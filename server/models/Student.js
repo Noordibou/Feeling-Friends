@@ -5,6 +5,7 @@ const StudentSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    seatNumber: { type: Number },
     role: { type: String, required: true },
     avatarImg: { type: String },
     journalEntries: [{
@@ -15,7 +16,7 @@ const StudentSchema = new mongoose.Schema({
             ZOR: { type: String },
             goal: { type: String },
             need: { type: String },
-            present: { type: boolean },
+            present: { type: Boolean },
         },
         checkout: {
             emotion: { type: String },

@@ -15,11 +15,18 @@ require('./config/database');
 // const userRoute = require("./routes/user");
 // app.use("/api/user", userRoute);
 
-app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
+const studentRoute = require("./routes/student.js");
+app.use("/api/students", studentRoute)
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
-  });
+// app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
+
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
+//   });
+
+app.get('/', (req, res) => {
+  res.send('Hello, Express!')
+})
 
 const port = process.env.PORT || 3001;
 

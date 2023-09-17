@@ -9,7 +9,7 @@ const Signup = () => {
     email: "",
     password: "",
     username: "",
-    role: "student", // Set a default role here
+    role: "student", 
   });
   const { email, password, username, role } = inputValue;
 
@@ -39,7 +39,7 @@ const Signup = () => {
             email,
             password,
             username,
-            role, // Include the selected role
+            role, 
           },
           { withCredentials: true }
         );
@@ -59,7 +59,7 @@ const Signup = () => {
         email: "",
         password: "",
         username: "",
-        role: "student", // Reset the role to the default value after submission
+        role: "student", 
       });
     };
     

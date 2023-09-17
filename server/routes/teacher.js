@@ -4,6 +4,26 @@ const Teacher = require('../models/Teacher.js');
 
 const app = express();
 
+
+// Create new teacher
+app.post('/teachers', async (req, res) => {
+  const teacher = new Teacher(req.body);
+  await teacher.save();
+  res.json(teacher);
+})
+
+app.get('/teachers', async (req, res) => {
+  const teacher = await Teacher.find();
+  res.json(teacher);
+})
+
+// get specific teacher
+app.get('/teachers/:id', async (req, res) => {
+  const teacher = await Teacher.find();
+  res.json(teacher);
+
+})
+
 app.put("/students/:id", async (req, res) => {
     try {
       res.json(
@@ -31,12 +51,23 @@ app.put("/students/:id", async (req, res) => {
     const teacher = await Teacher.findById(req.params.teacher_id);
     const student = await Student.findById(req.params.student_id);
   
-    // Update the student's information with the data from the request body
-    student.set(req.body);
-  
-    await student.save();
-  
-    res.json(student);
+    if (!req.body) {
+      // Add the student to the teacher's students array
+      teacher.students.push(student._id);
+
+      // Save the teacher's changes
+      await teacher.save();
+
+      // Respond with a success message
+      res.json(teacher);
+    } else if (req.body) {
+      // Update the student's information with the data from the request body
+      student.set(req.body);
+
+      await student.save();
+
+      res.json(student);
+    }
   });
 
   app.get('/teacher/:teacher_id/students', async (req, res) => {
@@ -62,13 +93,7 @@ app.put("/students/:id", async (req, res) => {
     res.sendStatus(200);
   })
 
-  app.get("/students/:id", async (req, res) => {
-    try {
-      res.json(await Student.findById(req.params.id));
-    } catch (error) {
-      res.status(400).json(error);
-    }
-  });
+  
 
 
 

@@ -13,15 +13,18 @@ app.post('/students', async (req, res) => {
 })
 
 // // FOR TEACHER Gets all students
-// app.get('/students', async (req, res) => {
-//     const students = await Student.find();
-//     res.json(students);
-
-// get a specific student
-app.get('/students/:student_id', async (req, res) => {
-    const student = await Student.findById(req.params.student_id);
-    res.json(student);
+app.get('/students', async (req, res) => {
+    const students = await Student.find();
+    res.json(students);
 })
+
+app.get("/students/:id", async (req, res) => {
+    try {
+      res.json(await Student.findById(req.params.id));
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  });
 
 // update a student
 app.put('/students/:student_id', async (req, res) => {
@@ -34,7 +37,7 @@ app.put('/students/:student_id', async (req, res) => {
 // delete a student
 app.delete('/students/:student_id', async (req, res) => {
     const student = await Student.findById(req.params.student_id)
-    await Student.remove();
+    await Student.deleteOne();
     res.json({ message: 'Student deleted.'});
 })
 

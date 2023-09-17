@@ -23,8 +23,6 @@ app.use('/', require("./routes/authRoute"));
 
 const studentRoute = require("./routes/student.js");
 app.use("/api/students", studentRoute);
-
-
 app.use("/api", studentRoute)
 
 const teacherRoute = require('./routes/teacher.js');

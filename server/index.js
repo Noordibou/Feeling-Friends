@@ -18,15 +18,17 @@ require('./config/database');
 const studentRoute = require("./routes/student.js");
 app.use("/api/students", studentRoute)
 
-// app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
+app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
 
-// app.get('/*', function(req, res) {
-//     res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
-//   });
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
+  });
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express!')
-})
+
+// *** Use if testing routes with postman instead of above app.use and app.get
+// app.get('/', (req, res) => {
+//   res.send('Hello, Express!')
+// })
 
 const port = process.env.PORT || 3001;
 

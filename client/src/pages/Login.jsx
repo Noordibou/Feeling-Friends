@@ -9,6 +9,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const { email, password } = inputValue;
 
   const handleOnChange = (e) => {
@@ -23,45 +24,55 @@ const Login = () => {
     toast.error(err, {
       position: "bottom-left",
     });
+
   const handleSuccess = (msg) =>
     toast.success(msg, {
       position: "bottom-left",
     });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3001/login",
-        {
-          ...inputValue,
-        },
-        { withCredentials: true }
-      );
-      const { success, message, user } = data;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          if (user.role === "student") {
-            navigate("/student-home");
-          } else if (user.role === "teacher") {
-            navigate("/teacher-home");
-          } else {
-            navigate("/");
-          }
-        }, 1000);
-      } else {
-        handleError(message);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      if (!email || !password) {
+        handleError("Please enter both email and password.");
+        return;
       }
-    } catch (error) {
-      console.log(error);
-    }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-    });
-  };
+    
+      try {
+        const { data } = await axios.post(
+          "http://localhost:3001/login",
+          { ...inputValue },
+          { withCredentials: true }
+        );
+    
+        console.log("Response from server:", data);
+    
+        const { success, message, user } = data;
+    
+        if (success) {
+          handleSuccess(message);
+    
+          if (user) {
+            console.log("User role:", user.role);
+            if (user.role === "student") {
+              navigate("/student-home");
+            } else {
+              navigate("/teacher-home");
+            }
+          }
+        } else {
+          handleError(message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    
+      setInputValue({
+        ...inputValue,
+        email: "",
+        password: "",
+      });
+    };    
 
   return (
     <div className="form_container">

@@ -58,7 +58,7 @@ import { getStudentById } from '../api/studentsApi';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(student);
+  const [formData, setFormData] = useState({firstName: "", lastName: "", });
 
   const handleChange = (event) => {
     setFormData({

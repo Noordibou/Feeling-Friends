@@ -6,7 +6,6 @@ const StudentSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     seatNumber: { type: Number },
-    role: { type: String, required: true },
     avatarImg: { type: String },
     journalEntries: [{
         date: { type: String },

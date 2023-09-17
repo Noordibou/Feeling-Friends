@@ -24,15 +24,23 @@ app.use('/', require("./routes/authRoute"));
 const studentRoute = require("./routes/student.js");
 app.use("/api/students", studentRoute);
 
-// // app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
 
-// // app.get('/*', function(req, res) {
-// //     res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
-// //   });
+app.use("/api", studentRoute)
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express!')
-})
+const teacherRoute = require('./routes/teacher.js');
+app.use("/api", teacherRoute)
+
+app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
+
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
+  });
+
+
+// *** Use if testing routes with postman instead of above app.use and app.get
+// app.get('/', (req, res) => {
+//   res.send('Hello, Express!')
+// })
 
 
 const port = process.env.PORT || 3001;

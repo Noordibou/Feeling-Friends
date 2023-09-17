@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = require('./User.js');
 const Student = require('./Student.js');
 
+
 const teacherSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   email: { type: String, required: true },

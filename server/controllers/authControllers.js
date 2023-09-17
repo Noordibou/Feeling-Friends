@@ -4,14 +4,14 @@ const bcrypt = require("bcryptjs");
 
 const Signup = async (req, res, next) => {
   try {
-    const { email, password, username, role, createdAt } = req.body; // Include the 'role' field from the request body
+    const { email, password, username, role, createdAt } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
 
-    const user = await User.create({ email, password, username, role, createdAt }); // Include the 'role' field
+    const user = await User.create({ email, password, username, role, createdAt });
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
       withCredentials: true,
@@ -41,16 +41,27 @@ const Login = async (req, res, next) => {
       return res.json({ message: 'Incorrect password or email' });
     }
     const token = createSecretToken(user._id);
+
+    // Check the user's role and redirect accordingly
+    let redirectPath = '/';
+    if (user.role === 'student') {
+      redirectPath = '/student-home';
+    } else if (user.role === 'teacher') {
+      redirectPath = '/teacher-home';
+    }
+
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
     });
-    res.status(201).json({ message: "User logged in successfully", success: true });
-    next();
+    
+    // Send a response indicating the successful login and the redirect path
+    res.status(201).json({ message: "User logged in successfully", success: true, redirectPath });
   } catch (error) {
     console.error(error);
   }
 };
+
 
 module.exports = {
   Signup,

@@ -36,6 +36,7 @@ app.put("/teachers/:id", async (req, res) => {
   }
 });
 
+// TODO: *** WILL NEED TO CHANGE *** //
 // Adds a student to the teacher's classroom roster
 app.put('/teachers/:teacher_id/students/:student_id', async (req, res) => {
   const teacher = await Teacher.findById(req.params.teacher_id);
@@ -47,6 +48,7 @@ app.put('/teachers/:teacher_id/students/:student_id', async (req, res) => {
   
 });
 
+// TODO: *** WILL NEED TO CHANGE *** //
 // Gets all students within a teacher's classroom
 app.get('/teacher/:teacher_id/students', async (req, res) => {
   const teacher = await Teacher.findById(req.params.teacher_id);
@@ -54,7 +56,7 @@ app.get('/teacher/:teacher_id/students', async (req, res) => {
   res.json(students)
 })
 
-
+// TODO: *** WILL NEED TO CHANGE *** //
 // Deletes a student in a teacher's classroom
 app.delete('/teacher/:teacher_id/students/:student_id', async (req, res) => {
   const teacher = await Teacher.findById(req.params.teacher_id);

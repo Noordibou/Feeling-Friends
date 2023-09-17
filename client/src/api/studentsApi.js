@@ -9,7 +9,7 @@ export const getStudents = async () => {
   return response.data;
 };
 
-
+// this works ✅
 export const createStudent = async (student) => {
   const response = await axios.post(STUDENTS_API_URL, student);
   return response.data;
@@ -21,13 +21,14 @@ export const getStudentById = async (id) => {
     return response.data;
 }
 
-
+// this works ✅
 export const updateStudent = async (id, student) => {
     const response = await axios.put(`${STUDENTS_API_URL}/${id}`, student)
     return response.data;
 }
 
+// this works ✅
 export const deleteStudent = async (id) => {
     const response = await axios.delete(`${STUDENTS_API_URL}/${id}`)
-    return response.data;
+    return response.sendStatus(200);
 }

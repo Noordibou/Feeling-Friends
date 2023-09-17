@@ -54,15 +54,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { getStudentById } from '../api/studentsApi';
+import { createTeacher } from '../api/teachersApi';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({firstName: "", lastName: "", });
+  const [teacher, setTeacher] = useState({
+    first_name: "",
+    last_name: "",
+    classrooms: [],
+  });
 
   const handleChange = (event) => {
-    setFormData({
-      ...formData,
+    setTeacher({
+      ...teacher,
       [event.target.name]: event.target.value,
     });
   };
@@ -70,26 +74,32 @@ const Home = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const updatedStudent = await updateStudent(id, formData);
+    try {
+      const createdTeacher = await createTeacher(teacher);
 
-    // Redirect to the student profile page
+      // Redirect to the teacher profile page
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="flex flex-col" onSubmit={handleSubmit}>
       <input
+        className="my-3"
         type="text"
-        name="name"
-        value={formData.name}
+        name="first_name"
+        value={teacher.first_name}
         onChange={handleChange}
       />
       <input
-        type="email"
-        name="email"
-        value={formData.email}
+        className="my-3"
+        type="text"
+        name="last_name"
+        value={teacher.last_name}
         onChange={handleChange}
       />
-      <button type="submit">Update Student</button>
+      <button className="bg-blue px-5" type="submit">Create Teacher</button>
     </form>
   );
 };

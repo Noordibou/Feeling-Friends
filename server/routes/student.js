@@ -12,12 +12,13 @@ app.post('/students', async (req, res) => {
     res.json(student);
 })
 
-// // FOR TEACHER Gets all students
+// // Gets all students registered (not for specific teacher/classroom)
 app.get('/students', async (req, res) => {
     const students = await Student.find();
     res.json(students);
 })
 
+// Gets specific student
 app.get("/students/:id", async (req, res) => {
     try {
       res.json(await Student.findById(req.params.id));
@@ -26,20 +27,25 @@ app.get("/students/:id", async (req, res) => {
     }
   });
 
-// update a student
-app.put('/students/:student_id', async (req, res) => {
-    const student = await Student.findById(req.params.student_id);
-    student.set(req.body);
-    await student.save();
-    res.json(student);
-})
+// Updates a specific student
+app.put("/students/:id", async (req, res) => {
+  try {
+    res.json(
+      await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    );
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 // delete a student
-app.delete('/students/:student_id', async (req, res) => {
-    const student = await Student.findById(req.params.student_id)
-    await Student.deleteOne();
-    res.json({ message: 'Student deleted.'});
-})
+app.delete("/students/:id", async (req, res) => {
+  try {
+    res.json(await Student.findByIdAndRemove(req.params.id));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 
 module.exports = app;

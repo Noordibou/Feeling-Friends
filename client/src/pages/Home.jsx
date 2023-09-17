@@ -1,11 +1,10 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-const TeacherHome = () => {
+const Home = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
@@ -47,4 +46,4 @@ const TeacherHome = () => {
   );
 };
 
-export default TeacherHome;
+export default Home;

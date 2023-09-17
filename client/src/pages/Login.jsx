@@ -1,52 +1,98 @@
-import { useState } from "react";
-
-// import axios from "axios";
-
-// import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
-  const [data, setData] = useSatae({
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
   });
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const { email, password } = inputValue;
 
-  // let navigate = useNavigate();
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
 
-  // const onLogin = async () => {
-  //   const credentials = {
-  //     email,
-  //     password,
-  //   };
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "bottom-left",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "bottom-left",
+    });
 
-  //   await axios
-  //     .post("http://localhost:3000/api/user/login", credentials)
-  //     .then((response) => {
-  //       if (response.data.accountType === "teacher") {
-  //         navigate("/teacher-home");
-  //       } else if (response.data.accountType === "student") {
-  //         navigate("/student-home");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       alert(error.response.data.message);
-  //     });
-  // };
-
-  const loginUser = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3001/login",
+        {
+          ...inputValue,
+        },
+        { withCredentials: true }
+      );
+      const { success, message, user } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          if (user.role === "student") {
+            navigate("/student-home");
+          } else if (user.role === "teacher") {
+            navigate("/teacher-home");
+          } else {
+            navigate("/");
+          }
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
   };
 
   return (
-    <div>
-      <form onSubmit={loginUser}>
-        <label>Email:</label>
-        <input type="email" placeholder="enter email..." value={data.email} onChange={(e) => setData({...data, email: e.target.value})} />
-        <label>Password:</label>
-        <input type="password" placeholder="enter password..." value={data.password} onChange={(e) => setData({...data, password: e.target.value})}/>
-        <button type="submit"> Login </button>
+    <div className="form_container">
+      <h2>Login Account</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            placeholder="Enter your email"
+            onChange={handleOnChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Enter your password"
+            onChange={handleOnChange}
+          />
+        </div>
+        <button type="submit">Submit</button>
+        <span>
+          Already have an account? <Link to={"/signup"}>Signup</Link>
+        </span>
       </form>
+      <ToastContainer />
     </div>
   );
 };

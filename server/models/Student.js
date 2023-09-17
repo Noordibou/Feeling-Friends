@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = require('./User.js');
 
 const StudentSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     seatNumber: { type: Number },

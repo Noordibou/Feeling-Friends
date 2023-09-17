@@ -16,7 +16,10 @@ require('./config/database');
 // app.use("/api/user", userRoute);
 
 const studentRoute = require("./routes/student.js");
-app.use("/api/students", studentRoute)
+app.use("/api", studentRoute)
+
+const teacherRoute = require('./routes/teacher.js');
+app.use("/api", teacherRoute)
 
 app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
 

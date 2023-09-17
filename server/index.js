@@ -9,18 +9,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
 
-// hey there this is a test
-// hello world
-
 require('dotenv').config();
 require('./config/database');
 
-const userRoute = require("./routes/user");
-app.use("/api/user", userRoute);
+// const userRoute = require("./routes/user");
+// app.use("/api/user", userRoute);
 
 app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
-
-
 
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));

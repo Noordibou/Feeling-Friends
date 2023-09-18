@@ -7,17 +7,19 @@ import SubEmotionDizzy from "./pages/student/SubEmotionDizzy"
 import RegZone from "./pages/student/RegZone"
 import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
-import { Login, Signup } from "./pages";
+import { Login, Signup } from "./pages/Authentication";
+import AuthProvider from "./pages/Authentication/AuthContext";
 
 
 export default function App() {
   return (
     <>
       {/* <Toaster position="top-center" toastOptions={{duration: 2000}} /> */}
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} /> */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/teacher-home" element={<TeacherHome />} />
 
         {/* Student Routes */}
@@ -27,6 +29,7 @@ export default function App() {
         <Route path="/goalsneeds" element={<GoalsNeeds />} />
         <Route path="/summary" element={<Summary />} />
       </Routes>
+      </AuthProvider>
     </>
   );
 }

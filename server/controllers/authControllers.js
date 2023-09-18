@@ -4,14 +4,14 @@ const bcrypt = require("bcryptjs");
 
 const Signup = async (req, res, next) => {
   try {
-    const { email, password, username, role, createdAt } = req.body;
+    const { email, password, username, role } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
 
-    const user = await User.create({ email, password, username, role, createdAt });
+    const user = await User.create({ email, password, username, role });
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
       withCredentials: true,
@@ -23,6 +23,7 @@ const Signup = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -42,26 +43,31 @@ const Login = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
 
-    // Check the user's role and redirect accordingly
     let redirectPath = '/';
+
     if (user.role === 'student') {
       redirectPath = '/student-home';
+      if (redirectPath === '/teacher-home') {
+        return res.status(403).json({ message: 'Access denied', success: false });
+    }
     } else if (user.role === 'teacher') {
       redirectPath = '/teacher-home';
+      if (redirectPath === '/student-home') {
+        return res.status(403).json({ message: 'Access denied', success: false });
+      }
     }
 
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
     });
-    
-    // Send a response indicating the successful login and the redirect path
-    res.status(201).json({ message: "User logged in successfully", success: true, redirectPath });
+
+    res.status(200).json({ message: "User logged in successfully", success: true, redirectPath });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 module.exports = {
   Signup,

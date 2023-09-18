@@ -30,49 +30,44 @@ const Login = () => {
       position: "bottom-left",
     });
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      if (!email || !password) {
-        handleError("Please enter both email and password.");
-        return;
-      }
-    
-      try {
-        const { data } = await axios.post(
-          "http://localhost:3001/login",
-          { ...inputValue },
-          { withCredentials: true }
-        );
-    
-        console.log("Response from server:", data);
-    
-        const { success, message, user } = data;
-    
-        if (success) {
-          handleSuccess(message);
-    
-          if (user) {
-            console.log("User role:", user.role);
-            if (user.role === "student") {
-              navigate("/student-home");
-            } else {
-              navigate("/teacher-home");
-            }
-          }
-        } else {
-          handleError(message);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      handleError("Please enter both email and password.");
+      return;
+    }
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3001/login",
+        { ...inputValue },
+        { withCredentials: true }
+      );
+
+      console.log("Response from server:", data);
+
+      const { success, message, redirectPath } = data;
+
+      if (success) {
+        handleSuccess(message);
+
+        if (redirectPath) {
+          navigate(redirectPath);
         }
-      } catch (error) {
-        console.error(error);
+      } else {
+        handleError(message);
       }
-    
-      setInputValue({
-        ...inputValue,
-        email: "",
-        password: "",
-      });
-    };    
+    } catch (error) {
+      console.error(error);
+    }
+
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
+  };
 
   return (
     <div className="form_container">

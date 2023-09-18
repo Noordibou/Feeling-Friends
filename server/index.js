@@ -9,7 +9,6 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 
-// Use the 'cors' middleware to handle CORS headers
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: 'GET, POST, PUT, DELETE',

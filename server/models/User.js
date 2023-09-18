@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs"); 
-const Student = require("./Student.js");
-const Teacher = require("./Teacher.js");
+const bcrypt = require("bcryptjs");
+
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -23,20 +22,13 @@ const userSchema = new mongoose.Schema({
     default: "student",
     required: true,
   },
+  student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
+  teacher: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher" },
 
   createdAt: {
     type: Date,
     default: new Date(),
   },
-  student: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Student
-  },
-  
-  teacher: {
-   type: mongoose.Schema.Types.ObjectId,
-   ref: Teacher
-  }
 });
 
 userSchema.pre("save", async function () {

@@ -44,21 +44,15 @@ const Login = async (req, res, next) => {
     const token = createSecretToken(user._id);
 
     let redirectPath = '/';
-    
-    if(user.role === 'student' && redirectPath === '/teacher-home') {
-      return res.status(403).json({message: 'Access denied', success: false}); 
-    }
-    
-    if(user.role === 'teacher' && redirectPath === '/student-home') {
-      return res.status(403).json({message: 'Access denied', success: false});
-    }
+
     if(user.role === 'student') {
       redirectPath = '/student-home';
     } else if(user.role === 'teacher') {
       redirectPath = '/teacher-home';  
-    }
-
-
+    } else {
+        return res.status(403).json({ message: 'Access denied for this role', success: false });
+      }
+    
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,

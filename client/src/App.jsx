@@ -12,20 +12,22 @@ import SubEmotionScared from "./pages/student/SubEmotionScared";
 import RegZone from "./pages/student/RegZone"
 import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
-import { Login, Signup } from "./pages/Authentication";
+// import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
 import CheckInProvider from "./context/CheckInProvider";
 
 export default function App() {
   return (
-    <>
+    <main className="bg-notebookPaper h-screen ">
+    
       {/* <Toaster position="top-center" toastOptions={{duration: 2000}} /> */}
+      
       <AuthProvider>
         <CheckInProvider>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
+        {/* <Route path="/signup" element={<Signup />} /> */}
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/teacher-home" element={<TeacherHome />} />
 
@@ -43,6 +45,7 @@ export default function App() {
       </Routes>
       </CheckInProvider>
       </AuthProvider>
-    </>
+    
+    </main>
   );
 }

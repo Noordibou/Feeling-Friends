@@ -20,10 +20,10 @@ const SubEmotionAnxious = () => {
 
         <div className=" font-header2 ">
 
-          <h2>Choose the emotion closest to what you're feeling.</h2>
+          <h2>Choose the emotion closest to</h2><span>what you're feeling.</span>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-5 font-header3">
           <div onClick={() => handleEmotionClick("Confused")}>Confused</div>
           <div onClick={() => handleEmotionClick("Embarrassed")}>Embarrassed</div>
           <div onClick={() => handleEmotionClick("Pressured")}>Pressured</div>

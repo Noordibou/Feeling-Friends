@@ -8,14 +8,16 @@ module.exports = {
       'header1': 'Karla',
       'header2': 'Karla',
       'header3': 'Karla',
-      'body': 'Poppins'
+      'body': 'Poppins',
+      'regZone': 'Poppins'
     },
 
     fontSize: {
       'header1': '4rem',
       'header2': '2.25rem',
       'header3': '1.5rem',
-      'body': '1.5rem'
+      'body': '1.5rem',
+      'regZone': '1.5rem'
     },
 
     fontWeight: {
@@ -41,6 +43,7 @@ module.exports = {
       'yellow': '#FDDA04',
       'orange': '#F06403',
       'notebookPaper': '#FFF9E4',
+      'white': '#FFFFFF'
     },
 
     // extend: {

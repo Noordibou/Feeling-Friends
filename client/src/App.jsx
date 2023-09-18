@@ -12,7 +12,7 @@ import SubEmotionScared from "./pages/student/SubEmotionScared";
 import RegZone from "./pages/student/RegZone"
 import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
-// import { Login, Signup } from "./pages/Authentication";
+import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
 import CheckInProvider from "./context/CheckInProvider";
 
@@ -27,8 +27,8 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/signup" element={<Signup />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/teacher-home" element={<TeacherHome />} />
 
         {/* Student Routes */}

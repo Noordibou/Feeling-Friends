@@ -101,7 +101,7 @@ const GoalsNeeds = () => {
                         setInputMode1(false);
                         setUserInput1('');
                       }}
-                      className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                      className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded"
                     >
                       Save
                     </button>
@@ -175,7 +175,7 @@ const GoalsNeeds = () => {
                     setInputMode2(false);
                     setUserInput2('');
                   }}
-                  className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded"
                 >
                   Save
                 </button>

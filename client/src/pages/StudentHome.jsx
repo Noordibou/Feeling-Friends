@@ -7,17 +7,17 @@ const StudentHome = () => {
       <h1>Hello, Name!</h1>
       <h2>Is this a check in or check out?</h2>
       <div>
-        <button>Check In</button>
+        <button>Check In</button><br/>
         <button>Check-out</button>
       </div>
       <h2>How are you feeling?</h2>
       <div>
-        <div>Starry</div>
-        <div>Dizzy</div>
-        <div>Sad</div>
-        <div>Happy</div>
-        <div>Stressed</div>
-        <div>Angry</div>
+        <div><a href="/subemotionproud">Proud</a></div>
+        <div><a href="/subemotionanxious">Anxious</a></div>
+        <div><a href="/subemotionsad">Sad</a></div>
+        <div><a href="/subemotionhappy">Happy</a></div>
+        <div><a href="/subemotionscared">Scared</a></div>
+        <div><a href="/subemotionangry">Angry</a></div>
       </div>
     </div>
     </>

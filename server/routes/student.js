@@ -73,7 +73,7 @@ app.put("/students/:id", async (req, res) => {
       await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
     );
   } catch (error) {
-    res.status(400).json(error);
+      res.status(400).json(error);
   }
 });
 

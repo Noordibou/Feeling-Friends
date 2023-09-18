@@ -10,10 +10,19 @@ const StudentCheckinContext = createContext({
 },
   updateFormState: () => {},
   resetFormState: () => {},
+  updateStudentData: () => {},
 });
 
 export function useStudentCheckin() {
-  return useContext(StudentCheckinContext);
+  const studentCheckinData = useContext(StudentCheckinContext);
+
+  return {
+    studentCheckinData,
+    updateFormState: studentCheckinData.updateFormState,
+    resetFormState: studentCheckinData.resetFormState,
+    updateStudentData: studentCheckinData.updateStudentData,
+  };
+
 }
 
 export default StudentCheckinContext;

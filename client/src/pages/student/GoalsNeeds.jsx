@@ -41,7 +41,7 @@ const GoalsNeeds = () => {
     <button onClick={() => handleNeedClick("something else")}>Something else</button>
     </div>
 
-      <button onClick={async () => await updateStudent()}>Submit</button>
+      <button onClick={async () => await updateStudent("6506618e9afe8f1c62042982", studentCheckinData)}>Submit</button>
     </div>
     </>
   );

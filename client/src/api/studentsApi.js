@@ -23,6 +23,7 @@ export const getStudentById = async (id) => {
 
 // this works ✅
 export const updateStudent = async (id, student) => {
+    console.log("update student api")
     const response = await axios.put(`${STUDENTS_API_URL}/${id}`, student)
     return response.data;
 }

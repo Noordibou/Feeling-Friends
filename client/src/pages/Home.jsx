@@ -1,3 +1,11 @@
+const Home = () => {
+  return (
+    <div>
+      <h1>Home</h1>
+    </div>
+  )
+}
+export default Home;
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { useCookies } from "react-cookie";
@@ -51,58 +59,58 @@
 
 
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { createTeacher } from '../api/teachersApi';
+// import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import { createTeacher } from '../api/teachersApi';
 
-const Home = () => {
-  const navigate = useNavigate();
-  const [teacher, setTeacher] = useState({
-    first_name: "",
-    last_name: "",
-    classrooms: [],
-  });
+// const Home = () => {
+//   const navigate = useNavigate();
+//   const [teacher, setTeacher] = useState({
+//     first_name: "",
+//     last_name: "",
+//     classrooms: [],
+//   });
 
-  const handleChange = (event) => {
-    setTeacher({
-      ...teacher,
-      [event.target.name]: event.target.value,
-    });
-  };
+//   const handleChange = (event) => {
+//     setTeacher({
+//       ...teacher,
+//       [event.target.name]: event.target.value,
+//     });
+//   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
 
-    try {
-      const createdTeacher = await createTeacher(teacher);
+//     try {
+//       const createdTeacher = await createTeacher(teacher);
 
-      // Redirect to the teacher profile page
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//       // Redirect to the teacher profile page
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
-  return (
-    <form className="flex flex-col" onSubmit={handleSubmit}>
-      <input
-        className="my-3"
-        type="text"
-        name="first_name"
-        value={teacher.first_name}
-        onChange={handleChange}
-      />
-      <input
-        className="my-3"
-        type="text"
-        name="last_name"
-        value={teacher.last_name}
-        onChange={handleChange}
-      />
-      <button className="bg-blue px-5" type="submit">Create Teacher</button>
-    </form>
-  );
-};
+//   return (
+//     <form className="flex flex-col" onSubmit={handleSubmit}>
+//       <input
+//         className="my-3"
+//         type="text"
+//         name="first_name"
+//         value={teacher.first_name}
+//         onChange={handleChange}
+//       />
+//       <input
+//         className="my-3"
+//         type="text"
+//         name="last_name"
+//         value={teacher.last_name}
+//         onChange={handleChange}
+//       />
+//       <button className="bg-blue px-5" type="submit">Create Teacher</button>
+//     </form>
+//   );
+// };
 
-export default Home;
+// export default Home;
 

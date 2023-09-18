@@ -38,7 +38,8 @@ module.exports = {
       'blue': '#0886CE',
       'green': '#459A4C',
       'yellow': '#FDDA04',
-      'orange': '#F06403'
+      'orange': '#F06403',
+      'notebookPaper': '#FFF9E4',
     },
 
     // extend: {

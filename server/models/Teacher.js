@@ -4,7 +4,7 @@ const Student = require('./Student.js');
 
 
 const teacherSchema = new mongoose.Schema({
-  // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  // user: { type: mongoose.Schema.Types.ObjectId, ref: User },
   prefix: { type: String },
   avatarImg: { type: String },
   first_name: { type: String, required: true },
@@ -12,7 +12,7 @@ const teacherSchema = new mongoose.Schema({
   classrooms: [{
     classroomName: { type: String },
     subject: { type: String },
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: Student }],
   }],
 });
 

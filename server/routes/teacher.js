@@ -2,6 +2,7 @@ const express = require('express');
 const Student = require('../models/Student.js');
 const Teacher = require('../models/Teacher.js');
 
+
 const app = express();
 
 

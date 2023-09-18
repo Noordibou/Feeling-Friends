@@ -1,4 +1,5 @@
-import React, { createContext } from "react";
+import React, { createContext, useContext } from "react";
+
 
 const StudentCheckinContext = createContext({
   studentCheckinData: {
@@ -7,8 +8,8 @@ const StudentCheckinContext = createContext({
   goal: "",
   need: "",
 },
-  updateFormState,
-  resetFormState,
+  updateFormState: () => {},
+  resetFormState: () => {},
 });
 
 export function useStudentCheckin() {

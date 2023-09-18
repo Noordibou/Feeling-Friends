@@ -14,13 +14,15 @@ import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
 import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
-
+import CheckInProvider from "./context/CheckInProvider";
 
 export default function App() {
   return (
     <>
       {/* <Toaster position="top-center" toastOptions={{duration: 2000}} /> */}
       <AuthProvider>
+        <CheckInProvider>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -39,6 +41,7 @@ export default function App() {
         <Route path="/goalsneeds" element={<GoalsNeeds />} />
         <Route path="/summary" element={<Summary />} />
       </Routes>
+      </CheckInProvider>
       </AuthProvider>
     </>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import CheckInContext from "./CheckInContext";
 
 export default function CheckInProvider ({children}) {
@@ -9,11 +9,13 @@ export default function CheckInProvider ({children}) {
     need: "",
   });
 
-  const updateFormState = (formData) => {
-    setStudentCheckinData({
-      ...studentCheckinData,
-      ...formData,
-    });
+  const updateFormState = (field, value) => {
+    console.log("helloooo")
+    setStudentCheckinData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+    console.log("oo from provider: " + JSON.stringify(studentCheckinData))
   };
 
   const resetFormState = () => {
@@ -30,6 +32,8 @@ export default function CheckInProvider ({children}) {
     updateFormState,
     resetFormState,
   };
+
+  
 
   return (
     <CheckInContext.Provider value={contextValue}>

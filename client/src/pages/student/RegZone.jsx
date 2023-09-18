@@ -1,6 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useStudentCheckin } from "../../context/CheckInContext";
 
 const RegZone = () => {
+  const navigate = useNavigate();
+  const { studentCheckinData, updateFormState } = useStudentCheckin();
+
+  const handleZoneClick = (zone) => {
+    updateFormState("ZOR", zone);
+    navigate("/goalsneeds");
+  };
+
   return (
     <>
     <div>
@@ -23,12 +33,12 @@ const RegZone = () => {
     </div>
 
     <div>
-        <div>
+        <div onClick={() => handleZoneClick("Low energy/Unmotivated")}>
             Low energy<br/>
             Unmotivated</div>
-        <div>Ready to learn</div>
+        <div onClick={() => handleZoneClick("Ready to learn/Wiggly")}>Ready to learn</div>
         <div>Wiggly</div>
-        <div>
+        <div onClick={() => handleZoneClick("High energy/Explosive")}>
             High energy<br/>
             Explosive</div>
     </div>

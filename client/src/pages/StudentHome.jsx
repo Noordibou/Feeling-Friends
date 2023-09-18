@@ -36,7 +36,7 @@ const StudentHome = () => {
   return (
     <>
     {/* page container */}
-    <div className="border-2 w-screen h-screen flex flex-col items-center bg-notebookPaper">
+    <div className="flex w-screen flex-col items-center bg-notebookPaper">
 
       {/* Check time Section */}
       <div className="mt-20 flex-col text-center">

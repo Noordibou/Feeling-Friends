@@ -29,6 +29,7 @@ module.exports = {
 
     colors: {
       // emotions
+      'themeWhite': '#FFFFFF',
       'darkTeal': '#3EB7AC',
       'lightLavender': '#DDC9E3',
       'lightYellow': '#FEE96C',

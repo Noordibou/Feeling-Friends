@@ -1,23 +1,70 @@
-import React from "react";
+import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import angryImg from '../images/angry.png'
+import proudImg from '../images/proud.png'
+import anxiousImg from '../images/anxious.png'
+import sadImg from '../images/sad.png'
+import happyImg from '../images/happy.png'
+import scaredImg from '../images/scared.png'
 
 const StudentHome = () => {
+  const navigate = useNavigate();
+
+  const [checkInBtn, setCheckInBtn] = useState("bg-white")
+  const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
+
+  const handleClick =(click) => {
+    if (checkOutBtn === "bg-bg-white" && click === "checkout") {
+      setCheckInBtn("bg-white")
+      setCheckOutBtn("bg-lightOrange")
+    } else if (checkOutBtn === "bg-lightOrange" && click === "checkout") {
+      setCheckOutBtn("bg-lightOrange")
+      setCheckInBtn("bg-white")
+    } else if (checkInBtn === 'bg-white' && click === "checkin") {
+      setCheckInBtn("bg-lightOrange")
+      setCheckOutBtn("bg-white")
+    } else {
+      setCheckOutBtn("bg-lightOrange")
+      setCheckInBtn("bg-white")
+    }
+  }
+
+  const handleEmotion = (emotion) => {
+    navigate(`/subemotion${emotion}`)
+  }
+
   return (
     <>
-    <div>
-      <h1>Hello, Name!</h1>
-      <h2>Is this a check in or check out?</h2>
-      <div>
-        <button>Check In</button><br/>
-        <button>Check-out</button>
+    {/* page container */}
+    <div className="border-2 w-screen h-screen flex flex-col items-center bg-notebookPaper">
+
+      {/* Check time Section */}
+      <div className="mt-20 flex-col text-center">
+        <h1 className="text-header1 font-header1">Hello, Name!</h1>
+        <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
+        <div className="flex flex-row mt-8">
+          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>
+          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
+        </div>
       </div>
-      <h2>How are you feeling?</h2>
-      <div>
-        <div><a href="/subemotionproud">Proud</a></div>
-        <div><a href="/subemotionanxious">Anxious</a></div>
-        <div><a href="/subemotionsad">Sad</a></div>
-        <div><a href="/subemotionhappy">Happy</a></div>
-        <div><a href="/subemotionscared">Scared</a></div>
-        <div><a href="/subemotionangry">Angry</a></div>
+
+      {/* Emotions Section */}
+      <div className="mt-20">
+        <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
+        <div className="">
+          {/* first row */}
+          <div className="w-screen max-w-lg flex justify-between my-14">
+            <button className="rounded-full w-32 h-32 bg-yellow p-4" onClick={() => handleEmotion("proud")}><img src={proudImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightOrange p-4" onClick={() => handleEmotion("anxious")}><img src={anxiousImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightBlue p-4" onClick={() => handleEmotion("sad")}><img src={sadImg} /></button>
+          </div>
+          {/* second row */}
+          <div className="w-screen max-w-lg flex justify-between my-14">
+            <button className="rounded-full w-32 h-32 bg-darkTeal p-4" onClick={() => handleEmotion("happy")}><img src={happyImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightLavender p-4" onClick={() => handleEmotion("scared")}><img src={scaredImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-pink p-4" onClick={() => handleEmotion("angry")}><img src={angryImg} /></button>
+          </div>
+        </div>
       </div>
     </div>
     </>

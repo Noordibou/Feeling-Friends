@@ -8,6 +8,7 @@ import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
 import { AuthContext } from "./Authentication/AuthContext"; 
 import { getStudentById } from "../api/studentsApi";
+import { getUserById } from "../api/userApi";
 
 const StudentHome = () => {
   const navigate = useNavigate();
@@ -36,22 +37,26 @@ const StudentHome = () => {
   }
 
   const auth = useContext(AuthContext); // Use useContext to access the AuthContext
-  const objectID = auth.user ? auth.user : null;
+  const objectID = auth.user ? auth.user._id : null;
   console.log("User's objectID:", JSON.stringify(objectID));
 
+  const [userData, setUserData] = useState(null);
   const [studentData, setStudentData] = useState(null);
 
   useEffect(() => {
-
+    getUserById(objectID)
+    .then((user) => {
+      // Set the user data in state
+      setUserData(user);
+    })
+    .catch((error) => {
+      // Handle any errors
+      console.error('Error:', error);
+    });
     
   console.log("hello???");
 
 }, [objectID]);
-
-useEffect(() => {
-  // This useEffect will run whenever studentData changes
-  console.log("yay student data????? " + JSON.stringify(studentData));
-}, [studentData]);
 
   return (
     <>

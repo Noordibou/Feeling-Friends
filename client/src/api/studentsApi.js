@@ -9,6 +9,8 @@ export const getStudents = async () => {
   return response.data;
 };
 
+
+
 // this works ✅
 export const createStudent = async (student) => {
   const response = await axios.post(STUDENTS_API_URL, student);

@@ -44,18 +44,20 @@ const StudentHome = () => {
   const [studentData, setStudentData] = useState(null);
 
   useEffect(() => {
-    getUserById(objectID)
-    .then((user) => {
-      // Set the user data in state
-      getStudentById(user.student).then((student)=> {
-        setStudentData(student)
-      })
+
+    //trying to get user id and then student id, but it doesnt work
+    // getUserById(objectID)
+    // .then((user) => {
+    //   // Set the user data in state
+    //   getStudentById(user.student).then((student)=> {
+    //     setStudentData(student)
+    //   })
       
-    })
-    .catch((error) => {
-      // Handle any errors
-      console.error('Error:', error);
-    });
+    // })
+    // .catch((error) => {
+    //   // Handle any errors
+    //   console.error('Error:', error);
+    // });
 
   
 }, [objectID]);
@@ -67,7 +69,7 @@ const StudentHome = () => {
 
       {/* Check time Section */}
       <div className="mt-20 flex-col text-center">
-        <h1 className="text-header1 font-header1">Hello, {studentData.firstName}!</h1>
+        <h1 className="text-header1 font-header1">Hello, Jimmy!</h1>
         <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
         <div className="flex flex-row mt-8">
           <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>

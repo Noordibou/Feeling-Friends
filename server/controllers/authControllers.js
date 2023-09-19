@@ -3,8 +3,6 @@ const User = require("../models/User");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
 
-
-//creates user and student at same time
 const Signup = async (req, res, next) => {
   try {
     const { email, password, username, role, studentDetails } = req.body;
@@ -13,8 +11,8 @@ const Signup = async (req, res, next) => {
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
-    // const objectId = mongoose.Types.ObjectId(studentObjectId);
-    // const foundStudent = await Student.findOne({ _id: objectId });
+
+    let existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
 
     if (!existingStudent) {
       // Create a new student if none exists with the provided schoolStudentId
@@ -86,14 +84,9 @@ const Login = async (req, res, next) => {
     const token = createSecretToken(user._id);
 
     let redirectPath = '/';
-    let studentId = null; // Initialize the studentId variable
 
     if(user.role === 'student') {
       redirectPath = '/student-home';
-      // If the user is a student, you can access their associated student's ObjectID
-      if (user.student) {
-        studentId = user.student.toString(); // Convert the ObjectId to a string
-      }
     } else if(user.role === 'teacher') {
       redirectPath = '/teacher-home';  
     } else {

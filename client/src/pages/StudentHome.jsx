@@ -7,8 +7,8 @@ import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
 import { AuthContext } from "./Authentication/AuthContext"; 
-import { getStudentById } from "../api/studentsApi";
-import { getUserById } from "../api/userApi";
+// import { getStudentById } from "../api/studentsApi";
+// import { getUserById } from "../api/userApi";
 
 const StudentHome = () => {
   const navigate = useNavigate();

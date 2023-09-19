@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import StudentCheckinContext from "../../context/CheckInContext";
 import angryWheel from "../../images/angryWheel.png"

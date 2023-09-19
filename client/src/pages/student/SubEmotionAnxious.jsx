@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import StudentCheckinContext from "../../context/CheckInContext";
 import orangewheel from "../../images/orangewheel.png"

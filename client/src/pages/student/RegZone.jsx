@@ -3,6 +3,7 @@ import { useNavigate, useLocation  } from "react-router-dom";
 import { useStudentCheckin } from "../../context/CheckInContext";
 import Avatar from "../../images/avatar.png";
 import Star from "../../images/star.png";
+import emotionsExplained from '../../mockData/emotionData.js'
 
 const RegZone = () => {
   const navigate = useNavigate();
@@ -17,43 +18,27 @@ const RegZone = () => {
   };
 
   useEffect(() => {
+    console.log("Location state:", location.state);
+  console.log("Emotion from location:", location.state?.emotion);
     const emotionFromParams = location.state?.emotion;
     if (emotionFromParams) {
       setEmotion(emotionFromParams);
     }
-  }, []);
+    console.log("Emotion:", emotion);
+  }, [location.state?.emotion]);
 
  
-
-  const emotionsExplained = [
-    {
-      emotion: "Anxiety",
-      tips: [
-        "It helps alert us to danger.",
-        "Some times, their stories about danger are not based in reality!"
-      ]
-    },
-    {
-      emotion: "embarrased",
-      tips: [
-        "It makes us feel good and motivated.",
-        "It can be contagious, so spread it around!"
-      ]
-    },
-  ]
-
   const getEmotionTips = () => {
-    const emotionObject = emotionsExplained.find((emotionObject) => emotionObject.emotion === emotion);
+    const emotionObject = emotionsExplained.find((emotionObject) => emotionObject.emotion === emotion.toLowerCase());
+    console.log("Emotion Object:", JSON.stringify(emotionObject));
     if (emotionObject) {
+      console.log("emotion object: " + JSON.stringify(emotionObject))
       return emotionObject.tips;
     } else {
       return [];
     }
   };
 
-  useEffect(() => {
-
-  }, []);
 
   return (
     <>
@@ -66,14 +51,14 @@ const RegZone = () => {
         <div className="pl-[1rem]">
           <h2 className="font-header2 text-header2 leading-tight">What is {emotionFromLocation}?</h2>
         <ul className="font-body text-body leading-relaxed">
-        {/* {getEmotionTips().map((tip) => (
-          <li className="list-disc mt-[1rem]" key={tip}>
+        {getEmotionTips().map((tip, index) => (
+          <li className="list-disc mt-[1rem]" key={index}>
             {tip}
           </li>
-        ))} */}
+        ))}
             
-            <li className="list-disc mt-[1rem]">It helps alert us to danger.</li>
-            <li className="list-disc mt-[1rem]">Some times, their stories about danger are not based in reality!</li>
+            {/* <li className="list-disc mt-[1rem]">It helps alert us to danger.</li>
+            <li className="list-disc mt-[1rem]">Some times, their stories about danger are not based in reality!</li> */}
         </ul>
         </div>
         <div className="mr-auto ml-auto">

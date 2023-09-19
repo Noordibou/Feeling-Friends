@@ -133,7 +133,11 @@ const RegZone = () => {
 
   const handleZoneClick = (zone) => {
     updateFormState("ZOR", zone);
-    navigate("/goalsneeds");
+    navigate("/goalsneeds", {
+      state: {
+        emotion: emotionFromLocation
+      }
+    });
   };
 
   const emotionsExplained = [

@@ -15,7 +15,7 @@ export default function CheckInProvider ({children, studentId}) {
       ...prevState,
       [field]: value,
     }));
-    console.log("oo from provider: " + JSON.stringify(studentCheckinData))
+    console.log("from provider: " + JSON.stringify(studentCheckinData))
     
   };
 

@@ -114,7 +114,6 @@ const Login = async (req, res, next) => {
       }
     
 
-    // Include the objectID in the response
     const responseObject = {
       message: "User logged in successfully",
       success: true,

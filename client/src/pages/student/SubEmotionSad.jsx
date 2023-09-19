@@ -43,8 +43,8 @@ const SubEmotionSad = () => {
               <div onClick={() => handleEmotionClick("Sad")} className=" cursor-pointer pt-20 hover:font-semibold">Sad</div>
             </div>
             <div className="flex mb-6 pt-12 ">
-              <div onClick={() => handleEmotionClick("Disappointed")} className=" cursor-pointer px-12 hover:font-semibold">Disappointed</div>
-              <div onClick={() => handleEmotionClick("Ashamed")} className="cursor-pointer px-8 hover:font-semibold">Ashamed</div>
+              <div onClick={() => handleEmotionClick("Disappointed")} className=" cursor-pointer px-2 hover:font-semibold">Disappointed</div>
+              <div onClick={() => handleEmotionClick("Ashamed")} className=" cursor-pointer px-8 hover:font-semibold">Ashamed</div>
             </div>
           </div>
         </div>

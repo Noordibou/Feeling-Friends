@@ -42,8 +42,8 @@ const SubEmotionScared = () => {
               <img src={scaredImg} alt="" className="w-32 h-32 object-fill " />
               <div onClick={() => handleEmotionClick("Rejected")} className=" cursor-pointer py-12 hover:font-semibold">Rejected</div>
             </div>
-            <div className="flex mb-6 pt-12 ">
-              <div onClick={() => handleEmotionClick("intimidated")} className=" cursor-pointer px-12 hover:font-semibold">intimidated</div>
+            <div className="flex mb-6 pt-8 ">
+              <div onClick={() => handleEmotionClick("intimidated")} className=" cursor-pointer px-4 hover:font-semibold">intimidated</div>
               <div onClick={() => handleEmotionClick("Helpless")} className="cursor-pointer px-8 hover:font-semibold">Helpless</div>
             </div>
           </div>

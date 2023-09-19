@@ -34,17 +34,17 @@ const SubEmotionSad = () => {
           <img src={sadWheel} alt="" className="w-[40.375rem] h-[35.375rem] object-fill" />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">
             <div className="flex py-8">
-              <div onClick={() => handleEmotionClick("Hurt")} className="cursor-pointer px-12">Hurt</div>
-              <div onClick={() => handleEmotionClick("Lonely")} className="px-8 cursor-pointer">Lonely</div>
+              <div onClick={() => handleEmotionClick("Hurt")} className="cursor-pointer px-12 hover:font-semibold">Hurt</div>
+              <div onClick={() => handleEmotionClick("Lonely")} className="px-8 cursor-pointer hover:font-semibold">Lonely</div>
             </div>
             <div className="flex gap-10  ">
-              <div onClick={() => handleEmotionClick("Guilty")} className="pt-20 cursor-pointer">Guilty</div>
-              <div className="pt-4" ><img src={sadImg} alt="" className="w-32 h-32  object-fill " /></div>
-              <div onClick={() => handleEmotionClick("Sad")} className=" cursor-pointer pt-20">Sad</div>
+              <div onClick={() => handleEmotionClick("Guilty")} className="pt-20 cursor-pointer hover:font-semibold">Guilty</div>
+              <div className="pt-4" ><img src={sadImg} alt="" className="w-32 h-32  object-fill hover:font-semibold " /></div>
+              <div onClick={() => handleEmotionClick("Sad")} className=" cursor-pointer pt-20 hover:font-semibold">Sad</div>
             </div>
             <div className="flex mb-6 pt-12 ">
-              <div onClick={() => handleEmotionClick("Disappointed")} className=" cursor-pointer px-12">Disappointed</div>
-              <div onClick={() => handleEmotionClick("Ashamed")} className="cursor-pointer px-8">Ashamed</div>
+              <div onClick={() => handleEmotionClick("Disappointed")} className=" cursor-pointer px-12 hover:font-semibold">Disappointed</div>
+              <div onClick={() => handleEmotionClick("Ashamed")} className="cursor-pointer px-8 hover:font-semibold">Ashamed</div>
             </div>
           </div>
         </div>

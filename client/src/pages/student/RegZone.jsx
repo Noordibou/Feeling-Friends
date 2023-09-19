@@ -453,18 +453,18 @@ const RegZone = () => {
       </div>
 
     <div className="mt-[2rem] flex items-center ">
-        <div className="bg-blue w-1/4 h-[20rem] rounded-tl-[2rem]" onClick={() => handleZoneClick("Low energy/Unmotivated")}>
-            <span className="block font-body text-white mt-[5rem] ml-[1.5rem]">Low energy</span>
-            <span className="block font-regZone md:text-regZone text-sm text-white  mt-[8rem] ml-[1.5rem]">Unmotivated</span></div>
+        <div className="bg-blue w-1/4 h-[20rem] rounded-tl-[2rem] hover:bg-blue/70" onClick={() => handleZoneClick("Low energy/Unmotivated")}>
+            <span className="block font-body text-white mt-[5rem] ml-[1.5rem] cursor-pointer" >Low energy</span>
+            <span className="block font-regZone md:text-regZone text-sm text-white  mt-[8rem] ml-[1.5rem] cursor-pointer">Unmotivated</span></div>
 
             
-        <div className="bg-green w-1/4 h-[20rem]" onClick={() => handleZoneClick("Ready to learn/Wiggly")}><span className="block font-regZone md:text-regZone text-sm  text-white mt-[14.4rem] ml-[1rem]">Ready to learn</span></div>
+        <div className="bg-green w-1/4 h-[20rem] cursor-pointer hover:bg-green/70" onClick={() => handleZoneClick("Ready to learn")}><span className="block font-regZone md:text-regZone text-sm  text-white mt-[14.4rem] ml-[1rem]">Ready to learn</span></div>
 
-        <div className="bg-yellow w-1/4 h-[20rem]"><span className="block font-regZone md:text-regZone text-sm text-white mt-[14.5rem] ml-[3.5rem]">Wiggly</span></div>
+        <div className="bg-yellow w-1/4 h-[20rem] cursor-pointer hover:bg-yellow/60" onClick={() => handleZoneClick("Wiggly")}><span className="block font-regZone md:text-regZone text-sm text-white mt-[14.5rem] ml-[3.5rem]">Wiggly</span></div>
 
-        <div className="bg-orange w-1/4 h-[20rem] rounded-tr-[2rem]" onClick={() => handleZoneClick("High energy/Explosive")}>
-        <span className="block font-body text-white mt-[5rem] ml-[5rem]">High energy</span>
-        <span className="block font-regZone md:text-regZone text-sm text-white md:mt-[9rem] mt-[7rem] ml-[3.5rem]">Explosive</span></div>
+        <div className="bg-orange w-1/4 h-[20rem] cursor-pointer rounded-tr-[2rem] hover:bg-orange/70" onClick={() => handleZoneClick("High energy/Explosive")}>
+        <span className="block font-body text-white mt-[5rem] ml-[5rem] cursor-pointer">High energy</span>
+        <span className="block font-regZone md:text-regZone text-sm text-white md:mt-[9rem] mt-[7rem] ml-[3.5rem] cursor-pointer">Explosive</span></div>
     </div>
 </div>
     </div>

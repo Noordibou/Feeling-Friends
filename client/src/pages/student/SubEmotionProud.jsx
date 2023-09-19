@@ -34,17 +34,17 @@ const SubEmotionProud = () => {
           <img src={proudWheel} alt="" className="w-[42.375rem] h-[35.375rem] object-fill" />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">
             <div className="flex py-14">
-              <div onClick={() => handleEmotionClick("Glad")} className="cursor-pointer px-12">Glad</div>
-              <div onClick={() => handleEmotionClick("Thrilled")} className="px-8 cursor-pointer">Thrilled</div>
+              <div onClick={() => handleEmotionClick("Glad")} className="cursor-pointer px-12 hover:font-semibold">Glad</div>
+              <div onClick={() => handleEmotionClick("Thrilled")} className="px-8 cursor-pointer hover:font-semibold">Thrilled</div>
             </div>
             <div className="flex gap-8 ">
-              <div onClick={() => handleEmotionClick("Confident")} className=" py-12 cursor-pointer">Confident</div>
+              <div onClick={() => handleEmotionClick("Confident")} className=" py-12 cursor-pointer hover:font-semibold">Confident</div>
               <img src={proudImg} alt="" className="w-32 h-32 object-fill " />
-              <div onClick={() => handleEmotionClick("Joyful")} className=" cursor-pointer pl-6 py-12">Joyful</div>
+              <div onClick={() => handleEmotionClick("Joyful")} className=" cursor-pointer pl-6 py-12 hover:font-semibold">Joyful</div>
             </div>
             <div className="flex mb-6 pt-12 ">
-              <div onClick={() => handleEmotionClick("Proud")} className=" cursor-pointer px-12">Proud</div>
-              <div onClick={() => handleEmotionClick("Excited")} className="cursor-pointer px-8">Excited</div>
+              <div onClick={() => handleEmotionClick("Proud")} className=" cursor-pointer px-12 hover:font-semibold">Proud</div>
+              <div onClick={() => handleEmotionClick("Excited")} className="cursor-pointer px-8 hover:font-semibold">Excited</div>
             </div>
           </div>
         </div>

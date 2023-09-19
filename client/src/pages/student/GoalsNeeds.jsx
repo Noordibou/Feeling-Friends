@@ -59,9 +59,9 @@ const GoalsNeeds = () => {
           {/* goal options */}
           <div className="w-full">
             {/* first row */}
-            <div className="flex flex-row justify-between mt-3">
+            <div className="flex flex-row justify-between mt-3 ">
                 <button
-                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange"
                   onClick={() =>
                     updateFormState("goal", "Finish homework during study hall")
                   }
@@ -69,7 +69,7 @@ const GoalsNeeds = () => {
                   Finish homework during study hall
                 </button>
                 <button
-                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange"
                   onClick={() => updateFormState("goal", "Better manage my energy")}
                 >
                   Better manage my energy
@@ -78,10 +78,10 @@ const GoalsNeeds = () => {
 
               {/* second row */}
               <div className="flex flex-row justify-between">
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded" onClick={() => updateFormState("goal", "Do my best in class")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange" onClick={() => updateFormState("goal", "Do my best in class")}>
                   Do my best in class
                 </button>
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded" onClick={() => updateFormState("goal", "Be more present")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange" onClick={() => updateFormState("goal", "Be more present")}>
                   Be more present
                 </button>
               </div>
@@ -95,7 +95,7 @@ const GoalsNeeds = () => {
                       value={userInput1}
                       onChange={handleInputChange1}
                       placeholder="Type your goal here"
-                      className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                      className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded "
                     />
                     <button
                       onClick={() => {
@@ -104,7 +104,7 @@ const GoalsNeeds = () => {
                         setInputMode1(false);
                         setUserInput1('');
                       }}
-                      className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                      className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange/60"
                     >
                       Save
                     </button>
@@ -112,7 +112,7 @@ const GoalsNeeds = () => {
                 ) : (
                   <div className="p-2">
                     <button
-                      className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                      className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange"
                       onClick={() => setInputMode1(true)}
                     >
                       Something else
@@ -137,7 +137,7 @@ const GoalsNeeds = () => {
             {/* first row */}
             <div className="flex flex-row justify-between mt-3">
                 <button
-                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange"
                   onClick={() =>
                     updateFormState("need", "Check in with my teacher")
                   }
@@ -145,7 +145,7 @@ const GoalsNeeds = () => {
                   Check in with my teacher
                 </button>
                 <button
-                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange"
                   onClick={() => updateFormState("need", "Help with homework")}
                 >
                   Help with homework
@@ -154,10 +154,10 @@ const GoalsNeeds = () => {
 
               {/* second row */}
               <div className="flex flex-row justify-between">
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded" onClick={() => updateFormState("need", "Extra practice")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange" onClick={() => updateFormState("need", "Extra practice")}>
                   Extra practice
                 </button>
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded" onClick={() => updateFormState("need", "Help with focusing")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange" onClick={() => updateFormState("need", "Help with focusing")}>
                   Help with focusing
                 </button>
               </div>
@@ -169,7 +169,7 @@ const GoalsNeeds = () => {
                   value={userInput2}
                   onChange={handleInputChange2}
                   placeholder="Enter your custom message 2"
-                  className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded "
                 />
                 <button
                   onClick={() => {
@@ -178,7 +178,7 @@ const GoalsNeeds = () => {
                     setInputMode2(false);
                     setUserInput2('');
                   }}
-                  className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange/60"
                 >
                   Save
                 </button>
@@ -186,7 +186,7 @@ const GoalsNeeds = () => {
             ) : (
               <div className="p-2">
                 <button
-                  className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded"
+                  className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded hover:bg-lightOrange"
                   onClick={() => setInputMode2(true)}
                 >
                   Something else
@@ -197,7 +197,7 @@ const GoalsNeeds = () => {
         </div>
         <div className="flex justify-center w-full mt-10 mb-20">
           <button
-            className="w-8/12 rounded py-4 text-body bg-lightOrange"
+            className="w-8/12 rounded py-4 text-body bg-lightOrange hover:bg-lightOrange/60"
             onClick={handleSubmit}
           >
             Submit

@@ -22,15 +22,16 @@ module.exports = {
       'regZone': '1.5rem',
       'input': '1.5rem',
       'button': '1.6rem',
-      'md':'1.2rem',
-      "sm":'0.9'
+      'md': '1.2rem',
+      "sm": '0.9'
     },
 
     fontWeight: {
       'header1': '700',
       'header2': '700',
       'header3': '400',
-      'body': '400'
+      'body': '400',
+      'semibold': '600'
     },
 
     colors: {

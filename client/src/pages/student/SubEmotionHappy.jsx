@@ -34,17 +34,17 @@ return (
         <img src={happyWheel} alt="" className="w-[42.375rem] h-[35.375rem] object-fill" />
         <div className="absolute inset-0 flex flex-col items-center justify-center ">
           <div className="flex py-14">
-            <div onClick={() => handleEmotionClick("Hopeful")} className="cursor-pointer px-12">Hopeful</div>
-            <div onClick={() => handleEmotionClick("Grateful")} className="px-8 cursor-pointer">Grateful</div>
+            <div onClick={() => handleEmotionClick("Hopeful")} className="cursor-pointer px-12 hover:font-semibold">Hopeful</div>
+            <div onClick={() => handleEmotionClick("Grateful")} className="px-8 cursor-pointer hover:font-semibold">Grateful</div>
           </div>
           <div className="flex gap-10 ">
-            <div onClick={() => handleEmotionClick("Secure")} className=" px-4 py-12 cursor-pointer">Secure</div>
+            <div onClick={() => handleEmotionClick("Secure")} className=" px-4 py-12 cursor-pointer hover:font-semibold">Secure</div>
             <img src={happyImg} alt="" className="w-32 h-32 object-fill " />
-            <div onClick={() => handleEmotionClick("Thoughtful")} className=" -ml-4 cursor-pointer py-12">Thoughtful</div>
+            <div onClick={() => handleEmotionClick("Thoughtful")} className=" -ml-4 cursor-pointer py-12 hover:font-semibold">Thoughtful</div>
           </div>
           <div className="flex mb-6 pt-12 ">
-            <div onClick={() => handleEmotionClick("Peaceful")} className=" cursor-pointer px-12">Peaceful</div>
-            <div onClick={() => handleEmotionClick("Content")} className="cursor-pointer px-8">Content</div>
+            <div onClick={() => handleEmotionClick("Peaceful")} className=" cursor-pointer px-12 hover:font-semibold">Peaceful</div>
+            <div onClick={() => handleEmotionClick("Content")} className="cursor-pointer px-8 hover:font-semibold">Content</div>
           </div>
         </div>
       </div>

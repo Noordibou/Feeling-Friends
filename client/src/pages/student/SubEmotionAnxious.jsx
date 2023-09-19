@@ -36,17 +36,17 @@ const SubEmotionAnxious = () => {
           <img src={orangewheel} alt="" className="w-[42.375rem] h-[42.375rem] object-fill" />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">
             <div className="flex py-14">
-              <div onClick={() => handleEmotionClick("Confused")} className="cursor-pointer px-12">Confused</div>
-              <div onClick={() => handleEmotionClick("Embarrassed")} className="px-8 cursor-pointer">Embarrassed</div>
+              <div onClick={() => handleEmotionClick("Confused")} className="cursor-pointer px-12 hover:font-semibold">Confused</div>
+              <div onClick={() => handleEmotionClick("Embarrassed")} className="px-8 cursor-pointer hover:font-semibold">Embarrassed</div>
             </div>
             <div className="flex gap-10 ">
-              <div onClick={() => handleEmotionClick("Pressured")} className=" px-6 py-12 cursor-pointer">Pressured</div>
+              <div onClick={() => handleEmotionClick("Pressured")} className=" px-6 py-12 cursor-pointer hover:font-semibold">Pressured</div>
               <img src={anxiousImg} alt="" className="w-32 h-32 object-fill " />
-              <div onClick={() => handleEmotionClick("Overwhelmed")} className=" cursor-pointer py-12">Overwhelmed</div>
+              <div onClick={() => handleEmotionClick("Overwhelmed")} className=" cursor-pointer py-12 hover:font-semibold">Overwhelmed</div>
             </div>
             <div className="flex pt-16 ">
-              <div onClick={() => handleEmotionClick("Worried")} className=" cursor-pointer px-12">Worried</div>
-              <div onClick={() => handleEmotionClick("Anxious")} className="cursor-pointer px-8">Anxious</div>
+              <div onClick={() => handleEmotionClick("Worried")} className=" cursor-pointer px-12 hover:font-semibold">Worried</div>
+              <div onClick={() => handleEmotionClick("Anxious")} className="cursor-pointer px-8 hover:font-semibold">Anxious</div>
             </div>
           </div>
         </div>

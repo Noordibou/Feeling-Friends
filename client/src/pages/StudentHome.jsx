@@ -47,15 +47,17 @@ const StudentHome = () => {
     getUserById(objectID)
     .then((user) => {
       // Set the user data in state
-      setUserData(user);
+      getStudentById(user.student).then((student)=> {
+        setStudentData(student)
+      })
+      
     })
     .catch((error) => {
       // Handle any errors
       console.error('Error:', error);
     });
-    
-  console.log("hello???");
 
+  
 }, [objectID]);
 
   return (
@@ -65,7 +67,7 @@ const StudentHome = () => {
 
       {/* Check time Section */}
       <div className="mt-20 flex-col text-center">
-        <h1 className="text-header1 font-header1">Hello, Name!</h1>
+        <h1 className="text-header1 font-header1">Hello, {studentData.firstName}!</h1>
         <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
         <div className="flex flex-row mt-8">
           <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>

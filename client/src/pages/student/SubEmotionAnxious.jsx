@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import StudentCheckinContext from "../../context/CheckInContext";
 
 const SubEmotionAnxious = () => {
@@ -8,9 +8,13 @@ const SubEmotionAnxious = () => {
 
   const { studentCheckinData, updateFormState } = useContext(StudentCheckinContext);
 
-  const handleEmotionClick = (emotion) => {
-    updateFormState("emotion", emotion);
-    navigate("/regzone");
+  const handleEmotionClick = (chosenEmotion) => {
+    updateFormState("emotion", chosenEmotion);
+    navigate("/regzone", {
+      state: {
+        emotion: chosenEmotion
+      }
+    });
   };
 
   return (
@@ -24,12 +28,12 @@ const SubEmotionAnxious = () => {
         </div>
 
         <div className="mt-5">
-          <div onClick={() => handleEmotionClick("Confused")}>Confused</div>
-          <div onClick={() => handleEmotionClick("Embarrassed")}>Embarrassed</div>
-          <div onClick={() => handleEmotionClick("Pressured")}>Pressured</div>
-          <div onClick={() => handleEmotionClick("Overwhelmed")}>Overwhelmed</div>
-          <div onClick={() => handleEmotionClick("Worried")}>Worried</div>
-          <div onClick={() => handleEmotionClick("Anxious")}>Anxious</div>
+          <div onClick={() => handleEmotionClick("confused")}>Confused</div>
+          <div onClick={() => handleEmotionClick("embarrassed")}>Embarrassed</div>
+          <div onClick={() => handleEmotionClick("pressured")}>Pressured</div>
+          <div onClick={() => handleEmotionClick("overwhelmed")}>Overwhelmed</div>
+          <div onClick={() => handleEmotionClick("worried")}>Worried</div>
+          <div onClick={() => handleEmotionClick("anxious")}>Anxious</div>
         </div>
 
         <div className="mt-5">

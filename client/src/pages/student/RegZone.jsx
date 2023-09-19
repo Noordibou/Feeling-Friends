@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { useNavigate, useLocation  } from "react-router-dom";
 import { useStudentCheckin } from "../../context/CheckInContext";
 import Avatar from "../../images/avatar.png";
 import Star from "../../images/star.png";
@@ -7,24 +7,73 @@ import Star from "../../images/star.png";
 const RegZone = () => {
   const navigate = useNavigate();
   const { studentCheckinData, updateFormState } = useStudentCheckin();
+  const [emotion, setEmotion] = useState("");
+  const location = useLocation();
+  const emotionFromLocation = location.state?.emotion || "";
 
   const handleZoneClick = (zone) => {
     updateFormState("ZOR", zone);
     navigate("/goalsneeds");
   };
 
+  useEffect(() => {
+    const emotionFromParams = location.state?.emotion;
+    if (emotionFromParams) {
+      setEmotion(emotionFromParams);
+    }
+  }, []);
+
+ 
+
+  const emotionsExplained = [
+    {
+      emotion: "Anxiety",
+      tips: [
+        "It helps alert us to danger.",
+        "Some times, their stories about danger are not based in reality!"
+      ]
+    },
+    {
+      emotion: "embarrased",
+      tips: [
+        "It makes us feel good and motivated.",
+        "It can be contagious, so spread it around!"
+      ]
+    },
+  ]
+
+  const getEmotionTips = () => {
+    const emotionObject = emotionsExplained.find((emotionObject) => emotionObject.emotion === emotion);
+    if (emotionObject) {
+      return emotionObject.tips;
+    } else {
+      return [];
+    }
+  };
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <>
     <div className="bg-notebookPaper pt-[3.5rem]">
-      <div className="w-6/12 text-center ml-auto mr-auto"><h1 className="font-header1 text-header1 leading-tight">It’s normal to feel anxious.</h1></div>
+      <div className="w-6/12 text-center ml-auto mr-auto"><h1 className="font-header1 text-header1 leading-tight">It’s normal to feel {emotionFromLocation}.</h1></div>
       <div className="w-6/12 text-center ml-auto mr-auto pt-[1.5rem]"><h2 className="font-header2 text-header2 leading-tight">Getting to know our emotions can help!</h2></div>
     
       
       <div className="bg-lightOrange w-11/12 pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center">
-        <div className="pl-[1rem]"><h2 className="font-header2 text-header2 leading-tight">What is anxiety?</h2>
+        <div className="pl-[1rem]">
+          {/* <h2 className="font-header2 text-header2 leading-tight">What is {emotionFromLocation}?</h2> */}
         <ul className="font-body text-body leading-relaxed">
-            <li className="list-disc mt-[1rem]">It helps alert us to danger.</li>
-            <li className="list-disc mt-[1rem]">Some times, their stories about danger are not based in reality!</li>
+        {getEmotionTips().map((tip) => (
+          <li className="list-disc mt-[1rem]" key={tip}>
+            {tip}
+          </li>
+        ))}
+            
+            {/* <li className="list-disc mt-[1rem]">It helps alert us to danger.</li>
+            <li className="list-disc mt-[1rem]">Some times, their stories about danger are not based in reality!</li> */}
         </ul>
         </div>
         <div className="mr-auto ml-auto">

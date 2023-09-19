@@ -9,7 +9,9 @@ module.exports = {
       'header2': 'Karla',
       'header3': 'Karla',
       'body': 'Poppins',
-      'regZone': 'Poppins'
+      'regZone': 'Poppins',
+      'input': 'Poppins',
+      'button': 'Poppins'
     },
 
     fontSize: {
@@ -17,7 +19,9 @@ module.exports = {
       'header2': '2.25rem',
       'header3': '1.5rem',
       'body': '1.5rem',
-      'regZone': '1.5rem'
+      'regZone': '1.5rem',
+      'input': '1.5rem',
+      'button': '1.6rem'
     },
 
     fontWeight: {
@@ -43,7 +47,8 @@ module.exports = {
       'yellow': '#FDDA04',
       'orange': '#F06403',
       'notebookPaper': '#FFF9E4',
-      'white': '#FFFFFF'
+      'white': '#FFFFFF',
+      'lightGray': '#979797'
     },
 
     // extend: {

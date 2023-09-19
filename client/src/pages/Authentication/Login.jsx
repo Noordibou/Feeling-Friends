@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import Button from "../../images/button.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -70,35 +71,50 @@ const Login = () => {
   };
 
   return (
-    <div className="form_container">
-      <h2>Login Account</h2>
+    <div className="pt-[10rem]">
+    <div className="form_container w-8/12 ml-auto mr-auto">
+
+      {/* Image here */}
+
+      <h2 className="font-header2 text-header2 leading-tight">Login</h2>
+
+    <div>
+    <div>
+      {/* Image here */}
+    </div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">Email</label>
-          <input
+          <input className="w-[35rem] mt-[3rem] font-input text-lightGray p-[0.5rem]"
             type="email"
             name="email"
             value={email}
-            placeholder="Enter your email"
+            placeholder="Email or Student ID"
             onChange={handleOnChange}
           />
         </div>
+
         <div>
-          <label htmlFor="password">Password</label>
-          <input
+          <div>
+            {/* Image here */}
+          </div>
+          <input className="w-[35rem] mt-[2rem] font-input text-lightGray p-[0.5rem]"
             type="password"
             name="password"
             value={password}
-            placeholder="Enter your password"
+            placeholder="Password"
             onChange={handleOnChange}
           />
         </div>
-        <button type="submit">Submit</button>
-        <span>
-          Already have an account? <Link to={"/signup"}>Signup</Link>
-        </span>
+        <button className="w-[35rem] h-[4.9375rem] mt-[2rem] text-notebookPaper font-button text-button" style={{ backgroundImage: `url(${Button})` }} type="submit">Login</button><br/><br/>
+        <div className="text-center font-input text-lightGray">
+        New to our app? <a className="underline" href="/">Register</a>
+        </div>
       </form>
+      </div>
+
+
       <ToastContainer />
+    </div>
     </div>
   );
 };

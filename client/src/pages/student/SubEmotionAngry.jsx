@@ -34,7 +34,6 @@ const SubEmotionAngry = () => {
           <img src={angryWheel} alt="" className="w-[42.375rem] h-[35.375rem] object-fill" />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">
             <div className="flex py-14">
-<<<<<<< HEAD
               <div onClick={() => handleEmotionClick("Grumpy")} className="cursor-pointer px-12 hover:font-semibold">Grumpy</div>
               <div onClick={() => handleEmotionClick("Disgusted")} className="px-8 cursor-pointer hover:font-semibold">Disgusted</div>
             </div>
@@ -46,19 +45,6 @@ const SubEmotionAngry = () => {
             <div className="flex mb-8 pt-12 ">
               <div onClick={() => handleEmotionClick("Annoyed")} className=" cursor-pointer px-12 hover:font-semibold">Annoyed</div>
               <div onClick={() => handleEmotionClick("Angry")} className="cursor-pointer px-8 hover:font-semibold">Angry</div>
-=======
-              <div onClick={() => handleEmotionClick("grumpy")} className="cursor-pointer px-12">Grumpy</div>
-              <div onClick={() => handleEmotionClick("disgusted")} className="px-8 cursor-pointer">Disgusted</div>
-            </div>
-            <div className="flex gap-10 ">
-              <div onClick={() => handleEmotionClick("jealous")} className=" px-2 py-12 cursor-pointer">Jealous</div>
-              <img src={angryImg} alt="" className="w-32 h-32 object-fill " />
-              <div onClick={() => handleEmotionClick("frustrated")} className=" -ml-4 cursor-pointer py-12">Frustrated</div>
-            </div>
-            <div className="flex mb-8 pt-12 ">
-              <div onClick={() => handleEmotionClick("annoyed")} className=" cursor-pointer px-12">Annoyed</div>
-              <div onClick={() => handleEmotionClick("angry")} className="cursor-pointer px-8">Angry</div>
->>>>>>> 1a48ed7ccfee11c1bbdc95a9aa575d2a9ead7031
             </div>
           </div>
         </div>

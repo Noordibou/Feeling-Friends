@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../images/button.png";
+import { useAuth } from "./AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const Login = () => {
   });
 
   const { email, password } = inputValue;
+
+  const { handleLogin } = useAuth();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +59,7 @@ const Login = () => {
         if (redirectPath) {
           navigate(redirectPath);
         }
+        handleLogin(data.user); // Pass the user data from the response
       } else {
         handleError(message);
       }

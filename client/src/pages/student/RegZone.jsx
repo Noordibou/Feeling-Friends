@@ -64,16 +64,16 @@ const RegZone = () => {
       
       <div className="bg-lightOrange w-11/12 pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center">
         <div className="pl-[1rem]">
-          {/* <h2 className="font-header2 text-header2 leading-tight">What is {emotionFromLocation}?</h2> */}
+          <h2 className="font-header2 text-header2 leading-tight">What is {emotionFromLocation}?</h2>
         <ul className="font-body text-body leading-relaxed">
-        {getEmotionTips().map((tip) => (
+        {/* {getEmotionTips().map((tip) => (
           <li className="list-disc mt-[1rem]" key={tip}>
             {tip}
           </li>
-        ))}
+        ))} */}
             
-            {/* <li className="list-disc mt-[1rem]">It helps alert us to danger.</li>
-            <li className="list-disc mt-[1rem]">Some times, their stories about danger are not based in reality!</li> */}
+            <li className="list-disc mt-[1rem]">It helps alert us to danger.</li>
+            <li className="list-disc mt-[1rem]">Some times, their stories about danger are not based in reality!</li>
         </ul>
         </div>
         <div className="mr-auto ml-auto">

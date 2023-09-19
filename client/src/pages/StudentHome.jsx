@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import angryImg from '../images/angry.png'
 import proudImg from '../images/proud.png'
@@ -6,6 +6,8 @@ import anxiousImg from '../images/anxious.png'
 import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
+import { AuthContext } from "./Authentication/AuthContext"; 
+import { getStudentById } from "../api/studentsApi";
 
 const StudentHome = () => {
   const navigate = useNavigate();
@@ -32,6 +34,24 @@ const StudentHome = () => {
   const handleEmotion = (emotion) => {
     navigate(`/subemotion${emotion}`)
   }
+
+  const auth = useContext(AuthContext); // Use useContext to access the AuthContext
+  const objectID = auth.user ? auth.user : null;
+  console.log("User's objectID:", JSON.stringify(objectID));
+
+  const [studentData, setStudentData] = useState(null);
+
+  useEffect(() => {
+
+    
+  console.log("hello???");
+
+}, [objectID]);
+
+useEffect(() => {
+  // This useEffect will run whenever studentData changes
+  console.log("yay student data????? " + JSON.stringify(studentData));
+}, [studentData]);
 
   return (
     <>

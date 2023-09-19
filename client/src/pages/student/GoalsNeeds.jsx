@@ -9,6 +9,8 @@ const GoalsNeeds = () => {
 
   const navigate = useNavigate();
   const { studentCheckinData, updateFormState } = useStudentCheckin();
+  const location = useLocation();
+  const emotionFromLocation = location.state?.emotion || "";
 
   const [inputMode1, setInputMode1] = useState(false);
   const [inputMode2, setInputMode2] = useState(false);
@@ -35,7 +37,11 @@ const GoalsNeeds = () => {
 
  const handleSubmit = async () => {
     await updateStudent("6506618e9afe8f1c62042982", studentCheckinData)
-    navigate("/summary")
+    navigate("/summary", {
+      state: {
+        emotion: emotionFromLocation
+      }
+    })
  }
 
   return (

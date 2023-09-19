@@ -78,8 +78,8 @@ if (loading) {
         <h1 className="text-header1 font-header1">{studentData ? ("Hello, " + studentData.firstName) : "Hello"}!</h1>
         <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
         <div className="flex flex-row mt-8">
-          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body hover:bg-lightOrange ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>
-          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body hover:bg-lightOrange ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
+          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>
+          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body  ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
         </div>
       </div>
 

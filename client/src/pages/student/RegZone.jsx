@@ -164,20 +164,21 @@ const RegZone = () => {
             It’s normal to feel {emotionFromLocation}.
           </h1>
         </div>
-        <div className="w-6/12 text-center ml-auto mr-auto pt-[1rem]">
+        <div className="w-11/12 text-center ml-auto mr-auto pt-[1rem]">
           <h2 className="font-header2 md:text-header2 text-header3 leading-tight">
             Getting to know our emotions can help!
           </h2>
         </div>
 
-        <div className="bg-lightOrange w-11/12 pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center">
+        {/* emotion explanation */}
+        <div className="bg-lightOrange w-11/12 pt-[1.rem] rounded-[2rem] p-[2rem] mt-[2rem] ml-auto mr-auto flex items-center">
           <div className="pl-[1rem]">
             <h2 className="font-header2 md:text-header2 text-md leading-tight">
               What is {emotionFromLocation}?
             </h2>
             <ul className="font-body md:text-body text-sm leading-relaxed">
               {getEmotionTips().map((tip, index) => (
-                <li className="list-disc mt-[1rem]" key={index}>
+                <li className="list-disc mt-[1rem] text-sm" key={index}>
                   {tip}
                 </li>
               ))}
@@ -187,13 +188,17 @@ const RegZone = () => {
             <img src={Avatar} alt="avatar" className=" ml-auto mr-auto" />
           </div>
         </div>
-
-        <div className="w-7/12 text-center ml-auto mr-auto md:pt-[5rem] py-[4rem] font-header2 md:text-header2 text-header3 leading-tight">
+        {/* checkin with body text */}
+        <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">
       <h2 >Check in with your body- what zone are you in? </h2>
       <h2 >Drag the slider to that zone.</h2>
     </div>
 
-        <div className="relative  ">
+
+{/* slider view */}
+        <div className="fixed
+             inset-x-0
+             bottom-0">
     <div className="absolute bottom-[7.5rem]">
       <hr className="border-8 w-screen border-white"></hr>
     </div>
@@ -201,18 +206,22 @@ const RegZone = () => {
       <img src={Star} />
       </div>
 
-    <div className="mt-[2rem] flex items-center ">
-        <div className="bg-blue w-1/4 h-[20rem] rounded-tl-[2rem] hover:bg-blue/70" onClick={() => handleZoneClick("Low energy/Unmotivated")}>
-            <span className="block font-body text-white mt-[5rem] ml-[1.5rem] cursor-pointer" >Low energy</span>
+    <div className="mt-[2rem] flex items-end ">
+
+      {/* unmotivated */}
+        <div className="bg-blue w-1/4 h-[17rem] rounded-tl-[2rem] hover:bg-blue/70 pb-10" onClick={() => handleZoneClick("Low energy/Unmotivated")}>
+            <span className="block font-body text-white mt-[5rem] ml-[1.5rem] cursor-pointer -mb-6" >Low energy</span>
             <span className="block font-regZone md:text-regZone text-sm text-white  mt-[8rem] ml-[1.5rem] cursor-pointer">Unmotivated</span></div>
 
-            
-        <div className="bg-green w-1/4 h-[20rem] cursor-pointer hover:bg-green/70" onClick={() => handleZoneClick("Ready to learn")}><span className="block font-regZone md:text-regZone text-sm  text-white mt-[14.4rem] ml-[1rem]">Ready to learn</span></div>
+        {/* ready to learn */}
+        <div className="bg-green w-1/4 h-[17rem] cursor-pointer hover:bg-green/70" onClick={() => handleZoneClick("Ready to learn")}><span className="block font-regZone md:text-regZone text-sm  text-white mt-[12.9rem] text-center">Ready to learn</span></div>
 
-        <div className="bg-yellow w-1/4 h-[20rem] cursor-pointer hover:bg-yellow/60" onClick={() => handleZoneClick("Wiggly")}><span className="block font-regZone md:text-regZone text-sm text-white mt-[14.5rem] ml-[3.5rem]">Wiggly</span></div>
+        {/* wiggly */}
+        <div className="bg-yellow w-1/4 h-[17rem] cursor-pointer hover:bg-yellow/60" onClick={() => handleZoneClick("Wiggly")}><span className="block font-regZone md:text-regZone text-sm text-white mt-[12.9rem] ml-[3.5rem] -mb-10">Wiggly</span></div>
 
-        <div className="bg-orange w-1/4 h-[20rem] cursor-pointer rounded-tr-[2rem] hover:bg-orange/70" onClick={() => handleZoneClick("High energy/Explosive")}>
-        <span className="block font-body text-white mt-[5rem] ml-[5rem] cursor-pointer">High energy</span>
+        {/* explosive */}
+        <div className="bg-orange w-1/4 h-[17rem] cursor-pointer rounded-tr-[2rem] hover:bg-orange/70" onClick={() => handleZoneClick("High energy/Explosive")}>
+        <span className="block font-body text-white mt-[5rem] ml-[5rem] cursor-pointer -mb-10">High energy</span>
         <span className="block font-regZone md:text-regZone text-sm text-white md:mt-[9rem] mt-[7rem] ml-[3.5rem] cursor-pointer">Explosive</span></div>
     </div>
 </div>

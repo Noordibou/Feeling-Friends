@@ -21,7 +21,9 @@ module.exports = {
       'body': '1.5rem',
       'regZone': '1.5rem',
       'input': '1.5rem',
-      'button': '1.6rem'
+      'button': '1.6rem',
+      'md':'1.2rem',
+      "sm":'0.9'
     },
 
     fontWeight: {

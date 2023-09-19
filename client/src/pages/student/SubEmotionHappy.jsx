@@ -14,9 +14,13 @@ const SubEmotionHappy = () => {
 const navigate = useNavigate();
 const { studentCheckinData, updateFormState } = useContext(StudentCheckinContext);
 
-const handleEmotionClick = (emotion) => {
-  updateFormState("emotion", emotion);
-  navigate("/regzone");
+const handleEmotionClick = (chosenEmotion) => {
+  updateFormState("emotion", chosenEmotion);
+  navigate("/regzone", {
+    state: {
+      emotion: chosenEmotion
+    }
+  });
 };
 
 return (

@@ -41,6 +41,26 @@ const findUser = async (req, res) => {
   res.json(user)
 }
 
+const findUserById = async (req, res) => {
+  try {
+    const userId = req.params.id; // Get the userId from the request params
+
+    // Query the database to find the user by their ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      // If the user is not found, send a 404 response
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // If the user is found, send the user data as the response
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 
 // const Signup = async (req, res, next) => {
 //   try {
@@ -93,12 +113,35 @@ const Login = async (req, res, next) => {
         return res.status(403).json({ message: 'Access denied for this role', success: false });
       }
     
+
+    // Include the objectID in the response
+    const responseObject = {
+      message: "User logged in successfully",
+      success: true,
+      user: {
+        _id: user._id, // Include the user's _id (objectID)
+        email: user.email,
+        username: user.username,
+        role: user.role,
+        student: user.student,
+        // Add any other user properties you want to include
+      },
+      redirectPath,
+    };
+
+
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
     });
 
-    res.status(200).json({ message: "User logged in successfully", success: true, redirectPath });
+    res.status(200).json({ message: "User logged in successfully", success: true,  user: {
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      // Add any other user properties you want to include
+    }, redirectPath });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -108,5 +151,6 @@ const Login = async (req, res, next) => {
 module.exports = {
   Signup,
   Login,
-  findUser
+  findUser,
+  findUserById
 };

@@ -1,4 +1,4 @@
-const { Signup, Login, findUser } = require('../controllers/authControllers')
+const { Signup, Login, findUser, findUserById } = require('../controllers/authControllers')
 const { userVerification } = require('../middleware/authMiddleware')
 const router = require("express").Router();
 
@@ -22,7 +22,8 @@ router.get("/teacher-home", userVerification , (req, res) => {
 
 router.post("/signup", Signup);
 router.post("/login", Login);
-router.post('/', userVerification)
-router.get("/user", findUser)
+router.post('/', userVerification);
+router.get("/users", findUser);
+router.get('/users/:id', findUserById)
 
 module.exports = router;

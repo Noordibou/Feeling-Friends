@@ -120,7 +120,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useStudentCheckin } from "../../context/CheckInContext";
 import Avatar from "../../images/avatar.png";
 import Star from "../../images/star.png";
-import emotionsExplained from '../../mockData/emotionData.js'
+import deepBreathing from "../../images/RegZoneDeepBreathingCard.png"
+import imagineExercise from "../../images/coping skill card_ Overwhelmed.png"
+// import emotionsExplained from '../../mockData/emotionData.js'
 
 const RegZone = () => {
   const navigate = useNavigate();
@@ -133,6 +135,17 @@ const RegZone = () => {
     updateFormState("ZOR", zone);
     navigate("/goalsneeds");
   };
+
+  const emotionsExplained = [
+    {
+      emotion: "Anxious",
+      image: {deepBreathing}
+    },
+    {
+      emotion: "Overwhelmed",
+      image: {imagineExercise}
+    },
+  ]
 
   useEffect(() => {
     console.log("Location state:", location.state);
@@ -171,22 +184,16 @@ const RegZone = () => {
         </div>
 
         {/* emotion explanation */}
-        <div className="bg-lightOrange w-11/12 pt-[1.rem] rounded-[2rem] p-[2rem] mt-[2rem] ml-auto mr-auto flex items-center">
-          <div className="pl-[1rem]">
-            <h2 className="font-header2 md:text-header2 text-md leading-tight">
+        <div className="bg-lightOrange w-11/12 pt-[1.rem] rounded-[2rem] p-2 mt-[2rem] ml-auto mr-auto flex items-center justify-center">
+          <div className="">
+            {/* <h2 className="font-header2 md:text-header2 text-md leading-tight">
               What is {emotionFromLocation}?
-            </h2>
-            <ul className="font-body md:text-body text-sm leading-relaxed">
-              {getEmotionTips().map((tip, index) => (
-                <li className="list-disc mt-[1rem] text-sm" key={index}>
-                  {tip}
-                </li>
-              ))}
-            </ul>
+            </h2> */}
+                  {emotionFromLocation === "Anxious" ? <img className="h-80 " src={deepBreathing} /> : <img className="h-80 " src={imagineExercise} />}
           </div>
-          <div className="mr-auto ml-auto">
+          {/* <div className="mr-auto ml-auto">
             <img src={Avatar} alt="avatar" className=" ml-auto mr-auto" />
-          </div>
+          </div> */}
         </div>
         {/* checkin with body text */}
         <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">

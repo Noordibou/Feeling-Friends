@@ -89,15 +89,15 @@ if (loading) {
         <div className="">
           {/* first row */}
           <div className="w-screen max-w-lg flex justify-between my-14">
-            <button className="rounded-full w-32 h-32 bg-yellow p-4" onClick={() => handleEmotion("proud")}><img src={proudImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-lightOrange p-4" onClick={() => handleEmotion("anxious")}><img src={anxiousImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-lightBlue p-4" onClick={() => handleEmotion("sad")}><img src={sadImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightYellow" onClick={() => handleEmotion("proud")}><img src={proudImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightOrange" onClick={() => handleEmotion("anxious")}><img src={anxiousImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightBlue" onClick={() => handleEmotion("sad")}><img src={sadImg} /></button>
           </div>
           {/* second row */}
           <div className="w-screen max-w-lg flex justify-between my-14">
-            <button className="rounded-full w-32 h-32 bg-darkTeal p-4" onClick={() => handleEmotion("happy")}><img src={happyImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-lightLavender p-4" onClick={() => handleEmotion("scared")}><img src={scaredImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-pink p-4" onClick={() => handleEmotion("angry")}><img src={angryImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-darkTeal" onClick={() => handleEmotion("happy")}><img src={happyImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-lightLavender" onClick={() => handleEmotion("scared")}><img src={scaredImg} /></button>
+            <button className="rounded-full w-32 h-32 bg-pink" onClick={() => handleEmotion("angry")}><img src={angryImg} /></button>
           </div>
         </div>
       </div>

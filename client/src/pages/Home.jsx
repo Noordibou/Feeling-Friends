@@ -34,6 +34,7 @@ const Home = () => {
   };
   return (
     <>
+    <div className="flex w-screen items-center justify-center">
       <div className="home_page">
         <h4>
           {" "}
@@ -42,6 +43,7 @@ const Home = () => {
         <button onClick={Logout}>LOGOUT</button>
       </div>
       <ToastContainer />
+      </div>
       
     </>
   );

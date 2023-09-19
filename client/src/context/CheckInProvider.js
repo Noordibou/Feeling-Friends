@@ -16,6 +16,7 @@ export default function CheckInProvider ({children, studentId}) {
       [field]: value,
     }));
     console.log("oo from provider: " + JSON.stringify(studentCheckinData))
+    
   };
 
   const updateStudentData = async (studentCheckinData) => {

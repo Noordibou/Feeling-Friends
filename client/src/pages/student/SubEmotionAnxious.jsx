@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import StudentCheckinContext from "../../context/CheckInContext";
 import orangewheel from "../../images/orangewheel.png"
 import angryImg from '../../images/angry.png'
@@ -16,9 +16,13 @@ const SubEmotionAnxious = () => {
 
   const { studentCheckinData, updateFormState } = useContext(StudentCheckinContext);
 
-  const handleEmotionClick = (emotion) => {
-    updateFormState("emotion", emotion);
-    navigate("/regzone");
+  const handleEmotionClick = (chosenEmotion) => {
+    updateFormState("emotion", chosenEmotion);
+    navigate("/regzone", {
+      state: {
+        emotion: chosenEmotion
+      }
+    });
   };
 
   return (

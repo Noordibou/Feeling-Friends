@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { useStudentCheckin } from "../../context/CheckInContext";
 import { updateStudent } from "../../api/studentsApi";
+import { useNavigate, useLocation  } from "react-router-dom";
 import anxiousAvatar from "../../images/anxiousAvatar.png"
 import studentImg from '../../images/avatar.png'
 
 const GoalsNeeds = () => {
 
+  const navigate = useNavigate();
   const { studentCheckinData, updateFormState } = useStudentCheckin();
 
   const [inputMode1, setInputMode1] = useState(false);
@@ -31,10 +33,11 @@ const GoalsNeeds = () => {
     setUserInput2(e.target.value);
   };
 
-  // Function to save the user's input for the second field
-  const saveUserInput2 = () => {
-    
-  };
+ const handleSubmit = async () => {
+    await updateStudent("6506618e9afe8f1c62042982", studentCheckinData)
+    navigate("/summary")
+ }
+
   return (
     <>
       {/* page container */}
@@ -195,9 +198,7 @@ const GoalsNeeds = () => {
         <div className="flex justify-center w-full mt-10 mb-20">
           <button
             className="w-8/12 rounded py-4 text-body bg-lightOrange"
-            onClick={async () =>
-              await updateStudent("6506618e9afe8f1c62042982", studentCheckinData)
-            }
+            onClick={handleSubmit}
           >
             Submit
           </button>

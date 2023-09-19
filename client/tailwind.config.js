@@ -15,15 +15,15 @@ module.exports = {
     },
 
     fontSize: {
-      'header1': '4rem',
-      'header2': '2.25rem',
-      'header3': '1.5rem',
+      'header1': '2.5rem',
+      'header2': '1.75rem',
+      'header3': '1.3rem',
       'body': '1.5rem',
       'regZone': '1.5rem',
       'input': '1.5rem',
       'button': '1.6rem',
       'md': '1.2rem',
-      "sm": '0.9'
+      "sm": '1.2rem'
     },
 
     fontWeight: {

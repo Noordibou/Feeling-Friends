@@ -14,9 +14,13 @@ const SubEmotionScared = () => {
 
   const { studentCheckinData, updateFormState } = useContext(StudentCheckinContext);
 
-  const handleEmotionClick = (emotion) => {
-    updateFormState("emotion", emotion);
-    navigate("/regzone");
+  const handleEmotionClick = (chosenEmotion) => {
+    updateFormState("emotion", chosenEmotion);
+    navigate("/regzone", {
+      state: {
+        emotion: chosenEmotion
+      }
+    });
   };
 
   return (
@@ -39,7 +43,7 @@ const SubEmotionScared = () => {
               <div onClick={() => handleEmotionClick("Rejected")} className=" cursor-pointer py-12">Rejected</div>
             </div>
             <div className="flex mb-6 pt-12 ">
-              <div onClick={() => handleEmotionClick("Intimited")} className=" cursor-pointer px-12">Intimited</div>
+              <div onClick={() => handleEmotionClick("intimidated")} className=" cursor-pointer px-12">intimidated</div>
               <div onClick={() => handleEmotionClick("Helpless")} className="cursor-pointer px-8">Helpless</div>
             </div>
           </div>

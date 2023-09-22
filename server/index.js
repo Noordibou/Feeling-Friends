@@ -20,11 +20,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(cors({
-//   origin: 'https://mindful-journal.vercel.app/',
-//   methods: 'GET, POST, PUT, DELETE',
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: 'https://mindful-journal.vercel.app/',
+  methods: 'GET, POST, PUT, DELETE',
+  credentials: true,
+}));
 
 
 app.use('/', require("./routes/authRoute"));

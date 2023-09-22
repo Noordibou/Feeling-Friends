@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'https://mindful-journal-server.vercel.app/';
+const API_URL = 'http://localhost:3001';
 
 export const getUserById = async (userId) => {
     

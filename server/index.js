@@ -9,15 +9,15 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 
-require('dotenv').config();
-require('./config/database');
-
 app.use(cors({
-  origin: 'https://mindful-journal.vercel.app',
+  origin: 'http://localhost:3000',
   methods: 'GET, POST, PUT, DELETE',
   credentials: true,
 }));
 
+
+require('dotenv').config();
+require('./config/database');
 
 app.use('/', require("./routes/authRoute"));
 
@@ -45,4 +45,3 @@ const port = process.env.PORT || 3001;
 app.listen(port, function() {
  console.log(`Express app running on port ${port}`)
 });
-

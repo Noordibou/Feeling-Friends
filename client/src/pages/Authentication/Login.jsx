@@ -61,7 +61,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://mindful-journal-server.vercel.app/login",
+        "http://localhost:3001/login",
         { ...inputValue },
         { withCredentials: true }
       );

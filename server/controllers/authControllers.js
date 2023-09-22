@@ -151,5 +151,6 @@ module.exports = {
   Signup,
   Login,
   findUser,
-  findUserById
+  findUserById,
+  
 };

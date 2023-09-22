@@ -14,7 +14,7 @@ const Home = () => {
         navigate("/login");
       }
       const { data } = await axios.post(
-        "https://mindful-journal-server.vercel.app/",
+        "http://localhost:3001",
         {},
         { withCredentials: true }
       );

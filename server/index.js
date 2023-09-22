@@ -13,7 +13,7 @@ require('dotenv').config();
 require('./config/database');
 
 app.use(cors({
-  origin: 'https://mindful-journal.vercel.app/',
+  origin: 'https://mindful-journal-server.vercel.app/',
   methods: 'GET, POST, PUT, DELETE',
   credentials: true,
 }));

@@ -50,7 +50,7 @@ const handleSuccess = (msg) =>
       e.preventDefault();
       try {
         const { data } = await axios.post(
-          "http://localhost:3001/signup",
+          "https://mindful-journal-server.vercel.app/signup",
           {
             email,
             password,

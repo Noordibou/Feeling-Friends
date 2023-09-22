@@ -28,11 +28,11 @@ app.use("/api", studentRoute)
 const teacherRoute = require('./routes/teacher.js');
 app.use("/api", teacherRoute)
 
-app.use(express.static(path.join(__dirname,'..' ,'client', 'build')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname,'..','client', 'build', 'index.html'));
-  });
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 
 // *** Use if testing routes with postman instead of above app.use and app.get
@@ -42,6 +42,6 @@ app.get('/*', function(req, res) {
 
 const port = process.env.PORT || 3001;
 
-app.listen(port, function() {
- console.log(`Express app running on port ${port}`)
+app.listen(port, function () {
+  console.log(`Express app running on port ${port}`)
 });

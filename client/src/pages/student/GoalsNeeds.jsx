@@ -1,14 +1,8 @@
 import React, { useState} from "react";
 import { useStudentCheckin } from "../../context/CheckInContext";
 import { updateStudent } from "../../api/studentsApi";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-import anxiousAvatar from "../../images/anxiousAvatar.png"
-import studentImg from '../../images/avatar.png'
-=======
 import { useNavigate, useLocation  } from "react-router-dom";
 import Wiggly from "../../images/wiggly.png"
->>>>>>> 6bffb2684a15b487373bd7a5a81ce280f514aceb
 
 const GoalsNeeds = () => {
 

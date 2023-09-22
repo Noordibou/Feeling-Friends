@@ -19,8 +19,8 @@ import CheckInProvider from "./context/CheckInProvider";
 export default function App() {
   return (
     <main className="bg-notebookPaper h-screen ">
-    
-      {/* <Toaster position="top-center" toastOptions={{duration: 2000}} /> */}
+      
+
       
       <AuthProvider>
         <CheckInProvider>

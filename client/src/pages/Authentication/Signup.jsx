@@ -90,7 +90,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1 " htmlFor="email">Email</label>
             <input
-              className="text-md py-2 pl-4 border rounded"
+              className="text-md py-2 pl-4 rounded"
               type="email"
               name="email"
               value={email}
@@ -101,7 +101,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1" htmlFor="username">Username</label>
             <input
-              className="text-md py-2 pl-4 border rounded"
+              className="text-md py-2 pl-4 rounded"
               type="text"
               name="username"
               value={username}
@@ -112,7 +112,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1" htmlFor="password">Password</label>
             <input
-              className="text-md py-2 pl-4 rounded border"
+              className="text-md py-2 pl-4 rounded"
               type="password"
               name="password"
               value={password}
@@ -123,7 +123,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1" htmlFor="role">Role</label>
             <select
-              className="text-md pl-4 py-2 border rounded"
+              className="text-md pl-4 py-2 rounded"
               name="role"
               value={role}
               onChange={handleOnChange}
@@ -132,8 +132,8 @@ const handleSuccess = (msg) =>
               <option className="text-md py-2 pl-4 rounded" value="teacher">Teacher</option>
             </select>
           </div>
-          <div className="flex flex-col w-full h-96 text-center justify-around self-stretch">
-            <button className="w-full text-center h-20 rounded mt-[2rem] font-button text-button text-notebookPaper bg-no-repeat bg-contain" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button>
+          <div className="flex flex-col w-full h-96 text-center justify-around">
+            <button className="w-full text-center h-20 rounded mt-[2rem] font-button text-button text-notebookPaper bg-no-repeat bg-center bg-contain" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button>
 
             <span className="text-md font-body text-lightGray">
               Already registered? <Link className="underline" to={"/login"}>Log in</Link>

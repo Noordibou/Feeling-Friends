@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Button from "../../images/button.png";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -81,55 +82,66 @@ const handleSuccess = (msg) =>
     
 
   return (
-    <div className="form_container">
-      <h2>Signup Account</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="form_container flex flex-col min-w-screen items-center">
+      <div className="flex flex-col w-8/12 mt-36">
+        <h2 className="flex font-header2 text-header2 mb-4">Sign up</h2>
         <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Enter your email"
-            onChange={handleOnChange}
-          />
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col my-3">
+            <label className="text-md ml-1 my-1" htmlFor="email">Email</label>
+            <input
+              className="text-md py-2 pl-4 rounded"
+              type="email"
+              name="email"
+              value={email}
+              placeholder="Enter your email"
+              onChange={handleOnChange}
+            />
+          </div>
+          <div className="flex flex-col my-3">
+            <label className="text-md ml-1 my-1" htmlFor="username">Username</label>
+            <input
+              className="text-md py-2 pl-4 rounded"
+              type="text"
+              name="username"
+              value={username}
+              placeholder="Enter your username"
+              onChange={handleOnChange}
+            />
+          </div>
+          <div className="flex flex-col my-3">
+            <label className="text-md ml-1 my-1" htmlFor="password">Password</label>
+            <input
+              className="text-md py-2 pl-4 rounded"
+              type="password"
+              name="password"
+              value={password}
+              placeholder="Enter your password"
+              onChange={handleOnChange}
+            />
+          </div>
+          <div className="flex flex-col my-3">
+            <label className="text-md ml-1 my-1" htmlFor="role">Role</label>
+            <select
+              className="text-md pl-4 py-2"
+              name="role"
+              value={role}
+              onChange={handleOnChange}
+            >
+              <option className="text-md py-2 pl-4 rounded" value="student">Student</option>
+              <option className="text-md py-2 pl-4 rounded" value="teacher">Teacher</option>
+            </select>
+          </div>
+          <div className="flex flex-col h-96 text-center justify-around">
+            <button className="w-full text-center rounded h-20 mt-[2rem] text-notebookPaper font-button text-button bg-no-repeat bg-contain" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button>
+
+            <span className="text-md font-body text-lightGray">
+              Already registered? <Link className="underline" to={"/login"}>Log in</Link>
+            </span>
+          </div>
+        </form>
         </div>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            placeholder="Enter your username"
-            onChange={handleOnChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Enter your password"
-            onChange={handleOnChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="role">Role</label>
-          <select
-            name="role"
-            value={role}
-            onChange={handleOnChange}
-          >
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-          </select>
-        </div>
-        <button type="submit">Submit</button>
-        <span>
-          Already have an account? <Link to={"/login"}>Login</Link>
-        </span>
-      </form>
+      </div>
       <ToastContainer />
     </div>
   );

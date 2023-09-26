@@ -11,7 +11,8 @@ module.exports = {
       'body': 'Poppins',
       'regZone': 'Poppins',
       'input': 'Poppins',
-      'button': 'Poppins'
+      'button': 'Poppins',
+      'karla': 'Karla'
     },
 
     fontSize: {
@@ -22,6 +23,7 @@ module.exports = {
       'regZone': '1.5rem',
       'input': '1.5rem',
       'button': '1.6rem',
+      'lg': '1.75rem',
       'md': '1.2rem',
       "sm": '1.2rem'
     },
@@ -31,7 +33,8 @@ module.exports = {
       'header2': '700',
       'header3': '400',
       'body': '400',
-      'semibold': '600'
+      'semibold': '600',
+      'normal': '400'
     },
 
     colors: {
@@ -51,7 +54,10 @@ module.exports = {
       'orange': '#F06403',
       'notebookPaper': '#FFF9E4',
       'white': '#FFFFFF',
-      'lightGray': '#979797'
+      'lightGray': '#979797',
+      // Other
+      'sandwich': '#E2DBC2',
+      'graphite': '#A59F8B'
     },
 
     // extend: {

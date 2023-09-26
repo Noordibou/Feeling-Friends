@@ -15,6 +15,10 @@ import Summary from "./pages/student/Summary"
 import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
 import CheckInProvider from "./context/CheckInProvider";
+import ClassRoom from "./pages/teacher/ViewClassroom";
+import ClassList from "./pages/teacher/ViewClassList";
+import NeedsGoals from "./pages/teacher/NeedsGoals";
+import StudentProfile from "./pages/teacher/StudentProfile";
 
 export default function App() {
   return (
@@ -29,7 +33,13 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+
+        {/* Teacher Routes */}
         <Route path="/teacher-home" element={<TeacherHome />} />
+        <Route path="/viewclassroom" element={<ClassRoom />} />
+        <Route path="/viewclasslist" element={<ClassList />} />
+        <Route path="/editneedsgoals" element={<NeedsGoals />} />
+        <Route path="/studentprofile" element={<StudentProfile />} />
 
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />

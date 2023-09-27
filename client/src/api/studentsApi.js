@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// FIXME: change back to https://mindful-journal-server.vercel.app/api/students
-const STUDENTS_API_URL = 'http://localhost:3001/api/students';
+// FIXME: change back to http://localhost:3001/api/students or https://mindful-journal-server.vercel.app/api/students
+const STUDENTS_API_URL = 'https://mindful-journal-server.vercel.app/api/students';
 
 
 // // this works ✅

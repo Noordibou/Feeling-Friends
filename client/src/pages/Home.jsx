@@ -14,8 +14,8 @@ const Home = () => {
         navigate("/login");
       }
       const { data } = await axios.post(
-        // FIXME: change back to https://mindful-journal-server.vercel.app
-        "http://localhost:3001",
+        // FIXME: change back to http://localhost:3001 or https://mindful-journal-server.vercel.app
+        "https://mindful-journal-server.vercel.app",
         {},
         { withCredentials: true }
       );

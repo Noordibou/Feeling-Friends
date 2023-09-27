@@ -178,7 +178,7 @@ const RegZone = () => {
       <div className="bg-notebookPaper pt-[3.5rem] ">
         <div className="md:w-6/12 w-9/12 text-center ml-auto mr-auto">
           <h1 className="font-header1 md:text-header1 text-header2 leading-tight">
-            It’s normal to feel {emotionFromLocation}.
+            It’s normal to feel {emotionFromLocation.toLowerCase()}.
           </h1>
         </div>
         <div className="w-11/12 text-center ml-auto mr-auto pt-[1rem]">

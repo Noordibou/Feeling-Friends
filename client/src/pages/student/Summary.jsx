@@ -9,6 +9,10 @@ import emotionsExplained from '../../mockData/emotionData.js'
 import { useStudentCheckin } from "../../context/CheckInContext";
 import { useLocation } from "react-router-dom";
 import QuestionFrog from '../../images/Question frog.png'
+import { useStudent } from '../../context/StudentContext';
+
+
+// TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
 
 const Summary = () => {
 
@@ -16,10 +20,10 @@ const Summary = () => {
   const auth = useContext(AuthContext); // Use useContext to access the AuthContext
   const objectID = auth.user ? auth.user._id : null;
   console.log("User's objectID:", JSON.stringify(objectID));
+  const { studentData } = useStudent();
 
-  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
-  const [studentData, setStudentData] = useState(null);
+  // const [studentOneData, setStudentOneData] = useState(null);
   const [emotion, setEmotion] = useState("");
   const { studentCheckinData, updateFormState } = useStudentCheckin();
   const location = useLocation();
@@ -27,38 +31,19 @@ const Summary = () => {
 
   useEffect(() => {
 
-    getUserById(objectID)
-      .then((user) => {
-        // Set the user data in state
-        getStudentById(user.student).then((student) => {
-          setStudentData(student);
-          setUserData(user);
-          setLoading(false); // Set loading to false when data is available
-        });
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error('Error:', error);
-        setLoading(false); // Set loading to false in case of an error
-      });
-
-  
-}, [objectID]);
+  }, [studentData]);
 
 useEffect(() => {
+  
+  // TODO: need to get it through context
   console.log("Location state:", location.state);
-console.log("Emotion from location:", location.state?.emotion);
+  console.log("Emotion from location:", location.state?.emotion);
   const emotionFromParams = location.state?.emotion;
   if (emotionFromParams) {
     setEmotion(emotionFromParams);
   }
   console.log("Emotion:", emotion);
 }, [location.state?.emotion]);
-
-
-if (loading) {
-  return <div>Loading...</div>;
-}
 
 
 const getEmotionTips = () => {
@@ -89,7 +74,7 @@ const getEmotionTips = () => {
              inset-x-0 bottom-0 rounded-b">
           <div className="pl-[1rem]">
             <h2 className="font-header2 md:text-header2 text-md leading-tight">
-              Being {emotionFromLocation} seems scary, but what is it really?
+              Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
             </h2>
             <ul className="font-body leading-relaxed w-10/12">
               {getEmotionTips().map((tip, index) => (

@@ -4,12 +4,11 @@ import axios from 'axios';
 const STUDENTS_API_URL = 'http://localhost:3001/api/students';
 
 
-// this works ✅
-export const getStudents = async () => {
-  const response = await axios.get(STUDENTS_API_URL);
-  return response.data;
-};
-
+// // this works ✅
+// export const getStudents = async () => {
+//   const response = await axios.get(STUDENTS_API_URL);
+//   return response.data;
+// };
 
 
 // this works ✅

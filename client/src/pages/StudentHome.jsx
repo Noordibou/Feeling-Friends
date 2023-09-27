@@ -6,13 +6,12 @@ import anxiousImg from '../images/anxious.png'
 import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
-import { AuthContext } from "./Authentication/AuthContext"; 
-import { getStudentById } from "../api/studentsApi";
-import { getUserById } from "../api/userApi";
+import { useStudent } from '../context/StudentContext';
 
 const StudentHome = () => {
   const navigate = useNavigate();
 
+  const { studentData } = useStudent();
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
 
@@ -36,31 +35,9 @@ const StudentHome = () => {
     navigate(`/subemotion${emotion}`)
   }
 
-  const auth = useContext(AuthContext); // Use useContext to access the AuthContext
-  const objectID = auth.user ? auth.user._id : null;
-  const studentID = auth.user ? auth.user.student : null;
-  console.log("User's objectID:", JSON.stringify(objectID));
-  console.log("User's student user:", JSON.stringify(auth.user));
-
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
-  const [studentData, setStudentData] = useState(null);
-
-  useEffect(() => {
-
-    
-    getStudentById(studentID).then((student) => {
-      setStudentData(student);
-      setLoading(false); // Set loading to false when data is available
-    });
-    
-
-  
-}, [objectID]);
-
-if (loading) {
-  return <div>Loading...</div>;
-}
+useEffect(() => {
+  console.log("student data: " + JSON.stringify(studentData))
+}, [studentData]);
 
   return (
     <>

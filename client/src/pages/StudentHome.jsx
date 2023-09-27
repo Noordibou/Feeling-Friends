@@ -38,7 +38,9 @@ const StudentHome = () => {
 
   const auth = useContext(AuthContext); // Use useContext to access the AuthContext
   const objectID = auth.user ? auth.user._id : null;
+  const studentID = auth.user ? auth.user.student : null;
   console.log("User's objectID:", JSON.stringify(objectID));
+  console.log("User's student user:", JSON.stringify(auth.user));
 
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
@@ -46,21 +48,13 @@ const StudentHome = () => {
 
   useEffect(() => {
 
-    getUserById(objectID)
-      .then((user) => {
-        // Set the user data in state
-        getStudentById(user.student).then((student) => {
-          setStudentData(student);
-          setUserData(user);
-          setLoading(false); // Set loading to false when data is available
-        });
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error('Error:', error);
-        setLoading(false); // Set loading to false in case of an error
-      });
- 
+    
+    getStudentById(studentID).then((student) => {
+      setStudentData(student);
+      setLoading(false); // Set loading to false when data is available
+    });
+    
+
   
 }, [objectID]);
 

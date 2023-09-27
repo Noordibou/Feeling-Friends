@@ -1,22 +1,33 @@
 const Student = require("../models/Student");
+const Teacher = require("../models/Teacher")
 const User = require("../models/User");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
 
 const Signup = async (req, res, next) => {
   try {
-    const { email, password, username, role, studentDetails } = req.body;
+    const { email, password, username, role, userDetails } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
 
-    let existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
+    let existingStudent = null;
+    let existingTeacher = null;
+
+
+    if (role === 'student') {
+      existingStudent = await Student.findOne({ schoolStudentId: userDetails.schoolStudentId });
+    } else if (role === 'teacher') {
+      existingTeacher = await Student.findOne({ schoolStudentId: userDetails.schoolStudentId });
+    }
 
     if (!existingStudent) {
       // Create a new student if none exists with the provided schoolStudentId
-      existingStudent = await Student.create(studentDetails);
+      existingStudent = await Student.create(userDetails);
+    } else if (!exisitingTeacher) {
+      existingTeacher = await Teacher.create(userDetails);
     }
 
     // Create a new user and associate it with the existing (or newly created) student
@@ -150,6 +161,7 @@ const Login = async (req, res, next) => {
       email: user.email,
       username: user.username,
       role: user.role,
+      student: user.student,
       // Add any other user properties you want to include
     }, redirectPath });
   } catch (error) {

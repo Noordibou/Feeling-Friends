@@ -6,13 +6,12 @@ import anxiousImg from '../images/anxious.png'
 import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
-import { AuthContext } from "./Authentication/AuthContext"; 
-import { getStudentById } from "../api/studentsApi";
-import { getUserById } from "../api/userApi";
+import { useStudent } from '../context/StudentContext';
 
 const StudentHome = () => {
   const navigate = useNavigate();
 
+  const { studentData } = useStudent();
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
 
@@ -36,37 +35,9 @@ const StudentHome = () => {
     navigate(`/subemotion${emotion}`)
   }
 
-  const auth = useContext(AuthContext); // Use useContext to access the AuthContext
-  const objectID = auth.user ? auth.user._id : null;
-  console.log("User's objectID:", JSON.stringify(objectID));
-
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
-  const [studentData, setStudentData] = useState(null);
-
-  useEffect(() => {
-
-    getUserById(objectID)
-      .then((user) => {
-        // Set the user data in state
-        getStudentById(user.student).then((student) => {
-          setStudentData(student);
-          setUserData(user);
-          setLoading(false); // Set loading to false when data is available
-        });
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error('Error:', error);
-        setLoading(false); // Set loading to false in case of an error
-      });
-
-  
-}, [objectID]);
-
-if (loading) {
-  return <div>Loading...</div>;
-}
+useEffect(() => {
+  console.log("student data: " + JSON.stringify(studentData))
+}, [studentData]);
 
   return (
     <>

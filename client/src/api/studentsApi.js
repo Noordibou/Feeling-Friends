@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const STUDENTS_API_URL = 'https://mindful-journal-server.vercel.app/api/students';
+// FIXME: change back to https://mindful-journal-server.vercel.app/api/students
+const STUDENTS_API_URL = 'http://localhost:3001/api/students';
 
 
-// this works ✅
-export const getStudents = async () => {
-  const response = await axios.get(STUDENTS_API_URL);
-  return response.data;
-};
-
+// // this works ✅
+// export const getStudents = async () => {
+//   const response = await axios.get(STUDENTS_API_URL);
+//   return response.data;
+// };
 
 
 // this works ✅

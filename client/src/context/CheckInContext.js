@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
 
+// TODO: should I merge this with the Student context??
 
 const StudentCheckinContext = createContext({
   studentCheckinData: {

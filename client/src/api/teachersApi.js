@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const TEACHERS_API_URL = 'https://mindful-journal-server.vercel.app/api/teachers';
+// FIXME: change back to https://mindful-journal-server.vercel.app/api/teachers
+const TEACHERS_API_URL = 'http://localhost:3001/api/teachers';
 
 export const createTeacher= async (teacher) => {
     try {

@@ -60,7 +60,7 @@ const StudentHome = () => {
         console.error('Error:', error);
         setLoading(false); // Set loading to false in case of an error
       });
-
+ 
   
 }, [objectID]);
 

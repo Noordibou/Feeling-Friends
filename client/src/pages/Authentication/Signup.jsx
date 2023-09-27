@@ -51,7 +51,8 @@ const handleSuccess = (msg) =>
       e.preventDefault();
       try {
         const { data } = await axios.post(
-          "https://mindful-journal-server.vercel.app/signup",
+          //FIXME: change back to https://mindful-journal-server.vercel.app/signup
+          "http://localhost:3001",
           {
             email,
             password,

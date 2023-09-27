@@ -101,13 +101,24 @@ const Login = async (req, res, next) => {
     if (!auth) {
       return res.json({ message: 'Incorrect password or email' });
     }
-    const token = createSecretToken(user._id);
+
+    // TODO: need to save studentID or teacherID to this token
+    // Student: user id, student id
+    // Teacher: user id, teacher id
+    // const token = createSecretToken(user._id);
+    let token = null;
 
     let redirectPath = '/';
 
     if(user.role === 'student') {
+      const studentId = user.student
+      token = createSecretToken(user._id, studentId);
+
       redirectPath = '/student-home';
     } else if(user.role === 'teacher') {
+      const teacherId = user.teacher
+      token = createSecretToken(user._id, teacherId);
+
       redirectPath = '/teacher-home';  
     } else {
         return res.status(403).json({ message: 'Access denied for this role', success: false });

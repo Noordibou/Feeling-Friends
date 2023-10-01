@@ -31,6 +31,7 @@ const Home = () => {
   }, [cookies, navigate, removeCookie]);
   const Logout = () => {
     removeCookie("token");
+    localStorage.removeItem('studentData');
     navigate("/login");
   };
   return (

@@ -123,7 +123,7 @@ export default StudentHome;
 //           {" "}
 //           Welcome <span>{username}</span>
 //         </h4>
-//         <button onClick={Logout}>LOGOUT</button>
+//         <button onClick={}>LOGOUT</button>
 //       </div>
 //       <ToastContainer />
 //     </>

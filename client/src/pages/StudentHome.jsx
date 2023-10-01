@@ -36,7 +36,10 @@ const StudentHome = () => {
   }
 
 useEffect(() => {
-  console.log("student data: " + JSON.stringify(studentData))
+
+  console.log('student data:', studentData);
+ 
+
 }, [studentData]);
 
   return (
@@ -120,7 +123,7 @@ export default StudentHome;
 //           {" "}
 //           Welcome <span>{username}</span>
 //         </h4>
-//         <button onClick={Logout}>LOGOUT</button>
+//         <button onClick={}>LOGOUT</button>
 //       </div>
 //       <ToastContainer />
 //     </>

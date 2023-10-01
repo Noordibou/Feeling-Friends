@@ -36,7 +36,10 @@ const StudentHome = () => {
   }
 
 useEffect(() => {
-  console.log("student data: " + JSON.stringify(studentData))
+
+  console.log('student data:', studentData);
+ 
+
 }, [studentData]);
 
   return (

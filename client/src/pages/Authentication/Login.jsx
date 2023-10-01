@@ -60,7 +60,7 @@ const Login = () => {
     try {
       const { data } = await axios.post(
         //FIXME: change back to: http://localhost:3001/login or https://mindful-journal-server.vercel.app/login
-        "https://mindful-journal-server.vercel.app/login",
+        "http://localhost:3001/login",
         { ...inputValue },
         { withCredentials: true }
       );

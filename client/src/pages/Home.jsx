@@ -10,7 +10,7 @@ const Home = () => {
   const [username, setUsername] = useState("");
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
+      if (!cookies.token || !localStorage) {
         navigate("/login");
       }
       const { data } = await axios.post(

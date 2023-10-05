@@ -122,13 +122,13 @@ const Login = async (req, res, next) => {
     let redirectPath = '/';
 
     if(user.role === 'student') {
-      const studentId = user.student
-      token = createSecretToken(user._id, studentId);
+      // const studentId = user.student
+      token = createSecretToken(user._id);
 
       redirectPath = '/student-home';
     } else if(user.role === 'teacher') {
-      const teacherId = user.teacher
-      token = createSecretToken(user._id, teacherId);
+      // const teacherId = user.teacher
+      token = createSecretToken(user._id);
 
       redirectPath = '/teacher-home';  
     } else {

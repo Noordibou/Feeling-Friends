@@ -1,8 +1,9 @@
 
 import axios from 'axios';
+import URL from '../URL'
 
-//FIXME: change back to http://localhost:3001 or https://mindful-journal-server.vercel.app
-const API_URL = 'https://mindful-journal-server.vercel.app';
+
+const API_URL = URL;
 
 export const getUserById = async (userId) => {
     

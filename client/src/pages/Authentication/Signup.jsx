@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../images/button.png";
+import URL from '../../URL'
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -51,8 +52,7 @@ const handleSuccess = (msg) =>
       e.preventDefault();
       try {
         const { data } = await axios.post(
-          //FIXME: change back to http://localhost:3001/signup or https://mindful-journal-server.vercel.app/signup
-          "https://mindful-journal-server.vercel.app/signup",
+          URL+"/signup",
           {
             email,
             password,

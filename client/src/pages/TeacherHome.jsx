@@ -2,8 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+// import axios from "axios";
+// import { ToastContainer, toast } from "react-toastify";
+// import URL from '../URL'
 
 const TeacherHome = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const TeacherHome = () => {
   //       navigate("/login");
   //     }
   //     const { data } = await axios.post(
-  //       "https://mindful-journal-server.vercel.app",
+  //       URL,
   //       {},
   //       { withCredentials: true }
   //     );

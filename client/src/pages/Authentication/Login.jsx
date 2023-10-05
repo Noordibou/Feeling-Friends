@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Button from "../../images/button.png";
 import { useAuth } from "./AuthContext";
 import "react-toastify/dist/ReactToastify.css";
+import URL from '../../URL'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -59,8 +60,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        //FIXME: change back to: http://localhost:3001/login or https://mindful-journal-server.vercel.app/login
-        "https://mindful-journal-server.vercel.app/login",
+        URL+"/login",
         { ...inputValue },
         { withCredentials: true }
       );

@@ -12,7 +12,10 @@ const Home = () => {
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.token && !localStorage) {
+        console.log("there are no cookies and localStorage")
         navigate("/login");
+      } else {
+        console.log("there are cookies and/or localStorage")
       }
       const { data } = await axios.post(
         URL,

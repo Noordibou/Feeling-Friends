@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import URL from '../URL'
 
 const Home = () => {
   const navigate = useNavigate();
@@ -14,8 +15,7 @@ const Home = () => {
         navigate("/login");
       }
       const { data } = await axios.post(
-        // FIXME: change back to http://localhost:3001 or https://mindful-journal-server.vercel.app
-        "https://mindful-journal-server.vercel.app",
+        URL,
         {},
         { withCredentials: true }
       );

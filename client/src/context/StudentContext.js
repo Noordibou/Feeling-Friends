@@ -15,7 +15,6 @@ export const StudentProvider = ({ children }) => {
 
   // useEffect to fetch a specific student by ID when the component mounts
   useEffect(() => {
-   console.log("helloooo ")
    const storedStudentData = localStorage.getItem('studentData');
    if (storedStudentData) {
      setStudentData(JSON.parse(storedStudentData));

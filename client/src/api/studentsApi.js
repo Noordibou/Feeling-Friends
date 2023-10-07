@@ -33,7 +33,7 @@ export const getStudentById = async (id) => {
     
 }
 
-// this works ✅
+
 export const updateStudent = async (id, student) => {
     console.log("update student api")
     try {

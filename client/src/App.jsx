@@ -20,7 +20,7 @@ import ClassList from "./pages/teacher/ViewClassList";
 import NeedsGoals from "./pages/teacher/NeedsGoals";
 import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
-import { StudentProvider } from "./context/StudentContext";
+import { StudentProvider } from "./context/StudentProvider";
 
 export default function App() {
   return (

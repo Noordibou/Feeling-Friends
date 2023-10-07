@@ -122,17 +122,21 @@ import Avatar from "../../images/avatar.png";
 import Star from "../../images/star.png";
 import deepBreathing from "../../images/RegZoneDeepBreathingCard.png"
 import imagineExercise from "../../images/coping skill card_ Overwhelmed.png"
+import { useStudent } from "../../context/StudentContext";
+
 // import emotionsExplained from '../../mockData/emotionData.js'
 
 const RegZone = () => {
   const navigate = useNavigate();
+  const { studentData, updateStudentDataAccumulated } = useStudent();
   const { studentCheckinData, updateFormState } = useStudentCheckin();
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 
   const handleZoneClick = (zone) => {
-    updateFormState("ZOR", zone);
+    const updatedFields = { ZOR: zone }
+    updateStudentDataAccumulated(updatedFields);
     navigate("/goalsneeds", {
       state: {
         emotion: emotionFromLocation

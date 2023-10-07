@@ -11,10 +11,10 @@ app.post('/students', async (req, res) => {
   try {
       // Create a new user first
       const user = new User({
-          email: req.body.email, // You can use email from req.body or any other user-related fields
-          username: req.body.username, // You can use username from req.body or any other user-related fields
-          password: req.body.password, // You can use password from req.body or any other user-related fields
-          role: 'student', // Assuming you want to create a student user
+          email: req.body.email,
+          username: req.body.username,
+          password: req.body.password,
+          role: 'student',
       });
 
       // Save the user
@@ -22,22 +22,19 @@ app.post('/students', async (req, res) => {
 
       // Create a new student and associate it with the user
       const student = new Student({
-          user: user._id, // Associate the student with the user using the user's ObjectId
-          firstName: req.body.firstName, // You can use firstName from req.body or any other student-related fields
-          lastName: req.body.lastName, // You can use lastName from req.body or any other student-related fields
-          seatNumber: req.body.seatNumber, // Include seatNumber from req.body
-          birthday: req.body.birthday, // Include birthday from req.body
-          gradeYear: req.body.gradeYear, // Include gradeYear from req.body
-          schoolStudentId: req.body.schoolStudentId, // Include schoolStudentId from req.body
-          role: 'student', // Include role (if not already set in req.body)
-          avatarImg: req.body.avatarImg, // Include avatarImg from req.body
-          journalEntries: req.body.journalEntries, // Include journalEntries from req.body
+          user: user._id,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          seatNumber: req.body.seatNumber,
+          birthday: req.body.birthday,
+          gradeYear: req.body.gradeYear,
+          schoolStudentId: req.body.schoolStudentId,
+          role: 'student',
+          avatarImg: req.body.avatarImg,
+          journalEntries: req.body.journalEntries,
       });
 
-      // Save the student
       await student.save();
-
-      // Return the newly created student object in the response
       res.json(student);
   } catch (error) {
       res.status(400).json(error);
@@ -66,16 +63,99 @@ app.get("/students/:id", async (req, res) => {
     }
   });
 
-// Updates a specific student
+// Updates a specific student's journal entry
+// if there is already a checkin or checkout, it will over write the previous entry
+// TODO: ? make an alert or something that tells user they already have a checkin/out for this class today, and ask are they sure they want to overwrite it
 app.put("/students/:id", async (req, res) => {
+  
+  // ----- getting today's date ----- //
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+  const day = String(currentDate.getDate()).padStart(2, '0');
+
+  const todayDate = `${month}-${day}-${year}`;
+  // -------------------------------- // 
+
   try {
-    res.json(
-      await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const studentId = req.params.id;
+    const { studentUpdate, checkInOutType} = req.body
+    const student = await Student.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    const todayDateExists = student.journalEntries.findIndex(
+      (entry) => entry.date === todayDate
     );
+
+    const commonProperties = {
+      emotion: studentUpdate.emotion,
+      ZOR: studentUpdate.ZOR,
+      goal: studentUpdate.goal,
+      need: studentUpdate.need,
+    };
+    
+    // checking if there's already an entry
+    if (todayDateExists !== -1) {
+    
+      if (checkInOutType === "checkout") {
+        // if the student user chose "checkout", adds new object to be filled
+        if (!student.journalEntries[todayDateExists].checkout) {
+          student.journalEntries[todayDateExists].checkout = {};
+        }
+    
+        // Update or add new checkout information
+        student.journalEntries[todayDateExists].checkout = {
+          ...student.journalEntries[todayDateExists].checkout,
+          ...commonProperties,
+          highlight: studentUpdate.highlight,
+        };
+      } else if (checkInOutType === "checkin") {
+        // If student user chose "checkin", adds new object to be filled
+        if (!student.journalEntries[todayDateExists].checkin) {
+          student.journalEntries[todayDateExists].checkin = {};
+        }
+    
+        // Update or add new checkin information
+        student.journalEntries[todayDateExists].checkin = {
+          ...student.journalEntries[todayDateExists].checkin,
+          ...commonProperties,
+          present: studentUpdate.present,
+        };
+      }
+    } else {
+      // No entry for the current date, so create a new one (this will always be done first thing in a new array)
+      const journalEntry = {
+        date: todayDate,
+      };
+    
+      if (checkInOutType === "checkout") {
+        journalEntry.checkout = {
+          ...commonProperties,
+          highlight: studentUpdate.highlight,
+        };
+      } else if (checkInOutType === "checkin") {
+        journalEntry.checkin = {
+          ...commonProperties,
+          present: studentUpdate.present,
+        };
+      }
+      // Add the new journal entry for the current date
+      student.journalEntries.push(journalEntry);
+    }
+
+    // FIXME: No current way to catch if student enters the checkin/out more than two times. Find a way maybe on the home screen if they've already done all their checks for the day..?
+    await student.save();
+
+    res.json(student);
   } catch (error) {
-      res.status(400).json(error);
+    console.error("Error updating student journal entries:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 // delete a student
 app.delete("/students/:id", async (req, res) => {

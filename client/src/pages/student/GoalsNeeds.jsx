@@ -19,12 +19,6 @@ const GoalsNeeds = () => {
   const [userInput1, setUserInput1] = useState('');
   const [userInput2, setUserInput2] = useState('');
 
-  // Function to handle the click event for the "Something else" button for the second field
-  // const handleNeedClick = (need) => {
-  //   setInputMode2(true);
-  //   updateStudentDataAccumulated({["need"]: need});
-  // };
-
   // Function to handle input changes for the first field
   const handleInputChange1 = (e) => {
     setUserInput1(e.target.value);
@@ -37,14 +31,13 @@ const GoalsNeeds = () => {
 
  const handleSubmit = async () => {
   console.log("handle submit activated")
-    console.log("student id: " + JSON.stringify(studentData._id))
-    console.log("accumulated updates: " + JSON.stringify(accumulatedUpdates))
-    await updateStudent(studentData._id, accumulatedUpdates, isCheckinOrOut)
-    navigate("/summary", {
-      state: {
-        emotion: emotionFromLocation
-      }
-    })
+  await updateStudent(studentData._id, accumulatedUpdates, isCheckinOrOut)
+
+  navigate("/summary", {
+    state: {
+      emotion: emotionFromLocation
+    }
+  })
  }
 
   return (

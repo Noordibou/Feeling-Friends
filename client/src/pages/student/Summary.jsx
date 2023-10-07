@@ -30,7 +30,6 @@ const Summary = () => {
   const emotionFromLocation = location.state?.emotion || "";
 
   useEffect(() => {
-      console.log("summary student data: " + JSON.stringify(studentData))
 
   }, [studentData]);
 

@@ -59,7 +59,9 @@ export const StudentProvider = ({ children }) => {
     console.log("set accumulated data: " + JSON.stringify(accumulatedUpdates))
   };
 
-
+  const clearAccumulatedUpdates = () => {
+    setAccumulatedUpdates({});
+  };
 
 
 
@@ -94,6 +96,7 @@ export const StudentProvider = ({ children }) => {
     updateStudentDataAccumulated,
     updateStudentDataImmediate,
     accumulatedUpdates,
+    clearAccumulatedUpdates,
     setIsCheckInOrOut,
     isCheckinOrOut
   };

@@ -113,7 +113,7 @@ app.put("/students/:id", async (req, res) => {
           highlight: studentUpdate.highlight,
         };
       } else if (checkInOutType === "checkin") {
-        // If student user chose "checkin"
+        // If student user chose "checkin", adds new object to be filled
         if (!student.journalEntries[todayDateExists].checkin) {
           student.journalEntries[todayDateExists].checkin = {};
         }
@@ -126,7 +126,7 @@ app.put("/students/:id", async (req, res) => {
         };
       }
     } else {
-      // No entry for the current date, so create a new one
+      // No entry for the current date, so create a new one (this will always be done first thing in a new array)
       const journalEntry = {
         date: todayDate,
       };

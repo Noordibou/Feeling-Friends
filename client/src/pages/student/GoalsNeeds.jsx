@@ -1,5 +1,6 @@
 import React, { useState} from "react";
 import { useStudentCheckin } from "../../context/CheckInContext";
+import { useStudent } from "../../context/StudentContext";
 import { updateStudent } from "../../api/studentsApi";
 import { useNavigate, useLocation  } from "react-router-dom";
 import Wiggly from "../../images/wiggly.png"
@@ -7,6 +8,7 @@ import Wiggly from "../../images/wiggly.png"
 const GoalsNeeds = () => {
 
   const navigate = useNavigate();
+  const { studentData, accumulatedUpdates, updateStudentDataAccumulated, clearAccumulatedUpdates,   } = useStudent();
   const { studentCheckinData, updateFormState } = useStudentCheckin();
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
@@ -19,10 +21,10 @@ const GoalsNeeds = () => {
   const [userInput2, setUserInput2] = useState('');
 
   // Function to handle the click event for the "Something else" button for the second field
-  const handleNeedClick = (need) => {
-    setInputMode2(true);
-    updateFormState("need", need);
-  };
+  // const handleNeedClick = (need) => {
+  //   setInputMode2(true);
+  //   updateStudentDataAccumulated({["need"]: need});
+  // };
 
   // Function to handle input changes for the first field
   const handleInputChange1 = (e) => {
@@ -35,7 +37,10 @@ const GoalsNeeds = () => {
   };
 
  const handleSubmit = async () => {
-    await updateStudent("6506618e9afe8f1c62042982", studentCheckinData)
+  console.log("handle submit activated")
+    console.log("student id: " + JSON.stringify(studentData.id))
+    console.log("accumulated updates: " + JSON.stringify(accumulatedUpdates))
+    await updateStudent(studentData.id, accumulatedUpdates)
     navigate("/summary", {
       state: {
         emotion: emotionFromLocation
@@ -65,14 +70,14 @@ const GoalsNeeds = () => {
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
                   onClick={() =>
-                    updateFormState("goal", "Finish homework during study hall")
+                    updateStudentDataAccumulated({["goal"]: "Finish homework during study hall"})
                   }
                 >
                   Finish homework during study hall
                 </button>
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                  onClick={() => updateFormState("goal", "Better manage my energy")}
+                  onClick={() => updateStudentDataAccumulated({["goal"]: "Better manage my energy"})}
                 >
                   Better manage my energy
                 </button>
@@ -80,10 +85,10 @@ const GoalsNeeds = () => {
 
               {/* second row */}
               <div className="flex flex-row justify-between">
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateFormState("goal", "Do my best in class")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["goal"]: "Do my best in class"})}>
                   Do my best in class
                 </button>
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateFormState("goal", "Be more present")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["goal"]: "Be more present"})}>
                   Be more present
                 </button>
               </div>
@@ -102,7 +107,7 @@ const GoalsNeeds = () => {
                     <button
                       onClick={() => {
                         console.log('User input 1:', userInput1);
-                        updateFormState("goal", userInput1);
+                        updateStudentDataAccumulated({["goal"]: userInput1});
                         setInputMode1(false);
                         setUserInput1('');
                       }}
@@ -141,14 +146,14 @@ const GoalsNeeds = () => {
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
                   onClick={() =>
-                    updateFormState("need", "Check in with my teacher")
+                    updateStudentDataAccumulated({["need"]: "Check in with my teacher"})
                   }
                 >
                   Check in with my teacher
                 </button>
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                  onClick={() => updateFormState("need", "Help with homework")}
+                  onClick={() => updateStudentDataAccumulated({["need"]: "Help with homework"})}
                 >
                   Help with homework
                 </button>
@@ -156,10 +161,10 @@ const GoalsNeeds = () => {
 
               {/* second row */}
               <div className="flex flex-row justify-between">
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateFormState("need", "Extra practice")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["need"]: "Extra practice"})}>
                   Extra practice
                 </button>
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateFormState("need", "Help with focusing")}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["need"]: "Help with focusing"})}>
                   Help with focusing
                 </button>
               </div>
@@ -176,7 +181,7 @@ const GoalsNeeds = () => {
                 <button
                   onClick={() => {
                     console.log('User input 2:', userInput2);
-                    updateFormState("need", userInput2)
+                    updateStudentDataAccumulated({["need"]: userInput2})
                     setInputMode2(false);
                     setUserInput2('');
                   }}

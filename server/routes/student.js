@@ -67,7 +67,7 @@ app.get("/students/:id", async (req, res) => {
 app.put("/students/:id", async (req, res) => {
   const currentDate = new Date();
 
-  // Get the current date as a string in the format "YYYY-MM-DD"
+  // Get the current date as a string
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
   const day = String(currentDate.getDate()).padStart(2, '0');
@@ -76,43 +76,50 @@ app.put("/students/:id", async (req, res) => {
 
   try {
     const studentId = req.params.id;
+    const student = await Student.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    const todayDateExists = student.journalEntries.findIndex(
+      (entry) => entry.date === todayDate
+    );
+
     const journalEntry = {
-      date: req.body.todayDate, // Assuming you want to add the current date
-      checkin: {
+      date: todayDate,
+      [todayDateExists !== -1 ? "checkout" : "checkin"]: {
         emotion: req.body.emotion,
         ZOR: req.body.ZOR,
         goal: req.body.goal,
         need: req.body.need,
         present: req.body.present,
       },
-      checkout: {
-        emotion: req.body.emotion, // You may need to adjust this based on your requirements
-        ZOR: req.body.ZOR, // You may need to adjust this based on your requirements
-        goal: req.body.goal, // You may need to adjust this based on your requirements
-        need: req.body.need, // You may need to adjust this based on your requirements
-        highlight: req.body.highlight, // You may need to adjust this based on your requirements
-      },
     };
 
-    // Update the student's journal entries using $push
-    const updatedStudent = await Student.findByIdAndUpdate(
-      studentId,
-      {
-        $push: { journalEntries: journalEntry },
-      },
-      { new: true }
-    );
-
-    if (!updatedStudent) {
-      return res.status(404).json({ message: "Student not found" });
+    if (todayDateExists !== -1) {
+      const entryIndex = todayDateExists;
+      if (!student.journalEntries[entryIndex].checkout) {
+        student.journalEntries[entryIndex].checkout = {};
+      }
+      student.journalEntries[entryIndex].checkout = {
+        ...student.journalEntries[entryIndex].checkout,
+        ...journalEntry.checkout,
+      };
+    } else {
+      student.journalEntries.push(journalEntry);
     }
 
-    res.json(updatedStudent);
+    // FIXME: No current way to catch if student enters the checkin/out more than two times. Find a way maybe on the home screen if they've already done all their checks for the day..?
+    await student.save();
+
+    res.json(student);
   } catch (error) {
     console.error("Error updating student journal entries:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 // delete a student
 app.delete("/students/:id", async (req, res) => {

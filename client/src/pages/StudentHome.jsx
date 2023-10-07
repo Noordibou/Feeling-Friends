@@ -11,7 +11,7 @@ import { useStudent } from '../context/StudentContext';
 const StudentHome = () => {
   const navigate = useNavigate();
 
-  const { studentData, setIsCheckInOrOut } = useStudent();
+  const { studentData, setIsCheckInOrOut, isCheckinOrOut } = useStudent();
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
 
@@ -35,7 +35,13 @@ const StudentHome = () => {
   }
 
   const handleEmotion = (emotion) => {
-    navigate(`/subemotion${emotion}`)
+    if (!isCheckinOrOut) {
+      // temp fix, might create modal or something...?
+      alert("Please choose checkin or checkout before choosing your feeling!")
+    } else {
+      navigate(`/subemotion${emotion}`)
+    }
+    
   }
 
 useEffect(() => {

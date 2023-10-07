@@ -14,7 +14,6 @@ import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
 import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
-import CheckInProvider from "./context/CheckInProvider";
 import ClassRoom from "./pages/teacher/ViewClassroom";
 import ClassList from "./pages/teacher/ViewClassList";
 import NeedsGoals from "./pages/teacher/NeedsGoals";
@@ -29,7 +28,6 @@ export default function App() {
 
       
       <AuthProvider>
-        <CheckInProvider>
 <StudentProvider>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -57,7 +55,6 @@ export default function App() {
         <Route path="/summary" element={<Summary />} />
       </Routes>
       </StudentProvider>
-      </CheckInProvider>
       </AuthProvider>
     
     </main>

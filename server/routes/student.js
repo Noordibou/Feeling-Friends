@@ -65,10 +65,25 @@ app.get("/students/:id", async (req, res) => {
 
 // Updates a specific student
 app.put("/students/:id", async (req, res) => {
+  const currentDate = new Date();
+
+  // Get the current date as a string in the format "YYYY-MM-DD"
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+  const day = String(currentDate.getDate()).padStart(2, '0');
+
+  const todayDate = `${month}-${day}-${year}`;
+
+  console.log("woo today's date " + todayDate);
+
   try {
-    res.json(
-      await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    );
+    console.log("req.body: " + JSON.stringify(req.body))
+    console.log("req.params.id: " + JSON.stringify(req.params.id))
+    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    if (!updatedStudent) {
+      console.log("whelp idk")
+    }
+    
   } catch (error) {
       res.status(400).json(error);
   }

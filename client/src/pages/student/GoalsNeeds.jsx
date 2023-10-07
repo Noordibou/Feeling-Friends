@@ -38,9 +38,9 @@ const GoalsNeeds = () => {
 
  const handleSubmit = async () => {
   console.log("handle submit activated")
-    console.log("student id: " + JSON.stringify(studentData.id))
+    console.log("student id: " + JSON.stringify(studentData._id))
     console.log("accumulated updates: " + JSON.stringify(accumulatedUpdates))
-    await updateStudent(studentData.id, accumulatedUpdates)
+    await updateStudent(studentData._id, accumulatedUpdates)
     navigate("/summary", {
       state: {
         emotion: emotionFromLocation

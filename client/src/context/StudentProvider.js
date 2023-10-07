@@ -82,6 +82,7 @@ export const StudentProvider = ({ children }) => {
     studentData,
     updateStudentDataAccumulated,
     updateStudentDataImmediate,
+    accumulatedUpdates
   };
 
   return (

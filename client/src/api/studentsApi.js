@@ -35,11 +35,13 @@ export const getStudentById = async (id) => {
 
 
 export const updateStudent = async (id, student) => {
-    console.log("update student api")
+    console.log("update student api, show id pls: " + id)
     try {
         const response = await axios.put(`${STUDENTS_API_URL}/${id}`, student)
+        console.log("is this working???")
         return response.data;
     } catch (error) {
+        console.log("oh shoot")
         throw error;
     }
     

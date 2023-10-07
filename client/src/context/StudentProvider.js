@@ -7,10 +7,12 @@ export const StudentProvider = ({ children }) => {
 
   const { user } = useAuth();
 
+  const [isCheckinOrOut, setIsCheckInOrOut] = useState("")
   const [accumulatedUpdates, setAccumulatedUpdates] = useState({});
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // ------------------------------------------------------//
   // useEffect to fetch a specific student by ID when the component mounts
   useEffect(() => {
    const storedStudentData = localStorage.getItem('studentData');
@@ -35,6 +37,8 @@ export const StudentProvider = ({ children }) => {
     }
   }, [user]);
 
+  // ------------------------------------------------------//
+  // if the to-be-updated data is only one one page
   const updateStudentDataImmediate = (newData) => {
     setStudentData((prevData) => ({ ...prevData, ...newData }));
   
@@ -48,10 +52,17 @@ export const StudentProvider = ({ children }) => {
       });
   };
 
+  // ------------------------------------------------------//
+  // if the to-be-updated data is across multiple pages
   const updateStudentDataAccumulated = (updatedFields) => {
     setAccumulatedUpdates((prevUpdates) => ({ ...prevUpdates, ...updatedFields }));
     console.log("set accumulated data: " + JSON.stringify(accumulatedUpdates))
   };
+
+
+
+
+
 
   // Might not be using
   const createStudentData = async (newStudentData) => {
@@ -82,7 +93,9 @@ export const StudentProvider = ({ children }) => {
     studentData,
     updateStudentDataAccumulated,
     updateStudentDataImmediate,
-    accumulatedUpdates
+    accumulatedUpdates,
+    setIsCheckInOrOut,
+    isCheckinOrOut
   };
 
   return (

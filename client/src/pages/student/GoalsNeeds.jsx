@@ -1,5 +1,4 @@
 import React, { useState} from "react";
-import { useStudentCheckin } from "../../context/CheckInContext";
 import { useStudent } from "../../context/StudentContext";
 import { updateStudent } from "../../api/studentsApi";
 import { useNavigate, useLocation  } from "react-router-dom";
@@ -8,8 +7,8 @@ import Wiggly from "../../images/wiggly.png"
 const GoalsNeeds = () => {
 
   const navigate = useNavigate();
-  const { studentData, accumulatedUpdates, updateStudentDataAccumulated, clearAccumulatedUpdates,   } = useStudent();
-  const { studentCheckinData, updateFormState } = useStudentCheckin();
+  const { studentData, accumulatedUpdates, updateStudentDataAccumulated, clearAccumulatedUpdates, isCheckinOrOut  } = useStudent();
+  
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 
@@ -40,7 +39,7 @@ const GoalsNeeds = () => {
   console.log("handle submit activated")
     console.log("student id: " + JSON.stringify(studentData._id))
     console.log("accumulated updates: " + JSON.stringify(accumulatedUpdates))
-    await updateStudent(studentData._id, accumulatedUpdates)
+    await updateStudent(studentData._id, accumulatedUpdates, isCheckinOrOut)
     navigate("/summary", {
       state: {
         emotion: emotionFromLocation

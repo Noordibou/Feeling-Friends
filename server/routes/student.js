@@ -64,18 +64,22 @@ app.get("/students/:id", async (req, res) => {
   });
 
 // Updates a specific student's journal entry
+// if there is already a checkin or checkout, it will over write the previous entry
+// TODO: ? make an alert or something that tells user they already have a checkin/out for this class today, and ask are they sure they want to overwrite it
 app.put("/students/:id", async (req, res) => {
+  
+  // ----- getting today's date ----- //
   const currentDate = new Date();
-
-  // Get the current date as a string
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
   const day = String(currentDate.getDate()).padStart(2, '0');
 
   const todayDate = `${month}-${day}-${year}`;
+  // -------------------------------- // 
 
   try {
     const studentId = req.params.id;
+    const { studentUpdate, checkInOutType} = req.body
     const student = await Student.findById(studentId);
 
     if (!student) {
@@ -86,27 +90,59 @@ app.put("/students/:id", async (req, res) => {
       (entry) => entry.date === todayDate
     );
 
-    const journalEntry = {
-      date: todayDate,
-      [todayDateExists !== -1 ? "checkout" : "checkin"]: {
-        emotion: req.body.emotion,
-        ZOR: req.body.ZOR,
-        goal: req.body.goal,
-        need: req.body.need,
-        present: req.body.present,
-      },
+    const commonProperties = {
+      emotion: studentUpdate.emotion,
+      ZOR: studentUpdate.ZOR,
+      goal: studentUpdate.goal,
+      need: studentUpdate.need,
     };
-
+    
+    // checking if there's already an entry
     if (todayDateExists !== -1) {
-      const entryIndex = todayDateExists;
-      if (!student.journalEntries[entryIndex].checkout) {
-        student.journalEntries[entryIndex].checkout = {};
+    
+      if (checkInOutType === "checkout") {
+        // if the student user chose "checkout", adds new object to be filled
+        if (!student.journalEntries[todayDateExists].checkout) {
+          student.journalEntries[todayDateExists].checkout = {};
+        }
+    
+        // Update or add new checkout information
+        student.journalEntries[todayDateExists].checkout = {
+          ...student.journalEntries[todayDateExists].checkout,
+          ...commonProperties,
+          highlight: studentUpdate.highlight,
+        };
+      } else if (checkInOutType === "checkin") {
+        // If student user chose "checkin"
+        if (!student.journalEntries[todayDateExists].checkin) {
+          student.journalEntries[todayDateExists].checkin = {};
+        }
+    
+        // Update or add new checkin information
+        student.journalEntries[todayDateExists].checkin = {
+          ...student.journalEntries[todayDateExists].checkin,
+          ...commonProperties,
+          present: studentUpdate.present,
+        };
       }
-      student.journalEntries[entryIndex].checkout = {
-        ...student.journalEntries[entryIndex].checkout,
-        ...journalEntry.checkout,
-      };
     } else {
+      // No entry for the current date, so create a new one
+      const journalEntry = {
+        date: todayDate,
+      };
+    
+      if (checkInOutType === "checkout") {
+        journalEntry.checkout = {
+          ...commonProperties,
+          highlight: studentUpdate.highlight,
+        };
+      } else if (checkInOutType === "checkin") {
+        journalEntry.checkin = {
+          ...commonProperties,
+          present: studentUpdate.present,
+        };
+      }
+      // Add the new journal entry for the current date
       student.journalEntries.push(journalEntry);
     }
 

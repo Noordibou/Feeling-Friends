@@ -11,11 +11,14 @@ import { useStudent } from '../context/StudentContext';
 const StudentHome = () => {
   const navigate = useNavigate();
 
-  const { studentData } = useStudent();
+  const { studentData, setIsCheckInOrOut } = useStudent();
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
 
-  const handleClick =(click) => {
+  const handleClick =(click) => {   
+
+    setIsCheckInOrOut(click)
+    // for button color:
     if (checkOutBtn === "bg-bg-white" && click === "checkout") {
       setCheckInBtn("bg-white")
       setCheckOutBtn("bg-lightOrange")

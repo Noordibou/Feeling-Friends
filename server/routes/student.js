@@ -63,7 +63,7 @@ app.get("/students/:id", async (req, res) => {
     }
   });
 
-// Updates a specific student
+// Updates a specific student's journal entry
 app.put("/students/:id", async (req, res) => {
   const currentDate = new Date();
 
@@ -75,15 +75,42 @@ app.put("/students/:id", async (req, res) => {
   const todayDate = `${month}-${day}-${year}`;
 
   try {
-    console.log("req.body: " + JSON.stringify(req.body))
-    console.log("req.params.id: " + JSON.stringify(req.params.id))
-    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const studentId = req.params.id;
+    const journalEntry = {
+      date: req.body.todayDate, // Assuming you want to add the current date
+      checkin: {
+        emotion: req.body.emotion,
+        ZOR: req.body.ZOR,
+        goal: req.body.goal,
+        need: req.body.need,
+        present: req.body.present,
+      },
+      checkout: {
+        emotion: req.body.emotion, // You may need to adjust this based on your requirements
+        ZOR: req.body.ZOR, // You may need to adjust this based on your requirements
+        goal: req.body.goal, // You may need to adjust this based on your requirements
+        need: req.body.need, // You may need to adjust this based on your requirements
+        highlight: req.body.highlight, // You may need to adjust this based on your requirements
+      },
+    };
+
+    // Update the student's journal entries using $push
+    const updatedStudent = await Student.findByIdAndUpdate(
+      studentId,
+      {
+        $push: { journalEntries: journalEntry },
+      },
+      { new: true }
+    );
+
     if (!updatedStudent) {
-      console.log("whelp idk")
+      return res.status(404).json({ message: "Student not found" });
     }
-    
+
+    res.json(updatedStudent);
   } catch (error) {
-      res.status(400).json(error);
+    console.error("Error updating student journal entries:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

@@ -74,8 +74,6 @@ app.put("/students/:id", async (req, res) => {
 
   const todayDate = `${month}-${day}-${year}`;
 
-  console.log("woo today's date " + todayDate);
-
   try {
     console.log("req.body: " + JSON.stringify(req.body))
     console.log("req.params.id: " + JSON.stringify(req.params.id))

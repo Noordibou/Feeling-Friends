@@ -6,7 +6,6 @@ import { AuthContext } from "../Authentication/AuthContext";
 import { getStudentById } from "../../api/studentsApi";
 import { getUserById } from "../../api/userApi";
 import emotionsExplained from '../../mockData/emotionData.js'
-import { useStudentCheckin } from "../../context/CheckInContext";
 import { useLocation } from "react-router-dom";
 import QuestionFrog from '../../images/Question frog.png'
 import { useStudent } from '../../context/StudentContext';
@@ -17,15 +16,13 @@ import { useStudent } from '../../context/StudentContext';
 const Summary = () => {
 
 
-  const auth = useContext(AuthContext); // Use useContext to access the AuthContext
+  const auth = useContext(AuthContext);
   const objectID = auth.user ? auth.user._id : null;
   console.log("User's objectID:", JSON.stringify(objectID));
   const { studentData } = useStudent();
 
   const [userData, setUserData] = useState(null);
-  // const [studentOneData, setStudentOneData] = useState(null);
   const [emotion, setEmotion] = useState("");
-  const { studentCheckinData, updateFormState } = useStudentCheckin();
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 

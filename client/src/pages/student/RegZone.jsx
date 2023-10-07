@@ -117,7 +117,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useStudentCheckin } from "../../context/CheckInContext";
 import Avatar from "../../images/avatar.png";
 import Star from "../../images/star.png";
 import deepBreathing from "../../images/RegZoneDeepBreathingCard.png"
@@ -129,7 +128,6 @@ import { useStudent } from "../../context/StudentContext";
 const RegZone = () => {
   const navigate = useNavigate();
   const { studentData, updateStudentDataAccumulated } = useStudent();
-  const { studentCheckinData, updateFormState } = useStudentCheckin();
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";

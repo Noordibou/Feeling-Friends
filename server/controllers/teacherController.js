@@ -68,10 +68,46 @@ const deleteTeacher = async (req, res) => {
     }
 }
 
+// =================================================== //
+
+// FIXME: *** WILL NEED TO CHANGE *** //
+// Gets all students within a teacher's classroom
+const getAllStudentsInClassroom = async (req, res) => {
+    const teacher = await Teacher.findById(req.params.teacher_id);
+    const students = await Student.find({ _id: { $in: teacher.students }});
+    res.json(students)
+}
+
+// FIXME: *** WILL NEED TO CHANGE *** //
+// Adds a student to the teacher's classroom roster
+const addStudentToClass = async (req, res) => {
+    const teacher = await Teacher.findById(req.params.teacher_id);
+    const student = await Student.findById(req.params.student_id);
+  
+    teacher.students.push(student._id);
+    await teacher.save();
+    res.json(teacher);
+    
+}
+
+// FIXME: *** WILL NEED TO CHANGE *** //
+// Deletes a student in a teacher's classroom
+const removeStudentFromClass = async (req, res) => {
+    const teacher = await Teacher.findById(req.params.teacher_id);
+    const student = await Student.findById(req.params.student_id);
+
+    teacher.students = teacher.students.filter((student) => student.id !== student.id);
+    await teacher.save();
+    res.sendStatus(200);
+}
+
 module.exports = {
     createNewTeacher,
     getAllTeachers,
     getTeacherById,
     updateTeacherInfo,
-    deleteTeacher
+    deleteTeacher,
+    getAllStudentsInClassroom,
+    addStudentToClass,
+    removeStudentFromClass
 }

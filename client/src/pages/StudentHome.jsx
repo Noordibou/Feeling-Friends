@@ -12,6 +12,7 @@ const StudentHome = () => {
   const navigate = useNavigate();
 
   const { studentData, setIsCheckInOrOut, isCheckinOrOut } = useStudent();
+  const [greeting, setGreeting] = useState("")
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
 
@@ -41,14 +42,25 @@ const StudentHome = () => {
     } else {
       navigate(`/subemotion${emotion}`)
     }
+  }
+
+  const checkTimeOfDay = () => {
+    let date = new Date();
+    let hour = date.getHours()
+
+    if (hour < 12) {
+      setGreeting("Good Morning")
+    } else if (hour >= 12 && hour < 5) {
+      setGreeting("Good afternoon")
+    } else {
+      setGreeting("Good evening")
+    }
     
   }
 
 useEffect(() => {
-
+  checkTimeOfDay();
   console.log('student data:', studentData);
- 
-
 }, [studentData]);
 
   return (
@@ -58,7 +70,7 @@ useEffect(() => {
 
       {/* Check time Section */}
       <div className="mt-20 flex-col text-center">
-        <h1 className="text-header1 font-header1">{studentData ? ("Hello, " + studentData.firstName) : "Hello"}!</h1>
+        <h1 className="text-header1 font-header1">{studentData ? (`${greeting}, ` + studentData.firstName) : "Hello"}!</h1>
         <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
         <div className="flex flex-row mt-8">
           <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>

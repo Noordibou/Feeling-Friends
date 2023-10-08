@@ -15,8 +15,6 @@ app.use(cors({
   credentials: true,
 }));
 
-
-
 require('dotenv').config();
 require('./config/database');
 

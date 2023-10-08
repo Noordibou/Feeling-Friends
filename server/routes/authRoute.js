@@ -11,13 +11,13 @@ const router = require("express").Router();
 
 // router.use(studentAccessToTeacherHome);
 
-router.get("/teacher-home", userVerification , (req, res) => {
-    // You can now access req.user.role
-    if (req.user.role === "student") {
-      return res
-        .status(403)
-        .json({ message: "Access denied", success: false });
-    }});
+// router.get("/teacher-home", userVerification , (req, res) => {
+//     // You can now access req.user.role
+//     if (req.user.role === "student") {
+//       return res
+//         .status(403)
+//         .json({ message: "Access denied", success: false });
+//     }});
 
 
 router.post("/signup", Signup);

@@ -55,7 +55,6 @@ const StudentHome = () => {
     } else {
       setGreeting("Good evening")
     }
-    
   }
 
 useEffect(() => {

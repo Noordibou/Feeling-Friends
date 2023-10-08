@@ -36,3 +36,42 @@ const createNewTeacher = async (req, res) => {
         res.status(400).json(error);
     }
 }
+
+const getAllTeachers = async (req, res) => {
+    const teacher = await Teacher.find();
+    res.json(teacher);
+}
+
+const getTeacherById = async (req, res) => {
+    try {
+        res.json(await Teacher.findById(req.params.id));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
+const updateTeacherInfo = async (req, res) => {
+    try {
+        res.json(
+          await Teacher.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        );
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
+const deleteTeacher = async (req, res) => {
+    try {
+        res.json(await Teacher.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
+module.exports = {
+    createNewTeacher,
+    getAllTeachers,
+    getTeacherById,
+    updateTeacherInfo,
+    deleteTeacher
+}

@@ -1,7 +1,7 @@
 const express = require('express');
 const Student = require('../models/Student.js');
 const Teacher = require('../models/Teacher.js');
-// const User = require('../models/User.js');
+const User = require('../models/User.js');
 
 
 const app = express();
@@ -24,11 +24,12 @@ app.post('/teachers', async (req, res) => {
       const teacher = new Teacher({
           user: user._id,
           prefix: req.body.prefix,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          schoolTeacherId: req.body.schoolTeacherId,
+          role: 'teacher',
           avatarImg: req.body.avatarImg,
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
           classrooms: req.body.classrooms, // Include classrooms from req.body
-         
       });
 
       // Save the teacher

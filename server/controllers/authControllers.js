@@ -1,12 +1,13 @@
 const Student = require("../models/Student");
-const Teacher = require("../models/Teacher")
+const Teacher = require("../models/Teacher");
 const User = require("../models/User");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
 
 const Signup = async (req, res, next) => {
+  console.log(req.body);
   try {
-    const { email, password, username, role, userDetails } = req.body;
+    const { email, password, username, role, studentDetails, teacherDetails } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -16,22 +17,29 @@ const Signup = async (req, res, next) => {
     let existingStudent = null;
     let existingTeacher = null;
 
+    if (role === 'student') {
+      existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
+      if (!existingStudent) {
+       
+        existingStudent = await Student.create(studentDetails);
+      }
+    } else if (role === 'teacher') {
+      existingTeacher = await Teacher.findOne({ schoolTeacherId: teacherDetails.schoolTeacherId });
+      if (!existingTeacher) {
+        
+        existingTeacher = await Teacher.create(teacherDetails);
+      }
+    }
+
+    
+    const user = await User.create({ email, password, username, role });
 
     if (role === 'student') {
-      existingStudent = await Student.findOne({ schoolStudentId: userDetails.schoolStudentId });
+      user.student = existingStudent._id;
     } else if (role === 'teacher') {
-      existingTeacher = await Student.findOne({ schoolStudentId: userDetails.schoolStudentId });
+      user.teacher = existingTeacher._id;
     }
 
-    if (!existingStudent) {
-      // Create a new student if none exists with the provided schoolStudentId
-      existingStudent = await Student.create(userDetails);
-    } else if (!exisitingTeacher) {
-      existingTeacher = await Teacher.create(userDetails);
-    }
-
-    // Create a new user and associate it with the existing (or newly created) student
-    const user = await User.create({ email, password, username, role, student: existingStudent._id });
     const token = createSecretToken(user._id);
 
     res.cookie("token", token, {
@@ -39,13 +47,14 @@ const Signup = async (req, res, next) => {
       httpOnly: false,
     });
 
-    res.status(201).json({ message: "User signed in successfully", success: true, user });
+    res.status(201).json({ message: "User signed up successfully", success: true, user });
     next();
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 const findUser = async (req, res) => {
   const user = await User.find();
@@ -54,17 +63,16 @@ const findUser = async (req, res) => {
 
 const findUserById = async (req, res) => {
   try {
-    const userId = req.params.id; // Get the userId from the request params
+    const userId = req.params.id; 
 
-    // Query the database to find the user by their ID
     const user = await User.findById(userId);
 
     if (!user) {
-      // If the user is not found, send a 404 response
+      
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // If the user is found, send the user data as the response
+    
     res.status(200).json({ user });
   } catch (error) {
     console.error(error);

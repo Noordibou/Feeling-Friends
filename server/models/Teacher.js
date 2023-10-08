@@ -5,8 +5,9 @@ const teacherSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   prefix: { type: String },
   avatarImg: { type: String },
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  schoolTeacherId: { type: String },
   classrooms: [{
     classroomName: { type: String },
     subject: { type: String },

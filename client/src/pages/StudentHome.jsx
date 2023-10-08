@@ -47,10 +47,10 @@ const StudentHome = () => {
   const checkTimeOfDay = () => {
     let date = new Date();
     let hour = date.getHours()
-
+    console.log("hour: ", hour)
     if (hour < 12) {
       setGreeting("Good Morning")
-    } else if (hour >= 12 && hour < 5) {
+    } else if (hour >= 12 && hour < 17) {
       setGreeting("Good afternoon")
     } else {
       setGreeting("Good evening")

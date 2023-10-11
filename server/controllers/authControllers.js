@@ -15,30 +15,31 @@ const Signup = async (req, res, next) => {
     }
 
     let existingStudent = null;
-    let existingTeacher = null;
+let existingTeacher = null;
 
-    if (role === 'student') {
-      existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
-      if (!existingStudent) {
-       
-        existingStudent = await Student.create(studentDetails);
-      }
-    } else if (role === 'teacher') {
-      existingTeacher = await Teacher.findOne({ schoolTeacherId: teacherDetails.schoolTeacherId });
-      if (!existingTeacher) {
-        
-        existingTeacher = await Teacher.create(teacherDetails);
-      }
-    }
+if (role === 'student') {
+  existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
+  if (!existingStudent) {
+    existingStudent = await Student.create(studentDetails);
+  }
+} else if (role === 'teacher') {
+  existingTeacher = await Teacher.findOne({ schoolTeacherId: teacherDetails.schoolTeacherId });
+  if (!existingTeacher) {
+    existingTeacher = await Teacher.create(teacherDetails);
+  }
+}
 
-    
-    const user = await User.create({ email, password, username, role });
+const userData = {
+  email,
+  password,
+  username,
+  role,
+  student: existingStudent ? existingStudent._id : null,
+  teacher: existingTeacher ? existingTeacher._id : null,
+};
 
-    if (role === 'student') {
-      user.student = existingStudent._id;
-    } else if (role === 'teacher') {
-      user.teacher = existingTeacher._id;
-    }
+const user = await User.create(userData);
+
 
     const token = createSecretToken(user._id);
 
@@ -144,19 +145,19 @@ const Login = async (req, res, next) => {
       }
     
 
-    const responseObject = {
-      message: "User logged in successfully",
-      success: true,
-      user: {
-        _id: user._id, // Include the user's _id (objectID)
-        email: user.email,
-        username: user.username,
-        role: user.role,
-        student: user.student,
-        // Add any other user properties you want to include
-      },
-      redirectPath,
-    };
+    // const responseObject = {
+    //   message: "User logged in successfully",
+    //   success: true,
+    //   user: {
+    //     _id: user._id, // Include the user's _id (objectID)
+    //     email: user.email,
+    //     username: user.username,
+    //     role: user.role,
+    //     student: user.student,
+    //     // Add any other user properties you want to include
+    //   },
+    //   redirectPath,
+    // };
 
 
     res.cookie("token", token, {
@@ -164,14 +165,31 @@ const Login = async (req, res, next) => {
       httpOnly: false,
     });
 
-    res.status(200).json({ message: "User logged in successfully", success: true,  user: {
-      _id: user._id,
-      email: user.email,
-      username: user.username,
-      role: user.role,
-      student: user.student,
-      // Add any other user properties you want to include
-    }, redirectPath });
+    if (user) {
+      let responseData = {
+        _id: user._id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+      };
+  
+      if (user.role === 'student') {
+        responseData.student = user.student;
+        // Add any other student-specific properties you want to include
+      } if (user.role === 'teacher') {
+        responseData.teacher = user.teacher;
+        // Add any other teacher-specific properties you want to include
+      }
+  
+      res.status(200).json({
+        message: "User logged in successfully",
+        success: true,
+        user: responseData,
+        redirectPath
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

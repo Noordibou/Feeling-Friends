@@ -121,14 +121,15 @@ import Avatar from "../../images/avatar.png";
 import Star from "../../images/star.png";
 import deepBreathing from "../../images/RegZoneDeepBreathingCard.png"
 import imagineExercise from "../../images/coping skill card_ Overwhelmed.png"
-import { useStudent } from "../../context/StudentContext";
+import { useUser } from "../../context/StudentProvider";
 import Slider from "../../components/Slider";
+
 
 // import emotionsExplained from '../../mockData/emotionData.js'
 
 const RegZone = () => {
   const navigate = useNavigate();
-  const { studentData, updateStudentDataAccumulated } = useStudent();
+  const { userData, updateUserDataAccumulated } = useUser();
   const [emotion, setEmotion] = useState("");
   const [sliderValue, setSliderValue] = useState(0)
   const [regZone, setRegZone] = useState("")
@@ -152,7 +153,8 @@ const RegZone = () => {
         regZone = "Explosive";
     }
     const updatedFields = { ZOR: regZone }
-    updateStudentDataAccumulated(updatedFields);
+    updateUserDataAccumulated(updatedFields);
+    
     navigate("/goalsneeds", {
       state: {
         emotion: emotionFromLocation

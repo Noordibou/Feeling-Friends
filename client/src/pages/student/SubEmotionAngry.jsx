@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useStudent } from "../../context/StudentContext";
+import { useUser } from "../../context/StudentProvider";
 import angryWheel from "../../images/angryWheel.png"
 import angryImg from '../../images/angry.png'
 import proudImg from '../../images/proud.png'
@@ -12,10 +12,10 @@ import scaredImg from '../../images/scared.png'
 const SubEmotionAngry = () => {
   const navigate = useNavigate();
 
-  const { studentData, updateStudentDataAccumulated } = useStudent();
+  const { userData, updateUserDataAccumulated } = useUser();
 
   const handleEmotionClick = (chosenEmotion) => {
-    updateStudentDataAccumulated({["emotion"]: chosenEmotion});    
+    updateUserDataAccumulated({["emotion"]: chosenEmotion});    
     navigate("/regzone", {
       state: {
         emotion: chosenEmotion

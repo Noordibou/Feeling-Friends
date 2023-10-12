@@ -8,7 +8,7 @@ import { getUserById } from "../../api/userApi";
 import emotionsExplained from '../../mockData/emotionData.js'
 import { useLocation } from "react-router-dom";
 import QuestionFrog from '../../images/Question frog.png'
-import { useStudent } from '../../context/StudentContext';
+import { useUser } from '../../context/StudentProvider';
 
 
 // TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
@@ -19,16 +19,16 @@ const Summary = () => {
   const auth = useContext(AuthContext);
   const objectID = auth.user ? auth.user._id : null;
   console.log("User's objectID:", JSON.stringify(objectID));
-  const { studentData } = useStudent();
+  const { userData } = useUser();
 
-  const [userData, setUserData] = useState(null);
+  // const [userData, setUserData] = useState(null);
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 
   useEffect(() => {
 
-  }, [studentData]);
+  }, [userData]);
 
 useEffect(() => {
   
@@ -64,7 +64,7 @@ const getEmotionTips = () => {
 </div>
 
 <div className="w-9/12 text-center ml-auto mr-auto pt-[1.5rem]">
-    <h1 className="font-header1 text-header1 leading-tight"> {studentData ? ("Thanks " + studentData.firstName) : "Thanks!"} - Have a good day at school!</h1>
+    <h1 className="font-header1 text-header1 leading-tight"> {userData ? ("Thanks " + userData.firstName) : "Thanks!"} - Have a good day at school!</h1>
 </div>
 
 <div className=" bg-lightOrange w-full pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center fixed

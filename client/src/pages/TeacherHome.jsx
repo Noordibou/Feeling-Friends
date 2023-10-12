@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useUser } from '../context/StudentProvider';
+import { useUser } from '../context/UserContext';
 
 const TeacherHome = () => {
   const { userData } = useUser();

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import angryImg from '../images/angry.png'
 import proudImg from '../images/proud.png'
@@ -6,7 +6,7 @@ import anxiousImg from '../images/anxious.png'
 import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
-import { useUser } from '../context/StudentProvider';
+import { useUser } from '../context/UserContext';
 
 const StudentHome = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const StudentHome = () => {
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
 
-  const handleClick =(click) => {   
+  const handleClick = (click) => {
 
     setIsCheckInOrOut(click)
     // for button color:
@@ -57,50 +57,62 @@ const StudentHome = () => {
     }
   }
 
-useEffect(() => {
-  checkTimeOfDay();
-  console.log('student data:', userData);
-}, [userData]);
+  useEffect(() => {
+    checkTimeOfDay();
+    console.log('student data:', userData);
+  }, [userData]);
 
   return (
     <>
-    {/* page container */}
-    <div className="flex w-screen flex-col items-center bg-notebookPaper">
+      {/* page container */}
+      <div className="flex w-screen flex-col items-center bg-notebookPaper">
 
-      {/* Check time Section */}
-      <div className="mt-20 flex-col text-center">
-        <h1 className="text-header1 font-header1">{userData ? (`${greeting}, ` + userData.firstName) : "Hello"}!</h1>
-        <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
-        <div className="flex flex-row mt-8">
-          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>
-          <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body  ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
-        </div>
-      </div>
-
-      {/* Emotions Section */}
-      <div className="mt-20">
-        <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
-        <div className="">
-          {/* first row */}
-          <div className="w-screen max-w-lg flex justify-between my-14">
-            <button className="rounded-full w-32 h-32 bg-lightYellow" onClick={() => handleEmotion("proud")}><img src={proudImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-lightOrange" onClick={() => handleEmotion("anxious")}><img src={anxiousImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-lightBlue" onClick={() => handleEmotion("sad")}><img src={sadImg} /></button>
-          </div>
-          {/* second row */}
-          <div className="w-screen max-w-lg flex justify-between my-14">
-            <button className="rounded-full w-32 h-32 bg-darkTeal" onClick={() => handleEmotion("happy")}><img src={happyImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-lightLavender" onClick={() => handleEmotion("scared")}><img src={scaredImg} /></button>
-            <button className="rounded-full w-32 h-32 bg-pink" onClick={() => handleEmotion("angry")}><img src={angryImg} /></button>
+        {/* Check time Section */}
+        <div className="mt-20 flex-col text-center">
+          <h1 className="text-header1 font-header1">{userData ? (`${greeting}, ` + userData.firstName) : "Hello"}!</h1>
+          <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
+          <div className="flex flex-row mt-8">
+            <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`} onClick={() => handleClick("checkin")}>Check-in</button>
+            <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body  ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
           </div>
         </div>
+
+        {/* Emotions Section */}
+        <div className="mt-20">
+          <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
+          <div className="">
+            {/* first row */}
+            <div className="w-screen max-w-lg flex justify-between my-14">
+              <button className="rounded-full w-32 h-32 bg-lightYellow" onClick={() => handleEmotion("proud")}>
+                <img src={proudImg} alt="Proud Emoji" />
+              </button>
+              <button className="rounded-full w-32 h-32 bg-lightOrange" onClick={() => handleEmotion("anxious")}>
+                <img src={anxiousImg} alt="Anxious Emoji" />
+              </button>
+              <button className="rounded-full w-32 h-32 bg-lightBlue" onClick={() => handleEmotion("sad")}>
+                <img src={sadImg} alt="Sad Emoji" />
+              </button>
+            </div>
+            {/* second row */}
+            <div className="w-screen max-w-lg flex justify-between my-14">
+              <button className="rounded-full w-32 h-32 bg-darkTeal" onClick={() => handleEmotion("happy")}>
+                <img src={happyImg} alt="Happy Emoji" />
+              </button>
+              <button className="rounded-full w-32 h-32 bg-lightLavender" onClick={() => handleEmotion("scared")}>
+                <img src={scaredImg} alt="Scared Emoji" />
+              </button>
+              <button className="rounded-full w-32 h-32 bg-pink" onClick={() => handleEmotion("angry")}>
+                <img src={angryImg} alt="Angry Emoji" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    </>
-  );
+      </>
+      );
 }
 
-export default StudentHome;
+      export default StudentHome;
 
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";

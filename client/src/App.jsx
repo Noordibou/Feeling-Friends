@@ -20,6 +20,7 @@ import NeedsGoals from "./pages/teacher/NeedsGoals";
 import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { StudentProvider } from "./context/StudentProvider";
+import Slider from "./components/Slider"
 
 export default function App() {
   return (
@@ -30,6 +31,9 @@ export default function App() {
       <AuthProvider>
 <StudentProvider>
       <Routes>
+
+        <Route path="/slider" element={<Slider />} />
+
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />

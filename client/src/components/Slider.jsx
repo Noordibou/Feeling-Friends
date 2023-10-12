@@ -22,19 +22,20 @@ const Slider = () => {
     return (
         <>
             <div className="">
-                <div className="relative flex pt-28 flex-col items-center justify-center">
+                <div className="relative flex pt-32 flex-col items-center justify-center">
                     
                     {/* slider bar */}
                     <div 
-                        className="absolute w-3/4 h-3 bg-sandwich rounded-full" 
+                        className="absolute w-11/12 h-3 bg-sandwich rounded-full" 
                         ref ={progressBarRef}    
                     />
 
                     {/* slider star */}
-                    <div className="w-10/12" ref={constraintsRef}>
-                        <motion.div 
+                    <div className="w-full" ref={constraintsRef}>
+                        <motion.img 
                             className="relative" 
                             ref={handleRef}
+                            src={Star}
                             drag="x" 
                             dragMomentum={false} 
                             dragConstraints={constraintsRef}
@@ -44,15 +45,13 @@ const Slider = () => {
                                 width: handleSize,
                                 height: handleSize
                             }}
-                        >
-                            <img src={Star} />
-                        </motion.div>
+                        />
                     </div>
                     
                 </div>
-                <div className="flex pt-20 justify-center">
+                {/* <div className="flex pt-10 justify-center">
                     <h1 className="text-body">{value}</h1>
-                </div>
+                </div> */}
             </div>
         </>
     )

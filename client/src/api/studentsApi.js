@@ -34,11 +34,11 @@ export const getStudentById = async (id) => {
 }
 
 
-export const updateStudent = async (id, studentUpdate, checkInOutType) => {
+export const updateStudent = async (id, userUpdate, checkInOutType) => {
     console.log("update student api, show id pls: " + id)
-    console.log("student object being sent to backend: " + JSON.stringify(studentUpdate))
+    console.log("student object being sent to backend: " + JSON.stringify(userUpdate))
     try {
-        const response = await axios.put(`${STUDENTS_API_URL}/${id}`, {studentUpdate, checkInOutType})
+        const response = await axios.put(`${STUDENTS_API_URL}/${id}`, {studentUpdate: userUpdate, checkInOutType})
         console.log("is this working???")
         return response.data;
     } catch (error) {

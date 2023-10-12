@@ -123,6 +123,7 @@ export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isCheckinOrOut, setIsCheckInOrOut] = useState("")
+  const [accumulatedUpdates, setAccumulatedUpdates] = useState({});
 
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
@@ -161,27 +162,37 @@ export const UserProvider = ({ children }) => {
 
   // Function to update user data
   const updateUser = (newData) => {
+    console.log(user.student)
     if (user.student) {
+      setUserData((prevData) => ({ ...prevData, ...newData }));
       updateStudent(newData.id, newData)
         .then(() => {
           console.log('Student data updated successfully.');
-          setUserData((prevData) => ({ ...prevData, ...newData }));
           localStorage.setItem('userData', JSON.stringify({ ...userData, ...newData }));
         })
         .catch((error) => {
           console.error('Error updating student data:', error);
         });
     } else if (user.teacher) {
+      setUserData((prevData) => ({ ...prevData, ...newData }));
       updateTeacher(newData.id, newData)
         .then(() => {
           console.log('Teacher data updated successfully.');
-          setUserData((prevData) => ({ ...prevData, ...newData }));
           localStorage.setItem('userData', JSON.stringify({ ...userData, ...newData }));
         })
         .catch((error) => {
           console.error('Error updating teacher data:', error);
         });
     }
+  };
+
+  const updateUserDataAccumulated = (updatedFields) => {
+    setAccumulatedUpdates((prevUpdates) => ({ ...prevUpdates, ...updatedFields }));
+    console.log("set accumulated data: " + JSON.stringify(accumulatedUpdates))
+  };
+
+  const clearAccumulatedUpdates = () => {
+    setAccumulatedUpdates({});
   };
 
   // Function to create user data
@@ -243,7 +254,10 @@ export const UserProvider = ({ children }) => {
     deleteUser,
     setLoading,
     isCheckinOrOut,
-    setIsCheckInOrOut
+    setIsCheckInOrOut,
+    accumulatedUpdates,
+    updateUserDataAccumulated,
+    clearAccumulatedUpdates,
   };
 
   return (

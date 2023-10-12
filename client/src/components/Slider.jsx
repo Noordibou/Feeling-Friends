@@ -50,9 +50,9 @@ const Slider = ({ updateSliderValue }) => {
                     </div>
                     
                 </div>
-                <div className="flex pt-10 justify-center">
+                {/* <div className="flex pt-10 justify-center">
                     <h1 className="text-body">{value}</h1>
-                </div>
+                </div> */}
             </div>
         </>
     )

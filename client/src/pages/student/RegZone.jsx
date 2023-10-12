@@ -127,14 +127,14 @@ import { useUser } from "../../context/StudentProvider";
 
 const RegZone = () => {
   const navigate = useNavigate();
-  const { userData,  updateUser } = useUser();
+  const { userData, updateUserDataAccumulated } = useUser();
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 
   const handleZoneClick = (zone) => {
     const updatedFields = { ZOR: zone }
-    updateUser(updatedFields);
+    updateUserDataAccumulated(updatedFields);
     navigate("/goalsneeds", {
       state: {
         emotion: emotionFromLocation

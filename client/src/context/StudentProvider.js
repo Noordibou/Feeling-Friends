@@ -5,63 +5,63 @@
 
 // export const StudentProvider = ({ children }) => {
 
-//   const { user } = useAuth();
+  // const { user } = useAuth();
 
-//   const [isCheckinOrOut, setIsCheckInOrOut] = useState("")
-//   const [accumulatedUpdates, setAccumulatedUpdates] = useState({});
-//   const [studentData, setStudentData] = useState(null);
-//   const [loading, setLoading] = useState(true);
+  // const [studentData, setStudentData] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [isCheckinOrOut, setIsCheckInOrOut] = useState("")
+  // const [accumulatedUpdates, setAccumulatedUpdates] = useState({});
+
+  // ------------------------------------------------------//
+  // useEffect to fetch a specific student by ID when the component mounts
+  // useEffect(() => {
+  //  const storedStudentData = localStorage.getItem('studentData');
+  //  if (storedStudentData) {
+  //    setStudentData(JSON.parse(storedStudentData));
+  //  }
+
+  //   if(user && user.student) {
+  //       getStudentById(user.student)
+  //       .then((data) => {
+  //           setStudentData(data);
+  //           setLoading(false);
+  //           localStorage.setItem('studentData', JSON.stringify(data));
+  //       })
+  //       .catch((error) => {
+  //           console.error('Error fetching student data:', error);
+  //           setLoading(false);
+  //       });
+
+  //   } else {
+  //       setLoading(false);
+  //   }
+  // }, [user]);
 
 //   // ------------------------------------------------------//
-//   // useEffect to fetch a specific student by ID when the component mounts
-//   useEffect(() => {
-//    const storedStudentData = localStorage.getItem('studentData');
-//    if (storedStudentData) {
-//      setStudentData(JSON.parse(storedStudentData));
-//    }
-
-//     if(user && user.student) {
-//         getStudentById(user.student)
-//         .then((data) => {
-//             setStudentData(data);
-//             setLoading(false);
-//             localStorage.setItem('studentData', JSON.stringify(data));
-//         })
-//         .catch((error) => {
-//             console.error('Error fetching student data:', error);
-//             setLoading(false);
-//         });
-
-//     } else {
-//         setLoading(false);
-//     }
-//   }, [user]);
-
-//   // ------------------------------------------------------//
-//   // if the to-be-updated data is only one one page
-//   const updateStudentDataImmediate = (newData) => {
-//     setStudentData((prevData) => ({ ...prevData, ...newData }));
+  // if the to-be-updated data is only one one page
+  // const updateStudentDataImmediate = (newData) => {
+  //   setStudentData((prevData) => ({ ...prevData, ...newData }));
   
-//     updateStudent(newData.id, newData)
-//       .then(() => {
-//         console.log('Student data updated successfully.');
-//         localStorage.setItem('studentData', JSON.stringify({ ...studentData, ...newData }));
-//       })
-//       .catch((error) => {
-//         console.error('Error updating student data:', error);
-//       });
-//   };
+  //   updateStudent(newData.id, newData)
+  //     .then(() => {
+  //       console.log('Student data updated successfully.');
+  //       localStorage.setItem('studentData', JSON.stringify({ ...studentData, ...newData }));
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error updating student data:', error);
+  //     });
+  // };
 
-//   // ------------------------------------------------------//
-//   // if the to-be-updated data is across multiple pages
-//   const updateStudentDataAccumulated = (updatedFields) => {
-//     setAccumulatedUpdates((prevUpdates) => ({ ...prevUpdates, ...updatedFields }));
-//     console.log("set accumulated data: " + JSON.stringify(accumulatedUpdates))
-//   };
+  // // ------------------------------------------------------//
+  // // if the to-be-updated data is across multiple pages
+  // const updateStudentDataAccumulated = (updatedFields) => {
+  //   setAccumulatedUpdates((prevUpdates) => ({ ...prevUpdates, ...updatedFields }));
+  //   console.log("set accumulated data: " + JSON.stringify(accumulatedUpdates))
+  // };
 
-//   const clearAccumulatedUpdates = () => {
-//     setAccumulatedUpdates({});
-//   };
+  // const clearAccumulatedUpdates = () => {
+  //   setAccumulatedUpdates({});
+  // };
 
 
 
@@ -130,7 +130,6 @@ export const UserProvider = ({ children }) => {
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
     }
-
     if (user) {
       if (user.student) {
         getStudentById(user.student)
@@ -143,7 +142,7 @@ export const UserProvider = ({ children }) => {
             console.error('Error fetching user data:', error);
             setLoading(false);
           });
-      } if (user.teacher) {
+      } else if (user.teacher) { 
         getTeacherById(user.teacher)
           .then((data) => {
             setUserData(data);
@@ -158,7 +157,8 @@ export const UserProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
-  }, [user])
+  }, [user]);
+
 
   // Function to update user data
   const updateUser = (newData) => {

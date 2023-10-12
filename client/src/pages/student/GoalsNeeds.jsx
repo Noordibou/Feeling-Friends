@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { useStudent } from "../../context/StudentContext";
+import { useUser } from "../../context/StudentProvider";
 import { updateStudent } from "../../api/studentsApi";
 import { useNavigate, useLocation  } from "react-router-dom";
 import Wiggly from "../../images/wiggly.png"
@@ -7,7 +7,7 @@ import Wiggly from "../../images/wiggly.png"
 const GoalsNeeds = () => {
 
   const navigate = useNavigate();
-  const { studentData, accumulatedUpdates, updateStudentDataAccumulated, clearAccumulatedUpdates, isCheckinOrOut  } = useStudent();
+  const { userData, accumulatedUpdates, updateUserDataAccumulated, clearAccumulatedUpdates, isCheckinOrOut  } = useUser();
   
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
@@ -31,7 +31,7 @@ const GoalsNeeds = () => {
 
  const handleSubmit = async () => {
   console.log("handle submit activated")
-  await updateStudent(studentData._id, accumulatedUpdates, isCheckinOrOut)
+  await updateStudent(userData._id, accumulatedUpdates, isCheckinOrOut)
 
   navigate("/summary", {
     state: {
@@ -62,14 +62,14 @@ const GoalsNeeds = () => {
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
                   onClick={() =>
-                    updateStudentDataAccumulated({["goal"]: "Finish homework during study hall"})
+                    updateUserDataAccumulated({["goal"]: "Finish homework during study hall"})
                   }
                 >
                   Finish homework during study hall
                 </button>
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                  onClick={() => updateStudentDataAccumulated({["goal"]: "Better manage my energy"})}
+                  onClick={() => updateUserDataAccumulated({["goal"]: "Better manage my energy"})}
                 >
                   Better manage my energy
                 </button>
@@ -77,10 +77,10 @@ const GoalsNeeds = () => {
 
               {/* second row */}
               <div className="flex flex-row justify-between">
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["goal"]: "Do my best in class"})}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateUserDataAccumulated({["goal"]: "Do my best in class"})}>
                   Do my best in class
                 </button>
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["goal"]: "Be more present"})}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateUserDataAccumulated({["goal"]: "Be more present"})}>
                   Be more present
                 </button>
               </div>
@@ -99,7 +99,7 @@ const GoalsNeeds = () => {
                     <button
                       onClick={() => {
                         console.log('User input 1:', userInput1);
-                        updateStudentDataAccumulated({["goal"]: userInput1});
+                        updateUserDataAccumulated({["goal"]: userInput1});
                         setInputMode1(false);
                         setUserInput1('');
                       }}
@@ -138,14 +138,14 @@ const GoalsNeeds = () => {
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
                   onClick={() =>
-                    updateStudentDataAccumulated({["need"]: "Check in with my teacher"})
+                    updateUserDataAccumulated({["need"]: "Check in with my teacher"})
                   }
                 >
                   Check in with my teacher
                 </button>
                 <button
                   className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                  onClick={() => updateStudentDataAccumulated({["need"]: "Help with homework"})}
+                  onClick={() => updateUserDataAccumulated({["need"]: "Help with homework"})}
                 >
                   Help with homework
                 </button>
@@ -153,10 +153,10 @@ const GoalsNeeds = () => {
 
               {/* second row */}
               <div className="flex flex-row justify-between">
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["need"]: "Extra practice"})}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateUserDataAccumulated({["need"]: "Extra practice"})}>
                   Extra practice
                 </button>
-                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateStudentDataAccumulated({["need"]: "Help with focusing"})}>
+                <button className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange" onClick={() => updateUserDataAccumulated({["need"]: "Help with focusing"})}>
                   Help with focusing
                 </button>
               </div>
@@ -173,7 +173,7 @@ const GoalsNeeds = () => {
                 <button
                   onClick={() => {
                     console.log('User input 2:', userInput2);
-                    updateStudentDataAccumulated({["need"]: userInput2})
+                    updateUserDataAccumulated({["need"]: userInput2})
                     setInputMode2(false);
                     setUserInput2('');
                   }}

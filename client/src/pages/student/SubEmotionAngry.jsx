@@ -12,10 +12,10 @@ import scaredImg from '../../images/scared.png'
 const SubEmotionAngry = () => {
   const navigate = useNavigate();
 
-  const { userData, updateUser } = useUser();
+  const { userData, updateUserDataAccumulated } = useUser();
 
   const handleEmotionClick = (chosenEmotion) => {
-    updateUser({["emotion"]: chosenEmotion});    
+    updateUserDataAccumulated({["emotion"]: chosenEmotion});    
     navigate("/regzone", {
       state: {
         emotion: chosenEmotion

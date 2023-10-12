@@ -236,7 +236,6 @@ const RegZone = () => {
              bottom-0"
         >
           {/* new animated slider */}
-          {/* TODO: need to make this actually submit info */}
           <div className="absolute w-full bottom-[3.4rem] ">
             <Slider updateSliderValue={setSliderValue} />
             <div className="flex w-full justify-center">

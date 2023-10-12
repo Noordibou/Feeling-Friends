@@ -6,12 +6,12 @@ import anxiousImg from '../images/anxious.png'
 import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
-import { useStudent } from '../context/StudentContext';
+import { useUser } from '../context/StudentProvider';
 
 const StudentHome = () => {
   const navigate = useNavigate();
 
-  const { studentData, setIsCheckInOrOut, isCheckinOrOut } = useStudent();
+  const { userData, setIsCheckInOrOut, isCheckinOrOut } = useUser();
   const [greeting, setGreeting] = useState("")
   const [checkInBtn, setCheckInBtn] = useState("bg-white")
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
@@ -59,8 +59,8 @@ const StudentHome = () => {
 
 useEffect(() => {
   checkTimeOfDay();
-  console.log('student data:', studentData);
-}, [studentData]);
+  console.log('student data:', userData);
+}, [userData]);
 
   return (
     <>
@@ -69,7 +69,7 @@ useEffect(() => {
 
       {/* Check time Section */}
       <div className="mt-20 flex-col text-center">
-        <h1 className="text-header1 font-header1">{studentData ? (`${greeting}, ` + studentData.firstName) : "Hello"}!</h1>
+        <h1 className="text-header1 font-header1">{userData ? (`${greeting}, ` + userData.firstName) : "Hello"}!</h1>
         <h2 className="text-header2 font-header2 mt-12">Is this a check in or check out?</h2>
         <div className="flex flex-row mt-8">
           <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}onClick={() => handleClick("checkin")}>Check-in</button>

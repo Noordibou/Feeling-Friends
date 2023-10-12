@@ -130,11 +130,28 @@ const RegZone = () => {
   const navigate = useNavigate();
   const { studentData, updateStudentDataAccumulated } = useStudent();
   const [emotion, setEmotion] = useState("");
+  const [sliderValue, setSliderValue] = useState(0)
+  const [regZone, setRegZone] = useState("")
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 
-  const handleZoneClick = (zone) => {
-    const updatedFields = { ZOR: zone }
+  const handleZoneClick = () => {
+    console.log("hellooo")
+    let regZone;
+    switch (true) {
+      case sliderValue <= 23:
+        regZone = "Unmotivated";
+        break;
+      case sliderValue > 23 && sliderValue <= 50:
+        regZone = "Ready to Learn";
+        break;
+      case sliderValue > 50 && sliderValue <= 77:
+        regZone = "Wiggly";
+        break;
+      default:
+        regZone = "Explosive";
+    }
+    const updatedFields = { ZOR: regZone }
     updateStudentDataAccumulated(updatedFields);
     navigate("/goalsneeds", {
       state: {
@@ -221,14 +238,17 @@ const RegZone = () => {
           {/* new animated slider */}
           {/* TODO: need to make this actually submit info */}
           <div className="absolute w-full bottom-[3.4rem] ">
-            <Slider />
+            <Slider updateSliderValue={setSliderValue} />
+            <div className="flex w-full justify-center">
+              <button className="bg-themeWhite px-10 py-3" onClick={handleZoneClick}>OK</button>
+            </div>
           </div>
 
           <div className="mt-[2rem] flex items-end ">
             {/* unmotivated */}
             <div
               className="bg-blue w-1/4 h-[17rem] rounded-tl-[2rem] hover:bg-blue/70 pb-10"
-              onClick={() => handleZoneClick("Low energy/Unmotivated")}
+
             >
               <span className="block font-body text-white mt-[5rem] ml-[1.5rem] cursor-pointer -mb-6">
                 Low energy
@@ -241,7 +261,6 @@ const RegZone = () => {
             {/* ready to learn */}
             <div
               className="bg-green w-1/4 h-[17rem] cursor-pointer hover:bg-green/70"
-              onClick={() => handleZoneClick("Ready to learn")}
             >
               <span className="block font-regZone md:text-regZone text-sm  text-white mt-[12.9rem] text-center">
                 Ready to learn
@@ -251,7 +270,6 @@ const RegZone = () => {
             {/* wiggly */}
             <div
               className="bg-yellow w-1/4 h-[17rem] cursor-pointer hover:bg-yellow/60"
-              onClick={() => handleZoneClick("Wiggly")}
             >
               <span className="block font-regZone md:text-regZone text-sm text-white mt-[12.9rem] ml-[3.5rem] -mb-10">
                 Wiggly
@@ -261,7 +279,6 @@ const RegZone = () => {
             {/* explosive */}
             <div
               className="bg-orange w-1/4 h-[17rem] cursor-pointer rounded-tr-[2rem] hover:bg-orange/70"
-              onClick={() => handleZoneClick("High energy/Explosive")}
             >
               <span className="block font-body text-white mt-[5rem] ml-[5rem] cursor-pointer -mb-10">
                 High energy

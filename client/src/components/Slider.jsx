@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { motion } from 'framer-motion'
 import Star from "../images/star.png";
 
-const Slider = () => {
+const Slider = ({ updateSliderValue }) => {
     const [value, setValue] = useState(0)
     let constraintsRef = useRef();
     const handleRef= useRef();
@@ -16,6 +16,7 @@ const Slider = () => {
         let newProgress = (middleOfHandle - progressBarBounds.x) / progressBarBounds.width;
 
         setValue(Math.round(newProgress * 100))
+        updateSliderValue(Math.round(newProgress * 100))
         // console.log("Position x-axis: " + Math.round(newProgress * 100))
     }
 
@@ -49,9 +50,9 @@ const Slider = () => {
                     </div>
                     
                 </div>
-                {/* <div className="flex pt-10 justify-center">
+                <div className="flex pt-10 justify-center">
                     <h1 className="text-body">{value}</h1>
-                </div> */}
+                </div>
             </div>
         </>
     )

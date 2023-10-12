@@ -9,8 +9,8 @@ const teacherSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   schoolTeacherId: { type: String },
   classrooms: [{
-    classroomName: { type: String },
-    subject: { type: String },
+    classroomSubject: { type: String },
+    location: { type: String },
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
   }],
 });

@@ -12,10 +12,10 @@ const createNewTeacher = async (req, res) => {
             password: req.body.password,
             role: 'teacher',
         });
-  
+
         // Save the user
         await user.save();
-  
+
         // Create a new teacher and associate it with the user
         const teacher = new Teacher({
             user: user._id,
@@ -27,10 +27,10 @@ const createNewTeacher = async (req, res) => {
             avatarImg: req.body.avatarImg,
             classrooms: req.body.classrooms, // Include classrooms from req.body
         });
-  
+
         // Save the teacher
         await teacher.save();
-  
+
         // Return the newly created teacher object in the response
         res.json(teacher);
     } catch (error) {
@@ -54,7 +54,7 @@ const getTeacherById = async (req, res) => {
 const updateTeacherInfo = async (req, res) => {
     try {
         res.json(
-          await Teacher.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            await Teacher.findByIdAndUpdate(req.params.id, req.body, { new: true })
         );
     } catch (error) {
         res.status(400).json(error);
@@ -71,36 +71,64 @@ const deleteTeacher = async (req, res) => {
 
 const getClassBySubject = async (req, res) => {
     try {
-      const teacher = await Teacher.findById(req.params.id);
+        const teacher = await Teacher.findById(req.params.id);
 
-      if (!teacher) {
-        return res.status(404).json({error: 'Teacher not found'});
-      }
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
 
-      const classroom = teacher.classrooms.id(req.params.classroomId);
+        const classroom = teacher.classrooms.id(req.params.classroomId);
 
-      if (!classroom) {
-        return res.status(404).json({error: 'Classroom not found'});
-      }
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
 
-      res.json(classroom);
+        res.json(classroom);
 
     } catch (err) {
-      console.error(err);
-      res.status(500).json({error: 'Server error'});
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
     }
-  }
+}
 
-  
-  module.exports = {
+const getStudentsInClassroom = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id); 
+        const classroom = teacher.classrooms.id(req.params.classroomId);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
+
+        const studentIds = classroom.students;
+
+        // Assuming you have a Student model defined
+        const students = await Student.find({ _id: { $in: studentIds } });
+
+        res.json(students);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
+
+
+
+module.exports = {
     createNewTeacher,
     getAllTeachers,
     getTeacherById,
     updateTeacherInfo,
     deleteTeacher,
-    getClassBySubject, // Add this to the exports
-  };
-  
+    getClassBySubject,
+    getStudentsInClassroom // Add this to the exports
+};
+
 
 // =================================================== //
 
@@ -108,7 +136,7 @@ const getClassBySubject = async (req, res) => {
 // Gets all students within a teacher's classroom
 const getAllStudentsInClassroom = async (req, res) => {
     const teacher = await Teacher.findById(req.params.teacher_id);
-    const students = await Student.find({ _id: { $in: teacher.students }});
+    const students = await Student.find({ _id: { $in: teacher.students } });
     res.json(students)
 }
 
@@ -117,11 +145,11 @@ const getAllStudentsInClassroom = async (req, res) => {
 const addStudentToClass = async (req, res) => {
     const teacher = await Teacher.findById(req.params.teacher_id);
     const student = await Student.findById(req.params.student_id);
-  
+
     teacher.students.push(student._id);
     await teacher.save();
     res.json(teacher);
-    
+
 }
 
 // FIXME: *** WILL NEED TO CHANGE *** //
@@ -145,4 +173,5 @@ module.exports = {
     getAllStudentsInClassroom,
     addStudentToClass,
     removeStudentFromClass,
+    getStudentsInClassroom
 }

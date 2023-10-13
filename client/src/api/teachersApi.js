@@ -52,6 +52,18 @@ export const getTeacherClassroom = async (id, classroomId) => {
       throw error; 
     }
   }
+
+  export const getAllStudentsClassroom = async (id, classroomId) => {
+    try {
+      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error; 
+    }
+  }
+
+
   
 
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //

@@ -27,7 +27,6 @@ const ViewClassroom = () => {
 
     return (
         <>
-            <div>
                 <div>
                     <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem]">
                         Good morning, {userData.firstName}!
@@ -62,14 +61,13 @@ const ViewClassroom = () => {
                                                     {student.firstName}
                                                 </div>
                                             );
-                                        }
-                                        else if (lastCheckin && lastCheckin.ZOR) {
-                                            const zor = lastCheckout.ZOR;
+                                        } else if (lastCheckin && lastCheckin.ZOR) {
+                                            const zor = lastCheckin.ZOR;
                                             const bgColorClass = getBorderColorClass(zor);
                                             return (
                                                 <div
                                                     key={`${student.id}-${index}`}
-                                                    className={`bg${bgColorClass} p-3 m-4 rounded-lg`}
+                                                    className={`border-4 ${bgColorClass} p-3 m-4 rounded-lg`}
                                                     style={{
                                                         gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
                                                         gridColumnStart: `${student.seatNumber % cols + 1}`,
@@ -132,7 +130,6 @@ const ViewClassroom = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </>
     );
 }

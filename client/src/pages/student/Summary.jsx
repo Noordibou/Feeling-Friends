@@ -46,7 +46,7 @@ const Summary = () => {
 
   return (
     <>
-      <div className="pt-[12rem]">
+      <div className="pt-[12rem] h-screen">
         <div className="flex items-center justify-center">
           <img src={SummaryPerson} alt="SummaryPerson" className="h-42" />
         </div>

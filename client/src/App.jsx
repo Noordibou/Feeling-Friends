@@ -23,10 +23,8 @@ import ViewClassroom from "./pages/teacher/ViewClassroom";
 
 export default function App() {
   return (
-    <main className="bg-notebookPaper ">
-      
-
-      
+    <main className="bg-notebookPaper">
+  
       <AuthProvider>
 <UserProvider>
       <Routes>
@@ -58,5 +56,6 @@ export default function App() {
       </AuthProvider>
     
     </main>
+   
   );
 }

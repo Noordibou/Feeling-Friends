@@ -39,7 +39,7 @@ const Home = () => {
   };
   return (
     <>
-    <div className="flex w-screen items-center justify-center">
+    <div className="flex w-screen items-center justify-center h-screen">
       <div className="home_page">
         <h4>
           {" "}

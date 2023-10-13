@@ -26,7 +26,7 @@ export default function ViewClassList() {
     }, [teacherId, classroomId]);
     return (
         <>
-            <div>
+            <div className=''>
                 <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem]">Good morning, {userData.firstName}!</h1>
                 {classroom ? (
                     <>
@@ -120,7 +120,7 @@ export default function ViewClassList() {
                     'Loading...'
                 )}
 
-                <div className="w-[90%] ml-auto mr-auto mt-[1rem]">
+                <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
 
 
                     {/* Div below may need positioned differently later */}
@@ -128,7 +128,7 @@ export default function ViewClassList() {
                         <a href="/teacher-home">&lt; All Classes</a>
                     </div>
 
-                    <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto">
+                    <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto ">
                         <div className="text-body font-body p-[1rem] bg-sandwich">
                         <Link to={`/classroom/${userData._id}/${classroomId}`}>Room</Link></div>
                         <div className="text-body font-body p-[1rem]"><Link to={`/viewclasslist/${userData._id}/${classroomId}`}>List</Link></div>

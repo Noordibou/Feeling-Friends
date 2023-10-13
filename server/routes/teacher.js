@@ -2,13 +2,13 @@ const Student = require('../models/Student.js');
 const Teacher = require('../models/Teacher.js');
 const User = require('../models/User.js');
 const {createNewTeacher, getAllTeachers, getTeacherById, updateTeacherInfo, deleteTeacher,  addStudentToClass, removeStudentFromClass, getClassBySubject, getStudentsInClassroom } = require('../controllers/teacherController.js')
-const {verifyToken, verifyUser}  = require('../middleware/index')
+const {verifyToken, verifyUser, verifyRole}  = require('../middleware/index')
 const router = require("express").Router();
 
 // probably won't use, use the signup instead
 router.post('/teachers', createNewTeacher);
 router.get('/teachers', getAllTeachers)
-router.get('/teachers/:id', verifyToken, verifyUser, getTeacherById);
+router.get('/teachers/:id', verifyToken, verifyUser, verifyRole(["teacher"]), getTeacherById);
 router.put("/teachers/:id", updateTeacherInfo);
 router.delete('/teachers/:id', deleteTeacher);
 

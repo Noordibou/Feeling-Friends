@@ -41,7 +41,7 @@ const userData = {
 const user = await User.create(userData);
 
 
-    const token = createSecretToken(user._id);
+    const token = createSecretToken(user._id, user.student, user.role);
 
     res.cookie("token", token, {
       withCredentials: true,
@@ -106,12 +106,13 @@ const Login = async (req, res, next) => {
 
     if(user.role === 'student') {
       // const studentId = user.student
-      token = createSecretToken(user._id, user.student);
+      token = createSecretToken(user._id, user.student, user.role);
 
       redirectPath = '/student-home';
     } else if(user.role === 'teacher') {
       // const teacherId = user.teacher
-      token = createSecretToken(user._id);
+      // not yet tested with new info
+      token = createSecretToken(user._id, user.teacher, user.role);
 
       redirectPath = '/teacher-home';  
     } else {

@@ -35,8 +35,15 @@ const verifyUser = (req, res, next) => {
     next();
 }
 
-const verifyRole = (req, res, next) => {
+// FIXME: currently doesnt work when changing to the url teacher-home, but it should since it should be only getting teacher information
+const verifyRole = (allowedRoles) => (req, res, next) => {
+  const userRole = req.user.role
   
+  if (allowedRoles.includes(userRole)) {
+    next();
+  } else {
+    res.status(403).json({message: "You are not authorized to access this information"})
+  }
 }
 
 // TODO:
@@ -78,5 +85,6 @@ const verifyRole = (req, res, next) => {
 
 module.exports = {
     verifyToken,
-    verifyUser
+    verifyUser,
+    verifyRole
 }

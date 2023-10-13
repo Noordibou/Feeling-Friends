@@ -114,29 +114,22 @@
 // }
 
 // export default RegZone;
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Avatar from "../../images/avatar.png";
-import Star from "../../images/star.png";
-import deepBreathing from "../../images/RegZoneDeepBreathingCard.png"
-import imagineExercise from "../../images/coping skill card_ Overwhelmed.png"
-import { useStudent } from "../../context/StudentContext";
+import deepBreathing from "../../images/RegZoneDeepBreathingCard.png";
+import imagineExercise from "../../images/coping skill card_ Overwhelmed.png";
+import { useUser } from "../../context/UserContext";
 import Slider from "../../components/Slider";
-
-// import emotionsExplained from '../../mockData/emotionData.js'
 
 const RegZone = () => {
   const navigate = useNavigate();
-  const { studentData, updateStudentDataAccumulated } = useStudent();
+  const { updateUserDataAccumulated } = useUser();
   const [emotion, setEmotion] = useState("");
-  const [sliderValue, setSliderValue] = useState(0)
-  const [regZone, setRegZone] = useState("")
+  const [sliderValue, setSliderValue] = useState(0);
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
 
   const handleZoneClick = () => {
-    console.log("hellooo")
     let regZone;
     switch (true) {
       case sliderValue <= 23:
@@ -151,51 +144,26 @@ const RegZone = () => {
       default:
         regZone = "Explosive";
     }
-    const updatedFields = { ZOR: regZone }
-    updateStudentDataAccumulated(updatedFields);
+    const updatedFields = { ZOR: regZone };
+    updateUserDataAccumulated(updatedFields);
+
     navigate("/goalsneeds", {
       state: {
-        emotion: emotionFromLocation
-      }
+        emotion: emotionFromLocation,
+      },
     });
   };
 
-  const emotionsExplained = [
-    {
-      emotion: "Anxious",
-      image: {deepBreathing}
-    },
-    {
-      emotion: "Overwhelmed",
-      image: {imagineExercise}
-    },
-  ]
-
   useEffect(() => {
-    console.log("Location state:", location.state);
-  console.log("Emotion from location:", location.state?.emotion);
     const emotionFromParams = location.state?.emotion;
     if (emotionFromParams) {
       setEmotion(emotionFromParams);
     }
-    console.log("Emotion:", emotion);
   }, [location.state?.emotion]);
-
-  const getEmotionTips = () => {
-    const emotionObject = emotionsExplained.find(
-      (emotionObject) => emotionObject.emotion.toLowerCase() === emotion.toLowerCase()
-    );
-    if (emotionObject) {
-      console.log("emotion object: " + JSON.stringify(emotionObject))
-      return emotionObject.tips;
-    } else {
-      return [];
-    }
-  };
 
   return (
     <>
-      <div className="bg-notebookPaper pt-[3.5rem] ">
+      <div className="bg-notebookPaper pt-[3.5rem]">
         <div className="md:w-6/12 w-9/12 text-center ml-auto mr-auto">
           <h1 className="font-header1 md:text-header1 text-header2 leading-tight">
             It’s normal to feel {emotionFromLocation.toLowerCase()}.
@@ -210,45 +178,34 @@ const RegZone = () => {
         {/* emotion explanation */}
         <div className="bg-lightOrange w-11/12 pt-[1.rem] rounded-[2rem] p-2 mt-[2rem] ml-auto mr-auto flex items-center justify-center">
           <div className="">
-            {/* <h2 className="font-header2 md:text-header2 text-md leading-tight">
-              What is {emotionFromLocation}?
-            </h2> */}
             {emotionFromLocation === "Anxious" ? (
-              <img className="h-80 " src={deepBreathing} />
+              <img className="h-80" src={deepBreathing} alt="Deep Breathing" />
             ) : (
-              <img className="h-80 " src={imagineExercise} />
+              <img className="h-80" src={imagineExercise} alt="Imagine Exercise" />
             )}
           </div>
-          {/* <div className="mr-auto ml-auto">
-            <img src={Avatar} alt="avatar" className=" ml-auto mr-auto" />
-          </div> */}
         </div>
-        {/* checkin with body text */}
+
+        {/* check-in with body text */}
         <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">
-          <h2>Check in with your body- what zone are you in? </h2>
+          <h2>Check in with your body - what zone are you in?</h2>
           <h2>Drag the slider to that zone.</h2>
         </div>
 
         {/* slider view */}
-        <div
-          className="fixed
-             inset-x-0
-             bottom-0"
-        >
-          {/* new animated slider */}
-          <div className="absolute w-full bottom-[3.4rem] ">
+        <div className="fixed inset-x-0 bottom-0">
+          <div className="absolute w-full bottom-[3.4rem]">
             <Slider updateSliderValue={setSliderValue} />
             <div className="flex w-full justify-center">
-              <button className="bg-themeWhite px-10 py-3" onClick={handleZoneClick}>OK</button>
+              <button className="bg-themeWhite px-10 py-3" onClick={handleZoneClick}>
+                OK
+              </button>
             </div>
           </div>
 
-          <div className="mt-[2rem] flex items-end ">
+          <div className="mt-[2rem] flex items-end">
             {/* unmotivated */}
-            <div
-              className="bg-blue w-1/4 h-[17rem] rounded-tl-[2rem] hover:bg-blue/70 pb-10"
-
-            >
+            <div className="bg-blue w-1/4 h-[17rem] rounded-tl-[2rem] hover:bg-blue/70 pb-10">
               <span className="block font-body text-white mt-[5rem] ml-[1.5rem] cursor-pointer -mb-6">
                 Low energy
               </span>
@@ -258,27 +215,21 @@ const RegZone = () => {
             </div>
 
             {/* ready to learn */}
-            <div
-              className="bg-green w-1/4 h-[17rem] cursor-pointer hover:bg-green/70"
-            >
+            <div className="bg-green w-1/4 h-[17rem] cursor-pointer hover-bg-green/70">
               <span className="block font-regZone md:text-regZone text-sm  text-white mt-[12.9rem] text-center">
                 Ready to learn
               </span>
             </div>
 
             {/* wiggly */}
-            <div
-              className="bg-yellow w-1/4 h-[17rem] cursor-pointer hover:bg-yellow/60"
-            >
+            <div className="bg-yellow w-1/4 h-[17rem] cursor-pointer hover-bg-yellow/60">
               <span className="block font-regZone md:text-regZone text-sm text-white mt-[12.9rem] ml-[3.5rem] -mb-10">
                 Wiggly
               </span>
             </div>
 
             {/* explosive */}
-            <div
-              className="bg-orange w-1/4 h-[17rem] cursor-pointer rounded-tr-[2rem] hover:bg-orange/70"
-            >
+            <div className="bg-orange w-1/4 h-[17rem] cursor-pointer rounded-tr-[2rem] hover-bg-orange/70">
               <span className="block font-body text-white mt-[5rem] ml-[5rem] cursor-pointer -mb-10">
                 High energy
               </span>
@@ -291,6 +242,6 @@ const RegZone = () => {
       </div>
     </>
   );
-}
+};
 
 export default RegZone;

@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useStudent } from "../../context/StudentContext";
+import { useUser } from "../../context/UserContext";
 import scaredWheel from "../../images/scaredWheel.png"
 import angryImg from '../../images/angry.png'
 import proudImg from '../../images/proud.png'
@@ -11,16 +10,14 @@ import scaredImg from '../../images/scared.png'
 
 const SubEmotionScared = () => {
   const navigate = useNavigate();
-
-  const { studentData, updateStudentDataAccumulated } = useStudent();
-
+  const { updateUserDataAccumulated } = useUser();
 
   const handleEmotionClick = (chosenEmotion) => {
-    updateStudentDataAccumulated({["emotion"]: chosenEmotion});    
+    updateUserDataAccumulated({ emotion: chosenEmotion });
     navigate("/regzone", {
       state: {
-        emotion: chosenEmotion
-      }
+        emotion: chosenEmotion,
+      },
     });
   };
 
@@ -49,20 +46,20 @@ const SubEmotionScared = () => {
             </div>
           </div>
         </div>
-<div className="-mt-[30%] justify-center ">
-        <div className=" px-18 flex justify-between">
-          <button className="rounded-full w-18 h-18 bg-yellow p-2" href="/subemotionproud"><img src={proudImg} alt="" className="w-16 h-16 object-fill  " /></button>
-          <button className="rounded-full w-18 h-18 bg-lightBlue p-2 " href="/subemotionanxious"><img src={anxiousImg} alt="" className="w-16 h-16 object-fill " /></button>
-        </div>
+        <div className="-mt-[30%] justify-center ">
+          <div className=" px-18 flex justify-between">
+            <button className="rounded-full w-18 h-18 bg-yellow p-2" href="/subemotionproud"><img src={proudImg} alt="" className="w-16 h-16 object-fill  " /></button>
+            <button className="rounded-full w-18 h-18 bg-lightBlue p-2 " href="/subemotionanxious"><img src={anxiousImg} alt="" className="w-16 h-16 object-fill " /></button>
+          </div>
 
-        <div className=" px-32 flex justify-between">
-          <button className="rounded-full w-18 h-18 bg-darkTeal p-2" href="/subemotionhappy"><img src={happyImg} alt="" className="w-16 h-16 object-fill " /></button>
-          <button className="rounded-full w-18 h-18 bg-pink p-2" href="/subemotionangry"><img src={angryImg} alt="" className="w-16 h-16 object-fill " /></button>
-        </div>
+          <div className=" px-32 flex justify-between">
+            <button className="rounded-full w-18 h-18 bg-darkTeal p-2" href="/subemotionhappy"><img src={happyImg} alt="" className="w-16 h-16 object-fill " /></button>
+            <button className="rounded-full w-18 h-18 bg-pink p-2" href="/subemotionangry"><img src={angryImg} alt="" className="w-16 h-16 object-fill " /></button>
+          </div>
 
-        <div className="-mt-12 flex justify-center">
-          <button className="rounded-full w-18 h-18 bg-lightLavender p-2" href="/subemotionscared"><img src={sadImg} alt="" className="w-16 h-16 object-fill " /></button>
-        </div>
+          <div className="-mt-12 flex justify-center">
+            <button className="rounded-full w-18 h-18 bg-lightLavender p-2" href="/subemotionscared"><img src={sadImg} alt="" className="w-16 h-16 object-fill " /></button>
+          </div>
         </div>
       </div>
     </div>

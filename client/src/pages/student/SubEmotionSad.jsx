@@ -1,26 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useStudent } from "../../context/StudentContext";
-import sadWheel from "../../images/sadWheel.png"
-import angryImg from '../../images/angry.png'
-import proudImg from '../../images/proud.png'
-import anxiousImg from '../../images/anxious.png'
-import sadImg from '../../images/sad.png'
-import happyImg from '../../images/happy.png'
-import scaredImg from '../../images/scared.png'
+import { useUser } from "../../context/UserContext";
+import sadWheel from "../../images/sadWheel.png";
+import angryImg from '../../images/angry.png';
+import proudImg from '../../images/proud.png';
+import anxiousImg from '../../images/anxious.png';
+import sadImg from '../../images/sad.png';
+import happyImg from '../../images/happy.png';
+import scaredImg from '../../images/scared.png';
 
 const SubEmotionSad = () => {
   const navigate = useNavigate();
-
-  const { studentData, updateStudentDataAccumulated } = useStudent();
-
+  const { updateUserDataAccumulated } = useUser();
 
   const handleEmotionClick = (chosenEmotion) => {
-    updateStudentDataAccumulated({["emotion"]: chosenEmotion});    
+    updateUserDataAccumulated({ emotion: chosenEmotion }); // Use "emotion" as the key
     navigate("/regzone", {
       state: {
-        emotion: chosenEmotion
-      }
+        emotion: chosenEmotion,
+      },
     });
   };
 
@@ -67,6 +65,6 @@ const SubEmotionSad = () => {
       </div>
     </div>
   );
-}
+};
 
 export default SubEmotionSad;

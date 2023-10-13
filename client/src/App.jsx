@@ -14,21 +14,19 @@ import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
 import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
-import ClassRoom from "./pages/teacher/ViewClassroom";
 import ClassList from "./pages/teacher/ViewClassList";
 import NeedsGoals from "./pages/teacher/NeedsGoals";
 import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
-import { StudentProvider } from "./context/StudentProvider";
+import { UserProvider } from "./context/UserContext";
+import ViewClassroom from "./pages/teacher/ViewClassroom";
 
 export default function App() {
   return (
-    <main className="bg-notebookPaper h-screen ">
-      
-
-      
+    <main className="bg-notebookPaper">
+  
       <AuthProvider>
-<StudentProvider>
+<UserProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -37,8 +35,8 @@ export default function App() {
 
         {/* Teacher Routes */}
         <Route path="/teacher-home" element={<TeacherHome />} />
-        <Route path="/viewclassroom" element={<ClassRoom />} />
-        <Route path="/viewclasslist" element={<ClassList />} />
+        <Route path="/classroom/:teacherId/:classroomId"  element={<ViewClassroom />} />
+        <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
         <Route path="/editneedsgoals" element={<NeedsGoals />} />
         <Route path="/studentprofile" element={<StudentProfile />} />
 
@@ -54,9 +52,10 @@ export default function App() {
         <Route path="/goalsneeds" element={<GoalsNeeds />} />
         <Route path="/summary" element={<Summary />} />
       </Routes>
-      </StudentProvider>
+      </UserProvider>
       </AuthProvider>
     
     </main>
+   
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useUser } from '../context/UserContext';
 
 const TeacherHome = () => {
@@ -31,7 +32,8 @@ const TeacherHome = () => {
                   <div className="flex justify-between mb-[1rem]">
                     <div className="bg-blue w-[80%] h-[2.5rem] rounded-[1rem]"></div>
                     <div className="text-body font-body">
-                      <a href="/viewclassroom">More &gt;</a>
+                      {/* Use Link to navigate to the specific classroom */}
+                      <Link to={`/classroom/${userData._id}/${classroom._id}`}>More &gt;</Link>
                     </div>
                   </div>
                 </div>

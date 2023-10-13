@@ -69,6 +69,39 @@ const deleteTeacher = async (req, res) => {
     }
 }
 
+const getClassBySubject = async (req, res) => {
+    try {
+      const teacher = await Teacher.findById(req.params.id);
+
+      if (!teacher) {
+        return res.status(404).json({error: 'Teacher not found'});
+      }
+
+      const classroom = teacher.classrooms.id(req.params.classroomId);
+
+      if (!classroom) {
+        return res.status(404).json({error: 'Classroom not found'});
+      }
+
+      res.json(classroom);
+
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({error: 'Server error'});
+    }
+  }
+
+  
+  module.exports = {
+    createNewTeacher,
+    getAllTeachers,
+    getTeacherById,
+    updateTeacherInfo,
+    deleteTeacher,
+    getClassBySubject, // Add this to the exports
+  };
+  
+
 // =================================================== //
 
 // FIXME: *** WILL NEED TO CHANGE *** //
@@ -108,7 +141,8 @@ module.exports = {
     getTeacherById,
     updateTeacherInfo,
     deleteTeacher,
+    getClassBySubject,
     getAllStudentsInClassroom,
     addStudentToClass,
-    removeStudentFromClass
+    removeStudentFromClass,
 }

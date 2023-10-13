@@ -14,12 +14,12 @@ import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
 import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
-import ClassRoom from "./pages/teacher/ViewClassroom";
 import ClassList from "./pages/teacher/ViewClassList";
 import NeedsGoals from "./pages/teacher/NeedsGoals";
 import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
+import ViewClassroom from "./pages/teacher/ViewClassroom";
 
 export default function App() {
   return (
@@ -37,7 +37,7 @@ export default function App() {
 
         {/* Teacher Routes */}
         <Route path="/teacher-home" element={<TeacherHome />} />
-        <Route path="/viewclassroom" element={<ClassRoom />} />
+        <Route path="/classroom/:teacherId/:classroomId"  element={<ViewClassroom />} />
         <Route path="/viewclasslist" element={<ClassList />} />
         <Route path="/editneedsgoals" element={<NeedsGoals />} />
         <Route path="/studentprofile" element={<StudentProfile />} />

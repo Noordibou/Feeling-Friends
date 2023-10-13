@@ -41,7 +41,7 @@ const userData = {
 const user = await User.create(userData);
 
 
-    const token = createSecretToken(user._id);
+    const token = createSecretToken(user._id, user.student, user.role);
 
     res.cookie("token", token, {
       withCredentials: true,
@@ -81,32 +81,6 @@ const findUserById = async (req, res) => {
   }
 }
 
-
-// const Signup = async (req, res, next) => {
-//   try {
-//     const { email, password, username, role } = req.body;
-//     const existingUser = await User.findOne({ email });
-
-//     if (existingUser) {
-//       return res.json({ message: "User already exists" });
-//     }
-
-//     const user = await User.create({ email, password, username, role });
-//     const token = createSecretToken(user._id);
-//     res.cookie("token", token, {
-//       withCredentials: true,
-//       httpOnly: false,
-//     });
-//     res
-//       .status(201)
-//       .json({ message: "User signed in successfully", success: true, user });
-//     next();
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
-
 const Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -132,12 +106,13 @@ const Login = async (req, res, next) => {
 
     if(user.role === 'student') {
       // const studentId = user.student
-      token = createSecretToken(user._id);
+      token = createSecretToken(user._id, user.student, user.role);
 
       redirectPath = '/student-home';
     } else if(user.role === 'teacher') {
       // const teacherId = user.teacher
-      token = createSecretToken(user._id);
+      // not yet tested with new info
+      token = createSecretToken(user._id, user.teacher, user.role);
 
       redirectPath = '/teacher-home';  
     } else {

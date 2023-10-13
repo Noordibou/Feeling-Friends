@@ -2,49 +2,42 @@ const User = require("../models/User");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+// authentication: verifies the request is coming from the user
 const verifyToken = (req, res, next) => {
+  console.log("Verify Token being called")
   const token = req.cookies.token
-  console.log("what is this token in veryfiToken? " + token)
 
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
 
   try {
-    console.log("well hey")
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-    console.log("decoded: " + JSON.stringify(decoded))
     req.user = decoded;
-    console.log('hey you here?')
     next();
   } catch (error) {
-    console.log("The error is: ", error)
     res.status(400).json({ message: 'Invalid token.' });
   }
 };
 
-
-
-
 // TODO: Middleware  functions:
-
-// // * verifyUser: that checks the user's token (verifies the request is coming from the user)
 // // * checkRole: checks that the user making the request has the right role
 // // * validation: makes sure that info being passed to database is correct
-// // * logger??? for error handling???
 
-// FIXME: NOT YET TESTED
+// authorization: verifies user's id
 const verifyUser = (req, res, next) => {
-    const userId = req.user.id;
+  console.log("Verify User being called")
+    const userId = req.user.roleId;
     const studentId = req.params.id;
-    console.log('userId: ', userId)
-    console.log('studentId: ', studentId)
 
     if (userId !== studentId) {
-        return res.status(403).json({ message: 'You are not authorized to access this student data' })
+        return res.status(403).json({ message: 'You are not authorized to access this data' })
     }
     next();
 }
+
+// NOTES:
+// only the student who is the owner of the data can access it. If you have different authorization levels (e.g., admin, teacher, etc.), you might need to extend your authorization logic accordingly.
 
 
 // move to index.js? used if an api call is made that doesn't exist

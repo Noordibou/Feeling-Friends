@@ -28,7 +28,7 @@ export const createStudent = async (student) => {
 // this works ✅
 export const getStudentById = async (id) => {
     try {
-        const response = await axios.get(`${STUDENTS_API_URL}/${id}`)
+        const response = await axios.get(`${STUDENTS_API_URL}/${id}`, { withCredentials: true })
         return response.data;
     } catch (error) {
         throw error;
@@ -38,18 +38,12 @@ export const getStudentById = async (id) => {
 
 
 export const updateStudent = async (id, studentUpdate, checkInOutType) => {
-    if (token) {
-        // Token is available, you can use it in your code
-        console.log('Token:', token);
-      } else {
+    if (!token) {
         // Token is not available
         console.log('Token not found');
       }
-    console.log("update student api, show id pls: " + id)
-    console.log("student object being sent to backend: " + JSON.stringify(studentUpdate))
     try {
         const response = await axios.put(`${STUDENTS_API_URL}/${id}`, {studentUpdate, checkInOutType}, { withCredentials: true })
-        console.log("is this working???")
         return response.data;
     } catch (error) {
         console.log("oh shoot")
@@ -61,7 +55,7 @@ export const updateStudent = async (id, studentUpdate, checkInOutType) => {
 // this works ✅
 export const deleteStudent = async (id) => {
     try {
-        const response = await axios.delete(`${STUDENTS_API_URL}/${id}`)
+        const response = await axios.delete(`${STUDENTS_API_URL}/${id}`, { withCredentials: true })
         return response.sendStatus(200);
     } catch (error) {
         throw error;

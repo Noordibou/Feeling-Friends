@@ -5,12 +5,10 @@ const jwt = require("jsonwebtoken");
 
 module.exports.userVerification = (req, res) => {
   const token = req.cookies.token
-  console.log("what is this token in authMiddle? " + token)
   if (!token) {
     return res.json({ status: false })
   }
   jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
-    console.log("decoded: " + JSON.stringify(data))
     if (err) {
      return res.json({ status: false })
     } else {

@@ -7,8 +7,8 @@ router.post('/students', createNewStudent);
 
 // not for specific teacher/classroom
 router.get('/students', getAllStudents)
-router.get("/students/:id", getStudentById);
+router.get("/students/:id", verifyToken, verifyUser, getStudentById);
 router.put("/students/:id", verifyToken, verifyUser, updateStudentJournalEntry);
-router.delete("/students/:id", deleteStudent);
+router.delete("/students/:id", verifyToken, verifyUser, deleteStudent);
 
 module.exports = router;

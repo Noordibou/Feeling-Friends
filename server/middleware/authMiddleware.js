@@ -3,14 +3,14 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 
-// FIXME: I don't think this is actually being used. Ran a console log in here and clicked on the site: nothing.
 module.exports.userVerification = (req, res) => {
   const token = req.cookies.token
-  console.log("hey is this userVerification function being called?")
+  console.log("what is this token in authMiddle? " + token)
   if (!token) {
     return res.json({ status: false })
   }
   jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+    console.log("decoded: " + JSON.stringify(data))
     if (err) {
      return res.json({ status: false })
     } else {

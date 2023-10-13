@@ -3,27 +3,24 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-//   const token = req.cookies.token;
-  const token = res.locals.token
-    console.log("oop just doing a check here: ", JSON.stringify(token))
-    console.log("oop another check for the req: ", JSON.stringify(req.cookies))
+  const token = req.cookies.token
+  console.log("what is this token in veryfiToken? " + token)
 
   if (!token) {
-    return res.status(403).json({ status: false });
+    return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
-  jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
-    if (err) {
-      return res.json({ status: false });
-    } else {
-      const user = await User.findById(data.id);
-      if (user) {
-        req.user = user;
-        next();
-      } else {
-        return res.status(403).json({ status: false });
-      }
-    }
-  });
+
+  try {
+    console.log("well hey")
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    console.log("decoded: " + JSON.stringify(decoded))
+    req.user = decoded;
+    console.log('hey you here?')
+    next();
+  } catch (error) {
+    console.log("The error is: ", error)
+    res.status(400).json({ message: 'Invalid token.' });
+  }
 };
 
 
@@ -39,7 +36,7 @@ const verifyToken = (req, res, next) => {
 // FIXME: NOT YET TESTED
 const verifyUser = (req, res, next) => {
     const userId = req.user.id;
-    const studentId = req.params.studentId;
+    const studentId = req.params.id;
     console.log('userId: ', userId)
     console.log('studentId: ', studentId)
 

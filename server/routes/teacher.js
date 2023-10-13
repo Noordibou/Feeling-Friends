@@ -8,7 +8,8 @@ const router = require("express").Router();
 // probably won't use, use the signup instead
 router.post('/teachers', createNewTeacher);
 router.get('/teachers', getAllTeachers)
-router.get('/teachers/:id', verifyToken, verifyUser, verifyRole(["teacher"]), getTeacherById);
+// router.get('/teachers/:id', verifyToken, verifyUser, verifyRole(["teacher"]), getTeacherById);
+router.get('/teachers/:id', getTeacherById);
 router.put("/teachers/:id", updateTeacherInfo);
 router.delete('/teachers/:id', deleteTeacher);
 

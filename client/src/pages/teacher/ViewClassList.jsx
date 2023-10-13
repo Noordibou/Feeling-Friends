@@ -26,7 +26,7 @@ export default function ViewClassList() {
     }, [teacherId, classroomId]);
     return (
         <>
-            <div className=''>
+            <div >
                 <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem]">Good morning, {userData.firstName}!</h1>
                 {classroom ? (
                     <>
@@ -52,10 +52,10 @@ export default function ViewClassList() {
                                                 const lastEmotion = lastCheckout.emotion;
                                                 const zor = lastCheckout.ZOR;
                                                 const bgColorClass = getBackgroundColorClass(zor);
-
+                                                console.log(zor)
                                                 return (
                                                     <li key={`${student.id}-${index}`}>
-                                                        <div className={`bg${bgColorClass} my-3 p-4 rounded-lg`}>
+                                                        <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
                                                             <div className='pb-2'>
                                                                 {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
                                                             </div>
@@ -70,6 +70,7 @@ export default function ViewClassList() {
                                             } else if (lastCheckin && lastCheckin.emotion) {
                                                 const lastEmotion = lastCheckin.emotion;
                                                 const zor = lastCheckin.ZOR;
+                                                console.log(zor)
                                                 const bgColorClass = getBackgroundColorClass(zor);
                                                 return (
                                                     <li key={`${student.id}-${index}`}>

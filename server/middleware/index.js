@@ -1,6 +1,9 @@
-const User = require("../models/User");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+
+// TODO: Middleware  functions:
+// // * checkRole: checks that the user making the request has the right role
+// // * validation: makes sure that info being passed to database is correct
 
 // authentication: verifies the request is coming from the user
 const verifyToken = (req, res, next) => {
@@ -20,10 +23,6 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// TODO: Middleware  functions:
-// // * checkRole: checks that the user making the request has the right role
-// // * validation: makes sure that info being passed to database is correct
-
 // authorization: verifies user's id
 const verifyUser = (req, res, next) => {
   console.log("Verify User being called")
@@ -36,19 +35,46 @@ const verifyUser = (req, res, next) => {
     next();
 }
 
-// NOTES:
+const verifyRole = (req, res, next) => {
+  
+}
+
+// TODO:
 // only the student who is the owner of the data can access it. If you have different authorization levels (e.g., admin, teacher, etc.), you might need to extend your authorization logic accordingly.
 
+// FIXME: not configured yet
+// // can make special permissions file, or an Access Control List (ACL)
+// // Example:
+// const acl = {
+//   students: {
+//     admin: ['read', 'create', 'update', 'delete'],
+//     teacher: ['read', 'update'],
+//     student: ['read'],
+//   },
+//   courses: {
+//     admin: ['read', 'create', 'update', 'delete'],
+//     teacher: ['read', 'update'],
+//     student: ['read'],
+//   },
+//   grades: {
+//     admin: ['read', 'create', 'update', 'delete'],
+//     teacher: ['read', 'update'],
+//     student: ['read'],
+//   },
+// };
 
-// move to index.js? used if an api call is made that doesn't exist
-// app.all("*", (req, res) => {
-//     res.status(404);
-//     throw new Error("Route not found")
+// FIXME: not tested yet
+// const checkPermission = (resourceType, action) => (req, res, next) => {
+//   const userRole = req.user.role; // Get the user's role from the token
 
-//     or
-// res.status(404).sendFile(path.join(__dirname, "public/404.html")); // Serve a 404 page
+//   // Check if the user's role is allowed to perform the specified action on the resource type
+//   if (acl[resourceType] && acl[resourceType][userRole] && acl[resourceType][userRole].includes(action)) {
+//     next(); // User is authorized
+//   } else {
+//     res.status(403).json({ message: 'You are not authorized to perform this action on this resource.' });
+//   }
+// };
 
-// })
 
 module.exports = {
     verifyToken,

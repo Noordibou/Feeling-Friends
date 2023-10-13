@@ -27,8 +27,9 @@ const ViewClassroom = () => {
 
     return (
         <>
-                <div>
-                    <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem]">
+                <div className='h-screen'>
+                    <div>
+                    <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem] ">
                         Good morning, {userData.firstName}!
                     </h1>
                 </div>
@@ -130,6 +131,7 @@ const ViewClassroom = () => {
                         </div>
                     </div>
                 </div>
+            </div>
         </>
     );
 }

@@ -43,6 +43,17 @@ export const updateTeacher = async (id, teacher) => {
     }
 }
 
+export const getTeacherClassroom = async (id, classroomId) => {
+    try {
+      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error; 
+    }
+  }
+  
+
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
 export const addStudentToTeacherClassroom = async (teacherId, studentId) => {
     try {

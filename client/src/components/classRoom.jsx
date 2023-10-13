@@ -10,10 +10,10 @@ for (let i = 0; i < rows; i++) {
 }
 
 function getBackgroundColorClass(zor) {
-  if (zor === 'Unmotivated' ) return "-blue";
-  if (zor === 'Ready to Learn') return "-green";
-  if (zor === 'Wiggly') return "-yellow";
-  if (zor === 'Explosive') return "-orange";
+  if (zor === 'Unmotivated' ) return "blue";
+  if (zor === 'Ready to Learn') return "green";
+  if (zor === 'Wiggly') return "yellow";
+  if (zor === 'Explosive') return "orange";
   return "";
 }
 

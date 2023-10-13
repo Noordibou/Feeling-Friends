@@ -91,7 +91,7 @@ const Login = () => {
   };
 
   return (
-    <div className="pt-[10rem]">
+    <div className="h-screen pt-[10rem]">
       <div className="form_container w-8/12 ml-auto mr-auto">
 
         {/* Image here */}

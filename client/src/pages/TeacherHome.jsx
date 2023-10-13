@@ -12,8 +12,8 @@ const TeacherHome = () => {
 
   return (
     <>
-      <div>
-        <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[4rem]">
+      <div className="h-screen">
+        <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[4rem] ">
           {userData ? `Good morning, ${userData.prefix} ${userData.firstName}!` : 'Loading...'}
         </h1>
 

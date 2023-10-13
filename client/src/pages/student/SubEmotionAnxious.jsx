@@ -24,7 +24,7 @@ const SubEmotionAnxious = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center md:h-screen justify-center">
       <div className="flex flex-col text-center">
         <div className="font-header2 text-header1">
           <h2>Choose the emotion closest to</h2>

@@ -33,6 +33,7 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
+
 // *** Use if testing routes with postman instead of above app.use and app.get
 // app.get('/', (req, res) => {
 //   res.send('Hello, Express!')

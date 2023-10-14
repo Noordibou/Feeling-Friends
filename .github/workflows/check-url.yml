@@ -21,7 +21,7 @@
 
 #       - name: Uncommented-Localhost-URL
 #         run: |
-#           if grep -q '// const URL = "http://localhost:3001"' src/URL.jsx; then
+#           if grep -q '// const URL = "http://localhost:3001"' client/src/URL.jsx; then
 #             echo "Success: Found commented localhost URL in your code."
 #             exit 0
 #           else

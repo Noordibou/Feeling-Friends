@@ -138,7 +138,7 @@ const Login = async (req, res, next) => {
 
 
     res.cookie("token", token, {
-      withCredentials: true,
+      secure: true,
       httpOnly: true,
       path: '/'
     });

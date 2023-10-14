@@ -5,7 +5,7 @@ const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const app = express();
 
-app.use(cookieParser());
+
 app.use(logger('dev'));
 app.use(express.json());
 
@@ -14,6 +14,8 @@ app.use(cors({
   methods: 'GET, POST, PUT, DELETE',
   credentials: true,
 }));
+
+app.use(cookieParser());
 
 require('dotenv').config();
 require('./config/database');

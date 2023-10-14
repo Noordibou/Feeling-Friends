@@ -104,6 +104,8 @@ const Login = async (req, res, next) => {
 
     let redirectPath = '/';
 
+    // TODO: *might be able to prevent user from going to different urls based on role
+
     if(user.role === 'student') {
       // const studentId = user.student
       token = createSecretToken(user._id, user.student, user.role);
@@ -137,7 +139,8 @@ const Login = async (req, res, next) => {
 
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      path: '/'
     });
 
     if (user) {

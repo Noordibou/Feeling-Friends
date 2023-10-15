@@ -16,14 +16,12 @@ jobs:
       - name: Check URL
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Uncommented-Localhost-URL
         run: |
           if grep -q '// const URL = "http://localhost:3001"' client/src/URL.jsx; then
             echo "Success: Found commented localhost URL in your code."
             exit 0
           else
+            echo "Error: Please comment out localhost URL."
             exit 1
           fi

@@ -43,6 +43,13 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.1",
     "tailwindcss": "^3.3.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node check-localhost.js"
+    }
   }
 }

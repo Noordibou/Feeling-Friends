@@ -3,6 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
+const session = require('express-session')
 const app = express();
 
 
@@ -17,7 +18,20 @@ app.use(cors({
 
 app.use(cookieParser());
 
+app.set('trust proxy', 1);
+
 require('dotenv').config();
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    sameSite: "none",
+    secure: true
+  },
+}));
+
 require('./config/database');
 
 app.use('/', require("./routes/authRoute"));

@@ -175,10 +175,22 @@ const Login = async (req, res, next) => {
   }
 };
 
+const Logout = async (req, res) => {
+  try {
+    console.log("backend cookie logging out...")
+    res.clearCookie('token');
+    res.status(200).send({ message: 'Logged out successfully' });
+  } catch (error) {
+    console.error("Error clearing cookie:", error);
+    res.status(500).send({ message: 'Error clearing cookie' });
+  }
+  
+}
+
 module.exports = {
   Signup,
   Login,
+  Logout,
   findUser,
-  findUserById,
-  
+  findUserById, 
 };

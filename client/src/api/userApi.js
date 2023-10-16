@@ -19,3 +19,12 @@ export const getUserById = async (userId) => {
       throw error; // You can handle this error in the calling code
     }
   };
+
+export const logoutUser = async () => {
+  console.log("hello trying to logout user frontend api call")
+  try {
+    return await axios.get(`${API_URL}/logout`)
+  } catch (error) {
+    console.error("Logout Failed: ", error)
+  }
+}

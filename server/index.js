@@ -18,19 +18,19 @@ app.use(cors({
 
 app.use(cookieParser());
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 require('dotenv').config();
 
-app.use(session({
-  secret: "secret",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    sameSite: "none",
-    secure: true
-  },
-}));
+// app.use(session({
+//   secret: "secret",
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     sameSite: "none",
+//     secure: true
+//   },
+// }));
 
 require('./config/database');
 

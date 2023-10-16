@@ -140,7 +140,8 @@ const Login = async (req, res, next) => {
     res.cookie("token", token, {
       secure: true,
       httpOnly: true,
-      path: '/'
+      path: '/',
+      sameSite: "none",
     });
 
     if (user) {

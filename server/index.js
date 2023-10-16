@@ -23,7 +23,7 @@ app.set('trust proxy', 1);
 require('dotenv').config();
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: "secret",
   resave: false,
   saveUninitialized: false,
   cookie: {

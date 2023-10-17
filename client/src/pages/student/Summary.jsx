@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import QuestionFrog from '../../images/Question_Frog.png';
 import { useUser } from '../../context/UserContext';
 import Logout from '../../components/LogoutButton.jsx'
+import ProgressBar from "../../components/ProgressBar";
 
 // TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
 
@@ -47,7 +48,10 @@ const Summary = () => {
 
   return (
     <>
-      <div className="pt-[8rem] min-h-screen">
+      <div className="pt-[4rem] min-h-screen">
+        <div className="flex w-full justify-center mb-20">
+          <ProgressBar/>
+        </div>
         <div className="flex items-center justify-center">
           <img src={SummaryPerson} alt="SummaryPerson" className="h-42" />
         </div>

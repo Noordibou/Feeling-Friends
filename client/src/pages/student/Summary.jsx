@@ -5,6 +5,7 @@ import emotionsExplained from '../../mockData/emotionData.js';
 import { useLocation } from "react-router-dom";
 import QuestionFrog from '../../images/Question frog.png';
 import { useUser } from '../../context/UserContext';
+import Logout from '../../components/Logout'
 
 // TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
 
@@ -46,7 +47,7 @@ const Summary = () => {
 
   return (
     <>
-      <div className="pt-[12rem] h-screen">
+      <div className="pt-[8rem] h-screen">
         <div className="flex items-center justify-center">
           <img src={SummaryPerson} alt="SummaryPerson" className="h-42" />
         </div>
@@ -56,7 +57,9 @@ const Summary = () => {
             {userData ? ("Thanks " + userData.firstName) : "Thanks!"} - Have a good day at school!
           </h1>
         </div>
-
+        <div className="flex justify-center mt-10">
+          <Logout/>
+        </div>
         <div className=" bg-lightOrange w-full pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center fixed
              inset-x-0 bottom-0 rounded-b">
           <div className="pl-[1rem]">

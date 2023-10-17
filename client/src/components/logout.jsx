@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ToastContainer, toast } from "react-toastify";
 import {logoutUser} from '../api/userApi.js'
 
-const Home = () => {
+const Logout = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
-  const [username, setUsername] = useState("");
 
-  const Logout = () => {
+  const logout = () => {
     console.log("logging out... on frontend hoome screen")
     logoutUser().then(() => {
       console.log("Logout successful")
@@ -18,23 +16,21 @@ const Home = () => {
     })
     removeCookie("token");
     localStorage.removeItem('userData');
+    navigate("/login")
   };
-
 
   useEffect(() => {
 
   }, [cookies, navigate, removeCookie]);
-
-
   
   return (
     <>
-        <div className="flex w-screen items-center justify-center h-screen">
-      
+        <div className="flex w-9/12 max-w-md items-center justify-center">
+            <button className="rounded w-full p-2 bg-lightOrange font-semibold text-body" onClick={logout}>Log Out</button>
         </div>
       
     </>
   );
 };
 
-export default Home;
+export default Logout;

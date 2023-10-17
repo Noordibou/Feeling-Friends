@@ -21,9 +21,8 @@ export const getUserById = async (userId) => {
   };
 
 export const logoutUser = async () => {
-  console.log("hello trying to logout user frontend api call")
   try {
-    return await axios.get(`${API_URL}/logout`)
+    return await axios.get(`${API_URL}/logout`, { withCredentials: true })
   } catch (error) {
     console.error("Logout Failed: ", error)
   }

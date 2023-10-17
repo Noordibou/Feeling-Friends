@@ -177,7 +177,6 @@ const Login = async (req, res, next) => {
 
 const Logout = async (req, res) => {
   try {
-    console.log("backend cookie logging out...")
     res.clearCookie('token');
     res.status(200).send({ message: 'Logged out successfully' });
   } catch (error) {

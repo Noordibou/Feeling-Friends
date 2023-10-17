@@ -20,19 +20,11 @@ const Home = () => {
     })
     removeCookie("token");
     localStorage.removeItem('userData');
-    // navigate("/login");
   };
 
 
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token && !localStorage) {
-        console.log("there are no cookies and localStorage")
-        navigate("/login");
-      } else {
-        console.log("there are cookies and/or localStorage")
-        console.log("localStorage: ", localStorage)
-      }
       const { data } = await axios.post(
         URL,
         {},
@@ -47,7 +39,7 @@ const Home = () => {
         : (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();
-  }, [cookies, navigate, removeCookie, Logout]);
+  }, [cookies, navigate, removeCookie]);
 
 
   

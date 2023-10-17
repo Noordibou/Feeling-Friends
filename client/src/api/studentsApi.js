@@ -1,6 +1,5 @@
 import axios from 'axios';
 import URL from '../URL'
-import {Cookies} from 'react-cookie'
 
 const STUDENTS_API_URL = URL+'/api/students';
 

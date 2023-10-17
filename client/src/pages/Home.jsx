@@ -20,6 +20,7 @@ const Home = () => {
     })
     removeCookie("token");
     localStorage.removeItem('userData');
+    navigate("/login")
   };
 
 

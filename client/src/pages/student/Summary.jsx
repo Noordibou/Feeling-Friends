@@ -50,7 +50,7 @@ const Summary = () => {
     <>
       <div className="pt-[4rem] min-h-screen">
         <div className="flex w-full justify-center mb-20">
-          <ProgressBar/>
+          <ProgressBar totalPages="6" currentPage="6"/>
         </div>
         <div className="flex items-center justify-center">
           <img src={SummaryPerson} alt="SummaryPerson" className="h-42" />

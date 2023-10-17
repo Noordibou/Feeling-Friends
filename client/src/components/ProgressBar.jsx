@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import backArrow from "../images/backarrow.png"
 
-const ProgressBar = () => {
+const ProgressBar = ({ totalPages, currentPage }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
   }
+
+  const progressBarWidth = (currentPage / totalPages) * 100 + "%";
   
   return (
     <>
@@ -16,7 +18,9 @@ const ProgressBar = () => {
             {/* outer progress bar */}
             <div className="border-4 border-sandwich ml-12 w-3/4 h-8 rounded-2xl flex items-center">
                 {/* inner progress bar */}
-                <div className="w-full bg-sandwich h-4 mx-1 flex my-auto rounded-2xl" />
+                <div className=" bg-sandwich h-4 mx-1 flex my-auto rounded-2xl" 
+                style={{ width: progressBarWidth }}
+                />
             </div>
         </div>
     </>

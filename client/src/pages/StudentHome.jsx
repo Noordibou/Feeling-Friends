@@ -7,6 +7,7 @@ import sadImg from '../images/sad.png'
 import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
 import { useUser } from '../context/UserContext';
+import ProgressBar from "../components/ProgressBar";
 
 const StudentHome = () => {
   const navigate = useNavigate();
@@ -66,7 +67,9 @@ const StudentHome = () => {
     <>
       {/* page container */}
       <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen">
-
+      <div className="flex w-full justify-center mt-20">
+          <ProgressBar totalPages="6" currentPage="1"/>
+        </div>
         {/* Check time Section */}
         <div className="mt-20 flex-col text-center">
           <h1 className="text-header1 font-header1">{userData ? (`${greeting}, ` + userData.firstName) : "Hello"}!</h1>

@@ -4,7 +4,10 @@ import backArrow from "../images/backarrow.png"
 
 const ProgressBar = () => {
   const navigate = useNavigate();
-  const goBack = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  }
   
   return (
     <>

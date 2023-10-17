@@ -1,11 +1,7 @@
 import axios from 'axios';
 import URL from '../URL'
-import {Cookies} from 'react-cookie'
 
 const STUDENTS_API_URL = URL+'/api/students';
-
-const cookies = new Cookies();
-const token = cookies.get('token');
 
 // // this works ✅
 // export const getStudents = async () => {
@@ -38,10 +34,6 @@ export const getStudentById = async (id) => {
 
 
 export const updateStudent = async (id, studentUpdate, checkInOutType) => {
-    if (!token) {
-        // Token is not available
-        console.log('Token not found');
-      }
     try {
         const response = await axios.put(`${STUDENTS_API_URL}/${id}`, {studentUpdate, checkInOutType}, { withCredentials: true })
         return response.data;

@@ -46,6 +46,12 @@ const verifyRole = (allowedRoles) => (req, res, next) => {
   }
 }
 
+const setCacheControlHeader = (req, res, next) => {
+  // Set cache control headers to allow client-side caching for a reasonable duration
+  res.setHeader('Cache-Control', 'public, max-age=3600'); // Example: Cache for 1 hour
+  next();
+}
+
 // TODO:
 // only the student who is the owner of the data can access it. If you have different authorization levels (e.g., admin, teacher, etc.), you might need to extend your authorization logic accordingly.
 
@@ -86,5 +92,6 @@ const verifyRole = (allowedRoles) => (req, res, next) => {
 module.exports = {
     verifyToken,
     verifyUser,
-    verifyRole
+    verifyRole,
+    setCacheControlHeader
 }

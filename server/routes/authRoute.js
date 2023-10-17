@@ -1,4 +1,4 @@
-const { Signup, Login, findUser, findUserById } = require('../controllers/authControllers')
+const { Signup, Login, findUser, findUserById, Logout } = require('../controllers/authControllers')
 const { userVerification } = require('../middleware/authMiddleware')
 const router = require("express").Router();
 
@@ -23,6 +23,7 @@ const router = require("express").Router();
 router.post("/signup", Signup);
 router.post("/login", Login);
 router.post('/', userVerification);
+router.get('/logout', Logout)
 router.get("/users", findUser);
 router.get('/users/:id', findUserById)
 

@@ -3,8 +3,10 @@ import SummaryPerson from "../../images/SummaryPerson.png";
 import { AuthContext } from "../Authentication/AuthContext";
 import emotionsExplained from '../../mockData/emotionData.js';
 import { useLocation } from "react-router-dom";
-import QuestionFrog from '../../images/Question frog.png';
+import QuestionFrog from '../../images/Question_Frog.png';
 import { useUser } from '../../context/UserContext';
+import Logout from '../../components/LogoutButton.jsx'
+import ProgressBar from "../../components/ProgressBar";
 
 // TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
 
@@ -46,7 +48,10 @@ const Summary = () => {
 
   return (
     <>
-      <div className="pt-[12rem] h-screen">
+      <div className="pt-[4rem] min-h-screen">
+        <div className="flex w-full justify-center mb-20">
+          <ProgressBar totalPages="6" currentPage="6"/>
+        </div>
         <div className="flex items-center justify-center">
           <img src={SummaryPerson} alt="SummaryPerson" className="h-42" />
         </div>
@@ -56,23 +61,40 @@ const Summary = () => {
             {userData ? ("Thanks " + userData.firstName) : "Thanks!"} - Have a good day at school!
           </h1>
         </div>
+        <div className="flex justify-center mt-24 mb-44">
+          <Logout/>
+        </div>
 
-        <div className=" bg-lightOrange w-full pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center fixed
-             inset-x-0 bottom-0 rounded-b">
-          <div className="pl-[1rem]">
-            <h2 className="font-header2 md:text-header2 text-md leading-tight">
-              Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
-            </h2>
-            <ul className="font-body leading-relaxed w-10/12">
-              {getEmotionTips().map((tip, index) => (
-                <li className="list-disc text-sm mt-[1rem]" key={index}>
-                  {tip}
-                </li>
-              ))}
-            </ul>
+        {/* bottom orange section */}
+        <div className=" bg-lightOrange w-full h-8/12 rounded-[2rem] p-[2rem] flex flex-col
+             rounded-b">
+        
+        {/* Learn more */}
+          <div className="flex flex-row justify-around mt-2">
+              <div className="w-8/12">
+                <h3 className="text-[1.75rem] font-semibold font-karla">Getting to know our emotions can help with school success</h3>
+                <h3 className="underline text-header2 font-karla font-body font-semibold mt-7">Learn more</h3>
+              </div>
+              <div className="">
+                <img src={QuestionFrog} alt="Avatar" className="" />
+              </div>
           </div>
-          <div className="mr-auto ml-auto ">
-            <img src={QuestionFrog} alt="Avatar" className=" ml-auto mr-auto" />
+
+          {/* emotion explanation */}
+          <div className="mt-40 mb-20">
+            <div className="flex flex-col items-center">
+              <h2 className="font-header2 md:text-[2.5rem] text-md leading-tight">
+                Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
+              </h2>
+              <ul className="font-body leading-relaxed w-8/12 flex flex-col justify-center">
+                {getEmotionTips().map((tip, index) => (
+                  <li className="list-disc text-sm mt-[1rem]" key={index}>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
           </div>
         </div>
       </div>

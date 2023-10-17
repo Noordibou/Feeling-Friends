@@ -8,6 +8,7 @@ import anxiousImg from '../../images/anxious.png';
 import sadImg from '../../images/sad.png';
 import happyImg from '../../images/happy.png';
 import scaredImg from '../../images/scared.png';
+import ProgressBar from "../../components/ProgressBar";
 
 const SubEmotionSad = () => {
   const navigate = useNavigate();
@@ -23,14 +24,17 @@ const SubEmotionSad = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex w-full justify-center -mt-10 mb-10">
+          <ProgressBar totalPages="6" currentPage="2"/>
+        </div>
       <div className="flex flex-col text-center">
         <div className="font-header2 text-header2">
           <h2>Choose the emotion closest to</h2>
           <span>what you're feeling.</span>
         </div>
         <div className="relative font-header3 -top-20 md:text-header3 text-[1.1rem]">
-          <img src={sadWheel} alt="" className="w-[40.375rem] h-[35.375rem] object-fill" />
+          <img src={sadWheel} alt="" className="w-[42.375rem] h-[42.375rem] object-fill" />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">
             <div className="flex py-8">
               <div onClick={() => handleEmotionClick("Hurt")} className="cursor-pointer px-12 hover:font-semibold">Hurt</div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useUser } from "../../context/UserContext";
 import { updateStudent } from "../../api/studentsApi";
 import { useNavigate, useLocation } from "react-router-dom";
+import ProgressBar from "../../components/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
 
 const GoalsNeeds = () => {
@@ -39,6 +40,10 @@ const GoalsNeeds = () => {
   return (
     <>
       <div className="flex flex-col w-screen items-center bg-notebookPaper">
+
+        <div className="flex w-full justify-center mt-20">
+          <ProgressBar totalPages="6" currentPage="5"/>
+        </div>
         <div className="items-center justify-center mt-20 mb-[2.5rem]">
           <img className="w-[33rem]" src={Wiggly} alt="Wiggly" />
         </div>

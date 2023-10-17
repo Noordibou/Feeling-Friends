@@ -120,6 +120,7 @@ import deepBreathing from "../../images/RegZoneDeepBreathingCard.png";
 import imagineExercise from "../../images/coping skill card_ Overwhelmed.png";
 import { useUser } from "../../context/UserContext";
 import Slider from "../../components/Slider";
+import ProgressBar from "../../components/ProgressBar";
 
 const RegZone = () => {
   const navigate = useNavigate();
@@ -164,6 +165,9 @@ const RegZone = () => {
   return (
     <>
       <div className="bg-notebookPaper pt-[3.5rem]">
+      <div className="flex w-full justify-center mt-6 mb-10">
+          <ProgressBar totalPages="6" currentPage="4"/>
+        </div>
         <div className="md:w-6/12 w-9/12 text-center ml-auto mr-auto">
           <h1 className="font-header1 md:text-header1 text-header2 leading-tight">
             It’s normal to feel {emotionFromLocation.toLowerCase()}.

@@ -7,6 +7,7 @@ import anxiousImg from '../../images/anxiousNoBg.png'
 import sadImg from '../../images/sad.png'
 import happyImg from '../../images/happy.png'
 import scaredImg from '../../images/scared.png'
+import ProgressBar from "../../components/ProgressBar";
 
 
 
@@ -24,7 +25,10 @@ const SubEmotionAnxious = () => {
   };
 
   return (
-    <div className="flex items-center md:h-screen justify-center">
+    <div className="flex flex-col items-center md:h-screen justify-center">
+      <div className="flex w-full justify-center -mt-1 mb-10">
+          <ProgressBar totalPages="6" currentPage="2"/>
+        </div>
       <div className="flex flex-col text-center">
         <div className="font-header2 text-header1">
           <h2>Choose the emotion closest to</h2>

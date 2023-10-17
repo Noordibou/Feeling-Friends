@@ -3,9 +3,9 @@ import SummaryPerson from "../../images/SummaryPerson.png";
 import { AuthContext } from "../Authentication/AuthContext";
 import emotionsExplained from '../../mockData/emotionData.js';
 import { useLocation } from "react-router-dom";
-import QuestionFrog from '../../images/Question frog.png';
+import QuestionFrog from '../../images/Question_Frog.png';
 import { useUser } from '../../context/UserContext';
-import Logout from '../../components/Logout'
+import Logout from '../../components/LogoutButton.jsx'
 
 // TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
 
@@ -47,7 +47,7 @@ const Summary = () => {
 
   return (
     <>
-      <div className="pt-[8rem] h-screen">
+      <div className="pt-[8rem] min-h-screen">
         <div className="flex items-center justify-center">
           <img src={SummaryPerson} alt="SummaryPerson" className="h-42" />
         </div>
@@ -60,22 +60,37 @@ const Summary = () => {
         <div className="flex justify-center mt-10">
           <Logout/>
         </div>
-        <div className=" bg-lightOrange w-full pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] ml-auto mr-auto flex items-center fixed
-             inset-x-0 bottom-0 rounded-b">
-          <div className="pl-[1rem]">
-            <h2 className="font-header2 md:text-header2 text-md leading-tight">
-              Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
-            </h2>
-            <ul className="font-body leading-relaxed w-10/12">
-              {getEmotionTips().map((tip, index) => (
-                <li className="list-disc text-sm mt-[1rem]" key={index}>
-                  {tip}
-                </li>
-              ))}
-            </ul>
+
+        {/* bottom orange section */}
+        <div className=" bg-lightOrange w-full h-10/12 pt-[1.5rem] rounded-[2rem] p-[2rem] mt-[4rem] flex flex-col
+             rounded-b">
+        
+        {/* Learn more */}
+          <div className="flex flex-row justify-around">
+              <div>
+                <h3 className="text-body">Getting to know our emotions can help with school success</h3>
+                <h3 className="underline text-body font-body font-semibold mt-7">Learn more</h3>
+              </div>
+              <div className="mr-auto ml-auto ">
+                <img src={QuestionFrog} alt="Avatar" className=" ml-auto mr-auto" />
+              </div>
           </div>
-          <div className="mr-auto ml-auto ">
-            <img src={QuestionFrog} alt="Avatar" className=" ml-auto mr-auto" />
+
+          {/* emotion explanation */}
+          <div className="mt-44">
+            <div className="pl-[1rem]">
+              <h2 className="font-header2 md:text-header2 text-md leading-tight">
+                Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
+              </h2>
+              <ul className="font-body leading-relaxed w-10/12">
+                {getEmotionTips().map((tip, index) => (
+                  <li className="list-disc text-sm mt-[1rem]" key={index}>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
           </div>
         </div>
       </div>

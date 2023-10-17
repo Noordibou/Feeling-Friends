@@ -7,7 +7,7 @@ const Logout = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
 
-  const logout = () => {
+  const handleLogout = () => {
     console.log("logging out... on frontend hoome screen")
     logoutUser().then(() => {
       console.log("Logout successful")
@@ -26,7 +26,7 @@ const Logout = () => {
   return (
     <>
         <div className="flex w-9/12 max-w-md items-center justify-center">
-            <button className="rounded w-full p-2 bg-lightOrange font-semibold text-body" onClick={logout}>Log Out</button>
+            <button className="rounded w-full p-4 bg-lightOrange font-semibold text-body" onClick={handleLogout}>Log Out</button>
         </div>
       
     </>

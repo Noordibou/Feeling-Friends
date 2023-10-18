@@ -7,15 +7,17 @@ const Logout = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
 
-  const handleLogout = () => {
-    console.log("logging out... on frontend hoome screen")
-    logoutUser().then(() => {
+  const handleLogout = async () => {
+    try{
+      console.log("logging out... on frontend hoome screen")
+      removeCookie("token");
+      localStorage.removeItem('userData');
+      await logoutUser()
       console.log("Logout successful")
-    }).catch((error) => {
-      console.error("Logout failed: ", error)
-    })
-    removeCookie("token");
-    localStorage.removeItem('userData');
+      
+    } catch (error) {
+      console.error("Logout Failed: ", error)
+    }
     navigate("/login")
   };
 

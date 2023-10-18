@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import SummaryPerson from "../../images/SummaryPerson.png";
 import { AuthContext } from "../Authentication/AuthContext";
 import emotionsExplained from '../../mockData/emotionData.js';
@@ -18,11 +18,16 @@ const Summary = () => {
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
+  const bottomContentRef = useRef()
 
   useEffect(() => {
-
+    scrollToTop();
   }, [userData]);
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+  
   // TODO: need to get it through context
   useEffect(() => {
     console.log("Location state:", location.state);
@@ -73,7 +78,16 @@ const Summary = () => {
           <div className="flex flex-row justify-around mt-2">
               <div className="w-8/12">
                 <h3 className="text-[1.75rem] font-semibold font-karla">Getting to know our emotions can help with school success</h3>
-                <h3 className="underline text-header2 font-karla font-body font-semibold mt-7">Learn more</h3>
+                <h3 className="underline text-header2 font-karla font-body font-semibold mt-7"
+                onClick={() => {
+                  if (bottomContentRef.current) {
+                    window.scrollTo({
+                      top: bottomContentRef.current.offsetTop,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+                >Learn more</h3>
               </div>
               <div className="">
                 <img src={QuestionFrog} alt="Avatar" className="" />
@@ -86,7 +100,7 @@ const Summary = () => {
               <h2 className="font-header2 md:text-[2.5rem] text-md leading-tight">
                 Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
               </h2>
-              <ul className="font-body leading-relaxed w-8/12 flex flex-col justify-center">
+              <ul ref={bottomContentRef} className="font-body leading-relaxed w-8/12 flex flex-col justify-center">
                 {getEmotionTips().map((tip, index) => (
                   <li className="list-disc text-sm mt-[1rem]" key={index}>
                     {tip}

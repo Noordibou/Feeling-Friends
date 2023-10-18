@@ -61,7 +61,7 @@ const Summary = () => {
             {userData ? ("Thanks " + userData.firstName) : "Thanks!"} - Have a good day at school!
           </h1>
         </div>
-        <div className="flex justify-center mt-24 mb-44">
+        <div className="flex justify-center mt-24 mb-32">
           <Logout/>
         </div>
 

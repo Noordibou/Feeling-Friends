@@ -93,10 +93,10 @@ const Summary = () => {
           {/* emotion explanation */}
           <section className="mt-40 mb-20">
             <div className="flex flex-col items-center">
-              <h2 className="font-header2 md:text-[2.5rem] text-md leading-tight">
+              <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
                 Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
               </h2>
-              <ul ref={bottomContentRef} className="font-body leading-relaxed w-8/12 flex flex-col justify-center">
+              <ul ref={bottomContentRef} className="font-body leading-relaxed w-8/12 flex flex-col justify-center mt-5">
                 {getEmotionTips().map((tip, index) => (
                   <li className="list-disc text-sm mt-[1rem]" key={index}>
                     {tip}

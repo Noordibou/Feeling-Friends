@@ -83,7 +83,7 @@ const handleSuccess = (msg) =>
     
 
   return (
-    <div className="form_container flex flex-col min-w-screen items-center">
+    <div className="form_container flex flex-col min-w-screen min-h-screen items-center">
       <div className="flex flex-col w-8/12 max-w-lg mt-36">
         <h2 className="flex font-header2 text-header2 mb-4">Sign up</h2>
         <div>
@@ -125,6 +125,7 @@ const handleSuccess = (msg) =>
             <label className="text-md ml-1 my-1" htmlFor="role">Role</label>
             <select
               className="text-md pl-4 py-2 rounded"
+              id="role"
               name="role"
               value={role}
               onChange={handleOnChange}
@@ -134,7 +135,7 @@ const handleSuccess = (msg) =>
             </select>
           </div>
           <div className="flex flex-col w-full h-96 text-center justify-around">
-            <button className="w-full text-center h-20 rounded mt-[2rem] font-button text-button text-notebookPaper bg-no-repeat bg-center bg-contain" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button>
+            <button className="w-full text-center h-20 rounded mt-[2rem] font-button text-button text-notebookPaper bg-no-repeat bg-center bg-contain" alt="" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button>
 
             <span className="text-md font-body text-lightGray">
               Already registered? <Link className="underline" to={"/login"}>Log in</Link>

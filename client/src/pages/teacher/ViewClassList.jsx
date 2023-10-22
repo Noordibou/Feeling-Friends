@@ -9,7 +9,7 @@ export default function ViewClassList() {
   const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState('lastName');
+  const [sortCriteria, setSortCriteria] = useState('zor');
   const [sortDirection, setSortDirection] = useState('asc');
 
   useEffect(() => {

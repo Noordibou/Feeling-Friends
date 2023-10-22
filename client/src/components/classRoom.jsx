@@ -25,10 +25,42 @@ function getBorderColorClass(zor) {
   return "";
 }
 
+function calculateZorPercentage(classroom) {
+  if (classroom.students && classroom.students.length > 0) {
+    const totalStudents = classroom.students.length;
+    const zorCounts = {
+      'Unmotivated': 0,
+      'Ready to Learn': 0,
+      'Wiggly': 0,
+      'Explosive': 0,
+    };
+
+    classroom.students.forEach((student) => {
+      if (student.journalEntries && student.journalEntries.length > 0) {
+        const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+        if (lastJournal.checkout && lastJournal.checkout.ZOR) {
+          const zor = lastJournal.checkout.ZOR;
+          zorCounts[zor]++;
+        }
+      }
+    });
+
+    // Calculate the percentage for each ZOR
+    const percentages = {};
+    for (const zor in zorCounts) {
+      percentages[zor] = (zorCounts[zor] / totalStudents) * 100;
+    }
+
+    return percentages;
+  }
+  return {};
+}
 module.exports={
     layout,
     rows,
     cols,
     getBackgroundColorClass,
-    getBorderColorClass
+    getBorderColorClass,
+    calculateZorPercentage
+
 }

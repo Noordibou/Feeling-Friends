@@ -40,8 +40,8 @@ export default function ViewClassList() {
           ? a.lastName.localeCompare(b.lastName)
           : b.lastName.localeCompare(a.lastName);
       } else if (sortCriteria === 'zor') {
-        const zorA = a.journalEntries[0]?.checkout?.ZOR || a.journalEntries[0]?.checkin?.ZOR;
-        const zorB = b.journalEntries[0]?.checkout?.ZOR || b.journalEntries[0]?.checkin?.ZOR;
+        const zorA = a.journalEntries[a.journalEntries.length - 1]?.checkout?.ZOR || a.journalEntries[a.journalEntries.length - 1]?.checkin?.ZOR;
+        const zorB = b.journalEntries[b.journalEntries.length - 1]?.checkout?.ZOR || b.journalEntries[b.journalEntries.length - 1]?.checkin?.ZOR;
   
         const indexA = zorOrder.indexOf(zorA);
         const indexB = zorOrder.indexOf(zorB);
@@ -67,8 +67,10 @@ export default function ViewClassList() {
   
     return sortedStudents;
   };
-
+  
   const sortedStudents = sortStudents();
+  
+  
     return (
         <>
             <div>

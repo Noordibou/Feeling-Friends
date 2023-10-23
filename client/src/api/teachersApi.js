@@ -15,7 +15,7 @@ export const createTeacher= async (teacher) => {
 
 export const getTeachers = async() => {
     try {
-        const response = await axios.get(TEACHERS_API_URL);
+        const response = await axios.get(TEACHERS_API_URL, { withCredentials: true } );
         return response.data;
     } catch (error) {
         console.log(error);
@@ -25,7 +25,7 @@ export const getTeachers = async() => {
 
 export const getTeacherById = async (id) => {
     try {
-        const response = await axios.get(`${TEACHERS_API_URL}/${id}`);
+        const response = await axios.get(`${TEACHERS_API_URL}/${id}`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -35,7 +35,7 @@ export const getTeacherById = async (id) => {
 
 export const updateTeacher = async (id, teacher) => {
     try {
-        const response = await axios.put(`${TEACHERS_API_URL}/${id}`, teacher);
+        const response = await axios.put(`${TEACHERS_API_URL}/${id}`, teacher, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -45,7 +45,7 @@ export const updateTeacher = async (id, teacher) => {
 
 export const getTeacherClassroom = async (id, classroomId) => {
     try {
-      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}`);
+      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}`, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -55,13 +55,26 @@ export const getTeacherClassroom = async (id, classroomId) => {
 
   export const getAllStudentsClassroom = async (id, classroomId) => {
     try {
-      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`);
+      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.log(error);
       throw error; 
     }
   }
+
+  export const getStudentProfile = async (teacherId, classroomId, studentId) => {
+    try {
+        const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
+        console.log('API Response:', response);
+        const profile = response.data;
+        console.log('Student Profile Data:', profile);
+        return profile;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
 
   

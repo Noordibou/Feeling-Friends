@@ -27,8 +27,28 @@ const StudentSchema = new mongoose.Schema({
             need: { type: String },
             highlight: { type: String },
         }
+    }],
+    IEP: [{
+        contentAreaNotices: { type: String },
+        learningChallenges: { 
+            challenge:{ type: String },
+            date: {
+                type: Date,
+                get: date => date.toISOString().slice(0, 10),
+                set: dateString => new Date(dateString)
+            }
+         },
+        accomodationsAndAssisstiveTech:{
+            accomodation:{ type: String },
+           location: {type: String},
+           frequency:{
+                type: String,
+                enum: ['Daily', 'Weekly', 'Monthly', 'As Needed']
+              },
+           
+          }
     }]
 
 })
 
-module.exports= mongoose.model('Student', StudentSchema);
+module.exports = mongoose.model('Student', StudentSchema);

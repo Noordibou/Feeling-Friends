@@ -9,6 +9,10 @@ const StudentSchema = new mongoose.Schema({
     gradeYear: { type: String },
     schoolStudentId: { type: String },
     avatarImg: { type: String },
+    iepStatus: {
+        type: String,
+        enum: ['Yes', 'No']
+    },
     journalEntries: [{
         date: { type: String },
         checkin: {
@@ -30,23 +34,23 @@ const StudentSchema = new mongoose.Schema({
     }],
     IEP: [{
         contentAreaNotices: { type: String },
-        learningChallenges: { 
-            challenge:{ type: String },
+        learningChallenges: {
+            challenge: { type: String },
             date: {
                 type: Date,
                 get: date => date.toISOString().slice(0, 10),
                 set: dateString => new Date(dateString)
             }
-         },
-        accomodationsAndAssisstiveTech:{
-            accomodation:{ type: String },
-           location: {type: String},
-           frequency:{
+        },
+        accomodationsAndAssisstiveTech: {
+            accomodation: { type: String },
+            location: { type: String },
+            frequency: {
                 type: String,
                 enum: ['Daily', 'Weekly', 'Monthly', 'As Needed']
-              },
-           
-          }
+            },
+
+        }
     }]
 
 })

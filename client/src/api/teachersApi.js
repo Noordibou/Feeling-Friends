@@ -66,9 +66,7 @@ export const getTeacherClassroom = async (id, classroomId) => {
   export const getStudentProfile = async (teacherId, classroomId, studentId) => {
     try {
         const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
-        console.log('API Response:', response);
         const profile = response.data;
-        console.log('Student Profile Data:', profile);
         return profile;
     } catch (error) {
         console.log(error);

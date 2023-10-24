@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const StudentSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     firstName: { type: String, required: true },
@@ -8,7 +9,10 @@ const StudentSchema = new mongoose.Schema({
     birthday: { type: String },
     gradeYear: { type: String },
     schoolStudentId: { type: String },
-    avatarImg: { type: String },
+    avatarImg: {
+        type: String,
+        default: "young-student.png"
+    },
     iepStatus: {
         type: String,
         enum: ['Yes', 'No']

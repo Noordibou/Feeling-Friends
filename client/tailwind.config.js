@@ -12,7 +12,8 @@ module.exports = {
       'regZone': 'Poppins',
       'input': 'Poppins',
       'button': 'Poppins',
-      'karla': 'Karla'
+      'karla': 'Karla',
+      'poppins': 'Poppins',
     },
 
     fontSize: {

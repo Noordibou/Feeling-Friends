@@ -20,7 +20,6 @@ import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
-import Test from "./pages/teacher/test";
 
 
 export default function App() {
@@ -34,7 +33,6 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/success" element={<SignupSuccess />} />
-        <Route path="/test" element={<Test />}></Route>
 
         {/* Teacher Routes */}
         <Route path="/teacher-home" element={<TeacherHome />} />

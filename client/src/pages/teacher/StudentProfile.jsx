@@ -56,7 +56,7 @@
 // }
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getStudentProfile } from '../../api/teachersApi';
 import { getBackgroundColorClass } from '../../components/classRoom';
 import Calendar from 'react-calendar';
@@ -105,7 +105,7 @@ export default function StudentProfile() {
     };
 
     return (
-        <div className="flex  flex-col items-center bg-notebookPaper h-screen">
+        <div className="flex flex-col items-center bg-notebookPaper h-full">
             <div>
                 <div className="flex flex-row items-center">
                     <div className={`w-32 rounded-md mr-4 mt-16 border-8 border-${getBackgroundColorClass(studentProfile?.journalEntries[studentProfile?.journalEntries.length - 1]?.checkout?.ZOR || studentProfile?.journalEntries[studentProfile?.journalEntries.length - 1]?.checkin?.ZOR)}`}>
@@ -113,7 +113,7 @@ export default function StudentProfile() {
                     </div>
                     <div>
                         <h2 className="text-header1 font-header1 text-center pt-[4rem]">
-                            <strong>{studentProfile?.firstName} {studentProfile?.lastName}</strong>
+                            <strong>&lt; {studentProfile?.firstName} {studentProfile?.lastName}</strong>
                         </h2>
                         <p>Age: {studentProfile?.age}</p>
                         <p>Grade: {studentProfile?.gradeYear}th</p>
@@ -124,7 +124,7 @@ export default function StudentProfile() {
                 </div>
                 <div className="">
                     {studentProfile && (
-                        <div className=" mt-12 rounded-2xl bg-white ">
+                        <div className=" mt-12 rounded-2xl ">
                             <Calendar
                                 className="react-calendar "
                                 tileClassName={({ date }) => {
@@ -140,8 +140,8 @@ export default function StudentProfile() {
                     )}
                     <div>
                         {selectedDate && (
-                            <div>
-                                <h4>Journal Entries for {selectedDate.toDateString()}:</h4>
+                            <div className='py-4 pl-4'>
+                                <h4><strong>Journal Entries for {selectedDate.toDateString()}:</strong></h4>
                                 {selectedEntries.length > 0 ? (
                                     selectedEntries.map((entry) => (
                                         <div key={entry._id}>
@@ -160,30 +160,51 @@ export default function StudentProfile() {
                 </div>
                 <div>
                     <div className='mt-6 mb-2'>
-                        <h3>Individual Education Program (IEP)</h3>
+                        <h1 className='text-black text-4xl font-bold font-header1'>Individual Education Program (IEP)</h1>
                     </div>
                     <div className='border-4 bg-sandwich border-sandwich rounded-2xl '>
                         <div className='border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4'>
-                            <h3 className='text-black text-3xl font-bold font-header1'>Content Area Notices</h3>
-                            <h3 className='underline'>Learning Benchmark</h3>
-                            <p> {studentProfile?.contentAreaNotices?.contentArea}</p>
-                            <p> {studentProfile?.contentAreaNotices?.benchmark}</p>
+                            <h3 className='font-header2'>Content Area Notices</h3>
+                            <h3 className='underline flex justify-end'>Learning Benchmark</h3>
+                            {studentProfile?.IEP?.contentAreaNotices?.map((contentAreaNotice, index) => (
+                                <div key={index}>
+                                    <p> {contentAreaNotice.contentArea}</p>
+                                    <p> {contentAreaNotice.benchmark}</p>
+                                </div>
+                            ))}
                         </div>
-                        <div className='border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 '>
-                            <h3 className='text-black text-3xl font-bold font-header1'>Learning Challenges</h3>
-                            <p> {studentProfile?.learningChallenges?.challenge}</p>
-                            <p className='underline'>Diagnosed</p>
-                            <p>{studentProfile?.learningChallenges?.date}</p>
-                        </div>
+
                         <div className='border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4'>
-                            <h3 className='text-black text-3xl font-bold font-header1'>Accomodations & Assisstive Tech</h3>
-                            <h3 className='underline'>Frequency</h3>
-                            <h3 className='underline'>Location</h3>
-                            <p> {studentProfile?.accommodations?.accommodation}</p>
-                            <p> {studentProfile?.accommodations?.frequency}</p>
-                            <p> {studentProfile?.accommodations?.location}</p>
+                            <h3 className='font-header2'>Learning Challenges</h3>
+                            <p className='underline flex justify-end'>Diagnosed</p>
+                            {studentProfile?.IEP?.learningChallenges?.map((learningChallenge, index) => (
+                                <div key={index}>
+                                    <p> {learningChallenge.challenge}</p>
+                                    <p>{learningChallenge.date}</p>
+                                </div>
+                            ))}
                         </div>
+
+                        <div className='border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4'>
+                            <h3 className='font-header2'>Accommodations & Assistive Tech</h3>
+                            <div className='flex flex-row gap-4 justify-end'>
+                                <h3 className='underline'>Frequency</h3>
+                                <h3 className='underline'>Location</h3>
+                            </div>
+                            {studentProfile?.IEP?.accomodationsAndAssisstiveTech?.map((accommodation, index) => (
+                                <div key={index} className='my-2'>
+                                    <p> {accommodation.accomodation}</p>
+                                    <p> {accommodation.frequency}</p>
+                                    <p> {accommodation.location}</p>
+                                </div>
+                            ))}
+                        </div>
+
+
                     </div>
+                </div>
+                <div className="text-sm font-sm my-6 underline">
+                    <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>&lt; Back</Link>
                 </div>
             </div>
         </div>

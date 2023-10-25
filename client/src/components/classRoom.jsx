@@ -25,6 +25,16 @@ function getBorderColorClass(zor) {
   return "";
 }
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+  const formattedDate = date.toLocaleDateString('en-US', options);
+  return formattedDate;
+}
+
+
+
 function calculateZorPercentage(classroom) {
   if (classroom.students && classroom.students.length > 0) {
     const totalStudents = classroom.students.length;
@@ -61,6 +71,7 @@ module.exports={
     cols,
     getBackgroundColorClass,
     getBorderColorClass,
-    calculateZorPercentage
+    calculateZorPercentage,
+    formatDate
 
 }

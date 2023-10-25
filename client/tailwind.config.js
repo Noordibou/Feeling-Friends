@@ -8,6 +8,7 @@ module.exports = {
       'header1': 'Karla',
       'header2': 'Karla',
       'header3': 'Karla',
+      'header4': 'Karla',
       'body': 'Poppins',
       'regZone': 'Poppins',
       'input': 'Poppins',
@@ -20,6 +21,7 @@ module.exports = {
       'header1': '2.5rem',
       'header2': '1.75rem',
       'header3': '1.3rem',
+      'header4': '1.875rem',
       'body': '1.5rem',
       'regZone': '1.5rem',
       'input': '1.5rem',
@@ -33,6 +35,7 @@ module.exports = {
       'header1': '700',
       'header2': '700',
       'header3': '400',
+      'header4': '700',
       'body': '400',
       'semibold': '600',
       'normal': '400'

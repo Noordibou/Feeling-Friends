@@ -37,7 +37,10 @@ const StudentSchema = new mongoose.Schema({
         }
     }],
     IEP: [{
-        contentAreaNotices: { type: String },
+        contentAreaNotices:{
+            contentArea: { type: String },
+            benchmark: { type: String },
+        },
         learningChallenges: {
             challenge: { type: String },
             date: {

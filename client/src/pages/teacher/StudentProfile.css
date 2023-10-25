@@ -1,0 +1,100 @@
+.react-calendar { 
+    width: 400px;
+    max-width: 100%;
+    background-color: #fff;
+    color: #222;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+    padding: 20px;
+    border-color: #E2DBC2;
+    border-width: 8px;
+    font-weight: bold;
+   
+   }
+
+   .react-calendar__navigation button {
+    color: #808080;
+    min-width: 44px;
+    background: none;
+    font-size: 16px;
+    margin-top: 8px;
+   }
+   .react-calendar__navigation button:enabled:hover,
+   .react-calendar__navigation button:enabled:focus {
+    background-color: #f8f8fa;
+   }
+   .react-calendar__navigation button[disabled] {
+    background-color: #f0f0f0;
+   }
+   abbr[title] {
+    text-decoration: none;
+    
+   }
+
+   .react-calendar__tile--now {
+    background: #E2DBC2;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #222;
+   }
+   .react-calendar__tile--now:enabled:hover,
+   .react-calendar__tile--now:enabled:focus {
+    background: #ae9f6e;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+   }
+ 
+   .react-calendar__tile--active {
+    background: #808080;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+   }
+   .react-calendar__tile--active:enabled:hover,
+   .react-calendar__tile--active:enabled:focus {
+    background: #808080;
+    color: white;
+   }
+  
+
+/* Update tile styles */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    border-radius: 6px;
+}
+
+.react-calendar__tile--now {
+    font-weight: bold;
+    color: #222;
+}
+
+/* Add styles for ZOR-based tiles */
+.react-calendar .blue {
+    background-color: #0886CE;
+    color: white;
+     border-radius: 6px;
+}
+
+.react-calendar .green {
+    background-color: #459A4C;
+    color: white;
+    border-radius: 6px;
+}
+
+.react-calendar .yellow {
+    background-color: #FDDA04;
+    color: #222;
+    border-radius: 6px;
+    
+}
+
+.react-calendar .orange {
+    background-color: #F06403;
+    color: white;
+    border-radius: 6px;
+    
+}
+

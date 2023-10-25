@@ -21,6 +21,7 @@ import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
 
+
 export default function App() {
   return (
     <main className="bg-notebookPaper">
@@ -38,7 +39,7 @@ export default function App() {
         <Route path="/classroom/:teacherId/:classroomId"  element={<ViewClassroom />} />
         <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
         <Route path="/editneedsgoals" element={<NeedsGoals />} />
-        <Route path="/studentprofile" element={<StudentProfile />} />
+        <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
 
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />

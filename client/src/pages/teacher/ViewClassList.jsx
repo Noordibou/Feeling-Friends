@@ -5,72 +5,72 @@ import { getTeacherClassroom, getAllStudentsClassroom } from '../../api/teachers
 import { getBackgroundColorClass } from '../../components/classRoom';
 
 export default function ViewClassList() {
-  const { teacherId, classroomId } = useParams();
-  const { userData } = useUser();
-  const [classroom, setClassroom] = useState(null);
-  const [students, setStudents] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState('zor');
-  const [sortDirection, setSortDirection] = useState('asc');
+    const { teacherId, classroomId } = useParams();
+    const { userData } = useUser();
+    const [classroom, setClassroom] = useState(null);
+    const [students, setStudents] = useState([]);
+    const [sortCriteria, setSortCriteria] = useState('zor');
+    const [sortDirection, setSortDirection] = useState('asc');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const classroom = await getTeacherClassroom(teacherId, classroomId);
-        setClassroom(classroom);
-        const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
-        setStudents(classroomStudents);
-      } catch (error) {
-        console.log(error);
-      }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const classroom = await getTeacherClassroom(teacherId, classroomId);
+                setClassroom(classroom);
+                const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
+                setStudents(classroomStudents);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [teacherId, classroomId]);
+
+    const toggleSortDirection = () => {
+        setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     };
 
-    fetchData();
-  }, [teacherId, classroomId]);
+    const sortStudents = () => {
+        const zorOrder = ['Unmotivated', 'Wiggly', 'Ready to Learn', 'Explosive'];
 
-  const toggleSortDirection = () => {
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  };
+        const sortedStudents = [...students].sort((a, b) => {
+            if (sortCriteria === 'lastName') {
+                return sortDirection === 'desc'
+                    ? a.lastName.localeCompare(b.lastName)
+                    : b.lastName.localeCompare(a.lastName);
+            } else if (sortCriteria === 'zor') {
+                const zorA = a.journalEntries[a.journalEntries.length - 1]?.checkout?.ZOR || a.journalEntries[a.journalEntries.length - 1]?.checkin?.ZOR;
+                const zorB = b.journalEntries[b.journalEntries.length - 1]?.checkout?.ZOR || b.journalEntries[b.journalEntries.length - 1]?.checkin?.ZOR;
 
-  const sortStudents = () => {
-    const zorOrder = ['Unmotivated', 'Wiggly', 'Ready to Learn', 'Explosive'];
-  
-    const sortedStudents = [...students].sort((a, b) => {
-      if (sortCriteria === 'lastName') {
-        return sortDirection === 'asc'
-          ? a.lastName.localeCompare(b.lastName)
-          : b.lastName.localeCompare(a.lastName);
-      } else if (sortCriteria === 'zor') {
-        const zorA = a.journalEntries[a.journalEntries.length - 1]?.checkout?.ZOR || a.journalEntries[a.journalEntries.length - 1]?.checkin?.ZOR;
-        const zorB = b.journalEntries[b.journalEntries.length - 1]?.checkout?.ZOR || b.journalEntries[b.journalEntries.length - 1]?.checkin?.ZOR;
-  
-        const indexA = zorOrder.indexOf(zorA);
-        const indexB = zorOrder.indexOf(zorB);
-  
-       
-        if (indexA === -1 && indexB === -1) {
-          return 0;
-        } else if (indexA === -1) {
-          return 1;
-        } else if (indexB === -1) {
-          return -1;
-        } else {
-          return indexA - indexB;
+                const indexA = zorOrder.indexOf(zorA);
+                const indexB = zorOrder.indexOf(zorB);
+
+
+                if (indexA === -1 && indexB === -1) {
+                    return 0;
+                } else if (indexA === -1) {
+                    return 1;
+                } else if (indexB === -1) {
+                    return -1;
+                } else {
+                    return indexA - indexB;
+                }
+            }
+
+            return 0;
+        });
+
+        if (sortCriteria === 'zor' && sortDirection === 'desc') {
+            sortedStudents.reverse();
         }
-      }
-  
-      return 0;
-    });
-  
-    if (sortCriteria === 'zor' && sortDirection === 'desc') {
-      sortedStudents.reverse();
-    }
-  
-    return sortedStudents;
-  };
-  
-  const sortedStudents = sortStudents();
-  
-  
+
+        return sortedStudents;
+    };
+
+    const sortedStudents = sortStudents();
+
+
     return (
         <>
             <div>
@@ -83,7 +83,7 @@ export default function ViewClassList() {
                                     <button
                                         className="text-body font-body rounded-[1rem] border-sandwich border-[4px] pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] w-[21rem]"
                                         onClick={() => {
-                                            setSortCriteria('zor'); 
+                                            setSortCriteria('zor');
                                             toggleSortDirection();
                                         }}
                                     >
@@ -94,7 +94,7 @@ export default function ViewClassList() {
                                     <button
                                         className="text-body font-body rounded-[1rem] border-sandwich border-[4px] pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] w-[21rem]"
                                         onClick={() => {
-                                            setSortCriteria('lastName'); 
+                                            setSortCriteria('lastName');
                                             toggleSortDirection();
                                         }}
                                     >
@@ -123,10 +123,13 @@ export default function ViewClassList() {
                                                             <div className='pb-2'>
                                                                 {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
                                                             </div>
-                                                            <div className='bg-notebookPaper px-2 py-2 rounded-md'>
+                                                            <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
                                                                 Goals: {lastCheckout.goal}
                                                                 <br />
                                                                 Needs: {lastCheckout.need}
+                                                                <div className='pt-3 mr-2 underline'>
+                                                                    <Link to={`/${userData._id}/${classroomId}/${student._id}`}>More &gt;</Link>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -141,10 +144,13 @@ export default function ViewClassList() {
                                                             <div>
                                                                 {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
                                                             </div>
-                                                            <div className='bg-notebookPaper px-2 py-2 rounded-md'>
+                                                            <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
                                                                 Goals: {lastCheckin.goal}
                                                                 <br />
                                                                 Needs: {lastCheckin.need}
+                                                                <div className='pt-3 mr-2 underline'>
+                                                                    <Link to={`/${userData._id}/${classroomId}/${student._id}`}>More &gt;</Link>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -153,8 +159,11 @@ export default function ViewClassList() {
                                         }
                                         return (
                                             <li key={`${student.id}-${index}`}>
-                                                <div className={`bg-white p-4 my-3 rounded-lg`}>
+                                                <div className={`bg-white p-4 my-3 rounded-lg flex justify-between`}>
                                                     {student.firstName} {student.lastName} didn't check in or out yet!
+
+                                                    <Link to={`/${userData._id}/${classroomId}/${student._id}`} className='mr-4 underline'>More &gt;</Link>
+
                                                 </div>
                                             </li>
                                         );

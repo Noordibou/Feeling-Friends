@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const StudentSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     firstName: { type: String, required: true },
@@ -8,7 +9,14 @@ const StudentSchema = new mongoose.Schema({
     birthday: { type: String },
     gradeYear: { type: String },
     schoolStudentId: { type: String },
-    avatarImg: { type: String },
+    avatarImg: {
+        type: String,
+        default: "young-student.png"
+    },
+    iepStatus: {
+        type: String,
+        enum: ['Yes', 'No']
+    },
     journalEntries: [{
         date: { type: String },
         checkin: {
@@ -27,8 +35,31 @@ const StudentSchema = new mongoose.Schema({
             need: { type: String },
             highlight: { type: String },
         }
+    }],
+    IEP: [{
+        contentAreaNotices:{
+            contentArea: { type: String },
+            benchmark: { type: String },
+        },
+        learningChallenges: {
+            challenge: { type: String },
+            date: {
+                type: Date,
+                get: date => date.toISOString().slice(0, 10),
+                set: dateString => new Date(dateString)
+            }
+        },
+        accomodationsAndAssisstiveTech: {
+            accomodation: { type: String },
+            location: { type: String },
+            frequency: {
+                type: String,
+                enum: ['Daily', 'Weekly', 'Monthly', 'As Needed']
+            },
+
+        }
     }]
 
 })
 
-module.exports= mongoose.model('Student', StudentSchema);
+module.exports = mongoose.model('Student', StudentSchema);

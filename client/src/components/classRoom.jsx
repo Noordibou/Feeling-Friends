@@ -33,6 +33,21 @@ function formatDate(dateString) {
   return formattedDate;
 }
 
+function calculateAge(birthday) {
+  const birthDate = new Date(birthday);
+  const today = new Date();
+  const age = today.getFullYear() - birthDate.getFullYear();
+
+  // Check if the birthday for this year has already occurred
+  if (
+      today.getMonth() < birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+  ) {
+      age--;
+  }
+
+  return age;
+}
 
 
 function calculateZorPercentage(classroom) {
@@ -72,6 +87,7 @@ module.exports={
     getBackgroundColorClass,
     getBorderColorClass,
     calculateZorPercentage,
-    formatDate
+    formatDate,
+    calculateAge
 
 }

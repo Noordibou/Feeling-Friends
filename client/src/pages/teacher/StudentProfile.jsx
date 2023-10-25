@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getStudentProfile } from '../../api/teachersApi';
-import { getBackgroundColorClass, formatDate } from '../../components/classRoom';
+import { getBackgroundColorClass, formatDate, calculateAge } from '../../components/classRoom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import youngStudent from '../../images/young-student.png';
@@ -58,7 +58,7 @@ export default function StudentProfile() {
                         <h2 className="text-header1 font-header1 text-center pt-[4rem]">
                             <strong> <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>&lt;</Link> {studentProfile?.firstName} {studentProfile?.lastName}</strong>
                         </h2>
-                        <p>Age: {studentProfile?.age}</p>
+                        <p>Age: {calculateAge(studentProfile?.birthday)}</p>
                         <p>Grade: {studentProfile?.gradeYear}th</p>
                         <p>Student ID: {studentProfile?.schoolStudentId}</p>
                         <p>Birthday: {studentProfile?.birthday}</p>

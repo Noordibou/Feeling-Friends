@@ -38,7 +38,7 @@ function calculateAge(birthday) {
   const today = new Date();
   const age = today.getFullYear() - birthDate.getFullYear();
 
-  // Check if the birthday for this year has already occurred
+ 
   if (
       today.getMonth() < birthDate.getMonth() ||
       (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())

@@ -15,7 +15,7 @@ function getBackgroundColorClass(zor) {
   if (zor === 'Wiggly') return "yellow";
   if (zor === 'Explosive') return "orange";
   return "";
-}
+};
 
 function getBorderColorClass(zor) {
   if (zor === 'Unmotivated' ) return "border-blue";
@@ -23,32 +23,7 @@ function getBorderColorClass(zor) {
   if (zor === 'Wiggly') return "border-yellow";
   if (zor === 'Explosive') return "border-orange";
   return "";
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-  const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
-  const formattedDate = date.toLocaleDateString('en-US', options);
-  return formattedDate;
-}
-
-function calculateAge(birthday) {
-  const birthDate = new Date(birthday);
-  const today = new Date();
-  const age = today.getFullYear() - birthDate.getFullYear();
-
-  // Check if the birthday for this year has already occurred
-  if (
-      today.getMonth() < birthDate.getMonth() ||
-      (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
-  ) {
-      age--;
-  }
-
-  return age;
-}
-
+};
 
 function calculateZorPercentage(classroom) {
   if (classroom.students && classroom.students.length > 0) {
@@ -79,7 +54,8 @@ function calculateZorPercentage(classroom) {
     return percentages;
   }
   return {};
-}
+};
+
 module.exports={
     layout,
     rows,
@@ -87,7 +63,5 @@ module.exports={
     getBackgroundColorClass,
     getBorderColorClass,
     calculateZorPercentage,
-    formatDate,
-    calculateAge
 
 }

@@ -1,7 +1,7 @@
 function calculateAge(birthday) {
     const birthDate = new Date(birthday);
     const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
+    let age = today.getFullYear() - birthDate.getFullYear();
   
    
     if (

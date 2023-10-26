@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getStudentProfile } from '../../api/teachersApi';
-import { getBackgroundColorClass, formatDate, calculateAge } from '../../components/classRoom';
+import { getBackgroundColorClass } from '../../components/classRoomColors';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import youngStudent from '../../images/young-student.png';
 import './StudentProfile.css';
+const { calculateAge, formatDate } = require('../../components/dateFormat');
 
 
 export default function StudentProfile() {
@@ -16,6 +17,7 @@ export default function StudentProfile() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedEntries, setSelectedEntries] = useState([]);
 
+    
     useEffect(() => {
         const fetchStudentProfile = async () => {
             try {

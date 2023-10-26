@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom } from '../../api/teachersApi';
-import { getBackgroundColorClass } from '../../components/classRoom';
+import { getBackgroundColorClass } from '../../components/classRoomColors';
 
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();

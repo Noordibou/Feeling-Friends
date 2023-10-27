@@ -79,7 +79,14 @@ const StudentHome = () => {
             <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body  ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
           </div>
         </div>
-
+        
+        {/* <div className="xlMin:w-[500px] xlMin:h-[120px] xlMax:w-[300px] flex z-10 absolute bg-gradient-to-t from-[#231d2c] translate-x-[-60px] skew-x-[135deg] mdMax:hidden shadow shadow-[#000000]"></div>
+                <h1
+                  className="xlMin:w-[500px] xlMin:h-[120px] xlMax:w-[300px] xlMax:h-[70px] absolute opacity-80 xlMin:translate-x-[-60px] xlMin:skew-x-[135deg] xlMax:skew-x-[135deg] xlMax:translate-x-[-35px] mdMax:hidden transform object-fill"
+                  autoPlay
+                  loop
+                  muted
+                ></h1> */}
         {/* Emotions Section */}
         <div className="mt-20">
           <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
@@ -88,24 +95,35 @@ const StudentHome = () => {
             <div className="w-screen max-w-lg flex justify-between my-14">
               <button className="rounded-full w-32 h-32 bg-lightYellow" onClick={() => handleEmotion("proud")}>
                 <img src={proudImg} alt="Proud Emoji" />
+
+
+                <h3 className="text-[1.8rem] font-header2 rotate-[6deg]">Proud</h3>
+
+
+
               </button>
               <button className="rounded-full w-32 h-32 bg-lightOrange" onClick={() => handleEmotion("anxious")}>
                 <img src={anxiousImg} alt="Anxious Emoji" />
+                <h3 className="text-[1.8rem] font-header2 ">Anxious</h3>
               </button>
               <button className="rounded-full w-32 h-32 bg-lightBlue" onClick={() => handleEmotion("sad")}>
                 <img src={sadImg} alt="Sad Emoji" />
+                <h3 className="text-[1.8rem] font-header2 ">Sad</h3>
               </button>
             </div>
             {/* second row */}
             <div className="w-screen max-w-lg flex justify-between my-14">
               <button className="rounded-full w-32 h-32 bg-darkTeal" onClick={() => handleEmotion("happy")}>
                 <img src={happyImg} alt="Happy Emoji" />
+                <h3 className="text-[1.8rem] font-header2 ">Happy</h3>
               </button>
               <button className="rounded-full w-32 h-32 bg-lightLavender" onClick={() => handleEmotion("scared")}>
                 <img src={scaredImg} alt="Scared Emoji" />
+                <h3 className="text-[1.8rem] font-header2 ">Scared</h3>
               </button>
               <button className="rounded-full w-32 h-32 bg-pink" onClick={() => handleEmotion("angry")}>
                 <img src={angryImg} alt="Angry Emoji" />
+                <h3 className="text-[1.8rem] font-header2 ">Angry</h3>
               </button>
             </div>
           </div>

@@ -8,6 +8,7 @@ import happyImg from '../images/happy.png'
 import scaredImg from '../images/scared.png'
 import { useUser } from '../context/UserContext';
 import ProgressBar from "../components/ProgressBar";
+import CurvedWords from "../components/CurvedWord";
 
 const StudentHome = () => {
   const navigate = useNavigate();
@@ -95,37 +96,76 @@ const StudentHome = () => {
             <div className="w-screen max-w-lg flex justify-between my-14">
               <button className="rounded-full w-32 h-32 bg-lightYellow" onClick={() => handleEmotion("proud")}>
                 <img src={proudImg} alt="Proud Emoji" />
-
-
-                <h3 className="text-[1.8rem] font-header2 rotate-[6deg]">Proud</h3>
-
-
-
+                <div className="flex flex-row justify-center">
+                  <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">P</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">r</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[0deg] tracking-[0.2rem]  ">o</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">u</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">d</h3>
+                </div>
               </button>
               <button className="rounded-full w-32 h-32 bg-lightOrange" onClick={() => handleEmotion("anxious")}>
                 <img src={anxiousImg} alt="Anxious Emoji" />
-                <h3 className="text-[1.8rem] font-header2 ">Anxious</h3>
+                {/* <h3 className="text-[1.8rem] font-header2 ">Anxious</h3> */}
+                <div className="flex flex-row justify-center">
+                  <h3 className="text-[1.8rem] font-header2 rotate-[28deg] -translate-y-[1.1rem] tracking-[0.2rem]  ">N</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">e</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">r</h3>
+                  <h3 className="text-[1.8rem] font-header2 tracking-[0.2rem] ">v</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">o</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">u</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[28deg] -translate-y-[1.1rem] tracking-[0.2rem]  ">s</h3>
+                </div>
+
               </button>
               <button className="rounded-full w-32 h-32 bg-lightBlue" onClick={() => handleEmotion("sad")}>
                 <img src={sadImg} alt="Sad Emoji" />
-                <h3 className="text-[1.8rem] font-header2 ">Sad</h3>
+                {/* <h3 className="text-[1.8rem] font-header2 ">Sad</h3> */}
+                <div className="flex flex-row justify-center">
+                  <h3 className="text-[1.8rem] font-header2 rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">S</h3>
+                  <h3 className="text-[1.8rem] font-header2 tracking-[0.2rem] ">a</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">d</h3>
+                </div>
               </button>
             </div>
             {/* second row */}
             <div className="w-screen max-w-lg flex justify-between my-14">
               <button className="rounded-full w-32 h-32 bg-darkTeal" onClick={() => handleEmotion("happy")}>
                 <img src={happyImg} alt="Happy Emoji" />
-                <h3 className="text-[1.8rem] font-header2 ">Happy</h3>
+                {/* <h3 className="text-[1.8rem] font-header2 ">Happy</h3> */}
+                <div className="flex flex-row justify-center">
+                  <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">H</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">a</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[0deg] tracking-[0.2rem]  ">p</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">p</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">y</h3>
+                </div>
               </button>
               <button className="rounded-full w-32 h-32 bg-lightLavender" onClick={() => handleEmotion("scared")}>
                 <img src={scaredImg} alt="Scared Emoji" />
-                <h3 className="text-[1.8rem] font-header2 ">Scared</h3>
+                {/* <h3 className="text-[1.8rem] font-header2 ">Scared</h3> */}
+                <div className="flex flex-row justify-center">
+                  <h3 className="text-[1.8rem] font-header2 rotate-[28deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">S</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">c</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[8deg] tracking-[0.2rem]  ">a</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] tracking-[0.2rem]  ">r</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">e</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[28deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">d</h3>
+                </div>
               </button>
               <button className="rounded-full w-32 h-32 bg-pink" onClick={() => handleEmotion("angry")}>
                 <img src={angryImg} alt="Angry Emoji" />
-                <h3 className="text-[1.8rem] font-header2 ">Angry</h3>
+                {/* <h3 className="text-[1.8rem] font-header2 ">Angry</h3> */}
+                <div className="flex flex-row justify-center">
+                  <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">A</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">n</h3>
+                  <h3 className="text-[1.8rem] font-header2 rotate-[0deg] tracking-[0.2rem]  ">g</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">r</h3>
+                  <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">y</h3>
+                </div>
               </button>
             </div>
+            <CurvedWords handleEmotion={handleEmotion}/>
           </div>
         </div>
       </div>

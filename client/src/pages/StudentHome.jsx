@@ -80,15 +80,7 @@ const StudentHome = () => {
             <button className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body  ${checkOutBtn}`} onClick={() => handleClick("checkout")}>Check-out</button>
           </div>
         </div>
-        
-        {/* <div className="xlMin:w-[500px] xlMin:h-[120px] xlMax:w-[300px] flex z-10 absolute bg-gradient-to-t from-[#231d2c] translate-x-[-60px] skew-x-[135deg] mdMax:hidden shadow shadow-[#000000]"></div>
-                <h1
-                  className="xlMin:w-[500px] xlMin:h-[120px] xlMax:w-[300px] xlMax:h-[70px] absolute opacity-80 xlMin:translate-x-[-60px] xlMin:skew-x-[135deg] xlMax:skew-x-[135deg] xlMax:translate-x-[-35px] mdMax:hidden transform object-fill"
-                  autoPlay
-                  loop
-                  muted
-                ></h1> */}
-        {/* Emotions Section */}
+ 
         <div className="mt-16">
           <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
           <div className="">

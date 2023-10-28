@@ -89,7 +89,7 @@ const StudentHome = () => {
                   muted
                 ></h1> */}
         {/* Emotions Section */}
-        <div className="mt-20">
+        <div className="mt-16">
           <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
           <div className="">
             {/* first row */}

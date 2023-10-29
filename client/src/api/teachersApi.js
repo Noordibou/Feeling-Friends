@@ -40,6 +40,7 @@ export const getTeacherById = async (id) => {
 
 export const updateTeacher = async (id, teacher) => {
     try {
+        // console.log(id)
         const response = await axios.put(`${TEACHERS_API_URL}/${id}`, teacher, { withCredentials: true });
         return response.data;
     } catch (error) {
@@ -81,8 +82,6 @@ export const getTeacherClassroom = async (id, classroomId) => {
     }
 }
 
-
-  
 
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
 export const addStudentToTeacherClassroom = async (teacherId, studentId) => {

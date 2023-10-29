@@ -25,7 +25,7 @@ const createNewTeacher = async (req, res) => {
             schoolTeacherId: req.body.schoolTeacherId,
             role: 'teacher',
             avatarImg: req.body.avatarImg,
-            classrooms: req.body.classrooms, // Include classrooms from req.body
+            classrooms: req.body.classrooms, 
         });
 
         // Save the teacher

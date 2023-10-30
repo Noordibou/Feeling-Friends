@@ -45,7 +45,7 @@ export default function App() {
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />
         <Route path="/emotion" element={<SubEmotion/>} />
-        <Route path="/subemotionanxious" element={<SubEmotionAnxious />} />
+        <Route path="/subemotionnervous" element={<SubEmotionAnxious />} />
         <Route path="/subemotionangry" element={<SubEmotionAngry />} />
         <Route path="/subemotionhappy" element={<SubEmotionHappy />} />
         <Route path="/subemotionproud" element={<SubEmotionProud />} />

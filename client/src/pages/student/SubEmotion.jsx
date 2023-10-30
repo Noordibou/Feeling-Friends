@@ -39,61 +39,46 @@ const SubEmotion = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+<div className="flex flex-col items-center justify-center h-screen min-w-screen ">
       <div className="flex w-full justify-center -mt-10 mb-10">
-          <ProgressBar totalPages="6" currentPage="2"/>
-        </div>
-      <div className="flex flex-col text-center">
-        <div className="font-header2 text-header1">
+          <ProgressBar totalPages="6" currentPage="5"/>
+      </div>
+      <div className="flex flex-col text-center w-full items-center bg-pink">
+        <div className="font-header2 text-header2">
           <h2>Choose the emotion closest to</h2>
           <span>what you're feeling.</span>
         </div>
-        {/* <DisplayEmotions /> */}
-        <div className="relative font-header3 -top-20 md:text-header3 text-[1.1rem]">
-          <img src={wheelImg} alt="" className="w-[42.375rem] h-[42.375rem] object-fill" />
+        <div className="relative font-header3 -top-20 md:text-header3 text-[1.1rem] ">
+          <img src={wheelImg} alt="" className="w-[38rem] h-[38rem] object-contain " />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">
-        
             <div className="flex py-14">
-              
-              <div onClick={() => handleEmotionClick(subEmotions[0])} className="cursor-pointer px-12 hover:font-semibold">{subEmotions[0]}</div>
-              
+              <div onClick={() => handleEmotionClick(subEmotions[0])} className="cursor-pointer px-8 hover:font-semibold">{subEmotions[0]}</div>
               <div onClick={() => handleEmotionClick(subEmotions[1])} className="px-8 cursor-pointer hover:font-semibold">{subEmotions[1]}</div>
-
             </div>
-
-            <div className="flex space-between self-center">
-              
-              <div onClick={() => handleEmotionClick(subEmotions[2])} className=" px-6 py-12 cursor-pointer hover:font-semibold">{subEmotions[2]}</div>
-              
-              <img src={eImage} alt="" className="w-44 h-32 object-fill " />
-              
+            <div className="flex justify-around w-[42.375rem] bg-darkTeal ">
+              <div onClick={() => handleEmotionClick(subEmotions[2])} className="  py-12 cursor-pointer hover:font-semibold">{subEmotions[2]}</div>
+              <img src={eImage} alt="" className="w-32 h-32 object-fill " />
               <div onClick={() => handleEmotionClick(subEmotions[3])} className=" cursor-pointer py-12 hover:font-semibold">{subEmotions[3]}</div>
-
             </div>
-
-            <div className="flex mb-6 pt-8">
-              
-              <div onClick={() => handleEmotionClick(subEmotions[4])} className=" cursor-pointer px-12 hover:font-semibold">{subEmotions[4]}</div>
-              
+            <div className="flex mb-6 pt-8 ">
+              <div onClick={() => handleEmotionClick(subEmotions[4])} className=" cursor-pointer px-4 hover:font-semibold">{subEmotions[4]}</div>
               <div onClick={() => handleEmotionClick(subEmotions[5])} className="cursor-pointer px-8 hover:font-semibold">{subEmotions[5]}</div>
-
             </div>
-
           </div>
         </div>
         <div className="-mt-[30%] justify-center ">
           <div className=" px-18 flex justify-between">
-            <button className="rounded-full w-18 h-18 bg-yellow p-2" href="/subemotionanxious"><img src={anxiousImg} alt="" className="w-16 h-16 object-fill  " /></button>
-            <button className="rounded-full w-18 h-18 bg-lightBlue p-2 " href="/subemotionsad"><img src={sadImg} alt="" className="w-16 h-16 object-fill " /></button>
+            <button className="rounded-full w-18 h-18 bg-yellow p-2" href="/subemotionproud"><img src={proudImg} alt="" className="w-16 h-16 object-fill  " /></button>
+            <button className="rounded-full w-18 h-18 bg-lightBlue p-2 " href="/subemotionanxious"><img src={anxiousImg} alt="" className="w-16 h-16 object-fill " /></button>
           </div>
 
           <div className=" px-32 flex justify-between">
-            <button className="rounded-full w-18 h-18 bg-darkTeal p-2" href="/subemotionhappy"><img src={happyImg} alt="" className="w-16 h-16 " /></button>
+            <button className="rounded-full w-18 h-18 bg-darkTeal p-2" href="/subemotionhappy"><img src={happyImg} alt="" className="w-16 h-16 object-fill " /></button>
             <button className="rounded-full w-18 h-18 bg-pink p-2" href="/subemotionangry"><img src={angryImg} alt="" className="w-16 h-16 object-fill " /></button>
           </div>
 
           <div className="-mt-12 flex justify-center">
-            <button className="rounded-full w-18 h-18 bg-lightLavender p-2" href="/subemotionscared"><img src={scaredImg} alt="" className="w-16 h-16 object-fill " /></button>
+            <button className="rounded-full w-18 h-18 bg-lightLavender p-2" href="/subemotionscared"><img src={sadImg} alt="" className="w-16 h-16 object-fill " /></button>
           </div>
         </div>
       </div>

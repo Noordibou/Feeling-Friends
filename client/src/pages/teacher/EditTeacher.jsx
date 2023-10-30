@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getTeacherById, getAllStudentsClassroom, updateStudent } from '../../api/teachersApi';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import { addStudentToTeacherClassroom, deleteStudentFromClassroom } from '../../api/teachersApi';
 
 
 const EditTeacher = () => {
@@ -60,24 +61,64 @@ const EditTeacher = () => {
         setStudentsData(updatedStudentsData);
     };
 
+    const addStudentToClassroom = async (classroomIndex) => {
+        try {
+            const teacherId = userData._id;
+            const classroomId = formData.classrooms[classroomIndex]._id;
+    
+            // Make an API call to add a student to the classroom
+            const response = await addStudentToTeacherClassroom(teacherId, classroomId);
+    
+            if (response && response.student) {
+                // Update studentsData state to include the newly added student
+                const updatedStudentsData = [...studentsData];
+                updatedStudentsData[classroomIndex].push(response.student);
+                setStudentsData(updatedStudentsData);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+    const removeStudentFromClassroom = async (classroomIndex, studentId) => {
+        try {
+            const teacherId = userData._id;
+            const classroomId = formData.classrooms[classroomIndex]._id;
+    
+            // Make an API call to remove a student from the classroom
+            await deleteStudentFromClassroom(teacherId, classroomId, studentId);
+    
+            // Update studentsData state to remove the deleted student
+            const updatedStudentsData = [...studentsData];
+            const studentIndex = updatedStudentsData[classroomIndex].findIndex(student => student._id === studentId);
+            if (studentIndex !== -1) {
+                updatedStudentsData[classroomIndex].splice(studentIndex, 1);
+                setStudentsData(updatedStudentsData);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+
     const handleFormSubmit = async (event) => {
         try {
             event.preventDefault();
-            updateUser(formData);
+            await updateUser(formData);
 
-            studentsData.forEach(async (classroom, classroomIndex) => {
+            // studentsData.forEach(async (classroom, classroomIndex) => {
 
-                classroom.forEach(async (student, studentIndex) => {
-                    // console.log(studentsData[classroomIndex][studentIndex].firstName)
-                    await updateStudent(userData._id, formData.classrooms[classroomIndex]._id, student._id, {
-                        firstName: studentsData[classroomIndex][studentIndex].firstName,
-                        lastName: studentsData[classroomIndex][studentIndex].lastName,
-                        iepStatus: studentsData[classroomIndex][studentIndex].iepStatus,
+            //     classroom.forEach(async (student, studentIndex) => {
+            //         // console.log(studentsData[classroomIndex][studentIndex].firstName)
+            //         await updateStudent(userData._id, formData.classrooms[classroomIndex]._id, student._id, {
+            //             firstName: studentsData[classroomIndex][studentIndex].firstName,
+            //             lastName: studentsData[classroomIndex][studentIndex].lastName,
+            //             iepStatus: studentsData[classroomIndex][studentIndex].iepStatus,
 
-                    });
+            //         });
 
-                });
-            });
+            //     });
+            // });
             navigate(`/teacher-home`);
         } catch (error) {
             console.error(error);
@@ -126,14 +167,23 @@ const EditTeacher = () => {
                             onChange={(event) => handleClassroomInputChange(event, classroomIndex, 'location')}
                         />
                         <ul>
-                            {Array.isArray(studentsData[classroomIndex]) &&
-                                studentsData[classroomIndex].map((student, studentIndex) => (
-                                    <li key={studentIndex}>
-                                        <span>{student.firstName}</span>
-                                        <span>{student.lastName}</span>
-                                    </li>
-                                ))}
-                        </ul>
+            {Array.isArray(studentsData[classroomIndex]) &&
+                studentsData[classroomIndex].map((student, studentIndex) => (
+                    <li key={studentIndex}>
+                        <span>{student.firstName} {student.lastName}</span>
+                        <button
+                            onClick={() => removeStudentFromClassroom(classroomIndex, student._id)}
+                        >
+                            Remove Student
+                        </button>
+                    </li>
+                ))}
+        </ul>
+        <button onClick={() => addStudentToClassroom(classroomIndex)}>
+            Add Student to Classroom
+        </button>
+    </div>
+))}
                         {/* <label>Students:</label>
                         <ul>
                             {Array.isArray(studentsData[classroomIndex]) &&
@@ -165,8 +215,7 @@ const EditTeacher = () => {
                                     </li>
                                 ))}
                         </ul> */}
-                    </div>
-                ))}
+                   
 
                 <button type="submit">Update Teacher</button>
             </form>

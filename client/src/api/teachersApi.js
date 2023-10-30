@@ -108,12 +108,18 @@ export const addStudentToTeacherClassroom = async (id, classroomId) => {
 
 
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const deleteStudentFromClassroom = async (id,classroomId, studentId) => {
+// TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
+export const deleteStudentFromClassroom = async (id, classroomId, studentId) => {
     try {
-        const response = await axios.delete(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students/${studentId}`);
-        return response.sendStatus(200);
+        const response = await axios.delete(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
+        // Check for a successful status code, typically 200 (OK), in the response
+        if (response.status === 200) {
+            return true; // Indicate successful deletion
+        }
+        return false; // Handle other status codes or errors as needed
     } catch (error) {
-        console.log(error);
-        throw error;
+        console.error(error);
+        return false; // Handle errors as needed
     }
 }
+

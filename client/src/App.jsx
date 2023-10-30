@@ -25,7 +25,7 @@ import EditTeacher from "./pages/teacher/EditTeacher";
 
 export default function App() {
   return (
-    <main className="bg-notebookPaper h-screen">
+    <main className="bg-notebookPaper h-full min-h-screen">
 
       <AuthProvider>
         <UserProvider>

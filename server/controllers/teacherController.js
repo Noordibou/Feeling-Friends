@@ -25,7 +25,7 @@ const createNewTeacher = async (req, res) => {
             schoolTeacherId: req.body.schoolTeacherId,
             role: 'teacher',
             avatarImg: req.body.avatarImg,
-            classrooms: req.body.classrooms, 
+            classrooms: req.body.classrooms,
         });
 
         // Save the teacher
@@ -93,7 +93,7 @@ const getClassBySubject = async (req, res) => {
 
 const getStudentsInClassroom = async (req, res) => {
     try {
-        const teacher = await Teacher.findById(req.params.id); 
+        const teacher = await Teacher.findById(req.params.id);
         const classroom = teacher.classrooms.id(req.params.classroomId);
 
         if (!teacher) {
@@ -106,7 +106,6 @@ const getStudentsInClassroom = async (req, res) => {
 
         const studentIds = classroom.students;
 
-        // Assuming you have a Student model defined
         const students = await Student.find({ _id: { $in: studentIds } });
 
         res.json(students);
@@ -119,7 +118,7 @@ const getStudentsInClassroom = async (req, res) => {
 
 const getStudentProfileForTeacher = async (req, res) => {
     try {
-        const teacher = await Teacher.findById(req.params.id); 
+        const teacher = await Teacher.findById(req.params.id);
         const classroom = teacher.classrooms.id(req.params.classroomId);
 
         if (!teacher) {
@@ -130,13 +129,13 @@ const getStudentProfileForTeacher = async (req, res) => {
             return res.status(404).json({ error: 'Classroom not found' });
         }
 
-        const studentId = req.params.studentId; // Assuming you get the student ID from the request parameters
+        const studentId = req.params.studentId; 
 
         if (!classroom.students.includes(studentId)) {
             return res.status(404).json({ error: 'Student not found in the classroom' });
         }
 
-        // Assuming you have a Student model defined
+       
         const studentData = await Student.findById(studentId);
 
         res.json(studentData);
@@ -145,8 +144,185 @@ const getStudentProfileForTeacher = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 }
-    
 
+const editStudentInformation = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id);
+        const classroom = teacher.classrooms.id(req.params.classroomId);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
+
+        const studentId = req.params.studentId;
+        const updatedData = req.body;
+
+        const studentIndex = classroom.students.findIndex(studentRef => studentRef.equals(studentId));
+
+        if (studentIndex === -1) {
+            return res.status(404).json({ error: 'Student not found in the classroom' });
+        }
+
+        
+        const studentToUpdateId = classroom.students[studentIndex];
+
+        const studentToUpdate = await Student.findById(studentToUpdateId);
+
+        if (!studentToUpdate) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+    
+        for (const key in updatedData) {
+            studentToUpdate[key] = updatedData[key];
+        }
+
+        const updatedStudent = await studentToUpdate.save();
+
+        res.json(updatedStudent);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
+// currently not using, but it works
+const getAllStudentsForTeacher = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id).populate('classrooms.students');
+        
+        if (!teacher) {
+            return res.status(404).json({ message: 'Teacher not found' });
+        }
+
+        const students = teacher.classrooms.reduce((allStudents, classroom) => {
+            allStudents.push(...classroom.students);
+            return allStudents;
+        }, []);
+
+        return res.status(200).json(students);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error fetching students for the teacher: ' + error.message });
+    }
+}
+
+const deleteStudentInClassroom = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id);
+        const classroom = teacher.classrooms.id(req.params.classroomId);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
+
+        const studentId = req.params.studentId;
+
+        // Check if the student is in the classroom
+        const studentIndex = classroom.students.findIndex(studentRef => studentRef.equals(studentId));
+
+        if (studentIndex === -1) {
+            return res.status(404).json({ error: 'Student not found in the classroom' });
+        }
+
+        // Remove the student from the classroom's students array
+        classroom.students.splice(studentIndex, 1);
+        await teacher.save();
+
+        res.json({ message: 'Student removed from the classroom' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+const addStudentToClassroom = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id);
+        const classroom = teacher.classrooms.id(req.params.classroomId);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
+
+        const studentId = req.body.studentId;
+
+        // Check if the student is already in the classroom
+        if (classroom.students.includes(studentId)) {
+            return res.status(400).json({ error: 'Student is already in the classroom' });
+        }
+
+        // Add the student to the classroom's students array
+        classroom.students.push(studentId);
+        await teacher.save();
+
+        // Get the updated list of students in the classroom
+        const updatedStudents = await Student.find({ _id: { $in: classroom.students } });
+
+        res.json({ message: 'Student added to the classroom', students: updatedStudents });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+ 
+
+const deleteClassroom = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        const classroomId = req.params.classroomId;
+
+        // Find the classroom by its ID and remove it from the teacher's classrooms array
+        teacher.classrooms.id(classroomId).remove();
+
+        await teacher.save();
+
+        res.json({ message: 'Classroom deleted' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+const createClassroom = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        const newClassroom = {
+            classSubject: req.body.classSubject,
+            location: req.body.location,
+            students: [],
+        };
+
+        teacher.classrooms.push(newClassroom);
+        await teacher.save();
+
+        res.json(newClassroom);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
 
 
 module.exports = {
@@ -158,6 +334,12 @@ module.exports = {
     getClassBySubject,
     getStudentsInClassroom,
     getStudentProfileForTeacher,
+    getAllStudentsForTeacher,
+    editStudentInformation,
+    deleteStudentInClassroom,
+    addStudentToClassroom,
+    deleteClassroom,
+    createClassroom,
 
 };
 
@@ -165,12 +347,6 @@ module.exports = {
 // =================================================== //
 
 // // FIXME: *** WILL NEED TO CHANGE *** //
-// // Gets all students within a teacher's classroom
-// const getAllStudentsInClassroom = async (req, res) => {
-//     const teacher = await Teacher.findById(req.params.teacher_id);
-//     const students = await Student.find({ _id: { $in: teacher.students } });
-//     res.json(students)
-// }
 
 // // FIXME: *** WILL NEED TO CHANGE *** //
 // // Adds a student to the teacher's classroom roster

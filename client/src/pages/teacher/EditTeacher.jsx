@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getTeacherById } from '../../api/teachersApi';
+import { getTeacherById, getAllStudentsClassroom, updateStudent } from '../../api/teachersApi';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from "../../context/UserContext";
+import { useUser } from '../../context/UserContext';
+
 
 const EditTeacher = () => {
     const navigate = useNavigate();
     const { userData, updateUser } = useUser();
-    // const { teacherId } = useParams();
     const [formData, setFormData] = useState({
         prefix: '',
         avatarImg: '',
@@ -15,15 +15,21 @@ const EditTeacher = () => {
         lastName: '',
         schoolTeacherId: '',
         classrooms: [],
-
     });
+    const [studentsData, setStudentsData] = useState([]);
 
     useEffect(() => {
-
         const fetchTeacherData = async () => {
             try {
                 const response = await getTeacherById(userData._id);
                 setFormData(response);
+
+                const studentsPromises = response.classrooms.map(classroom => {
+                    return getAllStudentsClassroom(userData._id, classroom._id);
+                });
+
+                const students = await Promise.all(studentsPromises);
+                setStudentsData(students);
             } catch (error) {
                 console.error(error);
             }
@@ -48,14 +54,32 @@ const EditTeacher = () => {
         });
     };
 
+    const handleStudentInputChange = (event, classroomIndex, studentIndex, field) => {
+        const updatedStudentsData = [...studentsData];
+        updatedStudentsData[classroomIndex][studentIndex][field] = event.target.value;
+        setStudentsData(updatedStudentsData);
+    };
 
     const handleFormSubmit = async (event) => {
         try {
             event.preventDefault();
             updateUser(formData);
+
+            studentsData.forEach(async (classroom, classroomIndex) => {
+
+                classroom.forEach(async (student, studentIndex) => {
+                    // console.log(studentsData[classroomIndex][studentIndex].firstName)
+                    await updateStudent(userData._id, formData.classrooms[classroomIndex]._id, student._id, {
+                        firstName: studentsData[classroomIndex][studentIndex].firstName,
+                        lastName: studentsData[classroomIndex][studentIndex].lastName,
+                        iepStatus: studentsData[classroomIndex][studentIndex].iepStatus,
+
+                    });
+
+                });
+            });
             navigate(`/teacher-home`);
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error);
         }
     };
@@ -84,31 +108,63 @@ const EditTeacher = () => {
                     <label>School Teacher ID:</label>
                     <input type="text" name="schoolTeacherId" value={formData.schoolTeacherId} onChange={handleInputChange} />
                 </div>
-
                 {/* Classroom details */}
-                {formData.classrooms.map((classroom, index) => (
-                    <div key={index}>
+                {formData.classrooms.map((classroom, classroomIndex) => (
+                    <div key={classroomIndex}>
                         <label>Class Subject:</label>
                         <input
                             type="text"
-                            name={`classrooms[${index}].classSubject`}
+                            name={`classrooms[${classroomIndex}].classSubject`}
                             value={classroom.classSubject}
-                            onChange={(event) => handleClassroomInputChange(event, index, 'classSubject')}
+                            onChange={(event) => handleClassroomInputChange(event, classroomIndex, 'classSubject')}
                         />
                         <label>Location:</label>
                         <input
                             type="text"
-                            name={`classrooms[${index}].location`}
+                            name={`classrooms[${classroomIndex}].location`}
                             value={classroom.location}
-                            onChange={(event) => handleClassroomInputChange(event, index, 'location')}
+                            onChange={(event) => handleClassroomInputChange(event, classroomIndex, 'location')}
                         />
-                        <label>Students:</label>
-                        <input
-                            type="text"
-                            name={`classrooms[${index}].students`}
-                            value={classroom.students}
-                            onChange={(event) => handleClassroomInputChange(event, index, 'students')}
-                        />
+                        <ul>
+                            {Array.isArray(studentsData[classroomIndex]) &&
+                                studentsData[classroomIndex].map((student, studentIndex) => (
+                                    <li key={studentIndex}>
+                                        <span>{student.firstName}</span>
+                                        <span>{student.lastName}</span>
+                                    </li>
+                                ))}
+                        </ul>
+                        {/* <label>Students:</label>
+                        <ul>
+                            {Array.isArray(studentsData[classroomIndex]) &&
+                                studentsData[classroomIndex].map((student, studentIndex) => (
+                                    <li key={studentIndex}>
+                                        <input
+                                            type="text"
+                                            value={student.firstName}
+                                            onChange={(event) =>
+                                                handleStudentInputChange(event, classroomIndex, studentIndex, 'firstName')
+                                            }
+                                        />
+                                        <input
+                                            type="text"
+                                            value={student.lastName}
+                                            onChange={(event) =>
+                                                handleStudentInputChange(event, classroomIndex, studentIndex, 'lastName')
+                                            }
+                                        />
+                                        <select
+                                            value={student.iepStatus}
+                                            onChange={(event) =>
+                                                handleStudentInputChange(event, classroomIndex, studentIndex, 'iepStatus')
+                                            }
+                                        >
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </li>
+                                ))}
+                        </ul> */}
                     </div>
                 ))}
 

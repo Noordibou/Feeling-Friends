@@ -1,9 +1,21 @@
-const Student = require('../models/Student.js');
-const Teacher = require('../models/Teacher.js');
-const User = require('../models/User.js');
-const { createNewTeacher, getAllTeachers, getTeacherById, updateTeacherInfo, deleteTeacher, getClassBySubject, getStudentsInClassroom, getStudentProfileForTeacher } = require('../controllers/teacherController.js')
 const { verifyToken, verifyUser, verifyRole } = require('../middleware/index')
 const router = require("express").Router();
+const {
+    createNewTeacher,
+    getAllTeachers,
+    getTeacherById,
+    updateTeacherInfo,
+    deleteTeacher,
+    getClassBySubject,
+    getStudentsInClassroom,
+    getStudentProfileForTeacher,
+    getAllStudentsForTeacher,
+    editStudentInformation,
+    deleteStudentInClassroom,
+    addStudentToClassroom,
+    deleteClassroom,
+    createClassroom,
+} = require('../controllers/teacherController.js');
 
 // probably won't use, use the signup instead
 router.post('/teachers', createNewTeacher);
@@ -12,21 +24,22 @@ router.get('/teachers/:id', verifyToken, verifyUser, verifyRole(["teacher"]), ge
 router.put("/teachers/:id", verifyToken, verifyUser, updateTeacherInfo);
 router.delete('/teachers/:id', deleteTeacher);
 
-router.get('/teachers/:id/classrooms/:classroomId', getClassBySubject);
-
 router.get('/teachers/:id/classrooms/:classroomId/students', getStudentsInClassroom);
 router.get('/teachers/:id/classrooms/:classroomId/students/:studentId', getStudentProfileForTeacher);
-// Add this route to teacher.js
+router.put("/teachers/:id/classrooms/:classroomId/students/:studentId", verifyToken, verifyUser, editStudentInformation);
 
+// router.get('/teachers/:id/students', getAllStudentsForTeacher);
+router.get('/teachers/:id/classrooms/:classroomId', getClassBySubject);
 
 // ================================================== //
-// // DOESNT WORK YET add a student to a classroom
-// router.put('/teachers/:teacher_id/students/:student_id', addStudentToClass);
+//check
+router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verifyToken, verifyUser, deleteStudentInClassroom);
+router.post('/teachers/:id/classrooms/:classroomId/students', verifyToken, verifyUser, addStudentToClassroom);
 
-// // DOESNT WORK YET get all students in classroom
+//check
+router.delete('/teachers/:id/classrooms/:classroomId', verifyToken, verifyUser, deleteClassroom);
+router.post('/teachers/:id/classrooms', verifyToken, verifyUser, createClassroom);
 
-// // DOESNT WORK YET removes student from a classroom
-// router.delete('/teacher/:teacher_id/students/:student_id', removeStudentFromClass)
 
 
 module.exports = router;

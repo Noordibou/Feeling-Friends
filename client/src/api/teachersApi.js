@@ -49,6 +49,16 @@ export const updateTeacher = async (id, teacher) => {
     }
 }
 
+export const updateStudent = async (teacherId, classroomId, studentId, studentData) => {
+    try {
+        const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, studentData, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export const getTeacherClassroom = async (id, classroomId) => {
     try {
 
@@ -61,32 +71,34 @@ export const getTeacherClassroom = async (id, classroomId) => {
     }
   }
 
-  export const getAllStudentsClassroom = async (id, classroomId) => {
-    try {
-      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error; 
-    }
-  }
-
+  
   export const getStudentProfile = async (teacherId, classroomId, studentId) => {
-    try {
-        const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
-        const profile = response.data;
-        return profile;
-    } catch (error) {
-        console.log(error);
-        throw error;
+      try {
+          const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
+          const profile = response.data;
+          return profile;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
-}
+
+    //currently not using
+    export const getAllStudentsClassroom = async (id, classroomId) => {
+      try {
+        const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        throw error; 
+      }
+    }
 
 
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const addStudentToTeacherClassroom = async (teacherId, studentId) => {
+export const addStudentToTeacherClassroom = async (id, classroomId) => {
     try {
-        const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/students/${studentId}`, { withCredentials: true });
+        const response = await axios.post(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -94,21 +106,11 @@ export const addStudentToTeacherClassroom = async (teacherId, studentId) => {
     }
 }
 
-// TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const getTeacherStudents = async (teacherId) => {
-    try {
-        const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/students`, { withCredentials: true });
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
 
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const deleteStudentFromClassroom = async (teacherId, studentId) => {
+export const deleteStudentFromClassroom = async (id,classroomId, studentId) => {
     try {
-        const response = await axios.delete(`${TEACHERS_API_URL}/${teacherId}/students/${studentId}`);
+        const response = await axios.delete(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students/${studentId}`);
         return response.sendStatus(200);
     } catch (error) {
         console.log(error);

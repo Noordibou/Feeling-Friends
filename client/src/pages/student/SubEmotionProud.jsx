@@ -8,6 +8,7 @@ import sadImg from '../../images/sad.png'
 import happyImg from '../../images/happy.png'
 import scaredImg from '../../images/scared.png'
 import ProgressBar from "../../components/ProgressBar";
+import { useEffect } from "react";
 
 const SubEmotionProud = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const SubEmotionProud = () => {
           <h2>Choose the emotion closest to</h2>
           <span>what you're feeling.</span>
         </div>
+        {/* <DisplayEmotions /> */}
         <div className="relative font-header3 -top-20 md:text-header3 text-[1.1rem] ">
           <img src={proudWheel} alt="" className="w-[42.375rem] h-[42.375rem] object-fill" />
           <div className="absolute inset-0 flex flex-col items-center justify-center ">

@@ -20,6 +20,7 @@ import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
+import SubEmotion from "./pages/student/SubEmotion";
 
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
 
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />
+        <Route path="/emotion" element={<SubEmotion/>} />
         <Route path="/subemotionanxious" element={<SubEmotionAnxious />} />
         <Route path="/subemotionangry" element={<SubEmotionAngry />} />
         <Route path="/subemotionhappy" element={<SubEmotionHappy />} />

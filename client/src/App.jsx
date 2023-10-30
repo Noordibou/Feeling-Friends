@@ -20,6 +20,7 @@ import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
+import SubEmotion from "./pages/student/SubEmotion";
 import EditTeacher from "./pages/teacher/EditTeacher";
 
 
@@ -43,19 +44,20 @@ export default function App() {
             <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
             <Route path="/edit/:teacherId" element={<EditTeacher />} />
 
-            {/* Student Routes */}
-            <Route path="/student-home" element={<StudentHome />} />
-            <Route path="/subemotionanxious" element={<SubEmotionAnxious />} />
-            <Route path="/subemotionangry" element={<SubEmotionAngry />} />
-            <Route path="/subemotionhappy" element={<SubEmotionHappy />} />
-            <Route path="/subemotionproud" element={<SubEmotionProud />} />
-            <Route path="/subemotionsad" element={<SubEmotionSad />} />
-            <Route path="/subemotionscared" element={<SubEmotionScared />} />
-            <Route path="/regzone" element={<RegZone />} />
-            <Route path="/goalsneeds" element={<GoalsNeeds />} />
-            <Route path="/summary" element={<Summary />} />
-          </Routes>
-        </UserProvider>
+        {/* Student Routes */}
+        <Route path="/student-home" element={<StudentHome />} />
+        <Route path="/emotion" element={<SubEmotion/>} />
+        <Route path="/subemotionnervous" element={<SubEmotionAnxious />} />
+        <Route path="/subemotionangry" element={<SubEmotionAngry />} />
+        <Route path="/subemotionhappy" element={<SubEmotionHappy />} />
+        <Route path="/subemotionproud" element={<SubEmotionProud />} />
+        <Route path="/subemotionsad" element={<SubEmotionSad />} />
+        <Route path="/subemotionscared" element={<SubEmotionScared />} />
+        <Route path="/regzone" element={<RegZone />} />
+        <Route path="/goalsneeds" element={<GoalsNeeds />} />
+        <Route path="/summary" element={<Summary />} />
+      </Routes>
+      </UserProvider>
       </AuthProvider>
 
     </main>

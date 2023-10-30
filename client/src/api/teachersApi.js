@@ -40,7 +40,18 @@ export const getTeacherById = async (id) => {
 
 export const updateTeacher = async (id, teacher) => {
     try {
+        // console.log(id)
         const response = await axios.put(`${TEACHERS_API_URL}/${id}`, teacher, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export const updateStudent = async (teacherId, classroomId, studentId, studentData) => {
+    try {
+        const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, studentData, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -60,34 +71,34 @@ export const getTeacherClassroom = async (id, classroomId) => {
     }
   }
 
-  export const getAllStudentsClassroom = async (id, classroomId) => {
-    try {
-      const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error; 
-    }
-  }
-
-  export const getStudentProfile = async (teacherId, classroomId, studentId) => {
-    try {
-        const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
-        const profile = response.data;
-        return profile;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
-
-
   
+  export const getStudentProfile = async (teacherId, classroomId, studentId) => {
+      try {
+          const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
+          const profile = response.data;
+          return profile;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    //currently not using
+    export const getAllStudentsClassroom = async (id, classroomId) => {
+      try {
+        const response = await axios.get(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        throw error; 
+      }
+    }
+
 
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const addStudentToTeacherClassroom = async (teacherId, studentId) => {
+export const addStudentToTeacherClassroom = async (id, classroomId) => {
     try {
-        const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/students/${studentId}`, { withCredentials: true });
+        const response = await axios.post(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -95,24 +106,20 @@ export const addStudentToTeacherClassroom = async (teacherId, studentId) => {
     }
 }
 
+
 // TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const getTeacherStudents = async (teacherId) => {
+// TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
+export const deleteStudentFromClassroom = async (id, classroomId, studentId) => {
     try {
-        const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/students`, { withCredentials: true });
-        return response.data;
+        const response = await axios.delete(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
+        // Check for a successful status code, typically 200 (OK), in the response
+        if (response.status === 200) {
+            return true; // Indicate successful deletion
+        }
+        return false; // Handle other status codes or errors as needed
     } catch (error) {
-        console.log(error);
-        throw error;
+        console.error(error);
+        return false; // Handle errors as needed
     }
 }
 
-// TODO: *** WILL NEED TO CHANGE URL & PARAMETERS *** //
-export const deleteStudentFromClassroom = async (teacherId, studentId) => {
-    try {
-        const response = await axios.delete(`${TEACHERS_API_URL}/${teacherId}/students/${studentId}`);
-        return response.sendStatus(200);
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}

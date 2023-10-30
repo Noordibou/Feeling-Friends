@@ -7,7 +7,7 @@ const TeacherHome = () => {
   const { userData } = useUser();
 
   useEffect(() => {
-    console.log('teacher data:', userData);
+    // console.log('teacher data:', userData);
   }, [userData]);
 
   return (
@@ -43,8 +43,9 @@ const TeacherHome = () => {
             <p>Loading classrooms...</p>
           )}
 
-          <div className="font-body text-body text-center pt-[2rem]">
-            {userData ? `Logged in as ${userData.firstName} ${userData.lastName} (Edit)` : 'Loading...'}
+          <div className="font-body text-body text-center pt-[2rem] ">
+            {userData ? `Logged in as ${userData.firstName} ${userData.lastName}` : 'Loading...'}
+            <Link to={`/edit/${userData._id}`}> (edit)</Link> 
           </div>
         </div>
       </div>

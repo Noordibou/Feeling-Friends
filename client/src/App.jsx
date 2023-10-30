@@ -20,43 +20,45 @@ import StudentProfile from "./pages/teacher/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
+import EditTeacher from "./pages/teacher/EditTeacher";
 
 
 export default function App() {
   return (
-    <main className="bg-notebookPaper">
-  
+    <main className="bg-notebookPaper h-full min-h-screen">
+
       <AuthProvider>
-<UserProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/success" element={<SignupSuccess />} />
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/success" element={<SignupSuccess />} />
 
-        {/* Teacher Routes */}
-        <Route path="/teacher-home" element={<TeacherHome />} />
-        <Route path="/classroom/:teacherId/:classroomId"  element={<ViewClassroom />} />
-        <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
-        <Route path="/editneedsgoals" element={<NeedsGoals />} />
-        <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
+            {/* Teacher Routes */}
+            <Route path="/teacher-home" element={<TeacherHome />} />
+            <Route path="/classroom/:teacherId/:classroomId" element={<ViewClassroom />} />
+            <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
+            <Route path="/editneedsgoals" element={<NeedsGoals />} />
+            <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
+            <Route path="/edit/:teacherId" element={<EditTeacher />} />
 
-        {/* Student Routes */}
-        <Route path="/student-home" element={<StudentHome />} />
-        <Route path="/subemotionanxious" element={<SubEmotionAnxious />} />
-        <Route path="/subemotionangry" element={<SubEmotionAngry />} />
-        <Route path="/subemotionhappy" element={<SubEmotionHappy />} />
-        <Route path="/subemotionproud" element={<SubEmotionProud />} />
-        <Route path="/subemotionsad" element={<SubEmotionSad />} />
-        <Route path="/subemotionscared" element={<SubEmotionScared />} />
-        <Route path="/regzone" element={<RegZone />} />
-        <Route path="/goalsneeds" element={<GoalsNeeds />} />
-        <Route path="/summary" element={<Summary />} />
-      </Routes>
-      </UserProvider>
+            {/* Student Routes */}
+            <Route path="/student-home" element={<StudentHome />} />
+            <Route path="/subemotionanxious" element={<SubEmotionAnxious />} />
+            <Route path="/subemotionangry" element={<SubEmotionAngry />} />
+            <Route path="/subemotionhappy" element={<SubEmotionHappy />} />
+            <Route path="/subemotionproud" element={<SubEmotionProud />} />
+            <Route path="/subemotionsad" element={<SubEmotionSad />} />
+            <Route path="/subemotionscared" element={<SubEmotionScared />} />
+            <Route path="/regzone" element={<RegZone />} />
+            <Route path="/goalsneeds" element={<GoalsNeeds />} />
+            <Route path="/summary" element={<Summary />} />
+          </Routes>
+        </UserProvider>
       </AuthProvider>
-    
+
     </main>
-   
+
   );
 }

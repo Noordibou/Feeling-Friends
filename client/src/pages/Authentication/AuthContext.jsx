@@ -12,8 +12,7 @@ const AuthProvider = ({ children }) => {
   // Function to set user data after login
   const handleLogin = (userData) => {
     setUser(userData);
-  };
-
+  };  
   
 
   const isStudent = () => {

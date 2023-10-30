@@ -62,7 +62,8 @@ module.exports = {
       // Other
       'sandwich': '#E2DBC2',
       'graphite': '#A59F8B',
-      'gray': '#808080,'
+      'gray': '#808080',
+      'darkSandwich': '#9E9268',
     },
 
     // extend: {

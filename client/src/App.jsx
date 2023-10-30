@@ -21,26 +21,28 @@ import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
 import SubEmotion from "./pages/student/SubEmotion";
+import EditTeacher from "./pages/teacher/EditTeacher";
 
 
 export default function App() {
   return (
-    <main className="bg-notebookPaper">
-  
-      <AuthProvider>
-<UserProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/success" element={<SignupSuccess />} />
+    <main className="bg-notebookPaper h-full min-h-screen">
 
-        {/* Teacher Routes */}
-        <Route path="/teacher-home" element={<TeacherHome />} />
-        <Route path="/classroom/:teacherId/:classroomId"  element={<ViewClassroom />} />
-        <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
-        <Route path="/editneedsgoals" element={<NeedsGoals />} />
-        <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
+      <AuthProvider>
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/success" element={<SignupSuccess />} />
+
+            {/* Teacher Routes */}
+            <Route path="/teacher-home" element={<TeacherHome />} />
+            <Route path="/classroom/:teacherId/:classroomId" element={<ViewClassroom />} />
+            <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
+            <Route path="/editneedsgoals" element={<NeedsGoals />} />
+            <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
+            <Route path="/edit/:teacherId" element={<EditTeacher />} />
 
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />
@@ -57,8 +59,8 @@ export default function App() {
       </Routes>
       </UserProvider>
       </AuthProvider>
-    
+
     </main>
-   
+
   );
 }

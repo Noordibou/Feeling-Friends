@@ -92,8 +92,8 @@ const ViewClassroom = () => {
                                 )}
 
                             </div>
-                            <div className="text-right text-body font-body text-sandwich pt-[2rem]">
-                                <a href="/">Edit seating chart</a>
+                            <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
+                                <a href="/">edit seating chart</a>
                             </div>
                         </div>
 

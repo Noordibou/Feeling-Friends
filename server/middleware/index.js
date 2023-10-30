@@ -29,8 +29,9 @@ const verifyUser = (req, res, next) => {
     const userId = req.user.roleId;
     const studentId = req.params.id;
 
+
     if (userId !== studentId) {
-        return res.status(403).json({ message: 'You are not authorized to access this data' })
+        return res.status(403).json({ message: 'You are not authorized to access this data, user does not match' })
     }
     next();
 }
@@ -42,7 +43,7 @@ const verifyRole = (allowedRoles) => (req, res, next) => {
   if (allowedRoles.includes(userRole)) {
     next();
   } else {
-    res.status(403).json({message: "You are not authorized to access this information"})
+    res.status(403).json({message: "You are not authorized to access this information, role doesn't match"})
   }
 }
 

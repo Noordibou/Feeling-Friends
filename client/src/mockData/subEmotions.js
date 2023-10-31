@@ -1,6 +1,6 @@
 import proudImg from '../images/proud.png'
 import sadImg from '../images/sad.png'
-import anxiousImg from '../images/anxiousNoBg.png';
+import anxiousImg from '../images/anxious.png';
 import angryImg from '../images/angry.png';
 import happyImg from '../images/happy.png';
 import scaredImg from '../images/scared.png';

@@ -40,25 +40,26 @@ const SubEmotion = () => {
     });
   }
 
-  const getEmotionImage = (subEmotion) => {
-    const matchedEmotion = subEmotionInfo.find((emotion) =>
-      emotion.subEmotions.includes(subEmotion)
-    );
-  
-    if (matchedEmotion) {
-      return matchedEmotion.eImage;
-    }
-  
-    console.log("Oops, no image found")
-  };
-
-
   const selectedEmotion = subEmotionInfo.find(
     (emotion) => emotion.emotion === emotionFromLocation
   );
-  console.log("selected emotion ooo: " + JSON.stringify(selectedEmotion));
-  const { wheelImg, subEmotions, eImage } = selectedEmotion;
+  const { wheelImg, subEmotions, eImage, emotion } = selectedEmotion;
   const angleBetweenButtons = (2 * Math.PI) / subEmotions.length;
+
+  const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion
+  );
+
+
+  
+
+  useEffect (() => {
+    
+    console.log("selected emotion ooo: " + JSON.stringify(selectedEmotion));
+    console.log("matched emotions whats this: ", matchedEmotions)
+    
+  })
+
+
 
   return (
     <div className="flex flex-col items-center justify-center h-screen min-w-screen ">
@@ -76,7 +77,7 @@ const SubEmotion = () => {
             alt=""
             className="w-[37rem] h-[35rem] object-fill"
           />
-          <div className="absolute right-[12.5rem] -top-16 inset-0 flex flex-col items-center justify-center text-center text-body">
+          <div className="absolute right-[12.5rem] -top-20 inset-0 flex flex-col items-center justify-center text-center text-body">
             {subEmotions.map((subEmotion, index) => {
               const angle = angleBetweenButtons * index;
               const radius = 13; // Adjust the radius as needed
@@ -120,39 +121,39 @@ const SubEmotion = () => {
           <div className="flex justify-between">
             <button
               className="rounded-full w-24 h-24"
-              onClick={() => changeEmotion("Proud")}
+              onClick={() => changeEmotion(matchedEmotions[0].emotion)}
             >
-              <img src={proudImg} alt="" className="w-22 h-22 object-fill  " />
+              <img src={matchedEmotions[0].eImage} alt="" className="w-22 h-22 object-fill  " />
             </button>
             <button
               className="rounded-full w-24 h-24"
-              onClick={() => changeEmotion("Nervous")}
+              onClick={() => changeEmotion(matchedEmotions[1].emotion)}
             >
-              <img src={anxiousImg} alt="" className="w-22 h-22 object-fill " />
+              <img src={matchedEmotions[1].eImage} alt="" className="w-22 h-22 object-fill " />
             </button>
           </div>
 
           <div className="flex justify-around">
             <button
               className="rounded-full w-24 h-24"
-              onClick={() => changeEmotion("Happy")}
+              onClick={() => changeEmotion(matchedEmotions[2].emotion)}
             >
-              <img src={happyImg} alt="" className="w-22 h-22 object-fill " />
+              <img src={matchedEmotions[2].eImage} alt="" className="w-22 h-22 object-fill " />
             </button>
             <button
               className="rounded-full w-24 h-24 "
-              onClick={() => changeEmotion("Angry")}
+              onClick={() => changeEmotion(matchedEmotions[3].emotion)}
             >
-              <img src={angryImg} alt="" className="w-22 h-22 object-fill " />
+              <img src={matchedEmotions[3].eImage} alt="" className="w-22 h-22 object-fill " />
             </button>
           </div>
 
           <div className="-mt-12 flex justify-center">
             <button
               className="rounded-full w-24 h-24"
-              onClick={() => changeEmotion("Sad")}
+              onClick={() => changeEmotion(matchedEmotions[4].emotion)}
             >
-              <img src={sadImg} alt="" className="w-22 h-22 object-fill " />
+              <img src={matchedEmotions[4].eImage} alt="" className="w-22 h-22 object-fill " />
             </button>
           </div>
         </div>

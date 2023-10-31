@@ -18,11 +18,11 @@ const subEmotionInfo = [
         eImage: proudImg,
         wheelImg: proudWheel,
         subEmotions: [
-            "Glad",
-            "Thrilled",
             "Confident",
-            "Joyful",
+            "Ambitious",
+            "Determined",
             "Proud",
+            "Secure",
             "Excited"                
         ]
     },
@@ -31,12 +31,12 @@ const subEmotionInfo = [
         eImage: sadImg,
         wheelImg: sadWheel,
         subEmotions: [
-            "Hurt",
-            "Lonely",
             "Guilty",
             "Sad",
             "Disappointed",
-            "Ashamed"                
+            "Ashamed",
+            "Hurt",
+            "Lonely"                
         ]
     },
     {
@@ -44,12 +44,12 @@ const subEmotionInfo = [
         eImage: anxiousImg,
         wheelImg: anxiousWheel,
         subEmotions: [
-            "Confused",
-            "Embarrassed",
             "Pressured",
-            "Anxious",
+            "Overwhelmed",
             "Worried",
-            "Overwhelmed"                
+            "Anxious",
+            "Confused",
+            "Embarrassed"                
         ]
     },
     {
@@ -57,12 +57,12 @@ const subEmotionInfo = [
         eImage: happyImg,
         wheelImg: happyWheel,
         subEmotions: [
-            "Hopeful",
-            "Grateful",
-            "Secure",
+            "Glad",
             "Thoughtful",
             "Peaceful",
-            "Content"                
+            "Content",
+            "Hopeful",
+            "Grateful"                
         ]
     },
     {
@@ -70,12 +70,12 @@ const subEmotionInfo = [
         eImage: scaredImg,
         wheelImg: scaredWheel,
         subEmotions: [
-            "Threatened",
-            "Insecure",
             "Scared",
             "Rejected",
             "Intimidated",
-            "Helpless"                
+            "Helpless",
+            "Threatened",
+            "Insecure"                
         ]
     },
     {
@@ -83,12 +83,12 @@ const subEmotionInfo = [
         eImage: angryImg,
         wheelImg: angryWheel,
         subEmotions: [
-            "Grumpy",
-            "Disgusted",
             "Jealous",
             "Frustrated",
             "Annoyed",
-            "Angry"                
+            "Angry",
+            "Grumpy",
+            "Disgusted"                
         ]
     },
 ]

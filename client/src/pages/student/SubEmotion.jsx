@@ -76,10 +76,10 @@ const SubEmotion = () => {
             alt=""
             className="w-[37rem] h-[35rem] object-fill"
           />
-          <div className="absolute right-[12.5rem] -top-14 inset-0 flex flex-col items-center justify-center text-center">
+          <div className="absolute right-[12.5rem] -top-16 inset-0 flex flex-col items-center justify-center text-center text-body">
             {subEmotions.map((subEmotion, index) => {
               const angle = angleBetweenButtons * index;
-              const radius = 12.5; // Adjust the radius as needed
+              const radius = 13; // Adjust the radius as needed
               const x = radius * Math.cos(angle);
               const y = radius * Math.sin(angle);
 

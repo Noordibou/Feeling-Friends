@@ -42,7 +42,7 @@ const StudentHome = () => {
       // temp fix, might create modal or something...?
       alert("Please choose checkin or checkout before choosing your feeling!")
     } else {
-      navigate(`/subemotion${chosenEmotion}`, {
+      navigate(`/emotion`, {
         state: {
           emotion: chosenEmotion,
         },

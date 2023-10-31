@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
       setUserData(JSON.parse(storedUserData));
       setLoading(false);
     }
-    console.log(user)
+    
    if (user) {
       if (user.student) {
         getStudentById(user.student)

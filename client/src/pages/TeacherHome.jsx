@@ -9,7 +9,7 @@ const TeacherHome = () => {
   useEffect(() => {
     // console.log('teacher data:', userData);
   }, [userData]);
-
+// console.log(userData)
   return (
     <>
       <div className="h-screen">
@@ -45,7 +45,7 @@ const TeacherHome = () => {
 
           <div className="font-body text-body text-center pt-[2rem] ">
             {userData ? `Logged in as ${userData.firstName} ${userData.lastName}` : 'Loading...'}
-            <Link to={`/edit/${userData._id}`}> (edit)</Link> 
+             <Link to={`/edit/${userData?._id}`}> (edit)</Link>  
           </div>
         </div>
       </div>

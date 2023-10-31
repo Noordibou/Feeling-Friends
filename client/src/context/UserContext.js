@@ -16,17 +16,26 @@ export const UserProvider = ({ children }) => {
   const [accumulatedUpdates, setAccumulatedUpdates] = useState({});
 
   useEffect(() => {
+    // Define a function to update user data and save it to local storage
+    const updateUserDataAndLocalStorage = (data) => {
+      setUserData(data);
+      localStorage.setItem('userData', JSON.stringify(data));
+      setLoading(false);
+    };
+
     const storedUserData = localStorage.getItem('userData');
+
     if (storedUserData) {
+      // If user data is in local storage, use it
       setUserData(JSON.parse(storedUserData));
+      setLoading(false);
     }
-    if (user) {
+    console.log(user)
+   if (user) {
       if (user.student) {
         getStudentById(user.student)
           .then((data) => {
-            setUserData(data);
-            setLoading(false);
-            localStorage.setItem('userData', JSON.stringify(data));
+            updateUserDataAndLocalStorage(data);
           })
           .catch((error) => {
             console.error('Error fetching user data:', error);
@@ -35,9 +44,7 @@ export const UserProvider = ({ children }) => {
       } else if (user.teacher) {
         getTeacherById(user.teacher)
           .then((data) => {
-            setUserData(data);
-            setLoading(false);
-            localStorage.setItem('userData', JSON.stringify(data));
+            updateUserDataAndLocalStorage(data);
           })
           .catch((error) => {
             console.error('Error fetching user data:', error);
@@ -52,15 +59,17 @@ export const UserProvider = ({ children }) => {
 
   // Function to update user data
   const updateUser = (newData) => {
-    setUserData((prevData) => ({ ...prevData, ...newData }));
-    updateTeacher(newData._id, newData)
-      .then(() => {
-        console.log('Teacher data updated successfully.');
-        localStorage.setItem('userData', JSON.stringify({ ...userData, ...newData }));
-      })
-      .catch((error) => {
-        console.error('Error updating teacher data:', error);
-      });
+    if (newData && newData._id) {
+      setUserData((prevData) => ({ ...prevData, ...newData }));
+      updateTeacher(newData._id, newData)
+        .then(() => {
+          console.log('Teacher data updated successfully.');
+          localStorage.setItem('userData', JSON.stringify({ ...userData, ...newData }));
+        })
+        .catch((error) => {
+          console.error('Error updating teacher data:', error);
+        });
+    }
   };
 
 

@@ -33,7 +33,7 @@ const TeacherHome = () => {
                     <div className="bg-blue w-[80%] h-[2.5rem] rounded-[1rem]"></div>
                     <div className="text-body font-body">
                       {/* Use Link to navigate to the specific classroom */}
-                      <Link to={`/classroom/${userData._id}/${classroom._id}`}>More &gt;</Link>
+                      {/* <Link to={`/classroom/${userData._id}/${classroom._id}`}>More &gt;</Link> */}
                     </div>
                   </div>
                 </div>
@@ -45,7 +45,7 @@ const TeacherHome = () => {
 
           <div className="font-body text-body text-center pt-[2rem] ">
             {userData ? `Logged in as ${userData.firstName} ${userData.lastName}` : 'Loading...'}
-            <Link to={`/edit/${userData._id}`}> (edit)</Link> 
+            {userData && <Link to={`/edit/${userData._id}`}> (edit)</Link>}
           </div>
         </div>
       </div>

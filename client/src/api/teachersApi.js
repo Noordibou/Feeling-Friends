@@ -30,7 +30,6 @@ export const getTeacherById = async (id) => {
     try {
 
         const response = await axios.get(`${TEACHERS_API_URL}/${id}`, { withCredentials: true });
-
         return response.data;
     } catch (error) {
         console.log(error);

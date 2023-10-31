@@ -4,24 +4,24 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import URL from '../URL'
-import {logoutUser} from '../api/userApi.js'
+import Logout from '../components/LogoutButton.jsx'
 
 const Home = () => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
 
-  const Logout = () => {
-    console.log("logging out... on frontend hoome screen")
-    logoutUser().then(() => {
-      console.log("Logout successful")
-    }).catch((error) => {
-      console.error("Logout failed: ", error)
-    })
-    removeCookie("token");
-    localStorage.removeItem('userData');
-    navigate("/login")
-  };
+  // const Logout = () => {
+  //   console.log("logging out... on frontend hoome screen")
+  //   logoutUser().then(() => {
+  //     console.log("Logout successful")
+  //   }).catch((error) => {
+  //     console.error("Logout failed: ", error)
+  //   })
+  //   removeCookie("token");
+  //   localStorage.removeItem('userData');
+  //   navigate("/login")
+  // };
 
 
   useEffect(() => {
@@ -48,14 +48,17 @@ const Home = () => {
     <>
     <div className="flex w-screen items-center justify-center h-screen">
       <div className="home_page">
-        <h4>
-          {" "}
-          Welcome <span>{username}</span>
-        </h4>
-        <button onClick={Logout}>LOGOUT</button>
+        
+        <div className="w-9/12 text-center ml-auto mr-auto pt-[1.5rem]">
+            <h1 className="font-header1 text-header1 leading-tight">
+              {username ? ("Thanks " + username) : "Thanks!"} - Have a good day at school!
+            </h1>
+          </div>
+          <div className="flex justify-center mt-24 mb-32">
+            <Logout/>
+          </div>
       </div>
-      <ToastContainer />
-      </div>
+    </div>
       
     </>
   );

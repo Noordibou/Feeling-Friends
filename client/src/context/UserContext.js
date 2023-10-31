@@ -12,30 +12,26 @@ export const UserProvider = ({ children }) => {
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isCheckinOrOut, setIsCheckInOrOut] = useState("")
+  const [isCheckinOrOut, setIsCheckInOrOut] = useState("");
   const [accumulatedUpdates, setAccumulatedUpdates] = useState({});
 
   useEffect(() => {
-    // Define a function to update user data and save it to local storage
-    const updateUserDataAndLocalStorage = (data) => {
-      setUserData(data);
-      localStorage.setItem('userData', JSON.stringify(data));
-      setLoading(false);
-    };
-
     const storedUserData = localStorage.getItem('userData');
-
+    
     if (storedUserData) {
       // If user data is in local storage, use it
       setUserData(JSON.parse(storedUserData));
       setLoading(false);
     }
-    
-   if (user) {
+
+    if (user) {
       if (user.student) {
         getStudentById(user.student)
           .then((data) => {
-            updateUserDataAndLocalStorage(data);
+            setUserData(data);
+            // Save user data to local storage here
+            localStorage.setItem('userData', JSON.stringify(data));
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching user data:', error);
@@ -44,7 +40,10 @@ export const UserProvider = ({ children }) => {
       } else if (user.teacher) {
         getTeacherById(user.teacher)
           .then((data) => {
-            updateUserDataAndLocalStorage(data);
+            setUserData(data);
+            // Save user data to local storage here
+            localStorage.setItem('userData', JSON.stringify(data));
+            setLoading(false);
           })
           .catch((error) => {
             console.error('Error fetching user data:', error);

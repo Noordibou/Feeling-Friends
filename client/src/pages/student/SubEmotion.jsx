@@ -11,17 +11,11 @@ import ProgressBar from "../../components/ProgressBar";
 import { useEffect } from "react";
 import subEmotionInfo from "../../mockData/subEmotions";
 
-// have an array of objects for each emotion (6), the associated imgs, and 6 sub emotions
-// loop through each object, and if the param is equal to what the user chose, keep it out from the buttons at the bottom
-// do the find() js method for the main wheel
-
 const SubEmotion = () => {
   const navigate = useNavigate();
   const { updateUserDataAccumulated } = useUser();
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
-
-  console.log("emotion from click: " + emotionFromLocation);
 
   const handleEmotionClick = (chosenEmotion) => {
     updateUserDataAccumulated({ emotion: chosenEmotion });
@@ -46,20 +40,7 @@ const SubEmotion = () => {
   const { wheelImg, subEmotions, eImage, emotion } = selectedEmotion;
   const angleBetweenButtons = (2 * Math.PI) / subEmotions.length;
 
-  const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion
-  );
-
-
-  
-
-  useEffect (() => {
-    
-    console.log("selected emotion ooo: " + JSON.stringify(selectedEmotion));
-    console.log("matched emotions whats this: ", matchedEmotions)
-    
-  })
-
-
+  const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen min-w-screen ">

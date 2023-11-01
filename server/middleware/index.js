@@ -53,6 +53,44 @@ const setCacheControlHeader = (req, res, next) => {
   next();
 }
 
+const signupValidation = [
+  body('email')
+    .isEmail()
+    .normalizeEmail()
+    .custom(async (value) => {
+      const user = await User.findOne({ email: value });
+      if (user) {
+        throw new Error('Email is already in use');
+      }
+    }),
+  body('username')
+  .isString()
+  .isLength({ min: 2 })
+  .custom(async (value) => {
+    const userWithUsername = await User.findOne({ username: value });
+    if (userWithUsername) {
+      throw new Error('Username is already in use');
+    }
+  }),
+  body('password').isString().isLength({ min: 4 }), // will change length later probably
+  body('role').isIn(['student', 'teacher']),
+  custom((req) => {
+    const { student, teacher } = req.body;
+  
+    if (!student && !teacher ) {
+      throw new Error('Either student or teacher id should be specified, not both or neither.');
+    }
+  
+    if (student && !mongoose.Types.ObjectId.isValid(student)) {
+      throw new Error('Student should be a valid ObjectId.');
+    }
+  
+    if (teacher && !mongoose.Types.ObjectId.isValid(teacher)) {
+      throw new Error('Teacher should be a valid ObjectId.');
+    }
+  })
+];
+
 // TODO:
 // only the student who is the owner of the data can access it. If you have different authorization levels (e.g., admin, teacher, etc.), you might need to extend your authorization logic accordingly.
 
@@ -94,5 +132,6 @@ module.exports = {
     verifyToken,
     verifyUser,
     verifyRole,
-    setCacheControlHeader
+    setCacheControlHeader,
+    signupValidation
 }

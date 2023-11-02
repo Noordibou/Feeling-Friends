@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { Teacher } = require("../models/Teacher");
-const { Student } = require("../models/Student");
+const Teacher = require("../models/Teacher");
+const Student = require("../models/Student");
+const User = require("../models/User")
 
 
 // TODO: Middleware  functions:
@@ -64,26 +65,34 @@ const signUpValidation = async (req, res, next) => {
   if (!email || !isEmailValid(email)) {
     errors.push({ field: 'email', message: 'Invalid email format' });
   }
+
+  //---------------- Error ------------------//
   if (email) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       errors.push({ field: 'email', message: 'Email is already in use' });
     }
+  } else {
+    // Handle the case when email is not provided (e.g., return an error message)
+    errors.push({ field: 'email', message: 'Email is required' });
   }
+//----------------------------------//
+ 
   if (!password || password.length < 4) {
     errors.push({ field: 'password', message: 'Password must be at least 4 characters' });
   }
 
-  if (!username || username.length < 2) {
+  if (!username || username.length < 5) {
     errors.push({ field: 'username', message: 'Username must be at least 2 characters' });
   }
+//---------------- Error ------------------//
   if (username) {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       errors.push({ field: 'username', message: 'Username is already in use' });
     }
   }
-
+//----------------------------------//
   // Check role
   if (!role || !['student', 'teacher'].includes(role)) {
     errors.push({ field: 'role', message: 'Invalid role' });

@@ -15,7 +15,7 @@ const Signup = async (req, res, next) => {
     }
 
     let existingStudent = null;
-let existingTeacher = null;
+    let existingTeacher = null;
 
 if (role === 'student') {
   existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
@@ -81,7 +81,7 @@ const findUserById = async (req, res) => {
   }
 }
 
-const Login = async (req, res, next) => {
+const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -91,15 +91,16 @@ const Login = async (req, res, next) => {
     if (!user) {
       return res.json({ message: 'Incorrect password or email' });
     }
+
+    if (!user.teacher && !user.student) {
+      console.error({ message: `Error, no ${user.role} id found`})
+      return res.json({ message: `Error: ${user.role} id required for login. No ${user.role} id found` });
+    }
     const auth = await bcrypt.compare(password, user.password);
     if (!auth) {
       return res.json({ message: 'Incorrect password or email' });
     }
 
-    // TODO: need to save studentID or teacherID to this token
-    // Student: user id, student id
-    // Teacher: user id, teacher id
-    // const token = createSecretToken(user._id);
     let token = null;
 
     let redirectPath = '/';
@@ -107,13 +108,11 @@ const Login = async (req, res, next) => {
     // TODO: *might be able to prevent user from going to different urls based on role
 
     if(user.role === 'student') {
-      // const studentId = user.student
+
       token = createSecretToken(user._id, user.student, user.role);
 
       redirectPath = '/student-home';
     } else if(user.role === 'teacher') {
-      // const teacherId = user.teacher
-      // not yet tested with new info
       token = createSecretToken(user._id, user.teacher, user.role);
 
       redirectPath = '/teacher-home';  
@@ -121,22 +120,6 @@ const Login = async (req, res, next) => {
         return res.status(403).json({ message: 'Access denied for this role', success: false });
       }
     
-
-    // const responseObject = {
-    //   message: "User logged in successfully",
-    //   success: true,
-    //   user: {
-    //     _id: user._id, // Include the user's _id (objectID)
-    //     email: user.email,
-    //     username: user.username,
-    //     role: user.role,
-    //     student: user.student,
-    //     // Add any other user properties you want to include
-    //   },
-    //   redirectPath,
-    // };
-
-
     res.cookie("token", token, {
       secure: true,
       httpOnly: true,
@@ -154,10 +137,8 @@ const Login = async (req, res, next) => {
   
       if (user.role === 'student') {
         responseData.student = user.student;
-        // Add any other student-specific properties you want to include
       } if (user.role === 'teacher') {
         responseData.teacher = user.teacher;
-        // Add any other teacher-specific properties you want to include
       }
   
       res.status(200).json({

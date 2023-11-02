@@ -1,5 +1,9 @@
+const mongoose = require("mongoose");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const { Teacher } = require("../models/Teacher");
+const { Student } = require("../models/Student");
+
 
 // TODO: Middleware  functions:
 // // * checkRole: checks that the user making the request has the right role
@@ -53,43 +57,90 @@ const setCacheControlHeader = (req, res, next) => {
   next();
 }
 
-const signupValidation = [
-  body('email')
-    .isEmail()
-    .normalizeEmail()
-    .custom(async (value) => {
-      const user = await User.findOne({ email: value });
-      if (user) {
-        throw new Error('Email is already in use');
-      }
-    }),
-  body('username')
-  .isString()
-  .isLength({ min: 2 })
-  .custom(async (value) => {
-    const userWithUsername = await User.findOne({ username: value });
-    if (userWithUsername) {
-      throw new Error('Username is already in use');
+const signUpValidation = async (req, res, next) => {
+  const { email, password, username, role, student, teacher } = req.body;
+  const errors = [];
+
+  if (!email || !isEmailValid(email)) {
+    errors.push({ field: 'email', message: 'Invalid email format' });
+  }
+  if (email) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      errors.push({ field: 'email', message: 'Email is already in use' });
     }
-  }),
-  body('password').isString().isLength({ min: 4 }), // will change length later probably
-  body('role').isIn(['student', 'teacher']),
-  custom((req) => {
-    const { student, teacher } = req.body;
-  
-    if (!student && !teacher ) {
-      throw new Error('Either student or teacher id should be specified, not both or neither.');
+  }
+  if (!password || password.length < 4) {
+    errors.push({ field: 'password', message: 'Password must be at least 4 characters' });
+  }
+
+  if (!username || username.length < 2) {
+    errors.push({ field: 'username', message: 'Username must be at least 2 characters' });
+  }
+  if (username) {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      errors.push({ field: 'username', message: 'Username is already in use' });
     }
-  
-    if (student && !mongoose.Types.ObjectId.isValid(student)) {
-      throw new Error('Student should be a valid ObjectId.');
-    }
-  
-    if (teacher && !mongoose.Types.ObjectId.isValid(teacher)) {
-      throw new Error('Teacher should be a valid ObjectId.');
-    }
-  })
-];
+  }
+
+  // Check role
+  if (!role || !['student', 'teacher'].includes(role)) {
+    errors.push({ field: 'role', message: 'Invalid role' });
+  }
+
+  if (student && teacher) {
+    errors.push('Either student or teacher ID should be specified, not both.');
+  }
+
+  // Check if student ID is a valid ObjectId
+  if (student && !mongoose.Types.ObjectId.isValid(student)) {
+    errors.push('Student should be a valid ObjectId.');
+  }
+
+  // Check if teacher ID is a valid ObjectId
+  if (teacher && !mongoose.Types.ObjectId.isValid(teacher)) {
+    errors.push('Teacher should be a valid ObjectId.');
+  }
+
+  if (errors.length > 0) {
+    return res.status(422).json({ errors });
+  }
+
+  next();
+}
+
+const isEmailValid = (email) => {
+  // Add your email validation logic here
+  // For a basic example, you can use a regular expression
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  return emailRegex.test(email);
+}
+
+// const validateTeacherId = async (req, res, next) => {
+//   const teacherId = req.params.id;
+
+//   if (!mongoose.Types.ObjectId.isValid(teacherId)) {
+//     return res.status(400).json({ message: 'Invalid teacher ID format.' });
+//   }
+
+//   try {
+//     const teacher = await Teacher.findById(teacherId);
+//     if (!teacher) {
+//       return res.status(404).json({ message: 'Teacher not found.' });
+//     }
+
+//     // If the teacher exists, you can optionally attach the teacher object to the request for use in your route handler
+//     req.teacher = teacher;
+
+//     next();
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// }
+
+
 
 // TODO:
 // only the student who is the owner of the data can access it. If you have different authorization levels (e.g., admin, teacher, etc.), you might need to extend your authorization logic accordingly.
@@ -133,5 +184,6 @@ module.exports = {
     verifyUser,
     verifyRole,
     setCacheControlHeader,
-    signupValidation
+    signUpValidation,
+  
 }

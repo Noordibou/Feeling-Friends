@@ -1,5 +1,6 @@
 const { Signup, Login, findUser, findUserById, Logout } = require('../controllers/authControllers')
 const { userVerification } = require('../middleware/authMiddleware')
+const { signUpValidation } = require("../middleware/index")
 const router = require("express").Router();
 
 // const studentAccessToTeacherHome = (req, res, next) => {
@@ -20,7 +21,7 @@ const router = require("express").Router();
 //     }});
 
 
-router.post("/signup", signupValidation, Signup);
+router.post("/signup", signUpValidation, Signup);
 router.post("/login", Login);
 router.post('/', userVerification);
 router.get('/logout', Logout)

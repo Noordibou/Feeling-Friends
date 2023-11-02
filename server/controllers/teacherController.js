@@ -1,6 +1,7 @@
 const Teacher = require('../models/Teacher.js');
 const Student = require("../models/Student.js")
 const User = require('../models/User.js');
+const mongoose = require("mongoose");
 
 // Create a new teacher, but signup in authentication should be doing that I think
 const createNewTeacher = async (req, res) => {
@@ -50,6 +51,7 @@ const getTeacherById = async (req, res) => {
         return res.status(400).json({ message: 'Invalid teacher ID format.' });
     }
 
+
     try {
         const teacher = await Teacher.findById(teacherId);
         if (!teacher) {
@@ -59,7 +61,7 @@ const getTeacherById = async (req, res) => {
         res.json(teacher);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Couldnt get Teacher by id: Internal server error' });
     }
 }
 

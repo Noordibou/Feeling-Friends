@@ -93,15 +93,11 @@ const signUpValidation = async (req, res, next) => {
     errors.push('Either student or teacher ID should be specified, not both.');
   }
 
-  // Check if student ID is a valid ObjectId
-  if (student && !mongoose.Types.ObjectId.isValid(student)) {
-    errors.push('Student should be a valid ObjectId.');
+  // Check if teacher/student ID is a valid ObjectId
+  if ((student && !mongoose.Types.ObjectId.isValid(student)) && (teacher && !mongoose.Types.ObjectId.isValid(teacher))) {
+    errors.push(`${role} should be a valid ObjectId.`);
   }
 
-  // Check if teacher ID is a valid ObjectId
-  if (teacher && !mongoose.Types.ObjectId.isValid(teacher)) {
-    errors.push('Teacher should be a valid ObjectId.');
-  }
 
   if (errors.length > 0) {
     return res.status(422).json({ errors });

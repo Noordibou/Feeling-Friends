@@ -49,6 +49,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^8.0.3",
+    "jest": "^27.5.1",
     "lint-staged": "^15.0.1",
     "tailwindcss": "^3.3.3"
   }

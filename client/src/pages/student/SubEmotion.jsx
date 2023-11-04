@@ -9,7 +9,7 @@ import happyImg from "../../images/happy.png";
 import scaredImg from "../../images/scared.png";
 import ProgressBar from "../../components/ProgressBar";
 import { useEffect } from "react";
-import subEmotionInfo from "../../mockData/subEmotions";
+import subEmotionInfo from "../../data/subEmotions";
 
 const SubEmotion = () => {
   const navigate = useNavigate();

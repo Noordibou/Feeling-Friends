@@ -1,14 +1,17 @@
+import { useEffect, useState } from "react";
+import { useRef } from "react";
+import { motion, useAnimation } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom } from '../../api/teachersApi';
 import { cols, getBorderColorClass } from '../../components/classRoomColors';
 
-const ViewClassroom = () => {
+const TESTEditSeatingChart = () => {
     const { teacherId, classroomId } = useParams();
     const { userData } = useUser();
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
+    const constraintsRef = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,8 +29,8 @@ const ViewClassroom = () => {
     }, [teacherId, classroomId]);
 
     return (
-        <>
-                <div className='h-screen'>
+        <> <div className='h-screen'>
+                <div >
                     <div>
                     <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem] ">
                         Good morning, {userData.firstName}!
@@ -35,7 +38,7 @@ const ViewClassroom = () => {
                 </div>
                 {classroom ? (
                     <>
-                        <div className="w-[90%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]">
+                        <div className="w-[90%] h-6/12 rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]" ref={constraintsRef}>
                             <h4 className="bg-sandwich text-notebookPaper font-body text-body w-[23rem] rounded-[1rem] text-center ml-auto mr-auto">
                                 Smartboard
                             </h4>
@@ -51,7 +54,10 @@ const ViewClassroom = () => {
                                             const zor = lastCheckout.ZOR;
                                             const bgColorClass = getBorderColorClass(zor);
                                             return (
-                                                <div
+                                                <motion.div
+                                                    dragMomentum={false}
+                                                    drag 
+                                                    dragConstraints={constraintsRef}
                                                     key={`${student.id}-${index}`}
                                                     className={`border-4 ${bgColorClass} p-3 m-4 rounded-lg`}
                                                     style={{
@@ -60,13 +66,16 @@ const ViewClassroom = () => {
                                                     }}
                                                 >
                                                     a{student.firstName}
-                                                </div>
+                                                </motion.div>
                                             );
                                         } else if (lastCheckin && lastCheckin.ZOR) {
                                             const zor = lastCheckin.ZOR;
                                             const bgColorClass = getBorderColorClass(zor);
                                             return (
-                                                <div
+                                                <motion.div
+                                                    drag={false}
+                                                    dragMomentum={false} 
+                                                    dragConstraints={constraintsRef}
                                                     key={`${student.id}-${index}`}
                                                     className={`border-4 ${bgColorClass} p-3 m-4 rounded-lg`}
                                                     style={{
@@ -75,17 +84,22 @@ const ViewClassroom = () => {
                                                     }}
                                                 >
                                                     b{student.firstName}
-                                                </div>
+                                                </motion.div>
                                             );
                                         }
                                     }
                                     return (
-                                        <div key={`${student.id}-${index}`} className={`bg-white p-3 m-4 rounded-lg`} style={{
-                                            gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
-                                            gridColumnStart: `${student.seatNumber % cols + 1}`,
-                                        }}>
+                                        <motion.div 
+                                            drag 
+                                            dragConstraints={constraintsRef}
+                                            dragMomentum={false}
+                                            key={`${student.id}-${index}`} className={`bg-white p-3 m-4 rounded-lg`} style={{
+                                                gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
+                                                gridColumnStart: `${student.seatNumber % cols + 1}`,
+                                            }}
+                                        >
                                             c{student.firstName}
-                                        </div>
+                                        </motion.div>
 
                                     );
                                 }
@@ -94,22 +108,6 @@ const ViewClassroom = () => {
                             </div>
                             <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
                                 <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
-                            </div>
-                        </div>
-
-                        <div className="w-[90%] ml-auto mr-auto mt-[1rem]">
-                            <div className="flex justify-between">
-                                <div>
-                                    <span className="text-header2 font-header2">
-                                        <b>{classroom.classSubject}</b>
-                                    </span>{' '}
-                                    &nbsp;&nbsp;
-                                    <span className="font-karla text-lg px-6">{classroom.location}</span>
-                                </div>
-                                <div className="text-body font-body">
-                                    Check In &nbsp;&nbsp; 8AM - 9AM<br />
-                                    Check out &nbsp;&nbsp; 2PM - 3PM
-                                </div>
                             </div>
                         </div>
                     </>
@@ -132,51 +130,9 @@ const ViewClassroom = () => {
                     </div>
                 </div>
             </div>
+            </div>
         </>
     );
 }
 
-export default ViewClassroom;
-
-
-// import { useParams } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
-
-// import { getAllStudentsClassroom } from '../../api/teachersApi';
-
-// function ClassroomStudents() {
-//     const { teacherId, classroomId } = useParams();
-
-//     const [students, setStudents] = useState([]);
-
-//     useEffect(() => {
-//         const fetchStudents = async () => {
-//             try {
-//                 const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
-//                 setStudents(classroomStudents);
-//             } catch (error) {
-//                 console.error(error);
-//             }
-//         };
-
-//         fetchStudents();
-//     }, [teacherId, classroomId]);
-
-//     return (
-//         <div>
-//             <h1>Students</h1>
-
-//             {students.length > 0 ? (
-//                 <ul>
-//                     {students.map((student, index) => (
-//                         <li key={`${student.id}-${index}`}>{student.firstName}</li>
-//                     ))}
-//                 </ul>
-//             ) : (
-//                 <p>No students found.</p>
-//             )}
-//         </div>
-//     );
-// }
-
-// export default ClassroomStudents;
+export default TESTEditSeatingChart

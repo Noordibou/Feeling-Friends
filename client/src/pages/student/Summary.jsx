@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import SummaryPerson from "../../images/SummaryPerson.png";
 import { AuthContext } from "../Authentication/AuthContext";
-import emotionsExplained from '../../mockData/emotionData.js';
+import emotionsExplained from '../../data/emotionData.js';
 import { useLocation } from "react-router-dom";
 import QuestionFrog from '../../images/Question_Frog.png';
 import { useUser } from '../../context/UserContext';

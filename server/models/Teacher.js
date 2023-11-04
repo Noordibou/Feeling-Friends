@@ -11,7 +11,14 @@ const teacherSchema = new mongoose.Schema({
   classrooms: [{
     classSubject: { type: String },
     location: { type: String },
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
+    students: [{ 
+      student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
+      seatInfo: {
+        x: { type: Number, default: null },
+        y: { type: Number, default: null },
+        assigned: { type: Boolean, default: false },
+      },
+     }],
   }],
 });
 

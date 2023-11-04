@@ -303,7 +303,7 @@ const deleteClassroom = async (req, res) => {
         const classroomId = req.params.classroomId;
 
         // Find the classroom by its ID and remove it from the teacher's classrooms array
-        teacher.classrooms.id(classroomId).remove();
+        teacher.classrooms.pull({ _id: classroomId });
 
         await teacher.save();
 
@@ -354,7 +354,6 @@ module.exports = {
     addStudentToClassroom,
     deleteClassroom,
     createClassroom,
-
 };
 
 

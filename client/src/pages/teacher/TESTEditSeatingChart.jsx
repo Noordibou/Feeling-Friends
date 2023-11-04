@@ -13,6 +13,8 @@ const TESTEditSeatingChart = () => {
     const [students, setStudents] = useState([]);
     const constraintsRef = useRef(null);
 
+    const [studentPositions, setStudentPositions] = useState({})
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,7 +22,21 @@ const TESTEditSeatingChart = () => {
                 setClassroom(classroom);
                 const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
                 setStudents(classroomStudents);
+                
+                const positions = {};
+                classroomStudents.forEach(student => {
+                    positions[student._id] = {
+                        x: student.seatInfo.x || null, 
+                        y: student.seatInfo.y || null, 
+                    };
+                });
+                setStudentPositions(positions);
+                
+                console.log( "what's this ",JSON.stringify(positions))
+                console.log("whaaat")
+
             } catch (error) {
+                console.log("oof error ")
                 console.log(error);
             }
         };
@@ -28,8 +44,15 @@ const TESTEditSeatingChart = () => {
         fetchData();
     }, [teacherId, classroomId]);
 
+    const handleDragEnd = (studentId, x, y) => {
+        setStudentPositions(prevPositions => ({
+            ...prevPositions,
+            [studentId]: { x, y },
+        }));
+    };
+
     return (
-        <> <div className='h-screen'>
+        <> <div className='flex min-h-screen'>
                 <div >
                     <div>
                     <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem] ">
@@ -38,12 +61,12 @@ const TESTEditSeatingChart = () => {
                 </div>
                 {classroom ? (
                     <>
-                        <div className="w-[90%] h-6/12 rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]" ref={constraintsRef}>
+                        <div className="w-[90%] h-[70%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]" ref={constraintsRef}>
                             <h4 className="bg-sandwich text-notebookPaper font-body text-body w-[23rem] rounded-[1rem] text-center ml-auto mr-auto">
                                 Smartboard
                             </h4>
                             {/* Classroom layout here */}
-                            <div className="grid grid-rows-8 grid-cols-8 grid-flow-col auto-cols-auto py-4">
+                            <div className="grid grid-rows-8 grid-cols-8 grid-flow-col auto-cols-auto py-4 bg-lightLavender">
 
                                 {students.map((student, index) => {
                                     const lastJournal = student.journalEntries[student.journalEntries.length - 1];
@@ -59,10 +82,13 @@ const TESTEditSeatingChart = () => {
                                                     drag 
                                                     dragConstraints={constraintsRef}
                                                     key={`${student.id}-${index}`}
-                                                    className={`border-4 ${bgColorClass} p-3 m-4 rounded-lg`}
+                                                    className={`border-4 ${bgColorClass} p-3 rounded-lg h-20`}
                                                     style={{
                                                         gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
                                                         gridColumnStart: `${student.seatNumber % cols + 1}`,
+                                                    }}
+                                                    onDragEnd={(event, info) => {
+                                                        handleDragEnd(student._id, info.point.x, info.point.y);
                                                     }}
                                                 >
                                                     a{student.firstName}
@@ -77,10 +103,13 @@ const TESTEditSeatingChart = () => {
                                                     dragMomentum={false} 
                                                     dragConstraints={constraintsRef}
                                                     key={`${student.id}-${index}`}
-                                                    className={`border-4 ${bgColorClass} p-3 m-4 rounded-lg`}
+                                                    className={`border-4 ${bgColorClass} p-3 rounded-lg`}
                                                     style={{
                                                         gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
                                                         gridColumnStart: `${student.seatNumber % cols + 1}`,
+                                                    }}
+                                                    onDragEnd={(event, info) => {
+                                                        handleDragEnd(student._id, info.point.x, info.point.y);
                                                     }}
                                                 >
                                                     b{student.firstName}
@@ -93,9 +122,12 @@ const TESTEditSeatingChart = () => {
                                             drag 
                                             dragConstraints={constraintsRef}
                                             dragMomentum={false}
-                                            key={`${student.id}-${index}`} className={`bg-white p-3 m-4 rounded-lg`} style={{
+                                            key={`${student.id}-${index}`} className={`bg-white p-3 m-4 border rounded-lg`} style={{
                                                 gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
                                                 gridColumnStart: `${student.seatNumber % cols + 1}`,
+                                            }}
+                                            onDragEnd={(event, info) => {
+                                                handleDragEnd(student._id, info.point.x, info.point.y);
                                             }}
                                         >
                                             c{student.firstName}
@@ -109,26 +141,15 @@ const TESTEditSeatingChart = () => {
                             <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
                                 <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
                             </div>
+                            
+                        <div className="bg-lightBlue w-40 h-40 "></div>
                         </div>
                     </>
                 ) : (
                     'Loading...'
                 )}
 
-                <div className="w-[90%] ml-auto mr-auto mt-[1rem]">
-                    <div className="justify-start text-body font-body">
-                        <a href="/teacher-home">&lt; All Classes</a>
-                    </div>
 
-                    <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto">
-                        <div className="text-body font-body p-[1rem] bg-sandwich">
-                            <a href="/viewclassroom">Room</a>
-                        </div>
-                        <div className="text-body font-body p-[1rem]">
-                            <Link to={`/viewclasslist/${userData._id}/${classroomId}`}>List</Link>
-                        </div>
-                    </div>
-                </div>
             </div>
             </div>
         </>

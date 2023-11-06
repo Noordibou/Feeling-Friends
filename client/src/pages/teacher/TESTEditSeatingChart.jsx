@@ -17,32 +17,52 @@ const TESTEditSeatingChart = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const classroom = await getTeacherClassroom(teacherId, classroomId);
-                setClassroom(classroom);
-                const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
-                setStudents(classroomStudents);
-                
-                const positions = {};
-                classroomStudents.forEach(student => {
-                    positions[student._id] = {
-                        x: student.seatInfo.x || null, 
-                        y: student.seatInfo.y || null, 
-                    };
-                });
-                setStudentPositions(positions);
-                
-                console.log( "what's this ",JSON.stringify(positions))
-                console.log("whaaat")
-
-            } catch (error) {
-                console.log("oof error ")
-                console.log(error);
-            }
+          try {
+            const classroom = await getTeacherClassroom(teacherId, classroomId);
+            setClassroom(classroom);
+            const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
+      
+            // Calculate the border color for each student
+            const studentsWithBorderColor = classroomStudents.map(student => {
+              const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+              if (lastJournal) {
+                const lastCheckin = lastJournal.checkin;
+                const lastCheckout = lastJournal.checkout;
+                if (lastCheckout && lastCheckout.ZOR) {
+                  const zor = lastCheckout.ZOR;
+                  student.borderColorClass = getBorderColorClass(zor);
+                } else if (lastCheckin && lastCheckin.ZOR) {
+                  const zor = lastCheckin.ZOR;
+                  student.borderColorClass = getBorderColorClass(zor);
+                } else {
+                  student.borderColorClass = 'border-graphite'; // Default border color
+                }
+              } else {
+                student.borderColorClass = 'border-graphite'; // Default border color
+              }
+      
+              return student;
+            });
+      
+            setStudents(studentsWithBorderColor);
+      
+            const positions = {};
+            studentsWithBorderColor.forEach(student => {
+              positions[student._id] = {
+                x: student.seatInfo.x || null,
+                y: student.seatInfo.y || null,
+              };
+            });
+            setStudentPositions(positions);
+      
+          } catch (error) {
+            console.log("oof error ");
+            console.log(error);
+          }
         };
-
+      
         fetchData();
-    }, [teacherId, classroomId]);
+      }, [teacherId, classroomId]);
 
     const handleDragEnd = (studentId, x, y) => {
         setStudentPositions(prevPositions => ({
@@ -61,95 +81,44 @@ const TESTEditSeatingChart = () => {
                 </div>
                 {classroom ? (
                     <>
-                        <div className="w-[90%] h-[70%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]" ref={constraintsRef}>
+                        <div className="w-[90%] h-[50%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]" ref={constraintsRef}>
                             <h4 className="bg-sandwich text-notebookPaper font-body text-body w-[23rem] rounded-[1rem] text-center ml-auto mr-auto">
                                 Smartboard
                             </h4>
                             {/* Classroom layout here */}
-                            <div className="grid grid-rows-8 grid-cols-8 grid-flow-col auto-cols-auto py-4 bg-lightLavender">
+                            <div className="flex flex-wrap py-4 bg-lightLavender">
 
-                                {students.map((student, index) => {
-                                    const lastJournal = student.journalEntries[student.journalEntries.length - 1];
-                                    if (lastJournal) {
-                                        const lastCheckin = lastJournal.checkin;
-                                        const lastCheckout = lastJournal.checkout;
-                                        if (lastCheckout && lastCheckout.ZOR) {
-                                            const zor = lastCheckout.ZOR;
-                                            const bgColorClass = getBorderColorClass(zor);
-                                            return (
-                                                <motion.div
-                                                    dragMomentum={false}
-                                                    drag 
-                                                    dragConstraints={constraintsRef}
-                                                    key={`${student.id}-${index}`}
-                                                    className={`border-4 ${bgColorClass} p-3 rounded-lg h-20`}
-                                                    style={{
-                                                        gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
-                                                        gridColumnStart: `${student.seatNumber % cols + 1}`,
-                                                    }}
-                                                    onDragEnd={(event, info) => {
-                                                        handleDragEnd(student._id, info.point.x, info.point.y);
-                                                    }}
-                                                >
-                                                    a{student.firstName}
-                                                </motion.div>
-                                            );
-                                        } else if (lastCheckin && lastCheckin.ZOR) {
-                                            const zor = lastCheckin.ZOR;
-                                            const bgColorClass = getBorderColorClass(zor);
-                                            return (
-                                                <motion.div
-                                                    drag={false}
-                                                    dragMomentum={false} 
-                                                    dragConstraints={constraintsRef}
-                                                    key={`${student.id}-${index}`}
-                                                    className={`border-4 ${bgColorClass} p-3 rounded-lg`}
-                                                    style={{
-                                                        gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
-                                                        gridColumnStart: `${student.seatNumber % cols + 1}`,
-                                                    }}
-                                                    onDragEnd={(event, info) => {
-                                                        handleDragEnd(student._id, info.point.x, info.point.y);
-                                                    }}
-                                                >
-                                                    b{student.firstName}
-                                                </motion.div>
-                                            );
-                                        }
-                                    }
-                                    return (
-                                        <motion.div 
-                                            drag 
-                                            dragConstraints={constraintsRef}
-                                            dragMomentum={false}
-                                            key={`${student.id}-${index}`} className={`bg-white p-3 m-4 border rounded-lg`} style={{
-                                                gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
-                                                gridColumnStart: `${student.seatNumber % cols + 1}`,
-                                            }}
-                                            onDragEnd={(event, info) => {
-                                                handleDragEnd(student._id, info.point.x, info.point.y);
-                                            }}
-                                        >
-                                            c{student.firstName}
-                                        </motion.div>
-
-                                    );
-                                }
-                                )}
+                            {students.map((student, index) => (
+                                <motion.div
+                                    dragMomentum={false}
+                                    drag
+                                    dragConstraints={constraintsRef}
+                                    key={`${student._id}-${index}`}
+                                    className={`border-4 ${student.borderColorClass} p-3 rounded-lg h-20 w-20`}
+                                    onDragEnd={(event, info) => {
+                                    handleDragEnd(student._id, info.point.x, info.point.y);
+                                    }}
+                                >
+                                    {student.firstName}
+                                </motion.div>
+                                ))}
 
                             </div>
-                            <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
-                                <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
+
+                            {/* Unassigned Students */}
+                            <div className="bg-lightBlue w-40 h-40 ">
+
                             </div>
-                            
-                        <div className="bg-lightBlue w-40 h-40 "></div>
                         </div>
+                        
                     </>
                 ) : (
                     'Loading...'
                 )}
 
-
+                <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
+                    <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
+                </div>
             </div>
             </div>
         </>

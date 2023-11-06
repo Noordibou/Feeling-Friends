@@ -18,7 +18,7 @@ const TESTEditSeatingChart = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const classroom = await getTeacherClassroom(teacherId, classroomId);
+            const classroom = userData.classrooms.find(c => c._id === classroomId);
             setClassroom(classroom);
             const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
       

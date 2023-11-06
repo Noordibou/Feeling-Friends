@@ -8,7 +8,7 @@ import { cols, getBorderColorClass } from '../../components/classRoomColors';
 
 const TESTEditSeatingChart = () => {
     const { teacherId, classroomId } = useParams();
-    const { userData } = useUser();
+    const { userData, updateUser } = useUser();
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
     const constraintsRef = useRef(null);
@@ -45,14 +45,15 @@ const TESTEditSeatingChart = () => {
             });
       
             setStudents(studentsWithBorderColor);
-      
             const positions = {};
-            studentsWithBorderColor.forEach(student => {
-              positions[student._id] = {
-                x: student.seatInfo.x || null,
-                y: student.seatInfo.y || null,
-              };
-            });
+                classroom.students.forEach(student => {
+                    console.log("student in class: ", JSON.stringify(student))
+                  positions[student._id] = {
+                    x: student.seatInfo.x || null,
+                    y: student.seatInfo.y || null,
+                  };
+                });
+
             setStudentPositions(positions);
       
           } catch (error) {
@@ -96,7 +97,8 @@ const TESTEditSeatingChart = () => {
                                     key={`${student._id}-${index}`}
                                     className={`border-4 ${student.borderColorClass} p-3 rounded-lg h-20 w-20`}
                                     onDragEnd={(event, info) => {
-                                    handleDragEnd(student._id, info.point.x, info.point.y);
+                                        console.log("student: "+ student._id + ", x: " + info.point.x + ", y: " + info.point.y)
+                                        handleDragEnd(student._id, info.point.x, info.point.y);
                                     }}
                                 >
                                     {student.firstName}

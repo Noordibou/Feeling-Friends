@@ -18,12 +18,31 @@ const GoalsNeeds = () => {
   const [userInput1, setUserInput1] = useState('');
   const [userInput2, setUserInput2] = useState('');
 
+  const [selectedGoal, setSelectedGoal] = useState(null);
+  const [selectedNeed, setSelectedNeed] = useState(null);
+
   const handleInputChange1 = (e) => {
     setUserInput1(e.target.value);
   };
 
   const handleInputChange2 = (e) => {
     setUserInput2(e.target.value);
+  };
+
+  const handleGoalClick = (goal) => {
+    if (selectedGoal === goal) {
+      setSelectedGoal(null);
+    } else {
+      setSelectedGoal(goal);
+    }
+  };
+
+  const handleNeedClick = (need) => {
+    if (selectedNeed === need) {
+      setSelectedNeed(null);
+    } else {
+      setSelectedNeed(need);
+    }
   };
 
   const handleSubmit = async () => {
@@ -40,9 +59,8 @@ const GoalsNeeds = () => {
   return (
     <>
       <div className="flex flex-col w-screen items-center bg-notebookPaper">
-
         <div className="flex w-full justify-center mt-20">
-          <ProgressBar totalPages="6" currentPage="5"/>
+          <ProgressBar totalPages="6" currentPage="5" />
         </div>
         <div className="items-center justify-center mt-20 mb-[2.5rem]">
           <img className="w-[33rem]" src={Wiggly} alt="Wiggly" />
@@ -56,14 +74,14 @@ const GoalsNeeds = () => {
           <div className="w-full">
             <div className="flex flex-row justify-between mt-3">
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ goal: "Finish homework during study hall" })}
+                className={`bg-${selectedGoal === "Finish homework during study hall" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange`}
+                onClick={() => handleGoalClick("Finish homework during study hall")}
               >
                 Finish homework during study hall
               </button>
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ goal: "Better manage my energy" })}
+                className={`bg-${selectedGoal === "Better manage my energy" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange`}
+                onClick={() => handleGoalClick("Better manage my energy")}
               >
                 Better manage my energy
               </button>
@@ -71,14 +89,14 @@ const GoalsNeeds = () => {
 
             <div className="flex flex-row justify-between">
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ goal: "Do my best in class" })}
+                className={`bg-${selectedGoal === "Do my best in class" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange`}
+                onClick={() => handleGoalClick("Do my best in class")}
               >
                 Do my best in class
               </button>
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ goal: "Be more present" })}
+                className={`bg-${selectedGoal === "Be more present" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange`}
+                onClick={() => handleGoalClick("Be more present")}
               >
                 Be more present
               </button>
@@ -97,10 +115,11 @@ const GoalsNeeds = () => {
                     onClick={() => {
                       console.log('User input 1:', userInput1);
                       updateUserDataAccumulated({ goal: userInput1 });
+                      setSelectedGoal(userInput1);
                       setInputMode1(false);
                       setUserInput1('');
                     }}
-                    className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange/60"
+                    className={`bg-${selectedGoal === userInput1 ? 'lightOrange' : 'themeWhite'} mt-2 p-4 w-full text-body font-body border-2 border-lightOrange hover:bg-lightOrange/60 rounded-[1rem]`}
                   >
                     Save
                   </button>
@@ -108,8 +127,11 @@ const GoalsNeeds = () => {
               ) : (
                 <div className="p-2">
                   <button
-                    className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                    onClick={() => setInputMode1(true)}
+                    className={`bg-${selectedGoal === "Something else" ? 'lightOrange' : 'themeWhite'} p-4 w-full text-body font-body border-2 border-lightOrange hover:bg-lightOrange`}
+                    onClick={() => {
+                      setSelectedGoal("Something else");
+                      setInputMode1(true);
+                    }}
                   >
                     Something else
                   </button>
@@ -125,14 +147,14 @@ const GoalsNeeds = () => {
           <div className="w-full">
             <div className="flex flex-row justify-between mt-3">
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ need: "Check in with my teacher" })}
+                className={`bg-${selectedNeed === "Check in with my teacher" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange`}
+                onClick={() => handleNeedClick("Check in with my teacher")}
               >
                 Check in with my teacher
               </button>
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ need: "Help with homework" })}
+                className={`bg-${selectedNeed === "Help with homework" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover-bg-lightOrange`}
+                onClick={() => handleNeedClick("Help with homework")}
               >
                 Help with homework
               </button>
@@ -140,14 +162,14 @@ const GoalsNeeds = () => {
 
             <div className="flex flex-row justify-between">
               <button
-                className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                onClick={() => updateUserDataAccumulated({ need: "Extra practice" })}
+                className={`bg-${selectedNeed === "Extra practice" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover-bg-lightOrange`}
+                onClick={() => handleNeedClick("Extra practice")}
               >
                 Extra practice
               </button>
               <button
-                 className="bg-themeWhite m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                 onClick={() => updateUserDataAccumulated({ need: "Help with focusing" })}
+                className={`bg-${selectedNeed === "Help with focusing" ? 'lightOrange' : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-lightOrange hover-bg-lightOrange rounded-[1rem]`}
+                onClick={() => handleNeedClick("Help with focusing")}
               >
                 Help with focusing
               </button>
@@ -165,10 +187,11 @@ const GoalsNeeds = () => {
                   onClick={() => {
                     console.log('User input 2:', userInput2);
                     updateUserDataAccumulated({ need: userInput2 });
+                    setSelectedNeed(userInput2);
                     setInputMode2(false);
                     setUserInput2('');
                   }}
-                  className="bg-lightOrange mt-2 p-4 w-full text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange/60"
+                  className={`bg-${selectedNeed === userInput2 ? 'lightOrange' : 'themeWhite'} mt-2 p-4 w-full text-body font-body border-2 border-lightOrange hover-bg-lightOrange/60 rounded-[1rem]`}
                 >
                   Save
                 </button>
@@ -176,8 +199,11 @@ const GoalsNeeds = () => {
             ) : (
               <div className="p-2">
                 <button
-                  className="bg-themeWhite p-4 w-full text-body font-body border-2 border-lightOrange rounded-[1rem] hover:bg-lightOrange"
-                  onClick={() => setInputMode2(true)}
+                  className={`bg-${selectedNeed === "Something else" ? 'lightOrange' : 'themeWhite'} p-4 w-full text-body font-body border-2 border-lightOrange hover-bg-lightOrange`}
+                  onClick={() => {
+                    setSelectedNeed("Something else");
+                    setInputMode2(true);
+                  }}
                 >
                   Something else
                 </button>
@@ -187,7 +213,7 @@ const GoalsNeeds = () => {
         </div>
         <div className="flex justify-center w-full mt-10 mb-20">
           <button
-            className="w-8/12 rounded-[1rem] py-4 text-body bg-lightOrange hover:bg-lightOrange/60"
+            className={`w-[31rem] rounded-[1rem] py-4 text-body bg-${selectedGoal === "Submit" ? 'lightOrange' : 'lightOrange'} hover-bg-lightOrange/60`}
             onClick={handleSubmit}
           >
             Submit

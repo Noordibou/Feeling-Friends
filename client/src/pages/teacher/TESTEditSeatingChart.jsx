@@ -12,6 +12,8 @@ const TESTEditSeatingChart = () => {
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
     const constraintsRef = useRef(null);
+    const [unassignedStudents, setUnassignedStudents] = useState([]);
+
 
     const [studentPositions, setStudentPositions] = useState({})
 
@@ -35,10 +37,10 @@ const TESTEditSeatingChart = () => {
                   const zor = lastCheckin.ZOR;
                   student.borderColorClass = getBorderColorClass(zor);
                 } else {
-                  student.borderColorClass = 'border-graphite'; // Default border color
+                  student.borderColorClass = 'border-graphite';
                 }
               } else {
-                student.borderColorClass = 'border-graphite'; // Default border color
+                student.borderColorClass = 'border-graphite';
               }
       
               return student;
@@ -53,8 +55,13 @@ const TESTEditSeatingChart = () => {
                     y: student.seatInfo.y || null,
                   };
                 });
-
+                
             setStudentPositions(positions);
+
+            const unassigned = classroom.students.filter(student => (
+                student.seatInfo.x === null || student.seatInfo.y === null
+              ));
+              setUnassignedStudents(unassigned);
       
           } catch (error) {
             console.log("oof error ");
@@ -106,12 +113,22 @@ const handleSubmit = async () => {
                             {/* Classroom layout here */}
                             <div className="flex flex-wrap py-4 bg-lightLavender">
 
-                            {students.map((student, index) => (
+                            {students.map((student, index) => {
+
+                                const ref = constraintsRef.current;
+                                const initialX = (studentPositions[student._id]?.x || 0)/  (ref ? ref.clientWidth : 1) *100
+                                const initialY = (studentPositions[student._id]?.y || 0) / (ref ? ref.clientHeight : 1) *100;
+                                console.log("ref client width: " + JSON.stringify(ref.clientWidth/2))       
+                                console.log("initial x: " + JSON.stringify(initialX))
+                                console.log("initialY: " + JSON.stringify(initialY))
+
+                                return (
                                 <motion.div
                                     dragMomentum={false}
                                     drag
                                     dragConstraints={constraintsRef}
                                     key={`${student._id}-${index}`}
+                                    initial={{ x: initialX, y: initialY }}
                                     className={`border-4 ${student.borderColorClass} p-3 rounded-lg h-20 w-20`}
                                     onDragEnd={(event, info) => {
                                         console.log("student: "+ student._id + ", x: " + info.point.x + ", y: " + info.point.y)
@@ -120,12 +137,8 @@ const handleSubmit = async () => {
                                 >
                                     {student.firstName}
                                 </motion.div>
-                                ))}
-
-                            </div>
-
-                            {/* Unassigned Students */}
-                            <div className="bg-lightBlue w-40 h-40 ">
+                                )
+                            })}
 
                             </div>
                         </div>
@@ -134,13 +147,23 @@ const handleSubmit = async () => {
                 ) : (
                     'Loading...'
                 )}
-
+                {/* Unassigned Students */}
+                <div className="bg-lightBlue w-40 h-40 m-10">
+                    <h2 className="text-center">Unassigned Students</h2>
+                    <div>
+                    {unassignedStudents.map((student, index) => (
+                        <div key={`unassigned-${student._id}`} className="p-2">
+                        {student.firstName}
+                        </div>
+                    ))}
+                    </div>
+                </div>
                 <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
                     <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
                 </div>
 
                 <div>
-                    <button onSubmit={handleSubmit}>Submit</button>
+                    <button onClick={handleSubmit}>Save Seating Chart</button>
                 </div>
             </div>
             </div>

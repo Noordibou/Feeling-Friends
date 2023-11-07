@@ -339,6 +339,50 @@ const createClassroom = async (req, res) => {
 };
 
 
+// updating the student seating chart with x y coords and assigned or unassigned.
+const updateStudentSeats = async (req, res) => {
+    try {
+        const teacherId = req.params.teacherId;
+        const classroomId = req.params.classroomId;
+        const updatedSeats = req.body;
+        console.log("req.boy.positions: " + JSON.stringify(req.body))
+        // Find the teacher by ID
+        const teacher = await Teacher.findById(teacherId);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        // Find the classroom within the teacher's classrooms
+        const classroom = teacher.classrooms.id(classroomId);
+
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
+
+        // Update the X and Y coordinates and "assigned" for each student in the classroom
+        updatedSeats.forEach((updatedPosition) => {
+            const studentId = updatedPosition.studentId;
+            const student = classroom.students.id(studentId);
+
+            if (student) {
+                student.seatInfo.x = updatedPosition.x;
+                student.seatInfo.y = updatedPosition.y;
+                student.seatInfo.assigned = updatedPosition.x !== null && updatedPosition.y !== null;
+            }
+        });
+
+        // Save the changes to the teacher's data
+        await teacher.save();
+
+        res.json({ message: 'Student positions updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+
 module.exports = {
     createNewTeacher,
     getAllTeachers,
@@ -354,6 +398,7 @@ module.exports = {
     addStudentToClassroom,
     deleteClassroom,
     createClassroom,
+    updateStudentSeats,
 };
 
 

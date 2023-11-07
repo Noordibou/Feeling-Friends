@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { motion, useAnimation } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { getTeacherClassroom, getAllStudentsClassroom } from '../../api/teachersApi';
+import { getTeacherClassroom, getAllStudentsClassroom, updateSeatingChart } from '../../api/teachersApi';
 import { cols, getBorderColorClass } from '../../components/classRoomColors';
 
 const TESTEditSeatingChart = () => {
@@ -72,6 +72,23 @@ const TESTEditSeatingChart = () => {
         }));
     };
 
+    
+const handleSubmit = async () => {
+    const updatedPositions = students.map((student) => ({
+        studentId: student._id,
+        x: studentPositions[student._id].x,
+        y: studentPositions[student._id].y,
+    }));
+
+    try {
+        await updateSeatingChart(teacherId, classroomId, updatedPositions);
+
+        // Optionally, you can show a success message to the user
+    } catch (error) {
+        // Handle any errors
+    }
+};
+
     return (
         <> <div className='flex min-h-screen'>
                 <div >
@@ -120,6 +137,10 @@ const TESTEditSeatingChart = () => {
 
                 <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
                     <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
+                </div>
+
+                <div>
+                    <button onSubmit={handleSubmit}>Submit</button>
                 </div>
             </div>
             </div>

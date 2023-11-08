@@ -60,8 +60,9 @@ const TESTEditSeatingChart = () => {
 
             const unassigned = classroom.students.filter(student => (
                 student.seatInfo.x === null || student.seatInfo.y === null
-              ));
-              setUnassignedStudents(unassigned);
+            ));
+            setUnassignedStudents(unassigned);
+
       
           } catch (error) {
             console.log("oof error ");
@@ -116,7 +117,7 @@ const handleSubmit = async () => {
                             {students.map((student, index) => {
 
                                 const ref = constraintsRef.current;
-                                const initialX = (studentPositions[student._id]?.x || 0)/  (ref ? ref.clientWidth : 1) *100
+                                const initialX = (studentPositions[student._id]?.x || 0) /  (ref ? ref.clientWidth : 1) *100
                                 const initialY = (studentPositions[student._id]?.y || 0) / (ref ? ref.clientHeight : 1) *100;
                                 console.log("ref client width: " + JSON.stringify(ref.clientWidth/2))       
                                 console.log("initial x: " + JSON.stringify(initialX))
@@ -148,14 +149,22 @@ const handleSubmit = async () => {
                     'Loading...'
                 )}
                 {/* Unassigned Students */}
-                <div className="bg-lightBlue w-40 h-40 m-10">
+                <div className="bg-lightBlue w-90 m-10 flex flex-wrap">
                     <h2 className="text-center">Unassigned Students</h2>
-                    <div>
-                    {unassignedStudents.map((student, index) => (
-                        <div key={`unassigned-${student._id}`} className="p-2">
-                        {student.firstName}
-                        </div>
-                    ))}
+                    <div className="flex-wrap flex flex-row">
+                    {unassignedStudents.map((studentId, index) => {
+                        const unassignedStudent = students.find(student => student._id === studentId._id);
+                                            
+                        if (unassignedStudent) {
+                          return (
+                            <div key={`unassigned-${index}`} className="p-2">
+                              {unassignedStudent.firstName}
+                            </div>
+                          );
+                        } else {
+                          return null;
+                        }
+                    })}
                     </div>
                 </div>
                 <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">

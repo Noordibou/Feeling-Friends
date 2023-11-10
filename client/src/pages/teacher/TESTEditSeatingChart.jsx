@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom, updateSeatingChart } from '../../api/teachersApi';
 import { cols, getBorderColorClass } from '../../components/classRoomColors';
+import { useNavigate } from "react-router-dom";
 
 const TESTEditSeatingChart = () => {
     const { teacherId, classroomId } = useParams();
@@ -12,7 +13,9 @@ const TESTEditSeatingChart = () => {
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
     const constraintsRef = useRef(null);
+    const [assignedStudents, setAssignedStudents] = useState([]);
     const [unassignedStudents, setUnassignedStudents] = useState([]);
+    const navigate = useNavigate();
 
 
     const [studentPositions, setStudentPositions] = useState({})
@@ -62,7 +65,11 @@ const TESTEditSeatingChart = () => {
                 student.seatInfo.x === null || student.seatInfo.y === null
             ));
             setUnassignedStudents(unassigned);
-
+            
+            const assigned = classroom.students.filter(student => (
+              student.seatInfo.x !== null && student.seatInfo.y !== null
+            ));
+            setAssignedStudents(assigned);
       
           } catch (error) {
             console.log("oof error ");
@@ -98,66 +105,84 @@ const handleSubmit = async () => {
 };
 
     return (
-        <> <div className='flex min-h-screen'>
-                <div >
-                    <div>
-                    <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem] ">
-                        Good morning, {userData.firstName}!
-                    </h1>
-                </div>
+        <> <div className='flex min-h-screen min-w-screen'>
+                <div className="w-full" >
+                    <h1 className="text-center mt-10 text-header1">Edit Classroom Seating Chart</h1>
+                    <div className="flex justify-around my-8">
+                        <button className="bg-darkTeal border p-5 h-10 rounded flex items-center">Save & Exit</button>
+                        <button className="bg-yellow border p-5 h-10 rounded flex items-center" onClick={handleSubmit} >Save & Keep Working</button>
+                        <button className="bg-orange border p-5 h-10 rounded flex items-center" >Unassign All</button>
+                        <a className="bg-lightLavender border p-5 h-10 rounded flex items-center" href={`/TESTEditSC/${teacherId}/${classroomId}`}>Refresh</a>
+
+                        
+                    </div>
                 {classroom ? (
                     <>
-                        <div className="w-[90%] h-[50%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto p-[2rem]" ref={constraintsRef}>
-                            <h4 className="bg-sandwich text-notebookPaper font-body text-body w-[23rem] rounded-[1rem] text-center ml-auto mr-auto">
+                        <div className="relative w-[90%] h-[50%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto " ref={constraintsRef}>
+                            <h4 className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
                                 Smartboard
                             </h4>
                             {/* Classroom layout here */}
-                            <div className="flex flex-wrap py-4 bg-lightLavender">
 
-                            {students.map((student, index) => {
+                            {assignedStudents.map((studentObj, index) => {
 
+                                console.log("assigned studentObj: " + JSON.stringify(studentObj))
+                                
                                 const ref = constraintsRef.current;
-                                const initialX = (studentPositions[student._id]?.x || 0) /  (ref ? ref.clientWidth : 1) *100
-                                const initialY = (studentPositions[student._id]?.y || 0) / (ref ? ref.clientHeight : 1) *100;
-                                console.log("ref client width: " + JSON.stringify(ref.clientWidth/2))       
+
+                                console.log("innerwidth: " + window.innerWidth + ", clientWidth: " + ref.clientWidth)
+                                const initialX = studentObj.seatInfo.x
+                                const initialY = studentObj.seatInfo.y 
                                 console.log("initial x: " + JSON.stringify(initialX))
                                 console.log("initialY: " + JSON.stringify(initialY))
 
+                                const assignedStudent = students.find(student => student._id === studentObj._id);
+                              if(assignedStudent) {
                                 return (
                                 <motion.div
                                     dragMomentum={false}
                                     drag
                                     dragConstraints={constraintsRef}
-                                    key={`${student._id}-${index}`}
-                                    initial={{ x: initialX, y: initialY }}
-                                    className={`border-4 ${student.borderColorClass} p-3 rounded-lg h-20 w-20`}
+                                    key={`${studentObj._id}-${index}`}
+                                    initial={{ x: initialX - 8, y: initialY - 8}}
+                                    className={`fixed border-4 ${assignedStudent.borderColorClass} p-3 rounded-lg h-20 w-20 bg-lightYellow`}
                                     onDragEnd={(event, info) => {
-                                        console.log("student: "+ student._id + ", x: " + info.point.x + ", y: " + info.point.y)
-                                        handleDragEnd(student._id, info.point.x, info.point.y);
+                                        console.log("student: "+ studentObj._id + ", x: " + info.point.x + ", y: " + info.point.y)
+                                        const containerBounds = constraintsRef.current.getBoundingClientRect();
+
+                                        // Calculate container coordinates
+                                        const containerX = info.point.x - containerBounds.left;
+                                        const containerY = info.point.y - containerBounds.top;
+
+                                        console.log("Dragged to x:", containerX, "y:", containerY);
+                                        handleDragEnd(studentObj._id, containerX, containerY);
                                     }}
                                 >
-                                    {student.firstName}
+                                    {assignedStudent.firstName}
                                 </motion.div>
                                 )
+                              } else {
+                                return null;
+                              }
                             })}
 
                             </div>
-                        </div>
                         
                     </>
                 ) : (
                     'Loading...'
                 )}
                 {/* Unassigned Students */}
-                <div className="bg-lightBlue w-90 m-10 flex flex-wrap">
-                    <h2 className="text-center">Unassigned Students</h2>
-                    <div className="flex-wrap flex flex-row">
+                
+                <div className=" w-90 m-10 flex-col">
+                <h2 className="py-3 text-header2">Unassigned Students</h2>
+                    <div className="flex-wrap flex flex-row bg-lightBlue p-5 rounded">
                     {unassignedStudents.map((studentId, index) => {
                         const unassignedStudent = students.find(student => student._id === studentId._id);
                                             
                         if (unassignedStudent) {
                           return (
-                            <div key={`unassigned-${index}`} className="p-2">
+                            <div key={`unassigned-${index}`} className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}>
                               {unassignedStudent.firstName}
                             </div>
                           );
@@ -166,14 +191,7 @@ const handleSubmit = async () => {
                         }
                     })}
                     </div>
-                </div>
-                <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
-                    <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
-                </div>
-
-                <div>
-                    <button onClick={handleSubmit}>Save Seating Chart</button>
-                </div>
+                </div>                
             </div>
             </div>
         </>

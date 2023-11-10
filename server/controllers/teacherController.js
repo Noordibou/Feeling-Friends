@@ -360,8 +360,9 @@ const updateStudentSeats = async (req, res) => {
             return res.status(404).json({ error: 'Classroom not found' });
         }
 
+        console.log("updated seats: " + JSON.stringify(updatedSeats))
         // Update the X and Y coordinates and "assigned" for each student in the classroom
-        updatedSeats.forEach((updatedPosition) => {
+        updatedSeats.positions.forEach((updatedPosition) => {
             const studentId = updatedPosition.studentId;
             const student = classroom.students.id(studentId);
 

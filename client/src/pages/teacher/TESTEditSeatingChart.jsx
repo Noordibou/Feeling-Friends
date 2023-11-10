@@ -136,6 +136,10 @@ const handleSubmit = async () => {
                                 console.log("initial x: " + JSON.stringify(initialX))
                                 console.log("initialY: " + JSON.stringify(initialY))
 
+                                function clamp(value, min, max) {
+                                  return Math.min(Math.max(value, min), max);
+                                }
+
                                 const assignedStudent = students.find(student => student._id === studentObj._id);
                               if(assignedStudent) {
                                 return (
@@ -144,8 +148,11 @@ const handleSubmit = async () => {
                                     drag
                                     dragConstraints={constraintsRef}
                                     key={`${studentObj._id}-${index}`}
-                                    initial={{ x: initialX - 8, y: initialY - 8}}
-                                    className={`fixed border-4 ${assignedStudent.borderColorClass} p-3 rounded-lg h-20 w-20 bg-lightYellow`}
+                                    initial={{ 
+                                      x: initialX - 62,
+                                      y: initialY - 62
+                                    }}
+                                    className={`absolute border-4 ${assignedStudent.borderColorClass} p-3 rounded-lg h-[80px] w-[80px] bg-lightYellow`}
                                     onDragEnd={(event, info) => {
                                         console.log("student: "+ studentObj._id + ", x: " + info.point.x + ", y: " + info.point.y)
                                         const containerBounds = constraintsRef.current.getBoundingClientRect();

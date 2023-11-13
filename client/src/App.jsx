@@ -9,6 +9,7 @@ import SubEmotionHappy from "./pages/student/SubEmotionHappy";
 import SubEmotionProud from "./pages/student/SubEmotionProud";
 import SubEmotionSad from "./pages/student/SubEmotionSad";
 import SubEmotionScared from "./pages/student/SubEmotionScared";
+import Insight from "./pages/student/Insight"
 import RegZone from "./pages/student/RegZone"
 import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="/subemotionproud" element={<SubEmotionProud />} />
         <Route path="/subemotionsad" element={<SubEmotionSad />} />
         <Route path="/subemotionscared" element={<SubEmotionScared />} />
+        <Route path="/insight" element={<Insight />} />
         <Route path="/regzone" element={<RegZone />} />
         <Route path="/goalsneeds" element={<GoalsNeeds />} />
         <Route path="/summary" element={<Summary />} />

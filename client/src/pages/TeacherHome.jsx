@@ -56,14 +56,13 @@ const TeacherHome = () => {
                       <div className="text-sm font-body text-sandwich">Check-in: 8AM &nbsp;&nbsp; Check-out: 2PM</div>
                     </div>
                     <div className="flex justify-between">
-                      <div className="flex w-[80%]">
-                        
+                      <div className="flex w-[80%] bg-sandwich rounded-[1rem]">
                         {Object.entries(zorPercentages).map(([zor, percentage], i, arr) => (
                           <div
-                          key={zor}
-                          className={`w-[${percentage}%] bg-${getBackgroundColorClass(zor)} ${i === firstNonZeroIndex ? 'rounded-l-[1rem]' : ''} ${i === arr.length - 1 ? 'rounded-r-[1rem]' : ''
-                          } h-[2.5rem]`}
-                          >{console.log(zor, percentage)}</div>
+                            key={zor}
+                            style={{ width: `${percentage}%` }}
+                            className={`bg-${getBackgroundColorClass(zor)} ${i === firstNonZeroIndex ? 'rounded-l-[1rem]' : ''} ${i === arr.length - 1 ? 'rounded-r-[1rem]' : ''} h-[2.5rem]`}
+                          ></div>
                         ))}
                       </div>
                       <div className="text-body font-body underline">
@@ -71,7 +70,7 @@ const TeacherHome = () => {
                       </div>
                     </div>
                   </div>
-                 </div>
+                </div>
               );
             })
           ) : (

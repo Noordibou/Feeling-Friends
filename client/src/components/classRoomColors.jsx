@@ -14,7 +14,7 @@ function getBackgroundColorClass(zor) {
   if (zor === 'Ready to Learn') return "green";
   if (zor === 'Wiggly') return "yellow";
   if (zor === 'Explosive') return "orange";
-  return "";
+  return "sandwich";
 };
 
 function getBorderColorClass(zor) {
@@ -38,8 +38,12 @@ const calculateZorPercentage = (classroom) => {
     classroom.students.forEach((student) => {
       if (student.journalEntries && student.journalEntries.length > 0) {
         const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+        
         if (lastJournal.checkout && lastJournal.checkout.ZOR) {
           const zor = lastJournal.checkout.ZOR;
+          zorCounts[zor]++;
+        } else if (lastJournal.checkin && lastJournal.checkin.ZOR) {
+          const zor = lastJournal.checkin.ZOR;
           zorCounts[zor]++;
         }
       }
@@ -49,11 +53,13 @@ const calculateZorPercentage = (classroom) => {
     for (const zor in zorCounts) {
       percentages[zor] = Math.round((zorCounts[zor] / totalStudents) * 100);
     }
-
+    
+    console.log(percentages);
     return percentages;
   }
   return {};
 };
+
 
 module.exports={
     layout,

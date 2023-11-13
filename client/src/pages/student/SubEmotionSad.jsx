@@ -16,7 +16,7 @@ const SubEmotionSad = () => {
 
   const handleEmotionClick = (chosenEmotion) => {
     updateUserDataAccumulated({ emotion: chosenEmotion }); // Use "emotion" as the key
-    navigate("/regzone", {
+    navigate("/insight", {
       state: {
         emotion: chosenEmotion,
       },

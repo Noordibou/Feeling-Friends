@@ -25,7 +25,7 @@ function getBorderColorClass(zor) {
   return "";
 };
 
-function calculateZorPercentage(classroom) {
+const calculateZorPercentage = (classroom) => {
   if (classroom.students && classroom.students.length > 0) {
     const totalStudents = classroom.students.length;
     const zorCounts = {
@@ -45,10 +45,9 @@ function calculateZorPercentage(classroom) {
       }
     });
 
-    // Calculate the percentage for each ZOR
     const percentages = {};
     for (const zor in zorCounts) {
-      percentages[zor] = (zorCounts[zor] / totalStudents) * 100;
+      percentages[zor] = Math.round((zorCounts[zor] / totalStudents) * 100);
     }
 
     return percentages;

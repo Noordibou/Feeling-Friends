@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useDragControls } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom, updateSeatingChart } from '../../api/teachersApi';
@@ -103,6 +103,19 @@ const handleSubmit = async () => {
         // Handle any errors
     }
 };
+const handleDrag = (_, { point }) => {
+  const { x, y } = point;
+  const containerBounds = constraintsRef.current.getBoundingClientRect();
+
+  // Ensure the element stays within the constraints
+  const constrainedX = Math.min(Math.max(x, containerBounds.left), containerBounds.right);
+  const constrainedY = Math.min(Math.max(y, containerBounds.top), containerBounds.bottom);
+
+  // Update the element's position
+  // This can be done by updating state or dispatching an action, depending on your app's architecture
+};
+
+const dragControls = useDragControls()
 
     return (
         <> <div className='flex min-h-screen min-w-screen'>
@@ -118,10 +131,10 @@ const handleSubmit = async () => {
                     </div>
                 {classroom ? (
                     <>
-                        <div className="relative w-[90%] h-[50%] rounded-[1rem] border-sandwich border-[8px] mr-auto ml-auto " ref={constraintsRef}>
-                            <h4 className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
+                        <div className="flex w-[690px] h-[507px] rounded-[1rem] border-sandwich border-[3px] bg-darkTeal  " ref={constraintsRef}>
+                            {/* <h4 className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
                                 Smartboard
-                            </h4>
+                            </h4> */}
                             {/* Classroom layout here */}
 
                             {assignedStudents.map((studentObj, index) => {
@@ -130,38 +143,36 @@ const handleSubmit = async () => {
                                 
                                 const ref = constraintsRef.current;
 
-                                console.log("innerwidth: " + window.innerWidth + ", clientWidth: " + ref.clientWidth)
-                                const initialX = studentObj.seatInfo.x
-                                const initialY = studentObj.seatInfo.y 
-                                console.log("initial x: " + JSON.stringify(initialX))
-                                console.log("initialY: " + JSON.stringify(initialY))
-
-                                function clamp(value, min, max) {
-                                  return Math.min(Math.max(value, min), max);
-                                }
-
+                                const containerBounds = constraintsRef.current.getBoundingClientRect();
+                                const containerWidth = parseFloat(containerBounds.clientWidth);
+                                const containerHeight = parseFloat(containerBounds.clientHeight);
+                                const initialX = parseFloat(studentObj.seatInfo.x - 80)
+                                const initialY = studentObj.seatInfo.y - 80
+                                
                                 const assignedStudent = students.find(student => student._id === studentObj._id);
                               if(assignedStudent) {
                                 return (
                                 <motion.div
                                     dragMomentum={false}
                                     drag
+                                    dragElastic={0}
+                                    
                                     dragConstraints={constraintsRef}
                                     key={`${studentObj._id}-${index}`}
                                     initial={{ 
-                                      x: initialX - 62,
-                                      y: initialY - 62
-                                    }}
+                                      x: Math.max(0, initialX),
+                                      y: Math.max(0, initialY)
+                                   }}
                                     className={`absolute border-4 ${assignedStudent.borderColorClass} p-3 rounded-lg h-[80px] w-[80px] bg-lightYellow`}
                                     onDragEnd={(event, info) => {
                                         console.log("student: "+ studentObj._id + ", x: " + info.point.x + ", y: " + info.point.y)
                                         const containerBounds = constraintsRef.current.getBoundingClientRect();
 
-                                        // Calculate container coordinates
                                         const containerX = info.point.x - containerBounds.left;
                                         const containerY = info.point.y - containerBounds.top;
 
-                                        console.log("Dragged to x:", containerX, "y:", containerY);
+                                        console.log("Dragged to x:",containerX, "y:", containerY, ", for " + assignedStudent.firstName);
+
                                         handleDragEnd(studentObj._id, containerX, containerY);
                                     }}
                                 >
@@ -189,7 +200,12 @@ const handleSubmit = async () => {
                                             
                         if (unassignedStudent) {
                           return (
-                            <div key={`unassigned-${index}`} className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}>
+                            <div key={`unassigned-${index}`} 
+                            onClick={()=>{
+                              handleDragEnd(studentId._id, 10, 10)
+                            }}
+                            
+                            className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}>
                               {unassignedStudent.firstName}
                             </div>
                           );

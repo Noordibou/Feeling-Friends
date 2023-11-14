@@ -14,7 +14,7 @@ function getBackgroundColorClass(zor) {
   if (zor === 'Ready to Learn') return "green";
   if (zor === 'Wiggly') return "yellow";
   if (zor === 'Explosive') return "orange";
-  return "";
+  return "sandwich";
 };
 
 function getBorderColorClass(zor) {
@@ -25,7 +25,7 @@ function getBorderColorClass(zor) {
   return "";
 };
 
-function calculateZorPercentage(classroom) {
+const calculateZorPercentage = (classroom) => {
   if (classroom.students && classroom.students.length > 0) {
     const totalStudents = classroom.students.length;
     const zorCounts = {
@@ -38,23 +38,28 @@ function calculateZorPercentage(classroom) {
     classroom.students.forEach((student) => {
       if (student.journalEntries && student.journalEntries.length > 0) {
         const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+        
         if (lastJournal.checkout && lastJournal.checkout.ZOR) {
           const zor = lastJournal.checkout.ZOR;
+          zorCounts[zor]++;
+        } else if (lastJournal.checkin && lastJournal.checkin.ZOR) {
+          const zor = lastJournal.checkin.ZOR;
           zorCounts[zor]++;
         }
       }
     });
 
-    // Calculate the percentage for each ZOR
     const percentages = {};
     for (const zor in zorCounts) {
-      percentages[zor] = (zorCounts[zor] / totalStudents) * 100;
+      percentages[zor] = Math.round((zorCounts[zor] / totalStudents) * 100);
     }
-
+    
+    console.log(percentages);
     return percentages;
   }
   return {};
 };
+
 
 module.exports={
     layout,

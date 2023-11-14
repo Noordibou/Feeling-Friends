@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import TeacherHome from "./pages/TeacherHome";
 import StudentHome from "./pages/StudentHome";
 import Home from "./pages/Home";
+import Insight from "./pages/student/Insight"
 import RegZone from "./pages/student/RegZone"
 import GoalsNeeds from "./pages/student/GoalsNeeds"
 import Summary from "./pages/student/Summary"
@@ -40,14 +41,15 @@ export default function App() {
             <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
             <Route path="/edit/:teacherId" element={<EditTeacher />} />
 
-            {/* Student Routes */}
-            <Route path="/student-home" element={<StudentHome />} />
-            <Route path="/emotion" element={<SubEmotion/>} />
-            <Route path="/regzone" element={<RegZone />} />
-            <Route path="/goalsneeds" element={<GoalsNeeds />} />
-            <Route path="/summary" element={<Summary />} />
-          </Routes>
-        </UserProvider>
+        {/* Student Routes */}
+        <Route path="/student-home" element={<StudentHome />} />
+        <Route path="/emotion" element={<SubEmotion/>} />
+        <Route path="/insight" element={<Insight />} />
+        <Route path="/regzone" element={<RegZone />} />
+        <Route path="/goalsneeds" element={<GoalsNeeds />} />
+        <Route path="/summary" element={<Summary />} />
+      </Routes>
+      </UserProvider>
       </AuthProvider>
 
     </main>

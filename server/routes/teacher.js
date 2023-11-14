@@ -37,7 +37,7 @@ router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verif
 router.post('/teachers/:id/classrooms/:classroomId/students', verifyToken, verifyUser, addStudentToClassroom);
 
 //check
-router.delete('/teachers/:id/classrooms/:classroomId', verifyToken, verifyUser, deleteClassroom);
+router.delete('/teachers/:id/:classroomId', verifyToken, verifyUser, deleteClassroom);
 router.post('/teachers/:id/classrooms', verifyToken, verifyUser, createClassroom);
 
 

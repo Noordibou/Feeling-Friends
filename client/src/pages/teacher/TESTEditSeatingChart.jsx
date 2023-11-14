@@ -121,6 +121,7 @@ const dragControls = useDragControls()
         <> <div className='flex min-h-screen min-w-screen'>
                 <div className="w-full" >
                     <h1 className="text-center mt-10 text-header1">Edit Classroom Seating Chart</h1>
+                    <h3 className="text-center mt-10 text-header2">🚧 Still in progress 🚧</h3>
                     <div className="flex justify-around my-8">
                         <button className="bg-darkTeal border p-5 h-10 rounded flex items-center">Save & Exit</button>
                         <button className="bg-yellow border p-5 h-10 rounded flex items-center" onClick={handleSubmit} >Save & Keep Working</button>
@@ -131,7 +132,7 @@ const dragControls = useDragControls()
                     </div>
                 {classroom ? (
                     <>
-                        <div className="flex w-[690px] h-[507px] rounded-[1rem] border-sandwich border-[3px] bg-darkTeal  " ref={constraintsRef}>
+                        <div className="flex w-[690px] h-[507px] rounded-[1rem] mr-auto ml-auto border-sandwich border-[3px] bg-darkTeal  " ref={constraintsRef}>
                             {/* <h4 className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
                                 Smartboard
                             </h4> */}

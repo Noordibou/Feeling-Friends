@@ -331,7 +331,7 @@ const createClassroom = async (req, res) => {
         const newClassroom = {
             classSubject: req.body.classSubject,
             location: req.body.location,
-            students: [],
+            students: req.body.students,
         };
 
         teacher.classrooms.push(newClassroom);
@@ -344,6 +344,17 @@ const createClassroom = async (req, res) => {
     }
 };
 
+const getAllStudents = async (req, res) => {
+    try {
+        // Fetch all students from the database
+        const students = await Student.find();
+
+        res.json(students);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
 
 module.exports = {
     createNewTeacher,
@@ -360,6 +371,7 @@ module.exports = {
     addStudentToClassroom,
     deleteClassroom,
     createClassroom,
+    getAllStudents,
 
 };
 

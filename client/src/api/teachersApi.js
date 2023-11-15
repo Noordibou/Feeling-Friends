@@ -136,3 +136,13 @@ export const createClassroom = async (id, classroom) => {
       throw error;
     }
   }
+
+  export const getAllStudents = async () => {
+    try {
+        const response = await axios.get(URL +'/api/students', { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};

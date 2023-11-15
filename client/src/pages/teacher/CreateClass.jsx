@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from '../../context/UserContext';
-import { getTeacherById, getAllStudentsClassroom, createClassroom } from '../../api/teachersApi';
+import { getTeacherById, getAllStudentsClassroom, createClassroom, getAllStudents } from '../../api/teachersApi';
 
 const CreateClass = () => {
     const navigate = useNavigate();
@@ -12,6 +12,8 @@ const CreateClass = () => {
         location: "",
         students: [],
     });
+    const [allStudents, setAllStudents] = useState([]);
+
 
     useEffect(() => {
         const fetchTeacherData = async () => {
@@ -28,12 +30,31 @@ const CreateClass = () => {
                 console.error(error);
             }
         };
+
+        const fetchAllStudents = async () => {
+            try {
+                const allStudentsData = await getAllStudents();
+                setAllStudents(allStudentsData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
         fetchTeacherData();
+        fetchAllStudents();
     }, [userData]);
 
     const handleInputChange = (field, value) => {
         setNewClassData((prevData) => ({ ...prevData, [field]: value }));
     };
+
+    const handleAddStudent = (studentId) => {
+        if (studentId && !newClassData.students.includes(studentId)) {
+            setNewClassData((prevData) => ({ ...prevData, students: [...prevData.students, studentId] }));
+        }
+    };
+
+    const isStudentSelected = (studentId) => newClassData.students.includes(studentId);
 
     const handleCreateClassroom = async () => {
         try {
@@ -45,25 +66,14 @@ const CreateClass = () => {
 
             const newClassroom = await createClassroom(userData._id, newClassroomData);
 
-            setClassroomsData((prevData) => [
-                ...prevData,
-                { classroom: newClassroom },
-            ]);
-
-            setNewClassData({
-                classSubject: "",
-                location: "",
-                students: [],
-            });
+            setClassroomsData((prevData) => [...prevData, { classroom: newClassroom }]);
+            setNewClassData((prevData) => ({ ...prevData, students: [] }));
 
             navigate(`/teacher-home`);
-
         } catch (error) {
             console.error(error);
         }
     };
-
-    console.log(classroomsData)
 
     return (
         <div className="h-screen">
@@ -74,11 +84,40 @@ const CreateClass = () => {
             <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto ">
                 <div className="flex justify-center">
                     <div className="flex flex-col w-[60%]  text-center">
-                        <FormField label="Class Subject" value={newClassData.classSubject} onChange={(e) => handleInputChange('classSubject', e.target.value)} />
-                        <FormField label="Location" value={newClassData.location} onChange={(e) => handleInputChange('location', e.target.value)} />
-                        <FormField label="Students" value={newClassData.students} onChange={(e) => handleInputChange('students', e.target.value)} />
+                        <FormField
+                            label="Class Subject"
+                            value={newClassData?.classSubject || ""}
+                            onChange={(e) => handleInputChange('classSubject', e.target.value)}
+                        />
+                        <FormField
+                            label="Location"
+                            value={newClassData?.location || ""}
+                            onChange={(e) => handleInputChange('location', e.target.value)}
+                        />
+                        {allStudents.length > 0 && (
+                            <div className="text-center">
+                                <label >Students:</label>
+                           <ul className="columns-3">
+                    {allStudents.map(student => (
+                        <li key={student._id}>
+                            <button
+                                onClick={() => handleAddStudent(student._id)}
+                                className={`p-1 ${isStudentSelected(student._id) ? 'bg-darkSandwich rounded-lg m-2 text-white' : 'bg-white rounded-lg m-2'}`}
+                            >
+                                {student.firstName} {student.lastName}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                            </div>
+                        )}
                         <div className=" text-body flex justify-center text-center pt-[2rem]">
-                            <button className='border-4 border-darkSandwich hover:bg-darkSandwich rounded-lg px-2 ' onClick={handleCreateClassroom}>Save</button>
+                            <button
+                                className='border-4 border-darkSandwich hover:bg-darkSandwich rounded-lg px-2 '
+                                onClick={handleCreateClassroom}
+                            >
+                                Save
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -90,7 +129,7 @@ const CreateClass = () => {
 const FormField = ({ label, value, onChange }) => (
     <>
         <label>{label}:</label>
-        <input type="text" value={value} onChange={onChange} />
+        <input type="text" value={value} onChange={onChange} className="rounded-lg h-[2.2rem] p-4" />
     </>
 );
 

@@ -76,14 +76,14 @@ const CreateClass = () => {
     };
 
     return (
-        <div className="h-screen">
+        <div className="h-screen ">
             <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[4rem] ">
                 Create New Class
             </h1>
 
-            <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto ">
+            <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[80%] overflow-y-auto ">
                 <div className="flex justify-center">
-                    <div className="flex flex-col w-[60%]  text-center">
+                    <div className="flex flex-col w-[60%] gap-3 text-center">
                         <FormField
                             label="Class Subject"
                             value={newClassData?.classSubject || ""}
@@ -97,27 +97,29 @@ const CreateClass = () => {
                         {allStudents.length > 0 && (
                             <div className="text-center">
                                 <label >Students:</label>
-                           <ul className="columns-3">
-                    {allStudents.map(student => (
-                        <li key={student._id}>
-                            <button
-                                onClick={() => handleAddStudent(student._id)}
-                                className={`p-1 ${isStudentSelected(student._id) ? 'bg-darkSandwich rounded-lg m-2 text-white' : 'bg-white rounded-lg m-2'}`}
-                            >
-                                {student.firstName} {student.lastName}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                                <ul className="columns-3">
+                                    {allStudents.map(student => (
+                                        <li key={student._id}>
+                                            <button
+                                                onClick={() => handleAddStudent(student._id)}
+                                                className={`p-1 ${isStudentSelected(student._id) ? 'bg-darkSandwich rounded-lg m-2 text-white' : 'bg-white rounded-lg m-2'}`}
+                                            >
+                                                {student.firstName} {student.lastName}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         )}
-                        <div className=" text-body flex justify-center text-center pt-[2rem]">
+                        <div className=" text-sm flex justify-center text-center pt-[2rem] gap-2">
                             <button
                                 className='border-4 border-darkSandwich hover:bg-darkSandwich rounded-lg px-2 '
                                 onClick={handleCreateClassroom}
                             >
                                 Save
                             </button>
+                            <Link className='border-4 border-darkSandwich hover:bg-darkSandwich rounded-lg px-2 ' to={'/teacher-home'}>Cancel
+                            </Link>
                         </div>
                     </div>
                 </div>

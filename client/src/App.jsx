@@ -22,6 +22,7 @@ import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
 import SubEmotion from "./pages/student/SubEmotion";
 import EditTeacher from "./pages/teacher/EditTeacher";
+import CreateClass from "./pages/teacher/CreateClass";
 
 
 export default function App() {
@@ -43,6 +44,8 @@ export default function App() {
             <Route path="/editneedsgoals" element={<NeedsGoals />} />
             <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
             <Route path="/edit/:teacherId" element={<EditTeacher />} />
+            <Route path="/createclass" element={<CreateClass />} />
+
 
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />

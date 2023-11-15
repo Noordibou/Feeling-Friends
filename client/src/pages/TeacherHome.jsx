@@ -7,7 +7,7 @@ import xButton from '../images/x-button.png';
 
 const TeacherHome = () => {
   const { userData } = useUser();
-  const [studentsData, setStudentsData] = useState([]);
+  const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
 
@@ -22,7 +22,7 @@ const TeacherHome = () => {
         });
 
         const classroomsWithStudents = await Promise.all(studentsPromises);
-        setStudentsData(classroomsWithStudents);
+        setClassroomsData(classroomsWithStudents);
       } catch (error) {
         console.error(error);
       }
@@ -34,7 +34,7 @@ const TeacherHome = () => {
     try {
       await deleteClassroom(userData._id, classroomId);
       // Remove the deleted class from studentsData
-      setStudentsData(prevData => prevData.filter(item => item.classroom._id !== classroomId));
+      setClassroomsData(prevData => prevData.filter(item => item.classroom._id !== classroomId));
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +47,6 @@ const TeacherHome = () => {
   };
 
   // const generateEditLink = (classroomId) => `/edit/${userData?._id}/${classroomId}`;
-
   return (
     <>
       <div className="h-screen">
@@ -56,19 +55,19 @@ const TeacherHome = () => {
         </h1>
 
           <h2 className="text-header2 font-header2 text-center mb-[2rem]">
-            {isEditMode ? "Create New Class" : "All Classes at a Glance"}
+            {isEditMode ? <Link className="underline" to={'/createclass'}>Create New Class</Link> : "All Classes at a Glance"}
           </h2>
         <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto">
 
-          {studentsData.length > 0 ? (
-            studentsData.map(({ classroom, students, zorPercentages }, index) => {
+          {classroomsData.length > 0 ? (
+            classroomsData.map(({ classroom, students, zorPercentages }, index) => {
               let firstNonZeroIndex = 0;
               for (let i = 0; i < Object.entries(zorPercentages).length; i++) {
                 const [zor, percentage] = Object.entries(zorPercentages)[i];
                 if (percentage > 0) {
                   firstNonZeroIndex = i;
                   break;
-                }
+                }      
               }
               return (
                 <div key={index}>

@@ -13,6 +13,7 @@ const TESTEditSeatingChart = () => {
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
     const constraintsRef = useRef(null);
+
     const [assignedStudents, setAssignedStudents] = useState([]);
     const [unassignedStudents, setUnassignedStudents] = useState([]);
     const navigate = useNavigate();
@@ -97,31 +98,19 @@ const handleSubmit = async () => {
 
     try {
         await updateSeatingChart(teacherId, classroomId, updatedPositions);
-
+        console.log("Submitted :)")
         // Optionally, you can show a success message to the user
     } catch (error) {
         // Handle any errors
     }
 };
-const handleDrag = (_, { point }) => {
-  const { x, y } = point;
-  const containerBounds = constraintsRef.current.getBoundingClientRect();
 
-  // Ensure the element stays within the constraints
-  const constrainedX = Math.min(Math.max(x, containerBounds.left), containerBounds.right);
-  const constrainedY = Math.min(Math.max(y, containerBounds.top), containerBounds.bottom);
-
-  // Update the element's position
-  // This can be done by updating state or dispatching an action, depending on your app's architecture
-};
-
-const dragControls = useDragControls()
 
     return (
         <> <div className='flex min-h-screen min-w-screen'>
                 <div className="w-full" >
                     <h1 className="text-center mt-10 text-header1">Edit Classroom Seating Chart</h1>
-                    <h3 className="text-center mt-10 text-header2">🚧 Still in progress 🚧</h3>
+                    {/* <h3 className="text-center mt-10 text-header2">🚧 Still in progress 🚧</h3> */}
                     <div className="flex justify-around my-8">
                         <button className="bg-darkTeal border p-5 h-10 rounded flex items-center">Save & Exit</button>
                         <button className="bg-yellow border p-5 h-10 rounded flex items-center" onClick={handleSubmit} >Save & Keep Working</button>
@@ -149,15 +138,18 @@ const dragControls = useDragControls()
                                 const containerHeight = parseFloat(containerBounds.clientHeight);
                                 const initialX = parseFloat(studentObj.seatInfo.x - 80)
                                 const initialY = studentObj.seatInfo.y - 80
-                                
+
                                 const assignedStudent = students.find(student => student._id === studentObj._id);
                               if(assignedStudent) {
+
+                                
+
                                 return (
                                 <motion.div
                                     dragMomentum={false}
                                     drag
                                     dragElastic={0}
-                                    
+                                    dragPropagation={false}
                                     dragConstraints={constraintsRef}
                                     key={`${studentObj._id}-${index}`}
                                     initial={{ 
@@ -169,15 +161,17 @@ const dragControls = useDragControls()
                                         console.log("student: "+ studentObj._id + ", x: " + info.point.x + ", y: " + info.point.y)
                                         const containerBounds = constraintsRef.current.getBoundingClientRect();
 
-                                        const containerX = info.point.x - containerBounds.left;
-                                        const containerY = info.point.y - containerBounds.top;
+                                        const containerX = Math.max(0, info.point.x - containerBounds.left);
+                                        const containerY = Math.max(0, info.point.y - containerBounds.top)
+                                        // const containerX = Math.max(0, motionRef.x - containerBounds.left);
+                                        // const containerY = Math.max(0, motionRef.y - containerBounds.top)
 
                                         console.log("Dragged to x:",containerX, "y:", containerY, ", for " + assignedStudent.firstName);
 
                                         handleDragEnd(studentObj._id, containerX, containerY);
                                     }}
                                 >
-                                    {assignedStudent.firstName}
+                                    <h1 className="">{assignedStudent.firstName}</h1>
                                 </motion.div>
                                 )
                               } else {

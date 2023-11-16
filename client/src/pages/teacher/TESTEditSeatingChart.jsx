@@ -81,12 +81,34 @@ const TESTEditSeatingChart = () => {
         fetchData();
       }, [teacherId, classroomId]);
 
-    const handleDragEnd = (studentId, x, y) => {
-        setStudentPositions(prevPositions => ({
-            ...prevPositions,
-            [studentId]: { x, y },
-        }));
-    };
+    // const handleDragEnd = (studentId, x, y) => {
+    //     setStudentPositions(prevPositions => ({
+    //         ...prevPositions,
+    //         [studentId]: { x, y },
+    //     }));
+    // };
+
+    const handleDragEnd = (studentId, x, y) => {  
+      const motionDiv = document.getElementById(`motion-div-${studentId}`);
+      if (motionDiv) {
+          const coords = motionDiv.style.transform.match(
+              /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
+          );
+  
+          if (coords?.length) {
+            console.log("Coords: " + JSON.stringify(coords));
+
+            // Update studentPositions directly
+            setStudentPositions(prevPositions => ({
+                ...prevPositions,
+                [studentId]: {
+                    x: parseInt(coords[1], 10),
+                    y: parseInt(coords[2], 10),
+                },
+            }));
+        }
+      }
+  };
 
     
 const handleSubmit = async () => {
@@ -110,7 +132,7 @@ const handleSubmit = async () => {
         <> <div className='flex min-h-screen min-w-screen'>
                 <div className="w-full" >
                     <h1 className="text-center mt-10 text-header1">Edit Classroom Seating Chart</h1>
-                    {/* <h3 className="text-center mt-10 text-header2">🚧 Still in progress 🚧</h3> */}
+                    <h3 className="text-center mt-10 text-header2">🚧 Still in progress 🚧</h3>
                     <div className="flex justify-around my-8">
                         <button className="bg-darkTeal border p-5 h-10 rounded flex items-center">Save & Exit</button>
                         <button className="bg-yellow border p-5 h-10 rounded flex items-center" onClick={handleSubmit} >Save & Keep Working</button>
@@ -122,9 +144,9 @@ const handleSubmit = async () => {
                 {classroom ? (
                     <>
                         <div className="flex w-[690px] h-[507px] rounded-[1rem] mr-auto ml-auto border-sandwich border-[3px] bg-darkTeal  " ref={constraintsRef}>
-                            {/* <h4 className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
+                            <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
                                 Smartboard
-                            </h4> */}
+                            </h4>
                             {/* Classroom layout here */}
 
                             {assignedStudents.map((studentObj, index) => {
@@ -136,8 +158,8 @@ const handleSubmit = async () => {
                                 const containerBounds = constraintsRef.current.getBoundingClientRect();
                                 const containerWidth = parseFloat(containerBounds.clientWidth);
                                 const containerHeight = parseFloat(containerBounds.clientHeight);
-                                const initialX = parseFloat(studentObj.seatInfo.x - 80)
-                                const initialY = studentObj.seatInfo.y - 80
+                                const initialX = parseFloat(studentObj.seatInfo.x)
+                                const initialY = studentObj.seatInfo.y
 
                                 const assignedStudent = students.find(student => student._id === studentObj._id);
                               if(assignedStudent) {
@@ -146,6 +168,7 @@ const handleSubmit = async () => {
 
                                 return (
                                 <motion.div
+                                    id={`motion-div-${studentObj._id}`}
                                     dragMomentum={false}
                                     drag
                                     dragElastic={0}
@@ -161,10 +184,10 @@ const handleSubmit = async () => {
                                         console.log("student: "+ studentObj._id + ", x: " + info.point.x + ", y: " + info.point.y)
                                         const containerBounds = constraintsRef.current.getBoundingClientRect();
 
-                                        const containerX = Math.max(0, info.point.x - containerBounds.left);
-                                        const containerY = Math.max(0, info.point.y - containerBounds.top)
+                                        const containerX = Math.max(0, info.point.x - containerBounds.left)-40;
+                                        const containerY = Math.max(0, info.point.y - containerBounds.top)-40
                                         // const containerX = Math.max(0, motionRef.x - containerBounds.left);
-                                        // const containerY = Math.max(0, motionRef.y - containerBounds.top)
+                                        // const containerY = Math.max(0, motionRef.y - containerBounds.top
 
                                         console.log("Dragged to x:",containerX, "y:", containerY, ", for " + assignedStudent.firstName);
 

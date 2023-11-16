@@ -291,28 +291,34 @@ const addStudentToClassroom = async (req, res) => {
     }
 };
  
-
 const deleteClassroom = async (req, res) => {
     try {
-        const teacher = await Teacher.findById(req.params.id);
-
-        if (!teacher) {
-            return res.status(404).json({ error: 'Teacher not found' });
-        }
-
-        const classroomId = req.params.classroomId;
-
-        // Find the classroom by its ID and remove it from the teacher's classrooms array
-        teacher.classrooms.pull({ _id: classroomId });
-
-        await teacher.save();
-
-        res.json({ message: 'Classroom deleted' });
+      const teacher = await Teacher.findById(req.params.id);
+  
+      if (!teacher) {
+        return res.status(404).json({ error: 'Teacher not found' });
+      }
+  
+      const classroomId = req.params.classroomId;
+  
+      // Find the index of the classroom with the specified ID
+      const classroomIndex = teacher.classrooms.findIndex(c => c._id.toString() === classroomId);
+  
+      if (classroomIndex === -1) {
+        return res.status(404).json({ error: 'Classroom not found' });
+      }
+  
+      // Remove the classroom at the found index
+      teacher.classrooms.splice(classroomIndex, 1);
+  
+      await teacher.save();
+  
+      res.json({ message: 'Classroom deleted' });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Server error' });
+      console.error(err);
+      res.status(500).json({ error: 'Server error' });
     }
-};
+  };
 
 const createClassroom = async (req, res) => {
     try {
@@ -325,7 +331,7 @@ const createClassroom = async (req, res) => {
         const newClassroom = {
             classSubject: req.body.classSubject,
             location: req.body.location,
-            students: [],
+            students: req.body.students,
         };
 
         teacher.classrooms.push(newClassroom);
@@ -338,6 +344,17 @@ const createClassroom = async (req, res) => {
     }
 };
 
+const getAllStudents = async (req, res) => {
+    try {
+        // Fetch all students from the database
+        const students = await Student.find();
+
+        res.json(students);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
 
 // updating the student seating chart with x y coords and assigned or unassigned.
 const updateStudentSeats = async (req, res) => {
@@ -400,6 +417,8 @@ module.exports = {
     deleteClassroom,
     createClassroom,
     updateStudentSeats,
+    getAllStudents,
+
 };
 
 

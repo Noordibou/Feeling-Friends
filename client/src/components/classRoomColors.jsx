@@ -51,14 +51,17 @@ const calculateZorPercentage = (classroom) => {
 
     const percentages = {};
     for (const zor in zorCounts) {
-      percentages[zor] = Math.round((zorCounts[zor] / totalStudents) * 100);
+      const percentage = Math.round((zorCounts[zor] / totalStudents) * 100);
+      if (zorCounts[zor] !== 0) {
+        percentages[zor] = percentage;
+      }
     }
     
-    console.log(percentages);
     return percentages;
   }
   return {};
 };
+
 
 
 module.exports={

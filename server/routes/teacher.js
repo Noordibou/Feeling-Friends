@@ -15,7 +15,8 @@ const {
     addStudentToClassroom,
     deleteClassroom,
     createClassroom,
-    updateStudentSeats
+    updateStudentSeats,
+    getAllStudents,
 } = require('../controllers/teacherController.js');
 
 // probably won't use, use the signup instead
@@ -37,6 +38,7 @@ router.put("/teachers/:id/classrooms/:classroomId/students/:studentId", verifyTo
 
 // router.get('/teachers/:id/students', getAllStudentsForTeacher);
 router.get('/teachers/:id/classrooms/:classroomId', getClassBySubject);
+router.get('/students', getAllStudents);
 
 // ================================================== //
 //check
@@ -44,8 +46,9 @@ router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verif
 router.post('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);
 
 //check
-router.delete('/teachers/:id/classrooms/:classroomId', verifyToken, verifyUser, deleteClassroom);
-router.post('/teachers/:id/classrooms', createClassroom);
+router.delete('/teachers/:id/:classroomId', verifyToken, verifyUser, deleteClassroom);
+router.post('/teachers/:id/classrooms', verifyToken, verifyUser, createClassroom);
+
 
 router.put('/teachers/:id/classrooms', createClassroom);
 

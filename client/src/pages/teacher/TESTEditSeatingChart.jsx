@@ -24,70 +24,73 @@ const TESTEditSeatingChart = () => {
 
   const [studentPositions, setStudentPositions] = useState({});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const classroom = userData.classrooms.find(
-          (c) => c._id === classroomId
-        );
-        setClassroom(classroom);
-        const classroomStudents = await getAllStudentsClassroom(
-          teacherId,
-          classroomId
-        );
+  const fetchData = async () => {
+    try {
+      const classroom = userData.classrooms.find(
+        (c) => c._id === classroomId
+      );
+      setClassroom(classroom);
+      const classroomStudents = await getAllStudentsClassroom(
+        teacherId,
+        classroomId
+      );
 
-        // Calculate the border color for each student
-        const studentsWithBorderColor = classroomStudents.map((student) => {
-          const lastJournal =
-            student.journalEntries[student.journalEntries.length - 1];
-          if (lastJournal) {
-            const lastCheckin = lastJournal.checkin;
-            const lastCheckout = lastJournal.checkout;
-            if (lastCheckout && lastCheckout.ZOR) {
-              const zor = lastCheckout.ZOR;
-              student.borderColorClass = getBorderColorClass(zor);
-            } else if (lastCheckin && lastCheckin.ZOR) {
-              const zor = lastCheckin.ZOR;
-              student.borderColorClass = getBorderColorClass(zor);
-            } else {
-              student.borderColorClass = "border-graphite";
-            }
+      // Calculate the border color for each student
+      const studentsWithBorderColor = classroomStudents.map((student) => {
+        const lastJournal =
+          student.journalEntries[student.journalEntries.length - 1];
+        if (lastJournal) {
+          const lastCheckin = lastJournal.checkin;
+          const lastCheckout = lastJournal.checkout;
+          if (lastCheckout && lastCheckout.ZOR) {
+            const zor = lastCheckout.ZOR;
+            student.borderColorClass = getBorderColorClass(zor);
+          } else if (lastCheckin && lastCheckin.ZOR) {
+            const zor = lastCheckin.ZOR;
+            student.borderColorClass = getBorderColorClass(zor);
           } else {
             student.borderColorClass = "border-graphite";
           }
+        } else {
+          student.borderColorClass = "border-graphite";
+        }
 
-          return student;
-        });
+        return student;
+      });
 
-        setStudents(studentsWithBorderColor);
-        const positions = {};
-        classroom.students.forEach((student) => {
-          console.log("student in class: ", JSON.stringify(student));
-          positions[student._id] = {
-            x: student.seatInfo.x || null,
-            y: student.seatInfo.y || null,
-          };
-        });
+      setStudents(studentsWithBorderColor);
+      const positions = {};
+      classroom.students.forEach((student) => {
+        console.log("student in class: ", JSON.stringify(student));
+        positions[student._id] = {
+          x: student.seatInfo.x || null,
+          y: student.seatInfo.y || null,
+        };
+      });
 
-        setStudentPositions(positions);
+      setStudentPositions(positions);
 
-        const unassigned = classroom.students.filter(
-          (student) =>
-            student.seatInfo.x === null || student.seatInfo.y === null
-        );
-        setUnassignedStudents(unassigned);
+      // organizing all unassigned seats to an array
+      const unassigned = classroom.students.filter(
+        (student) =>
+          student.seatInfo.x === null || student.seatInfo.y === null
+      );
+      setUnassignedStudents(unassigned);
 
-        const assigned = classroom.students.filter(
-          (student) =>
-            student.seatInfo.x !== null && student.seatInfo.y !== null
-        );
-        setAssignedStudents(assigned);
-      } catch (error) {
-        console.log("oof error ");
-        console.log(error);
-      }
-    };
+        // organizing all assigned seats to an array
+      const assigned = classroom.students.filter(
+        (student) =>
+          student.seatInfo.x !== null && student.seatInfo.y !== null
+      );
+      setAssignedStudents(assigned);
+    } catch (error) {
+      console.log("oof error ");
+      console.log(error);
+    }
+  };
 
+
+  useEffect(() => {
     fetchData();
   }, [teacherId, classroomId]);
 
@@ -124,6 +127,7 @@ const TESTEditSeatingChart = () => {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       console.log("Submitted :)");
       // Optionally, you can show a success message to the user
+      updateUser({ classrooms: [{ _id: classroomId, students: updatedPositions }] });
     } catch (error) {
       // Handle any errors
     }
@@ -163,10 +167,10 @@ const TESTEditSeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[690px] h-[507px] rounded-[1rem] mr-auto ml-auto border-sandwich border-[3px] bg-darkTeal  "
+                className="flex w-[690px] h-[507px] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
                 ref={constraintsRef}
               >
-                <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich text-notebookPaper font-body text-body rounded-[1rem] text-center w-96">
+                <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich font-body text-body rounded-[1rem] text-center w-96">
                   Smartboard
                 </h4>
                 {/* Classroom layout here */}

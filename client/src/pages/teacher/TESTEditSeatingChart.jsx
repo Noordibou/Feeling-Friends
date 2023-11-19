@@ -87,7 +87,7 @@ const TESTEditSeatingChart = () => {
 
   useEffect(() => {
     fetchData();
-  }, [teacherId, classroomId]);
+  }, [teacherId, classroomId, userData]);
 
   const handleDragEnd = (studentId, x, y) => {
     const motionDiv = document.getElementById(`motion-div-${studentId}`);

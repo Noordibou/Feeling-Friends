@@ -43,7 +43,7 @@ router.get('/students', getAllStudents);
 // ================================================== //
 //check
 router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verifyToken, verifyUser, deleteStudentInClassroom);
-router.post('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);
+router.put('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);
 
 //check
 router.delete('/teachers/:id/:classroomId', deleteClassroom);

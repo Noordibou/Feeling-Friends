@@ -26,9 +26,7 @@ const TESTEditSeatingChart = () => {
 
   const fetchData = async () => {
     try {
-      const classroom = userData.classrooms.find(
-        (c) => c._id === classroomId
-      );
+      const classroom = userData.classrooms.find((c) => c._id === classroomId);
       setClassroom(classroom);
       const classroomStudents = await getAllStudentsClassroom(
         teacherId,
@@ -72,15 +70,13 @@ const TESTEditSeatingChart = () => {
 
       // organizing all unassigned seats to an array
       const unassigned = classroom.students.filter(
-        (student) =>
-          student.seatInfo.x === null || student.seatInfo.y === null
+        (student) => student.seatInfo.x === null || student.seatInfo.y === null
       );
       setUnassignedStudents(unassigned);
 
-        // organizing all assigned seats to an array
+      // organizing all assigned seats to an array
       const assigned = classroom.students.filter(
-        (student) =>
-          student.seatInfo.x !== null && student.seatInfo.y !== null
+        (student) => student.seatInfo.x !== null && student.seatInfo.y !== null
       );
       setAssignedStudents(assigned);
     } catch (error) {
@@ -88,7 +84,6 @@ const TESTEditSeatingChart = () => {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     fetchData();
@@ -127,7 +122,9 @@ const TESTEditSeatingChart = () => {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       console.log("Submitted :)");
       // Optionally, you can show a success message to the user
-      updateUser({ classrooms: [{ _id: classroomId, students: updatedPositions }] });
+      updateUser({
+        classrooms: [{ _id: classroomId, students: updatedPositions }],
+      });
     } catch (error) {
       // Handle any errors
     }

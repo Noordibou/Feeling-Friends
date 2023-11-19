@@ -153,6 +153,32 @@ const deleteStudent = async (req, res) => {
     }
 }
 
+// Controller function to update a student's seat information
+exports.updateStudentSeatInfo = async (req, res) => {
+  try {
+    // Retrieve the student by ID
+    const studentId = req.params.studentId;
+    const student = await Student.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    // Update the seat information
+    student.seatInfo = req.body.seatInfo;
+
+    // Save the changes
+    await student.save();
+
+    res.json({ message: 'Student seat information updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
 
 module.exports = {
     createNewStudent,

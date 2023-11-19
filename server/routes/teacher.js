@@ -15,6 +15,7 @@ const {
     addStudentToClassroom,
     deleteClassroom,
     createClassroom,
+    updateStudentSeats,
     getAllStudents,
 } = require('../controllers/teacherController.js');
 
@@ -27,6 +28,12 @@ router.delete('/teachers/:id', deleteTeacher);
 
 router.get('/teachers/:id/classrooms/:classroomId/students', getStudentsInClassroom);
 router.get('/teachers/:id/classrooms/:classroomId/students/:studentId', getStudentProfileForTeacher);
+router.put(
+    '/teachers/:teacherId/classrooms/:classroomId/updateSeatingChart',
+    // verifyToken,
+    // verifyUser,
+    updateStudentSeats
+  );
 router.put("/teachers/:id/classrooms/:classroomId/students/:studentId", verifyToken, verifyUser, editStudentInformation);
 
 // router.get('/teachers/:id/students', getAllStudentsForTeacher);
@@ -36,12 +43,13 @@ router.get('/students', getAllStudents);
 // ================================================== //
 //check
 router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verifyToken, verifyUser, deleteStudentInClassroom);
-router.post('/teachers/:id/classrooms/:classroomId/students', verifyToken, verifyUser, addStudentToClassroom);
+router.post('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);
 
 //check
 router.delete('/teachers/:id/:classroomId', verifyToken, verifyUser, deleteClassroom);
 router.post('/teachers/:id/classrooms', verifyToken, verifyUser, createClassroom);
 
 
+router.put('/teachers/:id/classrooms', createClassroom);
 
 module.exports = router;

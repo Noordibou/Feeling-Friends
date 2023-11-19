@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { getTeacherClassroom, getAllStudentsClassroom } from '../../api/teachersApi';
+import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom } from '../../api/teachersApi';
 import { getBackgroundColorClass } from '../../components/classRoomColors';
+import xButton from '../../images/x-button.png';
 
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();
@@ -11,6 +12,7 @@ export default function ViewClassList() {
     const [students, setStudents] = useState([]);
     const [sortCriteria, setSortCriteria] = useState('zor');
     const [sortDirection, setSortDirection] = useState('asc');
+    const [isEditMode, setIsEditMode] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +28,16 @@ export default function ViewClassList() {
 
         fetchData();
     }, [teacherId, classroomId]);
+
+    const handleDeleteStudent = async (studentId) => {
+        try {
+            await deleteStudentFromClassroom(teacherId, classroomId, studentId);
+            setStudents((prevData) => prevData.filter((item) => item._id !== studentId));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     const toggleSortDirection = () => {
         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -120,8 +132,19 @@ export default function ViewClassList() {
                                                 return (
                                                     <li key={`${student.id}-${index}`}>
                                                         <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
-                                                            <div className='pb-2'>
-                                                                {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                            <div className='pb-2 flex justify-between'>
+                                                                <div>
+                                                                    {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                                </div>
+                                                                {isEditMode && (
+                                                                    <div className='-mt-8 -mx-8'>
+                                                                        <div>
+                                                                            <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                                <img src={xButton} alt="xButton" />
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
                                                                 Goals: {lastCheckout.goal}
@@ -141,8 +164,19 @@ export default function ViewClassList() {
                                                 return (
                                                     <li key={`${student.id}-${index}`}>
                                                         <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
-                                                            <div>
-                                                                {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                            <div className='flex justify-between'>
+                                                                <div>
+                                                                    {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                                </div>
+                                                                {isEditMode && (
+                                                                    <div className='-mt-8 -mx-8'>
+                                                                        <div>
+                                                                            <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                                <img src={xButton} alt="xButton" />
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
                                                                 Goals: {lastCheckin.goal}
@@ -160,10 +194,23 @@ export default function ViewClassList() {
                                         return (
                                             <li key={`${student.id}-${index}`}>
                                                 <div className={`bg-white p-4 my-3 rounded-lg flex justify-between`}>
+                                                   <div className=''>
                                                     {student.firstName} {student.lastName} didn't check in or out yet!
+                                                    
 
+                                                   </div>
+                                                   <div className='flex justify-end'>
+                                                    {isEditMode && (
+                                                        <div className='-mt-10 -mx-24'>
+                                                            <div>
+                                                                <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                    <img src={xButton} alt="xButton" />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                     <Link to={`/${userData._id}/${classroomId}/${student._id}`} className='mr-4 underline'>More &gt;</Link>
-
+                                                    </div>
                                                 </div>
                                             </li>
                                         );
@@ -183,7 +230,11 @@ export default function ViewClassList() {
                             </div>
                             <div className="flex justify-between text-body font-body">
                                 <div><a href="/editneedsgoals">Set class goals and needs</a></div>
-                                <div><a href="/">Edit roster</a></div>
+                                <div>
+                                    <button onClick={() => setIsEditMode(!isEditMode)}>
+                                        {isEditMode ? 'Save Changes' : 'Edit Students'}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </>

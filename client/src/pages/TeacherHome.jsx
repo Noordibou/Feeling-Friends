@@ -64,7 +64,7 @@ const TeacherHome = () => {
                 <div className="flex justify-between">
                   <h2 className="text-header2 font-header2 text-left">{classroom.classSubject}</h2>
                   {isEditMode && (
-                    <button onClick={() => handleDeleteClassroom(classroom._id)}>
+                    <button className="-mb-5" onClick={() => handleDeleteClassroom(classroom._id)}>
                       {selectedClassroom === userData._id && <img src={xButton} alt="xButton" />}
                     </button>
                   )}

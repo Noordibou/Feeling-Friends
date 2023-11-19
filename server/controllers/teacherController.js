@@ -145,10 +145,11 @@ const getStudentProfileForTeacher = async (req, res) => {
 
         const studentId = req.params.studentId; 
 
-        if (!classroom.students.includes(studentId)) {
+        const studentInClassroom = classroom.students.find(studentObj => studentObj && studentObj._id && studentObj._id.equals(studentId));
+
+        if (!studentInClassroom) {
             return res.status(404).json({ error: 'Student not found in the classroom' });
         }
-
        
         const studentData = await Student.findById(studentId);
 

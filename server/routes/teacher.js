@@ -46,10 +46,7 @@ router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verif
 router.post('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);
 
 //check
-router.delete('/teachers/:id/:classroomId', verifyToken, verifyUser, deleteClassroom);
-router.post('/teachers/:id/classrooms', verifyToken, verifyUser, createClassroom);
-
-
-router.put('/teachers/:id/classrooms', createClassroom);
+router.delete('/teachers/:id/:classroomId', deleteClassroom);
+router.post('/teachers/:id/classrooms', createClassroom);
 
 module.exports = router;

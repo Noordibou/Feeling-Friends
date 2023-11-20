@@ -188,12 +188,12 @@ const TESTEditSeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[690px] h-[507px] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
+                className="flex w-[690px] h-[60%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
                 ref={constraintsRef}
               >
-                <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich font-body text-body rounded-[1rem] text-center w-96">
+                {/* <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich font-body text-body rounded-[1rem] text-center w-96">
                   Smartboard
-                </h4>
+                </h4> */}
                 {/* Classroom layout here */}
 
                 {assignedStudents.map((studentObj, index) => {
@@ -246,33 +246,33 @@ const TESTEditSeatingChart = () => {
                     return null;
                   }
                 })}
-                <div className="absolute bottom-60 w-[680px] flex-col">
-            <h2 className="py-3 text-header2">Unassigned Students</h2>
-            <div className="flex-wrap flex flex-row bg-lightBlue p-5 rounded">
-              {unassignedStudents.map((studentId, index) => {
-                const unassignedStudent = students.find(
-                  (student) => student._id === studentId._id
-                );
+                  <div className="flex self-end w-[680px] bg-lightBlue flex-col">
+                    <h2 className="py-3 text-header2">Unassigned Students</h2>
+                    <div className="flex-wrap flex flex-row  p-5 rounded">
+                      {unassignedStudents.map((studentId, index) => {
+                        const unassignedStudent = students.find(
+                          (student) => student._id === studentId._id
+                        );
 
-                if (unassignedStudent) {
-                  return (
-                    <div
-                      id={`motion-div-${studentId._id}`}
-                      key={`unassigned-${index}`}
-                      onClick={() => {
-                        handleDivClick(studentId._id);
-                      }}
-                      className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}
-                    >
-                      {unassignedStudent.firstName}
+                        if (unassignedStudent) {
+                          return (
+                            <div
+                              id={`motion-div-${studentId._id}`}
+                              key={`unassigned-${index}`}
+                              onClick={() => {
+                                handleDivClick(studentId._id);
+                              }}
+                              className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}
+                            >
+                              {unassignedStudent.firstName}
+                            </div>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
                     </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </div>
-          </div>
+                </div>
               </div>
               
             </>

@@ -346,6 +346,7 @@ const deleteClassroom = async (req, res) => {
   }
 };
 
+//FIXME: reset after successfully added classroom
 const createClassroom = async (req, res) => {
   try {
     const teacher = await Teacher.findById(req.params.id);
@@ -357,6 +358,7 @@ const createClassroom = async (req, res) => {
     const newClassroom = {
       classSubject: req.body.classSubject,
       location: req.body.location,
+      furniture: req.body.furniture,
       students: req.body.students,
     };
 

@@ -59,6 +59,7 @@ export const UserProvider = ({ children }) => {
   // Function to update user data
   const updateUser = (newData) => {
     if (newData && newData._id) {
+      console.log("new data and id yesss")
       setUserData((prevData) => ({ ...prevData, ...newData }));
       updateTeacher(newData._id, newData)
         .then(() => {

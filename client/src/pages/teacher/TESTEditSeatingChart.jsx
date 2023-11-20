@@ -7,6 +7,7 @@ import {
   getTeacherClassroom,
   getAllStudentsClassroom,
   updateSeatingChart,
+  getTeacherById
 } from "../../api/teachersApi";
 import { getBorderColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
@@ -87,18 +88,20 @@ const TESTEditSeatingChart = () => {
 
   useEffect(() => {
     fetchData();
+    console.log(JSON.stringify(localStorage))
   }, [teacherId, classroomId, userData]);
 
   const handleDragEnd = (studentId, x, y) => {
+    console.log("ohh hey first hit")
     const motionDiv = document.getElementById(`motion-div-${studentId}`);
     if (motionDiv) {
       const coords = motionDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
-
+      console.log("ohh hey second hit")
       if (coords?.length) {
         console.log("Coords: " + JSON.stringify(coords));
-
+        console.log("nice it seems to be fine here")
         // Update studentPositions directly
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
@@ -107,9 +110,28 @@ const TESTEditSeatingChart = () => {
             y: parseInt(coords[2], 10),
           },
         }));
+      } else {
+        console.log("well poop")
       }
     }
   };
+
+
+  // --------- temporary ---------- //
+  const handleDivClick = (studentId) => {
+    setStudentPositions((prevPositions) => {
+      // Find the clicked student in the positions state
+      const updatedPositions = { ...prevPositions };
+  
+      if (studentId in updatedPositions && updatedPositions[studentId].x === null && updatedPositions[studentId].y === null) {
+        // Hardcode the coordinates when x and y are null
+        updatedPositions[studentId] = { x: 100, y: 100 }; // Change these values accordingly
+      }
+  
+      return updatedPositions;
+    });
+  };
+  // ----------------------------- //
 
   const handleSubmit = async () => {
     const updatedPositions = students.map((student) => ({
@@ -122,9 +144,13 @@ const TESTEditSeatingChart = () => {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       console.log("Submitted :)");
       // Optionally, you can show a success message to the user
-      updateUser({
-        classrooms: [{ _id: classroomId, students: updatedPositions }],
-      });
+      // updateUser({
+      //   classrooms: [{ _id: classroomId, students: updatedPositions }],
+      // });
+
+      const updatedUserData = await getTeacherById(teacherId);
+    updateUser(updatedUserData);
+      
     } catch (error) {
       // Handle any errors
     }
@@ -234,14 +260,7 @@ const TESTEditSeatingChart = () => {
                     return null;
                   }
                 })}
-              </div>
-            </>
-          ) : (
-            "Loading..."
-          )}
-          {/* Unassigned Students */}
-
-          <div className=" w-90 m-10 flex-col">
+                <div className="absolute bottom-60 w-[680px] flex-col">
             <h2 className="py-3 text-header2">Unassigned Students</h2>
             <div className="flex-wrap flex flex-row bg-lightBlue p-5 rounded">
               {unassignedStudents.map((studentId, index) => {
@@ -252,9 +271,10 @@ const TESTEditSeatingChart = () => {
                 if (unassignedStudent) {
                   return (
                     <div
+                      id={`motion-div-${studentId._id}`}
                       key={`unassigned-${index}`}
                       onClick={() => {
-                        handleDragEnd(studentId._id, 10, 10);
+                        handleDivClick(studentId._id);
                       }}
                       className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}
                     >
@@ -267,6 +287,14 @@ const TESTEditSeatingChart = () => {
               })}
             </div>
           </div>
+              </div>
+              
+            </>
+          ) : (
+            "Loading..."
+          )}
+          {/* Unassigned Students */}
+
         </div>
       </div>
     </>

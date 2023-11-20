@@ -85,21 +85,32 @@ const TESTEditSeatingChart = () => {
     }
   };
 
+  const unassignAll = () => {
+    // Reset assigned and unassigned students
+    setUnassignedStudents(classroom.students.map((student) => student._id));
+    setAssignedStudents([]);
+
+    // Reset coordinates to null in studentPositions
+    const nullPositions = {};
+    classroom.students.forEach((student) => {
+      nullPositions[student._id] = { x: null, y: null };
+    });
+    setStudentPositions(nullPositions);
+  };
+
+
   useEffect(() => {
     fetchData();
   }, [teacherId, classroomId, userData]);
 
   const handleDragEnd = (studentId, x, y) => {
-    console.log("ohh hey first hit")
     const motionDiv = document.getElementById(`motion-div-${studentId}`);
     if (motionDiv) {
       const coords = motionDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
-      console.log("ohh hey second hit")
       if (coords?.length) {
         console.log("Coords: " + JSON.stringify(coords));
-        console.log("nice it seems to be fine here")
         // Update studentPositions directly
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
@@ -108,6 +119,35 @@ const TESTEditSeatingChart = () => {
             y: parseInt(coords[2], 10),
           },
         }));
+
+
+        // Check if the dragged element is in the unassigned section
+      const unassignedSection = document.getElementById("unassigned-section");
+      console.log("unassignedSection check: ", unassignedSection.offsetTop - (unassignedSection.offsetHeight*1.85))
+      console.log("y: " + y)
+      
+      if (
+        unassignedSection &&
+        y <= unassignedSection.offsetTop &&
+        y >= unassignedSection.offsetTop - (unassignedSection.offsetHeight * 1.5)
+      ) {
+        // Move the student to the unassigned array
+        setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
+
+        // Remove the student from the assigned array
+        setAssignedStudents((prevAssigned) =>
+          prevAssigned.filter((assignedId) => assignedId !== studentId)
+        );
+
+        // Set the coordinates to null in studentPositions
+        setStudentPositions((prevPositions) => ({
+          ...prevPositions,
+          [studentId]: { x: null, y: null },
+        }));
+
+      }
+
+
       } else {
         console.log("well poop")
       }
@@ -158,24 +198,18 @@ const TESTEditSeatingChart = () => {
     <>
       {" "}
       <div className="flex min-h-screen min-w-screen">
-        <div className="w-full">
+        <div className="flex flex-col w-full items-center">
           <h1 className="text-center mt-10 text-header1">
             Edit Classroom Seating Chart
           </h1>
-          <h3 className="text-center mt-10 text-header2">
-            🚧 Still in progress 🚧
-          </h3>
-          <div className="flex justify-around my-8">
-            <button className="bg-darkTeal border p-5 h-10 rounded flex items-center">
-              Save & Exit
-            </button>
+          <div className="flex w-full justify-around my-8 max-w-3xl">
             <button
               className="bg-yellow border p-5 h-10 rounded flex items-center"
               onClick={handleSubmit}
             >
-              Save & Keep Working
+              Save
             </button>
-            <button className="bg-orange border p-5 h-10 rounded flex items-center">
+            <button className="bg-orange border p-5 h-10 rounded flex items-center" onClick={unassignAll}>
               Unassign All
             </button>
             <a
@@ -188,7 +222,7 @@ const TESTEditSeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[690px] h-[60%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
+                className="flex w-[690px] h-[65%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
                 ref={constraintsRef}
               >
                 {/* <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich font-body text-body rounded-[1rem] text-center w-96">
@@ -217,7 +251,7 @@ const TESTEditSeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute border-4 ${assignedStudent.borderColorClass} p-3 rounded-lg h-[80px] w-[80px] bg-lightYellow`}
+                        className={`absolute border-4 ${assignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px] `}
                         onDragEnd={(event, info) => {
                           const containerBounds =
                             constraintsRef.current.getBoundingClientRect();
@@ -239,16 +273,16 @@ const TESTEditSeatingChart = () => {
                           handleDragEnd(studentObj._id, containerX, containerY);
                         }}
                       >
-                        <h1 className="">{assignedStudent.firstName}</h1>
+                        <h1 className="flex h-full text-center flex-col-reverse bg-lightLavender"><span className="bg-white">{assignedStudent.firstName}</span></h1>
                       </motion.div>
                     );
                   } else {
                     return null;
                   }
                 })}
-                  <div className="flex self-end w-[680px] bg-lightBlue flex-col">
-                    <h2 className="py-3 text-header2">Unassigned Students</h2>
-                    <div className="flex-wrap flex flex-row  p-5 rounded">
+                  <div id="unassigned-section" className="flex self-end h-[150px] w-[680px] bg-lightBlue flex-col">
+                    <h2 className="pt-3 pl-3 text-header2">Unassigned Students</h2>
+                    <div className="flex-wrap flex flex-row  p-2 rounded">
                       {unassignedStudents.map((studentId, index) => {
                         const unassignedStudent = students.find(
                           (student) => student._id === studentId._id
@@ -262,9 +296,9 @@ const TESTEditSeatingChart = () => {
                               onClick={() => {
                                 handleDivClick(studentId._id);
                               }}
-                              className={`p-2 border-2 ${unassignedStudent.borderColorClass}`}
+                              className={`mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
                             >
-                              {unassignedStudent.firstName}
+                              <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow"><span className="bg-white">{unassignedStudent.firstName}</span></h1>
                             </div>
                           );
                         } else {

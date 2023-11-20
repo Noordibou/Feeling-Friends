@@ -58,8 +58,6 @@ export const UserProvider = ({ children }) => {
 
   // Function to update user data
   const updateUser = (newData) => {
-    console.log("hello???")
-    console.log("newData: " + JSON.stringify(newData))
     if (newData && newData._id) {
       console.log("new data and id yesss")
       setUserData((prevData) => ({ ...prevData, ...newData }));
@@ -67,13 +65,10 @@ export const UserProvider = ({ children }) => {
         .then(() => {
           console.log('Teacher data updated successfully.');
           localStorage.setItem('userData', JSON.stringify({ ...userData, ...newData }));
-          console.log("after local storage hmmm")
         })
         .catch((error) => {
           console.error('Error updating teacher data:', error);
         });
-    }else {
-      console.log("well poop :( not being updated to local storage..")
     }
   };
 

@@ -60,7 +60,6 @@ const TESTEditSeatingChart = () => {
       setStudents(studentsWithBorderColor);
       const positions = {};
       classroom.students.forEach((student) => {
-        console.log("student in class: ", JSON.stringify(student));
         positions[student._id] = {
           x: student.seatInfo.x || null,
           y: student.seatInfo.y || null,
@@ -88,7 +87,6 @@ const TESTEditSeatingChart = () => {
 
   useEffect(() => {
     fetchData();
-    console.log(JSON.stringify(localStorage))
   }, [teacherId, classroomId, userData]);
 
   const handleDragEnd = (studentId, x, y) => {
@@ -199,10 +197,6 @@ const TESTEditSeatingChart = () => {
                 {/* Classroom layout here */}
 
                 {assignedStudents.map((studentObj, index) => {
-                  console.log(
-                    "assigned studentObj: " + JSON.stringify(studentObj)
-                  );
-
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
 
@@ -225,14 +219,6 @@ const TESTEditSeatingChart = () => {
                         }}
                         className={`absolute border-4 ${assignedStudent.borderColorClass} p-3 rounded-lg h-[80px] w-[80px] bg-lightYellow`}
                         onDragEnd={(event, info) => {
-                          console.log(
-                            "student: " +
-                              studentObj._id +
-                              ", x: " +
-                              info.point.x +
-                              ", y: " +
-                              info.point.y
-                          );
                           const containerBounds =
                             constraintsRef.current.getBoundingClientRect();
 

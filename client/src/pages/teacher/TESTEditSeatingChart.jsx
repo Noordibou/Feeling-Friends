@@ -104,55 +104,57 @@ const TESTEditSeatingChart = () => {
     fetchData();
 
 
-    const storedPositions = JSON.parse(localStorage.getItem("studentPositions"));
-  if (storedPositions) {
-    setStudentPositions(storedPositions);
-  }
   }, [teacherId, classroomId, userData]);
-  localStorage.setItem("studentPositions", JSON.stringify(studentPositions));
 
-  const handleDragEnd = (studentId, x, y, unassignedSection) => {
+
+  const handleDragEnd = (studentId, x, y) => {
+    console.log("It has been dragged")
     const motionDiv = document.getElementById(`motion-div-${studentId}`);
-    if (motionDiv && x !== null) {
+    if (motionDiv) {
+      console.log("there is a motionDiv")
       const coords = motionDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
-      if (coords?.length) {
-        console.log("Coords: " + JSON.stringify(coords));
-        // Update studentPositions directly
-        setStudentPositions((prevPositions) => ({
-          ...prevPositions,
-          [studentId]: {
-            x: parseInt(coords[1], 10),
-            y: parseInt(coords[2], 10),
-          },
-        }));
 
-// // Check if the dragged element is in the unassigned section
-// if (
-//   unassignedSection &&
-//   y <= unassignedSection.offsetTop &&
-//   y >=
-//     unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
-// ) {
-//   // Move the student to the unassigned array
-//   setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
+      const unassignedSection = document.getElementById(`unassigned-section`);
 
-//   // Remove the student from the assigned array
-//   setAssignedStudents((prevAssigned) =>
-//     prevAssigned.filter((assignedId) => assignedId !== studentId)
-//   );
+// Check if the dragged element is in the unassigned section
+if (
+  unassignedSection &&
+  y <= unassignedSection.offsetTop &&
+  y >=
+    unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
+) {
 
-//   // Set the coordinates to null in studentPositions
-//   setStudentPositions((prevPositions) => ({
-//     ...prevPositions,
-//     [studentId]: { x: null, y: null },
-//   }));
-// }
+  console.log("hello is this being unassigned??")
+  // Move the student to the unassigned array
+  setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
 
-      } else {
-        console.log("well poop")
-      }
+  // Remove the student from the assigned array
+  setAssignedStudents((prevAssigned) =>
+    prevAssigned.filter((assignedId) => assignedId !== studentId)
+  );
+
+  // Set the coordinates to null in studentPositions
+  setStudentPositions((prevPositions) => ({
+    ...prevPositions,
+    [studentId]: { x: null, y: null },
+  }));
+} else {
+
+  if (coords?.length) {
+    console.log("Coords: " + JSON.stringify(coords));
+    // Update studentPositions directly
+    setStudentPositions((prevPositions) => ({
+      ...prevPositions,
+      [studentId]: {
+        x: parseInt(coords[1], 10),
+        y: parseInt(coords[2], 10),
+      },
+    }));
+  }
+}
+
     }
   };
 
@@ -282,7 +284,7 @@ const TESTEditSeatingChart = () => {
                     return null;
                   }
                 })}
-                  <div id="unassigned-section" ref={unassignedSectionRef} className="flex self-end h-[150px] w-[680px] bg-lightBlue flex-col">
+                  <div id="unassigned-section" className="flex self-end h-[150px] w-[680px] bg-lightBlue flex-col">
                     <h2 className="pt-3 pl-3 text-header2">Unassigned Students</h2>
                     <div className="flex-wrap flex flex-row  p-2 rounded">
                       {unassignedStudents.map((studentId, index) => {
@@ -300,23 +302,9 @@ const TESTEditSeatingChart = () => {
                               dragElastic={0}
                               dragConstraints={constraintsRef}
                               onDragEnd={(info) => {
-                                // const containerBounds = constraintsRef.current.getBoundingClientRect();
 
-                                // const containerX =
-                                //   Math.max(0, info.point.x - containerBounds.left) -
-                                //   40;
-                                // const containerY =
-                                //   Math.max(0, info.point.y - containerBounds.top) -
-                                //   40;
-                                // console.log(
-                                //   "Dragged to x:",
-                                //   containerX,
-                                //   "y:",
-                                //   containerY,
-                                //   ", for " + unassignedStudent.firstName
-                                // );
                                 
-                                handleDragEnd(unassignedStudent._id, unassignedSectionRef.current)
+                                handleDragEnd(unassignedStudent._id)
                               
                               }}
                               className={`mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}

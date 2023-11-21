@@ -109,47 +109,50 @@ const TESTEditSeatingChart = () => {
       const coords = motionDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
-      if (coords?.length) {
-        console.log("Coords: " + JSON.stringify(coords));
-        // Update studentPositions directly
-        setStudentPositions((prevPositions) => ({
-          ...prevPositions,
-          [studentId]: {
-            x: parseInt(coords[1], 10),
-            y: parseInt(coords[2], 10),
-          },
-        }));
-
 
         // Check if the dragged element is in the unassigned section
-      const unassignedSection = document.getElementById("unassigned-section");
-      console.log("unassignedSection check: ", unassignedSection.offsetTop - (unassignedSection.offsetHeight*1.85))
-      console.log("y: " + y)
-      
-      if (
-        unassignedSection &&
-        y <= unassignedSection.offsetTop &&
-        y >= unassignedSection.offsetTop - (unassignedSection.offsetHeight * 1.5)
-      ) {
-        // Move the student to the unassigned array
-        setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
-
-        // Remove the student from the assigned array
-        setAssignedStudents((prevAssigned) =>
-          prevAssigned.filter((assignedId) => assignedId !== studentId)
+        const unassignedSection = document.getElementById("unassigned-section");
+        console.log(
+          "unassignedSection check: ",
+          unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.85
         );
+        console.log("y: " + y);
 
-        // Set the coordinates to null in studentPositions
-        setStudentPositions((prevPositions) => ({
-          ...prevPositions,
-          [studentId]: { x: null, y: null },
-        }));
+        if (
+          unassignedSection &&
+          y <= unassignedSection.offsetTop &&
+          y >=
+            unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
+        ) {
+          // Move the student to the unassigned array
+          setUnassignedStudents((prevUnassigned) => [
+            ...prevUnassigned,
+            studentId,
+          ]);
 
-      }
+          // Remove the student from the assigned array
+          setAssignedStudents((prevAssigned) =>
+            prevAssigned.filter((assignedId) => assignedId !== studentId)
+          );
 
+          // Set the coordinates to null in studentPositions
+          setStudentPositions((prevPositions) => ({
+            ...prevPositions,
+            [studentId]: { x: null, y: null },
+          }));
+        } else {
+          if (coords?.length) {
+            console.log("Coords: " + JSON.stringify(coords));
+            // Update studentPositions directly
+            setStudentPositions((prevPositions) => ({
+              ...prevPositions,
+              [studentId]: {
+                x: parseInt(coords[1], 10),
+                y: parseInt(coords[2], 10),
+              },
+            }));
 
-      } else {
-        console.log("well poop")
+        }
       }
     }
   };

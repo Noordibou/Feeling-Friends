@@ -290,16 +290,20 @@ const TESTEditSeatingChart = () => {
 
                         if (unassignedStudent) {
                           return (
-                            <div
+                            <motion.div
                               id={`motion-div-${studentId._id}`}
                               key={`unassigned-${index}`}
+                              dragMomentum={false}
+                              drag
+                              dragElastic={0}
+                              dragConstraints={constraintsRef}
                               onClick={() => {
                                 handleDivClick(studentId._id);
                               }}
                               className={`mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
                             >
                               <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow"><span className="bg-white">{unassignedStudent.firstName}</span></h1>
-                            </div>
+                            </motion.div>
                           );
                         } else {
                           return null;

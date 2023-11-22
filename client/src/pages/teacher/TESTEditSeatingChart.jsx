@@ -115,7 +115,7 @@ const TESTEditSeatingChart = () => {
       const coords = motionDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
-
+      console.log("Coords: ", JSON.stringify(coords))
       const unassignedSection = document.getElementById(`unassigned-section`);
 
 // Check if the dragged element is in the unassigned section
@@ -143,37 +143,22 @@ if (
 } else {
 
   if (coords?.length) {
-    console.log("Coords: " + JSON.stringify(coords));
+    console.log("Coords 2: " + JSON.stringify(coords));
     // Update studentPositions directly
     setStudentPositions((prevPositions) => ({
       ...prevPositions,
       [studentId]: {
-        x: parseInt(coords[1], 10),
-        y: parseInt(coords[2], 10),
+        x: parseInt(coords[1]),
+        y: parseInt(coords[2]),
       },
     }));
+
+    console.log("student Positions: " + JSON.stringify(studentPositions))
   }
 }
 
     }
   };
-
-
-  // --------- temporary ---------- //
-  const handleDivClick = (studentId) => {
-    setStudentPositions((prevPositions) => {
-      // Find the clicked student in the positions state
-      const updatedPositions = { ...prevPositions };
-  
-      if (studentId in updatedPositions && updatedPositions[studentId].x === null && updatedPositions[studentId].y === null) {
-        // Hardcode the coordinates when x and y are null
-        updatedPositions[studentId] = { x: 100, y: 100 }; // Change these values accordingly
-      }
-  
-      return updatedPositions;
-    });
-  };
-  // ----------------------------- //
 
   const handleSubmit = async () => {
     const updatedPositions = students.map((student) => ({
@@ -226,7 +211,7 @@ if (
           {classroom ? (
             <>
               <div
-                className="flex w-[690px] h-[65%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
+                className="flex w-[690px] h-[75%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
                 ref={constraintsRef}
               >
                 {/* <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich font-body text-body rounded-[1rem] text-center w-96">
@@ -284,7 +269,7 @@ if (
                     return null;
                   }
                 })}
-                  <div id="unassigned-section" className="flex self-end h-[150px] w-[680px] bg-lightBlue flex-col">
+                  <div id="unassigned-section" className="flex self-end h-[200px] w-[680px] bg-lightBlue flex-col">
                     <h2 className="pt-3 pl-3 text-header2">Unassigned Students</h2>
                     <div className="flex-wrap flex flex-row  p-2 rounded">
                       {unassignedStudents.map((studentId, index) => {
@@ -301,7 +286,7 @@ if (
                               drag
                               dragElastic={0}
                               dragConstraints={constraintsRef}
-                              onDragEnd={(info) => {
+                              onDragEnd={() => {
 
                                 
                                 handleDragEnd(unassignedStudent._id)

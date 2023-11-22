@@ -7,10 +7,12 @@ import {
   getTeacherClassroom,
   getAllStudentsClassroom,
   updateSeatingChart,
-  getTeacherById
+  getTeacherById,
+  addFurniture
 } from "../../api/teachersApi";
 import { getBorderColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
+
 
 const TESTEditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -18,7 +20,6 @@ const TESTEditSeatingChart = () => {
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
-  const unassignedSectionRef = useRef(null);
 
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [unassignedStudents, setUnassignedStudents] = useState([]);
@@ -119,27 +120,27 @@ const TESTEditSeatingChart = () => {
       const unassignedSection = document.getElementById(`unassigned-section`);
 
 // Check if the dragged element is in the unassigned section
-if (
-  unassignedSection &&
-  y <= unassignedSection.offsetTop &&
-  y >=
-    unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
-) {
+  if (
+    unassignedSection &&
+    y <= unassignedSection.offsetTop &&
+    y >=
+      unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
+  ) {
 
-  console.log("hello is this being unassigned??")
-  // Move the student to the unassigned array
-  setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
+    console.log("hello is this being unassigned??")
+    // Move the student to the unassigned array
+    setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
 
-  // Remove the student from the assigned array
-  setAssignedStudents((prevAssigned) =>
-    prevAssigned.filter((assignedId) => assignedId !== studentId)
-  );
+    // Remove the student from the assigned array
+    setAssignedStudents((prevAssigned) =>
+      prevAssigned.filter((assignedId) => assignedId !== studentId)
+    );
 
-  // Set the coordinates to null in studentPositions
-  setStudentPositions((prevPositions) => ({
-    ...prevPositions,
-    [studentId]: { x: null, y: null },
-  }));
+    // Set the coordinates to null in studentPositions
+    setStudentPositions((prevPositions) => ({
+      ...prevPositions,
+      [studentId]: { x: null, y: null },
+    }));
 } else {
 
   if (coords?.length) {
@@ -170,7 +171,7 @@ if (
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       console.log("Submitted :)");
-      // Optionally, you can show a success message to the user
+
       // updateUser({
       //   classrooms: [{ _id: classroomId, students: updatedPositions }],
       // });
@@ -179,9 +180,31 @@ if (
     updateUser(updatedUserData);
       
     } catch (error) {
-      // Handle any errors
+        console.log("Ooops didnt work")
     }
   };
+
+
+  const handleAddFurniture = async () => {
+    const furnitureData = {
+        // Structure your furniture data here according to server expectations
+        // For example:
+        name: "Desk",
+        x: 100, 
+        y: 150,
+        assigned: true
+    };
+console.log("teacher id, classroom id, furniture data: " + teacherId, + " " + classroomId + " " + furnitureData)
+    try {
+      console.log("oh hey")
+        const response = await addFurniture(teacherId, classroomId, furnitureData);
+        console.log("Furniture added successfully!", response);
+        // Optionally, you can update the local state or perform any additional actions.
+    } catch (error) {
+        console.error("Error adding furniture:", error);
+        // Handle any errors.
+    }
+};
 
   return (
     <>
@@ -214,11 +237,18 @@ if (
                 className="flex w-[690px] h-[75%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
                 ref={constraintsRef}
               >
-                {/* <h4 className="relative top-1 left-1/2 transform -translate-x-1/2 h-10 bg-sandwich font-body text-body rounded-[1rem] text-center w-96">
-                  Smartboard
-                </h4> */}
                 {/* Classroom layout here */}
-
+                <motion.div
+                  dragMomentum={false}
+                  drag
+                  dragElastic={0}
+                  dragPropagation={false}
+                  dragConstraints={constraintsRef}
+                  onDragEnd={handleAddFurniture}
+                  className="absolute border-4 border-[#734e2a] w-28 h-20 rounded bg-[#c7884a]"
+                >
+                  <h3 className="flex text-center items-center h-full break-words">Teacher's Desk</h3>
+                </motion.div>
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
@@ -262,7 +292,7 @@ if (
                           handleDragEnd(studentObj._id, containerX, containerY);
                         }}
                       >
-                        <h1 className="flex h-full text-center flex-col-reverse bg-lightLavender"><span className="bg-white">{assignedStudent.firstName}</span></h1>
+                        <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender"><span className="bg-white">{assignedStudent.firstName}</span></h3>
                       </motion.div>
                     );
                   } else {

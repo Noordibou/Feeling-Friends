@@ -12,6 +12,7 @@ const teacherSchema = new mongoose.Schema({
     classSubject: { type: String },
     location: { type: String },
     furniture: [{
+      name: { type: String },
       x: { type: Number, default: null },
       y: { type: Number, default: null },
       assigned: { type: Boolean, default: false },

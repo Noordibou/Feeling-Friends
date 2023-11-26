@@ -4,7 +4,7 @@ import { studentUrl, teacherUrl } from './common.js';
 
 export let options = {
   vus: 10,
-  duration: '30s',
+  duration: '15s',
 };
 
 export default function () {

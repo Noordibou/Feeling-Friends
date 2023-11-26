@@ -116,11 +116,10 @@
 // export default RegZone;
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import deepBreathing from "../../images/RegZoneDeepBreathingCard.png";
-import imagineExercise from "../../images/coping skill card_ Overwhelmed.png";
 import { useUser } from "../../context/UserContext";
 import Slider from "../../components/Slider";
 import ProgressBar from "../../components/ProgressBar";
+import Wiggly from "../../images/wiggly.png";
 
 const RegZone = () => {
   const navigate = useNavigate();
@@ -168,40 +167,18 @@ const RegZone = () => {
       <div className="flex w-full justify-center mt-6 mb-10">
           <ProgressBar totalPages="6" currentPage="4"/>
         </div>
-        <div className="md:w-6/12 w-9/12 text-center ml-auto mr-auto">
-          <h1 className="font-header1 md:text-header1 text-header2 leading-tight">
-            It’s normal to feel {emotionFromLocation.toLowerCase()}.
-          </h1>
-        </div>
-        <div className="w-11/12 text-center ml-auto mr-auto pt-[1rem]">
-          <h2 className="font-header2 md:text-header2 text-header3 leading-tight">
-            Getting to know our emotions can help!
-          </h2>
-        </div>
 
-        {/* emotion explanation */}
-        <div className="bg-lightOrange w-11/12 pt-[1.rem] rounded-[2rem] p-2 mt-[2rem] ml-auto mr-auto flex items-center justify-center">
-          <div className="">
-            {emotionFromLocation === "Anxious" ? (
-              <img className="h-80" src={deepBreathing} alt="Deep Breathing" />
-            ) : (
-              <img className="h-80" src={imagineExercise} alt="Imagine Exercise" />
-            )}
-          </div>
-        </div>
-
-        {/* check-in with body text */}
         <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">
-          <h2>Check in with your body - what zone are you in?</h2>
-          <h2>Drag the slider to that zone.</h2>
+          <img src={Wiggly} alt="wiggly" className="ml-auto mr-auto" />
+          <h2 className="mt-[2rem]">Check in with your body - what zone are you in?</h2>
         </div>
 
         {/* slider view */}
         <div className="fixed inset-x-0 bottom-0">
-          <div className="absolute w-full bottom-[3.4rem]">
+          <div className="absolute w-full bottom-[7rem]">
             <Slider updateSliderValue={setSliderValue} />
-            <div className="flex w-full justify-center">
-              <button className="bg-themeWhite px-10 py-3" onClick={handleZoneClick}>
+            <div className="flex w-full justify-center mt-[3rem]">
+              <button className="bg-themeWhite px-10 py-3 w-[16rem] p-[1.5rem] font-header2 text-header2 rounded-[1rem]" onClick={handleZoneClick}>
                 OK
               </button>
             </div>
@@ -209,35 +186,35 @@ const RegZone = () => {
 
           <div className="mt-[2rem] flex items-end">
             {/* unmotivated */}
-            <div className="bg-blue w-1/4 h-[17rem] rounded-tl-[2rem] hover:bg-blue/70 pb-10">
-              <span className="block font-body text-white mt-[5rem] ml-[1.5rem] cursor-pointer -mb-6">
+            <div className="bg-blue w-1/4 h-[32rem] rounded-tl-[2rem] hover:bg-blue/70 pb-10">
+              <span className="block font-body text-white mt-[19rem] ml-[1.5rem] cursor-pointer -mb-6">
                 Low energy
               </span>
-              <span className="block font-regZone md:text-regZone text-sm text-white  mt-[8rem] ml-[1.5rem] cursor-pointer">
+              <span className="block font-regZone md:text-regZone text-sm text-white  mt-[-18rem] ml-[1.5rem] cursor-pointer">
                 Unmotivated
               </span>
             </div>
 
             {/* ready to learn */}
-            <div className="bg-green w-1/4 h-[17rem] cursor-pointer hover-bg-green/70">
-              <span className="block font-regZone md:text-regZone text-sm  text-white mt-[12.9rem] text-center">
+            <div className="bg-green w-1/4 h-[32rem] cursor-pointer hover-bg-green/70">
+              <span className="block font-regZone md:text-regZone text-sm  text-white mt-[2.5rem] text-center">
                 Ready to learn
               </span>
             </div>
 
             {/* wiggly */}
-            <div className="bg-yellow w-1/4 h-[17rem] cursor-pointer hover-bg-yellow/60">
-              <span className="block font-regZone md:text-regZone text-sm text-white mt-[12.9rem] ml-[3.5rem] -mb-10">
+            <div className="bg-yellow w-1/4 h-[32rem] cursor-pointer hover-bg-yellow/60">
+              <span className="block font-regZone md:text-regZone text-sm text-white mt-[2.5rem] ml-[3.5rem] -mb-10">
                 Wiggly
               </span>
             </div>
 
             {/* explosive */}
-            <div className="bg-orange w-1/4 h-[17rem] cursor-pointer rounded-tr-[2rem] hover-bg-orange/70">
-              <span className="block font-body text-white mt-[5rem] ml-[5rem] cursor-pointer -mb-10">
+            <div className="bg-orange w-1/4 h-[32rem] cursor-pointer rounded-tr-[2rem] hover-bg-orange/70">
+              <span className="block font-body text-white mt-[19rem] ml-[5rem] cursor-pointer -mb-10">
                 High energy
               </span>
-              <span className="block font-regZone md:text-regZone text-sm text-white md:mt-[9rem] mt-[7rem] ml-[3.5rem] cursor-pointer">
+              <span className="block font-regZone md:text-regZone text-sm text-white mt-[-18rem] ml-[3.5rem] cursor-pointer">
                 Explosive
               </span>
             </div>

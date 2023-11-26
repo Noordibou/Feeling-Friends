@@ -146,3 +146,16 @@ export const createClassroom = async (id, classroom) => {
         throw error;
     }
 };
+
+// updating teacher's seating chart
+export const updateSeatingChart = async (teacherId, classroomId, updatedPositions) => {
+    try {
+        const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/updateSeatingChart`, {
+            positions: updatedPositions,
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};

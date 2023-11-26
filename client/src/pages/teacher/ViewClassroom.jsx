@@ -45,7 +45,7 @@ const ViewClassroom = () => {
                         </div>
                     </div>
                     <div className="text-right text-body font-body text-darkSandwich pt-[2rem]">
-                        <a href="">edit seating chart</a>
+                        <a href={`/TESTEditSC/${teacherId}/${classroomId}`}>edit seating chart</a>
                     </div>
 
 

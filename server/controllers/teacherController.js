@@ -257,40 +257,7 @@ const deleteStudentInClassroom = async (req, res) => {
     }
 };
 
-const addStudentToClassroom = async (req, res) => {
-    try {
-        const teacher = await Teacher.findById(req.params.id);
-        const classroom = teacher.classrooms.id(req.params.classroomId);
 
-        if (!teacher) {
-            return res.status(404).json({ error: 'Teacher not found' });
-        }
-
-        if (!classroom) {
-            return res.status(404).json({ error: 'Classroom not found' });
-        }
-
-        const studentId = req.body.studentId;
-
-        // Check if the student is already in the classroom
-        if (classroom.students.includes(studentId)) {
-            return res.status(400).json({ error: 'Student is already in the classroom' });
-        }
-
-        // Add the student to the classroom's students array
-        classroom.students.push(studentId);
-        await teacher.save();
-
-        // Get the updated list of students in the classroom
-        const updatedStudents = await Student.find({ _id: { $in: classroom.students } });
-
-        res.json({ message: 'Student added to the classroom', students: updatedStudents });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Server error' });
-    }
-};
- 
 const deleteClassroom = async (req, res) => {
     try {
       const teacher = await Teacher.findById(req.params.id);
@@ -355,6 +322,49 @@ const getAllStudents = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+const addStudentToClassroom = async (req, res) => {
+    try {
+        const teacher = await Teacher.findById(req.params.id);
+
+        if (!teacher) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+
+        const classroom = teacher.classrooms.id(req.params.classroomId);
+
+        if (!classroom) {
+            return res.status(404).json({ error: 'Classroom not found' });
+        }
+
+        // Validate request body
+        const { firstName, lastName, /* Add other required fields */ } = req.body;
+        if (!firstName || !lastName /* Add other validations as needed */) {
+            return res.status(400).json({ error: 'Invalid request body' });
+        }
+
+        // Create a new student
+        const newStudent = new Student({
+            firstName,
+            lastName,
+            // Add other fields as needed
+        });
+
+        // Save the new student
+        await newStudent.save();
+
+        // Add the new student to the classroom
+        classroom.students.push(newStudent._id);
+        await teacher.save();
+
+        // Respond with the created student or any other relevant data
+        res.json({ message: 'Student added to classroom successfully', student: newStudent });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
 
 module.exports = {
     createNewTeacher,

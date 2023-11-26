@@ -23,6 +23,7 @@ import ViewClassroom from "./pages/teacher/ViewClassroom";
 import SubEmotion from "./pages/student/SubEmotion";
 import EditTeacher from "./pages/teacher/EditTeacher";
 import CreateClass from "./pages/teacher/CreateClass";
+import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
             <Route path="/edit/:teacherId" element={<EditTeacher />} />
             <Route path="/createclass" element={<CreateClass />} />
+            <Route path="/addstudent" element={<AddStudentToClassroom />} />
 
 
         {/* Student Routes */}

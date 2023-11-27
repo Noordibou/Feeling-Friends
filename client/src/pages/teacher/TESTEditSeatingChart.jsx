@@ -109,9 +109,9 @@ const TESTEditSeatingChart = () => {
 
   }, [teacherId, classroomId, userData]);
 
-
-  const handleDragEnd = (studentId, x, y) => {
-    console.log("It has been dragged");
+// TODO: make it so that when it's reassigned, 
+  const handleDragEnd = (studentId, key, y) => {
+    console.log("It has been dragged: ", studentId);
     const motionDiv = document.getElementById(`motion-div-${studentId}`);
     const coords = motionDiv.style.transform.match(
       /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
@@ -146,10 +146,20 @@ const TESTEditSeatingChart = () => {
     } else {
       
 
-      if (coords?.length) {
+      if (coords?.length && key === "unassigned") {
         console.log("Coords 2: " + JSON.stringify(coords));
         console.log(typeof coords);
-        // Update studentPositions directly
+
+        // setAssignedStudents((prevAssigned) => {
+        //   const uniqueAssigned = new Set([...prevAssigned, studentId]);
+        //   console.log('uniqueAssigned: ' + JSON.stringify(uniqueAssigned))
+        //   return [...uniqueAssigned];
+        // });
+
+        setUnassignedStudents((prevUnassigned) =>
+          prevUnassigned.filter((unassignedId) => unassignedId !== studentId)
+        );
+          // Update studentPositions directly
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
           [studentId]: {
@@ -158,9 +168,20 @@ const TESTEditSeatingChart = () => {
             assigned: true
           },
         }));
-
         console.log("student Positions: " + JSON.stringify(studentPositions));
+      } else {
+
+        // Update studentPositions directly
+      setStudentPositions((prevPositions) => ({
+        ...prevPositions,
+        [studentId]: {
+          x: parseInt(coords[1]),
+          y: parseInt(coords[2]),
+          assigned: true
+        },
+      }));
       }
+      
     }
   };
 
@@ -293,7 +314,7 @@ const handleAddFurniture = async () => {
                             ", for " + assignedStudent.firstName
                           );
 
-                          handleDragEnd(studentObj._id, containerX, containerY);
+                          handleDragEnd(studentObj._id, "assigned", containerY);
                         }}
                       >
                         <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender"><span className="bg-white">{assignedStudent.firstName}</span></h3>
@@ -323,7 +344,7 @@ const handleAddFurniture = async () => {
                               onDragEnd={() => {
 
                                 
-                                handleDragEnd(unassignedStudent._id)
+                                handleDragEnd(unassignedStudent._id, "unassigned")
                               
                               }}
                               className={`mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}

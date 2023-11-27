@@ -414,8 +414,7 @@ const updateStudentSeats = async (req, res) => {
       if (student) {
         student.seatInfo.x = updatedPosition.x;
         student.seatInfo.y = updatedPosition.y;
-        student.seatInfo.assigned =
-          updatedPosition.x !== null && updatedPosition.y !== null;
+        student.seatInfo.assigned = updatedPosition.assigned;
       }
     });
 

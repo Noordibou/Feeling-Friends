@@ -107,7 +107,7 @@ const TESTEditSeatingChart = () => {
     fetchData();
 
 
-  }, [teacherId, classroomId, userData]);
+  }, [teacherId, classroomId]);
 
 // TODO: make it so that when it's reassigned, 
   const handleDragEnd = (studentId, key, y) => {
@@ -119,13 +119,14 @@ const TESTEditSeatingChart = () => {
     console.log("Coords: ", JSON.stringify(coords));
     const unassignedSection = document.getElementById(`unassigned-section`);
 
-    // Check if the dragged element is in the unassigned section
+    // Check if the dragged element moves to the unassigned section
     if (
       unassignedSection &&
       y <= unassignedSection.offsetTop &&
       y >= unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
     ) {
       console.log("hello is this being unassigned??");
+      console.log("total offset: " + unassignedSection.offsetHeight * 1.5)
       // Move the student to the unassigned array
       setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
 
@@ -139,38 +140,35 @@ const TESTEditSeatingChart = () => {
         ...prevPositions,
         [studentId]: { 
           x: parseInt(coords[1]),
-          y: parseInt(coords[2]), 
+          y: (parseInt(coords[2])), 
           assigned: false
         },
       }));
+      console.log("student positions after moving to unassigned section: " + parseInt(coords[1])  + ", " + parseInt(coords[2]))
     } else {
       
-
+      // if there's coordinates and the key value on the element is unassigned (started in the unassigned area)
       if (coords?.length && key === "unassigned") {
         console.log("Coords 2: " + JSON.stringify(coords));
         console.log(typeof coords);
 
-        // setAssignedStudents((prevAssigned) => {
-        //   const uniqueAssigned = new Set([...prevAssigned, studentId]);
-        //   console.log('uniqueAssigned: ' + JSON.stringify(uniqueAssigned))
-        //   return [...uniqueAssigned];
-        // });
-
-        setUnassignedStudents((prevUnassigned) =>
-          prevUnassigned.filter((unassignedId) => unassignedId !== studentId)
-        );
-          // Update studentPositions directly
+        console.log("offset left and top: " + parseInt(Math.abs(coords[1] - unassignedSection.offsetLeft)) + ", " + parseInt(Math.abs(coords[2]) - unassignedSection.offsetTop))
+        const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
+        const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
+        // const unassignedX = 250
+        // const unassignedY = 250
+        // Update studentPositions directly
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
           [studentId]: {
-            x: parseInt(coords[1]),
-            y: parseInt(coords[2]),
+            x: parseInt(unassignedX),
+            y: parseInt(unassignedY),
             assigned: true
           },
         }));
         console.log("student Positions: " + JSON.stringify(studentPositions));
+        console.log("User data: " + JSON.stringify(userData))
       } else {
-
         // Update studentPositions directly
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
@@ -185,13 +183,19 @@ const TESTEditSeatingChart = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    const updatedPositions = students.map((student) => ({
-      studentId: student._id,
-      x: studentPositions[student._id].x,
-      y: studentPositions[student._id].y,
-      assigned: studentPositions[student._id].assigned,
-    }));
+  const handleSave = async () => {
+    const updatedPositions = students.map((student) => {
+      const updatedPosition = {
+        studentId: student._id,
+        x: studentPositions[student._id].x,
+        y: studentPositions[student._id].y,
+        assigned: studentPositions[student._id].assigned,
+      };
+      
+      console.log("Updated Position for Student:", updatedPosition);
+      
+      return updatedPosition;
+    });
 
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
@@ -202,7 +206,10 @@ const TESTEditSeatingChart = () => {
       // });
 
       const updatedUserData = await getTeacherById(teacherId);
-    updateUser(updatedUserData);
+      console.log("updated user data: " + JSON.stringify(updatedUserData))
+      
+      updateUser(updatedUserData);
+      console.log("userData: " + JSON.stringify(userData))
       
     } catch (error) {
         console.log("Ooops didnt work")
@@ -242,7 +249,7 @@ const handleAddFurniture = async () => {
           <div className="flex w-full justify-around my-8 max-w-3xl">
             <button
               className="bg-yellow border p-5 h-10 rounded flex items-center"
-              onClick={handleSubmit}
+              onClick={handleSave}
             >
               Save
             </button>
@@ -295,7 +302,7 @@ const handleAddFurniture = async () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute border-4 ${assignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px] `}
+                        className={`absolute mx-1 border-4 ${assignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px] `}
                         onDragEnd={(event, info) => {
                           const containerBounds =
                             constraintsRef.current.getBoundingClientRect();
@@ -347,7 +354,7 @@ const handleAddFurniture = async () => {
                                 handleDragEnd(unassignedStudent._id, "unassigned")
                               
                               }}
-                              className={`mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
+                              className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
                             >
                               <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow"><span className="bg-white">{unassignedStudent.firstName}</span></h1>
                             </motion.div>

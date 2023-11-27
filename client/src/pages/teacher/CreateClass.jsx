@@ -14,7 +14,6 @@ const CreateClass = () => {
     });
     const [allStudents, setAllStudents] = useState([]);
 
-
     useEffect(() => {
         const fetchTeacherData = async () => {
             try {
@@ -58,12 +57,18 @@ const CreateClass = () => {
 
     const handleCreateClassroom = async () => {
         try {
-            const newClassroomData = {
-                classSubject: newClassData.classSubject,
-                location: newClassData.location,
-                students: newClassData.students,
-            };
-
+          const newClassroomData = {
+            classSubject: newClassData.classSubject,
+            location: newClassData.location,
+            students: newClassData.students.map(studentId => ({
+              student: studentId,
+              seatInfo: {
+                x: null,
+                y: null,
+                assigned: false,
+              },
+            })),
+          };
             const newClassroom = await createClassroom(userData._id, newClassroomData);
 
             setClassroomsData((prevData) => [...prevData, { classroom: newClassroom }]);
@@ -83,13 +88,14 @@ const CreateClass = () => {
 
             <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[80%] overflow-y-auto ">
                 <div className="flex justify-center">
-                    <div className="flex flex-col w-[60%] gap-3 text-center">
+                    <div className="flex flex-col w-[60%] gap-5 text-center">
                         <FormField
                             label="Class Subject"
                             value={newClassData?.classSubject || ""}
                             onChange={(e) => handleInputChange('classSubject', e.target.value)}
                         />
                         <FormField
+
                             label="Location"
                             value={newClassData?.location || ""}
                             onChange={(e) => handleInputChange('location', e.target.value)}
@@ -127,12 +133,17 @@ const CreateClass = () => {
         </div>
     );
 };
-
 const FormField = ({ label, value, onChange }) => (
-    <>
-        <label>{label}:</label>
-        <input type="text" value={value} onChange={onChange} className="rounded-lg h-[2.2rem] p-4" />
-    </>
-);
+    <div>
+      <label>{label}:</label>
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        className="rounded-lg h-[2.2rem] p-4 mx-2"
+      />
+    </div>
+  );
+  
 
 export default CreateClass;

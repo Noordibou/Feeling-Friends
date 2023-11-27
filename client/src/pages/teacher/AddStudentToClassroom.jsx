@@ -1,76 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUser } from '../../context/UserContext';
-import { getTeacherById, getAllStudentsClassroom, createClassroom, getAllStudents } from '../../api/teachersApi';
+// AddStudent.js
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { addStudentToClassroom } from '../../api/teachersApi';
 
-const AddStudentToClassroom = () => {
-    const navigate = useNavigate();
-    const { userData } = useUser();
-    const [classroomsData, setClassroomsData] = useState([]);
-    const [newClassData, setNewClassData] = useState({
-        classSubject: "",
-        location: "",
-        students: [],
-    });
-    const [allStudents, setAllStudents] = useState([]);
-    const [studentId, setStudentId] = useState(""); // Added missing state for studentId
-    const [error, setError] = useState(""); // Added missing state for error
+export default function AddStudent() {
+    const { teacherId, classroomId } = useParams();
+    const [studentId, setStudentId] = useState('');
 
-    useEffect(() => {
-        const fetchTeacherData = async () => {
-            try {
-                const response = await getTeacherById(userData._id);
-                const studentsPromises = response.classrooms.map(async classroom => {
-                    const students = await getAllStudentsClassroom(userData._id, classroom._id);
-                    return { classroom, students };
-                });
-
-                const classroomsWithStudents = await Promise.all(studentsPromises);
-                setClassroomsData(classroomsWithStudents);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        const fetchAllStudents = async () => {
-            try {
-                const allStudentsData = await getAllStudents();
-                setAllStudents(allStudentsData);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchTeacherData();
-        fetchAllStudents();
-    }, [userData]);
-
-    const handleInputChange = (field, value) => {
-        setNewClassData((prevData) => ({ ...prevData, [field]: value }));
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setStudentId(value);
     };
 
-    const handleAddStudent = () => {
-        if (studentId && !newClassData.students.includes(studentId)) {
-            setNewClassData((prevData) => ({ ...prevData, students: [...prevData.students, studentId] }));
-            setStudentId(""); // Clear studentId after adding
-            setError(""); // Clear error if it was set previously
-        } else {
-            setError("Please enter a valid student ID.");
+    const handleAddStudent = async () => {
+        try {
+            // Make an API call to add the student to the classroom using the provided student ID
+            await addStudentToClassroom(teacherId, classroomId, { studentId });
+
+            // Clear the form after successful addition
+            setStudentId('');
+
+            // You may also want to navigate back to the ViewClassList page or update the state to trigger a re-render
+        } catch (error) {
+            console.error(error);
         }
     };
 
-    const isStudentSelected = (studentId) => newClassData.students.includes(studentId);
-
     return (
         <div>
-            <label>
-                Student ID:
-                <input type="text" value={studentId} onChange={(e) => setStudentId(e.target.value)} />
-            </label>
-            <button onClick={handleAddStudent}>Add Student to Classroom</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <h1>Add New Student</h1>
+            <form>
+                <div>
+                    <label htmlFor="studentId">Student ID:</label>
+                    <input
+                        type="text"
+                        id="studentId"
+                        name="studentId"
+                        value={studentId}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <button type="button" onClick={handleAddStudent}>
+                    Add Student
+                </button>
+            </form>
         </div>
     );
-};
-
-export default AddStudentToClassroom;
+}

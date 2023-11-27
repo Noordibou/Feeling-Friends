@@ -56,11 +56,11 @@ const TeacherHome = () => {
         <h2 className="text-header2 font-header2 text-center mb-[2rem]">
           {isEditMode ? <Link className="underline" to={'/createclass'}>Create New Class</Link> : "All Classes at a Glance"}
         </h2>
-        <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto">
-
+        <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto">{console.log(classroomsData)}
           {userData && userData.classrooms ? (
             classroomsData.map(({ classroom, zorPercentages }, index) => (
               <div key={index}>
+                {/* {console.log(classroom.students)} */}
                 <div className="flex justify-between">
                   <h2 className="text-header2 font-header2 text-left">{classroom.classSubject}</h2>
                   {isEditMode && (
@@ -76,6 +76,7 @@ const TeacherHome = () => {
                   </div>
                   <div className="flex justify-between">
                     <div className="flex w-[80%] bg-sandwich rounded-[1rem]">
+                   
                       {Object.entries(zorPercentages).map(([zor, percentage], i, arr) => (
                         <div
                           key={zor}

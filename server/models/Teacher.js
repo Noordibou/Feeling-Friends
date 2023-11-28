@@ -18,6 +18,7 @@ const teacherSchema = new mongoose.Schema({
       assigned: { type: Boolean, default: false },
     }],
     students: [{ 
+      _id: false,
       student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
       seatInfo: {
         x: { type: Number, default: null },

@@ -62,7 +62,7 @@ const TESTEditSeatingChart = () => {
       setStudents(studentsWithBorderColor);
       const positions = {};
       classroom.students.forEach((student) => {
-        positions[student._id] = {
+        positions[student.student] = {
           x: student.seatInfo.x,
           y: student.seatInfo.y,
           assigned: student.seatInfo.assigned,
@@ -91,13 +91,13 @@ const TESTEditSeatingChart = () => {
   // FIXME: need to fix so that it only updates the assigned boolean
   const unassignAll = () => {
     // Reset assigned and unassigned students
-    setUnassignedStudents(classroom.students.map((student) => student._id));
+    setUnassignedStudents(classroom.students.map((student) => student.student));
     setAssignedStudents([]);
 
     // Reset coordinates to null in studentPositions
     // const nullPositions = {};
     // classroom.students.forEach((student) => {
-    //   nullPositions[student._id] = { x: null, y: null };
+    //   nullPositions[student.student] = { x: null, y: null };
     // });
     // setStudentPositions(nullPositions);
   };
@@ -186,10 +186,10 @@ const TESTEditSeatingChart = () => {
   const handleSave = async () => {
     const updatedPositions = students.map((student) => {
       const updatedPosition = {
-        studentId: student._id,
-        x: studentPositions[student._id].x,
-        y: studentPositions[student._id].y,
-        assigned: studentPositions[student._id].assigned,
+        student: student._id,
+        x: studentPositions[student.student].x,
+        y: studentPositions[student.student].y,
+        assigned: studentPositions[student.student].assigned,
       };
       
       console.log("Updated Position for Student:", updatedPosition);
@@ -285,19 +285,21 @@ const handleAddFurniture = async () => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
 
+                  console.log("studentObj: " + JSON.stringify(studentObj))
+
                   const assignedStudent = students.find(
-                    (student) => student._id === studentObj._id
+                    (student) => student._id === studentObj.student
                   );
                   if (assignedStudent) {
                     return (
                       <motion.div
-                        id={`motion-div-${studentObj._id}`}
+                        id={`motion-div-${studentObj.student}`}
                         dragMomentum={false}
                         drag
                         dragElastic={0}
                         dragPropagation={false}
                         dragConstraints={constraintsRef}
-                        key={`${studentObj._id}-${index}`}
+                        key={`${studentObj.student}-${index}`}
                         initial={{
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
@@ -321,7 +323,7 @@ const handleAddFurniture = async () => {
                             ", for " + assignedStudent.firstName
                           );
 
-                          handleDragEnd(studentObj._id, "assigned", containerY);
+                          handleDragEnd(studentObj.student, "assigned", containerY);
                         }}
                       >
                         <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender"><span className="bg-white">{assignedStudent.firstName}</span></h3>
@@ -336,13 +338,13 @@ const handleAddFurniture = async () => {
                     <div className="flex-wrap flex flex-row  p-2 rounded">
                       {unassignedStudents.map((studentId, index) => {
                         const unassignedStudent = students.find(
-                          (student) => student._id === studentId._id
+                          (student) => student._id === studentId.student
                         );
 
                         if (unassignedStudent) {
                           return (
                             <motion.div
-                              id={`motion-div-${unassignedStudent._id}`}
+                              id={`motion-div-${unassignedStudent.student}`}
                               key={`unassigned-${index}`}
                               dragMomentum={false}
                               drag
@@ -351,7 +353,7 @@ const handleAddFurniture = async () => {
                               onDragEnd={() => {
 
                                 
-                                handleDragEnd(unassignedStudent._id, "unassigned")
+                                handleDragEnd(unassignedStudent.student, "unassigned")
                               
                               }}
                               className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}

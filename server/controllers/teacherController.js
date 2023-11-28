@@ -309,7 +309,7 @@ const addStudentToClassroom = async (req, res) => {
     await teacher.save();
 
     const updatedStudents = await Student.find({
-      _id: { $in: classroom.students },
+      _id: { $in: classroom.students.map(studentObj => studentObj.student) },
     });
 
     console.log("updated students: " + updatedStudents)

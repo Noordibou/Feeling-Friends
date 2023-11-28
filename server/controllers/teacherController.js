@@ -39,6 +39,7 @@ const createNewTeacher = async (req, res) => {
   }
 };
 
+// DELETE AFTER FINISHED. DEBUG ONLY
 const getAllTeachers = async (req, res) => {
   const teacher = await Teacher.find();
   res.json(teacher);

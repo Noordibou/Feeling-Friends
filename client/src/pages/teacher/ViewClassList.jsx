@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom } from '../../api/teachersApi';
+import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom, getTeacherById, getAllStudents, addStudentToClassroom } from '../../api/teachersApi';
 import { getBackgroundColorClass } from '../../components/classRoomColors';
 import xButton from '../../images/x-button.png';
 
@@ -115,11 +115,23 @@ export default function ViewClassList() {
                                 </div>
                             </div>
 
-                            {/* Scrollable list of students */}
                         </div>
+                        <div>
+                            <h2 className="text-header2 font-header2 text-center my-[1rem]">
+                                {isEditMode ? (
+                                    <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
+                                        Add new student
+                                    </Link>
+                                ) : (
+                                    ''
+                                )}
+                            </h2>
+                        </div>
+
+                        {/* Scrollable list of students */}
                         <div className='flex justify-center'>
                             {sortedStudents.length > 0 ? (
-                                <ul className='w-[70%]'>
+                                <ul className='w-[70%] '>
                                     {sortedStudents.map((student, index) => {
                                         const lastJournal = student.journalEntries[student.journalEntries.length - 1];
                                         if (lastJournal) {
@@ -194,22 +206,22 @@ export default function ViewClassList() {
                                         return (
                                             <li key={`${student.id}-${index}`}>
                                                 <div className={`bg-white p-4 my-3 rounded-lg flex justify-between`}>
-                                                   <div className=''>
-                                                    {student.firstName} {student.lastName} didn't check in or out yet!
-                                                    
+                                                    <div className=''>
+                                                        {student.firstName} {student.lastName} didn't check in or out yet!
 
-                                                   </div>
-                                                   <div className='flex justify-end'>
-                                                    {isEditMode && (
-                                                        <div className='-mt-10 -mx-24'>
-                                                            <div>
-                                                                <button onClick={() => handleDeleteStudent(student._id)}>
-                                                                    <img src={xButton} alt="xButton" />
-                                                                </button>
+
+                                                    </div>
+                                                    <div className='flex justify-end'>
+                                                        {isEditMode && (
+                                                            <div className='-mt-10 -mx-24'>
+                                                                <div>
+                                                                    <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                        <img src={xButton} alt="xButton" />
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    )}
-                                                    <Link to={`/${userData._id}/${classroomId}/${student._id}`} className='mr-4 underline'>More &gt;</Link>
+                                                        )}
+                                                        <Link to={`/${userData._id}/${classroomId}/${student._id}`} className='mr-4 underline'>More &gt;</Link>
                                                     </div>
                                                 </div>
                                             </li>

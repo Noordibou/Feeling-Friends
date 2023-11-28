@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getTeacherById, getAllStudentsClassroom, addStudentToTeacherClassroom, deleteStudentFromClassroom } from '../../api/teachersApi';
+import { getTeacherById, getAllStudentsClassroom, addStudentToClassroom, deleteStudentFromClassroom } from '../../api/teachersApi';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
@@ -68,7 +68,7 @@ const EditTeacher = () => {
                 const classroomId = classroom._id;
 
                 // Make an API call to add a student to the classroom
-                const response = await addStudentToTeacherClassroom(teacherId, classroomId);
+                const response = await addStudentToClassroom(teacherId, classroomId);
 
                 if (response && response.student) {
                     const updatedClassrooms = [...formData.classrooms];

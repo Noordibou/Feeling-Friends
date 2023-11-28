@@ -45,7 +45,6 @@ const TeacherHome = () => {
     setSelectedClassroom(userData._id);
   };
 
-  // const generateEditLink = (classroomId) => `/edit/${userData?._id}/${classroomId}`;
 
   return (
     <>
@@ -57,7 +56,6 @@ const TeacherHome = () => {
           {isEditMode ? <Link className="underline" to={'/createclass'}>Create New Class</Link> : "All Classes at a Glance"}
         </h2>
         <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto">
-
           {userData && userData.classrooms ? (
             classroomsData.map(({ classroom, zorPercentages }, index) => (
               <div key={index}>
@@ -76,6 +74,7 @@ const TeacherHome = () => {
                   </div>
                   <div className="flex justify-between">
                     <div className="flex w-[80%] bg-sandwich rounded-[1rem]">
+                   
                       {Object.entries(zorPercentages).map(([zor, percentage], i, arr) => (
                         <div
                           key={zor}

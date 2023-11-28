@@ -106,12 +106,12 @@ export default function StudentProfile() {
                                 {editMode ? (
                                     <input type="text" name="firstName" value={studentProfile.firstName} onChange={handleInputChange} />
                                 ) : (
-                                    <span>{studentProfile?.firstName}</span>
+                                    <span> {studentProfile?.firstName}</span>
                                 )}
                                 {editMode ? (
                                     <input type="text" name="lastName" value={studentProfile.lastName} onChange={handleInputChange} />
                                 ) : (
-                                    <span>{studentProfile?.lastName}</span>
+                                    <span> {studentProfile?.lastName}</span>
                                 )}
                             </strong>
                         </h2>
@@ -156,8 +156,8 @@ export default function StudentProfile() {
                                 <button className='mt-2 underline' onClick={handleSaveClick}>Save</button>
                             </div>
                         ) : (
-                            <div className='mt-2 underline'>
-                                <button onClick={handleEditClick}>Edit</button>
+                            <div>
+                                <button className='mt-2 underline' onClick={handleEditClick}>Edit</button>
                             </div>
                         )}
                     </div>
@@ -303,8 +303,8 @@ export default function StudentProfile() {
                                 <button onClick={handleSaveClick}>Save</button>
                             </div>
                         ) : (
-                            <div className='underline'>
-                                <button onClick={handleEditIEPClick}>Edit IEP</button>
+                            <div>
+                                <button className='underline' onClick={handleEditIEPClick}>Edit IEP</button>
                             </div>
                         )}
                        

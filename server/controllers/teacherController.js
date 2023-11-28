@@ -3,7 +3,7 @@ const Student = require("../models/Student.js");
 const User = require("../models/User.js");
 const mongoose = require("mongoose");
 
-// Create a new teacher, but signup in authentication should be doing that I think
+
 const createNewTeacher = async (req, res) => {
   try {
     // Create a new user first

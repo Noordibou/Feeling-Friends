@@ -393,7 +393,7 @@ const updateStudentSeats = async (req, res) => {
     const teacherId = req.params.teacherId;
     const classroomId = req.params.classroomId;
     const updatedSeats = req.body;
-    console.log("req.boy.positions: " + JSON.stringify(req.body));
+
     // Find the teacher by ID
     const teacher = await Teacher.findById(teacherId);
 
@@ -412,10 +412,7 @@ const updateStudentSeats = async (req, res) => {
     // Update the X and Y coordinates and "assigned" for each student in the classroom
     updatedSeats.positions.forEach((updatedPosition) => {
       const studentId = updatedPosition.student;
-      console.log("updated position: " + JSON.stringify(updatedPosition))
       const student = classroom.students.find(student => student.student.equals(studentId));
-      console.log("Student backend: " + JSON.stringify(student))
-      console.log("StudentId backend: " + JSON.stringify(studentId))
       if (student) {
         student.seatInfo.x = updatedPosition.x;
         student.seatInfo.y = updatedPosition.y;

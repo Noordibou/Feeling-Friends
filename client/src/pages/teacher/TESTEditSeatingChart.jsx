@@ -36,6 +36,8 @@ const TESTEditSeatingChart = () => {
         classroomId
       );
 
+      console.log("unassigned: " + JSON.stringify(unassignedStudents))
+
       // Calculate the border color for each student
       const studentsWithBorderColor = classroomStudents.map((student) => {
         const lastJournal =
@@ -69,19 +71,24 @@ const TESTEditSeatingChart = () => {
         };
       });
 
+
       setStudentPositions(positions);
+      console.log("positions " + JSON.stringify(studentPositions) )
 
       // organizing all unassigned seats to an array
       const unassigned = classroom.students.filter(
         (student) => student.seatInfo.assigned === false
       );
       setUnassignedStudents(unassigned);
+      console.log("unassigned students on page refresh: " + JSON.stringify(unassigned))
 
       // organizing all assigned seats to an array
       const assigned = classroom.students.filter(
         (student) => student.seatInfo.assigned
       );
       setAssignedStudents(assigned);
+      console.log("assigned students on page refresh: " + JSON.stringify(assigned))
+
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -132,29 +139,39 @@ const TESTEditSeatingChart = () => {
 
       // Remove the student from the assigned array
       setAssignedStudents((prevAssigned) =>
-        prevAssigned.filter((assignedId) => assignedId !== studentId)
+        prevAssigned.filter((assignedId) => {
+          console.log("assignedID & student id: " + assignedId + ", " + studentId)
+          return assignedId !== studentId
+        
+        })
       );
+
+
 
       // Set the coordinates to null in studentPositions
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
         [studentId]: { 
           x: parseInt(coords[1]),
-          y: (parseInt(coords[2])), 
+          y: parseInt(coords[2]), 
           assigned: false
         },
       }));
+      console.log("student id is okay here right? " + studentId)
       console.log("student positions after moving to unassigned section: " + parseInt(coords[1])  + ", " + parseInt(coords[2]))
-    } else {
+      console.log("Is it being saved correctly? student positions: " + JSON.stringify(studentPositions))
+    } 
+    else {
       
       // if there's coordinates and the key value on the element is unassigned (started in the unassigned area)
       if (coords?.length && key === "unassigned") {
         console.log("Coords 2: " + JSON.stringify(coords));
         console.log(typeof coords);
-
+        console.log("But I may be wrong and it hits here??")
         console.log("offset left and top: " + parseInt(Math.abs(coords[1] - unassignedSection.offsetLeft)) + ", " + parseInt(Math.abs(coords[2]) - unassignedSection.offsetTop))
         const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
         const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
+        console.log("unassigned x and  y : ", unassignedX, ", ", unassignedY)
         // const unassignedX = 250
         // const unassignedY = 250
         // Update studentPositions directly
@@ -166,9 +183,14 @@ const TESTEditSeatingChart = () => {
             assigned: true
           },
         }));
-        console.log("student Positions: " + JSON.stringify(studentPositions));
-        console.log("User data: " + JSON.stringify(userData))
+        console.log("student id is okay here right? " + studentId)
+        console.log("Is it being saved correctly #2? student positions: " + JSON.stringify(studentPositions))
+
+        
+        // console.log("student Positions: " + JSON.stringify(studentPositions));
+        // console.log("User data: " + JSON.stringify(userData))
       } else {
+        console.log("Should hit here hmmm")
         // Update studentPositions directly
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
@@ -178,7 +200,15 @@ const TESTEditSeatingChart = () => {
           assigned: true
         },
       }));
+      console.log("student id: "  +studentId)
+      console.log("Is it being saved correctly #3? student positions: " + JSON.stringify(studentPositions))
+
+      // Now, update the assigned students state
+      // setAssignedStudents((prevAssigned) =>
+      //   [...prevAssigned, studentId]
+      // );
       }
+      console.log("ASSIGNED STUDNETS SHOUDL WORK/???: " + JSON.stringify(assignedStudents))
       
     }
   };
@@ -187,16 +217,16 @@ const TESTEditSeatingChart = () => {
     const updatedPositions = students.map((student) => {
       const updatedPosition = {
         student: student._id,
-        x: studentPositions[student.student].x,
-        y: studentPositions[student.student].y,
-        assigned: studentPositions[student.student].assigned,
+        x: studentPositions[student._id].x,
+        y: studentPositions[student._id].y,
+        assigned: studentPositions[student._id].assigned,
       };
       
-      console.log("Updated Position for Student:", updatedPosition);
+
       
       return updatedPosition;
     });
-
+    console.log("Updated Position for Student:", updatedPositions);
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       console.log("Submitted :)");
@@ -209,7 +239,7 @@ const TESTEditSeatingChart = () => {
       console.log("updated user data: " + JSON.stringify(updatedUserData))
       
       updateUser(updatedUserData);
-      console.log("userData: " + JSON.stringify(userData))
+      // console.log("userData: " + JSON.stringify(userData))
       
     } catch (error) {
         console.log("Ooops didnt work")
@@ -284,9 +314,8 @@ const handleAddFurniture = async () => {
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
-
                   console.log("studentObj: " + JSON.stringify(studentObj))
-
+                  
                   const assignedStudent = students.find(
                     (student) => student._id === studentObj.student
                   );
@@ -344,16 +373,16 @@ const handleAddFurniture = async () => {
                         if (unassignedStudent) {
                           return (
                             <motion.div
-                              id={`motion-div-${unassignedStudent.student}`}
+                              id={`motion-div-${unassignedStudent._id}`}
                               key={`unassigned-${index}`}
                               dragMomentum={false}
                               drag
                               dragElastic={0}
                               dragConstraints={constraintsRef}
                               onDragEnd={() => {
-
                                 
-                                handleDragEnd(unassignedStudent.student, "unassigned")
+                                
+                                handleDragEnd(unassignedStudent._id, "unassigned")
                               
                               }}
                               className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}

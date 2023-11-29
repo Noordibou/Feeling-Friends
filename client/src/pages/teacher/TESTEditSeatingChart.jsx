@@ -36,8 +36,6 @@ const TESTEditSeatingChart = () => {
         classroomId
       );
 
-      console.log("unassigned: " + JSON.stringify(unassignedStudents))
-
       // Calculate the border color for each student
       const studentsWithBorderColor = classroomStudents.map((student) => {
         const lastJournal =
@@ -57,7 +55,6 @@ const TESTEditSeatingChart = () => {
         } else {
           student.borderColorClass = "border-graphite";
         }
-
         return student;
       });
 
@@ -71,24 +68,18 @@ const TESTEditSeatingChart = () => {
         };
       });
 
-
       setStudentPositions(positions);
-      console.log("positions " + JSON.stringify(studentPositions) )
 
       // organizing all unassigned seats to an array
       const unassigned = classroom.students.filter(
         (student) => student.seatInfo.assigned === false
       );
       setUnassignedStudents(unassigned);
-      console.log("unassigned students on page refresh: " + JSON.stringify(unassigned))
-
       // organizing all assigned seats to an array
       const assigned = classroom.students.filter(
         (student) => student.seatInfo.assigned
       );
       setAssignedStudents(assigned);
-      console.log("assigned students on page refresh: " + JSON.stringify(assigned))
-
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -109,107 +100,63 @@ const TESTEditSeatingChart = () => {
     // setStudentPositions(nullPositions);
   };
 
-
   useEffect(() => {
     fetchData();
-
-
   }, [teacherId, classroomId]);
 
-// TODO: make it so that when it's reassigned, 
   const handleDragEnd = (studentId, key, y) => {
-    console.log("It has been dragged: ", studentId);
+    const unassignedSection = document.getElementById(`unassigned-section`);
     const motionDiv = document.getElementById(`motion-div-${studentId}`);
     const coords = motionDiv.style.transform.match(
       /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
     );
-    console.log("Coords: ", JSON.stringify(coords));
-    const unassignedSection = document.getElementById(`unassigned-section`);
 
-    // Check if the dragged element moves to the unassigned section
+    // Check if the assigned element moves to the unassigned section
     if (
       unassignedSection &&
       y <= unassignedSection.offsetTop &&
       y >= unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
     ) {
-      console.log("hello is this being unassigned??");
-      console.log("total offset: " + unassignedSection.offsetHeight * 1.5)
-      // Move the student to the unassigned array
+      // Move to unassigned array
       setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
 
-      // Remove the student from the assigned array
+      // Remove from the assigned array
       setAssignedStudents((prevAssigned) =>
-        prevAssigned.filter((assignedId) => {
-          console.log("assignedID & student id: " + assignedId + ", " + studentId)
-          return assignedId !== studentId
-        
-        })
+        prevAssigned.filter((assignedId) => assignedId !== studentId)
       );
 
-
-
-      // Set the coordinates to null in studentPositions
-      setStudentPositions((prevPositions) => ({
-        ...prevPositions,
-        [studentId]: { 
-          x: parseInt(coords[1]),
-          y: parseInt(coords[2]), 
-          assigned: false
-        },
-      }));
-      console.log("student id is okay here right? " + studentId)
-      console.log("student positions after moving to unassigned section: " + parseInt(coords[1])  + ", " + parseInt(coords[2]))
-      console.log("Is it being saved correctly? student positions: " + JSON.stringify(studentPositions))
-    } 
-    else {
-      
-      // if there's coordinates and the key value on the element is unassigned (started in the unassigned area)
-      if (coords?.length && key === "unassigned") {
-        console.log("Coords 2: " + JSON.stringify(coords));
-        console.log(typeof coords);
-        console.log("But I may be wrong and it hits here??")
-        console.log("offset left and top: " + parseInt(Math.abs(coords[1] - unassignedSection.offsetLeft)) + ", " + parseInt(Math.abs(coords[2]) - unassignedSection.offsetTop))
-        const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
-        const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
-        console.log("unassigned x and  y : ", unassignedX, ", ", unassignedY)
-        // const unassignedX = 250
-        // const unassignedY = 250
-        // Update studentPositions directly
-        setStudentPositions((prevPositions) => ({
-          ...prevPositions,
-          [studentId]: {
-            x: parseInt(unassignedX),
-            y: parseInt(unassignedY),
-            assigned: true
-          },
-        }));
-        console.log("student id is okay here right? " + studentId)
-        console.log("Is it being saved correctly #2? student positions: " + JSON.stringify(studentPositions))
-
-        
-        // console.log("student Positions: " + JSON.stringify(studentPositions));
-        // console.log("User data: " + JSON.stringify(userData))
-      } else {
-        console.log("Should hit here hmmm")
-        // Update studentPositions directly
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
         [studentId]: {
           x: parseInt(coords[1]),
           y: parseInt(coords[2]),
-          assigned: true
+          assigned: false,
         },
       }));
-      console.log("student id: "  +studentId)
-      console.log("Is it being saved correctly #3? student positions: " + JSON.stringify(studentPositions))
-
-      // Now, update the assigned students state
-      // setAssignedStudents((prevAssigned) =>
-      //   [...prevAssigned, studentId]
-      // );
+    } else {
+      // if moving student from unassigned to assigned area
+      if (coords?.length && key === "unassigned") {
+        const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
+        const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
+        setStudentPositions((prevPositions) => ({
+          ...prevPositions,
+          [studentId]: {
+            x: parseInt(unassignedX),
+            y: parseInt(unassignedY),
+            assigned: true,
+          },
+        }));
+      // moving just inside the classroom and assigned (true) state does not change
+      } else {
+        setStudentPositions((prevPositions) => ({
+          ...prevPositions,
+          [studentId]: {
+            x: parseInt(coords[1]),
+            y: parseInt(coords[2]),
+            assigned: true,
+          },
+        }));
       }
-      console.log("ASSIGNED STUDNETS SHOUDL WORK/???: " + JSON.stringify(assignedStudents))
-      
     }
   };
 
@@ -221,12 +168,9 @@ const TESTEditSeatingChart = () => {
         y: studentPositions[student._id].y,
         assigned: studentPositions[student._id].assigned,
       };
-      
 
-      
       return updatedPosition;
     });
-    console.log("Updated Position for Student:", updatedPositions);
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       console.log("Submitted :)");
@@ -234,39 +178,39 @@ const TESTEditSeatingChart = () => {
       // updateUser({
       //   classrooms: [{ _id: classroomId, students: updatedPositions }],
       // });
-
       const updatedUserData = await getTeacherById(teacherId);
-      console.log("updated user data: " + JSON.stringify(updatedUserData))
-      
       updateUser(updatedUserData);
-      // console.log("userData: " + JSON.stringify(userData))
-      
     } catch (error) {
-        console.log("Ooops didnt work")
+      console.log("Ooops didnt work");
     }
   };
 
-// FIXME: Saving furniture doesnt yet work
-const handleAddFurniture = async () => {
-  const furnitureData = {
+  // FIXME: Saving furniture doesnt yet work
+  const handleAddFurniture = async () => {
+    const furnitureData = {
       // Structure your furniture data here according to server expectations
       // For example:
       name: "Desk",
-      x: 100, 
+      x: 100,
       y: 150,
-      assigned: true
-  };
-  console.log("teacher id, classroom id, furniture data: " + teacherId, + " " + classroomId + " " + furnitureData)
+      assigned: true,
+    };
+    console.log(
+      "teacher id, classroom id, furniture data: " + teacherId,
+      +" " + classroomId + " " + furnitureData
+    );
     try {
-      console.log("oh hey")
-        const response = await addFurniture(teacherId, classroomId, furnitureData);
-        console.log("Furniture added successfully!", response);
-        // Optionally, you can update the local state or perform any additional actions.
+      console.log("oh hey");
+      const response = await addFurniture(
+        teacherId,
+        classroomId,
+        furnitureData
+      );
+      console.log("Furniture added successfully!", response);
     } catch (error) {
-        console.error("Error adding furniture:", error);
-        // Handle any errors.
+      console.error("Error adding furniture:", error);
     }
-};
+  };
 
   return (
     <>
@@ -283,7 +227,10 @@ const handleAddFurniture = async () => {
             >
               Save
             </button>
-            <button className="bg-orange border p-5 h-10 rounded flex items-center" onClick={unassignAll}>
+            <button
+              className="bg-orange border p-5 h-10 rounded flex items-center"
+              onClick={unassignAll}
+            >
               Unassign All
             </button>
             <a
@@ -309,13 +256,14 @@ const handleAddFurniture = async () => {
                   onDragEnd={handleAddFurniture}
                   className="absolute border-4 border-[#734e2a] w-28 h-20 rounded bg-[#c7884a]"
                 >
-                  <h3 className="flex text-center items-center h-full break-words">Teacher's Desk</h3>
+                  <h3 className="flex text-center items-center h-full break-words">
+                    Teacher's Desk
+                  </h3>
                 </motion.div>
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
-                  console.log("studentObj: " + JSON.stringify(studentObj))
-                  
+
                   const assignedStudent = students.find(
                     (student) => student._id === studentObj.student
                   );
@@ -352,58 +300,69 @@ const handleAddFurniture = async () => {
                             ", for " + assignedStudent.firstName
                           );
 
-                          handleDragEnd(studentObj.student, "assigned", containerY);
+                          handleDragEnd(studentObj.student,"assigned",containerY);
                         }}
                       >
-                        <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender"><span className="bg-white">{assignedStudent.firstName}</span></h3>
+                        <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender">
+                          <span className="bg-white">
+                            {assignedStudent.firstName}
+                          </span>
+                        </h3>
                       </motion.div>
                     );
                   } else {
                     return null;
                   }
                 })}
-                  <div id="unassigned-section" className="flex self-end h-[200px] w-[680px] bg-lightBlue flex-col">
-                    <h2 className="pt-3 pl-3 text-header2">Unassigned Students</h2>
-                    <div className="flex-wrap flex flex-row  p-2 rounded">
-                      {unassignedStudents.map((studentId, index) => {
-                        const unassignedStudent = students.find(
-                          (student) => student._id === studentId.student
-                        );
+                {/* Unassigned Section */}
+                <div
+                  id="unassigned-section"
+                  className="flex self-end h-[200px] w-[680px] bg-lightBlue flex-col"
+                >
+                  <h2 className="pt-3 pl-3 text-header2">
+                    Unassigned Students
+                  </h2>
+                  <div className="flex-wrap flex flex-row  p-2 rounded">
+                    {unassignedStudents.map((studentId, index) => {
+                      const unassignedStudent = students.find(
+                        (student) => student._id === studentId.student
+                      );
 
-                        if (unassignedStudent) {
-                          return (
-                            <motion.div
-                              id={`motion-div-${unassignedStudent._id}`}
-                              key={`unassigned-${index}`}
-                              dragMomentum={false}
-                              drag
-                              dragElastic={0}
-                              dragConstraints={constraintsRef}
-                              onDragEnd={() => {
-                                
-                                
-                                handleDragEnd(unassignedStudent._id, "unassigned")
-                              
-                              }}
-                              className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
-                            >
-                              <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow"><span className="bg-white">{unassignedStudent.firstName}</span></h1>
-                            </motion.div>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
-                    </div>
+                      if (unassignedStudent) {
+                        return (
+                          <motion.div
+                            id={`motion-div-${unassignedStudent._id}`}
+                            key={`unassigned-${index}`}
+                            dragMomentum={false}
+                            drag
+                            dragElastic={0}
+                            dragConstraints={constraintsRef}
+                            onDragEnd={() => {
+                              handleDragEnd(
+                                unassignedStudent._id,
+                                "unassigned"
+                              );
+                            }}
+                            className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
+                          >
+                            <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow">
+                              <span className="bg-white">
+                                {unassignedStudent.firstName}
+                              </span>
+                            </h1>
+                          </motion.div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
+                  </div>
                 </div>
               </div>
-              
             </>
           ) : (
             "Loading..."
           )}
-          {/* Unassigned Students */}
-
         </div>
       </div>
     </>

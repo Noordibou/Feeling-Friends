@@ -12,6 +12,14 @@ const Insight = () => {
     const [sliderValue, setSliderValue] = useState(0);
     const location = useLocation();
     const emotionFromLocation = location.state?.emotion || "";
+
+    const handleClick = () => {
+      navigate("/regzone", {
+        state: {
+          emotion: emotionFromLocation,
+        },
+      });
+    };
   
     useEffect(() => {
       const emotionFromParams = location.state?.emotion;
@@ -46,7 +54,7 @@ const Insight = () => {
           {/* Text under tip */}
           <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] mt-[5rem] font-header2 md:text-header2 text-header3 leading-tight">
             <h2>Spend some time trying this skill and move on when you're ready.</h2>
-           <a href="/regzone"><button className="mt-[5rem] rounded-[1rem] p-[1.5rem] bg-lightOrange text-header2 font-header2 w-[16rem]">Next</button></a>
+           <button className="mt-[5rem] rounded-[1rem] p-[1.5rem] bg-lightOrange text-header2 font-header2 w-[16rem]" onClick={handleClick}>Next</button>
           </div>
         </div>
       </>

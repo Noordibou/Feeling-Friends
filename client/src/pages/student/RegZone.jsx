@@ -144,6 +144,7 @@ const RegZone = () => {
       default:
         regZone = "Explosive";
     }
+    console.log("regZone::::: " + regZone)
     const updatedFields = { ZOR: regZone };
     updateUserDataAccumulated(updatedFields);
 

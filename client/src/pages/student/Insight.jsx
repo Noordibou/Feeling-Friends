@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import deepBreathing from "../../images/RegZoneDeepBreathingCard.png";
 import imagineExercise from "../../images/coping skill card_ Overwhelmed.png";
-import { useUser } from "../../context/UserContext";
 import ProgressBar from "../../components/ProgressBar";
 
 const Insight = () => {
     const navigate = useNavigate();
-    const { updateUserDataAccumulated } = useUser();
     const [emotion, setEmotion] = useState("");
-    const [sliderValue, setSliderValue] = useState(0);
     const location = useLocation();
     const emotionFromLocation = location.state?.emotion || "";
 

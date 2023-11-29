@@ -11,7 +11,6 @@ const GoalsNeeds = () => {
 
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
-  console.log("emotionFromLocation: " + emotionFromLocation)
 
   const [inputMode1, setInputMode1] = useState(false);
   const [inputMode2, setInputMode2] = useState(false);
@@ -31,7 +30,6 @@ const GoalsNeeds = () => {
   };
 
   const handleGoalClick = (goal) => {
-    console.log("goal: "+ goal)
     if (selectedGoal === goal) {
       setSelectedGoal(null);
     } else {
@@ -51,9 +49,6 @@ const GoalsNeeds = () => {
   };
 
   const handleSubmit = async () => {
-    console.log("handle submit activated");
-    console.log("accumulated updates: " + JSON.stringify(accumulatedUpdates))
-    console.log("checkin or checkout ???: " + isCheckinOrOut)
     await updateStudent(userData._id, accumulatedUpdates, isCheckinOrOut);
 
     navigate("/summary", {

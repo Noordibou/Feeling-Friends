@@ -34,6 +34,7 @@ const GoalsNeeds = () => {
       setSelectedGoal(null);
     } else {
       setSelectedGoal(goal);
+      updateUserDataAccumulated({goal: goal})
     }
   };
 
@@ -42,11 +43,12 @@ const GoalsNeeds = () => {
       setSelectedNeed(null);
     } else {
       setSelectedNeed(need);
+      updateUserDataAccumulated({need: need})
+
     }
   };
 
   const handleSubmit = async () => {
-    console.log("handle submit activated");
     await updateStudent(userData._id, accumulatedUpdates, isCheckinOrOut);
 
     navigate("/summary", {

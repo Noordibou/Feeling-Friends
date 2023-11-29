@@ -159,3 +159,14 @@ export const updateSeatingChart = async (teacherId, classroomId, updatedPosition
         throw error;
     }
 };
+
+export const addFurniture = async (teacherId, classroomId, furnitureData) => {
+    try {
+        console.log("well I'm here")
+        const response = await axios.post(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, furnitureData, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.log("woops an aerror has occured: " + error);
+        throw error;
+    }
+}

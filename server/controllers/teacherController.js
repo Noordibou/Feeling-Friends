@@ -3,7 +3,7 @@ const Student = require("../models/Student.js");
 const User = require("../models/User.js");
 const mongoose = require("mongoose");
 
-// Create a new teacher, but signup in authentication should be doing that I think
+
 const createNewTeacher = async (req, res) => {
   try {
     // Create a new user first
@@ -39,6 +39,7 @@ const createNewTeacher = async (req, res) => {
   }
 };
 
+// DELETE AFTER FINISHED. DEBUG ONLY
 const getAllTeachers = async (req, res) => {
   const teacher = await Teacher.find();
   res.json(teacher);
@@ -302,12 +303,16 @@ const addStudentToClassroom = async (req, res) => {
         .json({ error: "Student is already in the classroom" });
     }
 
-    classroom.students.push(studentId);
+    console.log("studentID: " + studentId)
+
+    classroom.students.push({ student: studentId });
     await teacher.save();
 
     const updatedStudents = await Student.find({
-      _id: { $in: classroom.students },
+      _id: { $in: classroom.students.map(studentObj => studentObj.student) },
     });
+
+    console.log("updated students: " + updatedStudents)
 
     res.json({
       message: "Student added to the classroom",
@@ -388,7 +393,7 @@ const updateStudentSeats = async (req, res) => {
     const teacherId = req.params.teacherId;
     const classroomId = req.params.classroomId;
     const updatedSeats = req.body;
-    console.log("req.boy.positions: " + JSON.stringify(req.body));
+
     // Find the teacher by ID
     const teacher = await Teacher.findById(teacherId);
 
@@ -406,14 +411,12 @@ const updateStudentSeats = async (req, res) => {
     console.log("updated seats: " + JSON.stringify(updatedSeats));
     // Update the X and Y coordinates and "assigned" for each student in the classroom
     updatedSeats.positions.forEach((updatedPosition) => {
-      const studentId = updatedPosition.studentId;
-      const student = classroom.students.id(studentId);
-
+      const studentId = updatedPosition.student;
+      const student = classroom.students.find(student => student.student.equals(studentId));
       if (student) {
         student.seatInfo.x = updatedPosition.x;
         student.seatInfo.y = updatedPosition.y;
-        student.seatInfo.assigned =
-          updatedPosition.x !== null && updatedPosition.y !== null;
+        student.seatInfo.assigned = updatedPosition.assigned;
       }
     });
 
@@ -427,6 +430,39 @@ const updateStudentSeats = async (req, res) => {
   }
 };
 
+const addFurniture = async (req, res) => {
+  try {
+    const teacherId = req.params.teacherId;
+    const classroomId = req.params.classroomId;
+    const { furniture } = req.body;
+
+    // Find the teacher by ID
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    // Find the classroom within the teacher's classrooms
+    const classroom = teacher.classrooms.id(classroomId);
+
+    if (!classroom) {
+      return res.status(404).json({ error: "Classroom not found" });
+    }
+
+    // Add the furniture to the classroom's furniture array
+    classroom.furniture.push(...furniture);
+
+    // Save the changes to the teacher's data
+    await teacher.save();
+
+    res.json({ message: "Furniture added successfully", classroom });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Couldn't add furniture, Server error" });
+  }
+}
 // const addStudentToClassroom = async (req, res) => {
 //     try {
 //         const teacher = await Teacher.findById(req.params.id);
@@ -487,4 +523,5 @@ module.exports = {
   createClassroom,
   updateStudentSeats,
   getAllStudents,
+  addFurniture,
 };

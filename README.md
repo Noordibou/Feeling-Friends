@@ -43,6 +43,10 @@ This ensures a seamless and intuitive experience for both students and teachers.
 Feeling Friends empowers neurodiverse students to express themselves and fosters a supportive and understanding learning environment.
 
 ## App link  
-comming soon!!
+The app is currently undergoing updates to improve its features and performance.
+https://mindful-journal.vercel.app/login
+student: student3@example.com  password: 12345
+teacher: teacher15@example.com  password: 12345
+
 
 

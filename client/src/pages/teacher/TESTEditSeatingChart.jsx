@@ -95,7 +95,7 @@ const TESTEditSeatingChart = () => {
     // Reset coordinates to null in studentPositions
     // const nullPositions = {};
     // classroom.students.forEach((student) => {
-    //   nullPositions[student.student] = { x: null, y: null };
+    //   nullPositions[student.student] = { assigned: false };
     // });
     // setStudentPositions(nullPositions);
   };
@@ -103,6 +103,8 @@ const TESTEditSeatingChart = () => {
   useEffect(() => {
     fetchData();
   }, [teacherId, classroomId]);
+
+  console.log("hey")
 
   const handleDragEnd = (studentId, key, y) => {
     const unassignedSection = document.getElementById(`unassigned-section`);
@@ -117,13 +119,6 @@ const TESTEditSeatingChart = () => {
       y <= unassignedSection.offsetTop &&
       y >= unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
     ) {
-      // Move to unassigned array
-      setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
-
-      // Remove from the assigned array
-      setAssignedStudents((prevAssigned) =>
-        prevAssigned.filter((assignedId) => assignedId !== studentId)
-      );
 
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
@@ -135,6 +130,7 @@ const TESTEditSeatingChart = () => {
       }));
     } else {
       // if moving student from unassigned to assigned area
+      // FIXME: Still doesn't save on exact coordinate placement for some reason
       if (coords?.length && key === "unassigned") {
         const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
         const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
@@ -180,6 +176,7 @@ const TESTEditSeatingChart = () => {
       // });
       const updatedUserData = await getTeacherById(teacherId);
       updateUser(updatedUserData);
+
     } catch (error) {
       console.log("Ooops didnt work");
     }
@@ -201,11 +198,11 @@ const TESTEditSeatingChart = () => {
     );
     try {
       console.log("oh hey");
-      const response = await addFurniture(
-        teacherId,
-        classroomId,
-        furnitureData
-      );
+      // const response = await addFurniture(
+      //   teacherId,
+      //   classroomId,
+      //   furnitureData
+      // );
       console.log("Furniture added successfully!", response);
     } catch (error) {
       console.error("Error adding furniture:", error);

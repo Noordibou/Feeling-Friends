@@ -456,6 +456,83 @@ const addFurniture = async (req, res) => {
     res.status(500).json({ error: "Couldn't add furniture, Server error" });
   }
 }
+
+const updateFurniturePositions = async (req, res) => {
+  console.log("Oh heyy it hit the backend update furniture positions hmm")
+  try {
+    const teacherId = req.params.id;
+    const classroomId = req.params.classroomId;
+    const updatedPositions = req.body;
+
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    const classroom = teacher.classrooms.id(classroomId);
+
+    if (!classroom) {
+      return res.status(404).json({ error: "Classroom not found" });
+    }
+
+    // Update each furniture item in the classroom
+    updatedPositions.forEach((updatedPosition) => {
+      const furnitureItem = classroom.furniture.id(updatedPosition.itemId);
+
+      if (furnitureItem) {
+        furnitureItem.x = updatedPosition.x;
+        furnitureItem.y = updatedPosition.y;
+        furnitureItem.assigned = updatedPosition.assigned;
+      }
+    });
+
+    await teacher.save();
+
+    res.json({ message: "Furniture positions updated successfully", classroom });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Couldn't update furniture positions, Server error" });
+  }
+};
+
+const deleteFurniture = async (req, res) => {
+  try {
+    const teacherId = req.params.id;
+    const classroomId = req.params.classroomId;
+    const itemIdToDelete = req.params.itemId;
+
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    const classroom = teacher.classrooms.id(classroomId);
+
+    if (!classroom) {
+      return res.status(404).json({ error: "Classroom not found" });
+    }
+
+    // Find the furniture item to delete
+    const furnitureIndexToDelete = classroom.furniture.findIndex(item => item._id == itemIdToDelete);
+
+    if (furnitureIndexToDelete === -1) {
+      return res.status(404).json({ error: "Furniture item not found" });
+    }
+
+    // Remove the furniture item from the array
+    classroom.furniture.splice(furnitureIndexToDelete, 1);
+
+    await teacher.save();
+
+    res.json({ message: "Furniture deleted successfully", classroom });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Couldn't delete furniture, Server error" });
+  }
+};
+
 // const addStudentToClassroom = async (req, res) => {
 //     try {
 //         const teacher = await Teacher.findById(req.params.id);
@@ -517,4 +594,6 @@ module.exports = {
   updateStudentSeats,
   getAllStudents,
   addFurniture,
+  updateFurniturePositions,
+  deleteFurniture,
 };

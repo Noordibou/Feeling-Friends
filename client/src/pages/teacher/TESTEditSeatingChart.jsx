@@ -8,7 +8,8 @@ import {
   getAllStudentsClassroom,
   updateSeatingChart,
   getTeacherById,
-  addFurniture
+  addFurniture,
+  updateFurniturePositions
 } from "../../api/teachersApi";
 import { getBorderColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,7 @@ const TESTEditSeatingChart = () => {
   const navigate = useNavigate();
 
   const [studentPositions, setStudentPositions] = useState({});
+  const [furniturePositions, setFurniturePositions] = useState({});
 
   const fetchData = async () => {
     try {
@@ -109,15 +111,39 @@ const TESTEditSeatingChart = () => {
 
   console.log("hey")
 
-  const handleDragEnd = (studentId, key, y) => {
+  const handleDragEnd = (itemId, key, y) => {
     const unassignedSection = document.getElementById(`unassigned-section`);
-    const motionDiv = document.getElementById(`motion-div-${studentId}`);
-    const coords = motionDiv.style.transform.match(
-      /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
-    );
+    let studentCoords = null;
+    let furnishCoords = null;
+    
+    if(key === "furniture") {
+      const furnitureDiv = document.getElementById(`furniture-${itemId}`);
+      furnishCoords = furnitureDiv.style.transform.match(
+        /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
+      );
+      
+    } else {
+      const motionDiv = document.getElementById(`motion-div-${itemId}`);
+      studentCoords = motionDiv.style.transform.match(
+        /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
+      );
+    }
+    
+    
 
+      if (key === "furniture") {
+        setFurniturePositions((prevPositions) => ({
+          ...prevPositions,
+          [itemId]: {
+            x: parseInt(furnishCoords[1]),
+            y: parseInt(furnishCoords[2]),
+            assigned: true,
+          },
+        }))
+      
+        console.log("furniture positions: ", furniturePositions)
     // Check if the assigned element moves to the unassigned section
-    if (
+   } else if (
       unassignedSection &&
       y <= unassignedSection.offsetTop &&
       y >= unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
@@ -125,21 +151,21 @@ const TESTEditSeatingChart = () => {
 
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
-        [studentId]: {
-          x: parseInt(coords[1]),
-          y: parseInt(coords[2]),
+        [itemId]: {
+          x: parseInt(studentCoords[1]),
+          y: parseInt(studentCoords[2]),
           assigned: false,
         },
       }));
     } else {
       // if moving student from unassigned to assigned area
       // FIXME: Still doesn't save on exact coordinate placement for some reason
-      if (coords?.length && key === "unassigned") {
-        const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
-        const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
+      if (studentCoords?.length && key === "unassigned") {
+        const unassignedX = parseInt(studentCoords[1]) + unassignedSection.offsetLeft;
+        const unassignedY = parseInt(studentCoords[2]) + unassignedSection.offsetTop;
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
-          [studentId]: {
+          [itemId]: {
             x: parseInt(unassignedX),
             y: parseInt(unassignedY),
             assigned: true,
@@ -149,9 +175,9 @@ const TESTEditSeatingChart = () => {
       } else {
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
-          [studentId]: {
-            x: parseInt(coords[1]),
-            y: parseInt(coords[2]),
+          [itemId]: {
+            x: parseInt(studentCoords[1]),
+            y: parseInt(studentCoords[2]),
             assigned: true,
           },
         }));
@@ -170,8 +196,18 @@ const TESTEditSeatingChart = () => {
 
       return updatedPosition;
     });
+    const updatedFurniturePositions = Object.keys(furniturePositions).map((itemId) => {
+      const furniture = furniturePositions[itemId];
+      return {
+        itemId,
+        x: furniture.x,
+        y: furniture.y,
+        assigned: furniture.assigned,
+      };
+    });
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
+      await updateFurniturePositions(teacherId, classroomId, updatedFurniturePositions);
       console.log("Submitted :)");
 
       // updateUser({
@@ -185,46 +221,19 @@ const TESTEditSeatingChart = () => {
     }
   };
 
-  // FIXME: Saving furniture doesnt yet work
-  const handleAddFurniture = async () => {
-    const furnitureData = {
-      // Structure your furniture data here according to server expectations
-      // For example:
-      name: "Desk",
-      x: 100,
-      y: 150,
-      assigned: true,
-    };
-    console.log(
-      "teacher id, classroom id, furniture data: " + teacherId,
-      +" " + classroomId + " " + furnitureData
-    );
-    try {
-      console.log("oh hey");
-      // const response = await addFurniture(
-      //   teacherId,
-      //   classroomId,
-      //   furnitureData
-      // );
-      // console.log("Furniture added successfully!", response);
-    } catch (error) {
-      console.error("Error adding furniture:", error);
-    }
-  };
-
   const determineShape = (furnitureName) => {
-    switch (furnitureName.toLowerCase()) {
-      case 'smartboard':
-      case 'chalkboard':
+    switch (furnitureName) {
+      case 'Smartboard':
+      case 'Chalkboard':
         return furnitureShapes.longBar;
-      case 'door':
-      case 'window':
+      case 'Door':
+      case 'Window':
         return furnitureShapes.shortBar;
-      case 'teacher\'s desk':
-      case 'bookcase':
-      case 'table':
+      case 'Teacher\'s Desk':
+      case 'Bookcase':
+      case 'Table':
         return furnitureShapes.rectangle;
-      case 'empty desk':
+      case 'Empty Desk':
         return furnitureShapes.square;
       default:
         return furnitureShapes.rectangle;
@@ -266,16 +275,23 @@ const TESTEditSeatingChart = () => {
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
-                {classroom.furniture.map((item) => {
+                {classroom.furniture.map((item, index) => {
                   const shape = determineShape(item.name)
+                  const initialX = item.x;
+                  const initialY = item.y;
                   return (
                     <motion.div
+                      id={`furniture-${item._id}`}
                       dragMomentum={false}
+                      initial={{
+                        x: Math.max(0, initialX),
+                        y: Math.max(0, initialY),
+                      }}
                       drag
                       dragElastic={0}
                       dragPropagation={false}
                       dragConstraints={constraintsRef}
-                      onDragEnd={handleAddFurniture}
+                      onDragEnd={() => handleDragEnd(item._id, "furniture")}
                       className={`absolute border-4 border-[#734e2a] ${shape.width} ${shape.height} rounded bg-[#c7884a]`}
                     >
                       <h3 className="flex w-full text-center justify-center items-center h-full break-words">

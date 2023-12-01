@@ -160,13 +160,37 @@ export const updateSeatingChart = async (teacherId, classroomId, updatedPosition
     }
 };
 
+export const updateFurniturePositions = async (teacherId, classroomId, updatedPositions) => {
+    console.log("teacher ID: " + teacherId)
+    console.log("class ID: " + classroomId)
+    console.log("updated positions: " + JSON.stringify(updatedPositions))
+    try {
+      const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, updatedPositions);
+      console.log("response data:  " + response.data)
+      return response.data;
+    } catch (error) {
+      console.log("Oops, an error has occurred: " + error);
+      throw error;
+    }
+  };
+
 export const addFurniture = async (teacherId, classroomId, furnitureData) => {
     try {
         console.log("well I'm here")
-        const response = await axios.post(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, furnitureData, { withCredentials: true });
+        const response = await axios.post(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, furnitureData);
         return response.data;
     } catch (error) {
         console.log("woops an aerror has occured: " + error);
         throw error;
     }
-}
+};
+
+export const deleteFurniture = async (teacherId, classroomId, itemId) => {
+    try {
+      const response = await axios.delete(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture/${itemId}`, { withCredentials: true });
+      return response.data;
+    } catch (error) {
+      console.log("Oops, an error has occurred:", error);
+      throw error;
+    }
+  };

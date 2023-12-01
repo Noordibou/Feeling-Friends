@@ -18,6 +18,8 @@ const {
     updateStudentSeats,
     getAllStudents,
     addFurniture,
+    updateFurniturePositions,
+    deleteFurniture,
 } = require('../controllers/teacherController.js');
 
 // probably won't use, use the signup instead
@@ -35,14 +37,17 @@ router.put(
     // verifyUser,
     updateStudentSeats
   );
-router.put("/teachers/:id/classrooms/:classroomId/students/:studentId", verifyToken, verifyUser, editStudentInformation);
+router.put("/teachers/:id/classrooms/:classroomId/furniture", updateFurniturePositions)
 
+router.put("/teachers/:id/classrooms/:classroomId/students/:studentId", verifyToken, verifyUser, editStudentInformation);
 // router.get('/teachers/:id/students', getAllStudentsForTeacher);
 router.get('/teachers/:id/classrooms/:classroomId', getClassBySubject);
 router.get('/students', getAllStudents);
 
 // ================================================== //
 //check
+router.delete("/teachers/:id/classrooms/:classroomId/furniture/:itemId", deleteFurniture);
+
 router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verifyToken, verifyUser, deleteStudentInClassroom);
 router.put('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);
 router.post("/teachers/:id/classrooms/:classroomId/furniture", addFurniture);

@@ -23,6 +23,7 @@ const teacherSchema = new mongoose.Schema({
               "Empty Desk",
               "Table",
               "Bookcase/Storage",
+              "Chalkboard"
             ],
           },
           x: { type: Number, default: null },

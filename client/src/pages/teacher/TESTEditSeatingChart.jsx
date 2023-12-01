@@ -12,6 +12,7 @@ import {
 } from "../../api/teachersApi";
 import { getBorderColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
+import furnitureShapes from "../../data/furnitureShapes";
 
 
 const TESTEditSeatingChart = () => {
@@ -35,6 +36,8 @@ const TESTEditSeatingChart = () => {
         teacherId,
         classroomId
       );
+
+      console.log("classroom: " + JSON.stringify(classroom))
 
       // Calculate the border color for each student
       const studentsWithBorderColor = classroomStudents.map((student) => {
@@ -203,7 +206,7 @@ const TESTEditSeatingChart = () => {
       //   classroomId,
       //   furnitureData
       // );
-      console.log("Furniture added successfully!", response);
+      // console.log("Furniture added successfully!", response);
     } catch (error) {
       console.error("Error adding furniture:", error);
     }
@@ -244,19 +247,28 @@ const TESTEditSeatingChart = () => {
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
-                <motion.div
-                  dragMomentum={false}
-                  drag
-                  dragElastic={0}
-                  dragPropagation={false}
-                  dragConstraints={constraintsRef}
-                  onDragEnd={handleAddFurniture}
-                  className="absolute border-4 border-[#734e2a] w-28 h-20 rounded bg-[#c7884a]"
-                >
-                  <h3 className="flex text-center items-center h-full break-words">
-                    Teacher's Desk
-                  </h3>
-                </motion.div>
+                {classroom.furniture.map((item) => {
+                  return (
+                    <motion.div
+                      dragMomentum={false}
+                      drag
+                      dragElastic={0}
+                      dragPropagation={false}
+                      dragConstraints={constraintsRef}
+                      onDragEnd={handleAddFurniture}
+                      className={`absolute border-4 border-[#734e2a] ${furnitureShapes.longBar.width} ${furnitureShapes.longBar.height} rounded bg-[#c7884a]`}
+                    >
+                      <h3 className="flex w-full justify-center items-center h-full break-words">
+                        {item.name}
+                      </h3>
+                    </motion.div>
+                  )
+
+                })
+                
+                
+                }
+                
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;

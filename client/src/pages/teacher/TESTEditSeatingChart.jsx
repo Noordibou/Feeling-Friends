@@ -12,6 +12,7 @@ import {
 } from "../../api/teachersApi";
 import { getBorderColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
+import furnitureShapes from "../../data/furnitureShapes";
 
 
 const TESTEditSeatingChart = () => {
@@ -35,6 +36,8 @@ const TESTEditSeatingChart = () => {
         teacherId,
         classroomId
       );
+
+      console.log("classroom: " + JSON.stringify(classroom))
 
       // Calculate the border color for each student
       const studentsWithBorderColor = classroomStudents.map((student) => {
@@ -95,7 +98,7 @@ const TESTEditSeatingChart = () => {
     // Reset coordinates to null in studentPositions
     // const nullPositions = {};
     // classroom.students.forEach((student) => {
-    //   nullPositions[student.student] = { x: null, y: null };
+    //   nullPositions[student.student] = { assigned: false };
     // });
     // setStudentPositions(nullPositions);
   };
@@ -103,6 +106,8 @@ const TESTEditSeatingChart = () => {
   useEffect(() => {
     fetchData();
   }, [teacherId, classroomId]);
+
+  console.log("hey")
 
   const handleDragEnd = (studentId, key, y) => {
     const unassignedSection = document.getElementById(`unassigned-section`);
@@ -117,13 +122,6 @@ const TESTEditSeatingChart = () => {
       y <= unassignedSection.offsetTop &&
       y >= unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
     ) {
-      // Move to unassigned array
-      setUnassignedStudents((prevUnassigned) => [...prevUnassigned, studentId]);
-
-      // Remove from the assigned array
-      setAssignedStudents((prevAssigned) =>
-        prevAssigned.filter((assignedId) => assignedId !== studentId)
-      );
 
       setStudentPositions((prevPositions) => ({
         ...prevPositions,
@@ -135,6 +133,7 @@ const TESTEditSeatingChart = () => {
       }));
     } else {
       // if moving student from unassigned to assigned area
+      // FIXME: Still doesn't save on exact coordinate placement for some reason
       if (coords?.length && key === "unassigned") {
         const unassignedX = parseInt(coords[1]) + unassignedSection.offsetLeft;
         const unassignedY = parseInt(coords[2]) + unassignedSection.offsetTop;
@@ -180,6 +179,7 @@ const TESTEditSeatingChart = () => {
       // });
       const updatedUserData = await getTeacherById(teacherId);
       updateUser(updatedUserData);
+
     } catch (error) {
       console.log("Ooops didnt work");
     }
@@ -201,14 +201,33 @@ const TESTEditSeatingChart = () => {
     );
     try {
       console.log("oh hey");
-      const response = await addFurniture(
-        teacherId,
-        classroomId,
-        furnitureData
-      );
-      console.log("Furniture added successfully!", response);
+      // const response = await addFurniture(
+      //   teacherId,
+      //   classroomId,
+      //   furnitureData
+      // );
+      // console.log("Furniture added successfully!", response);
     } catch (error) {
       console.error("Error adding furniture:", error);
+    }
+  };
+
+  const determineShape = (furnitureName) => {
+    switch (furnitureName.toLowerCase()) {
+      case 'smartboard':
+      case 'chalkboard':
+        return furnitureShapes.longBar;
+      case 'door':
+      case 'window':
+        return furnitureShapes.shortBar;
+      case 'teacher\'s desk':
+      case 'bookcase':
+      case 'table':
+        return furnitureShapes.rectangle;
+      case 'empty desk':
+        return furnitureShapes.square;
+      default:
+        return furnitureShapes.rectangle;
     }
   };
 
@@ -247,19 +266,29 @@ const TESTEditSeatingChart = () => {
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
-                <motion.div
-                  dragMomentum={false}
-                  drag
-                  dragElastic={0}
-                  dragPropagation={false}
-                  dragConstraints={constraintsRef}
-                  onDragEnd={handleAddFurniture}
-                  className="absolute border-4 border-[#734e2a] w-28 h-20 rounded bg-[#c7884a]"
-                >
-                  <h3 className="flex text-center items-center h-full break-words">
-                    Teacher's Desk
-                  </h3>
-                </motion.div>
+                {classroom.furniture.map((item) => {
+                  const shape = determineShape(item.name)
+                  return (
+                    <motion.div
+                      dragMomentum={false}
+                      drag
+                      dragElastic={0}
+                      dragPropagation={false}
+                      dragConstraints={constraintsRef}
+                      onDragEnd={handleAddFurniture}
+                      className={`absolute border-4 border-[#734e2a] ${shape.width} ${shape.height} rounded bg-[#c7884a]`}
+                    >
+                      <h3 className="flex w-full text-center justify-center items-center h-full break-words">
+                        {item.name}
+                      </h3>
+                    </motion.div>
+                  )
+
+                })
+                
+                
+                }
+                
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;

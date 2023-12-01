@@ -432,28 +432,21 @@ const updateStudentSeats = async (req, res) => {
 
 const addFurniture = async (req, res) => {
   try {
-    const teacherId = req.params.teacherId;
+    const teacherId = req.params.id;
     const classroomId = req.params.classroomId;
-    const { furniture } = req.body;
-
-    // Find the teacher by ID
+    const furnitureArray = req.body;
     const teacher = await Teacher.findById(teacherId);
 
     if (!teacher) {
       return res.status(404).json({ error: "Teacher not found" });
     }
 
-    // Find the classroom within the teacher's classrooms
     const classroom = teacher.classrooms.id(classroomId);
 
     if (!classroom) {
       return res.status(404).json({ error: "Classroom not found" });
     }
-
-    // Add the furniture to the classroom's furniture array
-    classroom.furniture.push(...furniture);
-
-    // Save the changes to the teacher's data
+    classroom.furniture.push(...furnitureArray);
     await teacher.save();
 
     res.json({ message: "Furniture added successfully", classroom });

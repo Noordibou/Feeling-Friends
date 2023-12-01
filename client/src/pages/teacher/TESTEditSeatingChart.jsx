@@ -212,6 +212,25 @@ const TESTEditSeatingChart = () => {
     }
   };
 
+  const determineShape = (furnitureName) => {
+    switch (furnitureName.toLowerCase()) {
+      case 'smartboard':
+      case 'chalkboard':
+        return furnitureShapes.longBar;
+      case 'door':
+      case 'window':
+        return furnitureShapes.shortBar;
+      case 'teacher\'s desk':
+      case 'bookcase':
+      case 'table':
+        return furnitureShapes.rectangle;
+      case 'empty desk':
+        return furnitureShapes.square;
+      default:
+        return furnitureShapes.rectangle;
+    }
+  };
+
   return (
     <>
       {" "}
@@ -248,6 +267,7 @@ const TESTEditSeatingChart = () => {
               >
                 {/* Classroom layout here */}
                 {classroom.furniture.map((item) => {
+                  const shape = determineShape(item.name)
                   return (
                     <motion.div
                       dragMomentum={false}
@@ -256,9 +276,9 @@ const TESTEditSeatingChart = () => {
                       dragPropagation={false}
                       dragConstraints={constraintsRef}
                       onDragEnd={handleAddFurniture}
-                      className={`absolute border-4 border-[#734e2a] ${furnitureShapes.longBar.width} ${furnitureShapes.longBar.height} rounded bg-[#c7884a]`}
+                      className={`absolute border-4 border-[#734e2a] ${shape.width} ${shape.height} rounded bg-[#c7884a]`}
                     >
-                      <h3 className="flex w-full justify-center items-center h-full break-words">
+                      <h3 className="flex w-full text-center justify-center items-center h-full break-words">
                         {item.name}
                       </h3>
                     </motion.div>

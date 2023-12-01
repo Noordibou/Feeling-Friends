@@ -39,8 +39,6 @@ const TESTEditSeatingChart = () => {
         classroomId
       );
 
-      console.log("classroom: " + JSON.stringify(classroom))
-
       // Calculate the border color for each student
       const studentsWithBorderColor = classroomStudents.map((student) => {
         const lastJournal =
@@ -109,8 +107,6 @@ const TESTEditSeatingChart = () => {
     fetchData();
   }, [teacherId, classroomId]);
 
-  console.log("hey")
-
   const handleDragEnd = (itemId, key, y) => {
     const unassignedSection = document.getElementById(`unassigned-section`);
     let studentCoords = null;
@@ -141,7 +137,6 @@ const TESTEditSeatingChart = () => {
           },
         }))
       
-        console.log("furniture positions: ", furniturePositions)
     // Check if the assigned element moves to the unassigned section
    } else if (
       unassignedSection &&
@@ -171,7 +166,7 @@ const TESTEditSeatingChart = () => {
             assigned: true,
           },
         }));
-      // moving just inside the classroom and assigned (true) state does not change
+      // moving just inside the classroom and assigned (true); state does not change
       } else {
         setStudentPositions((prevPositions) => ({
           ...prevPositions,

@@ -48,8 +48,21 @@ const CreateClass = () => {
     };
 
     const handleAddStudent = (studentId) => {
-        if (studentId && !newClassData.students.includes(studentId)) {
-            setNewClassData((prevData) => ({ ...prevData, students: [...prevData.students, studentId] }));
+        // Check if the student is already selected
+        const isSelected = newClassData.students.includes(studentId);
+    
+        if (isSelected) {
+            // If selected, remove the student from the array
+            setNewClassData((prevData) => ({
+                ...prevData,
+                students: prevData.students.filter((id) => id !== studentId),
+            }));
+        } else {
+            // If not selected, add the student to the array
+            setNewClassData((prevData) => ({
+                ...prevData,
+                students: [...prevData.students, studentId],
+            }));
         }
     };
 

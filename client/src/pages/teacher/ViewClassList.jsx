@@ -263,7 +263,7 @@ export default function ViewClassList() {
                             <Link to={`/classroom/${userData._id}/${classroomId}`}>Room</Link>
                         </div>
                         <div className="text-body font-body p-[1rem]">
-                            <Link to={`/viewclasslist/${userData._id}/${classroomId}`}>List</Link>
+                            List
                         </div>
                     </div>
                 </div>

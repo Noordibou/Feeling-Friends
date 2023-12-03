@@ -33,13 +33,13 @@ const teacherSchema = new mongoose.Schema({
       ],
       students: [
         {
-          _id: false,
           student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
           seatInfo: {
             x: { type: Number, default: null },
             y: { type: Number, default: null },
             assigned: { type: Boolean, default: false },
           },
+          _id: false,
         },
       ],
     },

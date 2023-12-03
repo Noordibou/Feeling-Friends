@@ -94,7 +94,7 @@ export const getAllStudentsClassroom = async (id, classroomId) => {
 
 export const addStudentToClassroom = async (id, classroomId, newStudent) => {
     try {
-      const response = await axios.post(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, newStudent, { withCredentials: true });
+      const response = await axios.put(`${TEACHERS_API_URL}/${id}/classrooms/${classroomId}/students`, newStudent, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error(error);

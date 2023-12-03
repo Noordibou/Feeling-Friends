@@ -52,11 +52,37 @@ export default function StudentProfile() {
 
     const handleEditIEPClick = () => {
         setEditMode(!editMode);
+
+        if (!studentProfile.iep || studentProfile.iep.length === 0) {
+            setStudentProfile((prevProfile) => ({
+                ...prevProfile,
+                iep: [
+                    {
+                        contentAreaNotices: {
+                            contentArea: "",
+                            benchmark: "",
+                        },
+                        learningChallenges: {
+                            challenge: "",
+                            date: formatDate(new Date()),
+                        },
+                        accomodationsAndAssisstiveTech: {
+                            accomodation: "",
+                            location: "",
+                            frequency: "Daily",
+                        },
+                    },
+                ],
+            }));
+
+            setStudentProfile({
+                ...studentProfile,
+            });
+        }
     };
 
-
     const handleSaveClick = async () => {
-       
+
         try {
             const updatedProfile = await updateStudent(teacherId, classroomId, studentId, studentProfile);
             setStudentProfile(updatedProfile);
@@ -77,21 +103,21 @@ export default function StudentProfile() {
     };
 
     const handleIEPChange = (event, index, field, subField) => {
-
         const updatedIEP = [...studentProfile.iep];
-        
+
         if (field === 'contentAreaNotices') {
-          updatedIEP[index].contentAreaNotices[subField] = event.target.value; 
+            updatedIEP[index].contentAreaNotices[subField] = event.target.value;
         } else {
-          updatedIEP[index][field][subField] = event.target.value;
+            updatedIEP[index][field][subField] = event.target.value;
         }
-      
+
         setStudentProfile({
-          ...studentProfile, 
-          iep: updatedIEP
+            ...studentProfile,
+            iep: updatedIEP,
         });
-      
-      }
+    };
+
+
 
     return (
         <div className="flex flex-col items-center bg-notebookPaper h-full">
@@ -217,7 +243,7 @@ export default function StudentProfile() {
                                         <input
                                             type="text"
                                             value={iepEntry.contentAreaNotices.benchmark}
-                                            onChange={(event) => handleIEPChange(event, index, 'contentAreaNotices','benchmark')}
+                                            onChange={(event) => handleIEPChange(event, index, 'contentAreaNotices', 'benchmark')}
                                         />
                                     </div>
                                 ))
@@ -243,7 +269,7 @@ export default function StudentProfile() {
                                         />
                                         <input
                                             type="text"
-                                            value={formatDate(iepEntry.learningChallenges.date)}
+                                            defaultValue={formatDate(iepEntry.learningChallenges.date)}
                                             onChange={(event) => handleIEPChange(event, index, 'learningChallenges', 'date')}
                                         />
                                     </div>
@@ -296,7 +322,7 @@ export default function StudentProfile() {
                                     </div>
                                 ))
                             )}
-                            
+
                         </div>
                         {editMode ? (
                             <div>
@@ -307,7 +333,7 @@ export default function StudentProfile() {
                                 <button className='underline' onClick={handleEditIEPClick}>Edit IEP</button>
                             </div>
                         )}
-                       
+
                     </div>
                 </div>
 

@@ -1,11 +1,11 @@
-// AddStudent.js
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { addStudentToClassroom } from '../../api/teachersApi';
 
 export default function AddStudent() {
     const { teacherId, classroomId } = useParams();
     const [studentId, setStudentId] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { value } = e.target;
@@ -14,13 +14,9 @@ export default function AddStudent() {
 
     const handleAddStudent = async () => {
         try {
-            // Make an API call to add the student to the classroom using the provided student ID
             await addStudentToClassroom(teacherId, classroomId, { studentId });
-
-            // Clear the form after successful addition
             setStudentId('');
-
-            // You may also want to navigate back to the ViewClassList page or update the state to trigger a re-render
+            navigate(`/viewclasslist/${teacherId}/${classroomId}`);
         } catch (error) {
             console.error(error);
         }

@@ -74,12 +74,20 @@ export default function StudentProfile() {
                     },
                 ],
             }));
-
+        } else {
+    
+            const updatedIEP = [...studentProfile.iep];
+            if (!updatedIEP[0].learningChallenges.date) {
+                updatedIEP[0].learningChallenges.date = formatDate(new Date());
+            }
             setStudentProfile({
                 ...studentProfile,
+                iep: updatedIEP,
             });
         }
     };
+
+
 
     const handleSaveClick = async () => {
 

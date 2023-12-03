@@ -282,11 +282,24 @@ const TESTEditSeatingChart = () => {
                         x: Math.max(0, initialX),
                         y: Math.max(0, initialY),
                       }}
+
                       drag
                       dragElastic={0}
                       dragPropagation={false}
                       dragConstraints={constraintsRef}
                       onDragEnd={() => handleDragEnd(item._id, "furniture")}
+                      // onClick={() => {
+                      //   // Update rotation on click, e.g., rotate by 180 degrees
+                      //   setFurniturePositions((prevPositions) => ({
+                      //     ...prevPositions,
+                      //     [item._id]: {
+                      //       x: prevPositions[item._id].x,
+                      //       y: prevPositions[item._id].y,
+                      //       assigned: true,
+                      //       rotation: (prevPositions[item._id].rotation || 0) + 180,
+                      //     },
+                      //   }));
+                      // }}
                       className={`absolute border-4 border-[#734e2a] ${shape.width} ${shape.height} rounded bg-[#c7884a]`}
                     >
                       <h3 className="flex w-full text-center justify-center items-center h-full break-words">

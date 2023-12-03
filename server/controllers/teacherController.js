@@ -484,6 +484,7 @@ const updateFurniturePositions = async (req, res) => {
         furnitureItem.x = updatedPosition.x;
         furnitureItem.y = updatedPosition.y;
         furnitureItem.assigned = updatedPosition.assigned;
+        furnitureItem.rotation = updatedPosition.rotation
       }
     });
 

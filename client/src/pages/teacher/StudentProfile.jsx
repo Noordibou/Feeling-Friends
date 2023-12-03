@@ -75,7 +75,7 @@ export default function StudentProfile() {
                 ],
             }));
         } else {
-    
+
             const updatedIEP = [...studentProfile.iep];
             if (!updatedIEP[0].learningChallenges.date) {
                 updatedIEP[0].learningChallenges.date = formatDate(new Date());
@@ -130,25 +130,39 @@ export default function StudentProfile() {
     return (
         <div className="flex flex-col items-center bg-notebookPaper h-full">
             <div>
-                <div className="flex flex-row items-center">
+                <div className="flex items-center">
                     <div className={`w-32 rounded-md mr-4 border-8 border-${getBackgroundColorClass(studentProfile?.journalEntries[studentProfile?.journalEntries.length - 1]?.checkout?.ZOR || studentProfile?.journalEntries[studentProfile?.journalEntries.length - 1]?.checkin?.ZOR)}`}>
                         {studentProfile && <img src={youngStudent} alt="Student Avatar" />}
                     </div>
                     <div>
-                        <h2 className="text-header1 font-header1 text-center pt-[4rem]">
-                            <strong> <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>&lt;</Link>
+                        <h2 className="pt-[4rem]">
+                            <div className='flex flex-row '>
+                                <Link className='text-header1 font-header1' to={`/viewclasslist/${teacherId}/${classroomId}`}>&lt;</Link>
                                 {editMode ? (
-                                    <input type="text" name="firstName" value={studentProfile.firstName} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        value={studentProfile.firstName}
+                                        onChange={handleInputChange}
+                                        className="w-1/4 px-2 mx-3 "
+                                    />
                                 ) : (
-                                    <span> {studentProfile?.firstName}</span>
+                                    <span className='text-header1 font-header1 px-2'>{studentProfile?.firstName}</span>
                                 )}
                                 {editMode ? (
-                                    <input type="text" name="lastName" value={studentProfile.lastName} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        value={studentProfile.lastName}
+                                        onChange={handleInputChange}
+                                        className="w-1/4 px-2"
+                                    />
                                 ) : (
-                                    <span> {studentProfile?.lastName}</span>
+                                    <span className='text-header1 font-header1'>{studentProfile?.lastName}</span>
                                 )}
-                            </strong>
+                            </div>
                         </h2>
+
                         <p>Age: {calculateAge(studentProfile?.birthday)}</p>
                         {editMode ? (
                             <div>
@@ -232,7 +246,7 @@ export default function StudentProfile() {
                         )}
                     </div>
                 </div>
-                <div className='mb-20'>
+                <div className='mb-20 max-w-lg'>
                     <div className='mt-6 mb-2'>
                         <h1 className='text-black text-4xl font-bold font-header1'>Individual Education Program (IEP)</h1>
                     </div>
@@ -247,11 +261,13 @@ export default function StudentProfile() {
                                             type="text"
                                             value={iepEntry.contentAreaNotices.contentArea}
                                             onChange={(event) => handleIEPChange(event, index, 'contentAreaNotices', 'contentArea')}
+                                            className='mr-20 pl-2'
                                         />
                                         <input
                                             type="text"
                                             value={iepEntry.contentAreaNotices.benchmark}
                                             onChange={(event) => handleIEPChange(event, index, 'contentAreaNotices', 'benchmark')}
+                                            className='ml-10 pl-2 w-1/3'
                                         />
                                     </div>
                                 ))
@@ -274,11 +290,13 @@ export default function StudentProfile() {
                                             type="text"
                                             value={iepEntry.learningChallenges.challenge}
                                             onChange={(event) => handleIEPChange(event, index, 'learningChallenges', 'challenge')}
+                                            className='mr-14 pl-2  '
                                         />
                                         <input
                                             type="text"
                                             defaultValue={formatDate(iepEntry.learningChallenges.date)}
                                             onChange={(event) => handleIEPChange(event, index, 'learningChallenges', 'date')}
+                                            className='ml-24 pl-4 w-1/4 '
                                         />
                                     </div>
                                 ))
@@ -299,27 +317,36 @@ export default function StudentProfile() {
                             </div>
                             {editMode ? (
                                 studentProfile?.iep.map((iepEntry, index) => (
-                                    <div key={index}>
-                                        <input
-                                            type="text"
-                                            value={iepEntry.accomodationsAndAssisstiveTech.accomodation}
-                                            onChange={(event) => handleIEPChange(event, index, 'accomodationsAndAssisstiveTech', 'accomodation')}
-                                        />
-                                        <select
-                                            value={iepEntry.accomodationsAndAssisstiveTech.frequency}
-                                            onChange={(event) => handleIEPChange(event, index, 'accomodationsAndAssisstiveTech', 'frequency')}
-                                        >
-                                            <option value="Daily">Daily</option>
-                                            <option value="Weekly">Weekly</option>
-                                            <option value="Monthly">Monthly</option>
-                                            <option value="As Needed">As Needed</option>
-                                        </select>
-                                        <input
-                                            type="text"
-                                            value={iepEntry.accomodationsAndAssisstiveTech.location}
-                                            onChange={(event) => handleIEPChange(event, index, 'accomodationsAndAssisstiveTech', 'location')}
-                                        />
+                                    <div key={index} className='flex flex-row'>
+                                    <div className='mr-20'>
+                                      <input
+                                        type="text"
+                                        value={iepEntry.accomodationsAndAssisstiveTech.accomodation}
+                                        onChange={(event) => handleIEPChange(event, index, 'accomodationsAndAssisstiveTech', 'accomodation')}
+                                        className='pl-2'
+                                      />
                                     </div>
+                                    <div  className='inline  px-1'>
+                                      <select
+                                        value={iepEntry.accomodationsAndAssisstiveTech.frequency}
+                                        onChange={(event) => handleIEPChange(event, index, 'accomodationsAndAssisstiveTech', 'frequency')}
+                                       
+                                      >
+                                        <option value="Daily">Daily</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="As Needed">As Needed</option>
+                                      </select>
+                                    </div>
+                                    <div className='inline'>
+                                      <input
+                                        type="text"
+                                        value={iepEntry.accomodationsAndAssisstiveTech.location}
+                                        onChange={(event) => handleIEPChange(event, index, 'accomodationsAndAssisstiveTech', 'location')}
+                                        className='inline px-2 w-24'
+                                      />
+                                    </div>
+                                  </div>
                                 ))
                             ) : (
                                 studentProfile?.iep.map((iepEntry, index) => (
@@ -349,7 +376,7 @@ export default function StudentProfile() {
                 {/* <div className="text-sm font-sm my-6 underline">
                     <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>&lt; Back</Link>
                 </div> */}
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

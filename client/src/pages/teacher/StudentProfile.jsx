@@ -6,6 +6,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import youngStudent from "../../images/young-student.png";
 import "./StudentProfile.css";
+import xButton from '../../images/x-button.png';
 const { calculateAge, formatDate } = require("../../components/dateFormat");
 
 export default function StudentProfile() {
@@ -79,7 +80,7 @@ export default function StudentProfile() {
             accomodationsAndAssisstiveTech: {
               accomodation: "",
               location: "",
-              frequency: "Daily",
+              frequency: "",
             },
           },
         ],
@@ -95,6 +96,50 @@ export default function StudentProfile() {
       });
     }
   };
+
+  const handleIEPAddClick = () => {
+    setStudentProfile((prevProfile) => ({
+      ...prevProfile,
+      iep: [
+        ...prevProfile.iep,
+        {
+          contentAreaNotices: {
+            contentArea: "",
+            benchmark: "",
+          },
+          learningChallenges: {
+            challenge: "",
+            date: formatDate(new Date()),
+          },
+          accomodationsAndAssisstiveTech: {
+            accomodation: "",
+            location: "",
+            frequency: "",
+          },
+        },
+      ],
+    }));
+  };
+
+  const handleIEPDeleteClick = (entryIndex, section) => {
+    setStudentProfile((prevProfile) => {
+      const updatedIEP = [...prevProfile.iep];
+  
+      // Remove the entire section from the IEP entry
+      updatedIEP[entryIndex][section] = undefined;
+  
+      // Filter out any undefined sections from the IEP entry
+      const filteredIEP = updatedIEP.filter((entry) => entry[section] !== undefined);
+  
+      return {
+        ...prevProfile,
+        iep: filteredIEP,
+      };
+    });
+  };
+  
+  
+  
 
   const handleSaveClick = async () => {
     try {
@@ -359,16 +404,21 @@ export default function StudentProfile() {
             <h1 className="text-black text-4xl font-bold font-header1">
               Individual Education Program (IEP)
             </h1>
+            {editModeIEP ? (
+              <button className="underline" onClick={handleIEPAddClick}>
+                Add IEP Entry
+              </button>
+            ) : null}
           </div>
-          <div className="border-4 bg-sandwich border-sandwich rounded-2xl">
-            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
+          <div className="border-4 bg-sandwich border-sandwich rounded-2xl ">
+            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
               <h3 className="font-header4">Content Area Notices</h3>
               <h3 className="underline flex justify-end pb-2">
                 Learning Benchmark
               </h3>
               {editModeIEP
                 ? studentProfile?.iep.map((iepEntry, index) => (
-                    <div key={index}>
+                    <div key={index} className="flex justify-end -mr-3">
                       <input
                         type="text"
                         value={iepEntry.contentAreaNotices.contentArea}
@@ -395,6 +445,19 @@ export default function StudentProfile() {
                         }
                         className="ml-10 pl-2 w-1/3 rounded-md bg-sandwich"
                       />
+                      {editModeIEP ? (
+                        <button
+                            className="ml-1"
+                          onClick={() =>
+                            handleIEPDeleteClick(
+                              index,
+                              "contentAreaNotices"
+                            )
+                          }
+                        >
+                         <img src={xButton} alt="xButton" className="w-4" />
+                        </button>
+                      ) : null}
                     </div>
                   ))
                 : studentProfile?.iep.map((iepEntry, index) => (
@@ -409,7 +472,7 @@ export default function StudentProfile() {
               <p className="underline flex justify-end pb-2">Diagnosed</p>
               {editModeIEP
                 ? studentProfile?.iep.map((iepEntry, index) => (
-                    <div key={index}>
+                    <div key={index} className="flex justify-end -mr-3">
                       <input
                         type="text"
                         value={iepEntry.learningChallenges.challenge}
@@ -438,6 +501,19 @@ export default function StudentProfile() {
                         }
                         className="ml-24 pl-4 w-1/4 rounded-md bg-sandwich"
                       />
+                      {editModeIEP ? (
+                        <button
+                            className="ml-1"
+                          onClick={() =>
+                            handleIEPDeleteClick(
+                              index,
+                              "learningChallenges"
+                            )
+                          }
+                        >
+                         <img src={xButton} alt="xButton" className="w-4" />
+                        </button>
+                      ) : null}
                     </div>
                   ))
                 : studentProfile?.iep.map((iepEntry, index) => (
@@ -455,8 +531,8 @@ export default function StudentProfile() {
               </div>
               {editModeIEP
                 ? studentProfile?.iep.map((iepEntry, index) => (
-                    <div key={index} className="flex flex-row">
-                      <div className="mr-20">
+                    <div key={index} className="flex flex-row justify-end ">
+                      <div className="mr-24">
                         <input
                           type="text"
                           value={
@@ -470,10 +546,10 @@ export default function StudentProfile() {
                               "accomodation"
                             )
                           }
-                          className="pl-2 rounded-md bg-sandwich"
+                          className="pl-2 -ml-4 rounded-md bg-sandwich"
                         />
                       </div>
-                      <div className="inline  px-1">
+                      <div className="inline px-1">
                         <select
                           value={
                             iepEntry.accomodationsAndAssisstiveTech.frequency
@@ -486,7 +562,7 @@ export default function StudentProfile() {
                               "frequency"
                             )
                           }
-                          className="rounded-md bg-sandwich"
+                          className="rounded-md bg-sandwich w-20"
                         >
                           <option value="Daily">Daily</option>
                           <option value="Weekly">Weekly</option>
@@ -494,7 +570,7 @@ export default function StudentProfile() {
                           <option value="As Needed">As Needed</option>
                         </select>
                       </div>
-                      <div className="inline">
+                      <div className="flex flex-row justify-end ">
                         <input
                           type="text"
                           value={
@@ -508,8 +584,21 @@ export default function StudentProfile() {
                               "location"
                             )
                           }
-                          className="inline px-2 w-24 rounded-md bg-sandwich"
+                          className="inline pl-1 w-20 rounded-md bg-sandwich"
                         />
+                         {editModeIEP ? (
+                        <button
+                            className="-mr-3 "
+                          onClick={() =>
+                            handleIEPDeleteClick(
+                              index,
+                              "accomodationsAndAssisstiveTech"
+                            )
+                          }
+                        >
+                         <img src={xButton} alt="xButton" className="w-4 ml-1 " />
+                        </button>
+                      ) : null}
                       </div>
                     </div>
                   ))
@@ -542,7 +631,7 @@ export default function StudentProfile() {
               </div>
             )}
           </div>
-        {/* <div className="text-sm font-sm underline">
+          {/* <div className="text-sm font-sm underline">
           <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>
             &lt; Back
           </Link>

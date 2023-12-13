@@ -271,7 +271,7 @@ const TESTEditSeatingChart = () => {
               >
                 {/* Classroom layout here */}
                 {classroom.furniture.map((item, index) => {
-                  const shape = determineShape(item.name)
+                  const shape = determineShape(item.name);
                   const initialX = item.x;
                   const initialY = item.y;
                   return (
@@ -282,7 +282,6 @@ const TESTEditSeatingChart = () => {
                         x: Math.max(0, initialX),
                         y: Math.max(0, initialY),
                       }}
-
                       drag
                       dragElastic={0}
                       dragPropagation={false}
@@ -300,19 +299,15 @@ const TESTEditSeatingChart = () => {
                       //     },
                       //   }));
                       // }}
-                      className={`absolute border-4 border-[#734e2a] ${shape.width} ${shape.height} rounded bg-[#c7884a]`}
+                      className={`absolute border-4 border-[#734e2a] rounded bg-[#c7884a]`}
                     >
                       <h3 className="flex w-full text-center justify-center items-center h-full break-words">
                         {item.name}
                       </h3>
                     </motion.div>
-                  )
+                  );
+                })}
 
-                })
-                
-                
-                }
-                
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
@@ -353,7 +348,11 @@ const TESTEditSeatingChart = () => {
                             ", for " + assignedStudent.firstName
                           );
 
-                          handleDragEnd(studentObj.student,"assigned",containerY);
+                          handleDragEnd(
+                            studentObj.student,
+                            "assigned",
+                            containerY
+                          );
                         }}
                       >
                         <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender">
@@ -367,48 +366,15 @@ const TESTEditSeatingChart = () => {
                     return null;
                   }
                 })}
+                <div className="flex self-end w-full justify-center my-4">
                 {/* Unassigned Section */}
-                <div
-                  id="unassigned-section"
-                  className="flex self-end h-[200px] w-[680px] bg-lightBlue flex-col"
-                >
-                  <h2 className="pt-3 pl-3 text-header2">
-                    Unassigned Students
-                  </h2>
-                  <div className="flex-wrap flex flex-row  p-2 rounded">
-                    {unassignedStudents.map((studentId, index) => {
-                      const unassignedStudent = students.find(
-                        (student) => student._id === studentId.student
-                      );
-
-                      if (unassignedStudent) {
-                        return (
-                          <motion.div
-                            id={`motion-div-${unassignedStudent._id}`}
-                            key={`unassigned-${index}`}
-                            dragMomentum={false}
-                            drag
-                            dragElastic={0}
-                            dragConstraints={constraintsRef}
-                            onDragEnd={() => {
-                              handleDragEnd(
-                                unassignedStudent._id,
-                                "unassigned"
-                              );
-                            }}
-                            className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
-                          >
-                            <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow">
-                              <span className="bg-white">
-                                {unassignedStudent.firstName}
-                              </span>
-                            </h1>
-                          </motion.div>
-                        );
-                      } else {
-                        return null;
-                      }
-                    })}
+                  <div
+                    id="unassigned-section"
+                    className="flex h-[100px] w-[580px] flex-col rounded border-4 border-darkSandwich"
+                  >
+                    <h2 className="flex justify-center items-center h-full font-semibold text-header2">
+                      Remove Student(s) from Class
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -416,6 +382,31 @@ const TESTEditSeatingChart = () => {
           ) : (
             "Loading..."
           )}
+          <div className="flex flex-row flex-wrap p-2">
+            {unassignedStudents.map((studentId, index) => {
+              const unassignedStudent = students.find(
+                (student) => student._id === studentId.student
+              );
+
+              if (unassignedStudent) {
+                return (
+                  <div
+                    id={`motion-div-${unassignedStudent._id}`}
+                    key={`unassigned-${index}`}
+                    className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
+                  >
+                    <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow">
+                      <span className="bg-white">
+                        {unassignedStudent.firstName}
+                      </span>
+                    </h1>
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
         </div>
       </div>
     </>

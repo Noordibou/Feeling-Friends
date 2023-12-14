@@ -15,6 +15,9 @@ import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
 import furnitureShapes from "../../data/furnitureShapes";
 import AddStudentModal from "../../components/AddStudentsToClass";
+import SampleAvatar from "../../images/Sample_Avatar.png"
+import RosterImg from "../../images/Three People.png"
+import FurnitureImg from "../../images/Desk.png"
 
 
 const TESTEditSeatingChart = () => {
@@ -134,21 +137,7 @@ const TESTEditSeatingChart = () => {
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
 
-            // if moving student from unassigned to assigned area
-      // FIXME: Still doesn't save on exact coordinate placement for some reason
-      if (studentCoords?.length && key === "unassigned") {
-        const unassignedX = parseInt(studentCoords[1]) + unassignedSection.offsetLeft;
-        const unassignedY = parseInt(studentCoords[2]) + unassignedSection.offsetTop;
-        setStudentPositions((prevPositions) => ({
-          ...prevPositions,
-          [itemId]: {
-            x: parseInt(unassignedX),
-            y: parseInt(unassignedY),
-            assigned: true,
-          },
-        }));
-      // moving just inside the classroom and assigned (true); state does not change
-      } else {
+      if (studentCoords?.length) {
         setStudentPositions((prevPositions) => ({
           ...prevPositions,
           [itemId]: {
@@ -159,8 +148,6 @@ const TESTEditSeatingChart = () => {
         }));
       }
     }
-    
-
   };
 
   const handleSave = async () => {
@@ -226,30 +213,11 @@ const TESTEditSeatingChart = () => {
           <h1 className="text-center mt-10 text-header1">
             Edit Classroom Seating Chart
           </h1>
-          <div className="flex w-full justify-around my-8 max-w-3xl">
-            <button
-              className="bg-yellow border p-5 h-10 rounded flex items-center"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button
-              className="bg-orange border p-5 h-10 rounded flex items-center"
-              onClick={unassignAll}
-            >
-              Unassign All
-            </button>
-            <a
-              className="bg-lightLavender border p-5 h-10 rounded flex items-center"
-              href={`/TESTEditSC/${teacherId}/${classroomId}`}
-            >
-              Refresh
-            </a>
-          </div>
+          
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mr-auto ml-auto border-graphite border-[5px]"
+                className="flex w-[752px] h-[61%] rounded-[1rem] mt-10 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
@@ -313,7 +281,7 @@ const TESTEditSeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute mx-1 border-4 ${assignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px] `}
+                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} h-[102px] w-[85px] rounded-2xl `}
                         onClick={() => console.log("click")}
                         onDragEnd={(event, info) => {
                           const containerBounds =
@@ -339,22 +307,25 @@ const TESTEditSeatingChart = () => {
                           );
                         }}
                       >
-                        <h3 className="flex h-full text-center flex-col-reverse bg-lightLavender">
-                          <span className="bg-white">
-                            {assignedStudent.firstName}
-                          </span>
-                        </h3>
+                        <div className="">
+                          <div className="flex w-full justify-center h-full items-center">
+                            <img className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl" src={SampleAvatar}/>
+                          </div>
+                          <h3 className="flex h-full text-center flex-col-reverse">
+                              {assignedStudent.firstName}
+                          </h3>
+                        </div>
                       </motion.div>
                     );
                   } else {
                     return null;
                   }
                 })}
-                <div className="flex self-end w-full justify-center my-4">
+                <div className="flex self-end w-full justify-center mb-8">
                 {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
-                    className="flex items-center h-[100px] w-[580px] flex-col rounded border-4 border-darkSandwich"
+                    className="flex items-center h-[90px] w-[580px] flex-col rounded-2xl border-4 border-darkSandwich"
                     onClick={console.log("Unassign")}
                   >
                     <h2 className="flex items-center h-full font-semibold text-header2">
@@ -367,8 +338,26 @@ const TESTEditSeatingChart = () => {
           ) : (
             "Loading..."
           )}
-          <div className="flex flex-row flex-wrap p-2">
+          {/* <div className="flex flex-row flex-wrap p-2">
             <AddStudentModal unassignedStudents={unassignedStudents} students={students}/>
+          </div> */}
+          <div className="flex flex-row w-full justify-around mt-10">
+            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl">
+              <h5 className="text-[24px]">Student Roster</h5>
+              <img src={RosterImg} />
+            </button>
+            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl">
+              <h5 className="text-[24px]">Classroom Objects</h5>
+              <img src={FurnitureImg} />
+            </button>
+          </div>
+          <div className="flex w-full justify-around max-w-3xl">
+            <button
+              className="bg-yellow border p-5 my-8 h-10 rounded flex items-center"
+              onClick={handleSave}
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>

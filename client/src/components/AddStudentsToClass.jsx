@@ -29,7 +29,7 @@ const AddStudentModal = ({unassignedStudents, students}) => {
                     <div
                         id={`motion-div-${unassignedStudent._id}`}
                         key={`unassigned-${index}`}
-                        className={`mx-1 bg-${unassignedStudent.borderColorClass} h-[99px] w-[99px] rounded-2xl`}
+                        className={`m-2 bg-${unassignedStudent.borderColorClass} h-[99px] w-[99px] rounded-2xl`}
                     >
                         <div className="flex w-full justify-center h-full items-center">
                             <img className="flex object-cover h-[84px] w-[84px] rounded-2xl" src={SampleAvatar} />

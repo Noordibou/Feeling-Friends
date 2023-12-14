@@ -16,6 +16,11 @@ function calculateAge(birthday) {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return ""; // or any default value you prefer
+  }
+  
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
     const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
     const formattedDate = date.toLocaleDateString('en-US', options);

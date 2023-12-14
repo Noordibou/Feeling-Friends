@@ -76,7 +76,7 @@ const ViewClassroom = () => {
 
                 <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto">
                     <div className="text-body font-body p-[1rem] bg-sandwich">
-                        <a href="/viewclassroom">Room</a>
+                        Room
                     </div>
                     <div className="text-body font-body p-[1rem]">
                         <Link to={`/viewclasslist/${userData._id}/${classroomId}`}>List</Link>

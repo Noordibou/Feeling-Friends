@@ -14,6 +14,7 @@ import {
 import { getBorderColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
 import furnitureShapes from "../../data/furnitureShapes";
+import AddStudentModal from "../../components/AddStudentsToClass";
 
 
 const TESTEditSeatingChart = () => {
@@ -277,6 +278,7 @@ const TESTEditSeatingChart = () => {
                   return (
                     <motion.div
                       id={`furniture-${item._id}`}
+                      key={`${item._id}`}
                       dragMomentum={false}
                       initial={{
                         x: Math.max(0, initialX),
@@ -330,6 +332,7 @@ const TESTEditSeatingChart = () => {
                           y: Math.max(0, initialY),
                         }}
                         className={`absolute mx-1 border-4 ${assignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px] `}
+                        onClick={() => console.log("click")}
                         onDragEnd={(event, info) => {
                           const containerBounds =
                             constraintsRef.current.getBoundingClientRect();
@@ -347,7 +350,6 @@ const TESTEditSeatingChart = () => {
                             containerY,
                             ", for " + assignedStudent.firstName
                           );
-
                           handleDragEnd(
                             studentObj.student,
                             "assigned",
@@ -383,29 +385,7 @@ const TESTEditSeatingChart = () => {
             "Loading..."
           )}
           <div className="flex flex-row flex-wrap p-2">
-            {unassignedStudents.map((studentId, index) => {
-              const unassignedStudent = students.find(
-                (student) => student._id === studentId.student
-              );
-
-              if (unassignedStudent) {
-                return (
-                  <div
-                    id={`motion-div-${unassignedStudent._id}`}
-                    key={`unassigned-${index}`}
-                    className={`relative mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
-                  >
-                    <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow">
-                      <span className="bg-white">
-                        {unassignedStudent.firstName}
-                      </span>
-                    </h1>
-                  </div>
-                );
-              } else {
-                return null;
-              }
-            })}
+            <AddStudentModal unassignedStudents={unassignedStudents} students={students}/>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import SampleAvatar from '../images/Sample_Avatar.png'
 
 const AddStudentModal = ({unassignedStudents, students}) => {
 
@@ -16,7 +17,7 @@ const AddStudentModal = ({unassignedStudents, students}) => {
   
   return (
     <>
-        <div className="absolute top-60 left-16 z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
+        <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
             <div className="flex flex-row flex-wrap">
             {unassignedStudents.map((studentId, index) => {
                 const unassignedStudent = students.find(
@@ -28,11 +29,11 @@ const AddStudentModal = ({unassignedStudents, students}) => {
                     <div
                         id={`motion-div-${unassignedStudent._id}`}
                         key={`unassigned-${index}`}
-                        className={`mx-1 border-4 ${unassignedStudent.borderColorClass} rounded-lg h-[80px] w-[80px]`}
+                        className={`mx-1 bg-${unassignedStudent.borderColorClass} h-[99px] w-[99px] rounded-2xl`}
                     >
-                        <h1 className="flex h-full text-center flex-col-reverse bg-lightYellow">
-                        
-                        </h1>
+                        <div className="flex w-full justify-center h-full items-center">
+                            <img className="flex object-cover h-[84px] w-[84px] rounded-2xl" src={SampleAvatar} />
+                        </div>
                     </div>
                     );
                 } else {

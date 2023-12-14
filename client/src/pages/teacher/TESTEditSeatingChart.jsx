@@ -11,7 +11,7 @@ import {
   addFurniture,
   updateFurniturePositions
 } from "../../api/teachersApi";
-import { getBorderColorClass } from "../../components/classRoomColors";
+import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
 import furnitureShapes from "../../data/furnitureShapes";
 import AddStudentModal from "../../components/AddStudentsToClass";
@@ -49,15 +49,15 @@ const TESTEditSeatingChart = () => {
           const lastCheckout = lastJournal.checkout;
           if (lastCheckout && lastCheckout.ZOR) {
             const zor = lastCheckout.ZOR;
-            student.borderColorClass = getBorderColorClass(zor);
+            student.borderColorClass = getBackgroundColorClass(zor);
           } else if (lastCheckin && lastCheckin.ZOR) {
             const zor = lastCheckin.ZOR;
-            student.borderColorClass = getBorderColorClass(zor);
+            student.borderColorClass = getBackgroundColorClass(zor);
           } else {
-            student.borderColorClass = "border-graphite";
+            student.borderColorClass = "darkSandwich";
           }
         } else {
-          student.borderColorClass = "border-graphite";
+          student.borderColorClass = "darkSandwich";
         }
         return student;
       });

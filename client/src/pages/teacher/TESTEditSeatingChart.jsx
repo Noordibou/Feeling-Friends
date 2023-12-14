@@ -370,14 +370,15 @@ const TESTEditSeatingChart = () => {
                 })}
                 <div className="flex self-end w-full justify-center my-4">
                 {/* Unassigned Section */}
-                  <div
+                  <button
                     id="unassigned-section"
-                    className="flex h-[100px] w-[580px] flex-col rounded border-4 border-darkSandwich"
+                    className="flex items-center h-[100px] w-[580px] flex-col rounded border-4 border-darkSandwich"
+                    onClick={console.log("Unassign")}
                   >
-                    <h2 className="flex justify-center items-center h-full font-semibold text-header2">
+                    <h2 className="flex items-center h-full font-semibold text-header2">
                       Remove Student(s) from Class
                     </h2>
-                  </div>
+                  </button>
                 </div>
               </div>
             </>

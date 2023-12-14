@@ -34,6 +34,8 @@ const TESTEditSeatingChart = () => {
   const [studentPositions, setStudentPositions] = useState({});
   const [furniturePositions, setFurniturePositions] = useState({});
 
+  const [showStudentRosterModal, setShowStudentRosterModal] = useState(false);
+
   const fetchData = async () => {
     try {
       const classroom = userData.classrooms.find((c) => c._id === classroomId);
@@ -341,8 +343,12 @@ const TESTEditSeatingChart = () => {
           {/* <div className="flex flex-row flex-wrap p-2">
             <AddStudentModal unassignedStudents={unassignedStudents} students={students}/>
           </div> */}
+          {showStudentRosterModal && (
+            <AddStudentModal onClose={() => setShowStudentRosterModal(false)} unassignedStudents={unassignedStudents} students={students}/>
+
+          )}
           <div className="flex flex-row w-full justify-around mt-10">
-            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl">
+            <button onClick={() => setShowStudentRosterModal(!showStudentRosterModal)} className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl">
               <h5 className="text-[24px]">Student Roster</h5>
               <img src={RosterImg} />
             </button>

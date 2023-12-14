@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SampleAvatar from '../images/Sample_Avatar.png'
 
-const AddStudentModal = ({unassignedStudents, students}) => {
+const AddStudentModal = ({unassignedStudents, students, onClose}) => {
 
 // FIXME: might still need, could switch the x and y coords to null 
     // setStudentPositions((prevPositions) => ({
@@ -40,6 +40,9 @@ const AddStudentModal = ({unassignedStudents, students}) => {
                     return null;
                 }
                 })}
+            </div>
+            <div className="flex h-[400px] w-full justify-center items-end">
+                <button className="w-32 h-10 bg-lightLavender self-end" onClick={onClose}>Close</button>
             </div>
         </div>
     </>

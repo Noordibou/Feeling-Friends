@@ -118,17 +118,7 @@ const TESTEditSeatingChart = () => {
       furnishCoords = furnitureDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
-      
-    } else {
-      const motionDiv = document.getElementById(`motion-div-${itemId}`);
-      studentCoords = motionDiv.style.transform.match(
-        /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
-      );
-    }
-    
-    
 
-      if (key === "furniture") {
         setFurniturePositions((prevPositions) => ({
           ...prevPositions,
           [itemId]: {
@@ -138,23 +128,13 @@ const TESTEditSeatingChart = () => {
           },
         }))
       
-    // Check if the assigned element moves to the unassigned section
-   } else if (
-      unassignedSection &&
-      y <= unassignedSection.offsetTop &&
-      y >= unassignedSection.offsetTop - unassignedSection.offsetHeight * 1.5
-    ) {
-
-      setStudentPositions((prevPositions) => ({
-        ...prevPositions,
-        [itemId]: {
-          x: parseInt(studentCoords[1]),
-          y: parseInt(studentCoords[2]),
-          assigned: false,
-        },
-      }));
     } else {
-      // if moving student from unassigned to assigned area
+      const motionDiv = document.getElementById(`motion-div-${itemId}`);
+      studentCoords = motionDiv.style.transform.match(
+        /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
+      );
+
+            // if moving student from unassigned to assigned area
       // FIXME: Still doesn't save on exact coordinate placement for some reason
       if (studentCoords?.length && key === "unassigned") {
         const unassignedX = parseInt(studentCoords[1]) + unassignedSection.offsetLeft;
@@ -179,6 +159,8 @@ const TESTEditSeatingChart = () => {
         }));
       }
     }
+    
+
   };
 
   const handleSave = async () => {
@@ -267,7 +249,7 @@ const TESTEditSeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[690px] h-[75%] rounded-[1rem] mr-auto ml-auto border-sandwich border-[5px]"
+                className="flex w-[752px] h-[61%] rounded-[1rem] mr-auto ml-auto border-graphite border-[5px]"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}

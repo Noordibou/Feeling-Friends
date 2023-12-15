@@ -13,8 +13,6 @@ const AddStudentModal = ({unassignedStudents, students, onClose}) => {
     //     },
     //   }));
 
-
-  
   return (
     <>
         <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">

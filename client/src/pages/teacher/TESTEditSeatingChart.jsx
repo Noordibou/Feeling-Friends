@@ -35,6 +35,30 @@ const TESTEditSeatingChart = () => {
   const [furniturePositions, setFurniturePositions] = useState({});
 
   const [showStudentRosterModal, setShowStudentRosterModal] = useState(false);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+
+  const handleStudentClick = (studentId) => {
+    // Toggle the selected state of the student
+    setSelectedStudents((prevSelected) => {
+      if (prevSelected.includes(studentId)) {
+        // If student is already selected, remove them
+        return prevSelected.filter((id) => id !== studentId);
+      } else {
+        // If student is not selected, add them
+        return [...prevSelected, studentId];
+      }
+    });
+  };
+
+  const handleRemoveStudents = () => {
+    // Move selected students to the unassigned array
+    setUnassignedStudents((prevUnassigned) => [
+      ...prevUnassigned,
+      ...selectedStudents,
+    ]);
+    // Clear the selected students
+    setSelectedStudents([]);
+  };
 
   const fetchData = async () => {
     try {
@@ -269,7 +293,9 @@ const TESTEditSeatingChart = () => {
                   const assignedStudent = students.find(
                     (student) => student._id === studentObj.student
                   );
+
                   if (assignedStudent) {
+                    // console.log("assigned student: " + JSON.stringify(assignedStudent))
                     return (
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
@@ -283,8 +309,14 @@ const TESTEditSeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} h-[102px] w-[85px] rounded-2xl `}
-                        onClick={() => console.log("click")}
+                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} h-[102px] w-[85px] rounded-2xl ${
+                          selectedStudents.includes(studentObj.student)
+                            ? "border-black border-4" // Apply black border if selected
+                            : ""
+                        }`}
+                        onClick={() => {
+                          handleStudentClick(studentObj.student)
+                        }}
                         onDragEnd={(event, info) => {
                           const containerBounds =
                             constraintsRef.current.getBoundingClientRect();
@@ -328,9 +360,9 @@ const TESTEditSeatingChart = () => {
                   <button
                     id="unassigned-section"
                     className="flex items-center h-[90px] w-[580px] flex-col rounded-2xl border-4 border-darkSandwich"
-                    onClick={console.log("Unassign")}
+                    onClick={handleRemoveStudents}
                   >
-                    <h2 className="flex items-center h-full font-semibold text-header2">
+                    <h2 className="flex items-center h-full font-semibold text-header2 bg-lightLavender">
                       Remove Student(s) from Class
                     </h2>
                   </button>

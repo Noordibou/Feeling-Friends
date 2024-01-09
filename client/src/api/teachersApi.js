@@ -166,7 +166,7 @@ export const updateFurniturePositions = async (teacherId, classroomId, updatedPo
     console.log("updated positions: " + JSON.stringify(updatedPositions))
     try {
       const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, updatedPositions);
-      console.log("response data:  " + response.data)
+      console.log("response data:  " + JSON.stringify(response.data))
       return response.data;
     } catch (error) {
       console.log("Oops, an error has occurred: " + error);

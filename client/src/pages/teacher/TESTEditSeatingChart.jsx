@@ -211,9 +211,9 @@ const TESTEditSeatingChart = () => {
 
     if(key === "furniture") {
       const furnitureDiv = document.getElementById(`furniture-${itemId}`);
-      furnishCoords = furnitureDiv.style.transform.match(
-        /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
-      );
+      furnishCoords = furnitureDiv.style.transform.match(/translateX\(([^)]+)px\) translateY\(([^)]+)px\)/);
+
+      console.log("furnish coords: " + furnishCoords)
 
         if (furnishCoords) {
         setFurniturePositions((prevPositions) => ({
@@ -222,8 +222,11 @@ const TESTEditSeatingChart = () => {
             x: parseInt(furnishCoords[1]),
             y: parseInt(furnishCoords[2]),
             assigned: true,
+            rotation: furniturePositions[itemId]?.rotation,
           },
         }))
+      } else {
+        console.log("woops, no furnished coords")
       }
       
     } else {
@@ -258,16 +261,23 @@ const TESTEditSeatingChart = () => {
     }));
 
 
+    console.log("furniture positions/? : " + JSON.stringify(furniturePositions))
+
     const updatedFurniturePositions = Object.keys(furniturePositions).map((itemId) => {
+
       const furniture = furniturePositions[itemId];
+      console.log("furniture: " + JSON.stringify(furniture))
       return {
         itemId,
         x: furniture.x,
         y: furniture.y,
         assigned: furniture.assigned,
-        rotation: furniture.rotation || 0,
+        // rotation: furniture.rotation || 0,
       };
     });
+
+    console.log("updated funriture positions: " + JSON.stringify(updatedFurniturePositions))
+
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       await updateFurniturePositions(teacherId, classroomId, updatedFurniturePositions);
@@ -348,8 +358,8 @@ const TESTEditSeatingChart = () => {
                       onClick={() => {
                         if(!isDragging) {
                         setFurniturePositions((prevPositions) => {
-                          console.log("prevPostition: " + JSON.stringify(prevPositions))
-                          const prevRotation = prevPositions[item._id]?.rotation || 0;
+                          
+                          const prevRotation = item?.rotation || 0;
                           const newRotation = prevRotation + 90;
                           return {
                           ...prevPositions,

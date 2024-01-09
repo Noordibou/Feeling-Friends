@@ -355,10 +355,10 @@ const TESTEditSeatingChart = () => {
                         if(!isDragging) {
                           
                         setFurniturePositions((prevPositions) => {
-                          
+                          console.log("furniture positions rotatteeetet: " + furniturePositions[item._id]?.rotation)
                           const prevRotation = furniturePositions[item._id]?.rotation || item.rotation || 0;
                           const newRotation = prevRotation + 90;
-
+                          console.log("prevRotation: " + prevRotation)
                           console.log("newRotation: " + newRotation)
 
                           return {
@@ -367,7 +367,7 @@ const TESTEditSeatingChart = () => {
                             x: item.x,
                             y: item.y,
                             assigned: true,
-                            rotation: newRotation % 360,
+                            rotation: newRotation,
                           },
                         }
                         });

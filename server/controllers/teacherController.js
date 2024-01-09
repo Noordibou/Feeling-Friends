@@ -483,7 +483,7 @@ const updateFurniturePositions = async (req, res) => {
         furnitureItem.x = updatedPosition.x;
         furnitureItem.y = updatedPosition.y;
         furnitureItem.assigned = updatedPosition.assigned;
-        furnitureItem.rotation = updatedPosition.rotation
+        furnitureItem.rotation = (updatedPosition.rotation % 360 === 0 ? 0 : updatedPosition.rotation % 360)
       }
     });
 

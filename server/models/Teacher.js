@@ -29,6 +29,7 @@ const teacherSchema = new mongoose.Schema({
           x: { type: Number, default: null },
           y: { type: Number, default: null },
           assigned: { type: Boolean, default: false },
+          rotation: { type: Number, default: 0 }
         },
       ],
       students: [

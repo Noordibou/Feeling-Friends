@@ -37,27 +37,66 @@ const TESTEditSeatingChart = () => {
   const [showStudentRosterModal, setShowStudentRosterModal] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-  const handleStudentClick = (studentId) => {
+  const [isDragging, setIsDragging] = useState(false)
+
+  const handleStudentClick = (currentStudentObj) => {
     // Toggle the selected state of the student
     setSelectedStudents((prevSelected) => {
-      if (prevSelected.includes(studentId)) {
-        // If student is already selected, remove them
-        return prevSelected.filter((id) => id !== studentId);
+  
+      if (prevSelected.some((student) => student.student === currentStudentObj.student)) {
+        // If student is already selected, remove the entire object
+        return prevSelected.filter((student) => student.student !== currentStudentObj.student);
       } else {
         // If student is not selected, add them
-        return [...prevSelected, studentId];
+        return [...prevSelected, currentStudentObj];
       }
     });
   };
 
-  const handleRemoveStudents = () => {
-    // Move selected students to the unassigned array
-    setUnassignedStudents((prevUnassigned) => [
-      ...prevUnassigned,
-      ...selectedStudents,
-    ]);
-    // Clear the selected students
-    setSelectedStudents([]);
+  const handleRemoveStudents = async () => {
+    try {
+      // Move selected students to the unassigned array
+      const updatedUnassignedStudents = [
+        ...unassignedStudents,
+        ...assignedStudents.filter((student) =>
+          selectedStudents.includes(student.student)
+        ),
+      ];
+
+      console.log("Updated Unassigned : " + JSON.stringify(updatedUnassignedStudents)) 
+  
+      // Remove selected students from assigned array
+      const updatedAssignedStudents = assignedStudents.filter(
+        (student) => !selectedStudents.includes(student.student)
+      );
+
+      console.log("Updated Assigned: " + JSON.stringify(updatedAssignedStudents))
+  
+      // Update the local state immediately
+      setUnassignedStudents(updatedUnassignedStudents);
+      setAssignedStudents(updatedAssignedStudents);
+  
+      // Clear the selected students
+      setSelectedStudents([]);
+  
+      // Prepare data for backend update
+      const updatedPositions = updatedAssignedStudents.map((student) => ({
+        student: student.student,
+        seatInfo: {
+          x: student.seatInfo.x,
+          y: student.seatInfo.y,
+          assigned: student.seatInfo.assigned,
+          rotation: student.seatInfo.rotation || 0,
+        },
+      }));
+  
+      // Update the backend data immediately
+      await updateSeatingChart(teacherId, classroomId, updatedPositions);
+  
+      console.log("Students unassigned and saved successfully!");
+    } catch (error) {
+      console.error("Error removing and saving students:", error);
+    }
   };
 
   const fetchData = async () => {
@@ -119,35 +158,64 @@ const TESTEditSeatingChart = () => {
     }
   };
 
-  // FIXME: need to fix so that it only updates the assigned boolean
-  const unassignAll = () => {
-    // Reset assigned and unassigned students
-    setUnassignedStudents(classroom.students.map((student) => student.student));
-    setAssignedStudents([]);
+  const handleConfirmModal = () => {
+    // Copy the current state of assigned and unassigned students
+    const newAssignedStudents = [...assignedStudents];
+    const newUnassignedStudents = [...unassignedStudents];
+    
+    // Iterate over selected students and move them from unassigned to assigned
+    selectedStudents.forEach((studentId) => {
+      const student = newUnassignedStudents.find(
+        (unassignedStudent) => unassignedStudent.student === studentId
+      );
+  
+      console.log("student in removing studnet for unassigned: " + JSON.stringify(student))
+      if (student) {
+        // Remove from unassigned
+        newUnassignedStudents.splice(
+          newUnassignedStudents.indexOf(student),
+          1
+        );
+  
+        // Add to assigned
+        newAssignedStudents.push(student);
+      }
+    });
+  
+    // Update state with the new assigned and unassigned students
+    setAssignedStudents(newAssignedStudents);
+    setUnassignedStudents(newUnassignedStudents);
+  
+    // Clear the selected students
+    setSelectedStudents([]);
+    console.log("WOOO: " + JSON.stringify(newAssignedStudents) + "< " + JSON.stringify(newUnassignedStudents))
 
-    // Reset coordinates to null in studentPositions
-    // const nullPositions = {};
-    // classroom.students.forEach((student) => {
-    //   nullPositions[student.student] = { assigned: false };
-    // });
-    // setStudentPositions(nullPositions);
+    // Optional: You might want to update the backend here as well
+    // Call your backend API to update the seating chart with the new data
+    updateSeatingChart(teacherId, classroomId, /* Updated positions data */);
+  
+    // Log for confirmation
+    console.log("Students assigned successfully!");
   };
 
   useEffect(() => {
+    console.log("Unassigned studnetsss: " + JSON.stringify(unassignedStudents))
     fetchData();
   }, [teacherId, classroomId]);
 
   const handleDragEnd = (itemId, key, y) => {
-    const unassignedSection = document.getElementById(`unassigned-section`);
     let studentCoords = null;
     let furnishCoords = null;
     
+    if (constraintsRef.current) {
+
     if(key === "furniture") {
       const furnitureDiv = document.getElementById(`furniture-${itemId}`);
       furnishCoords = furnitureDiv.style.transform.match(
         /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
       );
 
+        if (furnishCoords) {
         setFurniturePositions((prevPositions) => ({
           ...prevPositions,
           [itemId]: {
@@ -156,6 +224,7 @@ const TESTEditSeatingChart = () => {
             assigned: true,
           },
         }))
+      }
       
     } else {
       const motionDiv = document.getElementById(`motion-div-${itemId}`);
@@ -174,19 +243,21 @@ const TESTEditSeatingChart = () => {
         }));
       }
     }
+    }
   };
 
   const handleSave = async () => {
-    const updatedPositions = students.map((student) => {
-      const updatedPosition = {
+    const updatedPositions = students.map((student) => ({
         student: student._id,
+        seatInfo: {
         x: studentPositions[student._id].x,
         y: studentPositions[student._id].y,
         assigned: studentPositions[student._id].assigned,
-      };
+        rotation: studentPositions[student._id].rotation,
+      }
+    }));
 
-      return updatedPosition;
-    });
+
     const updatedFurniturePositions = Object.keys(furniturePositions).map((itemId) => {
       const furniture = furniturePositions[itemId];
       return {
@@ -194,6 +265,7 @@ const TESTEditSeatingChart = () => {
         x: furniture.x,
         y: furniture.y,
         assigned: furniture.assigned,
+        rotation: furniture.rotation || 0,
       };
     });
     try {
@@ -259,24 +331,37 @@ const TESTEditSeatingChart = () => {
                       initial={{
                         x: Math.max(0, initialX),
                         y: Math.max(0, initialY),
+                        rotate: item.rotation || 0,
+                      }}
+                      animate={{
+                        rotate: furniturePositions[item._id]?.rotation || 0,
                       }}
                       drag
                       dragElastic={0}
                       dragPropagation={false}
                       dragConstraints={constraintsRef}
-                      onDragEnd={() => handleDragEnd(item._id, "furniture")}
-                      // onClick={() => {
-                      //   // Update rotation on click, e.g., rotate by 180 degrees
-                      //   setFurniturePositions((prevPositions) => ({
-                      //     ...prevPositions,
-                      //     [item._id]: {
-                      //       x: prevPositions[item._id].x,
-                      //       y: prevPositions[item._id].y,
-                      //       assigned: true,
-                      //       rotation: (prevPositions[item._id].rotation || 0) + 180,
-                      //     },
-                      //   }));
-                      // }}
+                      onDragStart={() => setIsDragging(true)}
+                      onDragEnd={() => {
+                        handleDragEnd(item._id, "furniture")
+                        setIsDragging(false)
+                      }}
+                      onClick={() => {
+                        if(!isDragging) {
+                        setFurniturePositions((prevPositions) => {
+                          console.log("prevPostition: " + JSON.stringify(prevPositions))
+                          const prevRotation = prevPositions[item._id]?.rotation || 0;
+                          const newRotation = prevRotation + 90;
+                          return {
+                          ...prevPositions,
+                          [item._id]: {
+                            x: item.x,
+                            y: item.y,
+                            assigned: true,
+                            rotation: newRotation % 360,
+                          },
+                        }
+                        });
+                      }}}
                       className={`absolute border-4 border-[#734e2a] rounded bg-[#c7884a]`}
                     >
                       <h3 className="flex w-full text-center justify-center items-center h-full break-words">
@@ -295,7 +380,6 @@ const TESTEditSeatingChart = () => {
                   );
 
                   if (assignedStudent) {
-                    // console.log("assigned student: " + JSON.stringify(assignedStudent))
                     return (
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
@@ -315,7 +399,7 @@ const TESTEditSeatingChart = () => {
                             : ""
                         }`}
                         onClick={() => {
-                          handleStudentClick(studentObj.student)
+                          handleStudentClick(studentObj)
                         }}
                         onDragEnd={(event, info) => {
                           const containerBounds =
@@ -376,7 +460,7 @@ const TESTEditSeatingChart = () => {
             <AddStudentModal unassignedStudents={unassignedStudents} students={students}/>
           </div> */}
           {showStudentRosterModal && (
-            <AddStudentModal onClose={() => setShowStudentRosterModal(false)} unassignedStudents={unassignedStudents} students={students}/>
+            <AddStudentModal onClose={() => setShowStudentRosterModal(false)} unassignedStudents={unassignedStudents} students={students} onConfirm={handleConfirmModal}/>
 
           )}
           <div className="flex flex-row w-full justify-around mt-10">

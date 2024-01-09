@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SampleAvatar from '../images/Sample_Avatar.png'
+import SampleAvatar from '../../images/Sample_Avatar.png'
 
 const AddStudentModal = ({unassignedStudents, students, onClose,onConfirm}) => {
 

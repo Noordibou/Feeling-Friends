@@ -13,11 +13,11 @@ import {
 } from "../../api/teachersApi";
 import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
-import furnitureShapes from "../../data/furnitureShapes";
-import AddStudentModal from "../../components/AddStudentsToClass";
+import AddStudentModal from "../../components/SeatingChart/AddStudentsToClass";
 import SampleAvatar from "../../images/Sample_Avatar.png"
 import RosterImg from "../../images/Three People.png"
 import FurnitureImg from "../../images/Desk.png"
+import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 
 
 const TESTEditSeatingChart = () => {
@@ -37,7 +37,6 @@ const TESTEditSeatingChart = () => {
   const [showStudentRosterModal, setShowStudentRosterModal] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-  const [isDragging, setIsDragging] = useState(false)
 
   const handleStudentClick = (currentStudentObj) => {
     // Toggle the selected state of the student
@@ -290,24 +289,7 @@ const TESTEditSeatingChart = () => {
     }
   };
 
-  const determineShape = (furnitureName) => {
-    switch (furnitureName) {
-      case 'Smartboard':
-      case 'Chalkboard':
-        return furnitureShapes.longBar;
-      case 'Door':
-      case 'Window':
-        return furnitureShapes.shortBar;
-      case 'Teacher\'s Desk':
-      case 'Bookcase':
-      case 'Table':
-        return furnitureShapes.rectangle;
-      case 'Empty Desk':
-        return furnitureShapes.square;
-      default:
-        return furnitureShapes.rectangle;
-    }
-  };
+
 
   return (
     <>
@@ -317,7 +299,7 @@ const TESTEditSeatingChart = () => {
           <h1 className="text-center mt-10 text-header1">
             Edit Classroom Seating Chart
           </h1>
-          
+
           {classroom ? (
             <>
               <div
@@ -325,61 +307,14 @@ const TESTEditSeatingChart = () => {
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
-                {classroom.furniture.map((item, index) => {
-                  const shape = determineShape(item.name);
-                  const initialX = item.x;
-                  const initialY = item.y;
-                  return (
-                    <motion.div
-                      id={`furniture-${item._id}`}
-                      key={`${item._id}`}
-                      dragMomentum={false}
-                      initial={{
-                        x: Math.max(0, initialX),
-                        y: Math.max(0, initialY),
-                        rotate: item.rotation || 0,
-                      }}
-                      animate={{
-                        rotate: furniturePositions[item._id]?.rotation || item.rotation || 0,
-                      }}
-                      drag
-                      dragElastic={0.1}
-                      dragPropagation={false}
-                      dragConstraints={constraintsRef}
-                      onDragStart={() => setIsDragging(true)}
-                      onDragEnd={() => {
-                        handleDragEnd(item._id, "furniture")
-                        setIsDragging(false)
-                      }}
-                      onClick={() => {
-                        if(!isDragging) {
-                          
-                        setFurniturePositions((prevPositions) => {
-                          console.log("furniture positions rotatteeetet: " + furniturePositions[item._id]?.rotation)
-                          const prevRotation = furniturePositions[item._id]?.rotation || item.rotation || 0;
-                          const newRotation = prevRotation + 90;
-                          console.log("prevRotation: " + prevRotation)
-                          console.log("newRotation: " + newRotation)
 
-                          return {
-                          ...prevPositions,
-                          [item._id]: {
-                            x: item.x,
-                            y: item.y,
-                            assigned: true,
-                            rotation: newRotation,
-                          },
-                        }
-                        });
-                      }}}
-                      className={`absolute border-4 border-[#734e2a] rounded bg-[#c7884a]`}
-                    >
-                      <h3 className="flex w-full text-center justify-center items-center h-full break-words">
-                        {item.name}
-                      </h3>
-                    </motion.div>
-                  );
-                })}
+                <ClassroomFurniture
+                  classroom={classroom}
+                  setFurniturePositions={setFurniturePositions}
+                  furniturePositions={furniturePositions}
+                  constraintsRef={constraintsRef}
+                  handleDragEnd={handleDragEnd}
+                />
 
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
@@ -403,13 +338,15 @@ const TESTEditSeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} h-[102px] w-[85px] rounded-2xl ${
+                        className={`absolute mx-1 bg-${
+                          assignedStudent.borderColorClass
+                        } h-[102px] w-[85px] rounded-2xl ${
                           selectedStudents.includes(studentObj.student)
                             ? "border-black border-4" // Apply black border if selected
                             : ""
                         }`}
                         onClick={() => {
-                          handleStudentClick(studentObj)
+                          handleStudentClick(studentObj);
                         }}
                         onDragEnd={(event, info) => {
                           const containerBounds =
@@ -437,10 +374,13 @@ const TESTEditSeatingChart = () => {
                       >
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
-                            <img className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl" src={SampleAvatar}/>
+                            <img
+                              className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
+                              src={SampleAvatar}
+                            />
                           </div>
                           <h3 className="flex h-full text-center flex-col-reverse">
-                              {assignedStudent.firstName}
+                            {assignedStudent.firstName}
                           </h3>
                         </div>
                       </motion.div>
@@ -450,7 +390,7 @@ const TESTEditSeatingChart = () => {
                   }
                 })}
                 <div className="flex self-end w-full justify-center mb-8">
-                {/* Unassigned Section */}
+                  {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
                     className="flex items-center h-[90px] w-[580px] flex-col rounded-2xl border-4 border-darkSandwich"
@@ -466,15 +406,20 @@ const TESTEditSeatingChart = () => {
           ) : (
             "Loading..."
           )}
-          {/* <div className="flex flex-row flex-wrap p-2">
-            <AddStudentModal unassignedStudents={unassignedStudents} students={students}/>
-          </div> */}
-          {showStudentRosterModal && (
-            <AddStudentModal onClose={() => setShowStudentRosterModal(false)} unassignedStudents={unassignedStudents} students={students} onConfirm={handleConfirmModal}/>
 
+          {showStudentRosterModal && (
+            <AddStudentModal
+              onClose={() => setShowStudentRosterModal(false)}
+              unassignedStudents={unassignedStudents}
+              students={students}
+              onConfirm={handleConfirmModal}
+            />
           )}
           <div className="flex flex-row w-full justify-around mt-10">
-            <button onClick={() => setShowStudentRosterModal(!showStudentRosterModal)} className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl">
+            <button
+              onClick={() => setShowStudentRosterModal(!showStudentRosterModal)}
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl"
+            >
               <h5 className="text-[24px]">Student Roster</h5>
               <img src={RosterImg} />
             </button>

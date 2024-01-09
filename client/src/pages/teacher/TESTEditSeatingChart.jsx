@@ -256,12 +256,8 @@ const TESTEditSeatingChart = () => {
         x: studentPositions[student._id].x,
         y: studentPositions[student._id].y,
         assigned: studentPositions[student._id].assigned,
-        rotation: studentPositions[student._id].rotation,
       }
     }));
-
-
-    console.log("furniture positions/? : " + JSON.stringify(furniturePositions))
 
     const updatedFurniturePositions = Object.keys(furniturePositions).map((itemId) => {
 
@@ -272,7 +268,7 @@ const TESTEditSeatingChart = () => {
         x: furniture.x,
         y: furniture.y,
         assigned: furniture.assigned,
-        // rotation: furniture.rotation || 0,
+        rotation: furniture.rotation || 0,
       };
     });
 
@@ -344,10 +340,10 @@ const TESTEditSeatingChart = () => {
                         rotate: item.rotation || 0,
                       }}
                       animate={{
-                        rotate: furniturePositions[item._id]?.rotation || 0,
+                        rotate: furniturePositions[item._id]?.rotation || item.rotation || 0,
                       }}
                       drag
-                      dragElastic={0}
+                      dragElastic={0.1}
                       dragPropagation={false}
                       dragConstraints={constraintsRef}
                       onDragStart={() => setIsDragging(true)}
@@ -357,10 +353,14 @@ const TESTEditSeatingChart = () => {
                       }}
                       onClick={() => {
                         if(!isDragging) {
+                          
                         setFurniturePositions((prevPositions) => {
                           
-                          const prevRotation = item?.rotation || 0;
+                          const prevRotation = furniturePositions[item._id]?.rotation || item.rotation || 0;
                           const newRotation = prevRotation + 90;
+
+                          console.log("newRotation: " + newRotation)
+
                           return {
                           ...prevPositions,
                           [item._id]: {

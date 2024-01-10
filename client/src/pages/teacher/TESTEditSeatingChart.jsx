@@ -19,7 +19,6 @@ import RosterImg from "../../images/Three People.png"
 import FurnitureImg from "../../images/Desk.png"
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 
-
 const TESTEditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
   const { userData, updateUser } = useUser();
@@ -288,8 +287,6 @@ const TESTEditSeatingChart = () => {
       console.log("Ooops didnt work");
     }
   };
-
-
 
   return (
     <>

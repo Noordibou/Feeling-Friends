@@ -18,6 +18,7 @@ import SampleAvatar from "../../images/Sample_Avatar.png"
 import RosterImg from "../../images/Three People.png"
 import FurnitureImg from "../../images/Desk.png"
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
+import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 
 const TESTEditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -313,7 +314,7 @@ const TESTEditSeatingChart = () => {
                   handleDragEnd={handleDragEnd}
                 />
 
-                {assignedStudents.map((studentObj, index) => {
+{/* {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
 
@@ -385,7 +386,8 @@ const TESTEditSeatingChart = () => {
                   } else {
                     return null;
                   }
-                })}
+                })} */}
+                <AssignedStudent assignedStudents={assignedStudents} students={students} constraintsRef={constraintsRef} selectedStudents={selectedStudents} handleStudentClick={handleStudentClick} handleDragEnd={handleDragEnd}/>
                 <div className="flex self-end w-full justify-center mb-8">
                   {/* Unassigned Section */}
                   <button

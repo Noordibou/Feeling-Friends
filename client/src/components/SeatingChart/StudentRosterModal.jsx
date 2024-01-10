@@ -53,14 +53,27 @@ const AddStudentModal = ({unassignedStudents, students, onClose, onConfirm}) => 
   return (
     <>
         <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
-            <div className="flex flex-row flex-wrap">
+
+          <div className="flex h-full flex-col">
+            <div className="flex flex-row h-3/4 flex-wrap overflow-y-auto">
                 <UnassignedStudent unassignedStudents={unassignedStudents} students={students} selectedStudent={selectedStudent} addSelectedStudent={addSelectedStudent}/>
             </div>
-            <div className="flex h-[400px] w-full justify-center items-end">
-                <button className="w-32 h-10 bg-lightLavender self-end" onClick={() => {
-                    onConfirm(selectedStudent)
-                    onClose()
-                }}>Confirm</button>
+
+            <div className="flex items-center h-1/3 justify-center">
+            <button
+              id="unassigned-section"
+              className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
+              onClick={() => {
+                onConfirm(selectedStudent)
+                onClose()
+            }}
+            >
+              <h2 className="flex items-center h-full font-semibold text-header2">
+                Confirm
+              </h2>
+            </button>
+          </div>
+
             </div>
         </div>
     </>

@@ -18,11 +18,12 @@ const teacherSchema = new mongoose.Schema({
             enum: [
               "Smartboard",
               "Teacher's Desk",
-              "Door",
+              "Entry",
               "Window",
               "Empty Desk",
               "Table",
-              "Bookcase/Storage",
+              "Bookcase",
+              "Storage",
               "Chalkboard"
             ],
           },

@@ -11,28 +11,13 @@ const ClassroomFurniture = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
-  const determineShape = (furnitureName) => {
-    switch (furnitureName) {
-      case "Smartboard":
-      case "Chalkboard":
-        return furnitureShapes.longBar;
-      case "Door":
-      case "Window":
-        return furnitureShapes.shortBar;
-      case "Teacher's Desk":
-      case "Bookcase":
-      case "Table":
-        return furnitureShapes.rectangle;
-      case "Empty Desk":
-        return furnitureShapes.square;
-      default:
-        return furnitureShapes.rectangle;
-    }
-  };
+
   return (
     <>
       {classroom.furniture.map((item, index) => {
-        const shape = determineShape(item.name);
+        const shape = furnitureShapes.find((shape) => shape.name === item.name);
+        console.log("Item: " + JSON.stringify(item.name))
+        // console.log("shape: " + JSON.stringify(shape))
         const initialX = item.x;
         const initialY = item.y;
         return (
@@ -85,11 +70,13 @@ const ClassroomFurniture = ({
                 });
               }
             }}
-            className={`absolute border-4 border-[#734e2a] rounded bg-[#c7884a]`}
+            className={`absolute ${shape.style.width} ${shape.style.height}`}
           >
-            <h3 className="flex w-full text-center justify-center items-center h-full break-words">
-              {item.name}
-            </h3>
+            <img
+             className="flex w-full h-full"
+             src={shape.src}
+             alt={shape.alt}
+            />
           </motion.div>
         );
       })}

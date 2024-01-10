@@ -13,7 +13,7 @@ import {
 } from "../../api/teachersApi";
 import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
-import AddStudentModal from "../../components/SeatingChart/AddStudentsToClass";
+import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import RosterImg from "../../images/Three People.png"
 import FurnitureImg from "../../images/Desk.png"
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import furniture from "../../data/furnitureShapes";
+import CancelImg from "../../images/x-button.png"
 
 const AddFurnitureToClassroom = ({}) => {
   // TODO: How to do this
@@ -13,8 +14,14 @@ const AddFurnitureToClassroom = ({}) => {
   return (
     <>
       {/* Modal */}
-      <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 px-10 pb-10 pt-5 rounded">
-        <h2 className="font-[Poppins] text-[24px] mb-5">
+      <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 rounded">
+      <div className="flex flex-col w-full bg-darkTeal items-end">
+        <button onClick={() => console.log("Click click")}>
+            <img className="absolute -top-6 -right-6" src={CancelImg} alt="close student roster" />
+        </button>
+      </div>
+      <div className="px-10 pb-10 flex h-full flex-col">
+        <h2 className="font-[Poppins] text-[24px] my-5">
           Tap to add objects to the classroom
         </h2>
         <div className="flex h-full flex-col ">
@@ -48,6 +55,7 @@ const AddFurnitureToClassroom = ({}) => {
               </h2>
             </button>
           </div>
+        </div>
         </div>
       </div>
     </>

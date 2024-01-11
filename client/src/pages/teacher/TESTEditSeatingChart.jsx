@@ -370,7 +370,7 @@ const TESTEditSeatingChart = () => {
             </button>
 
             {/* TODO: Create Modal */}
-            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(!showStudentRosterModal)}>
+            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(!showFurnitureModal)}>
               <h5 className="text-[24px]">Classroom Objects</h5>
               <img src={FurnitureImg} />
             </button>

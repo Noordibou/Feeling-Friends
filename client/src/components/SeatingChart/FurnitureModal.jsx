@@ -57,13 +57,14 @@ const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, onC
           {/* Container for Furniture */}
           <div className="flex flex-row w-full flex-wrap h-96 items-center justify-center overflow-y-auto">
             {furniture.map((item, key) => {
+              const isSelectedItem = isSelected.some((selectedItem) => selectedItem.name === item.name);
 
               return (
                 <>
                   <div
                     id={`furniture-${key}`}
                     key={`${key}`}
-                    className={`flex rounded-2xl ${item.style.width} ${item.style.height} m-5`}
+                    className={`flex rounded-2xl ${item.style.width} ${item.style.height} ${isSelectedItem ? 'border-2 border-black' : ''} m-5`}
                     onClick={() => handleClick(item)}
                   >
                     <img

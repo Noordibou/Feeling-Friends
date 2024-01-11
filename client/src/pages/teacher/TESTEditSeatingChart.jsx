@@ -18,6 +18,7 @@ import RosterImg from "../../images/Three People.png"
 import FurnitureImg from "../../images/Desk.png"
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
+import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 
 const TESTEditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -34,6 +35,7 @@ const TESTEditSeatingChart = () => {
   const [furniturePositions, setFurniturePositions] = useState({});
 
   const [showStudentRosterModal, setShowStudentRosterModal] = useState(false);
+  const [showFurnitureModal, setShowFurnitureModal] = useState(false)
   const [selectedStudents, setSelectedStudents] = useState([]);
 
 
@@ -198,6 +200,7 @@ const TESTEditSeatingChart = () => {
 
   useEffect(() => {
     console.log("Unassigned studnetsss: " + JSON.stringify(unassignedStudents))
+    
     fetchData();
   }, [teacherId, classroomId]);
 
@@ -347,6 +350,16 @@ const TESTEditSeatingChart = () => {
               onConfirm={handleConfirmModal}
             />
           )}
+          {showFurnitureModal && (
+            <FurnitureModal
+              onClose={() => setShowFurnitureModal(false)}
+              classroom={classroom}
+              setFurniturePositions={setFurniturePositions}
+              furniturePositions={furniturePositions}
+              onConfirm={handleConfirmModal}
+            />
+          )}
+
           <div className="flex flex-row w-full justify-around mt-10">
             <button
               onClick={() => setShowStudentRosterModal(!showStudentRosterModal)}
@@ -357,7 +370,7 @@ const TESTEditSeatingChart = () => {
             </button>
 
             {/* TODO: Create Modal */}
-            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl">
+            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(!showStudentRosterModal)}>
               <h5 className="text-[24px]">Classroom Objects</h5>
               <img src={FurnitureImg} />
             </button>

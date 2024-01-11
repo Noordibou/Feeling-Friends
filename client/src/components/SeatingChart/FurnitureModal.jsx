@@ -3,12 +3,41 @@ import { motion, useMotionValue } from "framer-motion";
 import furniture from "../../data/furnitureShapes";
 import CancelImg from "../../images/x-button.png"
 
-const AddFurnitureToClassroom = ({}) => {
+const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, onConfirm}) => {
   // TODO: How to do this
   // // when user clicks on a certain furniture, it will be added to the furniture list array and be submitted to backend.
   // // need furniture to refresh based on backend, does it already do that?
 
+  // // handleClick
+  // if clicked, add to an array with appropriate information from db
+  // then, in the map, do .find to check if it's within the array, and if so, apply border.
 
+  const [isSelected, setIsSelected] = useState([])
+
+  const handleClick = (furnitureItem) => {
+
+    const newFurniture = {
+      name: furnitureItem.name,
+      x: 0,
+      y: 0,
+      assigned: true,
+      rotation: 0,
+    };
+
+    const alreadySelected = isSelected.find((item) => newFurniture.name === item.name)
+    
+    if (!alreadySelected) {
+      setIsSelected([...isSelected, newFurniture])
+    } else {
+      // need to get it unselected, remove it from isSelected Array
+      const updatedSelection = isSelected.filter((item) => item.name !== alreadySelected.name )
+      setIsSelected(updatedSelection)
+    }
+
+    // need to add new furniture with 0, 0 coordinates, rotation 0. new Id should be added via backend
+    // need to check if controller function has been already created to add furniture items to db
+
+  }
 
 
   return (
@@ -26,17 +55,21 @@ const AddFurnitureToClassroom = ({}) => {
         </h2>
         <div className="flex h-full flex-col ">
           {/* Container for Furniture */}
-          <div className="flex flex-row flex-wrap h-96 items-center justify-center overflow-y-auto">
+          <div className="flex flex-row w-full flex-wrap h-96 items-center justify-center overflow-y-auto">
             {furniture.map((item, key) => {
+
               return (
                 <>
                   <div
                     id={`furniture-${key}`}
                     key={`${key}`}
-                    className={`flex ${item.style.width} ${item.style.height} m-5`}
+                    className={`flex rounded-2xl ${item.style.width} ${item.style.height} m-5`}
+                    onClick={() => handleClick(item)}
                   >
                     <img
-                      className="flex w-full h-full"
+                      id={`furniture-img-${key}`}
+                      key={`img-${key}`}
+                      className={`flex rounded-2xl w-full h-full`}
                       src={item.src}
                       alt={item.alt}
                     />
@@ -62,4 +95,4 @@ const AddFurnitureToClassroom = ({}) => {
   );
 };
 
-export default AddFurnitureToClassroom;
+export default FurnitureModal;

@@ -344,7 +344,7 @@ const TESTEditSeatingChart = () => {
 
           {showStudentRosterModal && (
             <AddStudentModal
-              onClose={() => setShowStudentRosterModal(false)}
+              setShowStudentRosterModal={setShowStudentRosterModal}
               unassignedStudents={unassignedStudents}
               students={students}
               onConfirm={handleConfirmModal}
@@ -352,7 +352,7 @@ const TESTEditSeatingChart = () => {
           )}
           {showFurnitureModal && (
             <FurnitureModal
-              onClose={() => setShowFurnitureModal(false)}
+              setShowFurnitureModal={setShowFurnitureModal}
               classroom={classroom}
               teacherId={teacherId}
               classroomId={classroomId}
@@ -361,6 +361,8 @@ const TESTEditSeatingChart = () => {
           )}
 
           <div className="flex flex-row w-full justify-around mt-10">
+
+            {/* Open Choose Students Modal */}
             <button
               onClick={() => setShowStudentRosterModal(!showStudentRosterModal)}
               className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl"
@@ -369,8 +371,8 @@ const TESTEditSeatingChart = () => {
               <img src={RosterImg} />
             </button>
 
-            {/* TODO: Create Modal */}
-            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(!showFurnitureModal)}>
+            {/* Open Choose Furniture Modal */}
+            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(true)}>
               <h5 className="text-[24px]">Classroom Objects</h5>
               <img src={FurnitureImg} />
             </button>

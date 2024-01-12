@@ -4,7 +4,7 @@ import furniture from "../../data/furnitureShapes";
 import CancelImg from "../../images/x-button.png"
 import { addFurniture } from "../../api/teachersApi";
 
-const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, teacherId, classroomId }) => {
+const FurnitureModal = ({ setShowFurnitureModal, setFuriturePositions, furniturePositions, teacherId, classroomId }) => {
   // TODO: How to do this
   // // when user clicks on a certain furniture, it will be added to the furniture list array and be submitted to backend.
   // // need furniture to refresh based on backend, does it already do that?
@@ -44,18 +44,23 @@ const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, tea
     try {
       await addFurniture(teacherId, classroomId, isSelected)
       setIsSelected([])
+      onClose()
     } catch (error) {
       console.error("An error occured adding furniture: ", error)
     }
+  }
+
+  const onClose = () => {
+    setShowFurnitureModal(false)
   }
 
 
   return (
     <>
       {/* Modal */}
-      <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 rounded">
+      <div className="absolute top-44 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 rounded">
       <div className="flex flex-col w-full bg-darkTeal items-end">
-        <button onClick={() => console.log("Click click")}>
+        <button onClick={onClose}>
             <img className="absolute -top-6 -right-6" src={CancelImg} alt="close student roster" />
         </button>
       </div>

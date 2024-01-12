@@ -3,7 +3,7 @@ import SampleAvatar from '../../images/Sample_Avatar.png'
 import UnassignedStudent from "./UnassignedStudent";
 import CancelImg from "../../images/x-button.png"
 
-const AddStudentModal = ({unassignedStudents, students, onClose, onConfirm}) => {
+const AddStudentModal = ({unassignedStudents, students, setShowStudentRosterModal, onConfirm}) => {
 
 // FIXME: might still need, could switch the x and y coords to null 
     // setStudentPositions((prevPositions) => ({
@@ -51,11 +51,16 @@ const AddStudentModal = ({unassignedStudents, students, onClose, onConfirm}) => 
         onClose();
       };
 
+
+      const onClose = () => {
+        setShowStudentRosterModal(false)
+      }
+
   return (
     <>
         <div className="absolute top-60 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
         <div className="flex flex-col w-full bg-darkTeal items-end">
-        <button onClick={() => console.log("Click click")}>
+        <button onClick={onClose}>
             <img className="absolute -top-6 -right-6" src={CancelImg} alt="close student roster" />
         </button>
       </div>
@@ -69,8 +74,7 @@ const AddStudentModal = ({unassignedStudents, students, onClose, onConfirm}) => 
               id="unassigned-section"
               className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
               onClick={() => {
-                onConfirm(selectedStudent)
-                onClose()
+                onConfirm()
             }}
             >
               <h2 className="flex items-center h-full font-semibold text-header2">

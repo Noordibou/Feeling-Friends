@@ -354,8 +354,8 @@ const TESTEditSeatingChart = () => {
             <FurnitureModal
               onClose={() => setShowFurnitureModal(false)}
               classroom={classroom}
-              setFurniturePositions={setFurniturePositions}
-              furniturePositions={furniturePositions}
+              teacherId={teacherId}
+              classroomId={classroomId}
               onConfirm={handleConfirmModal}
             />
           )}

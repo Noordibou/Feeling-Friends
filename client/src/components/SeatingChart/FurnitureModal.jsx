@@ -2,8 +2,9 @@ import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import furniture from "../../data/furnitureShapes";
 import CancelImg from "../../images/x-button.png"
+import { addFurniture } from "../../api/teachersApi";
 
-const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, onConfirm}) => {
+const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, teacherId, classroomId }) => {
   // TODO: How to do this
   // // when user clicks on a certain furniture, it will be added to the furniture list array and be submitted to backend.
   // // need furniture to refresh based on backend, does it already do that?
@@ -37,6 +38,15 @@ const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, onC
     // need to add new furniture with 0, 0 coordinates, rotation 0. new Id should be added via backend
     // need to check if controller function has been already created to add furniture items to db
 
+  }
+
+  const onConfirm = async () => {
+    try {
+      await addFurniture(teacherId, classroomId, isSelected)
+      setIsSelected([])
+    } catch (error) {
+      console.error("An error occured adding furniture: ", error)
+    }
   }
 
 
@@ -83,6 +93,7 @@ const FurnitureModal = ({ onClose, setFuriturePositions, furniturePositions, onC
             <button
               id="unassigned-section"
               className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
+              onClick={() => onConfirm()}
             >
               <h2 className="flex items-center h-full font-semibold text-header2">
                 Confirm

@@ -38,59 +38,54 @@ const TESTEditSeatingChart = () => {
   const [showFurnitureModal, setShowFurnitureModal] = useState(false)
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-
+// being used with AssignedStudent Component
   const handleStudentClick = (currentStudentObj) => {
     // Toggle the selected state of the student
     setSelectedStudents((prevSelected) => {
   
-      if (prevSelected.some((student) => student.student === currentStudentObj.student)) {
+      const alreadySelected = prevSelected.some((student) => student.student === currentStudentObj.student)
+      if (alreadySelected) {
         // If student is already selected, remove the entire object
         return prevSelected.filter((student) => student.student !== currentStudentObj.student);
-      } else {
+      } else if (!alreadySelected) {
         // If student is not selected, add them
-        return [...prevSelected, currentStudentObj];
+        const updatedStudentObj = {
+          student: currentStudentObj.student,
+          seatInfo: {
+            x: null,
+            y: null,
+            assigned: false,
+          }
+        };
+        setSelectedStudents([...selectedStudents, updatedStudentObj])
       }
     });
+
+    console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents))
   };
 
   const handleRemoveStudents = async () => {
     try {
-      // Move selected students to the unassigned array
-      const updatedUnassignedStudents = [
-        ...unassignedStudents,
-        ...assignedStudents.filter((student) =>
-          selectedStudents.includes(student.student)
-        ),
-      ];
-
-      console.log("Updated Unassigned : " + JSON.stringify(updatedUnassignedStudents)) 
-  
-      // Remove selected students from assigned array
-      const updatedAssignedStudents = assignedStudents.filter(
-        (student) => !selectedStudents.includes(student.student)
-      );
-
-      console.log("Updated Assigned: " + JSON.stringify(updatedAssignedStudents))
-  
-      // Update the local state immediately
-      setUnassignedStudents(updatedUnassignedStudents);
-      setAssignedStudents(updatedAssignedStudents);
-  
+      
       // Clear the selected students
-      setSelectedStudents([]);
+      
   
       // Prepare data for backend update
-      const updatedPositions = updatedAssignedStudents.map((student) => ({
-        student: student.student,
-        seatInfo: {
-          x: student.seatInfo.x,
-          y: student.seatInfo.y,
-          assigned: student.seatInfo.assigned,
-        },
-      }));
+      // const updatedPositions = updatedAssignedStudents.map((student) => ({
+      //   student: student.student,
+      //   seatInfo: {
+      //     x: student.seatInfo.x,
+      //     y: student.seatInfo.y,
+      //     assigned: student.seatInfo.assigned,
+      //   },
+      // }));
+
+      // TODO: need to put assigned and unassigned list together and send to backend,
+      // // look at student modal for more info?
   
       // Update the backend data immediately
-      await updateSeatingChart(teacherId, classroomId, updatedPositions);
+      await updateSeatingChart(teacherId, classroomId, selectedStudents);
+      setSelectedStudents([]);
   
       console.log("Students unassigned and saved successfully!");
     } catch (error) {
@@ -157,6 +152,8 @@ const TESTEditSeatingChart = () => {
     }
   };
 
+
+  // FIXME: !!! NOT CURRENTLY BEING USED !!! //
   const handleConfirmModal = () => {
     // Copy the current state of assigned and unassigned students
     const newAssignedStudents = [...assignedStudents];
@@ -327,10 +324,10 @@ const TESTEditSeatingChart = () => {
                   {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
-                    className="flex items-center h-[90px] w-[580px] flex-col rounded-2xl border-4 border-darkSandwich"
+                    className="flex items-center h-[80px] w-[550px] flex-col rounded-2xl border-4 border-darkSandwich"
                     onClick={handleRemoveStudents}
                   >
-                    <h2 className="flex items-center h-full font-semibold text-header2 bg-lightLavender">
+                    <h2 className="flex items-center h-full font-semibold text-[24px] font-[Poppins]">
                       Remove Student(s) from Class
                     </h2>
                   </button>
@@ -348,12 +345,8 @@ const TESTEditSeatingChart = () => {
               students={students}
               teacherId={teacherId}
               classroomId={classroomId}
-              onConfirm={handleConfirmModal}
               setStudentPositions={setStudentPositions}
-              setUnassignedStudents={setUnassignedStudents}
               setAssignedStudents={setAssignedStudents}
-              setSelectedStudents={setSelectedStudents}
-              selectedStudents={selectedStudents}
               fetchData={fetchData}
             />
           )}
@@ -363,7 +356,6 @@ const TESTEditSeatingChart = () => {
               classroom={classroom}
               teacherId={teacherId}
               classroomId={classroomId}
-              onConfirm={handleConfirmModal}
             />
           )}
 
@@ -374,13 +366,13 @@ const TESTEditSeatingChart = () => {
               onClick={() => setShowStudentRosterModal(!showStudentRosterModal)}
               className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl"
             >
-              <h5 className="text-[24px]">Student Roster</h5>
+              <h5 className="text-[24px] font-[Poppins]">Student Roster</h5>
               <img src={RosterImg} />
             </button>
 
             {/* Open Choose Furniture Modal */}
             <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(true)}>
-              <h5 className="text-[24px]">Classroom Objects</h5>
+              <h5 className="text-[24px] font-[Poppins]">Classroom Objects</h5>
               <img src={FurnitureImg} />
             </button>
           </div>

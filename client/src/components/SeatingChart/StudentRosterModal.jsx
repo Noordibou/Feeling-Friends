@@ -8,12 +8,8 @@ const AddStudentModal = ({
   unassignedStudents,
   students,
   setShowStudentRosterModal,
-  onConfirm,
   teacherId,
   classroomId,
-  setUnassignedStudents,
-  setSelectedStudents,
-  selectedStudents,
   fetchData
 }) => {
   // FIXME: might still need, could switch the x and y coords to null

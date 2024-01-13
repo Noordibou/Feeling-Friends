@@ -15,6 +15,11 @@ const AssignedStudent = ({ assignedStudents, students, constraintsRef, selectedS
                   );
 
                   if (assignedStudent) {
+
+                    const selectedStyling = selectedStudents.some((selected)=> {
+                      console.log("selected id: " + selected.student)
+                      return selected.student === studentObj.student})
+
                     return (
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
@@ -30,11 +35,7 @@ const AssignedStudent = ({ assignedStudents, students, constraintsRef, selectedS
                         }}
                         className={`absolute mx-1 bg-${
                           assignedStudent.borderColorClass
-                        } pb-1 px-[6px] rounded-2xl ${
-                          selectedStudents.includes(studentObj.student)
-                            ? "border-black border-4" // Apply black border if selected
-                            : ""
-                        }`}
+                        } pb-1 px-[6px] rounded-2xl ${ selectedStyling ? "border-4 border-black" : "" }`}
                         onClick={() => {
                           handleStudentClick(studentObj);
                         }}

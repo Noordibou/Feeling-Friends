@@ -11,7 +11,6 @@ const ClassroomFurniture = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
-
   return (
     <>
       {classroom.furniture.map((item, index) => {
@@ -44,17 +43,11 @@ const ClassroomFurniture = ({
             onClick={() => {
               if (!isDragging) {
                 setFurniturePositions((prevPositions) => {
-                  console.log(
-                    "furniture positions rotatteeetet: " +
-                      furniturePositions[item._id]?.rotation
-                  );
                   const prevRotation =
                     furniturePositions[item._id]?.rotation ||
                     item.rotation ||
                     0;
                   const newRotation = prevRotation + 90;
-                  console.log("prevRotation: " + prevRotation);
-                  console.log("newRotation: " + newRotation);
 
                   return {
                     ...prevPositions,
@@ -71,9 +64,9 @@ const ClassroomFurniture = ({
             className={`absolute ${shape.style.width} ${shape.style.height}`}
           >
             <img
-             className="flex w-full h-full"
-             src={shape.src}
-             alt={shape.alt}
+              className="flex w-full h-full"
+              src={shape.src}
+              alt={shape.alt}
             />
           </motion.div>
         );

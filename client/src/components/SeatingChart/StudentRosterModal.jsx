@@ -10,46 +10,35 @@ const AddStudentModal = ({
   setShowStudentRosterModal,
   teacherId,
   classroomId,
-  fetchData
+  fetchData,
 }) => {
-  // FIXME: might still need, could switch the x and y coords to null
-  // setStudentPositions((prevPositions) => ({
-  //     ...prevPositions,
-  //     [itemId]: {
-  //       x: parseInt(studentCoords[1]),
-  //       y: parseInt(studentCoords[2]),
-  //       assigned: false,
-  //     },
-  //   }));
-
-  // TODO: Need to be able to add students back to the assigned students array
-
-
-  const [studentSelection, setStudentSelection] = useState([])
+  const [studentSelection, setStudentSelection] = useState([]);
 
   const unassignedStudSelection = (studentObj) => {
-    const alreadySelected = studentSelection.find((student) => student.student === studentObj.student)
+    const alreadySelected = studentSelection.find(
+      (student) => student.student === studentObj.student
+    );
 
-    console.log("student Obj: " + JSON.stringify(studentObj))
-    if(!alreadySelected) {
+    console.log("student Obj: " + JSON.stringify(studentObj));
+    if (!alreadySelected) {
       const updatedStudentObj = {
         student: studentObj.student,
         seatInfo: {
           x: 0,
           y: 0,
           assigned: true,
-        }
+        },
       };
-      setStudentSelection([...studentSelection, updatedStudentObj])
+      setStudentSelection([...studentSelection, updatedStudentObj]);
     } else {
-      const updatedSelection = studentSelection.filter((student) => student.student !== alreadySelected.student)
-      setStudentSelection(updatedSelection)
+      const updatedSelection = studentSelection.filter(
+        (student) => student.student !== alreadySelected.student
+      );
+      setStudentSelection(updatedSelection);
     }
-    console.log("student selection: " + JSON.stringify(studentSelection))
-  }
+    console.log("student selection: " + JSON.stringify(studentSelection));
+  };
 
-  // TODO: save studentSelection array to backend
-  // TODO: check if I need to add the student Selection to assignedStudents array, or if it's already set up to do so?
   const handleConfirm = () => {
     updateSeatingChart(teacherId, classroomId, studentSelection);
     fetchData();
@@ -60,7 +49,7 @@ const AddStudentModal = ({
 
   const onClose = () => {
     setShowStudentRosterModal(false);
-    setStudentSelection([])
+    setStudentSelection([]);
   };
 
   return (
@@ -82,8 +71,6 @@ const AddStudentModal = ({
               students={students}
               unassignedStudSelection={unassignedStudSelection}
               studentSelection={studentSelection}
-              // selectedStudent={selectedStudent} probably don't need this?
-              // addSelectedStudent={addSelectedStudent} Probably need this
             />
           </div>
 

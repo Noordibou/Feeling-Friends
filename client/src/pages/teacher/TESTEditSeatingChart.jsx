@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
-  getTeacherClassroom,
   getAllStudentsClassroom,
   updateSeatingChart,
   getTeacherById,
-  addFurniture,
-  updateFurniturePositions
+  updateFurniturePositions,
 } from "../../api/teachersApi";
 import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
-import RosterImg from "../../images/Three People.png"
-import FurnitureImg from "../../images/Desk.png"
+import RosterImg from "../../images/Three People.png";
+import FurnitureImg from "../../images/Desk.png";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
@@ -35,18 +32,21 @@ const TESTEditSeatingChart = () => {
   const [furniturePositions, setFurniturePositions] = useState({});
 
   const [showStudentRosterModal, setShowStudentRosterModal] = useState(false);
-  const [showFurnitureModal, setShowFurnitureModal] = useState(false)
+  const [showFurnitureModal, setShowFurnitureModal] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-// being used with AssignedStudent Component
+  // being used with AssignedStudent Component
   const handleStudentClick = (currentStudentObj) => {
     // Toggle the selected state of the student
     setSelectedStudents((prevSelected) => {
-  
-      const alreadySelected = prevSelected.some((student) => student.student === currentStudentObj.student)
+      const alreadySelected = prevSelected.some(
+        (student) => student.student === currentStudentObj.student
+      );
       if (alreadySelected) {
         // If student is already selected, remove the entire object
-        return prevSelected.filter((student) => student.student !== currentStudentObj.student);
+        return prevSelected.filter(
+          (student) => student.student !== currentStudentObj.student
+        );
       } else if (!alreadySelected) {
         // If student is not selected, add them
         const updatedStudentObj = {
@@ -55,38 +55,21 @@ const TESTEditSeatingChart = () => {
             x: null,
             y: null,
             assigned: false,
-          }
+          },
         };
-        setSelectedStudents([...selectedStudents, updatedStudentObj])
+        setSelectedStudents([...selectedStudents, updatedStudentObj]);
       }
     });
 
-    console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents))
+    console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents));
   };
 
   const handleRemoveStudents = async () => {
     try {
-      
-      // Clear the selected students
-      
-  
-      // Prepare data for backend update
-      // const updatedPositions = updatedAssignedStudents.map((student) => ({
-      //   student: student.student,
-      //   seatInfo: {
-      //     x: student.seatInfo.x,
-      //     y: student.seatInfo.y,
-      //     assigned: student.seatInfo.assigned,
-      //   },
-      // }));
-
-      // TODO: need to put assigned and unassigned list together and send to backend,
-      // // look at student modal for more info?
-  
       // Update the backend data immediately
       await updateSeatingChart(teacherId, classroomId, selectedStudents);
       setSelectedStudents([]);
-  
+
       console.log("Students unassigned and saved successfully!");
     } catch (error) {
       console.error("Error removing and saving students:", error);
@@ -152,128 +135,139 @@ const TESTEditSeatingChart = () => {
     }
   };
 
-
   // FIXME: !!! NOT CURRENTLY BEING USED !!! //
   const handleConfirmModal = () => {
     // Copy the current state of assigned and unassigned students
     const newAssignedStudents = [...assignedStudents];
     const newUnassignedStudents = [...unassignedStudents];
-    
+
     // Iterate over selected students and move them from unassigned to assigned
     selectedStudents.forEach((studentId) => {
       const student = newUnassignedStudents.find(
         (unassignedStudent) => unassignedStudent.student === studentId
       );
-  
-      console.log("student in removing studnet for unassigned: " + JSON.stringify(student))
+
+      console.log(
+        "student in removing studnet for unassigned: " + JSON.stringify(student)
+      );
       if (student) {
         // Remove from unassigned
-        newUnassignedStudents.splice(
-          newUnassignedStudents.indexOf(student),
-          1
-        );
-  
+        newUnassignedStudents.splice(newUnassignedStudents.indexOf(student), 1);
+
         // Add to assigned
         newAssignedStudents.push(student);
       }
     });
-  
+
     // Update state with the new assigned and unassigned students
     setAssignedStudents(newAssignedStudents);
     setUnassignedStudents(newUnassignedStudents);
-  
+
     // Clear the selected students
     setSelectedStudents([]);
-    console.log("WOOO: " + JSON.stringify(newAssignedStudents) + "< " + JSON.stringify(newUnassignedStudents))
+    console.log(
+      "WOOO: " +
+        JSON.stringify(newAssignedStudents) +
+        "< " +
+        JSON.stringify(newUnassignedStudents)
+    );
 
     // Optional: You might want to update the backend here as well
     // Call your backend API to update the seating chart with the new data
-    updateSeatingChart(teacherId, classroomId, /* Updated positions data */);
-  
+    updateSeatingChart(teacherId, classroomId /* Updated positions data */);
+
     // Log for confirmation
     console.log("Students assigned successfully!");
   };
 
   useEffect(() => {
-    console.log("Unassigned studnetsss: " + JSON.stringify(unassignedStudents))
-    
+    console.log("Unassigned studnetsss: " + JSON.stringify(unassignedStudents));
+
     fetchData();
   }, [teacherId, classroomId]);
 
   const handleDragEnd = (itemId, key, y) => {
     let studentCoords = null;
     let furnishCoords = null;
-    
+
     if (constraintsRef.current) {
+      if (key === "furniture") {
+        const furnitureDiv = document.getElementById(`furniture-${itemId}`);
+        furnishCoords = furnitureDiv.style.transform.match(
+          /translateX\(([^)]+)px\) translateY\(([^)]+)px\)/
+        );
 
-    if(key === "furniture") {
-      const furnitureDiv = document.getElementById(`furniture-${itemId}`);
-      furnishCoords = furnitureDiv.style.transform.match(/translateX\(([^)]+)px\) translateY\(([^)]+)px\)/);
-
-      console.log("furnish coords: " + furnishCoords)
+        console.log("furnish coords: " + furnishCoords);
 
         if (furnishCoords) {
-        setFurniturePositions((prevPositions) => ({
-          ...prevPositions,
-          [itemId]: {
-            x: parseInt(furnishCoords[1]),
-            y: parseInt(furnishCoords[2]),
-            assigned: true,
-            rotation: furniturePositions[itemId]?.rotation,
-          },
-        }))
+          setFurniturePositions((prevPositions) => ({
+            ...prevPositions,
+            [itemId]: {
+              x: parseInt(furnishCoords[1]),
+              y: parseInt(furnishCoords[2]),
+              assigned: true,
+              rotation: furniturePositions[itemId]?.rotation,
+            },
+          }));
+        } else {
+          console.log("woops, no furnished coords");
+        }
       } else {
-        console.log("woops, no furnished coords")
-      }
-      
-    } else {
-      const motionDiv = document.getElementById(`motion-div-${itemId}`);
-      studentCoords = motionDiv.style.transform.match(
-        /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
-      );
+        const motionDiv = document.getElementById(`motion-div-${itemId}`);
+        studentCoords = motionDiv.style.transform.match(
+          /^translateX\((.+)px\) translateY\((.+)px\) translateZ/
+        );
 
-      if (studentCoords?.length) {
-        setStudentPositions((prevPositions) => ({
-          ...prevPositions,
-          [itemId]: {
-            x: parseInt(studentCoords[1]),
-            y: parseInt(studentCoords[2]),
-            assigned: true,
-          },
-        }));
+        if (studentCoords?.length) {
+          setStudentPositions((prevPositions) => ({
+            ...prevPositions,
+            [itemId]: {
+              x: parseInt(studentCoords[1]),
+              y: parseInt(studentCoords[2]),
+              assigned: true,
+            },
+          }));
+        }
       }
-    }
     }
   };
 
   const handleSave = async () => {
     const updatedPositions = students.map((student) => ({
-        student: student._id,
-        seatInfo: {
+      student: student._id,
+      seatInfo: {
         x: studentPositions[student._id].x,
         y: studentPositions[student._id].y,
         assigned: studentPositions[student._id].assigned,
-      }
+      },
     }));
 
-    const updatedFurniturePositions = Object.keys(furniturePositions).map((itemId) => {
+    const updatedFurniturePositions = Object.keys(furniturePositions).map(
+      (itemId) => {
+        const furniture = furniturePositions[itemId];
+        console.log("furniture: " + JSON.stringify(furniture));
+        return {
+          itemId,
+          x: furniture.x,
+          y: furniture.y,
+          assigned: furniture.assigned,
+          rotation: furniture.rotation || 0,
+        };
+      }
+    );
 
-      const furniture = furniturePositions[itemId];
-      console.log("furniture: " + JSON.stringify(furniture))
-      return {
-        itemId,
-        x: furniture.x,
-        y: furniture.y,
-        assigned: furniture.assigned,
-        rotation: furniture.rotation || 0,
-      };
-    });
-
-    console.log("updated funriture positions: " + JSON.stringify(updatedFurniturePositions))
+    console.log(
+      "updated funriture positions: " +
+        JSON.stringify(updatedFurniturePositions)
+    );
 
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
-      await updateFurniturePositions(teacherId, classroomId, updatedFurniturePositions);
+      await updateFurniturePositions(
+        teacherId,
+        classroomId,
+        updatedFurniturePositions
+      );
       console.log("Submitted :)");
 
       // updateUser({
@@ -281,7 +275,6 @@ const TESTEditSeatingChart = () => {
       // });
       const updatedUserData = await getTeacherById(teacherId);
       updateUser(updatedUserData);
-
     } catch (error) {
       console.log("Ooops didnt work");
     }
@@ -360,7 +353,6 @@ const TESTEditSeatingChart = () => {
           )}
 
           <div className="flex flex-row w-full justify-around mt-10">
-
             {/* Open Choose Students Modal */}
             <button
               onClick={() => setShowStudentRosterModal(!showStudentRosterModal)}
@@ -371,7 +363,10 @@ const TESTEditSeatingChart = () => {
             </button>
 
             {/* Open Choose Furniture Modal */}
-            <button className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl" onClick={() => setShowFurnitureModal(true)}>
+            <button
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl"
+              onClick={() => setShowFurnitureModal(true)}
+            >
               <h5 className="text-[24px] font-[Poppins]">Classroom Objects</h5>
               <img src={FurnitureImg} />
             </button>

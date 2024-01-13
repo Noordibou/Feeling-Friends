@@ -407,15 +407,14 @@ const updateStudentSeats = async (req, res) => {
       return res.status(404).json({ error: "Classroom not found" });
     }
 
-    console.log("updated seats: " + JSON.stringify(updatedSeats));
     // Update the X and Y coordinates and "assigned" for each student in the classroom
     updatedSeats.positions.forEach((updatedPosition) => {
       const studentId = updatedPosition.student;
       const student = classroom.students.find(student => student.student.equals(studentId));
       if (student) {
-        student.seatInfo.x = updatedPosition.x;
-        student.seatInfo.y = updatedPosition.y;
-        student.seatInfo.assigned = updatedPosition.assigned;
+        student.seatInfo.x = updatedPosition.seatInfo.x;
+        student.seatInfo.y = updatedPosition.seatInfo.y;
+        student.seatInfo.assigned = updatedPosition.seatInfo.assigned;
       }
     });
 

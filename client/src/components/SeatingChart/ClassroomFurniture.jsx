@@ -16,8 +16,6 @@ const ClassroomFurniture = ({
     <>
       {classroom.furniture.map((item, index) => {
         const shape = furnitureShapes.find((shape) => shape.name === item.name);
-        console.log("Item: " + JSON.stringify(item.name))
-        // console.log("shape: " + JSON.stringify(shape))
         const initialX = item.x;
         const initialY = item.y;
         return (

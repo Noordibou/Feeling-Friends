@@ -52,6 +52,7 @@ const FurnitureModal = ({ setShowFurnitureModal, setFuriturePositions, furniture
 
   const onClose = () => {
     setShowFurnitureModal(false)
+    setIsSelected([])
   }
 
 

@@ -86,7 +86,6 @@ const TESTEditSeatingChart = () => {
           x: student.seatInfo.x,
           y: student.seatInfo.y,
           assigned: student.seatInfo.assigned,
-          rotation: student.seatInfo.rotation || 0,
         },
       }));
   
@@ -149,7 +148,7 @@ const TESTEditSeatingChart = () => {
       setUnassignedStudents(unassigned);
       // organizing all assigned seats to an array
       const assigned = classroom.students.filter(
-        (student) => student.seatInfo.assigned
+        (student) => student.seatInfo.assigned === true
       );
       setAssignedStudents(assigned);
     } catch (error) {
@@ -347,7 +346,15 @@ const TESTEditSeatingChart = () => {
               setShowStudentRosterModal={setShowStudentRosterModal}
               unassignedStudents={unassignedStudents}
               students={students}
+              teacherId={teacherId}
+              classroomId={classroomId}
               onConfirm={handleConfirmModal}
+              setStudentPositions={setStudentPositions}
+              setUnassignedStudents={setUnassignedStudents}
+              setAssignedStudents={setAssignedStudents}
+              setSelectedStudents={setSelectedStudents}
+              selectedStudents={selectedStudents}
+              fetchData={fetchData}
             />
           )}
           {showFurnitureModal && (

@@ -30,7 +30,7 @@ const AssignedStudent = ({ assignedStudents, students, constraintsRef, selectedS
                         }}
                         className={`absolute mx-1 bg-${
                           assignedStudent.borderColorClass
-                        } h-[102px] w-[85px] rounded-2xl ${
+                        } pb-1 px-[6px] rounded-2xl ${
                           selectedStudents.includes(studentObj.student)
                             ? "border-black border-4" // Apply black border if selected
                             : ""
@@ -69,7 +69,7 @@ const AssignedStudent = ({ assignedStudents, students, constraintsRef, selectedS
                               src={SampleAvatar}
                             />
                           </div>
-                          <h3 className="flex h-full text-center flex-col-reverse">
+                          <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
                             {assignedStudent.firstName}
                           </h3>
                         </div>

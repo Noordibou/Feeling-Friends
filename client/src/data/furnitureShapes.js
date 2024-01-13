@@ -77,8 +77,8 @@ const furnitureShapes = [
         src: Entry,
         alt: "Entry Seating Chart Marker",
         style: {
-            width: "w-[200px]",
-            height: "w-[100px]"
+            width: "w-[150px]",
+            height: "w-[80px]"
         }
     }
 

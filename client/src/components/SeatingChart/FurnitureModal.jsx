@@ -3,7 +3,7 @@ import furniture from "../../data/furnitureShapes";
 import CancelImg from "../../images/x-button.png";
 import { addFurniture } from "../../api/teachersApi";
 
-const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId }) => {
+const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateInfo }) => {
   const [isSelected, setIsSelected] = useState([]);
 
   const handleClick = (furnitureItem) => {
@@ -34,6 +34,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId }) => {
     try {
       await addFurniture(teacherId, classroomId, isSelected);
       setIsSelected([]);
+      updateInfo();
       onClose();
     } catch (error) {
       console.error("An error occured adding furniture: ", error);

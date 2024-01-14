@@ -10,7 +10,7 @@ const AddStudentModal = ({
   setShowStudentRosterModal,
   teacherId,
   classroomId,
-  fetchData,
+  updateInfo,
 }) => {
   const [studentSelection, setStudentSelection] = useState([]);
 
@@ -39,9 +39,9 @@ const AddStudentModal = ({
     console.log("student selection: " + JSON.stringify(studentSelection));
   };
 
-  const handleConfirm = () => {
-    updateSeatingChart(teacherId, classroomId, studentSelection);
-    fetchData();
+  const handleConfirm = async () => {
+    await updateSeatingChart(teacherId, classroomId, studentSelection);
+    updateInfo();
     // I think I need to save to selected students
     // onConfirm();
     onClose();

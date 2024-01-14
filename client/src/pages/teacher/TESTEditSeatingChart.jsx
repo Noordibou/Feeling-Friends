@@ -128,6 +128,7 @@ const TESTEditSeatingChart = () => {
         console.error("Error removing and removing furniture items: ", error);
       }
     }
+    updateInfo()
   };
 
   const fetchData = async () => {
@@ -189,55 +190,15 @@ const TESTEditSeatingChart = () => {
     }
   };
 
-  // FIXME: !!! NOT CURRENTLY BEING USED !!! //
-  const handleConfirmModal = () => {
-    // Copy the current state of assigned and unassigned students
-    const newAssignedStudents = [...assignedStudents];
-    const newUnassignedStudents = [...unassignedStudents];
-
-    // Iterate over selected students and move them from unassigned to assigned
-    selectedStudents.forEach((studentId) => {
-      const student = newUnassignedStudents.find(
-        (unassignedStudent) => unassignedStudent.student === studentId
-      );
-
-      console.log(
-        "student in removing studnet for unassigned: " + JSON.stringify(student)
-      );
-      if (student) {
-        // Remove from unassigned
-        newUnassignedStudents.splice(newUnassignedStudents.indexOf(student), 1);
-
-        // Add to assigned
-        newAssignedStudents.push(student);
-      }
-    });
-
-    // Update state with the new assigned and unassigned students
-    setAssignedStudents(newAssignedStudents);
-    setUnassignedStudents(newUnassignedStudents);
-
-    // Clear the selected students
-    setSelectedStudents([]);
-    console.log(
-      "WOOO: " +
-        JSON.stringify(newAssignedStudents) +
-        "< " +
-        JSON.stringify(newUnassignedStudents)
-    );
-
-    // Optional: You might want to update the backend here as well
-    // Call your backend API to update the seating chart with the new data
-    updateSeatingChart(teacherId, classroomId /* Updated positions data */);
-
-    // Log for confirmation
-    console.log("Students assigned successfully!");
-  };
+  const updateInfo = async () => {
+    const updatedUserData = await getTeacherById(teacherId);
+    updateUser(updatedUserData);
+    fetchData();
+  }
 
   useEffect(() => {
     console.log("Unassigned studnetsss: " + JSON.stringify(unassignedStudents));
-
-    fetchData();
+    updateInfo();
   }, [teacherId, classroomId]);
 
   const handleDragEnd = (itemId, key, y) => {
@@ -327,8 +288,7 @@ const TESTEditSeatingChart = () => {
       // updateUser({
       //   classrooms: [{ _id: classroomId, students: updatedPositions }],
       // });
-      const updatedUserData = await getTeacherById(teacherId);
-      updateUser(updatedUserData);
+      updateInfo()
     } catch (error) {
       console.log("Ooops didnt work");
     }
@@ -393,10 +353,8 @@ const TESTEditSeatingChart = () => {
               unassignedStudents={unassignedStudents}
               students={students}
               teacherId={teacherId}
-              classroomId={classroomId}
-              setStudentPositions={setStudentPositions}
-              setAssignedStudents={setAssignedStudents}
-              fetchData={fetchData}
+              classroomId={classroomId}              
+              updateInfo={updateInfo}
             />
           )}
           {showFurnitureModal && (
@@ -405,6 +363,7 @@ const TESTEditSeatingChart = () => {
               classroom={classroom}
               teacherId={teacherId}
               classroomId={classroomId}
+              updateInfo={updateInfo}
             />
           )}
 

@@ -7,6 +7,7 @@ import {
   updateSeatingChart,
   getTeacherById,
   updateFurniturePositions,
+  deleteFurniture,
 } from "../../api/teachersApi";
 import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
@@ -35,44 +36,97 @@ const TESTEditSeatingChart = () => {
   const [showFurnitureModal, setShowFurnitureModal] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-  // being used with AssignedStudent Component
-  const handleStudentClick = (currentStudentObj) => {
-    // Toggle the selected state of the student
-    setSelectedStudents((prevSelected) => {
-      const alreadySelected = prevSelected.some(
-        (student) => student.student === currentStudentObj.student
-      );
-      if (alreadySelected) {
-        // If student is already selected, remove the entire object
-        return prevSelected.filter(
-          (student) => student.student !== currentStudentObj.student
-        );
-      } else if (!alreadySelected) {
-        // If student is not selected, add them
-        const updatedStudentObj = {
-          student: currentStudentObj.student,
-          seatInfo: {
-            x: null,
-            y: null,
-            assigned: false,
-          },
-        };
-        setSelectedStudents([...selectedStudents, updatedStudentObj]);
-      }
-    });
+  const [selectedItems, setSelectedItems] = useState([]);
 
-    console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents));
+  // being used with AssignedStudent Component
+  // being used with ClassroomFurniture Component
+  const handleStudentClick = (currentObj) => {
+    // Toggle the selected state of the student
+    if(currentObj.student) {
+
+      setSelectedStudents((prevSelected) => {
+        const alreadySelected = prevSelected.some(
+          (student) => student.student === currentObj.student
+        );
+        if (alreadySelected) {
+          // If student is already selected, remove the entire object
+          return prevSelected.filter(
+            (student) => student.student !== currentObj.student
+          );
+        } else if (!alreadySelected) {
+          // If student is not selected, add them
+          const updatedStudentObj = {
+            student: currentObj.student,
+            seatInfo: {
+              x: null,
+              y: null,
+              assigned: false,
+            },
+          };
+          setSelectedStudents([...selectedStudents, updatedStudentObj]);
+        }
+      });
+  
+      console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents));
+      
+    } else if (currentObj.rotation || currentObj.rotation === 0) {
+      console.log("bloop")
+
+      setSelectedItems((prevSelected) => {
+        const alreadySelected = prevSelected.some(
+          (furnitureId) => furnitureId === currentObj._id
+        );
+        if (alreadySelected) {
+          // If item is already selected, remove the entire object
+          return prevSelected.filter(
+            (furnitureId) => furnitureId !== currentObj._id
+          );
+        } else if (!alreadySelected) {
+          // If item is not selected, add them
+          console.log("updating furniture Obj")
+          
+          setSelectedItems([...selectedItems, currentObj._id]);
+        }
+      });
+
+    }
+
+    console.log("current obj: " + JSON.stringify(currentObj))
+    
   };
 
-  const handleRemoveStudents = async () => {
-    try {
-      // Update the backend data immediately
-      await updateSeatingChart(teacherId, classroomId, selectedStudents);
-      setSelectedStudents([]);
 
-      console.log("Students unassigned and saved successfully!");
-    } catch (error) {
-      console.error("Error removing and saving students:", error);
+  // TODO:
+  // // I want this to be just "handleRemoveObjects"
+  // // Need to change backend to separate furniture items and students to be saved to db with xy as"null" and assigned as "false"
+  // // update frontend api call
+  // // need to update ClassroomFurniture file's onClick to be similar to the Assigned student file
+  const handleRemoveObject = async () => {
+    if(selectedStudents.length > 0){
+      try {
+        // Update the backend data immediately
+        await updateSeatingChart(teacherId, classroomId, selectedStudents);
+        setSelectedStudents([]);
+
+        console.log("Students unassigned and saved successfully!");
+      } catch (error) {
+        console.error("Error removing and saving students: ", error);
+      }
+    } 
+    if (selectedItems.length > 0) {
+      // FIXME: update with furniture instead of student variables
+      try {
+        // Update the backend data immediately
+        // await updateSeatingChart(teacherId, classroomId, selectedItems);
+        console.log("selected furniture to delete: " + JSON.stringify(selectedItems))
+        await deleteFurniture(teacherId, classroomId, selectedItems)
+        
+        setSelectedItems([]);
+
+        console.log("Furniture removed successfully!");
+      } catch (error) {
+        console.error("Error removing and removing furniture items: ", error);
+      }
     }
   };
 
@@ -303,6 +357,8 @@ const TESTEditSeatingChart = () => {
                   furniturePositions={furniturePositions}
                   constraintsRef={constraintsRef}
                   handleDragEnd={handleDragEnd}
+                  handleStudentClick={handleStudentClick}
+                  selectedItems={selectedItems}
                 />
 
                 <AssignedStudent
@@ -318,7 +374,7 @@ const TESTEditSeatingChart = () => {
                   <button
                     id="unassigned-section"
                     className="flex items-center h-[80px] w-[550px] flex-col rounded-2xl border-4 border-darkSandwich"
-                    onClick={handleRemoveStudents}
+                    onClick={handleRemoveObject}
                   >
                     <h2 className="flex items-center h-full font-semibold text-[24px] font-[Poppins]">
                       Remove Student(s) from Class

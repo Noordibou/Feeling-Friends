@@ -8,6 +8,8 @@ const ClassroomFurniture = ({
   furniturePositions,
   constraintsRef,
   handleDragEnd,
+  handleStudentClick,
+  selectedItems,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -17,6 +19,17 @@ const ClassroomFurniture = ({
         const shape = furnitureShapes.find((shape) => shape.name === item.name);
         const initialX = item.x;
         const initialY = item.y;
+
+        // console.log("selected Items: " + JSON.stringify(selectedItems))
+
+        const selectedStyling = selectedItems.some(
+          (selectedId) => {
+            // console.log("selected._id: " + selected._id)
+            // console.log("item._id: " + item._id)
+            return selectedId === item._id}
+        );
+        // console.log("selected styling: " + selectedStyling)
+
         return (
           <motion.div
             id={`furniture-${item._id}`}
@@ -40,7 +53,8 @@ const ClassroomFurniture = ({
               handleDragEnd(item._id, "furniture");
               setIsDragging(false);
             }}
-            onClick={() => {
+            onClick={() => handleStudentClick(item)}
+            onDoubleClick={() => {
               if (!isDragging) {
                 setFurniturePositions((prevPositions) => {
                   const prevRotation =
@@ -61,7 +75,9 @@ const ClassroomFurniture = ({
                 });
               }
             }}
-            className={`absolute ${shape.style.width} ${shape.style.height}`}
+            className={`absolute ${shape.style.width} ${shape.style.height} ${
+              selectedStyling ? "border-4 border-black" : ""
+            }`}
           >
             <img
               className="flex w-full h-full"

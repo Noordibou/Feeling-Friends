@@ -46,7 +46,7 @@ router.get('/students', getAllStudents);
 
 // ================================================== //
 //check
-router.delete("/teachers/:id/classrooms/:classroomId/furniture/:itemId", deleteFurniture);
+router.delete("/teachers/:id/classrooms/:classroomId/furniture", deleteFurniture);
 
 router.delete('/teachers/:id/classrooms/:classroomId/students/:studentId', verifyToken, verifyUser, deleteStudentInClassroom);
 router.put('/teachers/:id/classrooms/:classroomId/students', addStudentToClassroom);

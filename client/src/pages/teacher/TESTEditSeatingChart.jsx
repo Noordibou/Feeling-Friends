@@ -37,6 +37,7 @@ const TESTEditSeatingChart = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   const [selectedItems, setSelectedItems] = useState([]);
+  const [counter, setCounter] = useState(0)
 
   // being used with AssignedStudent Component
   // being used with ClassroomFurniture Component
@@ -179,11 +180,12 @@ const TESTEditSeatingChart = () => {
     const updatedUserData = await getTeacherById(teacherId);
     updateUser(updatedUserData);
     fetchData();
+    setCounter(counter +1)
   }
 
   useEffect(() => {
-    updateInfo();
-  }, [teacherId, classroomId]);
+    fetchData()
+  }, [teacherId, classroomId, counter]);
 
   const handleDragEnd = (itemId, key, y) => {
     let studentCoords = null;

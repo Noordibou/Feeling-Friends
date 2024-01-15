@@ -73,7 +73,8 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                   );
 
                   return (
-                    <>
+                    
+                    <div key={`furniture-${key}-container`}>
                       <div
                         id={`furniture-${key}`}
                         key={`${key}`}
@@ -90,7 +91,8 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                           alt={item.alt}
                         />
                       </div>
-                    </>
+                      </div>
+                    
                   );
                 })}
               </div>

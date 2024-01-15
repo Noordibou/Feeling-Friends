@@ -18,7 +18,7 @@ import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 
-const TESTEditSeatingChart = () => {
+const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
   const { userData, updateUser } = useUser();
   const [classroom, setClassroom] = useState(null);
@@ -382,4 +382,4 @@ const TESTEditSeatingChart = () => {
   );
 };
 
-export default TESTEditSeatingChart;
+export default EditSeatingChart;

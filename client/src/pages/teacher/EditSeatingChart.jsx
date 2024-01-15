@@ -319,7 +319,7 @@ const EditSeatingChart = () => {
                     onClick={handleRemoveObject}
                   >
                     <h2 className="flex items-center h-full font-semibold text-[24px] font-[Poppins]">
-                      Remove Student(s) from Class
+                      Remove from Class
                     </h2>
                   </button>
                 </div>
@@ -349,22 +349,28 @@ const EditSeatingChart = () => {
             />
           )}
 
-          <div className="flex flex-row w-full justify-around mt-10">
+          <div className="flex flex-row w-full justify-between mt-10">
             {/* Open Choose Students Modal */}
             <button
-              onClick={() => setShowStudentRosterModal(!showStudentRosterModal)}
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl"
+              onClick={() => {
+                setShowStudentRosterModal(true)
+                setShowFurnitureModal(false)
+              }}
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
             >
-              <h5 className="text-[24px] font-[Poppins]">Student Roster</h5>
+              <h5 className={`text-[24px] ${showStudentRosterModal ? "font-[900] underline " : ""}`}>Student Roster</h5>
               <img src={RosterImg} />
             </button>
 
             {/* Open Choose Furniture Modal */}
             <button
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl"
-              onClick={() => setShowFurnitureModal(true)}
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
+              onClick={() => {
+                setShowFurnitureModal(true)
+                setShowStudentRosterModal(false)
+              }}
             >
-              <h5 className="text-[24px] font-[Poppins]">Classroom Objects</h5>
+              <h5 className={`text-[24px] ${showFurnitureModal ? "font-[900] underline " : ""}`}>Classroom Objects</h5>
               <img src={FurnitureImg} />
             </button>
           </div>

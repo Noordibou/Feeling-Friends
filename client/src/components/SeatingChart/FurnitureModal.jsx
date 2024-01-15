@@ -49,64 +49,65 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
   return (
     <>
       {/* Modal */}
-      <div className="absolute top-44 left-[8.5%] z-10 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 rounded">
-        <div className="flex flex-col w-full bg-darkTeal items-end">
-          <button onClick={onClose}>
-            <img
-              className="absolute -top-6 -right-6"
-              src={CancelImg}
-              alt="close student roster"
-            />
-          </button>
-        </div>
-        <div className="px-10 pb-10 flex h-full flex-col">
-          <h2 className="font-[Poppins] text-[24px] my-5">
-            Tap to add objects to the classroom
-          </h2>
-          <div className="flex h-full flex-col ">
-            {/* Container for Furniture */}
-            <div className="flex flex-row w-full flex-wrap h-96 items-center justify-center overflow-y-auto">
-              {furniture.map((item, key) => {
-                const isSelectedItem = isSelected.some(
-                  (selectedItem) => selectedItem.name === item.name
-                );
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] absolute top-[11.9%] left-[4.3%] z-10 w-[752px] h-[61%] rounded-lg opacity-90"></div>
+        <div className="absolute top-44 left-[8.2%] z-20 h-[648px] w-[686px] bg-notebookPaper border-sandwich border-4 rounded">
+          <div className="flex flex-col w-full bg-darkTeal items-end">
+            <button onClick={onClose}>
+              <img
+                className="absolute -top-6 -right-6"
+                src={CancelImg}
+                alt="close student roster"
+              />
+            </button>
+          </div>
+          <div className="px-10 pb-10 flex h-full flex-col">
+            <h2 className="font-[Poppins] text-[24px] my-5">
+              Tap to add objects to the classroom
+            </h2>
+            <div className="flex h-full flex-col ">
+              {/* Container for Furniture */}
+              <div className="flex flex-row w-full flex-wrap h-96 items-center justify-center overflow-y-auto">
+                {furniture.map((item, key) => {
+                  const isSelectedItem = isSelected.some(
+                    (selectedItem) => selectedItem.name === item.name
+                  );
 
-                return (
-                  <>
-                    <div
-                      id={`furniture-${key}`}
-                      key={`${key}`}
-                      className={`flex rounded-2xl ${item.style.width} ${
-                        item.style.height
-                      } ${isSelectedItem ? "border-2 border-black" : ""} m-5`}
-                      onClick={() => handleClick(item)}
-                    >
-                      <img
-                        id={`furniture-img-${key}`}
-                        key={`img-${key}`}
-                        className={`flex rounded-2xl w-full h-full`}
-                        src={item.src}
-                        alt={item.alt}
-                      />
-                    </div>
-                  </>
-                );
-              })}
-            </div>
-            <div className="flex items-center h-1/3 justify-center">
-              <button
-                id="unassigned-section"
-                className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
-                onClick={() => onConfirm()}
-              >
-                <h2 className="flex items-center h-full font-semibold text-header2">
-                  Confirm
-                </h2>
-              </button>
+                  return (
+                    <>
+                      <div
+                        id={`furniture-${key}`}
+                        key={`${key}`}
+                        className={`flex rounded-2xl ${item.style.width} ${
+                          item.style.height
+                        } ${isSelectedItem ? "border-2 border-black" : ""} m-5`}
+                        onClick={() => handleClick(item)}
+                      >
+                        <img
+                          id={`furniture-img-${key}`}
+                          key={`img-${key}`}
+                          className={`flex rounded-2xl w-full h-full`}
+                          src={item.src}
+                          alt={item.alt}
+                        />
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+              <div className="flex items-center h-1/3 justify-center">
+                <button
+                  id="unassigned-section"
+                  className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
+                  onClick={() => onConfirm()}
+                >
+                  <h2 className="flex items-center h-full font-semibold text-header2">
+                    Confirm
+                  </h2>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

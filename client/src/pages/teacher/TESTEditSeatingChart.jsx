@@ -68,10 +68,8 @@ const TESTEditSeatingChart = () => {
       });
   
       console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents));
-      
+    // Toggle the selected state of furniture
     } else if (currentObj.rotation || currentObj.rotation === 0) {
-      console.log("bloop")
-
       setSelectedItems((prevSelected) => {
         const alreadySelected = prevSelected.some(
           (furnitureId) => furnitureId === currentObj._id
@@ -89,18 +87,9 @@ const TESTEditSeatingChart = () => {
         }
       });
 
-    }
-
-    console.log("current obj: " + JSON.stringify(currentObj))
-    
+    }    
   };
 
-
-  // TODO:
-  // // I want this to be just "handleRemoveObjects"
-  // // Need to change backend to separate furniture items and students to be saved to db with xy as"null" and assigned as "false"
-  // // update frontend api call
-  // // need to update ClassroomFurniture file's onClick to be similar to the Assigned student file
   const handleRemoveObject = async () => {
     if(selectedStudents.length > 0){
       try {
@@ -114,11 +103,7 @@ const TESTEditSeatingChart = () => {
       }
     } 
     if (selectedItems.length > 0) {
-      // FIXME: update with furniture instead of student variables
       try {
-        // Update the backend data immediately
-        // await updateSeatingChart(teacherId, classroomId, selectedItems);
-        console.log("selected furniture to delete: " + JSON.stringify(selectedItems))
         await deleteFurniture(teacherId, classroomId, selectedItems)
         
         setSelectedItems([]);
@@ -197,7 +182,6 @@ const TESTEditSeatingChart = () => {
   }
 
   useEffect(() => {
-    console.log("Unassigned studnetsss: " + JSON.stringify(unassignedStudents));
     updateInfo();
   }, [teacherId, classroomId]);
 
@@ -284,10 +268,6 @@ const TESTEditSeatingChart = () => {
         updatedFurniturePositions
       );
       console.log("Submitted :)");
-
-      // updateUser({
-      //   classrooms: [{ _id: classroomId, students: updatedPositions }],
-      // });
       updateInfo()
     } catch (error) {
       console.log("Ooops didnt work");

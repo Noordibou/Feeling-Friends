@@ -9,7 +9,6 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import { getBackgroundColorClass } from "../../components/classRoomColors";
 import { useNavigate } from "react-router-dom";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import RosterImg from "../../images/Three People.png";
@@ -17,6 +16,7 @@ import FurnitureImg from "../../images/Desk.png";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
+import { applyColorsToStudents } from "../../utils/utils";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -117,7 +117,7 @@ const EditSeatingChart = () => {
     updateInfo()
   };
 
-  const fetchData = async () => {
+  const refreshData = async () => {
     try {
       const classroom = userData.classrooms.find((c) => c._id === classroomId);
       setClassroom(classroom);
@@ -126,27 +126,7 @@ const EditSeatingChart = () => {
         classroomId
       );
 
-      // Calculate the border color for each student
-      const studentsWithBorderColor = classroomStudents.map((student) => {
-        const lastJournal =
-          student.journalEntries[student.journalEntries.length - 1];
-        if (lastJournal) {
-          const lastCheckin = lastJournal.checkin;
-          const lastCheckout = lastJournal.checkout;
-          if (lastCheckout && lastCheckout.ZOR) {
-            const zor = lastCheckout.ZOR;
-            student.borderColorClass = getBackgroundColorClass(zor);
-          } else if (lastCheckin && lastCheckin.ZOR) {
-            const zor = lastCheckin.ZOR;
-            student.borderColorClass = getBackgroundColorClass(zor);
-          } else {
-            student.borderColorClass = "darkSandwich";
-          }
-        } else {
-          student.borderColorClass = "darkSandwich";
-        }
-        return student;
-      });
+      const studentsWithBorderColor = applyColorsToStudents(classroomStudents)
 
       setStudents(studentsWithBorderColor);
       const positions = {};
@@ -179,12 +159,12 @@ const EditSeatingChart = () => {
   const updateInfo = async () => {
     const updatedUserData = await getTeacherById(teacherId);
     updateUser(updatedUserData);
-    fetchData();
+    refreshData();
     setCounter(counter +1)
   }
 
   useEffect(() => {
-    fetchData()
+    refreshData()
   }, [teacherId, classroomId, counter]);
 
   const handleDragEnd = (itemId, key, y) => {

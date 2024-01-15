@@ -41,9 +41,8 @@ const AddStudentModal = ({
 
   const handleConfirm = async () => {
     await updateSeatingChart(teacherId, classroomId, studentSelection);
+    setStudentSelection([]);
     updateInfo();
-    // I think I need to save to selected students
-    // onConfirm();
     onClose();
   };
 

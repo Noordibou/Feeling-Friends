@@ -42,41 +42,41 @@ const EditSeatingChart = () => {
   // ✅ refactored
   // being used with AssignedStudent Component
   // being used with ClassroomFurniture Component
-  const handleStudentClick = (currentObj) => {
-    // Toggle the selected state of the student
-    if(currentObj.student) {
-        const alreadySelected = selectedStudents.some(
-          (student) => student.student === currentObj.student
-        );
-        if (!alreadySelected) {
-          // If student is not selected, add them
-          setSelectedStudents([...selectedStudents, currentObj]);
-        } else if (alreadySelected) {
-          // If student is already selected, remove the entire object
-          const updatedSelection = selectedStudents.filter(
-            (student) => student.student !== currentObj.student
-          );
-          setSelectedStudents(updatedSelection)
-        }
+  // const handleStudentClick = (currentObj) => {
+  //   // // Toggle the selected state of the student
+  //   // if(currentObj.student) {
+  //   //     const alreadySelected = selectedStudents.some(
+  //   //       (student) => student.student === currentObj.student
+  //   //     );
+  //   //     if (!alreadySelected) {
+  //   //       // If student is not selected, add them
+  //   //       setSelectedStudents([...selectedStudents, currentObj]);
+  //   //     } else if (alreadySelected) {
+  //   //       // If student is already selected, remove the entire object
+  //   //       const updatedSelection = selectedStudents.filter(
+  //   //         (student) => student.student !== currentObj.student
+  //   //       );
+  //   //       setSelectedStudents(updatedSelection)
+  //   //     }
      
-    // Toggle the selected state of furniture
-    } else {
+  //   // Toggle the selected state of furniture
+  //   } else {
 
-        const alreadySelected = selectedItems.some(
-          (furnitureId) => furnitureId === currentObj
-        );
-        if (!alreadySelected) {
-          // If item is not selected, add them          
-          setSelectedItems([...selectedItems, currentObj]);
-        } else if (alreadySelected) {
-          // If item is already selected, remove the entire object
-          const updatedSelection = selectedItems.filter(
-            (furnitureId) => furnitureId !== currentObj
-          );
-          setSelectedItems(updatedSelection)
-        }
-    }    
-  };
+  //       const alreadySelected = selectedItems.some(
+  //         (furnitureId) => furnitureId === currentObj
+  //       );
+  //       if (!alreadySelected) {
+  //         // If item is not selected, add them          
+  //         setSelectedItems([...selectedItems, currentObj]);
+  //       } else if (alreadySelected) {
+  //         // If item is already selected, remove the entire object
+  //         const updatedSelection = selectedItems.filter(
+  //           (furnitureId) => furnitureId !== currentObj
+  //         );
+  //         setSelectedItems(updatedSelection)
+  //       }
+  //   }    
+  // };
 
   const handleRemoveObject = async () => {
     if(selectedStudents.length > 0){
@@ -266,16 +266,16 @@ const EditSeatingChart = () => {
                   furniturePositions={furniturePositions}
                   constraintsRef={constraintsRef}
                   handleDragEnd={handleDragEnd}
-                  handleStudentClick={handleStudentClick}
                   selectedItems={selectedItems}
+                  setSelectedItems={setSelectedItems}
                 />
 
                 <AssignedStudent
                   assignedStudents={assignedStudents}
+                  setSelectedStudents={setSelectedStudents}
                   students={students}
                   constraintsRef={constraintsRef}
                   selectedStudents={selectedStudents}
-                  handleStudentClick={handleStudentClick}
                   handleDragEnd={handleDragEnd}
                 />
                 <div className="flex self-end w-full justify-center mb-8">

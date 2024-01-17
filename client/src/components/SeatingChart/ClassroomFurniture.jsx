@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import furnitureShapes from "../../data/furnitureShapes";
+import { toggleSelected } from "../../utils/utils";
 
 const ClassroomFurniture = ({
   classroom,
@@ -10,6 +11,7 @@ const ClassroomFurniture = ({
   handleDragEnd,
   handleStudentClick,
   selectedItems,
+  setSelectedItems,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -29,7 +31,9 @@ const ClassroomFurniture = ({
             return selectedId === item._id}
         );
         // console.log("selected styling: " + selectedStyling)
-            
+        const alreadySelected = selectedItems.some(
+          (furnitureId) => furnitureId === item._id
+        );
         return (
           <motion.div
             id={`furniture-${item._id}`}
@@ -53,7 +57,9 @@ const ClassroomFurniture = ({
               handleDragEnd(item._id, "furniture");
               setIsDragging(false);
             }}
-            onClick={() => handleStudentClick(item._id)}
+            onClick={() => {
+              setSelectedItems(toggleSelected(item._id, alreadySelected, selectedItems))
+            }}
             onDoubleClick={() => {
               if (!isDragging) {
                 setFurniturePositions((prevPositions) => {

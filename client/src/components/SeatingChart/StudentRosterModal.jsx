@@ -12,36 +12,36 @@ const AddStudentModal = ({
   classroomId,
   updateInfo,
 }) => {
-  const [studentSelection, setStudentSelection] = useState([]);
+  const [isSelected, setIsSelected] = useState([]);
 
-  // ✅ refactored
-  const unassignedStudSelection = (studentObj) => {
-    const alreadySelected = studentSelection.find(
-      (student) => student.student === studentObj.student
-    );
+  // // ✅ refactored
+  // const unassignedStudSelection = (studentObj) => {
+  //   const alreadySelected = studentSelection.find(
+  //     (student) => student.student === studentObj.student
+  //   );
 
-    console.log("student Obj: " + JSON.stringify(studentObj));
-    if (!alreadySelected) {
-      setStudentSelection([...studentSelection, studentObj]);
-    } else {
-      const updatedSelection = studentSelection.filter(
-        (student) => student.student !== alreadySelected.student
-      );
-      setStudentSelection(updatedSelection);
-    }
-    console.log("student selection: " + JSON.stringify(studentSelection));
-  };
+  //   console.log("student Obj: " + JSON.stringify(studentObj));
+  //   if (!alreadySelected) {
+  //     setStudentSelection([...studentSelection, studentObj]);
+  //   } else {
+  //     const updatedSelection = studentSelection.filter(
+  //       (student) => student.student !== alreadySelected.student
+  //     );
+  //     setStudentSelection(updatedSelection);
+  //   }
+  //   console.log("student selection: " + JSON.stringify(studentSelection));
+  // };
 
   const handleConfirm = async () => {
-    await updateSeatingChart(teacherId, classroomId, studentSelection);
-    setStudentSelection([]);
+    await updateSeatingChart(teacherId, classroomId, isSelected);
+    setIsSelected([]);
     updateInfo();
     onClose();
   };
 
   const onClose = () => {
     setShowStudentRosterModal(false);
-    setStudentSelection([]);
+    setIsSelected([]);
   };
 
   return (
@@ -62,8 +62,8 @@ const AddStudentModal = ({
             <UnassignedStudent
               unassignedStudents={unassignedStudents}
               students={students}
-              unassignedStudSelection={unassignedStudSelection}
-              studentSelection={studentSelection}
+              isSelected={isSelected}
+              setIsSelected={setIsSelected}
             />
           </div>
 

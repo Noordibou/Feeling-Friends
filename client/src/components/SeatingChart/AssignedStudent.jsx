@@ -1,13 +1,14 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
+import { toggleSelected } from "../../utils/utils";
 
 const AssignedStudent = ({
   assignedStudents,
   students,
   constraintsRef,
   selectedStudents,
-  handleStudentClick,
+  setSelectedStudents,
   handleDragEnd,
 }) => {
   return (
@@ -34,6 +35,10 @@ const AssignedStudent = ({
             }
           }
 
+          const alreadySelected = selectedStudents.some(
+            (student) => student.student === studentObj.student
+          );
+
           return (
             <motion.div
               id={`motion-div-${studentObj.student}`}
@@ -53,7 +58,7 @@ const AssignedStudent = ({
                 selectedStyling ? "border-4 border-black" : ""
               }`}
               onClick={() => {
-                handleStudentClick(newFormat);
+                setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
               }}
               onDragEnd={(event, info) => {
                 const containerBounds =

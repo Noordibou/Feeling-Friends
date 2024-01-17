@@ -26,3 +26,20 @@ export const applyColorsToStudents = (classroomStudents) => {
   });
   return studentsWithBorderColor
 };
+
+// FIXME: still working on making this more dynamic
+// // working on making a lambda for alreadySelected, since it's slightly different depending on what's passed in
+
+export const toggleSelected = (objItem, alreadySelected, isSelected) => {
+  // const alreadySelected = alreadySelectedLambda;
+
+  if (!alreadySelected) {
+    return [...isSelected, objItem];
+  } else {
+    // need to get it unselected, remove it from isSelected Array
+    const updatedSelection = isSelected.filter(
+      (item) => item.name !== objItem.name
+    );
+    return updatedSelection;
+  }
+};

@@ -2,26 +2,10 @@ import { useState, useRef } from "react";
 import furniture from "../../data/furnitureShapes";
 import CancelImg from "../../images/x-button.png";
 import { addFurniture } from "../../api/teachersApi";
+import { toggleSelected } from "../../utils/utils";
 
 const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateInfo }) => {
   const [isSelected, setIsSelected] = useState([]);
-
-  // ✅ refactored
-  const handleClick = (furnitureItem) => {
-    const alreadySelected = isSelected.find(
-      (item) => furnitureItem.name === item.name
-    );
-
-    if (!alreadySelected) {
-      setIsSelected([...isSelected, furnitureItem]);
-    } else {
-      // need to get it unselected, remove it from isSelected Array
-      const updatedSelection = isSelected.filter(
-        (item) => item.name !== alreadySelected.name
-      );
-      setIsSelected(updatedSelection);
-    }
-  };
 
   const onConfirm = async () => {
     try {
@@ -64,13 +48,17 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                   const isSelectedItem = isSelected.some(
                     (selectedItem) => selectedItem.name === item.name
                   );
-                  const newformat = {
+                  const newFormat = {
                     name: item.name,
                     x: 0,
                     y: 0,
                     assigned: true,
                     rotation: 0,
                   }; 
+
+                  const alreadySelected = isSelected.some(
+                    (furnitureItem) => furnitureItem.name === item.name
+                  );
 
                   return (
                     
@@ -81,7 +69,9 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                         className={`flex rounded-2xl ${item.style.width} ${
                           item.style.height
                         } ${isSelectedItem ? "border-2 border-black" : ""} m-5`}
-                        onClick={() => handleClick(newformat)}
+                        onClick={ () => {
+                          setIsSelected(toggleSelected(newFormat, alreadySelected, isSelected))
+                        }}
                       >
                         <img
                           id={`furniture-img-${key}`}

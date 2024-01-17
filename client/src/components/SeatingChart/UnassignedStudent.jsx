@@ -1,12 +1,14 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
+import { toggleSelected } from "../../utils/utils";
 
 const UnassignedStudent = ({
   unassignedStudents,
   unassignedStudSelection,
   students,
-  studentSelection,
+  isSelected,
+  setIsSelected
 }) => {
   return (
     <>
@@ -16,7 +18,7 @@ const UnassignedStudent = ({
         );
 
         if (unassignedStudent) {
-          const isSelectedStudent = studentSelection.some(
+          const isSelectedStudent = isSelected.some(
             (selected) => selected.student === studentObj.student
           );
 
@@ -29,6 +31,10 @@ const UnassignedStudent = ({
             }
           }
 
+          const alreadySelected = isSelected.some(
+            (student) => student.student === studentObj.student
+          );
+
           return (
             <div
               id={`motion-div-${unassignedStudent._id}`}
@@ -37,7 +43,9 @@ const UnassignedStudent = ({
                 unassignedStudent.borderColorClass
               } h-[99px] w-[99px] 
                 rounded-2xl ${isSelectedStudent ? `opacity-50` : ``}`}
-              onClick={() => unassignedStudSelection(newFormat)}
+              onClick={() => {
+                setIsSelected(toggleSelected(newFormat, alreadySelected, isSelected))
+              }}
             >
               <div className="flex w-full justify-center h-full items-center">
                 <img

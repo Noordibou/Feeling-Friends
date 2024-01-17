@@ -14,24 +14,6 @@ const AddStudentModal = ({
 }) => {
   const [isSelected, setIsSelected] = useState([]);
 
-  // // ✅ refactored
-  // const unassignedStudSelection = (studentObj) => {
-  //   const alreadySelected = studentSelection.find(
-  //     (student) => student.student === studentObj.student
-  //   );
-
-  //   console.log("student Obj: " + JSON.stringify(studentObj));
-  //   if (!alreadySelected) {
-  //     setStudentSelection([...studentSelection, studentObj]);
-  //   } else {
-  //     const updatedSelection = studentSelection.filter(
-  //       (student) => student.student !== alreadySelected.student
-  //     );
-  //     setStudentSelection(updatedSelection);
-  //   }
-  //   console.log("student selection: " + JSON.stringify(studentSelection));
-  // };
-
   const handleConfirm = async () => {
     await updateSeatingChart(teacherId, classroomId, isSelected);
     setIsSelected([]);

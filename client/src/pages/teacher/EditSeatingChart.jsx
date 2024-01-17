@@ -37,71 +37,29 @@ const EditSeatingChart = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   const [selectedItems, setSelectedItems] = useState([]);
-  const [counter, setCounter] = useState(0)
-
-  // ✅ refactored
-  // being used with AssignedStudent Component
-  // being used with ClassroomFurniture Component
-  // const handleStudentClick = (currentObj) => {
-  //   // // Toggle the selected state of the student
-  //   // if(currentObj.student) {
-  //   //     const alreadySelected = selectedStudents.some(
-  //   //       (student) => student.student === currentObj.student
-  //   //     );
-  //   //     if (!alreadySelected) {
-  //   //       // If student is not selected, add them
-  //   //       setSelectedStudents([...selectedStudents, currentObj]);
-  //   //     } else if (alreadySelected) {
-  //   //       // If student is already selected, remove the entire object
-  //   //       const updatedSelection = selectedStudents.filter(
-  //   //         (student) => student.student !== currentObj.student
-  //   //       );
-  //   //       setSelectedStudents(updatedSelection)
-  //   //     }
-     
-  //   // Toggle the selected state of furniture
-  //   } else {
-
-  //       const alreadySelected = selectedItems.some(
-  //         (furnitureId) => furnitureId === currentObj
-  //       );
-  //       if (!alreadySelected) {
-  //         // If item is not selected, add them          
-  //         setSelectedItems([...selectedItems, currentObj]);
-  //       } else if (alreadySelected) {
-  //         // If item is already selected, remove the entire object
-  //         const updatedSelection = selectedItems.filter(
-  //           (furnitureId) => furnitureId !== currentObj
-  //         );
-  //         setSelectedItems(updatedSelection)
-  //       }
-  //   }    
-  // };
+  const [counter, setCounter] = useState(0);
 
   const handleRemoveObject = async () => {
-    if(selectedStudents.length > 0){
+    if (selectedStudents.length > 0) {
       try {
         // Update the backend data immediately
         await updateSeatingChart(teacherId, classroomId, selectedStudents);
         setSelectedStudents([]);
-
         console.log("Students unassigned and saved successfully!");
       } catch (error) {
         console.error("Error removing and saving students: ", error);
       }
-    } 
+    }
     if (selectedItems.length > 0) {
       try {
-        await deleteFurniture(teacherId, classroomId, selectedItems)
-        
+        await deleteFurniture(teacherId, classroomId, selectedItems);
         setSelectedItems([]);
-
         console.log("Furniture removed successfully!");
       } catch (error) {
         console.error("Error removing and removing furniture items: ", error);
       }
     }
-    updateInfo()
+    updateInfo();
   };
 
   const refreshData = async () => {
@@ -113,7 +71,7 @@ const EditSeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents)
+      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
 
       setStudents(studentsWithBorderColor);
       const positions = {};
@@ -147,11 +105,11 @@ const EditSeatingChart = () => {
     const updatedUserData = await getTeacherById(teacherId);
     updateUser(updatedUserData);
     refreshData();
-    setCounter(counter +1)
-  }
+    setCounter(counter + 1);
+  };
 
   useEffect(() => {
-    refreshData()
+    refreshData();
   }, [teacherId, classroomId, counter]);
 
   const handleDragEnd = (itemId, key, y) => {
@@ -237,7 +195,7 @@ const EditSeatingChart = () => {
         updatedFurniturePositions
       );
       console.log("Submitted :)");
-      updateInfo()
+      updateInfo();
     } catch (error) {
       console.log("Ooops didnt work");
     }
@@ -302,7 +260,7 @@ const EditSeatingChart = () => {
               unassignedStudents={unassignedStudents}
               students={students}
               teacherId={teacherId}
-              classroomId={classroomId}              
+              classroomId={classroomId}
               updateInfo={updateInfo}
             />
           )}
@@ -320,12 +278,18 @@ const EditSeatingChart = () => {
             {/* Open Choose Students Modal */}
             <button
               onClick={() => {
-                setShowStudentRosterModal(true)
-                setShowFurnitureModal(false)
+                setShowStudentRosterModal(true);
+                setShowFurnitureModal(false);
               }}
               className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
             >
-              <h5 className={`text-[24px] ${showStudentRosterModal ? "font-[900] underline " : ""}`}>Student Roster</h5>
+              <h5
+                className={`text-[24px] ${
+                  showStudentRosterModal ? "font-[900] underline " : ""
+                }`}
+              >
+                Student Roster
+              </h5>
               <img src={RosterImg} />
             </button>
 
@@ -333,11 +297,17 @@ const EditSeatingChart = () => {
             <button
               className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
               onClick={() => {
-                setShowFurnitureModal(true)
-                setShowStudentRosterModal(false)
+                setShowFurnitureModal(true);
+                setShowStudentRosterModal(false);
               }}
             >
-              <h5 className={`text-[24px] ${showFurnitureModal ? "font-[900] underline " : ""}`}>Classroom Objects</h5>
+              <h5
+                className={`text-[24px] ${
+                  showFurnitureModal ? "font-[900] underline " : ""
+                }`}
+              >
+                Classroom Objects
+              </h5>
               <img src={FurnitureImg} />
             </button>
           </div>

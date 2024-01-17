@@ -20,6 +20,15 @@ const UnassignedStudent = ({
             (selected) => selected.student === studentObj.student
           );
 
+          const newFormat = {
+            student: studentObj.student,
+            seatInfo: {
+              x: 0,
+              y: 0,
+              assigned: true,
+            }
+          }
+
           return (
             <div
               id={`motion-div-${unassignedStudent._id}`}
@@ -28,7 +37,7 @@ const UnassignedStudent = ({
                 unassignedStudent.borderColorClass
               } h-[99px] w-[99px] 
                 rounded-2xl ${isSelectedStudent ? `opacity-50` : ``}`}
-              onClick={() => unassignedStudSelection(studentObj)}
+              onClick={() => unassignedStudSelection(newFormat)}
             >
               <div className="flex w-full justify-center h-full items-center">
                 <img

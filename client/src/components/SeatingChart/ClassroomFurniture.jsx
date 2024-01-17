@@ -29,7 +29,7 @@ const ClassroomFurniture = ({
             return selectedId === item._id}
         );
         // console.log("selected styling: " + selectedStyling)
-
+            
         return (
           <motion.div
             id={`furniture-${item._id}`}
@@ -53,7 +53,7 @@ const ClassroomFurniture = ({
               handleDragEnd(item._id, "furniture");
               setIsDragging(false);
             }}
-            onClick={() => handleStudentClick(item)}
+            onClick={() => handleStudentClick(item._id)}
             onDoubleClick={() => {
               if (!isDragging) {
                 setFurniturePositions((prevPositions) => {

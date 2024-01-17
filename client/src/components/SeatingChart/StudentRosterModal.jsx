@@ -14,6 +14,7 @@ const AddStudentModal = ({
 }) => {
   const [studentSelection, setStudentSelection] = useState([]);
 
+  // ✅ refactored
   const unassignedStudSelection = (studentObj) => {
     const alreadySelected = studentSelection.find(
       (student) => student.student === studentObj.student
@@ -21,15 +22,7 @@ const AddStudentModal = ({
 
     console.log("student Obj: " + JSON.stringify(studentObj));
     if (!alreadySelected) {
-      const updatedStudentObj = {
-        student: studentObj.student,
-        seatInfo: {
-          x: 0,
-          y: 0,
-          assigned: true,
-        },
-      };
-      setStudentSelection([...studentSelection, updatedStudentObj]);
+      setStudentSelection([...studentSelection, studentObj]);
     } else {
       const updatedSelection = studentSelection.filter(
         (student) => student.student !== alreadySelected.student

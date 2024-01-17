@@ -25,6 +25,15 @@ const AssignedStudent = ({
             (selected) => selected.student === studentObj.student
           );
 
+          const newFormat = {
+            student: studentObj.student,
+            seatInfo: {
+              x: null,
+              y: null,
+              assigned: false,
+            }
+          }
+
           return (
             <motion.div
               id={`motion-div-${studentObj.student}`}
@@ -44,7 +53,7 @@ const AssignedStudent = ({
                 selectedStyling ? "border-4 border-black" : ""
               }`}
               onClick={() => {
-                handleStudentClick(studentObj);
+                handleStudentClick(newFormat);
               }}
               onDragEnd={(event, info) => {
                 const containerBounds =

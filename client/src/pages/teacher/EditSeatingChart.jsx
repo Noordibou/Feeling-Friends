@@ -39,55 +39,42 @@ const EditSeatingChart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [counter, setCounter] = useState(0)
 
+  // ✅ refactored
   // being used with AssignedStudent Component
   // being used with ClassroomFurniture Component
   const handleStudentClick = (currentObj) => {
     // Toggle the selected state of the student
     if(currentObj.student) {
-
-      setSelectedStudents((prevSelected) => {
-        const alreadySelected = prevSelected.some(
+        const alreadySelected = selectedStudents.some(
           (student) => student.student === currentObj.student
         );
-        if (alreadySelected) {
+        if (!alreadySelected) {
+          // If student is not selected, add them
+          setSelectedStudents([...selectedStudents, currentObj]);
+        } else if (alreadySelected) {
           // If student is already selected, remove the entire object
-          return prevSelected.filter(
+          const updatedSelection = selectedStudents.filter(
             (student) => student.student !== currentObj.student
           );
-        } else if (!alreadySelected) {
-          // If student is not selected, add them
-          const updatedStudentObj = {
-            student: currentObj.student,
-            seatInfo: {
-              x: null,
-              y: null,
-              assigned: false,
-            },
-          };
-          setSelectedStudents([...selectedStudents, updatedStudentObj]);
+          setSelectedStudents(updatedSelection)
         }
-      });
-  
-      console.log("Hmm just checking hmm: " + JSON.stringify(selectedStudents));
+     
     // Toggle the selected state of furniture
-    } else if (currentObj.rotation || currentObj.rotation === 0) {
-      setSelectedItems((prevSelected) => {
-        const alreadySelected = prevSelected.some(
-          (furnitureId) => furnitureId === currentObj._id
-        );
-        if (alreadySelected) {
-          // If item is already selected, remove the entire object
-          return prevSelected.filter(
-            (furnitureId) => furnitureId !== currentObj._id
-          );
-        } else if (!alreadySelected) {
-          // If item is not selected, add them
-          console.log("updating furniture Obj")
-          
-          setSelectedItems([...selectedItems, currentObj._id]);
-        }
-      });
+    } else {
 
+        const alreadySelected = selectedItems.some(
+          (furnitureId) => furnitureId === currentObj
+        );
+        if (!alreadySelected) {
+          // If item is not selected, add them          
+          setSelectedItems([...selectedItems, currentObj]);
+        } else if (alreadySelected) {
+          // If item is already selected, remove the entire object
+          const updatedSelection = selectedItems.filter(
+            (furnitureId) => furnitureId !== currentObj
+          );
+          setSelectedItems(updatedSelection)
+        }
     }    
   };
 

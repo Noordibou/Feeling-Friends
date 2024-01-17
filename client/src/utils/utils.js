@@ -30,7 +30,7 @@ export const applyColorsToStudents = (classroomStudents) => {
 export const toggleSelected = (objItem, alreadySelected, isSelected) => {
   if (!alreadySelected) {
     return [...isSelected, objItem];
-  } else {
+  } else if (alreadySelected){
     // need to get it unselected, remove it from isSelected Array
     const updatedSelection = isSelected.filter(
       (item) => item.name !== objItem.name

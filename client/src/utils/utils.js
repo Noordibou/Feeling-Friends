@@ -27,6 +27,7 @@ export const applyColorsToStudents = (classroomStudents) => {
   return studentsWithBorderColor
 };
 
+// FIXME: too many exceptions (long if else chain). Need to figure a way for this to be more generic
 export const toggleSelected = (objItem, alreadySelected, isSelected) => {
   if (!alreadySelected) {
     return [...isSelected, objItem];
@@ -42,9 +43,13 @@ export const toggleSelected = (objItem, alreadySelected, isSelected) => {
       updatedSelection = isSelected.filter(
         (item) => item._id !== objItem._id
       );
-    } else {
+    } else if (objItem.name) {
       updatedSelection = isSelected.filter(
         (item) => item.name !== objItem.name
+      );
+    } else {
+      updatedSelection = isSelected.filter(
+        (itemId) => itemId !== objItem
       );
     }
     return updatedSelection;

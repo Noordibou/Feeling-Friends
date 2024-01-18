@@ -1,7 +1,6 @@
 const { toggleSelected } = require("../utils/utils");
 
 describe("checks if item is added to the array", () => {
- 
   test.each([
     [
       {
@@ -29,7 +28,7 @@ describe("checks if item is added to the array", () => {
 
     [
       {
-        testName: "removes student from selection array",
+        testName: "removes unassigned student from selection array",
         itemToTest: {
           student: "fakeStudentId",
           seatInfo: {
@@ -104,6 +103,48 @@ describe("checks if item is added to the array", () => {
             y: 10,
             assigned: true,
             rotation: 0,
+          },
+        ],
+      },
+    ],
+    [
+      {
+        testName: "adds assigned student from selection array",
+        itemToTest: {
+          student: "fakeStudentId10",
+          seatInfo: {
+            x: 90,
+            y: 40,
+            assigned: true,
+          },
+        },
+        isSelected: false,
+        alreadySelectedItems: [
+          {
+            student: "fakeStudentId11",
+            seatInfo: {
+              x: 50,
+              y: 60,
+              assigned: true,
+            },
+          },
+        ],
+        expectedResult: [
+          {
+            student: "fakeStudentId11",
+            seatInfo: {
+              x: 50,
+              y: 60,
+              assigned: true,
+            },
+          },
+          {
+            student: "fakeStudentId10",
+            seatInfo: {
+              x: 90,
+              y: 40,
+              assigned: true,
+            },
           },
         ],
       },

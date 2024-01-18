@@ -1,28 +1,7 @@
 const { toggleSelected } = require("../utils/utils");
 
 describe("checks if item is added to the array", () => {
-  // test("checks if item is added to the array", () => {
-  //   // Given
-  //   const item1 = {
-  //     name: "Empty Desk",
-  //     x: 0,
-  //     y: 0,
-  //     assigned: true,
-  //     rotation: 0,
-  //   };
-
-  //   const alreadySelected = false;
-
-  //   const isSelected = [];
-
-  //   // When
-  //   const result = toggleSelected(item1, alreadySelected, isSelected);
-
-  //   // Then
-  //   expect(result).toStrictEqual([item1]);
-  // });
-
-  // parameterized tests
+ 
   test.each([
     [
       {
@@ -136,8 +115,6 @@ describe("checks if item is added to the array", () => {
       testParams.isSelected,
       testParams.alreadySelectedItems
     );
-    console.log("result: " + JSON.stringify(result));
-    console.log("test params length: " + testParams.length);
     // Then
     expect(result).toStrictEqual(testParams.expectedResult);
   });

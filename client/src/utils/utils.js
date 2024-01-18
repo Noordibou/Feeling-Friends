@@ -32,9 +32,21 @@ export const toggleSelected = (objItem, alreadySelected, isSelected) => {
     return [...isSelected, objItem];
   } else if (alreadySelected){
     // need to get it unselected, remove it from isSelected Array
-    const updatedSelection = isSelected.filter(
-      (item) => item.name !== objItem.name
-    );
+    console.log("objItem: " + JSON.stringify(objItem))
+    let updatedSelection = null
+    if(objItem.student) {
+      updatedSelection = isSelected.filter(
+        (item) => item.student !== objItem.student
+      );
+    } else if (objItem._id) {
+      updatedSelection = isSelected.filter(
+        (item) => item._id !== objItem._id
+      );
+    } else {
+      updatedSelection = isSelected.filter(
+        (item) => item.name !== objItem.name
+      );
+    }
     return updatedSelection;
   }
 };

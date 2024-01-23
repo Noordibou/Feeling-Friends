@@ -8,6 +8,7 @@ import youngStudent from "../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from '../../images/x-button.png';
 const { calculateAge, formatDate } = require("../../components/dateFormat");
+const axios = require("axios");
 
 export default function StudentProfile() {
   const { teacherId, classroomId, studentId } = useParams();
@@ -19,6 +20,8 @@ export default function StudentProfile() {
   const [originalStudentProfile, setOriginalStudentProfile] = useState(null);
   const [editModeIEP, setEditModeIEP] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [editModeNotices, setEditModeNotices] = useState(false);
+
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
@@ -59,15 +62,7 @@ export default function StudentProfile() {
     setOriginalStudentProfile(studentProfile);
     setEditMode(true);
   };
-  
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setStudentProfile({
-      ...studentProfile,
-      [name]: value,
-    });
-  };
-  
+
   const handleSaveClick = async () => {
     try {
       const updatedProfile = await updateStudent(
@@ -84,22 +79,12 @@ export default function StudentProfile() {
     }
   };
 
-  
-  
-  const handleIEPSaveClick = async () => {
-    try {
-      const updatedProfile = await updateStudent(
-        teacherId,
-        classroomId,
-        studentId,
-        studentProfile
-      );
-      setStudentProfile(updatedProfile);
-      setEditModeIEP(false);
-    } catch (error) {
-      setError("An error occurred while saving the IEP information.");
-      console.error(error);
-    }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setStudentProfile({
+      ...studentProfile,
+      [name]: value,
+    });
   };
 
   const handleCancelClick = () => {
@@ -108,37 +93,77 @@ export default function StudentProfile() {
     setEditModeIEP(false);
   };
 
-  const handleContentAreaNoticeChange = (event, index, subField) => {
-    const updatedContentAreaNotices = [...studentProfile.contentAreaNotices];
-    updatedContentAreaNotices[index][subField] = event.target.value;
-    console.log(event, index, subField, updatedContentAreaNotices)
-
+  const handleEditNoticesClick = () => {
+    setOriginalStudentProfile(studentProfile);
+    setEditModeNotices(!editModeNotices);
+  
+    if (!studentProfile.contentAreaNotices || studentProfile.contentAreaNotices.length === 0) {
+      setStudentProfile(prevProfile => ({
+        ...prevProfile,
+        contentAreaNotices: [
+          {
+            contentArea: '',
+            benchmark: ''
+          }
+        ]
+      }));
+    }
+  };
+  
+  const handleNoticesChange = (event, index, field) => {
+    const updatedNotices = [...studentProfile.contentAreaNotices];
+  
+    updatedNotices[index][field] = event.target.value;
+  
     setStudentProfile({
-        ...studentProfile,
-        contentAreaNotices: updatedContentAreaNotices,
+      ...studentProfile,
+      contentAreaNotices: updatedNotices
     });
-};
+  };
+  
+  
+  const handleNoticesSaveClick = async () => {
 
-const handleLearningChallengeChange = (event, index, subField) => {
-    const updatedLearningChallenges = [...studentProfile.learningChallenges];
-    updatedLearningChallenges[index][subField] = event.target.value;
-
+    try {
+  
+      const updatedStudent = {
+        ...studentProfile,
+        contentAreaNotices: studentProfile.contentAreaNotices  
+      };
+  
+      const updatedProfile = await updateStudent(
+        teacherId, 
+        classroomId,
+        studentId,
+        updatedStudent
+      );
+  
+      setStudentProfile(updatedProfile);
+      setEditModeNotices(false);
+  
+    } catch (error) {
+      setError('Error saving notices');
+      console.error(error);
+    }
+  
+  };
+  
+  
+  const handleNoticesDeleteClick = index => {
+    const updatedNotices = [...studentProfile.contentAreaNotices];
+    updatedNotices.splice(index, 1);
+    
     setStudentProfile({
-        ...studentProfile,
-        learningChallenges: updatedLearningChallenges,
+      ...studentProfile,
+      contentAreaNotices: updatedNotices  
     });
-};
+  };
 
-const handleAAT = (event, index, subField) => {
-    const updatedAAt = [...studentProfile.accomodationsAndAssisstiveTech];
-    updatedAAt[index][subField] = event.target.value;
-
-    setStudentProfile({
-        ...studentProfile,
-        accomodationsAndAssisstiveTech: updatedAAt,
-    });
-};
-
+  // not working yet
+  //    const handleIEPCancelClick = () => {
+  //     setStudentProfile(originalStudentProfile);
+  //     setEditModeIEP(false);
+  //   };
 
   return (
     <div className="flex flex-col items-center bg-notebookPaper h-full">
@@ -336,6 +361,11 @@ const handleAAT = (event, index, subField) => {
             <h1 className="text-black text-4xl font-bold font-header1">
               Individual Education Program (IEP)
             </h1>
+            {/* {editModeIEP ? (
+              <button className="underline" onClick={handleIEPAddClick}>
+                Add IEP Entry
+              </button>
+            ) : null} */}
           </div>
           <div className="border-4 bg-sandwich border-sandwich rounded-2xl ">
             <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
@@ -343,41 +373,66 @@ const handleAAT = (event, index, subField) => {
               <h3 className="underline flex justify-end pb-2">
                 Learning Benchmark
               </h3>
-              {editModeIEP
-                ?studentProfile?.contentAreaNotices?.map((notice, index) => (
-                  <div key={index}>
-                      <input
-                          type="text"
-                          placeholder="Content Area"
-                          value={notice.contentArea}
-                          onChange={(event) => handleContentAreaNoticeChange(event, index, 'contentArea')}
-                      />
-                      <input
-                          type="text"
-                          placeholder="Benchmark"
-                          value={notice.benchmark}
-                          onChange={(event) => handleContentAreaNoticeChange(event, index, 'benchmark')}
-                      />  
-                    </div>
-                  ))
-                : studentProfile?.contentAreaNotices?.map((notice, index) => (
-                    <div key={index} className="flex justify-between font-body">
-                      <p> {notice.contentArea}</p>
-                      <p> {notice.benchmark}</p>
-                    </div>
-                  ))}
-            </div>
-            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
-              <h3 className="font-header4">Learning Challenges</h3>
-              <p className="underline flex justify-end pb-2">Diagnosed</p>
-              {editModeIEP
-                ?studentProfile?.learningChallenges?.map((notice, index) => (
+              {editModeNotices
+                ? studentProfile?.contentAreaNotices.map((iepEntry, index) => (
                     <div key={index} className="flex justify-end -mr-3">
                       <input
                         type="text"
-                        value={notice.challenge}
+                        value={iepEntry.contentArea}
                         onChange={(event) =>
-                          handleLearningChallengeChange(
+                          handleNoticesChange(
+                            event,
+                            index,
+                            "contentArea"
+                          )
+                        }
+                        className="mr-20 pl-2 rounded-md bg-sandwich"
+                      />
+                      <input
+                        type="text"
+                        value={iepEntry.benchmark}
+                        onChange={(event) =>
+                          handleNoticesChange(
+                            event,
+                            index,
+                            "benchmark"
+                          )
+                        }
+                        className="ml-10 pl-2 w-1/3 rounded-md bg-sandwich"
+                      />
+                      {editModeNotices ? (
+                        <button
+                            className="ml-1"
+                          onClick={() =>
+                            handleNoticesDeleteClick(
+                              index,
+                              "contentAreaNotices"
+                            )
+                          }
+                        >
+                         <img src={xButton} alt="xButton" className="w-4" />
+                        </button>
+                      ) : null}
+                    </div>
+                  ))
+                : studentProfile?.contentAreaNotices.map((iepEntry, index) => (
+                    <div key={index} className="flex justify-between font-body">
+                      <p> {iepEntry.contentArea}</p>
+                      <p> {iepEntry.benchmark}</p>
+                    </div>
+                  ))}
+            </div>
+            {/* <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
+              <h3 className="font-header4">Learning Challenges</h3>
+              <p className="underline flex justify-end pb-2">Diagnosed</p>
+              {editModeIEP
+                ? studentProfile?.iep.map((iepEntry, index) => (
+                    <div key={index} className="flex justify-end -mr-3">
+                      <input
+                        type="text"
+                        value={iepEntry.learningChallenges.challenge}
+                        onChange={(event) =>
+                          handleIEPChange(
                             event,
                             index,
                             "learningChallenges",
@@ -389,10 +444,10 @@ const handleAAT = (event, index, subField) => {
                       <input
                         type="text"
                         defaultValue={formatDate(
-                          notice.date
+                          iepEntry.learningChallenges.date
                         )}
                         onChange={(event) =>
-                          handleLearningChallengeChange(
+                          handleIEPChange(
                             event,
                             index,
                             "learningChallenges",
@@ -401,7 +456,7 @@ const handleAAT = (event, index, subField) => {
                         }
                         className="ml-24 pl-4 w-1/4 rounded-md bg-sandwich"
                       />
-                      {/* {editModeIEP ? (
+                      {editModeIEP ? (
                         <button
                             className="ml-1"
                           onClick={() =>
@@ -413,13 +468,13 @@ const handleAAT = (event, index, subField) => {
                         >
                          <img src={xButton} alt="xButton" className="w-4" />
                         </button>
-                      ) : null} */}
+                      ) : null}
                     </div>
                   ))
-                : studentProfile?.learningChallenges?.map((notice, index) => (
+                : studentProfile?.iep.map((iepEntry, index) => (
                     <div key={index} className="flex justify-between font-body">
-                      <p>{notice.challenge}</p>
-                      <p>{formatDate(notice.date)}</p>
+                      <p>{iepEntry.learningChallenges.challenge}</p>
+                      <p>{formatDate(iepEntry.learningChallenges.date)}</p>
                     </div>
                   ))}
             </div>
@@ -430,16 +485,16 @@ const handleAAT = (event, index, subField) => {
                 <h3 className="underline">Location</h3>
               </div>
               {editModeIEP
-                ? studentProfile?.accomodationsAndAssisstiveTech?.map((notice, index) => (
+                ? studentProfile?.iep.map((iepEntry, index) => (
                     <div key={index} className="flex flex-row justify-end ">
                       <div className="mr-24">
                         <input
                           type="text"
                           value={
-                            notice.accomodation
+                            iepEntry.accomodationsAndAssisstiveTech.accomodation
                           }
                           onChange={(event) =>
-                            handleAAT(
+                            handleIEPChange(
                               event,
                               index,
                               "accomodationsAndAssisstiveTech",
@@ -452,10 +507,10 @@ const handleAAT = (event, index, subField) => {
                       <div className="inline px-1">
                         <select
                           value={
-                            notice.frequency
+                            iepEntry.accomodationsAndAssisstiveTech.frequency
                           }
                           onChange={(event) =>
-                            handleAAT(
+                            handleIEPChange(
                               event,
                               index,
                               "accomodationsAndAssisstiveTech",
@@ -474,10 +529,10 @@ const handleAAT = (event, index, subField) => {
                         <input
                           type="text"
                           value={
-                            notice.location
+                            iepEntry.accomodationsAndAssisstiveTech.location
                           }
                           onChange={(event) =>
-                            handleAAT(
+                            handleIEPChange(
                               event,
                               index,
                               "accomodationsAndAssisstiveTech",
@@ -486,7 +541,7 @@ const handleAAT = (event, index, subField) => {
                           }
                           className="inline pl-1 w-20 rounded-md bg-sandwich"
                         />
-                         {/* {editModeIEP ? (
+                         {editModeIEP ? (
                         <button
                             className="-mr-3 "
                           onClick={() =>
@@ -498,36 +553,36 @@ const handleAAT = (event, index, subField) => {
                         >
                          <img src={xButton} alt="xButton" className="w-4 ml-1 " />
                         </button>
-                      ) : null} */}
+                      ) : null}
                       </div>
                     </div>
                   ))
-                : studentProfile?.accomodationsAndAssisstiveTech?.map((notice, index) => (
+                : studentProfile?.iep.map((iepEntry, index) => (
                     <div key={index} className="flex justify-between font-body">
                       <p>
                         {" "}
-                        {notice.accomodation}
+                        {iepEntry.accomodationsAndAssisstiveTech.accomodation}
                       </p>
                       <p className="ml-28">
                         {" "}
-                        {notice.frequency}
+                        {iepEntry.accomodationsAndAssisstiveTech.frequency}
                       </p>
-                      <p> {notice.location}</p>
+                      <p> {iepEntry.accomodationsAndAssisstiveTech.location}</p>
                     </div>
                   ))}
-            </div>
-            {editModeIEP ? (
+            </div> */}
+            {editModeNotices ? (
               <div className="px-2 ">
-                <button className="pr-2" onClick={handleIEPSaveClick}>
+                <button className="pr-2" onClick={handleNoticesSaveClick}>
                   Save
                 </button>
                 {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
               </div>
             ) : (
               <div>
-                {/* <button className="underline" onClick={handleEditIEPClick}>
+                <button className="underline" onClick={handleEditNoticesClick}>
                   Edit IEP
-                </button> */}
+                </button>
               </div>
             )}
           </div>

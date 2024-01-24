@@ -52,6 +52,7 @@ export const updateStudent = async (teacherId, classroomId, studentId, studentDa
     try {
         console.log('Received student:', studentData);
         const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, studentData, { withCredentials: true });
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);

@@ -13,10 +13,8 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         default: "young-student.png"
     },
-    iepStatus: {
-        type: String,
-        enum: ['Yes', 'No']
-    },
+    iepStatus: { type: String },
+
     journalEntries: [{
         date: { type: String },
         checkin: {

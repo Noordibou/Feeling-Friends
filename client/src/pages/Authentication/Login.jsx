@@ -133,7 +133,7 @@ const Login = () => {
         </div>
 
 
-        <ToastContainer
+        {/* <ToastContainer
           position="bottom-left"
           hideProgressBar={false}
           newestOnTop={false}
@@ -143,7 +143,7 @@ const Login = () => {
           draggable
           pauseOnHover
           toastClassName="custom-toast" // Apply custom CSS classes to toast messages
-        />
+        /> */}
       </div>
     </div>
   );

@@ -27,7 +27,6 @@ const createNewStudent = async (req, res) => {
             role: 'student',
             avatarImg: req.body.avatarImg,
             journalEntries: req.body.journalEntries,
-            iep: req.body.iep,
         });
   
         await student.save();

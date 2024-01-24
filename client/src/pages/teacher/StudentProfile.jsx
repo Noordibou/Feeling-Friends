@@ -17,8 +17,9 @@ export default function StudentProfile() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEntries, setSelectedEntries] = useState([]);
   const [originalStudentProfile, setOriginalStudentProfile] = useState(null);
-  const [editModeIEP, setEditModeIEP] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [editModeNotices, setEditModeNotices] = useState(false);
+
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
@@ -59,148 +60,14 @@ export default function StudentProfile() {
     setOriginalStudentProfile(studentProfile);
     setEditMode(true);
   };
-
-  const handleEditIEPClick = () => {
-    setOriginalStudentProfile(studentProfile);
-    setEditModeIEP(!editModeIEP);
-
-    if (!studentProfile.iep || studentProfile.iep.length === 0) {
-      setStudentProfile((prevProfile) => ({
-        ...prevProfile,
-        iep: [
-          {
-            contentAreaNotices: {
-              contentArea: "",
-              benchmark: "",
-            },
-            learningChallenges: {
-              challenge: "",
-              date: formatDate(new Date()),
-            },
-            accomodationsAndAssisstiveTech: {
-              accomodation: "",
-              location: "",
-              frequency: "",
-            },
-          },
-        ],
-      }));
-    } else {
-      const updatedIEP = [...studentProfile.iep];
-      if (!updatedIEP[0].learningChallenges.date) {
-        updatedIEP[0].learningChallenges.date = formatDate(new Date());
-      }
-      setStudentProfile({
-        ...studentProfile,
-        iep: updatedIEP,
-      });
-    }
-  };
-
-  // const handleIEPAddClick = () => {
-  //   setStudentProfile((prevProfile) => ({
-  //     ...prevProfile,
-  //     iep: [
-  //       ...prevProfile.iep,
-  //       {
-  //         contentAreaNotices: {
-  //           contentArea: "",
-  //           benchmark: "",
-  //         },
-  //         learningChallenges: {
-  //           challenge: "",
-  //           date: formatDate(new Date()),
-  //         },
-  //         accomodationsAndAssisstiveTech: {
-  //           accomodation: "",
-  //           location: "",
-  //           frequency: "",
-  //         },
-  //       },
-  //     ],
-  //   }));
-  // };
-
-  // const handleContentAreaAddClick = () => {
-  //   setStudentProfile((prevProfile) => {
-  //     const newContentAreaEntry = {
-  //       contentAreaNotices: {
-  //         contentArea: "",
-  //         benchmark: "",
-  //       },
-  //     };
-
-  //     return {
-  //       ...prevProfile,
-  //       iep: prevProfile?.iep ? [...prevProfile.iep, newContentAreaEntry] : [newContentAreaEntry],
-  //     };
-  //   });
-  // };
-
-  // const handleLearningChallengesAddClick = () => {
-  //   setStudentProfile((prevProfile) => {
-  //     const newLearningChallengesEntry = {
-  //       learningChallenges: {
-  //         challenge: "",
-  //         date: formatDate(new Date()),
-  //       },
-  //     };
-
-  //     return {
-  //       ...prevProfile,
-  //       iep: prevProfile?.iep ? [...prevProfile.iep, newLearningChallengesEntry] : [newLearningChallengesEntry],
-  //     };
-  //   });
-  // };
-
-  // const handleAccommodationsAddClick = () => {
-  //   setStudentProfile((prevProfile) => {
-  //     const newAccommodationsEntry = {
-  //       accomodationsAndAssisstiveTech: {
-  //         accomodation: "",
-  //         location: "",
-  //         frequency: "",
-  //       },
-  //     };
-
-  //     return {
-  //       ...prevProfile,
-  //       iep: prevProfile?.iep ? [...prevProfile.iep, newAccommodationsEntry] : [newAccommodationsEntry],
-  //     };
-  //   });
-  // };
-
-  const handleIEPChange = (event, index, field, subField) => {
-    const updatedIEP = [...studentProfile.iep];
-
-    if (field === "contentAreaNotices") {
-      updatedIEP[index].contentAreaNotices[subField] = event.target.value;
-    } else {
-      updatedIEP[index][field][subField] = event.target.value;
-    }
-
+  
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
     setStudentProfile({
       ...studentProfile,
-      iep: updatedIEP,
+      [name]: value,
     });
-  };
-
-  const handleIEPDeleteClick = (entryIndex, section) => {
-    setStudentProfile((prevProfile) => {
-      const updatedIEP = [...prevProfile.iep];
-
-      // Remove the entire section from the IEP entry
-      updatedIEP[entryIndex][section] = undefined;
-
-      // Filter out any undefined sections from the IEP entry
-      const filteredIEP = updatedIEP.filter((entry) => entry[section] !== undefined);
-
-      return {
-        ...prevProfile,
-        iep: filteredIEP,
-      };
-    });
-  };
+  };          
 
   const handleSaveClick = async () => {
     try {
@@ -218,41 +85,120 @@ export default function StudentProfile() {
     }
   };
 
-  const handleIEPSaveClick = async () => {
+
+  const handleCancelClick = () => {
+    setStudentProfile(originalStudentProfile);
+    setEditMode(false);
+    // seteditModeNotices(false);
+  };
+
+  const handleEditIEPClick = () => {
+    setOriginalStudentProfile(studentProfile);
+    setEditModeNotices(true);
+  
+    if (!studentProfile.contentAreaNotices) {
+      setStudentProfile((prevProfile) => ({
+        ...prevProfile,
+        contentAreaNotices: [],
+      }));
+    }
+  
+    if (!studentProfile.learningChallenges) {
+      setStudentProfile((prevProfile) => ({
+        ...prevProfile,
+        learningChallenges: [],
+      }));
+    }
+  
+    if (!studentProfile.accomodationsAndAssisstiveTech) {
+      setStudentProfile((prevProfile) => ({
+        ...prevProfile,
+        accomodationsAndAssisstiveTech: [],
+      }));
+    }
+  };
+  
+
+  const handleIEPChange = (event, index, field, category) => {
+    const updatedItems = [...studentProfile[category]];
+
+    updatedItems[index][field] = event.target.value;
+
+    setStudentProfile({
+      ...studentProfile,
+      [category]: updatedItems,
+    });
+  };
+
+  const handleIEPSaveClick = async (category) => {
     try {
+      const updatedStudent = {
+        ...studentProfile,
+        [category]: studentProfile[category] || [],
+      };
+
       const updatedProfile = await updateStudent(
         teacherId,
         classroomId,
         studentId,
-        studentProfile
+        updatedStudent,
       );
+
       setStudentProfile(updatedProfile);
-      setEditModeIEP(false);
+      setEditModeNotices(false);
     } catch (error) {
-      setError("An error occurred while saving the IEP information.");
+      setError(`Error saving ${category}`);
       console.error(error);
     }
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+
+  const handleIEPDeleteClick = (index, category) => {
+    const updatedItems = [...studentProfile[category]];
+    updatedItems.splice(index, 1);
+
     setStudentProfile({
       ...studentProfile,
-      [name]: value,
+      [category]: updatedItems,
     });
   };
 
- 
-  const handleCancelClick = () => {
-    setStudentProfile(originalStudentProfile);
-    setEditMode(false);
-    setEditModeIEP(false);
+  const handleIEPAddClick = (category) => {
+    const newItem = getNewItemForCategory(category); 
+
+    setStudentProfile((prevProfile) => ({
+      ...prevProfile,
+      [category]: [...prevProfile[category], newItem],
+    }));
+  };
+
+  const getNewItemForCategory = (category) => {
+    switch (category) {
+      case 'contentAreaNotices':
+        return {
+          contentArea: '',
+          benchmark: '',
+        };
+      case 'learningChallenges':
+        return {
+          challenge: '',
+          date: formatDate(new Date()),
+        };
+      case 'accomodationsAndAssisstiveTech':
+        return {
+          accomodation: '',
+          frequency: '',
+          location: '',
+        };
+      default:
+        return {};
+    }
   };
 
   // not working yet
   //    const handleIEPCancelClick = () => {
   //     setStudentProfile(originalStudentProfile);
-  //     setEditModeIEP(false);
+  //     seteditModeNotices(false);
   //   };
 
   return (
@@ -363,11 +309,11 @@ export default function StudentProfile() {
                 <label>IEP: </label>
                 <select
                   value={studentProfile.iepStatus}
-                  onChange={handleInputChange}
+                  onChange={e => setStudentProfile({...studentProfile, iepStatus: e.target.value})}
                   className="rounded-md bg-sandwich px-2"
                 >
                   <option value="Yes">Yes</option>
-                  <option value="false">No</option>
+                  <option value="No">No</option>
                 </select>
               </div>
             ) : (
@@ -451,11 +397,6 @@ export default function StudentProfile() {
             <h1 className="text-black text-4xl font-bold font-header1">
               Individual Education Program (IEP)
             </h1>
-            {/* {editModeIEP ? (
-              <button className="underline" onClick={handleIEPAddClick}>
-                Add IEP Entry
-              </button>
-            ) : null} */}
           </div>
           <div className="border-4 bg-sandwich border-sandwich rounded-2xl ">
             <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
@@ -463,39 +404,31 @@ export default function StudentProfile() {
               <h3 className="underline flex justify-end pb-2">
                 Learning Benchmark
               </h3>
-              {editModeIEP
-                ? studentProfile?.iep.map((iepEntry, index) => (
+              {editModeNotices
+                ? studentProfile?.contentAreaNotices.map((iepEntry, index) => (
                   <div key={index} className="flex justify-end -mr-3">
                     <input
                       type="text"
-                      value={iepEntry.contentAreaNotices.contentArea}
+                      value={iepEntry.contentArea}
                       onChange={(event) =>
                         handleIEPChange(
                           event,
                           index,
-                          "contentAreaNotices",
-                          "contentArea"
+                          "contentArea",
+                          "contentAreaNotices"
                         )
                       }
                       className="mr-20 pl-2 rounded-md bg-sandwich"
                     />
                     <input
                       type="text"
-                      value={iepEntry.contentAreaNotices.benchmark}
+                      value={iepEntry.benchmark}
                       onChange={(event) =>
-                        handleIEPChange(
-                          event,
-                          index,
-                          "contentAreaNotices",
-                          "benchmark"
-                        )
+                        handleIEPChange(event, index, "benchmark", 'contentAreaNotices')
                       }
                       className="ml-10 pl-2 w-1/3 rounded-md bg-sandwich"
                     />
-                    {/* <button className="underline" onClick={handleContentAreaAddClick}>
-                      Add
-                    </button> */}
-                    {editModeIEP ? (
+                    {editModeNotices ? (
                       <button
                         className="ml-1"
                         onClick={() =>
@@ -510,71 +443,84 @@ export default function StudentProfile() {
                     ) : null}
                   </div>
                 ))
-                : studentProfile?.iep.map((iepEntry, index) => (
+                : studentProfile?.contentAreaNotices.map((iepEntry, index) => (
                   <div key={index} className="flex justify-between font-body">
-                    <p> {iepEntry.contentAreaNotices.contentArea}</p>
-                    <p> {iepEntry.contentAreaNotices.benchmark}</p>
+                    <p> {iepEntry.contentArea}</p>
+                    <p> {iepEntry.benchmark}</p>
                   </div>
                 ))}
+                {((editModeNotices && studentProfile?.contentAreaNotices.length === 0) ||editModeNotices ) && (
+                  <button
+                    className="mt-2"
+                    onClick={() => handleIEPAddClick("contentAreaNotices")}
+                  >
+                    Add
+                  </button>
+                )}
             </div>
             <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
               <h3 className="font-header4">Learning Challenges</h3>
               <p className="underline flex justify-end pb-2">Diagnosed</p>
-              {editModeIEP
-                ? studentProfile?.iep.map((iepEntry, index) => (
+              {editModeNotices
+                ? studentProfile?.learningChallenges.map((iepEntry, index) => (
                   <div key={index} className="flex justify-end -mr-3">
                     <input
                       type="text"
-                      value={iepEntry.learningChallenges.challenge}
+                      value={iepEntry.challenge}
                       onChange={(event) =>
                         handleIEPChange(
                           event,
                           index,
-                          "learningChallenges",
-                          "challenge"
-                        )
-                      }
-                      className="mr-14 pl-2 rounded-md bg-sandwich "
-                    />
+                          "challenge",
+                          "learningChallenges"
+                          )
+                        }
+                        className="mr-14 pl-2 rounded-md bg-sandwich "
+                        />
                     <input
                       type="text"
                       defaultValue={formatDate(
-                        iepEntry.learningChallenges.date
-                      )}
-                      onChange={(event) =>
-                        handleIEPChange(
-                          event,
-                          index,
-                          "learningChallenges",
-                          "date"
-                        )
-                      }
-                      className="ml-24 pl-4 w-1/4 rounded-md bg-sandwich"
-                    />
-                    {/* <button className="underline" onClick={handleLearningChallengesAddClick}>
-                      Add
-                    </button> */}
-                    {editModeIEP ? (
-                      <button
-                        className="ml-1"
-                        onClick={() =>
-                          handleIEPDeleteClick(
+                        iepEntry.date
+                        )}
+                        onChange={(event) =>
+                          handleIEPChange(
+                            event,
                             index,
+                            "date",
                             "learningChallenges"
+                            )
+                          }
+                          className="ml-24 pl-4 w-1/4 rounded-md bg-sandwich"
+                          />
+                    {editModeNotices ? (
+                      <button
+                      className="ml-1"
+                      onClick={() =>
+                        handleIEPDeleteClick(
+                          index,
+                          "learningChallenges"
                           )
                         }
-                      >
+                        >
                         <img src={xButton} alt="xButton" className="w-4" />
                       </button>
                     ) : null}
                   </div>
                 ))
-                : studentProfile?.iep.map((iepEntry, index) => (
+                : studentProfile?.learningChallenges.map((iepEntry, index) => (
                   <div key={index} className="flex justify-between font-body">
-                    <p>{iepEntry.learningChallenges.challenge}</p>
-                    <p>{formatDate(iepEntry.learningChallenges.date)}</p>
+                    <p>{iepEntry.challenge}</p>
+                    <p>{formatDate(iepEntry.date)}</p>
                   </div>
                 ))}
+                {((editModeNotices && studentProfile?.learningChallenges.length === 0) ||editModeNotices ) && (
+                  <button
+                    className="mt-2"
+                    onClick={() => handleIEPAddClick("learningChallenges")}
+                  >
+                    Add
+                  </button>
+                )}
             </div>
             <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
               <h3 className="font-header4">Accommodations & Assistive Tech</h3>
@@ -582,21 +528,21 @@ export default function StudentProfile() {
                 <h3 className="underline">Frequency</h3>
                 <h3 className="underline">Location</h3>
               </div>
-              {editModeIEP
-                ? studentProfile?.iep.map((iepEntry, index) => (
+              {editModeNotices
+                ? studentProfile?.accomodationsAndAssisstiveTech.map((iepEntry, index) => (
                   <div key={index} className="flex flex-row justify-end ">
                     <div className="mr-24">
                       <input
                         type="text"
                         value={
-                          iepEntry.accomodationsAndAssisstiveTech.accomodation
+                          iepEntry.accomodation
                         }
                         onChange={(event) =>
                           handleIEPChange(
                             event,
                             index,
-                            "accomodationsAndAssisstiveTech",
-                            "accomodation"
+                            "accomodation",
+                            "accomodationsAndAssisstiveTech"
                           )
                         }
                         className="pl-2 -ml-4 rounded-md bg-sandwich"
@@ -605,14 +551,14 @@ export default function StudentProfile() {
                     <div className="inline px-1">
                       <select
                         value={
-                          iepEntry.accomodationsAndAssisstiveTech.frequency
+                          iepEntry.frequency
                         }
                         onChange={(event) =>
                           handleIEPChange(
                             event,
                             index,
-                            "accomodationsAndAssisstiveTech",
-                            "frequency"
+                            "frequency",
+                            "accomodationsAndAssisstiveTech"
                           )
                         }
                         className="rounded-md bg-sandwich w-20"
@@ -627,24 +573,21 @@ export default function StudentProfile() {
                       <input
                         type="text"
                         value={
-                          iepEntry.accomodationsAndAssisstiveTech.location
+                          iepEntry.location
                         }
                         onChange={(event) =>
                           handleIEPChange(
                             event,
                             index,
-                            "accomodationsAndAssisstiveTech",
-                            "location"
+                            "location",
+                            "accomodationsAndAssisstiveTech"
                           )
                         }
                         className="inline pl-1 w-20 rounded-md bg-sandwich"
                       />
-                      {/* <button className="underline" onClick={handleAccommodationsAddClick}>
-                        Add
-                      </button> */}
-                      {editModeIEP ? (
+                      {editModeNotices ? (
                         <button
-                          className="-mr-3 "
+                          className="-mr-2"
                           onClick={() =>
                             handleIEPDeleteClick(
                               index,
@@ -658,21 +601,29 @@ export default function StudentProfile() {
                     </div>
                   </div>
                 ))
-                : studentProfile?.iep.map((iepEntry, index) => (
+                : studentProfile?.accomodationsAndAssisstiveTech.map((iepEntry, index) => (
                   <div key={index} className="flex justify-between font-body">
                     <p>
                       {" "}
-                      {iepEntry.accomodationsAndAssisstiveTech.accomodation}
+                      {iepEntry.accomodation}
                     </p>
                     <p className="ml-28">
                       {" "}
-                      {iepEntry.accomodationsAndAssisstiveTech.frequency}
+                      {iepEntry.frequency}
                     </p>
-                    <p> {iepEntry.accomodationsAndAssisstiveTech.location}</p>
+                    <p> {iepEntry.location}</p>
                   </div>
                 ))}
+                {((editModeNotices && studentProfile?.accomodationsAndAssisstiveTech.length === 0) ||editModeNotices ) && (
+              <button
+                className="mt-2"
+                onClick={() => handleIEPAddClick("accomodationsAndAssisstiveTech")}
+              >
+                Add
+              </button>
+            )}
             </div>
-            {editModeIEP ? (
+            {editModeNotices ? (
               <div className="px-2 ">
                 <button className="pr-2" onClick={handleIEPSaveClick}>
                   Save

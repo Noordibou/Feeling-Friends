@@ -13,10 +13,8 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         default: "young-student.png"
     },
-    iepStatus: {
-        type: String,
-        enum: ['Yes', 'No']
-    },
+    iepStatus: { type: String },
+
     journalEntries: [{
         date: { type: String },
         checkin: {
@@ -36,30 +34,27 @@ const StudentSchema = new mongoose.Schema({
             highlight: { type: String },
         }
     }],
-    iep: [{
-        contentAreaNotices:{
-            contentArea: { type: String },
-            benchmark: { type: String },
-        },
-        learningChallenges: {
-            challenge: { type: String },
-            date: {
-                type: Date,
-                get: date => date.toISOString().slice(0, 10),
-                set: dateString => new Date(dateString)
-            }
-        },
-        accomodationsAndAssisstiveTech: {
-            accomodation: { type: String },
-            location: { type: String },
-            frequency: {
-                type: String,
-                enum: ['Daily', 'Weekly', 'Monthly', 'As Needed']
-            },
-
+    contentAreaNotices: [{
+        contentArea: { type: String },
+        benchmark: { type: String },
+    }],
+    learningChallenges: [{
+        challenge: { type: String },
+        date: {
+            type: Date,
+            get: date => date.toISOString().slice(0, 10),
+            set: dateString => new Date(dateString)
         }
-    }]
+    }],
+    accomodationsAndAssisstiveTech: [{
+        accomodation: { type: String },
+        location: { type: String },
+        frequency: {
+            type: String,
+            enum: ['Daily', 'Weekly', 'Monthly', 'As Needed']
+        },
 
+    }]
 })
 
 module.exports = mongoose.model('Student', StudentSchema);

@@ -50,7 +50,9 @@ export const updateTeacher = async (id, teacher) => {
 
 export const updateStudent = async (teacherId, classroomId, studentId, studentData) => {
     try {
+        console.log('Received student:', studentData);
         const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, studentData, { withCredentials: true });
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -73,6 +75,7 @@ export const getTeacherClassroom = async (id, classroomId) => {
 
 export const getStudentProfile = async (teacherId, classroomId, studentId) => {
     try {
+        
         const response = await axios.get(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, { withCredentials: true });
         const profile = response.data;
         return profile;

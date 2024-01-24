@@ -17,9 +17,10 @@ import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
 import SubEmotion from "./pages/student/SubEmotion";
 import EditTeacher from "./pages/teacher/EditTeacher";
-import TESTEditSeatingChart from "./pages/teacher/TESTEditSeatingChart";
+import EditSeatingChart from "./pages/teacher/EditSeatingChart";
 import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
+import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 
 
 export default function App() {
@@ -37,14 +38,14 @@ export default function App() {
             {/* Teacher Routes */}
             <Route path="/teacher-home" element={<TeacherHome />} />
             <Route path="/classroom/:teacherId/:classroomId" element={<ViewClassroom />} />
-            <Route path="/TESTEditSC/:teacherId/:classroomId" element={<TESTEditSeatingChart />} />
+            <Route path="/edit-seating-chart/:teacherId/:classroomId" element={<EditSeatingChart />} />
             <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
             <Route path="/editneedsgoals" element={<NeedsGoals />} />
             <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
             <Route path="/edit/:teacherId" element={<EditTeacher />} />
             <Route path="/createclass" element={<CreateClass />} />
             <Route path="/addstudent/:teacherId/:classroomId" element={<AddStudentToClassroom />} />
-
+            <Route path="/furnituremodal" element={<FurnitureModal />} />
 
         {/* Student Routes */}
         <Route path="/student-home" element={<StudentHome />} />

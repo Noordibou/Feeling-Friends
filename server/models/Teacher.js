@@ -18,17 +18,19 @@ const teacherSchema = new mongoose.Schema({
             enum: [
               "Smartboard",
               "Teacher's Desk",
-              "Door",
+              "Entry",
               "Window",
               "Empty Desk",
               "Table",
-              "Bookcase/Storage",
+              "Bookcase",
+              "Storage",
               "Chalkboard"
             ],
           },
           x: { type: Number, default: null },
           y: { type: Number, default: null },
           assigned: { type: Boolean, default: false },
+          rotation: { type: Number, default: 0 }
         },
       ],
       students: [
@@ -44,6 +46,6 @@ const teacherSchema = new mongoose.Schema({
       ],
     },
   ],
-});
+})
 
 module.exports = mongoose.model("Teacher", teacherSchema);

@@ -563,6 +563,7 @@ export default function StudentProfile() {
                         }
                         className="rounded-md bg-sandwich w-20"
                       >
+                        <option value=""></option>
                         <option value="Daily">Daily</option>
                         <option value="Weekly">Weekly</option>
                         <option value="Monthly">Monthly</option>

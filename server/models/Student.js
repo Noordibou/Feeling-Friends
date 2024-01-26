@@ -49,10 +49,7 @@ const StudentSchema = new mongoose.Schema({
     accomodationsAndAssisstiveTech: [{
         accomodation: { type: String },
         location: { type: String },
-        frequency: {
-            type: String,
-            enum: ['Daily', 'Weekly', 'Monthly', 'As Needed']
-        },
+        frequency: { type: String },
 
     }]
 })

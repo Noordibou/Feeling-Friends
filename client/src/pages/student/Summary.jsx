@@ -62,7 +62,7 @@ const Summary = () => {
             </h1>
           </div>
           <div className="flex justify-center mt-24 mb-32">
-            <Logout/>
+            <Logout location="studentLogout"/>
           </div>
         </section>
 

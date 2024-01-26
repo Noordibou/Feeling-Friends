@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import TeacherHome from "./pages/TeacherHome";
+import TeacherHome from "./pages/teacher/teacherHome/TeacherHome";
 import StudentHome from "./pages/StudentHome";
 import Home from "./pages/Home";
 import Insight from "./pages/student/Insight"
@@ -25,8 +25,7 @@ import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 
 export default function App() {
   return (
-    <main className="bg-notebookPaper h-full min-h-screen">
-
+    <main className="bg-notebookPaper scrollbar-wrapper h-full min-h-screen scrollhost">
       <AuthProvider>
         <UserProvider>
           <Routes>
@@ -47,15 +46,15 @@ export default function App() {
             <Route path="/addstudent/:teacherId/:classroomId" element={<AddStudentToClassroom />} />
             <Route path="/furnituremodal" element={<FurnitureModal />} />
 
-        {/* Student Routes */}
-        <Route path="/student-home" element={<StudentHome />} />
-        <Route path="/emotion" element={<SubEmotion/>} />
-        <Route path="/insight" element={<Insight />} />
-        <Route path="/regzone" element={<RegZone />} />
-        <Route path="/goalsneeds" element={<GoalsNeeds />} />
-        <Route path="/summary" element={<Summary />} />
-      </Routes>
-      </UserProvider>
+            {/* Student Routes */}
+            <Route path="/student-home" element={<StudentHome />} />
+            <Route path="/emotion" element={<SubEmotion />} />
+            <Route path="/insight" element={<Insight />} />
+            <Route path="/regzone" element={<RegZone />} />
+            <Route path="/goalsneeds" element={<GoalsNeeds />} />
+            <Route path="/summary" element={<Summary />} />
+          </Routes>
+        </UserProvider>
       </AuthProvider>
 
     </main>

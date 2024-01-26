@@ -11,7 +11,7 @@ import { Login, Signup } from "./pages/Authentication";
 import AuthProvider from "./pages/Authentication/AuthContext";
 import ClassList from "./pages/teacher/ViewClassList";
 import NeedsGoals from "./pages/teacher/NeedsGoals";
-import StudentProfile from "./pages/teacher/StudentProfile";
+import StudentProfile from "./pages/teacher/studentProfile/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import ViewClassroom from "./pages/teacher/ViewClassroom";

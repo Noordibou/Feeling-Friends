@@ -57,11 +57,10 @@ const TeacherHome = () => {
             <Greeting isEditMode={isEditMode} userData={userData} />
           </div>
 
-          <div className=" h-[68%] custom-scrollbar ">
+          <div className=" custom-scrollbar ">
             {userData && userData.classrooms ? (
               classroomsData.map(({ classroom, zorPercentages }, index) => (
-                <div key={index} className="bg-sandwich w-[80%] h-[32%] ml-auto mr-auto p-[0.5rem] rounded-[1rem]  my-[1rem]">
-                  <Link to={`/classroom/${userData._id}/${classroom._id}`}>
+                <div key={index} className="bg-sandwich w-[80%]  ml-auto mr-auto p-[0.5rem] rounded-[1rem] my-[1rem]">
                     <div className="flex justify-between">
                       <h2 className="text-header4 font-header2 text-left">{classroom.classSubject}</h2>
                       {isEditMode && (
@@ -70,6 +69,7 @@ const TeacherHome = () => {
                         </button>
                       )}
                     </div>
+                          <Link to={`/classroom/${userData._id}/${classroom._id}`}>
                     <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
                       <div className="flex justify-between mb-[1rem] mx-2">
                         <div className="flex-col text-sm font-body">

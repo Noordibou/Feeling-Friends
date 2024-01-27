@@ -43,7 +43,7 @@ module.exports = {
     },
 
     colors: {
-      // emotions
+      // Emotions
       'themeWhite': '#FFFFFF',
       'darkTeal': '#3EB7AC',
       'lightLavender': '#DDC9E3',
@@ -52,7 +52,7 @@ module.exports = {
       'lightCyan': '#BFEFEF',
       'lightBlue': '#7BBBE5',
       'pink': '#F497A9',
-      // regulatory zone
+      // Regulatory zone
       'blue': '#0886CE',
       'green': '#459A4C',
       'yellow': '#FDDA04',
@@ -65,6 +65,11 @@ module.exports = {
       'graphite': '#A59F8B',
       'gray': '#808080',
       'darkSandwich': '#9E9268',
+      // Teacher Navbar
+      'sky': '#3DA4DE',
+      'grass': '#52B85A',
+      'schoolBus': '#F5D73A',
+      'apple': '#F46B1E'
     },
 
     // extend: {

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom, getTeacherById, getAllStudents, addStudentToClassroom } from '../../api/teachersApi';
-import { getBackgroundColorClass } from '../../components/classRoomColors';
+import { getBackgroundColorClass } from '../../components/ClassRoomColors';
 import xButton from '../../images/x-button.png';
+import './scrollbar.css'
+import GoBack from '../../components/GoBack.jsx';
 
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();
@@ -85,185 +87,208 @@ export default function ViewClassList() {
 
     return (
         <>
-            <div>
-                <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem]">Good morning, {userData.firstName}!</h1>
-                {classroom ? (
-                    <>
-                        <div className="flex justify-center w-[90%] mr-auto ml-auto">
-                            <div className="flex">
-                                <div className="pr-[0.5rem]">
-                                    <button
-                                        className="text-body font-body rounded-[1rem] border-sandwich border-[4px] pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] w-[21rem]"
-                                        onClick={() => {
-                                            setSortCriteria('zor');
-                                            toggleSortDirection();
-                                        }}
-                                    >
-                                        Sort by Regulatory Zone
-                                    </button>
+            <div className='max-w-screen-xl mx-auto'>
+                <div className='flex flex-col justify-center h-screen pt-[4rem]'>
+                    {classroom ? (
+                        <>
+                            <div className="flex justify-center gap-[8rem] mb-[0.5rem] ">
+                                <div className="flex items-center ">
+                                    <GoBack />
+                                    <h2 className="text-header4 font-header2 ml-[2rem] ">{classroom.classSubject}</h2>
                                 </div>
-                                <div className="pl-[0.5rem]">
-                                    <button
-                                        className="text-body font-body rounded-[1rem] border-sandwich border-[4px] pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] w-[21rem]"
-                                        onClick={() => {
-                                            setSortCriteria('lastName');
-                                            toggleSortDirection();
-                                        }}
-                                    >
-                                        Sort by Last Name
-                                    </button>
+                                <div className="flex-col text-sm font-body">
+                                    <h2>Location:</h2>
+                                    <h2 className="font-semibold">{classroom.location}</h2>
+                                </div>
+
+                                <div className="flex-col text-sm font-body ">
+                                    <div className="flex gap-4">
+                                        <h2>Check-in</h2>
+                                        <h2>Check-out</h2>
+                                    </div>
+                                    <div className="flex gap-[4rem] font-semibold">
+                                        <h2>{classroom.checkIn ? `${classroom.checkIn}AM` : '-'}</h2>
+                                        <h2>{classroom.checkOut ? `${classroom.checkOut}PM` : '-'}</h2>
+                                    </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div>
-                            <h2 className="text-header2 font-header2 text-center my-[1rem]">
-                                {isEditMode ? (
-                                    <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
-                                        Add new student
-                                    </Link>
-                                ) : (
-                                    ''
-                                )}
-                            </h2>
-                        </div>
+                            <div className="flex justify-center w-[70%] mr-auto ml-auto">
+                                <div className="flex">
+                                    <div className="pr-[0.5rem]">
+                                        <button
+                                            className={`md:text-body font-body rounded-[0.7rem] ${sortCriteria === 'zor' ? 'border-sandwich border-[4px] bg-sandwich' : 'border-[4px] border-sandwich'
+                                                } pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] md:w-[20rem] w-[16rem]`}
+                                            onClick={() => {
+                                                setSortCriteria('zor');
+                                                toggleSortDirection();
+                                            }}
+                                        >
+                                            Sort by Regulatory Zone
+                                        </button>
+                                    </div>
+                                    <div className="pl-[0.5rem]">
+                                        <button
+                                            className={`md:text-body font-body rounded-[0.7rem] ${sortCriteria === 'lastName' ? 'border-sandwich border-[4px] bg-sandwich' : 'border-[4px] border-sandwich'
+                                                } pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] md:w-[20rem] w-[16rem] `}
+                                            onClick={() => {
+                                                setSortCriteria('lastName');
+                                                toggleSortDirection();
+                                            }}
+                                        >
+                                            Sort by Last Name
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 className="text-header2 font-header2 text-center my-[1rem]">
+                                    {isEditMode ? (
+                                        <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
+                                            Add new student
+                                        </Link>
+                                    ) : (
+                                        ''
+                                    )}
+                                </h2>
+                            </div>
 
-                        {/* Scrollable list of students */}
-                        <div className='flex justify-center'>
-                            {sortedStudents.length > 0 ? (
-                                <ul className='w-[70%] '>
-                                    {sortedStudents.map((student, index) => {
-                                        const lastJournal = student.journalEntries[student.journalEntries.length - 1];
-                                        if (lastJournal) {
-                                            const lastCheckin = lastJournal.checkin;
-                                            const lastCheckout = lastJournal.checkout;
-                                            if (lastCheckout && lastCheckout.emotion) {
-                                                const lastEmotion = lastCheckout.emotion;
-                                                const zor = lastCheckout.ZOR;
-                                                const bgColorClass = getBackgroundColorClass(zor);
-                                                return (
-                                                    <li key={`${student.id}-${index}`}>
-                                                        <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
-                                                            <div className='pb-2 flex justify-between'>
-                                                                <div>
-                                                                    {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
-                                                                </div>
-                                                                {isEditMode && (
-                                                                    <div className='-mt-8 -mx-8'>
-                                                                        <div>
-                                                                            <button onClick={() => handleDeleteStudent(student._id)}>
-                                                                                <img src={xButton} alt="xButton" />
-                                                                            </button>
-                                                                        </div>
+                            {/* Scrollable list of students */}
+                            <div className='flex justify-center overflow-y-auto custom-scrollbar'>
+                                {sortedStudents.length > 0 ? (
+                                    <ul className='w-[70%] '>
+                                        {sortedStudents.map((student, index) => {
+                                            const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+                                            if (lastJournal) {
+                                                const lastCheckin = lastJournal.checkin;
+                                                const lastCheckout = lastJournal.checkout;
+                                                if (lastCheckout && lastCheckout.emotion) {
+                                                    const lastEmotion = lastCheckout.emotion;
+                                                    const zor = lastCheckout.ZOR;
+                                                    const bgColorClass = getBackgroundColorClass(zor);
+                                                    return (
+                                                        <li key={`${student.id}-${index}`}>
+                                                            <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
+                                                                {/* <div>
+                                                                    {student.avatarImg && (
+                                                                        <img
+                                                                            src={student.avatarImg}
+                                                                            alt={`Avatar for ${student.firstName} ${student.lastName}`}
+                                                                            className="w-10 h-10 rounded-full mr-4"
+                                                                        />
+                                                                    )}
+                                                                </div> */}
+                                                                <div className='pb-2 flex justify-between'>
+                                                                    <div>
+                                                                        {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
                                                                     </div>
-                                                                )}
-                                                            </div>
-                                                            <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
-                                                                Goals: {lastCheckout.goal}
-                                                                <br />
-                                                                Needs: {lastCheckout.need}
-                                                                <div className='pt-3 mr-2 underline'>
-                                                                    <Link to={`/${userData._id}/${classroomId}/${student._id}`}>More &gt;</Link>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (lastCheckin && lastCheckin.emotion) {
-                                                const lastEmotion = lastCheckin.emotion;
-                                                const zor = lastCheckin.ZOR;
-                                                const bgColorClass = getBackgroundColorClass(zor);
-                                                return (
-                                                    <li key={`${student.id}-${index}`}>
-                                                        <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
-                                                            <div className='flex justify-between'>
-                                                                <div>
-                                                                    {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
-                                                                </div>
-                                                                {isEditMode && (
-                                                                    <div className='-mt-8 -mx-8'>
-                                                                        <div>
-                                                                            <button onClick={() => handleDeleteStudent(student._id)}>
-                                                                                <img src={xButton} alt="xButton" />
-                                                                            </button>
+                                                                    {isEditMode && (
+                                                                        <div className='-mt-8 -mx-8'>
+                                                                            <div>
+                                                                                <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                                    <img src={xButton} alt="xButton" />
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
+                                                                    )}
+                                                                </div>
+                                                                <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
+                                                                    Goals: {lastCheckout.goal}
+                                                                    <br />
+                                                                    Needs: {lastCheckout.need}
+                                                                    <div className='pt-3 mr-2 underline'>
+                                                                        <Link to={`/${userData._id}/${classroomId}/${student._id}`}>More &gt;</Link>
                                                                     </div>
-                                                                )}
-                                                            </div>
-                                                            <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
-                                                                Goals: {lastCheckin.goal}
-                                                                <br />
-                                                                Needs: {lastCheckin.need}
-                                                                <div className='pt-3 mr-2 underline'>
-                                                                    <Link to={`/${userData._id}/${classroomId}/${student._id}`}>More &gt;</Link>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                );
+                                                        </li>
+                                                    );
+                                                } else if (lastCheckin && lastCheckin.emotion) {
+                                                    const lastEmotion = lastCheckin.emotion;
+                                                    const zor = lastCheckin.ZOR;
+                                                    const bgColorClass = getBackgroundColorClass(zor);
+                                                    return (
+                                                        <li key={`${student.id}-${index}`}>
+                                                            <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
+                                                                <div className='flex justify-between'>
+                                                                    <div>
+                                                                        {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                                    </div>
+                                                                    {isEditMode && (
+                                                                        <div className='-mt-8 -mx-8'>
+                                                                            <div>
+                                                                                <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                                    <img src={xButton} alt="xButton" />
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                <div className='bg-notebookPaper px-2 py-2 rounded-md flex justify-between'>
+                                                                    Goals: {lastCheckin.goal}
+                                                                    <br />
+                                                                    Needs: {lastCheckin.need}
+                                                                    <div className='pt-3 mr-2 underline'>
+                                                                        <Link to={`/${userData._id}/${classroomId}/${student._id}`}>More &gt;</Link>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
                                             }
-                                        }
-                                        return (
-                                            <li key={`${student.id}-${index}`}>
-                                                <div className={`bg-white p-4 my-3 rounded-lg flex justify-between`}>
-                                                    <div className=''>
-                                                        {student.firstName} {student.lastName} didn't check in or out yet!
+                                            return (
+                                                <li key={`${student.id}-${index}`}>
+                                                    <div className={`bg-white p-4 my-3 rounded-lg flex justify-between`}>
+                                                        <div className=''>
+                                                            {student.firstName} {student.lastName} didn't check in or out yet!
 
 
-                                                    </div>
-                                                    <div className='flex justify-end'>
-                                                        {isEditMode && (
-                                                            <div className='-mt-10 -mx-24'>
-                                                                <div>
-                                                                    <button onClick={() => handleDeleteStudent(student._id)}>
-                                                                        <img src={xButton} alt="xButton" />
-                                                                    </button>
+                                                        </div>
+                                                        <div className='flex justify-end'>
+                                                            {isEditMode && (
+                                                                <div className='-mt-10 -mx-24'>
+                                                                    <div>
+                                                                        <button onClick={() => handleDeleteStudent(student._id)}>
+                                                                            <img src={xButton} alt="xButton" />
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        )}
-                                                        <Link to={`/${userData._id}/${classroomId}/${student._id}`} className='mr-4 underline'>More &gt;</Link>
+                                                            )}
+                                                            <Link to={`/${userData._id}/${classroomId}/${student._id}`} className='mr-4 underline'>More &gt;</Link>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            ) : (
-                                <p>No students found.</p>
-                            )}
-                        </div>
-
-                        <div className="w-[90%] ml-auto mr-auto mt-[1rem]">
-                            <div className="text-left">
-                                <div>
-                                    <span className="text-header2 font-header2"><b>{classroom.classSubject}</b></span> &nbsp;&nbsp;
-                                    <span className="font-karla text-lg">{classroom.location}</span>
-                                </div>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                ) : (
+                                    <p>No students found.</p>
+                                )}
                             </div>
-                            <div className="flex justify-between text-body font-body">
-                                <div><a href="/editneedsgoals">Set class goals and needs</a></div>
-                                <div>
-                                    <button onClick={() => setIsEditMode(!isEditMode)}>
-                                        {isEditMode ? 'Save Changes' : 'Edit Students'}
-                                    </button>
-                                </div>
+
+                        </>
+                    ) : (
+                        'Loading...'
+                    )}
+
+                    <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
+                        <div className="flex justify-between text-body font-body">
+                            <a href="/teacher-home">&lt; All Classes</a>
+                            <div>
+                                <button onClick={() => setIsEditMode(!isEditMode)}>
+                                    {isEditMode ? 'Save Changes' : 'Edit Students'}
+                                </button>
                             </div>
                         </div>
-                    </>
-                ) : (
-                    'Loading...'
-                )}
 
-                <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
-                    <div className="justify-start text-body font-body">
-                        <a href="/teacher-home">&lt; All Classes</a>
-                    </div>
-                    <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto ">
-                        <div className="text-body font-body p-[1rem] bg-sandwich">
-                            <Link to={`/classroom/${userData._id}/${classroomId}`}>Room</Link>
-                        </div>
-                        <div className="text-body font-body p-[1rem]">
-                            List
+                        <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto ">
+                            <div className="text-body font-body p-[1rem] bg-sandwich">
+                                <Link to={`/classroom/${userData._id}/${classroomId}`}>Room</Link>
+                            </div>
+                            <div className="text-body font-body p-[1rem]">
+                                List
+                            </div>
                         </div>
                     </div>
                 </div>

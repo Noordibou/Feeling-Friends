@@ -1,4 +1,4 @@
-import { getBorderColorClass, cols } from './classRoomColors';
+import { getBorderColorClass, cols } from './ClassRoomColors';
 
 const StudentBox = ({ student, index }) => {
     const lastJournal = student.journalEntries[student.journalEntries.length - 1];

@@ -9,7 +9,7 @@ const Greeting = ({ isEditMode, userData }) => {
     if (isEditMode) {
         return (
             <div>
-                <h1 className="text-header1 font-header1 text-center pt-[4rem] mx-6">
+                <h1 className="text-header1 font-header1 text-center pt-[6.2rem] mx-6">
                     Add/remove classes
                 </h1>
                 <div className="text-header3 font-inter text-center pt-[2rem] ">
@@ -34,7 +34,7 @@ const Greeting = ({ isEditMode, userData }) => {
             <h1 className="text-header1 font-header1 text-center pt-[3rem] mx-6">
                 Good morning, {userData.prefix} {userData.firstName}!
             </h1>
-            <h2 className="font-body text-body text-center">
+            <div className="font-body text-body text-center">
                 <div className="flex items-center justify-center underline">
                     {`Logged in as ${userData.firstName} ${userData.lastName} - `}
                     <Logout location="teacherLogout" />
@@ -45,7 +45,7 @@ const Greeting = ({ isEditMode, userData }) => {
                         All Classes at a Glance
                     </h2>
                 )}
-            </h2>
+            </div>
             <div className="text-header3 font-inter text-center ">
                 <Link className="underline" to={'/createclass'}>
                     Add new class

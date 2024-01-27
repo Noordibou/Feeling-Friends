@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
-import { getBackgroundColorClass } from "../../../components/classRoomColors";
+import { getBackgroundColorClass } from "../../../components/ClassRoomColors";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from '../../../images/x-button.png';
-const { calculateAge, formatDate } = require("../../../components/dateFormat");
+const { calculateAge, formatDate } = require("../../../components/DateFormat");
 
 export default function StudentProfile() {
   const { teacherId, classroomId, studentId } = useParams();

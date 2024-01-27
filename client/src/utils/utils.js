@@ -1,4 +1,4 @@
-import { getBackgroundColorClass } from "../components/classRoomColors";
+import { getBackgroundColorClass } from "../components/ClassRoomColors";
 
 // This transforms application state to presentation state
 // // means that this is something that can be unit tested

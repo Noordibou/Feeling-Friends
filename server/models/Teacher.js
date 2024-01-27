@@ -7,10 +7,15 @@ const teacherSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   schoolTeacherId: { type: String },
+  email: { type: String },
+  phone: { type: String },
+  school: {type:String},
   classrooms: [
     {
       classSubject: { type: String },
       location: { type: String },
+      checkIn: { type: String },
+      checkOut: { type: String },
       furniture: [
         {
           name: {

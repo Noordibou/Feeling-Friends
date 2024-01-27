@@ -1,2 +1,8 @@
-/* font imports */
+/* Font imports */
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Poppins&display=swap');
+
+/* Text drop shadow */
+
+.nav-text-shadow {
+    text-shadow: 2px 2px 2px rgba(9, 14, 58, 0.30);
+}

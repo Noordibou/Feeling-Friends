@@ -4,6 +4,7 @@ import { useUser } from '../context/UserContext';
 import { getTeacherById, getAllStudentsClassroom, deleteClassroom } from '../api/teachersApi';
 import { getBackgroundColorClass, calculateZorPercentage } from '../components/classRoomColors';
 import xButton from '../images/x-button.png';
+import TeacherNavbar from "../components/TeacherNavbar";
 
 const TeacherHome = () => {
   const { userData } = useUser();
@@ -55,7 +56,7 @@ const TeacherHome = () => {
         <h2 className="text-header2 font-header2 text-center mb-[2rem]">
           {isEditMode ? <Link className="underline" to={'/createclass'}>Create New Class</Link> : "All Classes at a Glance"}
         </h2>
-        <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[80%] overflow-y-auto">
+        <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] h-[75%] overflow-y-auto">
           {userData && userData.classrooms ? (
             classroomsData.map(({ classroom, zorPercentages }, index) => (
               <div key={index}>
@@ -100,6 +101,9 @@ const TeacherHome = () => {
             <button className="underline" onClick={handleEditClick}>{isEditMode ? "(save)" : "(edit)"}</button>
           </div>
         </div>
+      </div>
+      <div className="fixed -bottom-0 sticky">
+        <TeacherNavbar />
       </div>
     </>
   );

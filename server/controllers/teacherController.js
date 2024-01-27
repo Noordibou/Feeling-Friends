@@ -407,15 +407,14 @@ const updateStudentSeats = async (req, res) => {
       return res.status(404).json({ error: "Classroom not found" });
     }
 
-    console.log("updated seats: " + JSON.stringify(updatedSeats));
     // Update the X and Y coordinates and "assigned" for each student in the classroom
     updatedSeats.positions.forEach((updatedPosition) => {
       const studentId = updatedPosition.student;
       const student = classroom.students.find(student => student.student.equals(studentId));
       if (student) {
-        student.seatInfo.x = updatedPosition.x;
-        student.seatInfo.y = updatedPosition.y;
-        student.seatInfo.assigned = updatedPosition.assigned;
+        student.seatInfo.x = updatedPosition.seatInfo.x;
+        student.seatInfo.y = updatedPosition.seatInfo.y;
+        student.seatInfo.assigned = updatedPosition.seatInfo.assigned;
       }
     });
 
@@ -456,6 +455,88 @@ const addFurniture = async (req, res) => {
   }
 }
 
+const updateFurniturePositions = async (req, res) => {
+  console.log("Oh heyy it hit the backend update furniture positions hmm")
+  try {
+    const teacherId = req.params.id;
+    const classroomId = req.params.classroomId;
+    const updatedPositions = req.body;
+
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    const classroom = teacher.classrooms.id(classroomId);
+
+    if (!classroom) {
+      return res.status(404).json({ error: "Classroom not found" });
+    }
+
+    // Update each furniture item in the classroom
+    updatedPositions.forEach((updatedPosition) => {
+      const furnitureItem = classroom.furniture.id(updatedPosition.itemId);
+
+      if (furnitureItem) {
+        furnitureItem.x = updatedPosition.x;
+        furnitureItem.y = updatedPosition.y;
+        furnitureItem.assigned = updatedPosition.assigned;
+        furnitureItem.rotation = (updatedPosition.rotation % 360 === 0 ? 0 : updatedPosition.rotation % 360)
+      }
+    });
+
+    await teacher.save();
+
+    res.json({ message: "Furniture positions updated successfully", classroom });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Couldn't update furniture positions, Server error" });
+  }
+};
+
+const deleteFurniture = async (req, res) => {
+  console.log("oh hi")
+  try {
+    const teacherId = req.params.id;
+    const classroomId = req.params.classroomId;
+    const itemIdsToDelete = req.body;
+    console.log("what is this: " + JSON.stringify(itemIdsToDelete))
+    console.log("req.body: " + JSON.stringify(req.body))
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    const classroom = teacher.classrooms.id(classroomId);
+
+    if (!classroom) {
+      return res.status(404).json({ error: "Classroom not found" });
+    }
+    console.log("okay here")
+    // Find the furniture item to delete
+    itemIdsToDelete.forEach(itemId => {
+      // Find the furniture item to delete
+      const furnitureIndexToDelete = classroom.furniture.findIndex(item => item._id == itemId);
+
+      if (furnitureIndexToDelete !== -1) {
+        // Remove the furniture item from the array
+        classroom.furniture.splice(furnitureIndexToDelete, 1);
+      } else {
+        return res.status(404).json({ error: "Furniture item not found" });
+      }
+    });
+
+    await teacher.save();
+
+    res.json({ message: "Furniture deleted successfully", classroom });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Couldn't delete furniture, Server error" });
+  }
+};
+
 module.exports = {
   createNewTeacher,
   getAllTeachers,
@@ -474,4 +555,6 @@ module.exports = {
   updateStudentSeats,
   getAllStudents,
   addFurniture,
+  updateFurniturePositions,
+  deleteFurniture,
 };

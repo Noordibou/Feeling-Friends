@@ -15,14 +15,15 @@ module.exports = {
       'button': 'Poppins',
       'karla': 'Karla',
       'poppins': 'Poppins',
+      'inter': 'Inter',
     },
 
     fontSize: {
       'header1': '2.5rem',
       'header2': '1.75rem',
       'header3': '1.3rem',
-      'header4': '1.875rem',
-      'body': '1.5rem',
+      'header4': '1.8rem',
+      'body': '1.4rem',
       'regZone': '1.5rem',
       'input': '1.5rem',
       'button': '1.6rem',
@@ -60,7 +61,7 @@ module.exports = {
       'white': '#FFFFFF',
       'lightGray': '#979797',
       // Other
-      'sandwich': '#E2DBC2',
+      'sandwich': '#D2C2A4',
       'graphite': '#A59F8B',
       'gray': '#808080',
       'darkSandwich': '#9E9268',
@@ -76,5 +77,5 @@ module.exports = {
 
     // },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar')],
 }

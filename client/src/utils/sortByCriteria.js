@@ -1,5 +1,5 @@
 const sortByCriteria = (students, sortCriteria, sortDirection) => {
-    console.log('students:',students)
+
     const zorOrder = ['Unmotivated', 'Wiggly', 'Ready to Learn', 'Explosive'];
 
     const sortedStudents = [...students].sort((a, b) => {
@@ -32,7 +32,6 @@ const sortByCriteria = (students, sortCriteria, sortDirection) => {
     if (sortCriteria === 'zor' && sortDirection === 'desc') {
         sortedStudents.reverse();
     }
-console.log(sortedStudents)
     return sortedStudents;
 };
 

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom, getTeacherById, getAllStudents, addStudentToClassroom } from '../../api/teachersApi';
-import { getBackgroundColorClass } from '../../components/ClassRoomColors';
+import { getBackgroundColorClass } from '../../utils/classroomColors.js';
 import xButton from '../../images/x-button.png';
 import './scrollbar.css'
 import GoBack from '../../components/GoBack.jsx';
-import { StudentSort, StudentList } from '../../components/StudentSort.jsx'
-import sortByCriteria from '../../components/sortByCriteria.jsx';
+import sortByCriteria from '../../utils/sortByCriteria.js';
 import ToggleButton from '../../components/ToggleButton.jsx';
 
 export default function ViewClassList() {
@@ -15,9 +14,9 @@ export default function ViewClassList() {
     const { userData } = useUser();
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
-    // const [sortCriteria, setSortCriteria] = useState('zor');
-    // const [sortDirection, setSortDirection] = useState('asc');
     const [isEditMode, setIsEditMode] = useState(false);
+    const [sortCriteria, setSortCriteria] = useState('zor');
+    const [sortDirection, setSortDirection] = useState('asc');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +24,7 @@ export default function ViewClassList() {
                 const classroom = await getTeacherClassroom(teacherId, classroomId);
                 setClassroom(classroom);
                 const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
-                setStudents(classroomStudents);
+                setStudents(sortByCriteria(classroomStudents));
             } catch (error) {
                 console.log(error);
             }
@@ -33,6 +32,7 @@ export default function ViewClassList() {
 
         fetchData();
     }, [teacherId, classroomId]);
+    
 
     const handleDeleteStudent = async (studentId) => {
         try {

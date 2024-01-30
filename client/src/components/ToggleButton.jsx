@@ -1,15 +1,21 @@
-import React, { useState} from 'react';
-import sortByCriteria from './sortByCriteria'; 
+import React, { useState, useEffect} from 'react';
+import sortByCriteria from '../utils/sortByCriteria'; 
 
 
 const ToggleButton = ({ students, setStudents }) => {
-    const [sortCriteria, setSortCriteria] = useState();
-    const [sortDirection, setSortDirection] = useState();
+    const [sortCriteria, setSortCriteria] = useState('zor');
+    const [sortDirection, setSortDirection] = useState('asc');
 
     const toggleSortDirection = () => {
         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     };
     
+    
+    useEffect(() => {
+
+        const sorted = sortByCriteria(students);
+        setStudents(sorted);
+      }, []);
 
       const handleSort = () => {
         const sorted = sortByCriteria(students, sortCriteria, sortDirection); 

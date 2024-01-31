@@ -157,8 +157,8 @@ const Login = () => {
           <button className=" bg-lightOrange w-9/12 py-5 my-5 font-[Poppins] text-[25px] rounded shadow-lg"
           onClick={ () => {
             setInputValue({
-              email: "student10@example.com",
-              password: "Password1!",
+              email: process.env.REACT_APP_DEMO_STUDENT_EMAIL,
+              password: process.env.REACT_APP_DEMO_STUDENT_PW,
             })
           }}
           >
@@ -167,8 +167,8 @@ const Login = () => {
           <button className=" bg-darkTeal w-9/12 py-5 my-5 font-[Poppins] text-[25px] text-white rounded shadow-lg"
           onClick={ () => {
             setInputValue({
-              email: "teacher15@example.com",
-              password: "12345",
+              email: process.env.REACT_APP_DEMO_TEACHER_EMAIL,
+              password: process.env.REACT_APP_DEMO_TEACHER_PW,
             })
           }}>
             <h4>See demo for Teacher View</h4>

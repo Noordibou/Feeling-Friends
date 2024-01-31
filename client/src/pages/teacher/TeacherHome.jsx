@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from '../../context/UserContext.js';
 import { getTeacherById, getAllStudentsClassroom, deleteClassroom } from '../../api/teachersApi.js';
-import { getBackgroundColorClass, calculateZorPercentage } from '../../components/ClassRoomColors.jsx';
+import { getBackgroundColorClass, calculateZorPercentage } from '../../utils/classroomColors.js';
 import xButton from '../../images/x-button.png';
 import Greeting from '../../components/TGreeting.jsx'
 import 'tailwind-scrollbar';

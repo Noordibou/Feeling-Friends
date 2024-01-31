@@ -15,8 +15,6 @@ export default function ViewClassList() {
     const [classroom, setClassroom] = useState(null);
     const [students, setStudents] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [sortCriteria, setSortCriteria] = useState('zor');
-    const [sortDirection, setSortDirection] = useState('asc');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,7 +22,7 @@ export default function ViewClassList() {
                 const classroom = await getTeacherClassroom(teacherId, classroomId);
                 setClassroom(classroom);
                 const classroomStudents = await getAllStudentsClassroom(teacherId, classroomId);
-                setStudents(sortByCriteria(classroomStudents));
+                setStudents(classroomStudents);
             } catch (error) {
                 console.log(error);
             }

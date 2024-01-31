@@ -4,7 +4,7 @@ const sortByCriteria = (students, sortCriteria, sortDirection) => {
 
     const sortedStudents = [...students].sort((a, b) => {
         if (sortCriteria === 'lastName') {
-            return sortDirection === 'desc'
+            return sortDirection === 'asc'
                 ? a.lastName.localeCompare(b.lastName)
                 : b.lastName.localeCompare(a.lastName);
         } else if (sortCriteria === 'zor') {

@@ -3,25 +3,20 @@ import sortByCriteria from '../utils/sortByCriteria';
 
 
 const ToggleButton = ({ students, setStudents }) => {
-    const [sortCriteria, setSortCriteria] = useState('zor');
+    const [sortCriteria, setSortCriteria] = useState();
     const [sortDirection, setSortDirection] = useState('asc');
 
     const toggleSortDirection = () => {
         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     };
     
-    
-    useEffect(() => {
 
-        const sorted = sortByCriteria(students);
-        setStudents(sorted);
-      }, []);
-
-      const handleSort = () => {
-        const sorted = sortByCriteria(students, sortCriteria, sortDirection); 
+      const handleSort = (criteria) => {
+        setSortCriteria(criteria);
+        toggleSortDirection();  
+        const sorted = sortByCriteria(students, criteria, sortDirection);
         setStudents(sorted);
       };
-
     
     return (
         <>
@@ -32,9 +27,7 @@ const ToggleButton = ({ students, setStudents }) => {
                             className={`md:text-body font-body rounded-[0.7rem] ${sortCriteria === 'zor' ? 'border-sandwich border-[4px] bg-sandwich' : 'border-[4px] border-sandwich'
                                 } pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] md:w-[20rem] w-[16rem]`}
                             onClick={() => {
-                                setSortCriteria('zor');
-                                toggleSortDirection();
-                                handleSort();
+                                handleSort('zor');
                             }}
                         >
                             Sort by Regulatory Zone
@@ -45,9 +38,7 @@ const ToggleButton = ({ students, setStudents }) => {
                             className={`md:text-body font-body rounded-[0.7rem] ${sortCriteria === 'lastName' ? 'border-sandwich border-[4px] bg-sandwich' : 'border-[4px] border-sandwich'
                                 } pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] md:w-[20rem] w-[16rem] `}
                             onClick={() => {
-                                setSortCriteria('lastName');
-                                toggleSortDirection();
-                                handleSort();
+                                handleSort('lastName');
                             }}
                         >
                             Sort by Last Name

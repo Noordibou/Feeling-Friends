@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom, getTeacherById, getAllStudents, addStudentToClassroom } from '../../api/teachersApi';
+import { getTeacherClassroom, getAllStudentsClassroom, deleteStudentFromClassroom } from '../../api/teachersApi';
 import { getBackgroundColorClass } from '../../utils/classroomColors.js';
 import xButton from '../../images/x-button.png';
 import './scrollbar.css'
 import GoBack from '../../components/GoBack.jsx';
 import ToggleButton from '../../components/ToggleButton.jsx';
-const { sortByCriteria } = require('../../utils/sortByCriteria');
-
+import  sortByCriteria  from '../../utils/sortStudents.js';
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();
     const { userData } = useUser();
@@ -108,7 +107,7 @@ export default function ViewClassList() {
                                                         <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
                                                             <div className='pb-2 flex justify-between'>
                                                                 <div>
-                                                                    {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                                    {student.firstName}  {student.lastName} is feeling <b>{lastEmotion}</b>
                                                                 </div>
                                                                 {isEditMode && (
                                                                     <div className='-mt-8 -mx-8'>

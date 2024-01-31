@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react';
-const { sortByCriteria } = require('../utils/sortByCriteria');
+import React, { useState } from 'react';
+import  sortByCriteria  from '../utils/sortStudents.js';
 
 
 const ToggleButton = ({ students, setStudents }) => {
@@ -9,15 +9,15 @@ const ToggleButton = ({ students, setStudents }) => {
     const toggleSortDirection = () => {
         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     };
-    
 
-      const handleSort = (criteria) => {
+
+    const handleSort = (criteria) => {
         setSortCriteria(criteria);
-        toggleSortDirection();  
+        toggleSortDirection();
         const sorted = sortByCriteria(students, criteria, sortDirection);
         setStudents(sorted);
-      };
-    
+    };
+
     return (
         <>
             <div className="flex justify-center w-[70%] mr-auto ml-auto">

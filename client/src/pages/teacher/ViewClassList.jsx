@@ -7,7 +7,9 @@ import xButton from '../../images/x-button.png';
 import './scrollbar.css'
 import GoBack from '../../components/GoBack.jsx';
 import ToggleButton from '../../components/ToggleButton.jsx';
-import  sortByCriteria  from '../../utils/sortStudents.js';
+import sortByCriteria  from '../../utils/sortStudents.js';
+import TeacherNavbar from '../../components/TeacherNavbar.jsx';
+
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();
     const { userData } = useUser();
@@ -185,6 +187,9 @@ export default function ViewClassList() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="fixed -bottom-0 sticky">
+            <TeacherNavbar />
             </div>
         </>
     );

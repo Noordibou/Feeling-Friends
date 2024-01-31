@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { addStudentToClassroom } from '../../api/teachersApi';
+import TeacherNavbar from '../../components/TeacherNavbar';
 
 export default function AddStudent() {
     const { teacherId, classroomId } = useParams();
@@ -23,6 +24,7 @@ export default function AddStudent() {
     };
 
     return (
+        <>
         <div>
             <h1>Add New Student</h1>
             <form>
@@ -41,5 +43,9 @@ export default function AddStudent() {
                 </button>
             </form>
         </div>
+        <div className="fixed -bottom-0 sticky">
+            <TeacherNavbar />
+        </div>
+        </>
     );
 }

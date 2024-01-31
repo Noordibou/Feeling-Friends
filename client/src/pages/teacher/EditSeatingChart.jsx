@@ -17,6 +17,7 @@ import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 import { applyColorsToStudents } from "../../utils/utils";
+import TeacherNavbar from "../../components/TeacherNavbar";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -320,6 +321,9 @@ const EditSeatingChart = () => {
             </button>
           </div>
         </div>
+      </div>
+      <div className="fixed -bottom-0 sticky">
+            <TeacherNavbar />
       </div>
     </>
   );

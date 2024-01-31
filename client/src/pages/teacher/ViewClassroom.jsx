@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { getTeacherClassroom, getAllStudentsClassroom } from '../../api/teachersApi';
 import StudentBox from '../../components/StudentBox';
+import TeacherNavbar from '../../components/TeacherNavbar';
 
 const ViewClassroom = () => {
     const { teacherId, classroomId } = useParams();
@@ -26,6 +27,7 @@ const ViewClassroom = () => {
     }, [teacherId, classroomId]);
 
     return (
+        <>
         <div className='h-screen'>
             <div>
                 <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[0.5rem] ">
@@ -84,6 +86,10 @@ const ViewClassroom = () => {
                 </div>
             </div>
         </div >
+        <div className="fixed -bottom-0 sticky">
+            <TeacherNavbar />
+        </div>
+        </>
     );
 }
 

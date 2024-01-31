@@ -1,3 +1,4 @@
+import TeacherNavbar from "../../../components/TeacherNavbar.jsx";
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
@@ -8,6 +9,7 @@ import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from '../../../images/x-button.png';
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
+
 
 export default function StudentProfile() {
   const { teacherId, classroomId, studentId } = useParams();
@@ -202,7 +204,8 @@ export default function StudentProfile() {
   //   };
 
   return (
-    <div className="flex flex-col items-center bg-notebookPaper h-full">
+    <>
+    <div className="flex flex-col items-center bg-notebookPaper h-screen">
       <div>
         <div className="flex items-center">
           <div
@@ -647,5 +650,9 @@ export default function StudentProfile() {
         </div>
       </div>
     </div>
+    <div className="fixed -bottom-0 sticky">
+      <TeacherNavbar />
+    </div>
+    </>
   );
 }

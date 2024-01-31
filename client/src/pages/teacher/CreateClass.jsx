@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from '../../context/UserContext';
 import { getTeacherById, getAllStudentsClassroom, createClassroom, getAllStudents } from '../../api/teachersApi';
+import TeacherNavbar from "../../components/TeacherNavbar";
 
 const CreateClass = () => {
     const navigate = useNavigate();
@@ -94,6 +95,7 @@ const CreateClass = () => {
     };
 
     return (
+        <>
         <div className="h-screen ">
             <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[4rem] ">
                 Create New Class
@@ -144,6 +146,10 @@ const CreateClass = () => {
                 </div>
             </div>
         </div>
+        <div className="fixed -bottom-0 sticky">
+            <TeacherNavbar />
+        </div>
+        </>
     );
 };
 const FormField = ({ label, value, onChange }) => (

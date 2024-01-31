@@ -21,6 +21,7 @@ import EditSeatingChart from "./pages/teacher/EditSeatingChart";
 import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import FurnitureModal from "./components/SeatingChart/FurnitureModal";
+import ShowSeatingChart from "./pages/teacher/DisplaySeatingChart";
 
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/createclass" element={<CreateClass />} />
             <Route path="/addstudent/:teacherId/:classroomId" element={<AddStudentToClassroom />} />
             <Route path="/furnituremodal" element={<FurnitureModal />} />
+            <Route path="/show-seating-chart/:teacherId/:classroomId" element={<ShowSeatingChart />} />
 
             {/* Student Routes */}
             <Route path="/student-home" element={<StudentHome />} />

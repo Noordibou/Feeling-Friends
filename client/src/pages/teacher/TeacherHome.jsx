@@ -7,6 +7,7 @@ import xButton from '../../images/x-button.png';
 import Greeting from '../../components/TGreeting.jsx'
 import 'tailwind-scrollbar';
 import './scrollbar.css'
+import TeacherNavbar from '../../components/TeacherNavbar.jsx'
 
 const TeacherHome = () => {
   const { userData } = useUser();
@@ -51,7 +52,7 @@ const TeacherHome = () => {
 
   return (
     <>
-    <div className="max-w-screen-xl mx-auto">
+    <div>
       <div className="flex flex-col justify-center h-screen">
         <div className="h-[25%]">
           <Greeting isEditMode={isEditMode} userData={userData} />
@@ -116,6 +117,9 @@ const TeacherHome = () => {
           </button>
         </div>
       </div>
+    </div>
+    <div className="fixed -bottom-0 sticky">
+        <TeacherNavbar />
     </div>
   </>
 );

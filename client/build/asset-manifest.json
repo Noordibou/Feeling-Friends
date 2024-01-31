@@ -1,20 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.65d7cf8d.css",
-    "main.js": "/static/js/main.1dda41e1.js",
+    "main.css": "/static/css/main.1b9f92bb.css",
+    "main.js": "/static/js/main.396b3a05.js",
     "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
     "static/media/RegZoneDeepBreathingCard.png": "/static/media/RegZoneDeepBreathingCard.1bdebf688ffd0414d1ac.png",
+    "static/media/ScaredLizardAndWheel.png": "/static/media/ScaredLizardAndWheel.bab51e54d929ee3713df.png",
+    "static/media/NervousFrogAndWheel.png": "/static/media/NervousFrogAndWheel.3b02d6f0f9eb55d43245.png",
+    "static/media/AngryCrabAndWheel.png": "/static/media/AngryCrabAndWheel.74e1d920558b6e76b6ba.png",
+    "static/media/HappyLambAndWheel.png": "/static/media/HappyLambAndWheel.0c41426c22b0e72f491f.png",
+    "static/media/SadMouseAndWheel.png": "/static/media/SadMouseAndWheel.5c726b2b56bc0ad2c0c3.png",
+    "static/media/ProudRabbitAndWheel.png": "/static/media/ProudRabbitAndWheel.ad8cb05e59eb73678053.png",
     "static/media/coping skill card_ Overwhelmed.png": "/static/media/coping skill card_ Overwhelmed.0d2146528b1b02aba734.png",
     "static/media/wiggly.png": "/static/media/wiggly.3e5a2e09fad0c294238c.png",
-    "static/media/happyWheel.png": "/static/media/happyWheel.c9f16c67de2338e266a7.png",
-    "static/media/angryWheel.png": "/static/media/angryWheel.93b0efe8f5628081cf65.png",
-    "static/media/sadWheel.png": "/static/media/sadWheel.6e08bf90c61e7f0d6b31.png",
-    "static/media/scaredWheel.png": "/static/media/scaredWheel.2572a1552bf9090f46d4.png",
     "static/media/proudWheel.png": "/static/media/proudWheel.93fa8247e10b3427ec6c.png",
-    "static/media/orangewheel.png": "/static/media/orangewheel.5519abebd08c97763069.png",
-    "static/media/anxiousNoBg.png": "/static/media/anxiousNoBg.007ddc7fdf3240fa303f.png",
+    "static/media/Sample_Avatar.png": "/static/media/Sample_Avatar.6d2d0fa4087e6c38677a.png",
     "static/media/young-student.png": "/static/media/young-student.174602d87627d460be87.png",
     "static/media/SummaryPerson.png": "/static/media/SummaryPerson.046a9eb6ca376a1f9aff.png",
+    "static/media/Empty_Desk.png": "/static/media/Empty_Desk.46ca90b4e13b89df9379.png",
     "static/media/scared.png": "/static/media/scared.553f2c89377770672035.png",
     "static/media/anxious.png": "/static/media/anxious.e147353e68cf9879c610.png",
     "static/media/happy.png": "/static/media/happy.7f6faebc88f57814cc4c.png",
@@ -23,12 +25,12 @@
     "static/media/sad.png": "/static/media/sad.97ddcccb8bb99b272ddb.png",
     "static/media/proud.png": "/static/media/proud.a8c1b95966d882132462.png",
     "index.html": "/index.html",
-    "main.65d7cf8d.css.map": "/static/css/main.65d7cf8d.css.map",
-    "main.1dda41e1.js.map": "/static/js/main.1dda41e1.js.map",
+    "main.1b9f92bb.css.map": "/static/css/main.1b9f92bb.css.map",
+    "main.396b3a05.js.map": "/static/js/main.396b3a05.js.map",
     "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.65d7cf8d.css",
-    "static/js/main.1dda41e1.js"
+    "static/css/main.1b9f92bb.css",
+    "static/js/main.396b3a05.js"
   ]
 }

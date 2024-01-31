@@ -108,7 +108,7 @@ export default function ViewClassList() {
                                                         <div className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}>
                                                             <div className='pb-2 flex justify-between'>
                                                                 <div>
-                                                                    {student.firstName} {student.lastName} is feeling <b>{lastEmotion}</b>
+                                                                    {student.firstName}  {student.lastName} is feeling <b>{lastEmotion}</b>
                                                                 </div>
                                                                 {isEditMode && (
                                                                     <div className='-mt-8 -mx-8'>

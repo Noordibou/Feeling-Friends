@@ -35,4 +35,4 @@ const sortByCriteria = (students, sortCriteria, sortDirection) => {
     return sortedStudents;
 };
 
-module.exports = sortByCriteria;
+module.exports = {sortByCriteria};

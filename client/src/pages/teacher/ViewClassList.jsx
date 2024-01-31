@@ -6,7 +6,7 @@ import { getBackgroundColorClass } from '../../utils/classroomColors.js';
 import xButton from '../../images/x-button.png';
 import './scrollbar.css'
 import GoBack from '../../components/GoBack.jsx';
-import sortByCriteria from '../../utils/sortByCriteria.js';
+import {sortByCriteria} from '../../utils/sortByCriteria.js';
 import ToggleButton from '../../components/ToggleButton.jsx';
 
 export default function ViewClassList() {

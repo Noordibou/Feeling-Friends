@@ -6,8 +6,8 @@ import { getBackgroundColorClass } from '../../utils/classroomColors.js';
 import xButton from '../../images/x-button.png';
 import './scrollbar.css'
 import GoBack from '../../components/GoBack.jsx';
-import { sortByCriteria } from '../../utils/sortByCriteria';
 import ToggleButton from '../../components/ToggleButton.jsx';
+const { sortByCriteria } = require('../../utils/sortByCriteria');
 
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();

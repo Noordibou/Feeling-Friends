@@ -38,7 +38,7 @@ export default function App() {
             <Route path="/teacher-home" element={<TeacherHome />} />
             <Route path="/classroom/:teacherId/:classroomId" element={<ViewClassroom />} />
             <Route path="/edit-seating-chart/:teacherId/:classroomId" element={<EditSeatingChart />} />
-            <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} />
+            {/* <Route path="/viewclasslist/:teacherId/:classroomId" element={<ClassList />} /> */}
             <Route path="/editneedsgoals" element={<NeedsGoals />} />
             <Route path="/:teacherId/:classroomId/:studentId" element={<StudentProfile />} />
             <Route path="/edit/:teacherId" element={<EditTeacher />} />

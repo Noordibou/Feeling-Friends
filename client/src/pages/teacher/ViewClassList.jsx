@@ -7,7 +7,7 @@ import xButton from '../../images/x-button.png';
 import './scrollbar.css'
 import GoBack from '../../components/GoBack.jsx';
 import ToggleButton from '../../components/ToggleButton.jsx';
-import { sortByCriteria } from '../../utils/sortStudents.js';
+import  sortByCriteria  from '../../utils/sortStudents.js';
 export default function ViewClassList() {
     const { teacherId, classroomId } = useParams();
     const { userData } = useUser();

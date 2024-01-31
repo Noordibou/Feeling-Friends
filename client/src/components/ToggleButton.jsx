@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sortByCriteria } from '../utils/sortByCriteria.js';
+import { sortByCriteria } from '../utils/sortStudents.js';
 
 
 const ToggleButton = ({ students, setStudents }) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import {sortByCriteria} from '../utils/sortByCriteria'; 
+import { sortByCriteria } from '../utils/sortByCriteria';
 
 
 const ToggleButton = ({ students, setStudents }) => {

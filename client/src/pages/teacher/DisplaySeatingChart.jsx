@@ -135,7 +135,7 @@ const DisplaySeatingChart = () => {
                   const assignedStudent = students.find(
                     (student) => student._id === studentObj.student
                   );
-                  console.log("assigned students: " + JSON.stringify(assignedStudent))
+                  
                   return (
                     <div className="absolute top-0 left-36 flex-col bg-pink w-[500px]">
                       <StudentInfoBox student={assignedStudent} index={index} classroomId={classroomId} userData={userData}/>

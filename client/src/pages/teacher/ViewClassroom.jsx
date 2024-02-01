@@ -61,8 +61,8 @@ const ViewClassroom = () => {
                                 <span className="font-karla text-lg px-6">{classroom.location}</span>
                             </div>
                             <div className="text-body font-body">
-                                Check In &nbsp;&nbsp; 8AM - 9AM<br />
-                                Check out &nbsp;&nbsp; 2PM - 3PM
+                                Check In &nbsp;&nbsp; {classroom.checkIn}AM <br />
+                                Check out &nbsp;&nbsp; {classroom.checkOut}2PM
                             </div>
                         </div>
                     </div>

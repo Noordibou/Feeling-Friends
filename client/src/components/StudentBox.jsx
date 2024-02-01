@@ -1,5 +1,5 @@
 import { getBorderColorClass, cols } from '../utils/classroomColors';
-
+import youngStudent from "../images/young-student.png";
 const StudentBox = ({ student, index }) => {
     const lastJournal = student.journalEntries[student.journalEntries.length - 1];
     let zor, bgColorClass;
@@ -31,8 +31,7 @@ const StudentBox = ({ student, index }) => {
             
         >
             <img
-                className=" object-fill mx-auto"
-                src={student.avatarImg}
+  src={student.avatarImg === "none" ? youngStudent : student.avatarImg}
                 alt={student.firstName}
             />
 

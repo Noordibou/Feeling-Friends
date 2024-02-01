@@ -223,10 +223,10 @@ export default function StudentProfile() {
             )}`}
           >
               <img
-                src={studentProfile?.avatarImg || youngStudent}
-                alt="student"
-                className="rounded-md"
-              />
+  src={studentProfile?.avatarImg === "none" ? youngStudent : studentProfile?.avatarImg}
+  alt="student"
+  className="rounded-md object-fill w-32"
+/>
             
           </div>
           {editMode ? ( 

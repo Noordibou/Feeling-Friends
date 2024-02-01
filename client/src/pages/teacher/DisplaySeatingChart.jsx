@@ -5,16 +5,16 @@ import { getAllStudentsClassroom } from "../../api/teachersApi";
 import { applyColorsToStudents } from "../../utils/utils";
 import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
-import { motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
+import StudentBox from "../../components/StudentBox";
+import StudentInfoBox from "../../components/StudentInfoBox";
 
 const DisplaySeatingChart = () => {
-  const { userData, updateUser } = useUser();
+  const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [assignedStudents, setAssignedStudents] = useState([]);
   const { teacherId, classroomId } = useParams();
   const [students, setStudents] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedStudents, setSelectedStudents] = useState([]);
   const constraintsRef = useRef(null);
 
   const getClassroomData = async () => {
@@ -38,10 +38,6 @@ const DisplaySeatingChart = () => {
         };
       });
 
-      // setStudentPositions(positions);
-
-      // setUnassignedStudents(unassigned);
-      // // organizing all assigned seats to an array
       const assigned = classroom.students.filter(
         (student) => student.seatInfo.assigned === true
       );
@@ -58,8 +54,8 @@ const DisplaySeatingChart = () => {
 
   return (
     <>
-      <div className="flex min-h-screen min-w-screen justify-center">
-        <div className="">
+      <div className="flex min-h-screen min-w-screen">
+        <div className="flex flex-col items-center w-full">
           {classroom ? (
             <>
               <div
@@ -69,44 +65,31 @@ const DisplaySeatingChart = () => {
                 {/* Classroom layout here */}
 
                 {classroom.furniture.map((item, index) => {
-        const shape = furnitureShapes.find((shape) => shape.name === item.name);
-        const initialX = item.x;
-        const initialY = item.y;
+                  const shape = furnitureShapes.find(
+                    (shape) => shape.name === item.name
+                  );
+                  const initialX = item.x;
+                  const initialY = item.y;
 
-        // console.log("selected Items: " + JSON.stringify(selectedItems))
-
-        const selectedStyling = selectedItems.some(
-          (selectedId) => {
-            // console.log("selected._id: " + selected._id)
-            // console.log("item._id: " + item._id)
-            return selectedId === item._id}
-        );
-        // console.log("selected styling: " + selectedStyling)
-        const alreadySelected = selectedItems.some(
-          (furnitureId) => furnitureId === item._id
-        );
-        return (
-          <motion.div
-            id={`furniture-${item._id}`}
-            key={`${item._id}`}
-            initial={{
-              x: Math.max(0, initialX),
-              y: Math.max(0, initialY),
-              rotate: item.rotation || 0,
-            }}
-            className={`absolute ${shape.style.width} ${shape.style.height} ${
-              selectedStyling ? "border-4 border-black" : ""
-            }`}
-          >
-            <img
-              className="flex w-full h-full"
-              src={shape.src}
-              alt={shape.alt}
-            />
-          </motion.div>
-        );
-      })}
-
+                  return (
+                    <motion.div
+                      id={`furniture-${item._id}`}
+                      key={`${item._id}`}
+                      initial={{
+                        x: Math.max(0, initialX),
+                        y: Math.max(0, initialY),
+                        rotate: item.rotation || 0,
+                      }}
+                      className={`absolute ${shape.style.width} ${shape.style.height}`}
+                    >
+                      <img
+                        className="flex w-full h-full"
+                        src={shape.src}
+                        alt={shape.alt}
+                      />
+                    </motion.div>
+                  );
+                })}
 
                 {/* Assigned Students here */}
 
@@ -114,52 +97,53 @@ const DisplaySeatingChart = () => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
 
-                  // console.log("initial x: " + initialX)
-                  // console.log("initial y: " + initialY)
-
                   const assignedStudent = students.find(
                     (student) => student._id === studentObj.student
                   );
 
-                  if (assignedStudent) {
-                    const selectedStyling = selectedStudents.some(
-                      (selected) => selected.student === studentObj.student
-                    );
-
-                    return (
-                      <motion.div
-                        id={`motion-div-${studentObj.student}`}
-                        key={`${studentObj.student}-${index}`}
-                        initial={{
-                          x: Math.max(0, initialX),
-                          y: Math.max(0, initialY),
-                        }}
-                        className={`absolute mx-1 bg-${
-                          assignedStudent.borderColorClass
-                        } pb-1 px-[6px] rounded-2xl ${
-                          selectedStyling ? "border-4 border-black" : ""
-                        }`}
-                        onClick={() => {
-                          console.log("click click 2");
-                        }}
-                      >
-                        <div className="">
-                          <div className="flex w-full justify-center h-full items-center">
-                            <img
-                              className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
-                              src={SampleAvatar}
-                            />
-                          </div>
-                          <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                            {assignedStudent.firstName}
-                          </h3>
+                  return (
+                    <motion.div
+                      id={`motion-div-${studentObj.student}`}
+                      key={`${studentObj.student}-${index}`}
+                      initial={{
+                        x: Math.max(0, initialX),
+                        y: Math.max(0, initialY),
+                      }}
+                      className={`absolute mx-1 bg-${assignedStudent.borderColorClass} pb-1 px-[6px] rounded-2xl`}
+                      onClick={() => {
+                        console.log("click click 2");
+                      }}
+                    >
+                      <div className="">
+                        <div className="flex w-full justify-center h-full items-center">
+                          <img
+                            className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
+                            src={SampleAvatar}
+                          />
                         </div>
-                      </motion.div>
-                    );
-                  } else {
-                    return null;
-                  }
+                        <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
+                          {assignedStudent.firstName}
+                        </h3>
+                      </div>
+                    </motion.div>
+                  );
                 })}
+              </div>
+              <div className="flex flex-row">
+                {assignedStudents.map((studentObj, index) => {
+
+                  const assignedStudent = students.find(
+                    (student) => student._id === studentObj.student
+                  );
+                  console.log("assigned students: " + JSON.stringify(assignedStudent))
+                  return (
+                    <div className="absolute top-0 left-36 flex-col bg-pink w-[500px]">
+                      <StudentInfoBox student={assignedStudent} index={index} classroomId={classroomId} userData={userData}/>
+                      
+                    </div>
+                  );
+                })}
+                <h1>wooo</h1>
               </div>
             </>
           ) : (

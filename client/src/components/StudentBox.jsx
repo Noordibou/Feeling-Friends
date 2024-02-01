@@ -20,16 +20,28 @@ const StudentBox = ({ student, index }) => {
     }
 
     return (
-        <div
-            key={`${student.id}-${index}`}
-            className={`min-w-fit border-4 ${bgColorClass} p-3 m-4 rounded-lg px-2`}
-            style={{
+        <>
+        <div style={{
                 gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
                 gridColumnStart: `${student.seatNumber % cols + 1}`,
-            }}
+            }}>
+        <div
+            key={`${student.id}-${index}`}
+            className={`min-w-fit border-4 ${bgColorClass} rounded-lg m-2 `}
+            
         >
+            <img
+                className=" object-fill mx-auto"
+                src={student.avatarImg}
+                alt={student.firstName}
+            />
+
+        </div>
+        <div className="text-center font-body text-">
             {student.firstName}
         </div>
+        </div>
+        </>
     );
 };
 

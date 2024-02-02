@@ -50,10 +50,10 @@ const emotionsExplained = [
       ],
     },
     {
-      emotion: "Thrilled",
+      emotion: "Ambitious",
       tips: [
-        "Being thrilled is when you're super excited and happy about something amazing that happened.",
-        "Jump for joy and share your excitement with friends and family. It's a fantastic feeling!",
+        "When you feel ambitious, it's like having a special energy inside you that makes you want to work hard and try your best to make your dreams come true.",
+        "Feeling ambitious is like having a superpower that makes everything exciting. So, dream big and try new things!",
       ],
     },
     {
@@ -64,10 +64,10 @@ const emotionsExplained = [
       ],
     },
     {
-      emotion: "Joyful",
+      emotion: "Determined",
       tips: [
-        "Joy is a big, happy feeling that makes your heart want to dance and sing.",
-        "Spread joy by sharing laughter and smiles with others. It's like giving everyone a gift!",
+        "Determined is like having a strong and brave feeling inside you when you really want to finish something.",
+        "With determination, you can learn cool stuff. Even if it feels tricky at the start, you keep trying until you get really good at it.",
       ],
     },
     {
@@ -102,7 +102,7 @@ const emotionsExplained = [
       emotion: "Guilty",
       tips: [
         "Feeling guilty is when you think you did something wrong and it makes your heart feel heavy.",
-        "Apologize if you need to, and try to make things right. Everyone makes mistakes sometimes.",
+        "Say sorry if you need to, and try to make things right. Everyone makes mistakes sometimes.",
       ],
     },
     {

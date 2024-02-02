@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import { getAllStudentsClassroom } from "../../api/teachersApi";
-import { applyColorsToStudents } from "../../utils/utils";
+import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";

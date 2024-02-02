@@ -16,7 +16,7 @@ import FurnitureImg from "../../images/Desk.png";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import { applyColorsToStudents } from "../../utils/utils";
+import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 

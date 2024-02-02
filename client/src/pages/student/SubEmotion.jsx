@@ -1,14 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import proudWheel from "../../images/proudWheel.png";
-import angryImg from "../../images/angry.png";
-import proudImg from "../../images/proud.png";
-import anxiousImg from "../../images/anxious.png";
-import sadImg from "../../images/sad.png";
-import happyImg from "../../images/happy.png";
-import scaredImg from "../../images/scared.png";
 import ProgressBar from "../../components/ProgressBar";
-import { useEffect } from "react";
 import subEmotionInfo from "../../data/subEmotions";
 
 const SubEmotion = () => {
@@ -37,7 +29,7 @@ const SubEmotion = () => {
   const selectedEmotion = subEmotionInfo.find(
     (emotion) => emotion.emotion === emotionFromLocation
   );
-  const { wheelImg, subEmotions, eImage, emotion } = selectedEmotion;
+  const { wheelImg, subEmotions } = selectedEmotion;
   const angleBetweenButtons = (2 * Math.PI) / subEmotions.length;
 
   const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion);
@@ -55,7 +47,7 @@ const SubEmotion = () => {
         <div className="relative font-header3 mt-5 md:text-header3 text-[1.1rem] ">
           <img
             src={wheelImg}
-            alt=""
+            alt="emotions wheel"
             className="w-[37rem] h-[35rem] object-fill"
           />
           <div className="absolute right-[12.5rem] -top-20 inset-0 flex flex-col items-center justify-center text-center text-body">

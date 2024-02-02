@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import furnitureShapes from "../../data/furnitureShapes";
-import { toggleSelected } from "../../utils/utils";
+import { toggleSelected } from "../../utils/editSeatChartUtil";
 
 const ClassroomFurniture = ({
   classroom,

@@ -1,8 +1,9 @@
-import { getBackgroundColorClass } from "./ClassRoomColors";
+import { getBackgroundColorClass } from "../utils/classroomColors";
 import { Link } from "react-router-dom";
 import avatarImg from '../images/Sample_Avatar.png'
+import xButton from "../images/x-button.png"
 
-const StudentInfoBox = ({ student, userData, classroomId }) => {
+const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) => {
   let lastJournal = student.journalEntries
     ? student.journalEntries[student.journalEntries.length - 1]
     : null;
@@ -32,18 +33,18 @@ const StudentInfoBox = ({ student, userData, classroomId }) => {
     <>
       <div className="flex flex-col h-full w-full" key={`${student.id}`}>
         {/* bg object */}
-        <div className={`bg-${bgColorClass} my-3 p-4 h-full rounded-lg flex flex-row items-center`}>
+        <div className={`bg-${bgColorClass} shadow-2xl my-3 p-4 h-full rounded-lg flex flex-row items-center`}>
           {/* student image */}
           <div className="flex h-full">
             <img
               src={avatarImg}
               alt={`Avatar for ${student.firstName} ${student.lastName}`}
-              className="flex w-20 h-20 rounded-full mr-4 items-center"
+              className="flex w-24 h-24 rounded-2xl mr-4 items-center"
             />
           </div>
 
           {/* text container */}
-          <div className="flex flex-col">
+          <div className="flex flex-col w-96">
             {/* last emotion */}
             <div className="pb-2 flex justify-between">
               <div>
@@ -53,17 +54,27 @@ const StudentInfoBox = ({ student, userData, classroomId }) => {
             </div>
 
             {/* goals & needs */}
-            <div className="bg-notebookPaper px-2 py-2 rounded-md flex justify-between">
-              Goals: {lastCheck.goal}
-              <br />
-              Needs: {lastCheck.need}
-              <div className="pt-3 mr-2 underline">
+            <div className="bg-notebookPaper px-2 py-2 rounded-md flex justify-around ">
+              <div className="flex flex-col w-72">
+                <h5 className="font-[Poppins]">Goals: {lastCheck.goal}</h5>
+                <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
+              </div>
+              <div className="flex items-center underline">
                 <Link to={`/${userData._id}/${classroomId}/${student._id}`}>
                   More &gt;
                 </Link>
               </div>
             </div>
           </div>
+        </div>
+        <div className="absolute -top-3 -right-5">
+          <button
+            onClick={() =>
+              setSelectedStudent({})
+            }
+          >
+            <img src={xButton} alt="xButton" />
+          </button>
         </div>
       </div>
     </>

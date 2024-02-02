@@ -60,9 +60,15 @@ const DisplaySeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mt-10 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
+                className={`${
+                  Object.keys(selectedStudent).length === 0 ? "" : "pointer-events-none"
+                } flex w-[752px] h-[61%] rounded-[1rem] mt-10 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
                 ref={constraintsRef}
               >
+                <div className={`${
+                    Object.keys(selectedStudent).length === 0 ? "hidden" : "flex"
+                  } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-80 `}></div>
+                
                 {/* Classroom layout here */}
 
                 {classroom.furniture.map((item, index) => {
@@ -114,12 +120,7 @@ const DisplaySeatingChart = () => {
                         }}
                         className={`absolute mx-1 bg-${assignedStudent.borderColorClass} pb-1 px-[6px] rounded-2xl`}
                         onClick={() => {
-                          console.log("click click 2");
                           setSelectedStudent(assignedStudent);
-                          console.log("selected student= " + selectedStudent)
-
-                          console.log("assigned student= " + JSON.stringify(assignedStudent))
-
                         }}
                       >
                         <div className="">
@@ -142,12 +143,13 @@ const DisplaySeatingChart = () => {
                 <div
                   className={`${
                     Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
-                  } top-0 left-36 flex-col w-[500px]`}
+                  } top-[25%] left-[20%] flex-col w-[500px] z-20`}
                 >
                   <StudentInfoBox
                     student={selectedStudent}
                     classroomId={classroomId}
                     userData={userData}
+                    setSelectedStudent={setSelectedStudent}
                   />
                 </div>
               </div>

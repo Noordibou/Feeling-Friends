@@ -87,16 +87,16 @@ export default function ViewClassList() {
               </div>
 
               {/* <div>
-                                <h2 className="text-header2 font-header2 text-center my-[1rem]">
-                                {isEditMode ? (
-                                    <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
-                                    Add new student
-                                    </Link>
-                                    ) : (
-                                        ''
-                                        )}
-                                        </h2>
-                                    </div> */}
+              <h2 className="text-header2 font-header2 text-center my-[1rem]">
+              {isEditMode ? (
+                  <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
+                  Add new student
+                  </Link>
+                  ) : (
+                      ''
+                      )}
+                      </h2>
+                  </div> */}
 
               <ToggleButton students={students} setStudents={setStudents} />
 

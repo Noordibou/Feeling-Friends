@@ -48,6 +48,7 @@ export default function StudentProfile() {
       }
     };
     fetchStudentProfile();
+    window.scrollTo(0, 0);
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
@@ -673,7 +674,7 @@ export default function StudentProfile() {
         </div>
       </div>
     </div>
-    <div className="fixed -bottom-0 sticky">
+    <div className="sticky -bottom-0">
       <TeacherNavbar />
     </div>
     </>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import avatarImg from '../images/Sample_Avatar.png'
 import xButton from "../images/x-button.png"
 
-const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) => {
+const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent, isEditMode }) => {
   let lastJournal = student.journalEntries
     ? student.journalEntries[student.journalEntries.length - 1]
     : null;
@@ -29,9 +29,9 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
   }
   return (
     <>
-      <div className="flex flex-col h-full w-full" key={`${student.id}`}>
+      <div className="flex flex-col h-full w-full " key={`${student.id}`}>
         {/* bg object */}
-        <div className={`${bgColorClass ? `bg-${bgColorClass}` : "bg-graphite border-black"} shadow-2xl my-3 p-4 h-full rounded-lg flex flex-row items-center`}>
+        <div className={`${bgColorClass ? `bg-${bgColorClass}` : "bg-graphite"} shadow-2xl p-4 h-full rounded-lg flex flex-row items-center`}>
           {/* student image */}
           <div className="flex h-full w-full">
             <img
@@ -76,11 +76,17 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
             </div>
           </div>
         </div>
-        <div className="absolute -top-3 -right-5">
+        <div className="relative -top-36 self-end -right-5">
           <button
-            onClick={() =>
-              setSelectedStudent({})
+            onClick={() => {
+              if (isEditMode != null) {
+                setSelectedStudent(student._id)
+              } else {
+                setSelectedStudent({})
+              }
+              
             }
+          }
           >
             <img src={xButton} alt="x Button" />
           </button>

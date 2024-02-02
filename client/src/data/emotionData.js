@@ -102,7 +102,7 @@ const emotionsExplained = [
       emotion: "Guilty",
       tips: [
         "Feeling guilty is when you think you did something wrong and it makes your heart feel heavy.",
-        "Apologize if you need to, and try to make things right. Everyone makes mistakes sometimes.",
+        "Say sorry if you need to, and try to make things right. Everyone makes mistakes sometimes.",
       ],
     },
     {

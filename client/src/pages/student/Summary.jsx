@@ -7,6 +7,7 @@ import QuestionFrog from '../../images/Question_Frog.png';
 import { useUser } from '../../context/UserContext';
 import Logout from '../../components/LogoutButton.jsx'
 import ProgressBar from "../../components/ProgressBar";
+import subEmotionInfo from "../../data/subEmotions.js"
 
 // TODO: have it say a message based on whether they've selected check-in or check-out (currently line 70)
 
@@ -19,9 +20,11 @@ const Summary = () => {
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
   const bottomContentRef = useRef()
+  const [mainEmotion, setMainEmotion] = useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setMainEmotion(findMainEmotion(emotionFromLocation))
   }, [userData]);
   
   useEffect(() => {
@@ -32,7 +35,15 @@ const Summary = () => {
     console.log("Emotion:", emotion);
   }, [emotion, location.state]); 
 
-  // TODO: This can be unit testable
+  const findMainEmotion = (subemotion) => {
+    for (let emotionObject of subEmotionInfo) {
+      if (emotionObject.subEmotions.includes(subemotion)) {
+        return emotionObject.emotion;
+      }
+    }
+    return null;
+  }
+
   const getEmotionTips = () => {
     const emotionObject = emotionsExplained.find(
       (emotionObject) => emotionObject.emotion === emotionFromLocation
@@ -93,9 +104,27 @@ const Summary = () => {
           {/* emotion explanation */}
           <section className="mt-40 mb-20">
             <div className="flex flex-col items-center">
-              <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                Being {emotionFromLocation.toLowerCase()} seems scary, but what is it really?
-              </h2>
+              
+
+                {/* Sub emotion transition sentence */}
+                { mainEmotion.toLowerCase() === "sad" ||
+                mainEmotion.toLowerCase() === "angry" ||
+                mainEmotion.toLowerCase() === "scared" ?
+                <div>
+                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">Being {emotionFromLocation.toLowerCase()} can feel like a big feeling that's hard to control.</h2>
+                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">What can we do when we feel {emotionFromLocation.toLowerCase()}?</h2>
+                </div>
+                : mainEmotion.toLowerCase() === "happy" ?
+                <div>
+                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
+                    Being {emotionFromLocation.toLowerCase()} is the best! What can we do when we feel {emotionFromLocation.toLowerCase()}?
+                  </h2>
+                </div>
+                :
+                <span>Feeling {emotionFromLocation.toLowerCase()} can help you do really cool things. What can we do when we feel {emotionFromLocation.toLowerCase()}?</span>
+                }
+                
+              
               <ul ref={bottomContentRef} className="font-body leading-relaxed w-8/12 flex flex-col justify-center mt-5">
                 {getEmotionTips().map((tip, index) => (
                   <li className="list-disc text-sm mt-[1rem]" key={index}>

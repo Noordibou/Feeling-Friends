@@ -60,7 +60,7 @@ const DisplaySeatingChart = () => {
 
   return (
     <>
-      <div className="flex min-h-screen min-w-screen">
+      <div className="flex h-screen min-w-screen">
         <div className="flex flex-col items-center w-full">
           {/* Top Navbar */}
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
@@ -158,21 +158,17 @@ const DisplaySeatingChart = () => {
           )}
 
           {/* Student Info Modal */}
-          <div className="flex flex-row">
-            <div
-              className={`${
-                Object.keys(selectedStudent).length === 0
-                  ? "hidden"
-                  : "absolute"
-              } top-[33%] left-[20%] flex-col w-[500px] z-20`}
-            >
-              <StudentInfoBox
-                student={selectedStudent}
-                classroomId={classroomId}
-                userData={userData}
-                setSelectedStudent={setSelectedStudent}
-              />
-            </div>
+          <div
+            className={`${
+              Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
+            } top-[33%] left-[20%] flex-col w-[500px] z-20`}
+          >
+            <StudentInfoBox
+              student={selectedStudent}
+              classroomId={classroomId}
+              userData={userData}
+              setSelectedStudent={setSelectedStudent}
+            />
           </div>
 
           {/* Room View & List Buttons */}

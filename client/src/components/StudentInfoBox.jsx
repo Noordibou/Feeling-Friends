@@ -26,8 +26,6 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
       lastCheck = lastCheckin;
       bgColorClass = getBackgroundColorClass(zor);
     }
-  } else {
-    console.log("oh well")
   }
   return (
     <>

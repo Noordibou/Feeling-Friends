@@ -8,8 +8,10 @@ import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";
 import StudentInfoBox from "../../components/StudentInfoBox";
 import { Link } from "react-router-dom";
-import classBoxesIcon from '../../images/ClassBoxesIcon.png'
-import listIcon from '../../images/ListIcon.png'
+import classBoxesIcon from "../../images/ClassBoxesIcon.png";
+import listIcon from "../../images/ListIcon.png";
+import TeacherNavbar from "../../components/TeacherNavbar";
+import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -60,15 +62,19 @@ const DisplaySeatingChart = () => {
     <>
       <div className="flex min-h-screen min-w-screen">
         <div className="flex flex-col items-center w-full">
+          {/* Top Navbar */}
+          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
+
           {classroom ? (
             <>
               {/* Classroom Container */}
               <div
+                key={`classroom-${classroomId}`}
                 className={`${
                   Object.keys(selectedStudent).length === 0
                     ? ""
                     : "pointer-events-none"
-                } flex w-[752px] h-[61%] rounded-[1rem] mt-10 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
+                } flex w-[752px] h-[61%] rounded-[1rem] mt-2 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
                 ref={constraintsRef}
               >
                 <div
@@ -80,7 +86,6 @@ const DisplaySeatingChart = () => {
                 ></div>
 
                 {/* Furniture layout here */}
-
                 {classroom.furniture.map((item, index) => {
                   const shape = furnitureShapes.find(
                     (shape) => shape.name === item.name
@@ -109,7 +114,6 @@ const DisplaySeatingChart = () => {
                 })}
 
                 {/* Assigned Students here */}
-
                 {assignedStudents.map((studentObj, index) => {
                   const initialX = studentObj.seatInfo.x;
                   const initialY = studentObj.seatInfo.y;
@@ -148,13 +152,21 @@ const DisplaySeatingChart = () => {
                   );
                 })}
               </div>
-              <div className="flex flex-row">
+
+              
+            </>
+          ) : (
+            "Loading..."
+          )}
+
+          {/* Student Info Modal */}
+          <div className="flex flex-row">
                 <div
                   className={`${
                     Object.keys(selectedStudent).length === 0
                       ? "hidden"
                       : "absolute"
-                  } top-[25%] left-[20%] flex-col w-[500px] z-20`}
+                  } top-[33%] left-[20%] flex-col w-[500px] z-20`}
                 >
                   <StudentInfoBox
                     student={selectedStudent}
@@ -164,28 +176,31 @@ const DisplaySeatingChart = () => {
                   />
                 </div>
               </div>
-            </>
-          ) : (
-            "Loading..."
-          )}
 
+          {/* Room View & List Buttons */}
           <div className="flex justify-around w-full mt-8 items-center ">
             <div className="">
               <button className="text-body font-body rounded-xl px-[1rem] bg-sandwich flex items-center h-16 border-[5px] border-sandwich ">
                 <h4 className="pr-2">Room View</h4>
-                <img src={classBoxesIcon} alt="Student Room View"/>
+                <img src={classBoxesIcon} alt="Student Room View" />
               </button>
             </div>
             <div className="">
               <button className="text-body font-body border-[5px] border-sandwich rounded-xl px-[1rem] flex items-center">
-                <Link className="flex items-center px-[1rem] h-16" to={`/viewclasslist/${userData._id}/${classroomId}`}>
+                <Link
+                  className="flex items-center px-[1rem] h-16"
+                  to={`/viewclasslist/${userData._id}/${classroomId}`}
+                >
                   <h4 className="pr-5">List View</h4>
-                  <img src={listIcon} alt="Student List View"/>
+                  <img src={listIcon} alt="Student List View" />
                 </Link>
               </button>
             </div>
           </div>
         </div>
+      </div>
+      <div className="sticky -bottom-0">
+        <TeacherNavbar />
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import { getBackgroundColorClass } from "./ClassRoomColors";
 import { Link } from "react-router-dom";
 import avatarImg from '../images/Sample_Avatar.png'
 
-const StudentInfoBox = ({ student, index, userData, classroomId }) => {
+const StudentInfoBox = ({ student, userData, classroomId }) => {
   let lastJournal = student.journalEntries
     ? student.journalEntries[student.journalEntries.length - 1]
     : null;
@@ -25,10 +25,12 @@ const StudentInfoBox = ({ student, index, userData, classroomId }) => {
       lastCheck = lastCheckin;
       bgColorClass = getBackgroundColorClass(zor);
     }
+  } else {
+    console.log("oh well")
   }
   return (
     <>
-      <div className="flex flex-col h-full w-full" key={`${student.id}-${index}`}>
+      <div className="flex flex-col h-full w-full" key={`${student.id}`}>
         {/* bg object */}
         <div className={`bg-${bgColorClass} my-3 p-4 h-full rounded-lg flex flex-row items-center`}>
           {/* student image */}

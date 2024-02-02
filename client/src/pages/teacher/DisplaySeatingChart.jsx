@@ -6,7 +6,6 @@ import { applyColorsToStudents } from "../../utils/utils";
 import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";
-import StudentBox from "../../components/StudentBox";
 import StudentInfoBox from "../../components/StudentInfoBox";
 
 const DisplaySeatingChart = () => {
@@ -16,6 +15,7 @@ const DisplaySeatingChart = () => {
   const { teacherId, classroomId } = useParams();
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
+  const [selectedStudent, setSelectedStudent] = useState({});
 
   const getClassroomData = async () => {
     try {
@@ -50,6 +50,7 @@ const DisplaySeatingChart = () => {
 
   useEffect(() => {
     getClassroomData();
+    setSelectedStudent({})
   }, []);
 
   return (
@@ -101,49 +102,54 @@ const DisplaySeatingChart = () => {
                     (student) => student._id === studentObj.student
                   );
 
+
                   return (
-                    <motion.div
-                      id={`motion-div-${studentObj.student}`}
-                      key={`${studentObj.student}-${index}`}
-                      initial={{
-                        x: Math.max(0, initialX),
-                        y: Math.max(0, initialY),
-                      }}
-                      className={`absolute mx-1 bg-${assignedStudent.borderColorClass} pb-1 px-[6px] rounded-2xl`}
-                      onClick={() => {
-                        console.log("click click 2");
-                      }}
-                    >
-                      <div className="">
-                        <div className="flex w-full justify-center h-full items-center">
-                          <img
-                            className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
-                            src={SampleAvatar}
-                          />
+                    <>
+                      <motion.div
+                        id={`motion-div-${studentObj.student}`}
+                        key={`${studentObj.student}-${index}`}
+                        initial={{
+                          x: Math.max(0, initialX),
+                          y: Math.max(0, initialY),
+                        }}
+                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} pb-1 px-[6px] rounded-2xl`}
+                        onClick={() => {
+                          console.log("click click 2");
+                          setSelectedStudent(assignedStudent);
+                          console.log("selected student= " + selectedStudent)
+
+                          console.log("assigned student= " + JSON.stringify(assignedStudent))
+
+                        }}
+                      >
+                        <div className="">
+                          <div className="flex w-full justify-center h-full items-center">
+                            <img
+                              className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
+                              src={SampleAvatar}
+                            />
+                          </div>
+                          <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
+                            {assignedStudent.firstName}
+                          </h3>
                         </div>
-                        <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                          {assignedStudent.firstName}
-                        </h3>
-                      </div>
-                    </motion.div>
+                      </motion.div>
+                    </>
                   );
                 })}
               </div>
               <div className="flex flex-row">
-                {assignedStudents.map((studentObj, index) => {
-
-                  const assignedStudent = students.find(
-                    (student) => student._id === studentObj.student
-                  );
-                  
-                  return (
-                    <div className="absolute top-0 left-36 flex-col bg-pink w-[500px]">
-                      <StudentInfoBox student={assignedStudent} index={index} classroomId={classroomId} userData={userData}/>
-                      
-                    </div>
-                  );
-                })}
-                <h1>wooo</h1>
+                <div
+                  className={`${
+                    Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
+                  } top-0 left-36 flex-col w-[500px]`}
+                >
+                  <StudentInfoBox
+                    student={selectedStudent}
+                    classroomId={classroomId}
+                    userData={userData}
+                  />
+                </div>
               </div>
             </>
           ) : (

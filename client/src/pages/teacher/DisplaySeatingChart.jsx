@@ -152,8 +152,6 @@ const DisplaySeatingChart = () => {
                   );
                 })}
               </div>
-
-              
             </>
           ) : (
             "Loading..."
@@ -161,21 +159,21 @@ const DisplaySeatingChart = () => {
 
           {/* Student Info Modal */}
           <div className="flex flex-row">
-                <div
-                  className={`${
-                    Object.keys(selectedStudent).length === 0
-                      ? "hidden"
-                      : "absolute"
-                  } top-[33%] left-[20%] flex-col w-[500px] z-20`}
-                >
-                  <StudentInfoBox
-                    student={selectedStudent}
-                    classroomId={classroomId}
-                    userData={userData}
-                    setSelectedStudent={setSelectedStudent}
-                  />
-                </div>
-              </div>
+            <div
+              className={`${
+                Object.keys(selectedStudent).length === 0
+                  ? "hidden"
+                  : "absolute"
+              } top-[33%] left-[20%] flex-col w-[500px] z-20`}
+            >
+              <StudentInfoBox
+                student={selectedStudent}
+                classroomId={classroomId}
+                userData={userData}
+                setSelectedStudent={setSelectedStudent}
+              />
+            </div>
+          </div>
 
           {/* Room View & List Buttons */}
           <div className="flex justify-around w-full mt-8 items-center ">

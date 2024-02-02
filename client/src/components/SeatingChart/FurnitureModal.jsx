@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import furniture from "../../data/furnitureShapes";
 import CancelImg from "../../images/x-button.png";
 import { addFurniture } from "../../api/teachersApi";
-import { toggleSelected } from "../../utils/utils";
+import { toggleSelected } from "../../utils/editSeatChartUtil";
 
 const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateInfo }) => {
   const [isSelected, setIsSelected] = useState([]);

@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
-import { toggleSelected } from "../../utils/utils";
+import { toggleSelected } from "../../utils/editSeatChartUtil";
 
 const UnassignedStudent = ({
   unassignedStudents,

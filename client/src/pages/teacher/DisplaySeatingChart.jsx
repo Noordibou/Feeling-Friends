@@ -7,6 +7,7 @@ import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";
 import StudentInfoBox from "../../components/StudentInfoBox";
+import { Link } from "react-router-dom";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -59,17 +60,24 @@ const DisplaySeatingChart = () => {
         <div className="flex flex-col items-center w-full">
           {classroom ? (
             <>
+            {/* Classroom Container */}
               <div
                 className={`${
-                  Object.keys(selectedStudent).length === 0 ? "" : "pointer-events-none"
+                  Object.keys(selectedStudent).length === 0
+                    ? ""
+                    : "pointer-events-none"
                 } flex w-[752px] h-[61%] rounded-[1rem] mt-10 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
                 ref={constraintsRef}
               >
-                <div className={`${
-                    Object.keys(selectedStudent).length === 0 ? "hidden" : "flex"
-                  } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}></div>
-                
-                {/* Classroom layout here */}
+                <div
+                  className={`${
+                    Object.keys(selectedStudent).length === 0
+                      ? "hidden"
+                      : "flex"
+                  } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}
+                ></div>
+
+                {/* Furniture layout here */}
 
                 {classroom.furniture.map((item, index) => {
                   const shape = furnitureShapes.find(
@@ -108,7 +116,6 @@ const DisplaySeatingChart = () => {
                     (student) => student._id === studentObj.student
                   );
 
-
                   return (
                     <>
                       <motion.div
@@ -142,7 +149,9 @@ const DisplaySeatingChart = () => {
               <div className="flex flex-row">
                 <div
                   className={`${
-                    Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
+                    Object.keys(selectedStudent).length === 0
+                      ? "hidden"
+                      : "absolute"
                   } top-[25%] left-[20%] flex-col w-[500px] z-20`}
                 >
                   <StudentInfoBox
@@ -157,6 +166,13 @@ const DisplaySeatingChart = () => {
           ) : (
             "Loading..."
           )}
+
+          <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto ">
+            <div className="text-body font-body p-[1rem] bg-sandwich">
+              <Link to={`/classroom/${userData._id}/${classroomId}`}>Room</Link>
+            </div>
+            <div className="text-body font-body p-[1rem]">List</div>
+          </div>
         </div>
       </div>
     </>

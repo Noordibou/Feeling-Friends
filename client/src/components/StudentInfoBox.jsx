@@ -65,8 +65,8 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
                   <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
                 </div> :
                 <div className="flex flex-col w-60">
-                  {student.firstName} {student.lastName} didn't
-                  check in or out yet!
+                  <h5 className="font-[Poppins]">{student.firstName} {student.lastName} didn't
+                  check in or out yet!</h5>
                 </div>
               }
               

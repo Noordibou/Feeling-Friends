@@ -67,7 +67,7 @@ const DisplaySeatingChart = () => {
               >
                 <div className={`${
                     Object.keys(selectedStudent).length === 0 ? "hidden" : "flex"
-                  } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-80 `}></div>
+                  } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}></div>
                 
                 {/* Classroom layout here */}
 

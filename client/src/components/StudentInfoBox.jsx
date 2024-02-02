@@ -33,9 +33,9 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
     <>
       <div className="flex flex-col h-full w-full" key={`${student.id}`}>
         {/* bg object */}
-        <div className={`bg-${bgColorClass} shadow-2xl my-3 p-4 h-full rounded-lg flex flex-row items-center`}>
+        <div className={`${bgColorClass ? `bg-${bgColorClass}` : "bg-graphite border-black"} shadow-2xl my-3 p-4 h-full rounded-lg flex flex-row items-center`}>
           {/* student image */}
-          <div className="flex h-full">
+          <div className="flex h-full w-full">
             <img
               src={avatarImg}
               alt={`Avatar for ${student.firstName} ${student.lastName}`}
@@ -44,22 +44,33 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
           </div>
 
           {/* text container */}
-          <div className="flex flex-col w-96">
+          <div className="flex flex-col w-96 px-4">
             {/* last emotion */}
             <div className="pb-2 flex justify-between">
-              <div>
-                {student.firstName} {student.lastName} is feeling{" "}
+            {lastCheck ? 
+              <div className="font-[Poppins] text-md">
+                <span>{student.firstName} {student.lastName} is feeling{" "}</span>
                 <b>{lastEmotion}</b>
               </div>
+              :
+              <></>
+            }
             </div>
 
             {/* goals & needs */}
             <div className="bg-notebookPaper px-2 py-2 rounded-md flex justify-around ">
-              <div className="flex flex-col w-72">
-                <h5 className="font-[Poppins]">Goals: {lastCheck.goal}</h5>
-                <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
-              </div>
-              <div className="flex items-center underline">
+              {lastCheck ? 
+                <div className="flex flex-col w-72">
+                  <h5 className="font-[Poppins]">Goals: {lastCheck.goal}</h5>
+                  <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
+                </div> :
+                <div className="flex flex-col w-60">
+                  {student.firstName} {student.lastName} didn't
+                  check in or out yet!
+                </div>
+              }
+              
+              <div className="flex items-center underline text-md w-24 px-2">
                 <Link to={`/${userData._id}/${classroomId}/${student._id}`}>
                   More &gt;
                 </Link>
@@ -73,7 +84,7 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent }) 
               setSelectedStudent({})
             }
           >
-            <img src={xButton} alt="xButton" />
+            <img src={xButton} alt="x Button" />
           </button>
         </div>
       </div>

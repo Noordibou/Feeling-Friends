@@ -33,12 +33,14 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
 
       <div className="flex-col text-sm font-body ">
         <div className="flex gap-4">
-          <h2>Check-in</h2>
-          <h2>Check-out</h2>
-        </div>
-        <div className="flex gap-[4rem] font-semibold">
-          <h2>{classroom.checkIn ? `${classroom.checkIn}AM` : "-"}</h2>
-          <h2>{classroom.checkOut ? `${classroom.checkOut}PM` : "-"}</h2>
+          <div>
+            <h2>Check-in</h2>
+            <h2>{classroom.checkIn ? `${classroom.checkIn}AM` : "-"}</h2>
+          </div>
+          <div>
+            <h2>Check-out</h2>
+            <h2>{classroom.checkOut ? `${classroom.checkOut}PM` : "-"}</h2>
+          </div>
         </div>
       </div>
     </div>

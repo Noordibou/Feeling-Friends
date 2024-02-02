@@ -18,6 +18,7 @@ import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 import { applyColorsToStudents } from "../../utils/utils";
 import TeacherNavbar from "../../components/TeacherNavbar";
+import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -207,14 +208,12 @@ const EditSeatingChart = () => {
       {" "}
       <div className="flex min-h-screen min-w-screen">
         <div className="flex flex-col w-full items-center">
-          <h1 className="text-center mt-10 text-header1">
-            Edit Classroom Seating Chart
-          </h1>
+          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId}/>
 
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mt-10 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
+                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}

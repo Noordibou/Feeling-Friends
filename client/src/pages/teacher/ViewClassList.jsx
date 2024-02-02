@@ -113,7 +113,7 @@ export default function ViewClassList() {
                     </div>
                     <div className="flex justify-center bg-sandwich rounded-[1rem]  py-[0.8rem]">
                       <h2 className="text-header3 font-semibold font-[Poppins] underline">
-                        Edit Seating Chart
+                        <a href={`/edit-seating-chart/${teacherId}/${classroomId}`}>Edit Seating Chart</a>
                       </h2>
                     </div>
                   </div>

@@ -24,7 +24,6 @@ const Summary = () => {
     window.scrollTo(0, 0);
   }, [userData]);
   
-  // TODO: need to get it through context
   useEffect(() => {
     const emotionFromParams = location.state?.emotion;
     if (emotionFromParams) {
@@ -33,6 +32,7 @@ const Summary = () => {
     console.log("Emotion:", emotion);
   }, [emotion, location.state]); 
 
+  // TODO: This can be unit testable
   const getEmotionTips = () => {
     const emotionObject = emotionsExplained.find(
       (emotionObject) => emotionObject.emotion === emotionFromLocation

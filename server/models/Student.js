@@ -10,8 +10,7 @@ const StudentSchema = new mongoose.Schema({
     gradeYear: { type: String },
     schoolStudentId: { type: String },
     avatarImg: {
-        type: String,
-        default: "young-student.png"
+        type: String
     },
     iepStatus: { type: String },
 

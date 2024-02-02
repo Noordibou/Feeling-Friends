@@ -1,13 +1,16 @@
+import TeacherNavbar from "../../../components/TeacherNavbar.jsx";
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
-import { getBackgroundColorClass } from "../../../components/ClassRoomColors";
+import { getBackgroundColorClass } from "../../../utils/classroomColors";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from '../../../images/x-button.png';
-const { calculateAge, formatDate } = require("../../../components/DateFormat");
+import FileBase from 'react-file-base64';
+const { calculateAge, formatDate } = require("../../../utils/dateFormat");
+
 
 export default function StudentProfile() {
   const { teacherId, classroomId, studentId } = useParams();
@@ -195,6 +198,11 @@ export default function StudentProfile() {
     }
   };
 
+  const handleFileUpload = (file) => {
+    setStudentProfile({
+      ...studentProfile, avatarImg: file.base64 });
+};
+
   // not working yet
   //    const handleIEPCancelClick = () => {
   //     setStudentProfile(originalStudentProfile);
@@ -202,9 +210,11 @@ export default function StudentProfile() {
   //   };
 
   return (
-    <div className="flex flex-col items-center bg-notebookPaper h-full">
+    <>
+    <div className="flex flex-col items-center bg-notebookPaper h-screen">
       <div>
         <div className="flex items-center">
+       <div>
           <div
             className={`w-32 rounded-md mr-4 border-8 border-${getBackgroundColorClass(
               studentProfile?.journalEntries[
@@ -215,8 +225,24 @@ export default function StudentProfile() {
               ]?.checkin?.ZOR
             )}`}
           >
-            {studentProfile && <img src={youngStudent} alt="Student Avatar" />}
+              <img
+  src={studentProfile?.avatarImg === "none" ? youngStudent : studentProfile?.avatarImg}
+  alt="student"
+  className="rounded-md object-fill w-32"
+/>
+            
           </div>
+          {editMode ? ( 
+          <div className=" inline-flex text-[12px] mt-2 w-3/4 font-header1 underline">
+            <FileBase
+              type="file"
+              multiple={false}
+              onDone={({ base64 }) => handleFileUpload({ base64 })}
+              
+            />
+          </div>
+        ) : null}
+        </div>
           <div>
             <h2 className="pt-[4rem]">
               <div className="flex flex-row ">
@@ -647,5 +673,9 @@ export default function StudentProfile() {
         </div>
       </div>
     </div>
+    <div className="fixed -bottom-0 sticky">
+      <TeacherNavbar />
+    </div>
+    </>
   );
 }

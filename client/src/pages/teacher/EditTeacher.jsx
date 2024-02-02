@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getTeacherById} from '../../api/teachersApi';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import TeacherNavbar from '../../components/TeacherNavbar';
 
 const EditTeacher = () => {
     const navigate = useNavigate();
@@ -49,6 +50,7 @@ const EditTeacher = () => {
     };
 
     return (
+        <>
         <div className='h-full min-h-screen flex flex-col items-center '>
             <h1 className='m-4 font-header1'>Edit Teacher</h1>
             <form onSubmit={handleFormSubmit}>
@@ -78,6 +80,10 @@ const EditTeacher = () => {
                 <button className='border rounded-md my-4' type="submit">Update Teacher</button>
             </form>
         </div>
+        <div className="fixed -bottom-0 sticky">
+            <TeacherNavbar />
+        </div>
+        </>
     );
 };
 

@@ -1,5 +1,5 @@
-import { getBorderColorClass, cols } from './ClassRoomColors';
-
+import { getBorderColorClass, cols } from '../utils/classroomColors';
+import youngStudent from "../images/young-student.png";
 const StudentBox = ({ student, index }) => {
     const lastJournal = student.journalEntries[student.journalEntries.length - 1];
     let zor, bgColorClass;
@@ -20,16 +20,27 @@ const StudentBox = ({ student, index }) => {
     }
 
     return (
-        <div
-            key={`${student.id}-${index}`}
-            className={`min-w-fit border-4 ${bgColorClass} p-3 m-4 rounded-lg px-2`}
-            style={{
+        <>
+        <div style={{
                 gridRowStart: `${Math.floor(student.seatNumber / cols) + 1}`,
                 gridColumnStart: `${student.seatNumber % cols + 1}`,
-            }}
+            }}>
+        <div
+            key={`${student.id}-${index}`}
+            className={`min-w-fit border-4 ${bgColorClass} rounded-lg m-2 `}
+            
         >
+            <img
+  src={student.avatarImg === "none" ? youngStudent : student.avatarImg}
+                alt={student.firstName}
+            />
+
+        </div>
+        <div className="text-center font-body text-">
             {student.firstName}
         </div>
+        </div>
+        </>
     );
 };
 

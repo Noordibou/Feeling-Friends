@@ -145,6 +145,7 @@ export default function ViewClassList() {
                 className={`flex justify-center overflow-y-auto custom-scrollbar ${
                   isEditMode ? "" : "h-[55%]"
                 } pt-3`}
+                key="list-of-students"
               >
                 {sortedStudents.length > 0 ? (
                   <ul className="w-[70%]">

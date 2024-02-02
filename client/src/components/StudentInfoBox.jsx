@@ -76,7 +76,7 @@ const StudentInfoBox = ({ student, userData, classroomId, setSelectedStudent, is
             </div>
           </div>
         </div>
-        <div className="relative -top-36 self-end -right-5">
+        <div className="absolute -top-5 self-end -right-5">
           <button
             onClick={() => {
               if (isEditMode != null) {

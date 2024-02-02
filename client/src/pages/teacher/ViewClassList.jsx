@@ -13,6 +13,10 @@ import GoBack from "../../components/GoBack.jsx";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
 import TeacherNavbar from "../../components/TeacherNavbar.jsx";
+import ClassInfoNavbar from "../../components/ClassInfoNavbar.jsx";
+import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
+import listIcon from "../../images/ListIconLight.png";
+import StudentInfoBox from "../../components/StudentInfoBox.jsx";
 
 export default function ViewClassList() {
   const { teacherId, classroomId } = useParams();
@@ -36,6 +40,7 @@ export default function ViewClassList() {
       }
     };
 
+    window.scrollTo(0, 0);
     fetchData();
   }, [teacherId, classroomId]);
 
@@ -55,39 +60,76 @@ export default function ViewClassList() {
   return (
     <>
       <div className="max-w-screen-xl mx-auto">
-        <div className="flex flex-col justify-center h-screen pt-[4rem]">
+        <div className="flex flex-col h-screen ">
           {classroom ? (
             <>
-              <div className="flex justify-center gap-[8rem] mb-[0.5rem] ">
-                <div className="flex items-center ">
-                  <GoBack />
-                  <h2 className="text-header4 font-header2 ml-[2rem] ">
-                    {classroom.classSubject}
-                  </h2>
-                </div>
-                <div className="flex-col text-sm font-body">
-                  <h2>Location:</h2>
-                  <h2 className="font-semibold">{classroom.location}</h2>
-                </div>
-
-                <div className="flex-col text-sm font-body ">
-                  <div className="flex gap-4">
-                    <h2>Check-in</h2>
-                    <h2>Check-out</h2>
+              {isEditMode ? (
+                <>
+                  {/* Top Nav (on Edit only)*/}
+                  <div className="flex justify-around items-center mt-20">
+                    <div className="absolute left-14">
+                      <GoBack />
+                    </div>
+                    <span className="text-header1 w-full text-center font-header1">
+                      Manage Classroom
+                    </span>
                   </div>
-                  <div className="flex gap-[4rem] font-semibold">
-                    <h2>
-                      {classroom.checkIn ? `${classroom.checkIn}AM` : "-"}
-                    </h2>
-                    <h2>
-                      {classroom.checkOut ? `${classroom.checkOut}PM` : "-"}
-                    </h2>
-                  </div>
-                </div>
-              </div>
 
+                  {/* Classroom Info (on Edit only) */}
+                  <div className="bg-sandwich w-[80%] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
+                    <h2 className="text-header2 font-header2 my-[0.5rem]">
+                      {classroom.classSubject}
+                    </h2>
+                    <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
+                      <div className="flex justify-between mx-2">
+                        <div className="flex-col text-sm font-body">
+                          <h2>Location:</h2>
+                          <h2 className="font-semibold">
+                            {classroom.location}
+                          </h2>
+                        </div>
+
+                        <div className="flex-col text-sm font-body ">
+                          <div className="flex gap-4">
+                            <div>
+                              <h2>Check-in:</h2>
+                              <h2>
+                                {classroom.checkIn
+                                  ? `${classroom.checkIn}AM`
+                                  : "-"}
+                              </h2>
+                            </div>
+                            <div>
+                              <h2>Check-out:</h2>
+                              <h2>
+                                {classroom.checkOut
+                                  ? `${classroom.checkOut}AM`
+                                  : "-"}
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex justify-center bg-sandwich rounded-[1rem]  py-[0.8rem]">
+                      <h2 className="text-header3 font-semibold font-[Poppins] underline">
+                        <a href={`/edit-seating-chart/${teacherId}/${classroomId}`}>Edit Seating Chart</a>
+                      </h2>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <ClassInfoNavbar
+                  teacherId={teacherId}
+                  classroomId={classroomId}
+                />
+              )}
+
+              <ToggleButton students={students} setStudents={setStudents} />
+              {/* NOTE: Moved add new student under the toggle buttons according to wireframes */}
+              {/* FIXME: Not sure why commented out, but please uncomment if it works */}
               {/* <div>
-              <h2 className="text-header2 font-header2 text-center my-[1rem]">
+              <h2 className="text-header3 font-header2 text-center my-[1rem]">
               {isEditMode ? (
                   <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
                   Add new student
@@ -98,10 +140,13 @@ export default function ViewClassList() {
                       </h2>
                   </div> */}
 
-              <ToggleButton students={students} setStudents={setStudents} />
-
               {/* Scrollable list of students */}
-              <div className="flex justify-center overflow-y-auto custom-scrollbar">
+              <div
+                className={`flex justify-center overflow-y-auto custom-scrollbar ${
+                  isEditMode ? "" : "h-[55%]"
+                } pt-3`}
+                key="list-of-students"
+              >
                 {sortedStudents.length > 0 ? (
                   <ul className="w-[70%]">
                     {sortedStudents.map((student, index) => {
@@ -121,6 +166,7 @@ export default function ViewClassList() {
                           : lastJournal.checkin?.ZOR;
                         const bgColorClass = getBackgroundColorClass(zor);
 
+                        // Student if they've checked in or out
                         return (
                           <li key={`${student.id}-${index}`}>
                             <div
@@ -169,37 +215,50 @@ export default function ViewClassList() {
                       }
 
                       return (
-                        <li key={`${student.id}-${index}`}>
-                          <div
-                            className={`bg-white p-4 my-3 rounded-lg flex justify-between`}
-                          >
-                            <div className="">
-                              {student.firstName} {student.lastName} didn't
-                              check in or out yet!
-                            </div>
-                            <div className="flex justify-end">
-                              {isEditMode && (
-                                <div className="-mt-10 -mx-24">
-                                  <div>
-                                    <button
-                                      onClick={() =>
-                                        handleDeleteStudent(student._id)
-                                      }
-                                    >
-                                      <img src={xButton} alt="xButton" />
-                                    </button>
+                        <>
+                          {/* FIXME: Trying to get component StudentInfoBox to at least work here */}
+                          {/* {isEditMode ? 
+                        <div className="-mb-8">
+                          <StudentInfoBox student={student} userData={userData} classroomId={classroomId} isEditMode={true} setSelectedStudent={handleDeleteStudent} />
+                        </div>
+                        :
+                        <></>  
+
+                        } */}
+
+                          {/* Student if they haven't checked in or out yet */}
+                          <li key={`${student.id}-${index}`}>
+                            <div
+                              className={`bg-white p-4 my-3 rounded-lg flex justify-between`}
+                            >
+                              <div className="">
+                                {student.firstName} {student.lastName} didn't
+                                check in or out yet!
+                              </div>
+                              <div className="flex justify-end">
+                                {isEditMode && (
+                                  <div className="-mt-10 -mx-24">
+                                    <div>
+                                      <button
+                                        onClick={() =>
+                                          handleDeleteStudent(student._id)
+                                        }
+                                      >
+                                        <img src={xButton} alt="xButton" />
+                                      </button>
+                                    </div>
                                   </div>
-                                </div>
-                              )}
-                              <Link
-                                to={`/${userData._id}/${classroomId}/${student._id}`}
-                                className="mr-4 underline"
-                              >
-                                More &gt;
-                              </Link>
+                                )}
+                                <Link
+                                  to={`/${userData._id}/${classroomId}/${student._id}`}
+                                  className="mr-4 underline"
+                                >
+                                  More &gt;
+                                </Link>
+                              </div>
                             </div>
-                          </div>
-                        </li>
+                          </li>
+                        </>
                       );
                     })}
                   </ul>
@@ -212,6 +271,7 @@ export default function ViewClassList() {
             "Loading..."
           )}
 
+          {/* Buttons for Home and save/edit */}
           <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
             <div className="flex justify-between text-body font-body">
               <a href="/teacher-home">&lt; All Classes</a>
@@ -222,18 +282,30 @@ export default function ViewClassList() {
               </div>
             </div>
 
-            <div className="flex rounded-[1rem] border-sandwich border-[8px] w-[25%] ml-auto mr-auto ">
-              <div className="text-body font-body p-[1rem] bg-sandwich">
-                <Link to={`/classroom/${userData._id}/${classroomId}`}>
-                  Room
-                </Link>
+            {/* Room View & List Buttons */}
+            <div className="flex justify-around w-full mt-8 items-center ">
+              <div className="">
+                <button className="text-body font-body border-[5px]   border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
+                  <Link
+                    className="flex items-center px-[1rem] h-16"
+                    to={`/classroom/${userData._id}/${classroomId}`}
+                  >
+                    <h4 className="pr-2">Room View</h4>
+                    <img src={classBoxesIcon} alt="Student Room View" />
+                  </Link>
+                </button>
               </div>
-              <div className="text-body font-body p-[1rem]">List</div>
+              <div className="">
+                <button className="text-body font-body rounded-xl px-[1rem] flex items-center h-20 w-72 border-[5px] border-sandwich bg-sandwich justify-center">
+                  <h4 className="pr-5">List View</h4>
+                  <img src={listIcon} alt="Student List View" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="fixed -bottom-0 sticky">
+      <div className="sticky -bottom-0">
         <TeacherNavbar />
       </div>
     </>

@@ -56,6 +56,7 @@ const DisplaySeatingChart = () => {
   useEffect(() => {
     getClassroomData();
     setSelectedStudent({});
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -174,13 +175,13 @@ const DisplaySeatingChart = () => {
           {/* Room View & List Buttons */}
           <div className="flex justify-around w-full mt-8 items-center ">
             <div className="">
-              <button className="text-body font-body rounded-xl px-[1rem] bg-sandwich flex items-center h-16 border-[5px] border-sandwich ">
+              <button className="text-body font-body rounded-xl px-[1rem] bg-sandwich flex items-center h-20 w-72 border-[3px] border-sandwich justify-center">
                 <h4 className="pr-2">Room View</h4>
                 <img src={classBoxesIcon} alt="Student Room View" />
               </button>
             </div>
             <div className="">
-              <button className="text-body font-body border-[5px] border-sandwich rounded-xl px-[1rem] flex items-center">
+              <button className="text-body font-body border-[5px] border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
                 <Link
                   className="flex items-center px-[1rem] h-16"
                   to={`/viewclasslist/${userData._id}/${classroomId}`}

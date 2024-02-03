@@ -193,9 +193,9 @@ const DisplaySeatingChart = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="sticky -bottom-0">
+      <div className="bottom-0 fixed w-screen">
         <TeacherNavbar />
+      </div>
       </div>
     </>
   );

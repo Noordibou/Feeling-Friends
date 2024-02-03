@@ -19,7 +19,7 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
   }, [teacherId, classroomId]);
 
   return (
-    <div className="flex justify-center gap-[8rem] mb-[0.5rem] mt-20">
+    <div className="flex justify-center gap-[8rem] mb-[0.5rem] mt-10">
       <div className="flex items-center ">
         <GoBack />
         <h2 className="text-header4 font-header2 ml-[2rem] ">

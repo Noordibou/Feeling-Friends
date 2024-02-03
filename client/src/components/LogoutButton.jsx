@@ -29,7 +29,7 @@ const Logout = ({ location }) => {
     <>
       <div className={`${location === 'studentLogout' ? 'flex w-9/12 max-w-md items-center justify-center' : location === 'teacherLogout' ? '' : ''}`}>
         <button className={`text-body  ${location === 'studentLogout' ? 'rounded w-full p-4 font-semibold  bg-lightOrange' : location === 'teacherLogout' ? 'underline font-body' : ''}`} onClick={handleLogout}>
-          Log Out
+          Logout
         </button>
       </div>
 

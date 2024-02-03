@@ -52,25 +52,24 @@ const TeacherHome = () => {
 
   return (
     <>
-    <div>
       <div className="flex flex-col justify-center h-screen">
-        <div className="h-[25%]">
+        <div className="-mt-[6rem] mb-3">
           <Greeting isEditMode={isEditMode} userData={userData} />
         </div>
 
-        <div className=" custom-scrollbar ">
+        <div className="custom-scrollbar h-[50%]">
           {userData && userData.classrooms ? (
             classroomsData.map(({ classroom, zorPercentages }, index) => (
               <div key={index} className="bg-sandwich w-[80%]  ml-auto mr-auto p-[0.5rem] rounded-[1rem] my-[1rem]">
-                  <div className="flex justify-between">
-                    <h2 className="text-header4 font-header2 text-left">{classroom.classSubject}</h2>
-                    {isEditMode && (
-                      <button className="-mt-[3rem] -mx-[2rem]" onClick={() => handleDeleteClassroom(classroom._id)}>
-                        {selectedClassroom === userData._id && <img src={xButton} alt="xButton" />}
-                      </button>
-                    )}
-                  </div>
-                        <Link to={`/classroom/${userData._id}/${classroom._id}`}>
+                <div className="flex justify-between">
+                  <h2 className="text-header4 font-header2 text-left">{classroom.classSubject}</h2>
+                  {isEditMode && (
+                    <button className="-mt-[3rem] -mx-[2rem]" onClick={() => handleDeleteClassroom(classroom._id)}>
+                      {selectedClassroom === userData._id && <img src={xButton} alt="xButton" />}
+                    </button>
+                  )}
+                </div>
+                <Link to={`/classroom/${userData._id}/${classroom._id}`}>
                   <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
                     <div className="flex justify-between mb-[1rem] mx-2">
                       <div className="flex-col text-sm font-body">
@@ -84,9 +83,9 @@ const TeacherHome = () => {
                           <h2>Check-out</h2>
                         </div>
                         <div className="flex gap-[4rem] font-semibold">
-                            <h2>{classroom.checkIn ? `${classroom.checkIn}AM` : '-'}</h2>
-                            <h2>{classroom.checkOut ? `${classroom.checkOut}PM` : '-'}</h2>
-                          </div>
+                          <h2>{classroom.checkIn ? `${classroom.checkIn}AM` : '-'}</h2>
+                          <h2>{classroom.checkOut ? `${classroom.checkOut}PM` : '-'}</h2>
+                        </div>
                       </div>
                     </div>
                     <div className="flex justify-between">
@@ -111,18 +110,17 @@ const TeacherHome = () => {
           )}
 
         </div>
-        <div className="flex justify-center ">
+        <div className="flex justify-center pt-2">
           <button className="text-header2 font-header2 underline" onClick={handleEditClick}>
             {isEditMode ? "Done" : "Edit"}
           </button>
         </div>
+        <div className="bottom-0 fixed w-screen">
+          <TeacherNavbar />
+        </div>
       </div>
-    </div>
-    <div className="fixed -bottom-0 sticky">
-        <TeacherNavbar />
-    </div>
-  </>
-);
+    </>
+  );
 };
 
 export default TeacherHome;

@@ -47,7 +47,6 @@ export default function App() {
             <Route path="/addstudent/:teacherId/:classroomId" element={<AddStudentToClassroom />} />
             <Route path="/furnituremodal" element={<FurnitureModal />} />
             <Route path="/show-seating-chart/:teacherId/:classroomId" element={<ShowSeatingChart />} />
-
             {/* Student Routes */}
             <Route path="/student-home" element={<StudentHome />} />
             <Route path="/emotion" element={<SubEmotion />} />
@@ -58,7 +57,6 @@ export default function App() {
           </Routes>
         </UserProvider>
       </AuthProvider>
-
     </main>
 
   );

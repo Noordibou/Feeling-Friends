@@ -42,9 +42,9 @@ export default function AddStudent() {
                     Add Student
                 </button>
             </form>
-        </div>
-        <div className="fixed -bottom-0 sticky">
+        <div className="fixed bottom-0 w-screen">
             <TeacherNavbar />
+        </div>
         </div>
         </>
     );

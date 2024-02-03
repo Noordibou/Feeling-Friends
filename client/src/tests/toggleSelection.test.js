@@ -1,4 +1,4 @@
-const { toggleSelected } = require("../utils/utils");
+import { toggleSelected } from "../utils/editSeatChartUtil";
 
 describe("checks if item is added to the array", () => {
   test.each([

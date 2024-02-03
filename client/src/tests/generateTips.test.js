@@ -1,12 +1,12 @@
-const subEmotionInfo = require('../data/subEmotions')
-const emotionsExplained = require('../data/emotionData.js')
+import subEmotionInfo from '../data/subEmotions';
+import emotionsExplained from '../data/emotionData.js';
 
 describe('Data Files', () => {
     test('Sub-emotions should be present in emotionData', () => {
 
-      subEmotionInfo.default.forEach((subEmotion) => {
+      subEmotionInfo.forEach((subEmotion) => {
         subEmotion.subEmotions.forEach((subEmotionName) => {
-          const found = emotionsExplained.default.some(
+          const found = emotionsExplained.some(
             (emotionObject) => emotionObject.emotion === subEmotionName
           );
 

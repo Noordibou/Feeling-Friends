@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import furnitureShapes from "../../data/furnitureShapes";
 import { toggleSelected } from "../../utils/editSeatChartUtil";
 
@@ -9,7 +9,6 @@ const ClassroomFurniture = ({
   furniturePositions,
   constraintsRef,
   handleDragEnd,
-  handleStudentClick,
   selectedItems,
   setSelectedItems,
 }) => {
@@ -22,15 +21,10 @@ const ClassroomFurniture = ({
         const initialX = item.x;
         const initialY = item.y;
 
-        // console.log("selected Items: " + JSON.stringify(selectedItems))
-
         const selectedStyling = selectedItems.some(
           (selectedId) => {
-            // console.log("selected._id: " + selected._id)
-            // console.log("item._id: " + item._id)
             return selectedId === item._id}
         );
-        // console.log("selected styling: " + selectedStyling)
         const alreadySelected = selectedItems.some(
           (furnitureId) => furnitureId === item._id
         );
@@ -81,8 +75,8 @@ const ClassroomFurniture = ({
                 });
               }
             }}
-            className={`absolute ${shape.style.width} ${shape.style.height} ${
-              selectedStyling ? "border-4 border-black" : ""
+            className={`absolute border-4 rounded-xl ${shape.style.width} ${shape.style.height} ${
+              selectedStyling ? "border-black" : " border-notebookPaper border-opacity-0"
             }`}
           >
             <img

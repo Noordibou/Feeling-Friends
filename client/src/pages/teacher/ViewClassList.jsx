@@ -66,7 +66,7 @@ export default function ViewClassList() {
               {isEditMode ? (
                 <>
                   {/* Top Nav (on Edit only)*/}
-                  <div className="flex justify-around items-center mt-20">
+                  <div className="flex justify-around items-center mt-8">
                     <div className="absolute left-14">
                       <GoBack />
                     </div>
@@ -126,9 +126,7 @@ export default function ViewClassList() {
               )}
 
               <ToggleButton students={students} setStudents={setStudents} />
-              {/* NOTE: Moved add new student under the toggle buttons according to wireframes */}
-              {/* FIXME: Not sure why commented out, but please uncomment if it works */}
-              {/* <div>
+              <div>
               <h2 className="text-header3 font-header2 text-center my-[1rem]">
               {isEditMode ? (
                   <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
@@ -138,7 +136,7 @@ export default function ViewClassList() {
                       ''
                       )}
                       </h2>
-                  </div> */}
+                  </div>
 
               {/* Scrollable list of students */}
               <div
@@ -273,7 +271,7 @@ export default function ViewClassList() {
 
           {/* Buttons for Home and save/edit */}
           <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
-            <div className="flex justify-between text-body font-body">
+            <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
                 <button onClick={() => setIsEditMode(!isEditMode)}>
@@ -283,7 +281,7 @@ export default function ViewClassList() {
             </div>
 
             {/* Room View & List Buttons */}
-            <div className="flex justify-around w-full mt-8 items-center ">
+            <div className="flex justify-around w-full mt-6 items-center ">
               <div className="">
                 <button className="text-body font-body border-[5px]   border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
                   <Link
@@ -303,10 +301,10 @@ export default function ViewClassList() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="sticky -bottom-0">
+      <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
+      </div>
+        </div>
       </div>
     </>
   );

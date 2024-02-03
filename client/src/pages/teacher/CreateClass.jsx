@@ -145,9 +145,9 @@ const CreateClass = () => {
                     </div>
                 </div>
             </div>
-        </div>
-        <div className="fixed -bottom-0 sticky">
+        <div className="bottom-0 fixed w-screen">
             <TeacherNavbar />
+        </div>
         </div>
         </>
     );

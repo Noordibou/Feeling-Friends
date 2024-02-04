@@ -61,8 +61,8 @@ const DisplaySeatingChart = () => {
 
   return (
     <>
-      <div className="flex h-screen min-w-screen">
-        <div className="flex flex-col items-center w-full">
+      <div className="flex h-screen min-w-screen justify-center">
+        <div className="flex flex-col items-center w-full max-w-4xl ">
           {/* Top Navbar */}
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -162,7 +162,7 @@ const DisplaySeatingChart = () => {
           <div
             className={`${
               Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
-            } top-[33%] left-[20%] flex-col w-[500px] z-20`}
+            }  flex-col mt-[340px] w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}

@@ -206,8 +206,8 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen">
-        <div className="flex flex-col w-full items-center">
+      <div className="flex min-h-screen min-w-screen justify-center">
+        <div className="flex flex-col w-full items-center max-w-3xl h-screen">
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId}/>
 
           {classroom ? (
@@ -321,7 +321,7 @@ const EditSeatingChart = () => {
           </div>
         </div>
       </div>
-      <div className="bottom-0 fixed w-screen">
+      <div className="bottom-0 sticky">
             <TeacherNavbar />
       </div>
     </>

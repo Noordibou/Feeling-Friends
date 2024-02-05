@@ -97,24 +97,57 @@ const CreateClass = () => {
     return (
         <>
         <div className="h-screen ">
-            <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[4rem] ">
-                Create New Class
+            <h1 className="text-header1 font-header1 text-center pt-[4rem] pb-[1rem] ">
+                Add new Classroom
             </h1>
-
-            <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[80%] overflow-y-auto ">
-                <div className="flex justify-center">
-                    <div className="flex flex-col w-[60%] gap-5 text-center">
+            
+            <div className="bg-sandwich w-[80%]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
                         <FormField
-                            label="Class Subject"
+                            label="Enter Class Title or Subject"
                             value={newClassData?.classSubject || ""}
                             onChange={(e) => handleInputChange('classSubject', e.target.value)}
                         />
+            <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
+            <div className="flex justify-between mx-2">
+                      <div className="flex-col text-sm font-body">
+                        <h2 className="ml-[1rem] text-lg font-karla">Location:</h2>
                         <FormField
-
-                            label="Location"
+                            label="Classroom"
                             value={newClassData?.location || ""}
                             onChange={(e) => handleInputChange('location', e.target.value)}
                         />
+                      </div>
+
+                      <div className="flex-col text-sm font-body ">
+                        <div className="flex gap-4">
+                          <h2 className="ml-[1rem] text-lg font-karla">Check-in:</h2>
+                          <h2 className="ml-[1rem] text-lg font-karla">Check-out:</h2>
+                        </div>
+                        <div className="flex w-[20rem]">
+                        <FormField
+                            label="00 AM"
+                            value={newClassData?.checkIn || ""}
+                            onChange={(e) => handleInputChange('checkIn', e.target.value)}
+                        />
+                        <FormField
+                            label="00 PM"
+                            value={newClassData?.checkOut || ""}
+                            onChange={(e) => handleInputChange('checkOut', e.target.value)}
+                        />
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                      <div className="flex justify-center bg-sandwich rounded-[1rem]  pt-[0.8rem]">
+                      <h2 className="text-header2 font-header2"><a href="/edit-seating-chart/:teacherId/:classroomId"><u>Edit Seating Chart</u></a></h2>
+
+                    </div>
+                  </div>
+                  
+            <div className="w-[80%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[80%] overflow-y-auto ">
+            <h2 className="text-header2 font-header2 text-center"><a href="/addstudent/:teacherId/:classroomId"><u>+ Add student</u></a></h2>
+                <div className="flex justify-center pt-[3rem]">
+                    <div className="flex flex-col w-[60%] gap-5 text-center">
                         {allStudents.length > 0 && (
                             <div className="text-center">
                                 <label >Students:</label>
@@ -154,12 +187,12 @@ const CreateClass = () => {
 };
 const FormField = ({ label, value, onChange }) => (
     <div>
-      <label>{label}:</label>
       <input
         type="text"
+        placeholder={label}
         value={value}
         onChange={onChange}
-        className="rounded-lg h-[2.2rem] p-4 mx-2"
+        className="rounded-lg h-[2.2rem] p-4 text-header2 font-header2 custom-placeholder custom-input"
       />
     </div>
   );

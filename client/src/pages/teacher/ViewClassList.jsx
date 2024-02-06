@@ -59,8 +59,8 @@ export default function ViewClassList() {
 
   return (
     <>
-      <div className="max-w-screen-xl mx-auto">
-        <div className="flex flex-col h-screen ">
+      <div className="flex min-h-screen min-w-screen-xl justify-center">
+        <div className="flex flex-col h-screen max-w-3xl">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -113,7 +113,11 @@ export default function ViewClassList() {
                     </div>
                     <div className="flex justify-center bg-sandwich rounded-[1rem]  py-[0.8rem]">
                       <h2 className="text-header3 font-semibold font-[Poppins] underline">
-                        <a href={`/edit-seating-chart/${teacherId}/${classroomId}`}>Edit Seating Chart</a>
+                        <a
+                          href={`/edit-seating-chart/${teacherId}/${classroomId}`}
+                        >
+                          Edit Seating Chart
+                        </a>
                       </h2>
                     </div>
                   </div>
@@ -127,16 +131,19 @@ export default function ViewClassList() {
 
               <ToggleButton students={students} setStudents={setStudents} />
               <div>
-              <h2 className="text-header3 font-header2 text-center my-[1rem]">
-              {isEditMode ? (
-                  <Link className="underline" to={`/addstudent/${teacherId}/${classroomId}`}>
-                  Add new student
-                  </Link>
+                <h2 className="text-header3 font-header2 text-center my-[1rem]">
+                  {isEditMode ? (
+                    <Link
+                      className="underline"
+                      to={`/addstudent/${teacherId}/${classroomId}`}
+                    >
+                      Add new student
+                    </Link>
                   ) : (
-                      ''
-                      )}
-                      </h2>
-                  </div>
+                    ""
+                  )}
+                </h2>
+              </div>
 
               {/* Scrollable list of students */}
               <div
@@ -301,9 +308,9 @@ export default function ViewClassList() {
               </div>
             </div>
           </div>
-      <div className="fixed bottom-0 w-screen">
-        <TeacherNavbar />
-      </div>
+        </div>
+        <div className="fixed bottom-0 w-screen">
+          <TeacherNavbar />
         </div>
       </div>
     </>

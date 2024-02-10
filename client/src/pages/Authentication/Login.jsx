@@ -102,7 +102,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div>
               <input
-                className="w-[35rem] mt-[3rem] font-input text-black p-[0.5rem] border-2 border-black rounded"
+                className="w-[35rem] mt-[3rem] font-input text-gray p-[0.5rem] border-2 border-black rounded"
                 type="email"
                 name="email"
                 value={email}
@@ -114,7 +114,7 @@ const Login = () => {
             <div>
               <div>{/* Image here */}</div>
               <input
-                className="w-[35rem] mt-[2rem] font-input text-lightGray p-[0.5rem] border-2 border-black text-black rounded"
+                className="w-[35rem] mt-[2rem] font-input text-gray p-[0.5rem] border-2 border-black text-black rounded"
                 type="password"
                 name="password"
                 value={password}

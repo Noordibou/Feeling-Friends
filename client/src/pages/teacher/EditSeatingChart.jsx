@@ -10,15 +10,16 @@ import {
   deleteFurniture,
 } from "../../api/teachersApi";
 import { useNavigate } from "react-router-dom";
+import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
-import RosterImg from "../../images/Three People.png";
-import FurnitureImg from "../../images/Desk.png";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import saveButton from "../../images/button.png"
+import RosterImg from "../../images/Three People.png";
+import FurnitureImg from "../../images/Desk.png";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -208,7 +209,7 @@ const EditSeatingChart = () => {
       {" "}
       <div className="flex min-h-screen min-w-screen justify-center">
         <div className="flex flex-col w-full items-center max-w-3xl h-screen">
-          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId}/>
+          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
           {classroom ? (
             <>
@@ -281,10 +282,10 @@ const EditSeatingChart = () => {
                 setShowStudentRosterModal(true);
                 setShowFurnitureModal(false);
               }}
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
             >
               <h5
-                className={`text-[24px] ${
+                className={`text-[24px] font-[Poppins] pr-3 ${
                   showStudentRosterModal ? "font-[900] underline " : ""
                 }`}
               >
@@ -295,14 +296,14 @@ const EditSeatingChart = () => {
 
             {/* Open Choose Furniture Modal */}
             <button
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
               onClick={() => {
                 setShowFurnitureModal(true);
                 setShowStudentRosterModal(false);
               }}
             >
               <h5
-                className={`text-[24px] ${
+                className={`text-[24px] font-[Poppins] pr-3 ${
                   showFurnitureModal ? "font-[900] underline " : ""
                 }`}
               >
@@ -310,19 +311,22 @@ const EditSeatingChart = () => {
               </h5>
               <img src={FurnitureImg} />
             </button>
-          </div>
-          <div className="flex w-full justify-around max-w-3xl">
+
+            {/* Save Layout button */}
             <button
-              className="bg-yellow border p-5 my-8 h-10 rounded flex items-center"
+              className="relative overflow-hidden mx-4 rounded-xl"
               onClick={handleSave}
             >
-              Save
+              <img className=" object-auto w-72 h-full" src={saveButton} />
+              <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
+                Save
+              </h4>
             </button>
           </div>
         </div>
       </div>
-      <div className="bottom-0 sticky">
-            <TeacherNavbar />
+      <div className="fixed bottom-0 w-screen">
+        <TeacherNavbar />
       </div>
     </>
   );

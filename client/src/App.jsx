@@ -22,6 +22,7 @@ import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 import ShowSeatingChart from "./pages/teacher/DisplaySeatingChart";
+import MsgModal from "./components/SeatingChart/MsgModal";
 
 
 export default function App() {
@@ -34,6 +35,8 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/success" element={<SignupSuccess />} />
+
+            <Route path="/msgmodal" element={<MsgModal />} />
 
             {/* Teacher Routes */}
             <Route path="/teacher-home" element={<TeacherHome />} />

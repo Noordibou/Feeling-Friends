@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {motion} from 'framer-motion'
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
@@ -20,6 +21,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import saveButton from "../../images/button.png"
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
+import MsgModal from "../../components/SeatingChart/MsgModal";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -41,6 +43,7 @@ const EditSeatingChart = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [showMsg, setShowMsg] = useState(false)
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -197,7 +200,11 @@ const EditSeatingChart = () => {
         classroomId,
         updatedFurniturePositions
       );
-      console.log("Submitted :)");
+      // Show brief save message for 3 secs
+      setShowMsg(true)
+      setTimeout(() =>{
+        setShowMsg(false);
+      }, 2500)
       updateInfo();
     } catch (error) {
       console.log("Ooops didnt work");
@@ -208,6 +215,7 @@ const EditSeatingChart = () => {
     <>
       {" "}
       <div className="flex min-h-screen min-w-screen justify-center">
+        
         <div className="flex flex-col w-full items-center max-w-3xl h-screen">
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -322,6 +330,9 @@ const EditSeatingChart = () => {
                 Save
               </h4>
             </button>
+          </div>
+          <div className="absolute mt-[70px]">
+            <MsgModal msgText="Seating Chart Saved!" showMsg={showMsg} />
           </div>
         </div>
       </div>

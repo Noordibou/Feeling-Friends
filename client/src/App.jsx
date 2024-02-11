@@ -22,7 +22,7 @@ import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 import ShowSeatingChart from "./pages/teacher/DisplaySeatingChart";
-import MsgModal from "./components/SeatingChart/MsgModal";
+import MsgModal from "./components/SeatingChart/TempMsgModal";
 
 
 export default function App() {

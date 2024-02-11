@@ -11,7 +11,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 // }, 3000)
 
 
-const MsgModal = ({ msgText, showMsg }) => {
+const TempMsgModal = ({ msgText, showMsg }) => {
 
   return (
     <>
@@ -34,4 +34,4 @@ const MsgModal = ({ msgText, showMsg }) => {
   );
 };
 
-export default MsgModal;
+export default TempMsgModal;

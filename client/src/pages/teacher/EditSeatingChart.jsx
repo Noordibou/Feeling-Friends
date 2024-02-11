@@ -21,7 +21,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import saveButton from "../../images/button.png"
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
-import MsgModal from "../../components/SeatingChart/MsgModal";
+import MsgModal from "../../components/SeatingChart/TempMsgModal";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -222,7 +222,7 @@ const EditSeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
+                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}

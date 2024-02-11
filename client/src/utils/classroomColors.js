@@ -12,7 +12,6 @@ for (let i = 0; i < rows; i++) {
 }
 
 export function getEmotionColor(chosenEmotion) {
-  console.log("chosen emotion: " + chosenEmotion.toLowerCase());
   const emotionColors = {
     Nervous: "lightOrange",
     Sad: "lightBlue",
@@ -25,7 +24,6 @@ export function getEmotionColor(chosenEmotion) {
   for (const emotionInfo of subEmotionInfo) {
     if (emotionInfo.subEmotions.includes(chosenEmotion)) {
       const mainEmotion = emotionInfo.emotion;
-      console.log("what emotion color: " + emotionColors[mainEmotion]);
       return emotionColors[mainEmotion];
     }
   }

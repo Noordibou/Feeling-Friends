@@ -21,7 +21,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import saveButton from "../../images/button.png"
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
-import MsgModal from "../../components/SeatingChart/TempMsgModal";
+import MsgModal from "../../components/SeatingChart/MsgModal";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -332,7 +332,7 @@ const EditSeatingChart = () => {
             </button>
           </div>
           <div className="absolute mt-[70px]">
-            <MsgModal msgText="Seating Chart Saved!" showMsg={showMsg} />
+            <MsgModal msgText="Seating Chart Saved!" showMsg={showMsg} bgColor="bg-black" textColor="text-white" />
           </div>
         </div>
       </div>

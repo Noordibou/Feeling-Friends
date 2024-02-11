@@ -9,22 +9,28 @@ import {AnimatePresence, motion} from 'framer-motion'
 // setTimeout(() =>{
 //     setShowMsg(false);
 // }, 3000)
+// Ex: <MsgModal showMsg={showMsg} msgText="anything you want as text" bgColor="bg-gray" textColor="textwhite" />
+// // (bgColor is optional)
 
 
-const TempMsgModal = ({ msgText, showMsg }) => {
+// * Can also be used as a normal permanent Msg modal. To do this, do the following:
+// <MsgModal showMsg={true} msgText="anything you want as text" bgColor="bg-gray" textColor="text-white" />
+
+
+const MsgModal = ({ msgText, showMsg, bgColor, textColor }) => {
 
   return (
     <>
       <AnimatePresence>
         {showMsg &&(
         <motion.div
-          className="text-center bg-black bg-opacity-70 py-6 rounded-xl px-10"
+          className={`text-center ${bgColor} bg-opacity-70 py-6 rounded-xl px-10`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
         >
-          <h3 className="text-white font-[Poppins] text-[1.85rem]">
+          <h3 className={`${textColor} font-[Poppins] text-[1.85rem]`}>
             {msgText}
           </h3>
         </motion.div>
@@ -34,4 +40,4 @@ const TempMsgModal = ({ msgText, showMsg }) => {
   );
 };
 
-export default TempMsgModal;
+export default MsgModal;

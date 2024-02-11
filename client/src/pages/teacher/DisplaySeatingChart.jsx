@@ -21,6 +21,7 @@ const DisplaySeatingChart = () => {
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
   const [selectedStudent, setSelectedStudent] = useState({});
+  const [showMsg, setShowMsg] = useState(false)
 
   const getClassroomData = async () => {
     try {
@@ -47,6 +48,7 @@ const DisplaySeatingChart = () => {
         (student) => student.seatInfo.assigned === true
       );
       setAssignedStudents(assigned);
+
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -56,8 +58,20 @@ const DisplaySeatingChart = () => {
   useEffect(() => {
     getClassroomData();
     setSelectedStudent({});
+    
     window.scrollTo(0, 0);
   }, []);
+
+
+  useEffect(() => {
+
+    console.log("assigned students: " + JSON.stringify(assignedStudents))
+    if(assignedStudents.length > 0) {
+      setShowMsg(false)
+    } else {
+      setShowMsg(true)
+    }
+  }, [assignedStudents])
 
   return (
     <>
@@ -192,6 +206,11 @@ const DisplaySeatingChart = () => {
               </button>
             </div>
           </div>
+        </div>
+        <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
+          <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold">
+            Click the Navbar's "Edit" button to add students and furniture to your classroom layout!
+          </h4>
         </div>
       <div className="bottom-0 fixed w-screen">
         <TeacherNavbar />

@@ -16,6 +16,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 // * Can also be used as a normal permanent Msg modal. To do this, do the following:
 // <MsgModal showMsg={true} msgText="anything you want as text" bgColor="bg-gray" textColor="text-white" />
 
+// TODO: might use tailwind animations instead of framer for this to make this component even more reusable https://tailwindcss.com/docs/animation
 
 const MsgModal = ({ msgText, showMsg, bgColor, textColor }) => {
 

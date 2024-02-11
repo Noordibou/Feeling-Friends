@@ -8,6 +8,7 @@ import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
 import subEmotionInfo from "../../data/subEmotions.js";
+import { getEmotionColor } from "../../utils/classroomColors.js";
 
 const Summary = () => {
   const auth = useContext(AuthContext);
@@ -19,10 +20,14 @@ const Summary = () => {
   const emotionFromLocation = location.state?.emotion || "";
   const bottomContentRef = useRef();
   const [mainEmotion, setMainEmotion] = useState("");
+  const [emotionColor, setEmotionColor] = useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setMainEmotion(findMainEmotion(emotionFromLocation));
+    if(emotionFromLocation) {
+      setEmotionColor(getEmotionColor(emotionFromLocation))
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -76,14 +81,14 @@ const Summary = () => {
             </h1>
           </div>
           <div className="flex justify-center mt-24 mb-32">
-            <Logout location="studentLogout" />
+            <Logout location="studentLogout" btnColor={emotionColor} />
           </div>
         </section>
 
         {/* bottom orange section */}
         <div
-          className=" bg-lightOrange w-full h-8/12 rounded-[2rem] p-[2rem] flex flex-col
-             rounded-b"
+          className={`bg-${emotionColor} w-full h-8/12 rounded-[2rem] p-[2rem] flex flex-col
+             rounded-b`}
         >
           {/* Learn more */}
           <section className="flex flex-row justify-around mt-2">
@@ -114,36 +119,12 @@ const Summary = () => {
           <section className="mt-40 mb-20">
             <div className="flex flex-col items-center">
               {/* Sub emotion transition sentence */}
-              {mainEmotion.toLowerCase() === "sad" ||
-              mainEmotion.toLowerCase() === "angry" ||
-              mainEmotion.toLowerCase() === "scared" ? (
                 <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    Being {emotionFromLocation.toLowerCase()} can feel like a
-                    big feeling that's hard to control.
-                  </h2>
                   <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
                     What can we do when we feel{" "}
                     {emotionFromLocation.toLowerCase()}?
                   </h2>
                 </div>
-              ) : mainEmotion.toLowerCase() === "happy" ? (
-                <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    Being {emotionFromLocation.toLowerCase()} is the best! What
-                    can we do when we feel {emotionFromLocation.toLowerCase()}?
-                  </h2>
-                </div>
-              ) : (
-                <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    Feeling {emotionFromLocation.toLowerCase()} can help you do
-                    really cool things. What can we do when we feel{" "}
-                    {emotionFromLocation.toLowerCase()}?
-                  </h2>
-                </div>
-              )}
-
               <ul
                 ref={bottomContentRef}
                 className="font-body leading-relaxed w-8/12 flex flex-col justify-center mt-5"

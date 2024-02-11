@@ -35,11 +35,11 @@ const SubEmotion = () => {
   const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen min-w-screen ">
-      <div className="flex w-full justify-center mb-5">
+    <div className="flex flex-col items-center h-screen min-w-screen ">
+      <div className="flex w-full justify-center mt-20">
         <ProgressBar totalPages="6" currentPage="2" />
       </div>
-      <div className="flex flex-col text-center w-full items-center">
+      <div className="flex flex-col text-center h-full mt justify-center w-full items-center">
         <div className="font-header2 text-header2 z-10">
           <h2>Choose the emotion closest to</h2>
           <span>what you're feeling.</span>

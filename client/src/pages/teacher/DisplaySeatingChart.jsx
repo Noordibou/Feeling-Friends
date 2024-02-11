@@ -12,6 +12,7 @@ import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import ButtonView from "../../components/ButtonView";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -146,7 +147,13 @@ const DisplaySeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} ${assignedStudent.borderColorClass === "darkSandwich" ? "bg-opacity-60" : ""} pb-1 px-[6px] rounded-2xl`}
+                        className={`absolute mx-1 bg-${
+                          assignedStudent.borderColorClass
+                        } ${
+                          assignedStudent.borderColorClass === "darkSandwich"
+                            ? "bg-opacity-60"
+                            : ""
+                        } pb-1 px-[6px] rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
                         }}
@@ -154,7 +161,12 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              className={`flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl ${assignedStudent.borderColorClass === "darkSandwich" ? "opacity-20" : ""}`}
+                              className={`flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl ${
+                                assignedStudent.borderColorClass ===
+                                "darkSandwich"
+                                  ? "opacity-20"
+                                  : ""
+                              }`}
                               src={SampleAvatar}
                             />
                           </div>
@@ -169,7 +181,15 @@ const DisplaySeatingChart = () => {
               </div>
             </>
           ) : (
-            "Loading..."
+            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+              {/* placeholder for now */}
+              <div className={`absolute mt-[250px] px-32 -ml-10`}>
+                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                  Sorry, this feature is not available right now. Please try
+                  again later
+                </h4>
+              </div>
+            </div>
           )}
 
           {/* Student Info Modal */}
@@ -188,33 +208,34 @@ const DisplaySeatingChart = () => {
 
           {/* Room View & List Buttons */}
           <div className="flex justify-around w-full mt-8 items-center ">
-            <div className="">
-              <button className="text-body font-body rounded-xl px-[1rem] bg-sandwich flex items-center h-20 w-72 border-[3px] border-sandwich justify-center">
-                <h4 className="pr-2">Room View</h4>
-                <img src={classBoxesIcon} alt="Student Room View" />
-              </button>
-            </div>
-            <div className="">
-              <button className="text-body font-body border-[5px] border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
-                <Link
-                  className="flex items-center px-[1rem] h-16"
-                  to={`/viewclasslist/${userData._id}/${classroomId}`}
-                >
-                  <h4 className="pr-5">List View</h4>
-                  <img src={listIcon} alt="Student List View" />
-                </Link>
-              </button>
-            </div>
+            <ButtonView
+              buttonText="Room View"
+              bgColor="bg-sandwich"
+              fontDeco={false}
+              btnImage={classBoxesIcon}
+            />
+            <Link
+              className="flex items-center h-16"
+              to={`/viewclasslist/${userData._id}/${classroomId}`}
+            >
+              <ButtonView
+                buttonText="List View"
+                fontDeco={false}
+                btnImage={listIcon}
+                bgColor="bg-notebook"
+              />
+            </Link>
           </div>
         </div>
         <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
           <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
-            Click the Navbar's "Edit" button to add students and furniture to your classroom layout!
+            Click the Navbar's "Edit" button to add students and furniture to
+            your classroom layout!
           </h4>
         </div>
-      <div className="bottom-0 fixed w-screen">
-        <TeacherNavbar />
-      </div>
+        <div className="bottom-0 fixed w-screen">
+          <TeacherNavbar />
+        </div>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import TeacherNavbar from "../../components/TeacherNavbar";
 
 const CreateClass = () => {
     const navigate = useNavigate();
-    const { userData } = useUser();
+    const { userData, updateUser } = useUser();
     const [classroomsData, setClassroomsData] = useState([]);
     const [newClassData, setNewClassData] = useState({
         classSubject: "",
@@ -87,6 +87,10 @@ const CreateClass = () => {
 
             setClassroomsData((prevData) => [...prevData, { classroom: newClassroom }]);
             setNewClassData((prevData) => ({ ...prevData, students: [] }));
+            
+            // Updates React Context
+            const updatedUserData = await getTeacherById(userData._id);
+            updateUser(updatedUserData);
 
             navigate(`/teacher-home`);
         } catch (error) {

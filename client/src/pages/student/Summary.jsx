@@ -114,36 +114,12 @@ const Summary = () => {
           <section className="mt-40 mb-20">
             <div className="flex flex-col items-center">
               {/* Sub emotion transition sentence */}
-              {mainEmotion.toLowerCase() === "sad" ||
-              mainEmotion.toLowerCase() === "angry" ||
-              mainEmotion.toLowerCase() === "scared" ? (
                 <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    Being {emotionFromLocation.toLowerCase()} can feel like a
-                    big feeling that's hard to control.
-                  </h2>
                   <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
                     What can we do when we feel{" "}
                     {emotionFromLocation.toLowerCase()}?
                   </h2>
                 </div>
-              ) : mainEmotion.toLowerCase() === "happy" ? (
-                <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    Being {emotionFromLocation.toLowerCase()} is the best! What
-                    can we do when we feel {emotionFromLocation.toLowerCase()}?
-                  </h2>
-                </div>
-              ) : (
-                <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    Feeling {emotionFromLocation.toLowerCase()} can help you do
-                    really cool things. What can we do when we feel{" "}
-                    {emotionFromLocation.toLowerCase()}?
-                  </h2>
-                </div>
-              )}
-
               <ul
                 ref={bottomContentRef}
                 className="font-body leading-relaxed w-8/12 flex flex-col justify-center mt-5"

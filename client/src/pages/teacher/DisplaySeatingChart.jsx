@@ -208,7 +208,7 @@ const DisplaySeatingChart = () => {
           </div>
         </div>
         <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
-          <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold">
+          <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
             Click the Navbar's "Edit" button to add students and furniture to your classroom layout!
           </h4>
         </div>

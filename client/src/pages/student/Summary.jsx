@@ -8,6 +8,7 @@ import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
 import subEmotionInfo from "../../data/subEmotions.js";
+import { getEmotionColor } from "../../utils/classroomColors.js";
 
 const Summary = () => {
   const auth = useContext(AuthContext);
@@ -19,10 +20,14 @@ const Summary = () => {
   const emotionFromLocation = location.state?.emotion || "";
   const bottomContentRef = useRef();
   const [mainEmotion, setMainEmotion] = useState("");
+  const [emotionColor, setEmotionColor] = useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setMainEmotion(findMainEmotion(emotionFromLocation));
+    if(emotionFromLocation) {
+      setEmotionColor(getEmotionColor(emotionFromLocation))
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -76,14 +81,14 @@ const Summary = () => {
             </h1>
           </div>
           <div className="flex justify-center mt-24 mb-32">
-            <Logout location="studentLogout" />
+            <Logout location="studentLogout" btnColor={emotionColor} />
           </div>
         </section>
 
         {/* bottom orange section */}
         <div
-          className=" bg-lightOrange w-full h-8/12 rounded-[2rem] p-[2rem] flex flex-col
-             rounded-b"
+          className={`bg-${emotionColor} w-full h-8/12 rounded-[2rem] p-[2rem] flex flex-col
+             rounded-b`}
         >
           {/* Learn more */}
           <section className="flex flex-row justify-around mt-2">

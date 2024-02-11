@@ -17,6 +17,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
+import ButtonView from "../../components/ButtonView.jsx";
 
 export default function ViewClassList() {
   const { teacherId, classroomId } = useParams();
@@ -289,23 +290,23 @@ export default function ViewClassList() {
 
             {/* Room View & List Buttons */}
             <div className="flex justify-around w-full mt-6 items-center ">
-              <div className="">
-                <button className="text-body font-body border-[5px]   border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
-                  <Link
-                    className="flex items-center px-[1rem] h-16"
-                    to={`/classroom/${userData._id}/${classroomId}`}
-                  >
-                    <h4 className="pr-2">Room View</h4>
-                    <img src={classBoxesIcon} alt="Student Room View" />
-                  </Link>
-                </button>
-              </div>
-              <div className="">
-                <button className="text-body font-body rounded-xl px-[1rem] flex items-center h-20 w-72 border-[5px] border-sandwich bg-sandwich justify-center">
-                  <h4 className="pr-5">List View</h4>
-                  <img src={listIcon} alt="Student List View" />
-                </button>
-              </div>
+              <Link
+                className="flex items-center px-[1rem] h-16"
+                to={`/classroom/${userData._id}/${classroomId}`}
+              >
+                <ButtonView
+                  buttonText="Room View"
+                  fontDeco={false}
+                  btnImage={classBoxesIcon}
+                  bgColor="bg-notebook"
+                />
+              </Link>
+              <ButtonView
+                buttonText="List View"
+                fontDeco={false}
+                btnImage={listIcon}
+                bgColor="bg-sandwich"
+              />
             </div>
           </div>
         </div>

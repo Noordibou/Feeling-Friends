@@ -354,8 +354,7 @@ const EditSeatingChart = () => {
           {/* Msg shows when no students are in the classroom */}
           <div className={`${noStudentMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
           <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
-            Click the Navbar's "Edit" button to add students and furniture to
-            your classroom layout!
+            Click "Student Roster" to start adding students to your seating chart!
           </h4>
         </div>
         </div>

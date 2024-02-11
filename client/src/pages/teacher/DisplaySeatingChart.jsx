@@ -12,6 +12,7 @@ import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import ButtonView from "../../components/ButtonView";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -207,23 +208,23 @@ const DisplaySeatingChart = () => {
 
           {/* Room View & List Buttons */}
           <div className="flex justify-around w-full mt-8 items-center ">
-            <div className="">
-              <button className="text-body font-body rounded-xl px-[1rem] bg-sandwich flex items-center h-20 w-72 border-[3px] border-sandwich justify-center">
-                <h4 className="pr-2">Room View</h4>
-                <img src={classBoxesIcon} alt="Student Room View" />
-              </button>
-            </div>
-            <div className="">
-              <button className="text-body font-body border-[5px] border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
-                <Link
-                  className="flex items-center px-[1rem] h-16"
-                  to={`/viewclasslist/${userData._id}/${classroomId}`}
-                >
-                  <h4 className="pr-5">List View</h4>
-                  <img src={listIcon} alt="Student List View" />
-                </Link>
-              </button>
-            </div>
+            <ButtonView
+              buttonText="Room View"
+              bgColor="bg-sandwich"
+              fontDeco={false}
+              btnImage={classBoxesIcon}
+            />
+            <Link
+              className="flex items-center h-16"
+              to={`/viewclasslist/${userData._id}/${classroomId}`}
+            >
+              <ButtonView
+                buttonText="List View"
+                fontDeco={false}
+                btnImage={listIcon}
+                bgColor="bg-notebook"
+              />
+            </Link>
           </div>
         </div>
         <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>

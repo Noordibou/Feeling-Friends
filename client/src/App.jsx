@@ -14,7 +14,6 @@ import NeedsGoals from "./pages/teacher/NeedsGoals";
 import StudentProfile from "./pages/teacher/studentProfile/StudentProfile";
 import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
-import ViewClassroom from "./pages/teacher/ViewClassroom";
 import SubEmotion from "./pages/student/SubEmotion";
 import EditTeacher from "./pages/teacher/EditTeacher";
 import EditSeatingChart from "./pages/teacher/EditSeatingChart";

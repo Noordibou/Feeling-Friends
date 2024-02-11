@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {motion} from 'framer-motion'
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
@@ -10,15 +11,17 @@ import {
   deleteFurniture,
 } from "../../api/teachersApi";
 import { useNavigate } from "react-router-dom";
+import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
-import RosterImg from "../../images/Three People.png";
-import FurnitureImg from "../../images/Desk.png";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import saveButton from "../../images/button.png"
+import RosterImg from "../../images/Three People.png";
+import FurnitureImg from "../../images/Desk.png";
+import MsgModal from "../../components/SeatingChart/MsgModal";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -40,6 +43,7 @@ const EditSeatingChart = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [showMsg, setShowMsg] = useState(false)
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -196,7 +200,11 @@ const EditSeatingChart = () => {
         classroomId,
         updatedFurniturePositions
       );
-      console.log("Submitted :)");
+      // Show brief save message for 3 secs
+      setShowMsg(true)
+      setTimeout(() =>{
+        setShowMsg(false);
+      }, 2500)
       updateInfo();
     } catch (error) {
       console.log("Ooops didnt work");
@@ -207,13 +215,14 @@ const EditSeatingChart = () => {
     <>
       {" "}
       <div className="flex min-h-screen min-w-screen justify-center">
+        
         <div className="flex flex-col w-full items-center max-w-3xl h-screen">
-          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId}/>
+          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
+                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
@@ -281,10 +290,10 @@ const EditSeatingChart = () => {
                 setShowStudentRosterModal(true);
                 setShowFurnitureModal(false);
               }}
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
             >
               <h5
-                className={`text-[24px] ${
+                className={`text-[24px] font-[Poppins] pr-3 ${
                   showStudentRosterModal ? "font-[900] underline " : ""
                 }`}
               >
@@ -295,14 +304,14 @@ const EditSeatingChart = () => {
 
             {/* Open Choose Furniture Modal */}
             <button
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
+              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
               onClick={() => {
                 setShowFurnitureModal(true);
                 setShowStudentRosterModal(false);
               }}
             >
               <h5
-                className={`text-[24px] ${
+                className={`text-[24px] font-[Poppins] pr-3 ${
                   showFurnitureModal ? "font-[900] underline " : ""
                 }`}
               >
@@ -310,19 +319,25 @@ const EditSeatingChart = () => {
               </h5>
               <img src={FurnitureImg} />
             </button>
-          </div>
-          <div className="flex w-full justify-around max-w-3xl">
+
+            {/* Save Layout button */}
             <button
-              className="bg-yellow border p-5 my-8 h-10 rounded flex items-center"
+              className="relative overflow-hidden mx-4 rounded-xl"
               onClick={handleSave}
             >
-              Save
+              <img className=" object-auto w-72 h-full" src={saveButton} />
+              <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
+                Save
+              </h4>
             </button>
+          </div>
+          <div className="absolute mt-[70px]">
+            <MsgModal msgText="Seating Chart Saved!" showMsg={showMsg} bgColor="bg-black" textColor="text-white" />
           </div>
         </div>
       </div>
-      <div className="bottom-0 sticky">
-            <TeacherNavbar />
+      <div className="fixed bottom-0 w-screen">
+        <TeacherNavbar />
       </div>
     </>
   );

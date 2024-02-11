@@ -44,6 +44,7 @@ const EditSeatingChart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [counter, setCounter] = useState(0);
   const [showMsg, setShowMsg] = useState(false)
+  const [noStudentMsg, setNoStudentMsg] = useState(false)
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -117,6 +118,14 @@ const EditSeatingChart = () => {
   useEffect(() => {
     refreshData();
   }, [teacherId, classroomId, counter]);
+
+  useEffect(() => {
+    if(assignedStudents.length === 0) {
+      setNoStudentMsg(true)
+    } else {
+      setNoStudentMsg(false)
+    }
+  }, [assignedStudents])
 
   const handleDragEnd = (itemId, key, y) => {
     let studentCoords = null;
@@ -260,7 +269,14 @@ const EditSeatingChart = () => {
               </div>
             </>
           ) : (
-            "Loading..."
+            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+              {/* placeholder for now */}
+              <div className={`absolute mt-[250px] px-32 -ml-10`}>
+                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                Sorry, this feature is not available right now. Please try again later
+                </h4>
+              </div>
+            </div>
           )}
 
           {showStudentRosterModal && (
@@ -331,9 +347,17 @@ const EditSeatingChart = () => {
               </h4>
             </button>
           </div>
+          {/* Tells user they have saved the layout */}
           <div className="absolute mt-[70px]">
             <MsgModal msgText="Seating Chart Saved!" showMsg={showMsg} bgColor="bg-black" textColor="text-white" />
           </div>
+          {/* Msg shows when no students are in the classroom */}
+          <div className={`${noStudentMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
+          <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+            Click the Navbar's "Edit" button to add students and furniture to
+            your classroom layout!
+          </h4>
+        </div>
         </div>
       </div>
       <div className="fixed bottom-0 w-screen">

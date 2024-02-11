@@ -146,7 +146,7 @@ const DisplaySeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} pb-1 px-[6px] rounded-2xl`}
+                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} ${assignedStudent.borderColorClass === "darkSandwich" ? "bg-opacity-60" : ""} pb-1 px-[6px] rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
                         }}
@@ -154,7 +154,7 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
+                              className={`flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl ${assignedStudent.borderColorClass === "darkSandwich" ? "opacity-20" : ""}`}
                               src={SampleAvatar}
                             />
                           </div>

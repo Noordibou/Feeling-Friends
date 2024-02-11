@@ -12,29 +12,21 @@ const Summary = () => {
   const { userData } = useUser();
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
-  const emotionFromLocation = location.state?.emotion || "";
+  const emotionFromParams = location.state?.emotion || "";
   const bottomContentRef = useRef();
   const [emotionColor, setEmotionColor] = useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if(emotionFromLocation) {
-      setEmotionColor(getEmotionColor(emotionFromLocation))
+    if(emotionFromParams) {
+      setEmotionColor(getEmotionColor(emotionFromParams))
+      setEmotion(emotionFromParams);
     }
   }, [userData]);
 
-  useEffect(() => {
-    const emotionFromParams = location.state?.emotion;
-    if (emotionFromParams) {
-      setEmotion(emotionFromParams);
-    }
-    console.log("Emotion:", emotion);
-  }, [emotion, location.state]);
-
-
   const getEmotionTips = () => {
     const emotionObject = emotionsExplained.find(
-      (emotionObject) => emotionObject.emotion === emotionFromLocation
+      (emotionObject) => emotionObject.emotion === emotionFromParams
     );
     if (emotionObject) {
       return emotionObject.tips;
@@ -107,7 +99,7 @@ const Summary = () => {
                 <div>
                   <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
                     What can we do when we feel{" "}
-                    {emotionFromLocation.toLowerCase()}?
+                    {emotionFromParams.toLowerCase()}?
                   </h2>
                 </div>
               <ul

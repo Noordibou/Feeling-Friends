@@ -1,55 +1,32 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import SummaryPerson from "../../images/SummaryPerson.png";
-import { AuthContext } from "../Authentication/AuthContext";
 import emotionsExplained from "../../data/emotionData.js";
 import { useLocation } from "react-router-dom";
 import QuestionFrog from "../../images/Question_Frog.png";
 import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
-import subEmotionInfo from "../../data/subEmotions.js";
 import { getEmotionColor } from "../../utils/classroomColors.js";
 
 const Summary = () => {
-  const auth = useContext(AuthContext);
-  const objectID = auth.user ? auth.user._id : null;
-  console.log("User's objectID:", JSON.stringify(objectID));
   const { userData } = useUser();
   const [emotion, setEmotion] = useState("");
   const location = useLocation();
-  const emotionFromLocation = location.state?.emotion || "";
+  const emotionFromParams = location.state?.emotion || "";
   const bottomContentRef = useRef();
-  const [mainEmotion, setMainEmotion] = useState("");
   const [emotionColor, setEmotionColor] = useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setMainEmotion(findMainEmotion(emotionFromLocation));
-    if(emotionFromLocation) {
-      setEmotionColor(getEmotionColor(emotionFromLocation))
+    if(emotionFromParams) {
+      setEmotionColor(getEmotionColor(emotionFromParams))
+      setEmotion(emotionFromParams);
     }
   }, [userData]);
 
-  useEffect(() => {
-    const emotionFromParams = location.state?.emotion;
-    if (emotionFromParams) {
-      setEmotion(emotionFromParams);
-    }
-    console.log("Emotion:", emotion);
-  }, [emotion, location.state]);
-
-  const findMainEmotion = (subemotion) => {
-    for (let emotionObject of subEmotionInfo) {
-      if (emotionObject.subEmotions.includes(subemotion)) {
-        return emotionObject.emotion;
-      }
-    }
-    return null;
-  };
-
   const getEmotionTips = () => {
     const emotionObject = emotionsExplained.find(
-      (emotionObject) => emotionObject.emotion === emotionFromLocation
+      (emotionObject) => emotionObject.emotion === emotionFromParams
     );
     if (emotionObject) {
       return emotionObject.tips;
@@ -122,7 +99,7 @@ const Summary = () => {
                 <div>
                   <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
                     What can we do when we feel{" "}
-                    {emotionFromLocation.toLowerCase()}?
+                    {emotionFromParams.toLowerCase()}?
                   </h2>
                 </div>
               <ul

@@ -5,4 +5,6 @@ const { generateRandAnswers } = require('./generateRandAnswers')
 const task = cron.job('0 7 * * *', () => {
     const randomAnswers = generateRandAnswers();
 
+
+
 })

@@ -30,11 +30,27 @@
 /* Placeholder text color */
 
 .custom-placeholder::placeholder{
-  color: #000;
+  color: #A59F8B; 
+  /* (graphite) */
 }
 
 .custom-input {
   width: 100%;
-  background: transparent;
+  background: #FFF9E4;
+  /* (notebook paper) */
+  border-radius: 1rem;
+  border: 1rem;
+  font-family: karla;
+  padding: 0.5rem;
+  font-size: 1.75rem;
 }
 
+/* Save Button */
+.save-button {
+  background-image: url("./images/button.png");
+  width: 700px;
+  height: 80px;
+  font-family: karla;
+  font-size: 1.75rem;
+  color: #FFF9E4;
+}

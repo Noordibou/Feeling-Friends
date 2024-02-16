@@ -238,7 +238,7 @@ const CreateClass = () => {
                   className="save-button"
                   onClick={handleCreateClassroom}
                 >
-                  Save
+                Save
                 </button>
           </div>
         </div>

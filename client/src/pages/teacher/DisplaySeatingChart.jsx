@@ -150,10 +150,10 @@ const DisplaySeatingChart = () => {
                         className={`absolute mx-1 bg-${
                           assignedStudent.borderColorClass
                         } ${
-                          assignedStudent.borderColorClass === "darkSandwich"
-                            ? "bg-opacity-60"
-                            : ""
-                        } pb-1 px-[6px] rounded-2xl`}
+                          assignedStudent.borderColorClass === "sandwich"
+                            ? "bg-opacity-30 border-4 border-sandwich"
+                            : `border-4 border-${assignedStudent.borderColorClass}`
+                        } px-[2px] rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
                         }}
@@ -161,17 +161,17 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              className={`flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl ${
+                              className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
                                 assignedStudent.borderColorClass ===
-                                "darkSandwich"
-                                  ? "opacity-20"
+                                "sandwich"
+                                  ? "opacity-50"
                                   : ""
                               }`}
                               src={SampleAvatar}
                             />
                           </div>
                           <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                            {assignedStudent.firstName}
+                            {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
                           </h3>
                         </div>
                       </motion.div>

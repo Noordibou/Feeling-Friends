@@ -17,10 +17,10 @@ export const applyColorsToStudents = (classroomStudents) => {
         const zor = lastCheckin.ZOR;
         student.borderColorClass = getBackgroundColorClass(zor);
       } else {
-        student.borderColorClass = "darkSandwich";
+        student.borderColorClass = "sandwich";
       }
     } else {
-      student.borderColorClass = "darkSandwich";
+      student.borderColorClass = "sandwich";
     }
     return student;
   });

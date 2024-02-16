@@ -86,7 +86,7 @@ const AssignedStudent = ({
                   />
                 </div>
                 <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                  {assignedStudent.firstName}
+                  {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
                 </h3>
               </div>
             </motion.div>

@@ -52,11 +52,9 @@ const AssignedStudent = ({
                 x: Math.max(0, initialX),
                 y: Math.max(0, initialY),
               }}
-              className={`absolute border-4 bg-${
-                assignedStudent.borderColorClass
-              } px-[4px] rounded-2xl ${
+              className={`absolute border-4 px-[4px] rounded-2xl ${
                 selectedStyling ? "border-black" : ` border-${assignedStudent.borderColorClass}`
-              }`}
+              } ${assignedStudent.borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${assignedStudent.borderColorClass}`}`}
               onClick={() => {
                 setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
               }}
@@ -81,7 +79,7 @@ const AssignedStudent = ({
               <div className="">
                 <div className="flex w-full justify-center h-full items-center">
                   <img
-                    className="flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl"
+                    className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${assignedStudent.borderColorClass === "sandwich" ? "opacity-50" : ""}`}
                     src={SampleAvatar}
                   />
                 </div>

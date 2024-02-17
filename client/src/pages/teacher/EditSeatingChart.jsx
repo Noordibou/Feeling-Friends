@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import {motion} from 'framer-motion'
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
@@ -10,7 +9,6 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import { useNavigate } from "react-router-dom";
 import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
@@ -18,10 +16,13 @@ import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
-import saveButton from "../../images/button.png"
+import saveButton from "../../images/button.png";
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
+import openRosterImg from "../../images/ThreePplLight.png";
+import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
+import ButtonView from "../../components/ButtonView";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -32,7 +33,6 @@ const EditSeatingChart = () => {
 
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [unassignedStudents, setUnassignedStudents] = useState([]);
-  const navigate = useNavigate();
 
   const [studentPositions, setStudentPositions] = useState({});
   const [furniturePositions, setFurniturePositions] = useState({});
@@ -43,8 +43,8 @@ const EditSeatingChart = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [showMsg, setShowMsg] = useState(false)
-  const [noStudentMsg, setNoStudentMsg] = useState(false)
+  const [showMsg, setShowMsg] = useState(false);
+  const [noStudentMsg, setNoStudentMsg] = useState(false);
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -116,16 +116,17 @@ const EditSeatingChart = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     refreshData();
-  }, [teacherId, classroomId, counter]);
+  }, [counter]);
 
   useEffect(() => {
-    if(assignedStudents.length === 0) {
-      setNoStudentMsg(true)
+    if (assignedStudents.length === 0) {
+      setNoStudentMsg(true);
     } else {
-      setNoStudentMsg(false)
+      setNoStudentMsg(false);
     }
-  }, [assignedStudents])
+  }, [assignedStudents]);
 
   const handleDragEnd = (itemId, key, y) => {
     let studentCoords = null;
@@ -210,10 +211,10 @@ const EditSeatingChart = () => {
         updatedFurniturePositions
       );
       // Show brief save message for 3 secs
-      setShowMsg(true)
-      setTimeout(() =>{
+      setShowMsg(true);
+      setTimeout(() => {
         setShowMsg(false);
-      }, 2500)
+      }, 2500);
       updateInfo();
     } catch (error) {
       console.log("Ooops didnt work");
@@ -224,7 +225,6 @@ const EditSeatingChart = () => {
     <>
       {" "}
       <div className="flex min-h-screen min-w-screen justify-center">
-        
         <div className="flex flex-col w-full items-center max-w-3xl h-screen">
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -273,7 +273,8 @@ const EditSeatingChart = () => {
               {/* placeholder for now */}
               <div className={`absolute mt-[250px] px-32 -ml-10`}>
                 <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
-                Sorry, this feature is not available right now. Please try again later
+                  Sorry, this feature is not available right now. Please try
+                  again later
                 </h4>
               </div>
             </div>
@@ -301,47 +302,41 @@ const EditSeatingChart = () => {
 
           <div className="flex flex-row w-full justify-between mt-10">
             {/* Open Choose Students Modal */}
-            <button
-              onClick={() => {
-                setShowStudentRosterModal(true);
+
+            <ButtonView
+              buttonText="Student Roster"
+              defaultBtnImage={RosterImg}
+              btnImageWhenOpen={openRosterImg}
+              handleClick={() => {
+                setShowStudentRosterModal(!showStudentRosterModal);
                 setShowFurnitureModal(false);
               }}
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
-            >
-              <h5
-                className={`text-[24px] font-[Poppins] pr-3 ${
-                  showStudentRosterModal ? "font-[900] underline " : ""
-                }`}
-              >
-                Student Roster
-              </h5>
-              <img src={RosterImg} />
-            </button>
+              isSelected={showStudentRosterModal}
+            />
 
             {/* Open Choose Furniture Modal */}
-            <button
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
-              onClick={() => {
-                setShowFurnitureModal(true);
+
+            <ButtonView
+              buttonText="Classroom Objects"
+              defaultBtnImage={FurnitureImg}
+              btnImageWhenOpen={openFurnitureImg}
+              handleClick={() => {
+                setShowFurnitureModal(!showFurnitureModal);
                 setShowStudentRosterModal(false);
               }}
-            >
-              <h5
-                className={`text-[24px] font-[Poppins] pr-3 ${
-                  showFurnitureModal ? "font-[900] underline " : ""
-                }`}
-              >
-                Classroom Objects
-              </h5>
-              <img src={FurnitureImg} />
-            </button>
+              isSelected={showFurnitureModal}
+            />
 
             {/* Save Layout button */}
             <button
               className="relative overflow-hidden mx-4 rounded-xl"
               onClick={handleSave}
             >
-              <img className=" object-auto w-72 h-full" src={saveButton} />
+              <img
+                alt="Save Seating Chart"
+                className=" object-auto w-72 h-full"
+                src={saveButton}
+              />
               <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
                 Save
               </h4>
@@ -349,14 +344,24 @@ const EditSeatingChart = () => {
           </div>
           {/* Tells user they have saved the layout */}
           <div className="absolute mt-[70px]">
-            <MsgModal msgText="Seating Chart Saved!" showMsg={showMsg} bgColor="bg-black" textColor="text-white" />
+            <MsgModal
+              msgText="Seating Chart Saved!"
+              showMsg={showMsg}
+              bgColor="bg-black"
+              textColor="text-white"
+            />
           </div>
           {/* Msg shows when no students are in the classroom */}
-          <div className={`${noStudentMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
-          <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
-            Click "Student Roster" to start adding students to your seating chart!
-          </h4>
-        </div>
+          <div
+            className={`${
+              noStudentMsg ? "absolute" : "hidden"
+            } mt-[350px] px-24`}
+          >
+            <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+              Click "Student Roster" to start adding students to your seating
+              chart!
+            </h4>
+          </div>
         </div>
       </div>
       <div className="fixed bottom-0 w-screen">

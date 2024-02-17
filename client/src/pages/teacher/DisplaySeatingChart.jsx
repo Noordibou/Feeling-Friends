@@ -63,10 +63,12 @@ const DisplaySeatingChart = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const closeStudentInfo = (clickedStudent) => {
+    setSelectedStudent(clickedStudent._id)
+  }
+
 
   useEffect(() => {
-
-    console.log("assigned students: " + JSON.stringify(assignedStudents))
     if(assignedStudents.length > 0) {
       setShowMsg(false)
     } else {
@@ -77,7 +79,7 @@ const DisplaySeatingChart = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full max-w-4xl ">
+        <div className="flex flex-col items-center max-w-4xl ">
           {/* Top Navbar */}
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -139,7 +141,6 @@ const DisplaySeatingChart = () => {
                   );
 
                   return (
-                    <>
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
                         key={`${studentObj.student}-${index}`}
@@ -161,6 +162,7 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
+                              alt="student picture"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
                                 assignedStudent.borderColorClass ===
                                 "sandwich"
@@ -175,7 +177,6 @@ const DisplaySeatingChart = () => {
                           </h3>
                         </div>
                       </motion.div>
-                    </>
                   );
                 })}
               </div>
@@ -202,17 +203,16 @@ const DisplaySeatingChart = () => {
               student={selectedStudent}
               classroomId={classroomId}
               userData={userData}
-              setSelectedStudent={setSelectedStudent}
+              handleClick={() => closeStudentInfo(selectedStudent)}
             />
           </div>
 
           {/* Room View & List Buttons */}
-          <div className="flex justify-around w-full mt-8 items-center ">
+          <div className="flex justify-around w-full mt-10 items-center ">
             <ButtonView
               buttonText="Room View"
-              bgColor="bg-sandwich"
-              fontDeco={false}
-              btnImage={classBoxesIcon}
+              btnImageWhenOpen={classBoxesIcon}
+              isSelected={true}
             />
             <Link
               className="flex items-center h-16"
@@ -220,9 +220,8 @@ const DisplaySeatingChart = () => {
             >
               <ButtonView
                 buttonText="List View"
-                fontDeco={false}
-                btnImage={listIcon}
-                bgColor="bg-notebook"
+                defaultBtnImage={listIcon}
+                isSelected={false}
               />
             </Link>
           </div>

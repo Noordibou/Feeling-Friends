@@ -63,10 +63,12 @@ const DisplaySeatingChart = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const closeStudentInfo = (clickedStudent) => {
+    setSelectedStudent(clickedStudent._id)
+  }
+
 
   useEffect(() => {
-
-    console.log("assigned students: " + JSON.stringify(assignedStudents))
     if(assignedStudents.length > 0) {
       setShowMsg(false)
     } else {
@@ -139,7 +141,6 @@ const DisplaySeatingChart = () => {
                   );
 
                   return (
-                    <>
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
                         key={`${studentObj.student}-${index}`}
@@ -161,6 +162,7 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
+                              alt="student picture"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
                                 assignedStudent.borderColorClass ===
                                 "sandwich"
@@ -175,7 +177,6 @@ const DisplaySeatingChart = () => {
                           </h3>
                         </div>
                       </motion.div>
-                    </>
                   );
                 })}
               </div>
@@ -202,7 +203,7 @@ const DisplaySeatingChart = () => {
               student={selectedStudent}
               classroomId={classroomId}
               userData={userData}
-              setSelectedStudent={setSelectedStudent}
+              handleClick={() => closeStudentInfo(selectedStudent)}
             />
           </div>
 
@@ -220,7 +221,6 @@ const DisplaySeatingChart = () => {
               <ButtonView
                 buttonText="List View"
                 defaultBtnImage={listIcon}
-                handleClick={()=> console.log("Clicky click")}
                 isSelected={false}
               />
             </Link>

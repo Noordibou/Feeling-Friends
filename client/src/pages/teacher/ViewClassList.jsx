@@ -278,7 +278,7 @@ export default function ViewClassList() {
           )}
 
           {/* Buttons for Home and save/edit */}
-          <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
+          <div className="flex flex-col mt-[1rem] pb-6">
             <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
@@ -289,23 +289,23 @@ export default function ViewClassList() {
             </div>
 
             {/* Room View & List Buttons */}
-            <div className="flex justify-around w-full mt-6 items-center ">
+            <div className="flex justify-between w-full mt-6 items-center ">
               <Link
-                className="flex items-center px-[1rem] h-16"
+                className="flex items-center h-16"
                 to={`/classroom/${userData._id}/${classroomId}`}
               >
                 <ButtonView
                   buttonText="Room View"
-                  fontDeco={false}
+                  toggle={false}
+                  defaultSetting={false}
                   btnImage={classBoxesIcon}
-                  bgColor="bg-notebook"
                 />
               </Link>
               <ButtonView
                 buttonText="List View"
-                fontDeco={false}
+                toggle={false}
+                defaultSetting={true}
                 btnImage={listIcon}
-                bgColor="bg-sandwich"
               />
             </div>
           </div>

@@ -211,7 +211,8 @@ const DisplaySeatingChart = () => {
             <ButtonView
               buttonText="Room View"
               bgColor="bg-sandwich"
-              fontDeco={false}
+              defaultSetting={true}
+              toggle={false}
               btnImage={classBoxesIcon}
             />
             <Link
@@ -220,7 +221,8 @@ const DisplaySeatingChart = () => {
             >
               <ButtonView
                 buttonText="List View"
-                fontDeco={false}
+                defaultSetting={false}
+                toggle={false}
                 btnImage={listIcon}
                 bgColor="bg-notebook"
               />

@@ -22,6 +22,7 @@ import saveButton from "../../images/button.png"
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
+import ButtonView from "../../components/ButtonView";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -197,6 +198,8 @@ const EditSeatingChart = () => {
       }
     );
 
+    
+
     console.log(
       "updated funriture positions: " +
         JSON.stringify(updatedFurniturePositions)
@@ -219,6 +222,16 @@ const EditSeatingChart = () => {
       console.log("Ooops didnt work");
     }
   };
+  const handleToggleRosterClick = (rosterClick) => {
+    if(rosterClick) {
+      setShowFurnitureModal(true);
+      setShowStudentRosterModal(false);
+    } else {
+      setShowFurnitureModal(false);
+      setShowStudentRosterModal(true);
+    }
+
+  }
 
   return (
     <>
@@ -300,8 +313,10 @@ const EditSeatingChart = () => {
           )}
 
           <div className="flex flex-row w-full justify-between mt-10">
+
+            
             {/* Open Choose Students Modal */}
-            <button
+            {/* <button
               onClick={() => {
                 setShowStudentRosterModal(true);
                 setShowFurnitureModal(false);
@@ -316,9 +331,22 @@ const EditSeatingChart = () => {
                 Student Roster
               </h5>
               <img src={RosterImg} />
-            </button>
+            </button> */}
+
+
+            <ButtonView 
+              buttonText="Student Roster"
+              defaultSetting={false}
+              toggle={true}
+              btnImage={RosterImg}
+              handleClick={handleToggleRosterClick}
+              isRosterClick={showStudentRosterModal}
+            />
 
             {/* Open Choose Furniture Modal */}
+
+
+
             <button
               className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
               onClick={() => {
@@ -335,6 +363,8 @@ const EditSeatingChart = () => {
               </h5>
               <img src={FurnitureImg} />
             </button>
+
+
 
             {/* Save Layout button */}
             <button

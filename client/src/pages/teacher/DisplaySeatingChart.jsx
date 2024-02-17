@@ -77,7 +77,7 @@ const DisplaySeatingChart = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full max-w-4xl ">
+        <div className="flex flex-col items-center max-w-4xl ">
           {/* Top Navbar */}
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -207,13 +207,11 @@ const DisplaySeatingChart = () => {
           </div>
 
           {/* Room View & List Buttons */}
-          <div className="flex justify-around w-full mt-8 items-center ">
+          <div className="flex justify-around w-full mt-10 items-center ">
             <ButtonView
               buttonText="Room View"
-              bgColor="bg-sandwich"
-              defaultSetting={true}
-              toggle={false}
-              btnImage={classBoxesIcon}
+              btnImageWhenOpen={classBoxesIcon}
+              isSelected={true}
             />
             <Link
               className="flex items-center h-16"
@@ -221,10 +219,9 @@ const DisplaySeatingChart = () => {
             >
               <ButtonView
                 buttonText="List View"
-                defaultSetting={false}
-                toggle={false}
-                btnImage={listIcon}
-                bgColor="bg-notebook"
+                defaultBtnImage={listIcon}
+                handleClick={()=> console.log("Clicky click")}
+                isSelected={false}
               />
             </Link>
           </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import {motion} from 'framer-motion'
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
@@ -10,7 +9,6 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import { useNavigate } from "react-router-dom";
 import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
@@ -21,6 +19,8 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import saveButton from "../../images/button.png"
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
+import openRosterImg from "../../images/ThreePplLight.png"
+import openFurnitureImg from "../../images/DeskImgLight.png"
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import ButtonView from "../../components/ButtonView";
 
@@ -33,7 +33,6 @@ const EditSeatingChart = () => {
 
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [unassignedStudents, setUnassignedStudents] = useState([]);
-  const navigate = useNavigate();
 
   const [studentPositions, setStudentPositions] = useState({});
   const [furniturePositions, setFurniturePositions] = useState({});
@@ -117,8 +116,9 @@ const EditSeatingChart = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     refreshData();
-  }, [teacherId, classroomId, counter]);
+  }, [counter]);
 
   useEffect(() => {
     if(assignedStudents.length === 0) {
@@ -336,18 +336,31 @@ const EditSeatingChart = () => {
 
             <ButtonView 
               buttonText="Student Roster"
-              defaultSetting={false}
-              toggle={true}
-              btnImage={RosterImg}
-              handleClick={handleToggleRosterClick}
-              isRosterClick={showStudentRosterModal}
+              defaultBtnImage={RosterImg}
+              btnImageWhenOpen={openRosterImg}
+              handleClick={() => {
+                setShowStudentRosterModal(!showStudentRosterModal)
+                setShowFurnitureModal(false)
+              }}
+              isSelected={showStudentRosterModal}
             />
 
             {/* Open Choose Furniture Modal */}
 
 
+            <ButtonView 
+              buttonText="Classroom Objects"
+              defaultBtnImage={FurnitureImg}
+              btnImageWhenOpen={openFurnitureImg}
+              handleClick={() => {
+                setShowFurnitureModal(!showFurnitureModal)
+                setShowStudentRosterModal(false)
+              }}
+              isSelected={showFurnitureModal}
+            />
 
-            <button
+
+            {/* <button
               className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-4"
               onClick={() => {
                 setShowFurnitureModal(true);
@@ -362,7 +375,7 @@ const EditSeatingChart = () => {
                 Classroom Objects
               </h5>
               <img src={FurnitureImg} />
-            </button>
+            </button> */}
 
 
 
@@ -371,7 +384,7 @@ const EditSeatingChart = () => {
               className="relative overflow-hidden mx-4 rounded-xl"
               onClick={handleSave}
             >
-              <img className=" object-auto w-72 h-full" src={saveButton} />
+              <img alt="Save Seating Chart" className=" object-auto w-72 h-full" src={saveButton} />
               <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
                 Save
               </h4>

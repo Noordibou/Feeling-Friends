@@ -60,8 +60,8 @@ export default function ViewClassList() {
 
   return (
     <>
-      <div className="flex min-h-screen min-w-screen-xl justify-center">
-        <div className="flex flex-col h-screen max-w-3xl">
+      <div className="flex h-screen min-w-screen-xl justify-center">
+        <div className="flex flex-col max-w-4xl">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -289,23 +289,21 @@ export default function ViewClassList() {
             </div>
 
             {/* Room View & List Buttons */}
-            <div className="flex justify-between w-full mt-6 items-center ">
+            <div className="flex justify-between w-full items-center ">
               <Link
                 className="flex items-center h-16"
                 to={`/classroom/${userData._id}/${classroomId}`}
               >
                 <ButtonView
                   buttonText="Room View"
-                  toggle={false}
-                  defaultSetting={false}
-                  btnImage={classBoxesIcon}
+                  defaultBtnImage={classBoxesIcon}
+                  isSelected={false}
                 />
               </Link>
               <ButtonView
                 buttonText="List View"
-                toggle={false}
-                defaultSetting={true}
-                btnImage={listIcon}
+                btnImageWhenOpen={listIcon}
+                isSelected={true}
               />
             </div>
           </div>

@@ -46,7 +46,7 @@ const StudentInfoBox = ({
         {/* student image */}
         <div
           className={`flex h-full my-auto ${
-            bgColorClass ? "w-full" : "w-28 opacity-70"
+            bgColorClass ? "w-full" : "w-28 opacity-50"
           }`}
         >
           <img

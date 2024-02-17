@@ -79,7 +79,7 @@ const AssignedStudent = ({
               <div className="">
                 <div className="flex w-full justify-center h-full items-center">
                   <img
-                    className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${assignedStudent.borderColorClass === "sandwich" ? "opacity-70" : ""}`}
+                    className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${assignedStudent.borderColorClass === "sandwich" ? "opacity-50" : ""}`}
                     src={SampleAvatar}
                   />
                 </div>

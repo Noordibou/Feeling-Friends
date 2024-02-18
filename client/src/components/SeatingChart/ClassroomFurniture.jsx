@@ -83,11 +83,6 @@ const ClassroomFurniture = ({
                     0;
                   const newRotation = prevRotation + 90;
 
-                  console.log("furniture position? " + JSON.stringify(furniturePositions))
-                  console.log("New rotation: " + newRotation)
-                  console.log("item.x: " + item.x)
-                  console.log("item.y: " + item.y)
-
                   return {
                     ...prevPositions,
                     [item._id]: {
@@ -105,7 +100,7 @@ const ClassroomFurniture = ({
             }`}
           >
             <img
-              className="flex w-full h-full border-pink"
+              className="flex w-full h-full"
               src={shape.src}
               alt={shape.alt}
             />

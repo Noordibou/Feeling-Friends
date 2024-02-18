@@ -29,7 +29,7 @@ const ClassroomFurniture = ({
           (furnitureId) => furnitureId === item._id
         );
 
-        const radians = (furniturePositions[item._id]?.rotation * Math.PI) / 180;
+        const radians = ((furniturePositions[item._id]?.rotation || item?.rotation) * Math.PI) / 180;
         const sinTheta = Math.abs(Math.sin(radians));
         const cosTheta = Math.abs(Math.cos(radians));
 
@@ -37,7 +37,7 @@ const ClassroomFurniture = ({
         const constraintsFurnHeight = shape.style.height.split("[")[1].split("px]")[0]/2
 
         let dragConstraints = {};
-        if (furniturePositions[item._id]?.rotation % 360 === 90 || furniturePositions[item._id]?.rotation % 360 === 270) {
+        if ((furniturePositions[item._id]?.rotation || item?.rotation) % 360 === 90 || (furniturePositions[item._id]?.rotation || item?.rotation) % 360 === 270) {
           dragConstraints = {
             left: -constraintsFurnWidth -(constraintsFurnWidth * cosTheta)+10,
             right: 710 - constraintsFurnWidth - (constraintsFurnHeight * cosTheta), 
@@ -54,13 +54,13 @@ const ClassroomFurniture = ({
             key={`${item._id}`}
             dragMomentum={false}
             initial={{
-              x: Math.max(0, initialX),
-              y: Math.max(0, initialY),
+              x: initialX,
+              y: initialY,
               rotate: item.rotation || 0,
             }}
             animate={{
               rotate:
-                furniturePositions[item._id]?.rotation || item.rotation || 0,
+                furniturePositions[item._id]?.rotation || item.rotation,
             }}
             drag
             dragElastic={0.1}
@@ -82,6 +82,11 @@ const ClassroomFurniture = ({
                     item.rotation ||
                     0;
                   const newRotation = prevRotation + 90;
+
+                  console.log("furniture position? " + JSON.stringify(furniturePositions))
+                  console.log("New rotation: " + newRotation)
+                  console.log("item.x: " + item.x)
+                  console.log("item.y: " + item.y)
 
                   return {
                     ...prevPositions,

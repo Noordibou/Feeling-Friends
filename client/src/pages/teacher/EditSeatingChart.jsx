@@ -140,6 +140,7 @@ const EditSeatingChart = () => {
         );
 
         console.log("furnish coords: " + furnishCoords);
+        console.log("furniture rotation: " + furniturePositions[itemId]?.rotation)
 
         if (furnishCoords) {
           setFurniturePositions((prevPositions) => ({
@@ -148,7 +149,7 @@ const EditSeatingChart = () => {
               x: parseInt(furnishCoords[1]),
               y: parseInt(furnishCoords[2]),
               assigned: true,
-              rotation: furniturePositions[itemId]?.rotation,
+              rotation: furniturePositions[itemId]?.rotation || classroom.furniture[itemId]?.rotation,
             },
           }));
         } else {
@@ -187,13 +188,15 @@ const EditSeatingChart = () => {
     const updatedFurniturePositions = Object.keys(furniturePositions).map(
       (itemId) => {
         const furniture = furniturePositions[itemId];
-        console.log("furniture: " + JSON.stringify(furniture));
+        const furnitureItem = classroom.furniture.find(item => item._id === itemId);
+        const furnitureRotation = furnitureItem?.rotation;
+
         return {
           itemId,
           x: furniture.x,
           y: furniture.y,
           assigned: furniture.assigned,
-          rotation: furniture.rotation || 0,
+          rotation: furniture.rotation || furnitureRotation,
         };
       }
     );

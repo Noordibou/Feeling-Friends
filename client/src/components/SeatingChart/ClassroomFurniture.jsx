@@ -63,7 +63,7 @@ const ClassroomFurniture = ({
                 furniturePositions[item._id]?.rotation || item.rotation,
             }}
             drag
-            dragElastic={0.1}
+            dragElastic={0}
             dragPropagation={false}
             dragConstraints={dragConstraints}
             onDragStart={() => setIsDragging(true)}

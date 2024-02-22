@@ -116,8 +116,8 @@ const DisplaySeatingChart = () => {
                       id={`furniture-${item._id}`}
                       key={`${item._id}`}
                       initial={{
-                        x: Math.max(0, initialX),
-                        y: Math.max(0, initialY),
+                        x: initialX,
+                        y: initialY,
                         rotate: item.rotation || 0,
                       }}
                       className={`absolute ${shape.style.width} ${shape.style.height}`}

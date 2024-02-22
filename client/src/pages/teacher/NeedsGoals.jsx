@@ -65,7 +65,7 @@ export default function NeedsGoals() {
             </div>
           </div>
           <button className="relative overflow-hidden mt-5">
-            <img className=" object-cover w-full h-full" src={saveButton}/>
+            <img className=" object-cover w-full h-full" src={saveButton} alt="save goals"/>
             <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-white font-bold">Save</h4>
           </button>
 
@@ -120,7 +120,7 @@ export default function NeedsGoals() {
             </div>
           </div>
           <button className="relative overflow-hidden mt-5">
-            <img className=" object-cover w-full h-full" src={saveButton}/>
+            <img className=" object-cover w-full h-full" src={saveButton} alt="save needs"/>
             <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-white font-bold">Save</h4>
           </button>
         </div>

@@ -5,11 +5,9 @@ import {
   getTeacherClassroom,
   getAllStudentsClassroom,
   deleteStudentFromClassroom,
+  getTeacherById,
 } from "../../api/teachersApi";
-import { getBackgroundColorClass } from "../../utils/classroomColors.js";
-import xButton from "../../images/x-button.png";
 import "./scrollbar.css";
-import GoBack from "../../components/GoBack.jsx";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
 import TeacherNavbar from "../../components/TeacherNavbar.jsx";
@@ -18,10 +16,11 @@ import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
 import ButtonView from "../../components/ButtonView.jsx";
+import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 
 export default function ViewClassList() {
   const { teacherId, classroomId } = useParams();
-  const { userData } = useUser();
+  const { userData, updateUser } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -51,6 +50,9 @@ export default function ViewClassList() {
       setStudents((prevData) =>
         prevData.filter((item) => item._id !== studentId)
       );
+
+      const updatedUserData = await getTeacherById(userData._id);
+      updateUser(updatedUserData);
     } catch (error) {
       console.error(error);
     }
@@ -60,21 +62,14 @@ export default function ViewClassList() {
 
   return (
     <>
-      <div className="flex min-h-screen min-w-screen-xl justify-center">
-        <div className="flex flex-col h-screen max-w-3xl">
+      <div className="flex h-screen min-w-screen-xl justify-center">
+        <div className="flex flex-col max-w-4xl">
           {classroom ? (
             <>
               {isEditMode ? (
                 <>
                   {/* Top Nav (on Edit only)*/}
-                  <div className="flex justify-around items-center mt-8">
-                    <div className="absolute left-14">
-                      <GoBack />
-                    </div>
-                    <span className="text-header1 w-full text-center font-header1">
-                      Manage Classroom
-                    </span>
-                  </div>
+                  <SimpleTopNav pageTitle="Manage Classroom" />
 
                   {/* Classroom Info (on Edit only) */}
                   <div className="bg-sandwich w-[80%] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
@@ -150,124 +145,25 @@ export default function ViewClassList() {
               <div
                 className={`flex justify-center overflow-y-auto custom-scrollbar ${
                   isEditMode ? "" : "h-[55%]"
-                } pt-3`}
-                key="list-of-students"
+                } pt-3 `}
+                key="list-of-students-1"
               >
                 {sortedStudents.length > 0 ? (
-                  <ul className="w-[70%]">
+                  <div key={`container`} className="w-[80%]">
                     {sortedStudents.map((student, index) => {
-                      const lastJournal =
-                        student.journalEntries[
-                          student.journalEntries.length - 1
-                        ];
-
-                      if (lastJournal) {
-                        const isCheckout =
-                          lastJournal.checkout && lastJournal.checkout.emotion;
-                        const lastEmotion = isCheckout
-                          ? lastJournal.checkout.emotion
-                          : lastJournal.checkin?.emotion;
-                        const zor = isCheckout
-                          ? lastJournal.checkout.ZOR
-                          : lastJournal.checkin?.ZOR;
-                        const bgColorClass = getBackgroundColorClass(zor);
-
-                        // Student if they've checked in or out
-                        return (
-                          <li key={`${student.id}-${index}`}>
-                            <div
-                              className={`bg-${bgColorClass} my-3 p-4 rounded-lg`}
-                            >
-                              <div className="pb-2 flex justify-between">
-                                <div>
-                                  {student.firstName} {student.lastName} is
-                                  feeling <b>{lastEmotion}</b>
-                                </div>
-                                {isEditMode && (
-                                  <div className="-mt-8 -mx-8">
-                                    <div>
-                                      <button
-                                        onClick={() =>
-                                          handleDeleteStudent(student._id)
-                                        }
-                                      >
-                                        <img src={xButton} alt="xButton" />
-                                      </button>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                              <div className="bg-notebookPaper px-2 py-2 rounded-md flex justify-between">
-                                Goals:{" "}
-                                {isCheckout
-                                  ? lastJournal.checkout.goal
-                                  : lastJournal.checkin?.goal}
-                                <br />
-                                Needs:{" "}
-                                {isCheckout
-                                  ? lastJournal.checkout.need
-                                  : lastJournal.checkin?.need}
-                                <div className="pt-3 mr-2 underline">
-                                  <Link
-                                    to={`/${userData._id}/${classroomId}/${student._id}`}
-                                  >
-                                    More &gt;
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      }
-
                       return (
-                        <>
-                          {/* FIXME: Trying to get component StudentInfoBox to at least work here */}
-                          {/* {isEditMode ? 
-                        <div className="-mb-8">
-                          <StudentInfoBox student={student} userData={userData} classroomId={classroomId} isEditMode={true} setSelectedStudent={handleDeleteStudent} />
+                        <div key={`student-info-${index}`} className="my-6 ">
+                          <StudentInfoBox
+                            student={student}
+                            userData={userData}
+                            classroomId={classroomId}
+                            isEditMode={isEditMode}
+                            handleClick={() => handleDeleteStudent(student._id)}
+                          />
                         </div>
-                        :
-                        <></>  
-
-                        } */}
-
-                          {/* Student if they haven't checked in or out yet */}
-                          <li key={`${student.id}-${index}`}>
-                            <div
-                              className={`bg-white p-4 my-3 rounded-lg flex justify-between`}
-                            >
-                              <div className="">
-                                {student.firstName} {student.lastName} didn't
-                                check in or out yet!
-                              </div>
-                              <div className="flex justify-end">
-                                {isEditMode && (
-                                  <div className="-mt-10 -mx-24">
-                                    <div>
-                                      <button
-                                        onClick={() =>
-                                          handleDeleteStudent(student._id)
-                                        }
-                                      >
-                                        <img src={xButton} alt="xButton" />
-                                      </button>
-                                    </div>
-                                  </div>
-                                )}
-                                <Link
-                                  to={`/${userData._id}/${classroomId}/${student._id}`}
-                                  className="mr-4 underline"
-                                >
-                                  More &gt;
-                                </Link>
-                              </div>
-                            </div>
-                          </li>
-                        </>
                       );
                     })}
-                  </ul>
+                  </div>
                 ) : (
                   <p>No students found.</p>
                 )}
@@ -278,7 +174,7 @@ export default function ViewClassList() {
           )}
 
           {/* Buttons for Home and save/edit */}
-          <div className="w-[90%] ml-auto mr-auto mt-[1rem] pb-6">
+          <div className="flex flex-col mt-[1rem] pb-6">
             <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
@@ -289,23 +185,21 @@ export default function ViewClassList() {
             </div>
 
             {/* Room View & List Buttons */}
-            <div className="flex justify-around w-full mt-6 items-center ">
+            <div className="flex justify-between w-full items-center ">
               <Link
-                className="flex items-center px-[1rem] h-16"
+                className="flex items-center h-16"
                 to={`/classroom/${userData._id}/${classroomId}`}
               >
                 <ButtonView
                   buttonText="Room View"
-                  fontDeco={false}
-                  btnImage={classBoxesIcon}
-                  bgColor="bg-notebook"
+                  defaultBtnImage={classBoxesIcon}
+                  isSelected={false}
                 />
               </Link>
               <ButtonView
                 buttonText="List View"
-                fontDeco={false}
-                btnImage={listIcon}
-                bgColor="bg-sandwich"
+                btnImageWhenOpen={listIcon}
+                isSelected={true}
               />
             </div>
           </div>

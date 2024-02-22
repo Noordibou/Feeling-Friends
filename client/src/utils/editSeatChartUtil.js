@@ -1,7 +1,7 @@
 import { getBackgroundColorClass } from "./classroomColors";
 
 export function getLastJournalInfo(student) {
-  // returns if student has 0 journa entries
+  // returns if student has 0 journal entries
   if (!student.journalEntries || student.journalEntries.length === 0) {
     return {
       borderColorClass: "sandwich",

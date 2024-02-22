@@ -33,6 +33,7 @@ const StudentInfoBox = ({
       bgColorClass = getBackgroundColorClass(zor);
     }
   }
+
   return (
     <div className="relative flex flex-col h-full w-full" key={`${student.id}`}>
       {/* bg object */}

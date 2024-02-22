@@ -64,7 +64,7 @@ const DisplaySeatingChart = () => {
   }, []);
 
   const closeStudentInfo = (clickedStudent) => {
-    setSelectedStudent(clickedStudent._id)
+    setSelectedStudent({})
   }
 
 
@@ -203,6 +203,7 @@ const DisplaySeatingChart = () => {
               student={selectedStudent}
               classroomId={classroomId}
               userData={userData}
+              isEditMode={true}
               handleClick={() => closeStudentInfo(selectedStudent)}
             />
           </div>

@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import { getAllStudentsClassroom } from "../../api/teachersApi";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";
@@ -13,6 +12,7 @@ import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
+import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -33,9 +33,7 @@ const DisplaySeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
-
-      setStudents(studentsWithBorderColor);
+      setStudents(classroomStudents);
       const positions = {};
       classroom.students.forEach((student) => {
         positions[student.student] = {
@@ -140,6 +138,8 @@ const DisplaySeatingChart = () => {
                     (student) => student._id === studentObj.student
                   );
 
+                  const { borderColorClass } = getLastJournalInfo(assignedStudent)
+
                   return (
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
@@ -149,11 +149,11 @@ const DisplaySeatingChart = () => {
                           y: Math.max(0, initialY),
                         }}
                         className={`absolute mx-1 bg-${
-                          assignedStudent.borderColorClass
+                          borderColorClass
                         } ${
-                          assignedStudent.borderColorClass === "sandwich"
+                          borderColorClass === "sandwich"
                             ? "bg-opacity-30 border-4 border-sandwich"
-                            : `border-4 border-${assignedStudent.borderColorClass}`
+                            : `border-4 border-${borderColorClass}`
                         } px-[2px] rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
@@ -164,7 +164,7 @@ const DisplaySeatingChart = () => {
                             <img
                               alt="student"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
-                                assignedStudent.borderColorClass ===
+                                borderColorClass ===
                                 "sandwich"
                                   ? "opacity-50"
                                   : ""

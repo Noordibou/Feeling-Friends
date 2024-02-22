@@ -9,7 +9,6 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
@@ -78,9 +77,7 @@ const EditSeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
-
-      setStudents(studentsWithBorderColor);
+      setStudents(classroomStudents);
       const positions = {};
       classroom.students.forEach((student) => {
         positions[student.student] = {

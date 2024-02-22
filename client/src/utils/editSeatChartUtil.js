@@ -1,17 +1,28 @@
 import { getBackgroundColorClass } from "./classroomColors";
 
-// This transforms application state to presentation state
-// // means that this is something that can be unit tested
-export const applyColorsToStudents = (classroomStudents) => {
-  return classroomStudents.map((student) => {
-    const lastJournal = student.journalEntries?.[student.journalEntries.length - 1];
-    const lastCheckin = lastJournal?.checkin;
-    const lastCheckout = lastJournal?.checkout;
-    const zor = lastCheckout?.ZOR ?? lastCheckin?.ZOR;
-    student.borderColorClass = zor ? getBackgroundColorClass(zor) : "sandwich";
-    return student;
-  });
-};
+export function getLastJournalInfo(student) {
+  // returns if student has 0 journa entries
+  if (!student.journalEntries || student.journalEntries.length === 0) {
+    return {
+      borderColorClass: "sandwich",
+      bgColorClass: "",
+      lastCheck: null,
+      lastEmotion: "",
+    };
+  }
+  const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+  const { checkout, checkin } = lastJournal || {};
+  const zor = checkout?.ZOR || checkin?.ZOR;
+
+  // formatting exported values
+  const borderColorClass = zor ? getBackgroundColorClass(zor) : "sandwich";
+  const bgColorClass = getBackgroundColorClass(
+    lastJournal.checkout?.ZOR || lastJournal.checkin?.ZOR
+  );
+  const lastCheck = lastJournal?.checkout || lastJournal?.checkin;
+  const lastEmotion = lastCheck?.emotion || "";
+  return { borderColorClass, bgColorClass, lastCheck, lastEmotion };
+}
 
 // FIXME: too many exceptions (long if else chain). Need to figure a way for this to be more generic
 export const toggleSelected = (objItem, alreadySelected, isSelected) => {

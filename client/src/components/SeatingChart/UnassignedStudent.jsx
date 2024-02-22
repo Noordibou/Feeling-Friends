@@ -1,11 +1,9 @@
-import { useState, useRef } from "react";
-import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { toggleSelected } from "../../utils/editSeatChartUtil";
+import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
 const UnassignedStudent = ({
   unassignedStudents,
-  unassignedStudSelection,
   students,
   isSelected,
   setIsSelected
@@ -35,12 +33,15 @@ const UnassignedStudent = ({
             (student) => student.student === studentObj.student
           );
 
+          
+          const { borderColorClass } = getLastJournalInfo(unassignedStudent)
+
           return (
             <div
               id={`motion-div-${unassignedStudent._id}`}
               key={`unassigned-${index}`}
               className={`m-2 bg-${
-                unassignedStudent.borderColorClass
+                borderColorClass
               } h-[99px] w-[99px] 
                 rounded-2xl ${isSelectedStudent ? `opacity-50` : ``}`}
               onClick={() => {
@@ -49,7 +50,7 @@ const UnassignedStudent = ({
             >
               <div className="flex w-full justify-center h-full items-center">
                 <img
-                  className={`flex object-cover h-[84px] w-[84px] rounded-2xl ${unassignedStudent.borderColorClass === "sandwich" ? "opacity-60" : ""}`}
+                  className={`flex object-cover h-[84px] w-[84px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-60" : ""}`}
                   src={SampleAvatar}
                 />
               </div>

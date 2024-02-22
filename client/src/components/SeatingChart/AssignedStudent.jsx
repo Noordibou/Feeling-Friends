@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { toggleSelected } from "../../utils/editSeatChartUtil";
+import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
 const AssignedStudent = ({
   assignedStudents,
@@ -39,6 +40,8 @@ const AssignedStudent = ({
             (student) => student.student === studentObj.student
           );
 
+          const { borderColorClass } = getLastJournalInfo(assignedStudent)
+
           return (
             <motion.div
               id={`motion-div-${studentObj.student}`}
@@ -53,8 +56,8 @@ const AssignedStudent = ({
                 y: Math.max(0, initialY),
               }}
               className={`absolute border-4 px-[4px] rounded-2xl ${
-                selectedStyling ? "border-black" : ` border-${assignedStudent.borderColorClass}`
-              } ${assignedStudent.borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${assignedStudent.borderColorClass}`}`}
+                selectedStyling ? "border-black" : ` border-${borderColorClass}`
+              } ${borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${borderColorClass}`}`}
               onClick={() => {
                 setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
               }}
@@ -79,7 +82,7 @@ const AssignedStudent = ({
               <div className="">
                 <div className="flex w-full justify-center h-full items-center">
                   <img
-                    className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${assignedStudent.borderColorClass === "sandwich" ? "opacity-50" : ""}`}
+                    className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
                     src={SampleAvatar}
                   />
                 </div>

@@ -3,28 +3,14 @@ import { getBackgroundColorClass } from "./classroomColors";
 // This transforms application state to presentation state
 // // means that this is something that can be unit tested
 export const applyColorsToStudents = (classroomStudents) => {
-  // Calculate the border color for each student
-  const studentsWithBorderColor = classroomStudents.map((student) => {
-    const lastJournal =
-      student.journalEntries[student.journalEntries.length - 1];
-    if (lastJournal) {
-      const lastCheckin = lastJournal.checkin;
-      const lastCheckout = lastJournal.checkout;
-      if (lastCheckout && lastCheckout.ZOR) {
-        const zor = lastCheckout.ZOR;
-        student.borderColorClass = getBackgroundColorClass(zor);
-      } else if (lastCheckin && lastCheckin.ZOR) {
-        const zor = lastCheckin.ZOR;
-        student.borderColorClass = getBackgroundColorClass(zor);
-      } else {
-        student.borderColorClass = "sandwich";
-      }
-    } else {
-      student.borderColorClass = "sandwich";
-    }
+  return classroomStudents.map((student) => {
+    const lastJournal = student.journalEntries?.[student.journalEntries.length - 1];
+    const lastCheckin = lastJournal?.checkin;
+    const lastCheckout = lastJournal?.checkout;
+    const zor = lastCheckout?.ZOR ?? lastCheckin?.ZOR;
+    student.borderColorClass = zor ? getBackgroundColorClass(zor) : "sandwich";
     return student;
   });
-  return studentsWithBorderColor
 };
 
 // FIXME: too many exceptions (long if else chain). Need to figure a way for this to be more generic

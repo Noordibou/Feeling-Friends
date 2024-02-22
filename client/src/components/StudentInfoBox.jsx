@@ -14,25 +14,12 @@ const StudentInfoBox = ({
     ? student.journalEntries[student.journalEntries.length - 1]
     : null;
 
-  let bgColorClass = "";
-  let lastEmotion = "";
-  let lastCheck = "";
+  const bgColorClass = lastJournal
+  ? getBackgroundColorClass(lastJournal.checkout?.ZOR || lastJournal.checkin?.ZOR)
+  : "";
 
-  if (lastJournal) {
-    if (lastJournal.checkout) {
-      let lastCheckout = lastJournal.checkout;
-      let zor = lastCheckout.ZOR;
-      lastEmotion = lastCheckout.emotion;
-      lastCheck = lastCheckout;
-      bgColorClass = getBackgroundColorClass(zor);
-    } else if (lastJournal.checkin) {
-      let lastCheckin = lastJournal.checkin;
-      let zor = lastCheckin.ZOR;
-      lastEmotion = lastCheckin.emotion;
-      lastCheck = lastCheckin;
-      bgColorClass = getBackgroundColorClass(zor);
-    }
-  }
+  let lastCheck = lastJournal?.checkout || lastJournal?.checkin;
+  let lastEmotion = lastCheck?.emotion || ""
 
   return (
     <div className="relative flex flex-col h-full w-full" key={`${student.id}`}>

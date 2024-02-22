@@ -2,6 +2,7 @@ import { getBackgroundColorClass } from "../utils/classroomColors";
 import { Link } from "react-router-dom";
 import avatarImg from "../images/Sample_Avatar.png";
 import xButton from "../images/x-button.png";
+import { getLastJournalInfo } from "../utils/editSeatChartUtil";
 
 const StudentInfoBox = ({
   student,
@@ -10,29 +11,9 @@ const StudentInfoBox = ({
   handleClick,
   isEditMode,
 }) => {
-  let lastJournal = student.journalEntries
-    ? student.journalEntries[student.journalEntries.length - 1]
-    : null;
+  
+  const {bgColorClass, lastCheck, lastEmotion} = getLastJournalInfo(student);
 
-  let bgColorClass = "";
-  let lastEmotion = "";
-  let lastCheck = "";
-
-  if (lastJournal) {
-    if (lastJournal.checkout) {
-      let lastCheckout = lastJournal.checkout;
-      let zor = lastCheckout.ZOR;
-      lastEmotion = lastCheckout.emotion;
-      lastCheck = lastCheckout;
-      bgColorClass = getBackgroundColorClass(zor);
-    } else if (lastJournal.checkin) {
-      let lastCheckin = lastJournal.checkin;
-      let zor = lastCheckin.ZOR;
-      lastEmotion = lastCheckin.emotion;
-      lastCheck = lastCheckin;
-      bgColorClass = getBackgroundColorClass(zor);
-    }
-  }
   return (
     <div className="relative flex flex-col h-full w-full" key={`${student.id}`}>
       {/* bg object */}

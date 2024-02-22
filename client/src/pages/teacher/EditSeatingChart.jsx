@@ -9,7 +9,6 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
@@ -78,9 +77,7 @@ const EditSeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
-
-      setStudents(studentsWithBorderColor);
+      setStudents(classroomStudents);
       const positions = {};
       classroom.students.forEach((student) => {
         positions[student.student] = {
@@ -345,15 +342,7 @@ const EditSeatingChart = () => {
               </h4>
             </button>
           </div>
-          {/* Tells user they have saved the layout */}
-          <div className="absolute mt-[70px]">
-            <MsgModal
-              msgText="Seating Chart Saved!"
-              showMsg={showMsg}
-              bgColor="bg-black"
-              textColor="text-white"
-            />
-          </div>
+
           {/* Msg shows when no students are in the classroom */}
           <div
             className={`${
@@ -367,6 +356,13 @@ const EditSeatingChart = () => {
           </div>
         </div>
       </div>
+      
+      {/* Tells user they have saved the layout */}
+      <MsgModal
+        msgText="Save Successful!"
+        showMsg={showMsg}
+        textColor="text-black"
+      />
       <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div>

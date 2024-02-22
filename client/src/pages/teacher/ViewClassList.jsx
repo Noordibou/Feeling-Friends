@@ -8,7 +8,6 @@ import {
   getTeacherById,
 } from "../../api/teachersApi";
 import "./scrollbar.css";
-import GoBack from "../../components/GoBack.jsx";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
 import TeacherNavbar from "../../components/TeacherNavbar.jsx";
@@ -17,6 +16,7 @@ import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
 import ButtonView from "../../components/ButtonView.jsx";
+import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 
 export default function ViewClassList() {
   const { teacherId, classroomId } = useParams();
@@ -69,14 +69,7 @@ export default function ViewClassList() {
               {isEditMode ? (
                 <>
                   {/* Top Nav (on Edit only)*/}
-                  <div className="flex justify-around items-center mt-8">
-                    <div className="absolute left-14">
-                      <GoBack />
-                    </div>
-                    <span className="text-header1 w-full text-center font-header1">
-                      Manage Classroom
-                    </span>
-                  </div>
+                  <SimpleTopNav pageTitle="Manage Classroom" />
 
                   {/* Classroom Info (on Edit only) */}
                   <div className="bg-sandwich w-[80%] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">

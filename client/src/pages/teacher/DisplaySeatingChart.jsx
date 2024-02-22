@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import { getAllStudentsClassroom } from "../../api/teachersApi";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";
@@ -13,6 +12,7 @@ import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
+import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -33,9 +33,7 @@ const DisplaySeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
-
-      setStudents(studentsWithBorderColor);
+      setStudents(classroomStudents);
       const positions = {};
       classroom.students.forEach((student) => {
         positions[student.student] = {
@@ -64,7 +62,7 @@ const DisplaySeatingChart = () => {
   }, []);
 
   const closeStudentInfo = (clickedStudent) => {
-    setSelectedStudent(clickedStudent._id)
+    setSelectedStudent({})
   }
 
 
@@ -116,8 +114,8 @@ const DisplaySeatingChart = () => {
                       id={`furniture-${item._id}`}
                       key={`${item._id}`}
                       initial={{
-                        x: Math.max(0, initialX),
-                        y: Math.max(0, initialY),
+                        x: initialX,
+                        y: initialY,
                         rotate: item.rotation || 0,
                       }}
                       className={`absolute ${shape.style.width} ${shape.style.height}`}
@@ -140,6 +138,8 @@ const DisplaySeatingChart = () => {
                     (student) => student._id === studentObj.student
                   );
 
+                  const { borderColorClass } = getLastJournalInfo(assignedStudent)
+
                   return (
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
@@ -149,11 +149,11 @@ const DisplaySeatingChart = () => {
                           y: Math.max(0, initialY),
                         }}
                         className={`absolute mx-1 bg-${
-                          assignedStudent.borderColorClass
+                          borderColorClass
                         } ${
-                          assignedStudent.borderColorClass === "sandwich"
+                          borderColorClass === "sandwich"
                             ? "bg-opacity-30 border-4 border-sandwich"
-                            : `border-4 border-${assignedStudent.borderColorClass}`
+                            : `border-4 border-${borderColorClass}`
                         } px-[2px] rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
@@ -162,9 +162,9 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              alt="student picture"
+                              alt="student"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
-                                assignedStudent.borderColorClass ===
+                                borderColorClass ===
                                 "sandwich"
                                   ? "opacity-50"
                                   : ""
@@ -203,6 +203,7 @@ const DisplaySeatingChart = () => {
               student={selectedStudent}
               classroomId={classroomId}
               userData={userData}
+              isEditMode={true}
               handleClick={() => closeStudentInfo(selectedStudent)}
             />
           </div>

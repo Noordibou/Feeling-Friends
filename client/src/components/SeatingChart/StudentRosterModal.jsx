@@ -24,7 +24,6 @@ const AddStudentModal = ({
     setShowStudentRosterModal(false);
     setIsSelected([]);
   };
-  console.log("unassigned students: " + unassignedStudents);
 
   return (
     <>

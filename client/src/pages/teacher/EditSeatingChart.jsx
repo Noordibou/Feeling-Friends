@@ -345,15 +345,7 @@ const EditSeatingChart = () => {
               </h4>
             </button>
           </div>
-          {/* Tells user they have saved the layout */}
-          <div className="absolute mt-[70px]">
-            <MsgModal
-              msgText="Seating Chart Saved!"
-              showMsg={showMsg}
-              bgColor="bg-black"
-              textColor="text-white"
-            />
-          </div>
+
           {/* Msg shows when no students are in the classroom */}
           <div
             className={`${
@@ -367,6 +359,13 @@ const EditSeatingChart = () => {
           </div>
         </div>
       </div>
+      
+      {/* Tells user they have saved the layout */}
+      <MsgModal
+        msgText="Save Successful!"
+        showMsg={showMsg}
+        textColor="text-black"
+      />
       <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div>

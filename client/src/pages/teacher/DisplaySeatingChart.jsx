@@ -162,7 +162,7 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              alt="student picture"
+                              alt="student"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
                                 assignedStudent.borderColorClass ===
                                 "sandwich"

@@ -20,25 +20,25 @@ import successFrog from '../../images/successFrog.png'
 
 // TODO: might use tailwind animations instead of framer for this to make this component even more reusable https://tailwindcss.com/docs/animation
 
-const MsgModal = ({ msgText, showMsg, textColor }) => {
+const MsgModal = ({ msgText, showMsg }) => {
 
   return (
     <>
       <AnimatePresence>
         {showMsg &&(
         <motion.div
-          className={`fixed bottom-0 z-10 w-full`}
+          className={`fixed bottom-0 z-10 w-full object-cover rounded-t-[1rem]`}
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "tween", stiffness: 120, damping: 15 }}
         >
           <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center mt-2">
-            <h3 className={`${textColor} relative text-center font-[Poppins] font-semibold text-[1.65rem]`}>
+            <h3 className={`text-black relative text-center font-[Poppins] font-semibold text-[1.65rem]`}>
               {msgText}
             </h3>
           </div>
-          <img alt="save success" src={saveBg} className={`w-full`}/>
+          <img alt="save success" src={saveBg} className={`w-full h-36`}/>
           <div className="absolute bottom-0 left-0 flex items-end h-full">
             <img src={successFrog}/>
           </div>

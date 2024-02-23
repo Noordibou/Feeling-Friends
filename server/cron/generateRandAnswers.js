@@ -52,7 +52,7 @@ const generateRandAnswers = () => {
 
   const randomAnswers = {
     emotion: emotions[Math.floor(Math.random() * emotions.length)],
-    ZOR: ZORS[Math.floor(Math.random() * ZORs.length)],
+    ZOR: ZORS[Math.floor(Math.random() * ZORS.length)],
     goal: goals[Math.floor(Math.random() * goals.length)],
     need: needs[Math.floor(Math.random() * needs.length)],
   };

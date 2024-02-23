@@ -4,10 +4,10 @@ import saveBg from '../../images/saveModalBg.png'
 import successFrog from '../../images/successFrog.png'
 
 // How to use this temporary message modal:
-// -- Please follow the below instructions. All of the following should go on the page where it will be used
-// -- make a useState on the page with the onClick (or equivalent)
+// Please follow the below instructions. All of the following should go on the page where it will be used
+// -- make a useState on the page (I defined it as showMsg and setShowMsg) and an onClick function (or equivalent)
 // -- in onClick function, use the setShowMsg (or whatever your useState is) to true
-// -- use this builtin js method to make it disappear (3000 = 3 seconds):
+// -- use the below builtin js method to make it disappear (3000 = 3 seconds):
 // setTimeout(() =>{
 //     setShowMsg(false);
 // }, 3000)
@@ -16,7 +16,7 @@ import successFrog from '../../images/successFrog.png'
 
 
 // * Can also be used as a normal permanent Msg modal. To do this, do the following:
-// <MsgModal showMsg={true} msgText="anything you want as text" bgColor="bg-gray" textColor="text-white" />
+// <MsgModal showMsg={true} msgText="anything you want as text" />
 
 // TODO: might use tailwind animations instead of framer for this to make this component even more reusable https://tailwindcss.com/docs/animation
 
@@ -39,7 +39,7 @@ const MsgModal = ({ msgText, showMsg }) => {
             </h3>
           </div>
           <img alt="save success" src={saveBg} className={`w-full h-36`}/>
-          <div className="absolute bottom-0 left-0 flex items-end h-full">
+          <div className="absolute bottom-0 left-12 flex items-end h-full">
             <img src={successFrog}/>
           </div>
         </motion.div>

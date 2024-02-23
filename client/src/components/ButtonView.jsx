@@ -11,7 +11,7 @@ const ButtonView = ({
     <>
       <div className="mx-2">
         <button
-          className={`text-body text-[Poppins] rounded-xl px-[1rem] flex items-center h-20 w-72 border-[5px] border-sandwich justify-around ${
+          className={`text-body text-[Poppins] rounded-xl px-[1rem] flex items-center h-20 w-[270px] border-[5px] border-sandwich justify-around ${
             isSelected ? "underline font-[700] bg-sandwich" : "bg-notebookPaper"
           }`}
           onClick={handleClick}

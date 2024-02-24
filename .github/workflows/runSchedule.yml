@@ -1,0 +1,35 @@
+name: Cron Job
+
+on:
+  schedule:
+    - cron: "00 13 * * 1,5"
+  workflow_dispatch:
+
+jobs:
+  run-cron-job:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: Production 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      TOKEN_KEY: ${{ secrets.TOKEN_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run cron job
+        run: node server/cron/autoJournalEntries.js
+
+      - name: Check for success and exit
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Job completed successfully"
+            exit 0  # Exit the workflow with success code
+          else
+            echo "Job failed!"
+            exit 1  # Exit the workflow with failure code
+          fi

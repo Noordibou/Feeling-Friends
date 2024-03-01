@@ -22,7 +22,8 @@ jobs:
         run: npm install
 
       - name: Run cron job
-        run: node server/cron/autoJournalEntries.js
+        run: node autoJournalEntries.js
+        working-directory: server/cron
 
       - name: Check for success and exit
         run: |

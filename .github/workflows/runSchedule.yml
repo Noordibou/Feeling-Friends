@@ -9,7 +9,7 @@ jobs:
   run-cron-job:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment: Production - mindful-journal-server
+    environment: Production – mindful-journal-server
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       TOKEN_KEY: ${{ secrets.TOKEN_KEY }}
@@ -22,7 +22,8 @@ jobs:
         run: npm install
 
       - name: Run cron job
-        run: node server/cron/autoJournalEntries.js
+        run: node autoJournalEntries.js
+        working-directory: server/cron
 
       - name: Check for success and exit
         run: |

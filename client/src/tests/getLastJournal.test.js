@@ -1,8 +1,12 @@
 import { getLastJournalInfo } from "../utils/editSeatChartUtil";
+import { getCurrentDate } from "../utils/dateFormat";
 
 // FIXME: Need to test whenever we get the current day's journal entry checkin/out
 
 describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => {
+
+  const todaysDate = getCurrentDate()
+
   test.each([
     [
       {
@@ -37,7 +41,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Better manage my energy",
                 need: "Check in with my teacher",
               },
-              date: "10-06-2023",
+              date: todaysDate,
               _id: "6520d33b87d6c853514e8c05",
             },
             {
@@ -47,7 +51,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Do my best in class",
                 need: "Check in with my teacher",
               },
-              date: "10-07-2023",
+              date: todaysDate,
               _id: "65217cf7e9188ac7c9bff2a9",
             },
             {
@@ -63,7 +67,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Finish homework during study hall",
                 need: "Help with focusing",
               },
-              date: "10-17-2023",
+              date: todaysDate,
               _id: "652efa064fe2566491e6cc72",
             },
             {
@@ -83,7 +87,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Do my best in class",
                 need: "Help with focusing",
               },
-              date: "10-31-2023",
+              date: todaysDate,
               _id: "65416c45b0887547b6a062ad",
             },
           ],
@@ -127,7 +131,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Better manage my energy",
                 need: "Check in with my teacher",
               },
-              date: "10-06-2023",
+              date: todaysDate,
               _id: "6520d33b87d6c853514e8c05",
             },
           ],
@@ -171,7 +175,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Do my best in class",
                 need: "Extra practice",
               },
-              date: "10-06-2023",
+              date: todaysDate,
               _id: "6520d33b87d6c853514e8c05",
             },
           ],
@@ -205,7 +209,7 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
                 goal: "Better manage my energy",
                 need: "Check in with my teacher",
               },
-              date: "10-06-2023",
+              date: todaysDate,
               _id: "6520d33b87d6c853514e8c05",
             },
           ],
@@ -220,6 +224,35 @@ describe("get borderColorClass, bgColorClass, lastCheck and lastEmotion", () => 
             need: "Check in with my teacher",
           },
           lastEmotion: "Embarrassed",
+        },
+      },
+      {
+        testName: "no current day entry, so should return null/sandwich values",
+        student: {
+          journalEntries: [
+            {
+              checkin: {
+                emotion: "Worried",
+                ZOR: "Wiggly",
+                goal: "Do my best in class",
+                need: "Extra practice",
+              },
+              checkout: {
+                emotion: "Embarrassed",
+                ZOR: "Ready to learn",
+                goal: "Better manage my energy",
+                need: "Check in with my teacher",
+              },
+              date: "10-26-2023",
+              _id: "6520d33b87d6c853514e8c05",
+            },
+          ],
+        },
+        expectedOutput: {
+          borderColorClass: "sandwich",
+          bgColorClass: "",
+          lastCheck: null,
+          lastEmotion: "",
         },
       },
     ],

@@ -100,6 +100,7 @@ const ClassroomFurniture = ({
             }`}
           >
             <img
+              draggable={false}
               className="flex w-full h-full"
               src={shape.src}
               alt={shape.alt}

@@ -1,4 +1,5 @@
 import subEmotionInfo from "../data/subEmotions";
+import { getCurrentDate } from "./dateFormat";
 
 export const rows = 8;
 export const cols = 8; 
@@ -48,6 +49,7 @@ export function getBorderColorClass(zor) {
 
 export const calculateZorPercentage = (classroom) => {
   if (classroom.students && classroom.students.length > 0) {
+    const currentDate = getCurrentDate();
     const totalStudents = classroom.students.length;
     const zorCounts = {
       'Unmotivated': 0,
@@ -58,14 +60,14 @@ export const calculateZorPercentage = (classroom) => {
 
     classroom.students.forEach((student) => {
       if (student.journalEntries && student.journalEntries.length > 0) {
-        const lastJournal = student.journalEntries[student.journalEntries.length - 1];
-        
-        if (lastJournal.checkout && lastJournal.checkout.ZOR) {
-          const zor = lastJournal.checkout.ZOR;
-          zorCounts[zor]++;
-        } else if (lastJournal.checkin && lastJournal.checkin.ZOR) {
-          const zor = lastJournal.checkin.ZOR;
-          zorCounts[zor]++;
+        const todaysEntries = student.journalEntries.filter(entry => entry.date === currentDate);
+
+        if (todaysEntries.length > 0) {
+          const lastJournal = todaysEntries[todaysEntries.length - 1];
+          const zor = lastJournal.checkout?.ZOR || lastJournal.checkin?.ZOR;
+          if (zor) {
+            zorCounts[zor]++
+          }
         }
       }
     });

@@ -1,4 +1,5 @@
 import { getBackgroundColorClass } from "./classroomColors";
+import { getCurrentDate } from "./dateFormat";
 
 export function getLastJournalInfo(student) {
   // returns if student has 0 journal entries
@@ -10,7 +11,20 @@ export function getLastJournalInfo(student) {
       lastEmotion: "",
     };
   }
-  const lastJournal = student.journalEntries[student.journalEntries.length - 1];
+
+  const currentDate = getCurrentDate();
+  const todaysEntries = student.journalEntries.filter(entry => entry.date === currentDate);
+
+  if (todaysEntries.length === 0) {
+    return {
+      borderColorClass: "sandwich",
+      bgColorClass: "sandwich",
+      lastCheck: null,
+      lastEmotion: "",
+    };
+  }
+
+  const lastJournal = todaysEntries[todaysEntries.length - 1];
   const { checkout, checkin } = lastJournal || {};
   const zor = checkout?.ZOR || checkin?.ZOR;
 

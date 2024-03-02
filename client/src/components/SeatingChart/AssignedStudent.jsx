@@ -82,6 +82,7 @@ const AssignedStudent = ({
               <div className="">
                 <div className="flex w-full justify-center h-full items-center">
                   <img
+                    draggable={false}
                     className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
                     src={SampleAvatar}
                   />

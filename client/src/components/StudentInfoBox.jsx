@@ -38,7 +38,7 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-col w-[80%] px-4">
+        <div className="flex flex-col w-[80%] justify-center px-4">
           {/* last emotion */}
           <div className="pb-2 flex justify-between">
             {lastCheck ? (
@@ -59,7 +59,7 @@ const StudentInfoBox = ({
               bgColorClass
                 ? "bg-notebookPaper py-2 flex justify-around"
                 : "w-full"
-            } px-2 rounded-md `}
+            } px-2 rounded-md`}
           >
             {lastCheck ? (
               <div className="flex flex-col w-72">
@@ -67,7 +67,7 @@ const StudentInfoBox = ({
                 <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
               </div>
             ) : (
-              <div className="flex flex-row">
+              <div className="flex flex-col w-72">
                 <h5 className="font-[Poppins]">
                   {student.firstName} {student.lastName} hasn't checked in
                   today.

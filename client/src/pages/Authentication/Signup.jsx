@@ -88,7 +88,7 @@ const handleSuccess = (msg) =>
       <div className="flex flex-col w-8/12 max-w-lg mt-36">
         <h2 className="flex font-header2 text-header2 mb-4">Sign up</h2>
         <div>
-        {/* <form onSubmit={handleSubmit}> */}
+        <form onSubmit={handleSubmit}>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1 " htmlFor="email">Email</label>
             <input
@@ -137,15 +137,13 @@ const handleSuccess = (msg) =>
           </div>
           <div className="flex flex-col w-full h-96 text-center justify-around">
           <div className="mt-[2rem] w-full"> 
-              <BtnRainbow textColor="text-white" btnText="Continue" handleSave={handleSubmit}/>
+              <BtnRainbow textColor="text-white" btnText="Continue"/>
             </div>
-            {/* <button className="w-full text-center h-20 rounded mt-[2rem] font-button text-button text-notebookPaper bg-no-repeat bg-center bg-contain" alt="" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button> */}
-
             <span className="text-md font-body text-lightGray">
               Already registered? <Link className="underline" to={"/login"}>Log in</Link>
             </span>
           </div>
-        {/* </form> */}
+        </form>
         </div>
       </div>
       <ToastContainer />

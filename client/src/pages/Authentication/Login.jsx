@@ -93,14 +93,14 @@ const Login = () => {
 
   return (
     <div className="h-screen w-screen pt-[10rem] flex justify-center">
-      <div className="form_container ">
+      <div className="form_container">
         {/* Image here */}
 
         <h2 className="font-header2 text-header2 leading-tight">Login</h2>
 
         <div>
           <div>{/* Image here */}</div>
-          {/* <form onSubmit={handleSubmit}> */}
+          <form onSubmit={handleSubmit}>
             <div>
               <input
                 className="w-[35rem] mt-[3rem] font-input text-gray p-[0.5rem] border-2 border-black rounded"
@@ -124,8 +124,8 @@ const Login = () => {
               />
             </div>
 
-            <div className="mt-[2rem] w-[35rem]"> 
-              <BtnRainbow textColor="text-white" btnText="Login" handleSave={handleSubmit}/>
+            <div className="mt-[2rem] w-full"> 
+              <BtnRainbow textColor="text-white" btnText="Login"/>
             </div>
 
             {/* <button
@@ -141,7 +141,7 @@ const Login = () => {
                 Register
               </a>
             </div>
-          {/* </form> */}
+          </form>
         </div>
 
         {/* <ToastContainer

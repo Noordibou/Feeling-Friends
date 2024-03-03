@@ -4,6 +4,9 @@ import avatarImg from "../images/Sample_Avatar.png";
 import xButton from "../images/x-button.png";
 import { getLastJournalInfo } from "../utils/editSeatChartUtil";
 
+// this is the long box that tells the teacher how the student is feeling, shows ZOR, and shows their goals & needs 
+// this is used on classroom view page and manage class list page
+
 const StudentInfoBox = ({
   student,
   userData,

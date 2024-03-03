@@ -124,7 +124,7 @@ const Login = () => {
               />
             </div>
 
-            <div className="mt-[2rem] w-full"> 
+            <div className="mt-[2rem] w-[35rem]"> 
               <BtnRainbow textColor="text-white" btnText="Login"/>
             </div>
 

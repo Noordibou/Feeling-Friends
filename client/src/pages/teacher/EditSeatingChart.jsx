@@ -22,6 +22,7 @@ import openRosterImg from "../../images/ThreePplLight.png";
 import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import ButtonView from "../../components/ButtonView";
+import BtnRainbow from "../../components/BtnRainbow";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -328,19 +329,10 @@ const EditSeatingChart = () => {
             />
 
             {/* Save Layout button */}
-            <button
-              className="relative overflow-hidden mx-4 rounded-xl"
-              onClick={handleSave}
-            >
-              <img
-                alt="Save Seating Chart"
-                className=" object-auto w-72 h-full"
-                src={saveButton}
-              />
-              <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
-                Save
-              </h4>
-            </button>
+
+            <div className="">
+              <BtnRainbow btnText="Save" handleSave={handleSave}/>
+            </div>
           </div>
 
           {/* Msg shows when no students are in the classroom */}

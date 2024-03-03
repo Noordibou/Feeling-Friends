@@ -39,20 +39,20 @@ import saveButton from '../images/button.png'
 // </button>
 
 
-const BtnRainbow = ({btnText, handleSave}) => {
+const BtnRainbow = ({textColor, btnText, handleSave}) => {
 
     return (
       
         <button
-          className="relative overflow-hidden mx-4 rounded-xl"
+          className="relative overflow-hidden rounded-xl"
           onClick={handleSave}
         >
           <img
             alt="Save Seating Chart"
-            className={` object-auto h-20`}
+            className={`object-auto h-20`}
             src={saveButton}
           />
-          <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
+          <h4 className={`absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center ${textColor} font-bold`}>
             {btnText}
           </h4>
         </button>

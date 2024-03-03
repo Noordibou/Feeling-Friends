@@ -1,5 +1,6 @@
 import React from "react";
 import saveButton from '../../images/button.png'
+import BtnRainbow from "../../components/BtnRainbow";
 
 
 export default function NeedsGoals() {
@@ -64,12 +65,11 @@ export default function NeedsGoals() {
               />
             </div>
           </div>
-          <button className="relative overflow-hidden mt-5">
-            <img className=" object-cover w-full h-full" src={saveButton} alt="save goals"/>
-            <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-white font-bold">Save</h4>
-          </button>
 
-          
+          <div className="mt-5"> 
+            <BtnRainbow textColor="text-white" btnText="Save" handleSave={console.log("Saved! Need actual save function though")}/>
+          </div>
+         
         </div>
         <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
           <h2 className="text-header2 font-header2 text-center">
@@ -119,10 +119,9 @@ export default function NeedsGoals() {
               />
             </div>
           </div>
-          <button className="relative overflow-hidden mt-5">
-            <img className=" object-cover w-full h-full" src={saveButton} alt="save needs"/>
-            <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-white font-bold">Save</h4>
-          </button>
+          <div className="mt-5"> 
+            <BtnRainbow textColor="text-white" btnText="Save" handleSave={console.log("Saved! Need actual save function though")}/>
+          </div>
         </div>
       </div>
     </>

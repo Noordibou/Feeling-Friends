@@ -330,8 +330,8 @@ const EditSeatingChart = () => {
 
             {/* Save Layout button */}
 
-            <div className="">
-              <BtnRainbow btnText="Save" handleSave={handleSave}/>
+            <div className="mx-4">
+              <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>
 

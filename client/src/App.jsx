@@ -22,7 +22,6 @@ import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 import ShowSeatingChart from "./pages/teacher/DisplaySeatingChart";
 
-
 export default function App() {
   return (
     <main className="bg-notebookPaper scrollbar-wrapper h-full min-h-screen scrollhost">

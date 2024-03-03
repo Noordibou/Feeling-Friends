@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import  sortByCriteria  from '../utils/sortStudents.js';
 
+// This is specifically for sorting (sort by regulatory zone and sort by last name)
 
 const ToggleButton = ({ students, setStudents }) => {
     const [sortCriteria, setSortCriteria] = useState();

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../images/button.png";
 import URL from '../../URL'
+import BtnRainbow from "../../components/BtnRainbow";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1 " htmlFor="email">Email</label>
             <input
-              className="text-md py-2 pl-4 rounded"
+              className="text-md py-2 pl-4 rounded border-[1px] border-black"
               type="email"
               name="email"
               value={email}
@@ -102,7 +103,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1" htmlFor="username">Username</label>
             <input
-              className="text-md py-2 pl-4 rounded"
+              className="text-md py-2 pl-4 rounded border-[1px] border-black"
               type="text"
               name="username"
               value={username}
@@ -113,7 +114,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1" htmlFor="password">Password</label>
             <input
-              className="text-md py-2 pl-4 rounded"
+              className="text-md py-2 pl-4 rounded border-[1px] border-black"
               type="password"
               name="password"
               value={password}
@@ -124,7 +125,7 @@ const handleSuccess = (msg) =>
           <div className="flex flex-col my-3">
             <label className="text-md ml-1 my-1" htmlFor="role">Role</label>
             <select
-              className="text-md pl-4 py-2 rounded"
+              className="text-md pl-4 py-2 rounded border-[1px] border-black"
               id="role"
               name="role"
               value={role}
@@ -135,8 +136,9 @@ const handleSuccess = (msg) =>
             </select>
           </div>
           <div className="flex flex-col w-full h-96 text-center justify-around">
-            <button className="w-full text-center h-20 rounded mt-[2rem] font-button text-button text-notebookPaper bg-no-repeat bg-center bg-contain" alt="" type="submit" style={{ backgroundImage: `url(${Button})` }}>Continue</button>
-
+          <div className="mt-[2rem] w-full"> 
+              <BtnRainbow textColor="text-white" btnText="Continue"/>
+            </div>
             <span className="text-md font-body text-lightGray">
               Already registered? <Link className="underline" to={"/login"}>Log in</Link>
             </span>

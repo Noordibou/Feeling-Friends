@@ -22,9 +22,6 @@ import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 import ShowSeatingChart from "./pages/teacher/DisplaySeatingChart";
 
-import TestPlayground from "./pages/TestPlayground"
-
-
 export default function App() {
   return (
     <main className="bg-notebookPaper scrollbar-wrapper h-full min-h-screen scrollhost">
@@ -35,11 +32,6 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/success" element={<SignupSuccess />} />
-
-            {/* TEMP ROUTE */}
-            <Route path="/testplayground" element={<TestPlayground />} />
-
-            {/* ---------- */}
 
             {/* Teacher Routes */}
             <Route path="/teacher-home" element={<TeacherHome />} />

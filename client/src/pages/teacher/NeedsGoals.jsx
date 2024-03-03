@@ -67,7 +67,7 @@ export default function NeedsGoals() {
           </div>
 
           <div className="mt-5"> 
-            <BtnRainbow textColor="text-white" btnText="Save" handleSave={console.log("Saved! Need actual save function though")}/>
+            <BtnRainbow textColor="text-white" btnText="Save" handleSave={() => console.log("Saved! Need actual save function though")}/>
           </div>
          
         </div>
@@ -120,7 +120,7 @@ export default function NeedsGoals() {
             </div>
           </div>
           <div className="mt-5"> 
-            <BtnRainbow textColor="text-white" btnText="Save" handleSave={console.log("Saved! Need actual save function though")}/>
+            <BtnRainbow textColor="text-white" btnText="Save" handleSave={() => console.log("Saved! Need actual save function though")}/>
           </div>
         </div>
       </div>

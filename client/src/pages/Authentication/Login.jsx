@@ -6,6 +6,7 @@ import Button from "../../images/button.png";
 import { useAuth } from "./AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import URL from '../../URL'
+import BtnRainbow from "../../components/BtnRainbow";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -99,7 +100,7 @@ const Login = () => {
 
         <div>
           <div>{/* Image here */}</div>
-          <form onSubmit={handleSubmit}>
+          {/* <form onSubmit={handleSubmit}> */}
             <div>
               <input
                 className="w-[35rem] mt-[3rem] font-input text-gray p-[0.5rem] border-2 border-black rounded"
@@ -114,7 +115,7 @@ const Login = () => {
             <div>
               <div>{/* Image here */}</div>
               <input
-                className="w-[35rem] mt-[2rem] font-input text-gray p-[0.5rem] border-2 border-black text-black rounded"
+                className="w-[35rem] mt-[2rem] font-input p-[0.5rem] border-2 border-black text-gray rounded"
                 type="password"
                 name="password"
                 value={password}
@@ -123,20 +124,24 @@ const Login = () => {
               />
             </div>
 
-            <button
+            <div className="mt-[2rem] w-[35rem]"> 
+              <BtnRainbow textColor="text-white" btnText="Login" handleSave={handleSubmit}/>
+            </div>
+
+            {/* <button
               className="relative overflow-hidden w-[35rem] h-[4.9375rem] mt-[2rem] text-notebookPaper font-button text-button"
               type="submit"
             >
               <img className=" object-cover w-full" src={Button} />
               <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-white font-bold">Login</h4>
-            </button>
+            </button> */}
             <div className="text-center font-input text-lightGray mt-4">
               New to our app?{" "}
               <a className="underline" href="/">
                 Register
               </a>
             </div>
-          </form>
+          {/* </form> */}
         </div>
 
         {/* <ToastContainer

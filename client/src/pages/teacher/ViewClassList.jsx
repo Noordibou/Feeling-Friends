@@ -179,7 +179,7 @@ export default function ViewClassList() {
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
                 <button onClick={() => setIsEditMode(!isEditMode)}>
-                  {isEditMode ? "Save Changes" : "Edit Students"}
+                  {isEditMode ? "Save Changes" : ""}
                 </button>
               </div>
             </div>
@@ -205,7 +205,7 @@ export default function ViewClassList() {
           </div>
         </div>
         <div className="fixed bottom-0 w-screen">
-          <TeacherNavbar />
+        <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div>
       </div>
     </>

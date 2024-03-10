@@ -301,7 +301,7 @@ export default function ViewClassList() {
               </div>
             </div>
           </div>
-      <div className="fixed bottom-0 w-screen">
+      <div className="sticky bottom-0 w-screen">
         <TeacherNavbar />
       </div>
         </div>
@@ -309,3 +309,4 @@ export default function ViewClassList() {
     </>
   );
 }
+

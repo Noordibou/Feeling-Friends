@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import { getAllStudentsClassroom } from "../../api/teachersApi";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import furnitureShapes from "../../data/furnitureShapes";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { motion } from "framer-motion";
@@ -12,6 +11,8 @@ import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import ButtonView from "../../components/ButtonView";
+import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -21,6 +22,7 @@ const DisplaySeatingChart = () => {
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
   const [selectedStudent, setSelectedStudent] = useState({});
+  const [showMsg, setShowMsg] = useState(false)
 
   const getClassroomData = async () => {
     try {
@@ -31,9 +33,7 @@ const DisplaySeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
-
-      setStudents(studentsWithBorderColor);
+      setStudents(classroomStudents);
       const positions = {};
       classroom.students.forEach((student) => {
         positions[student.student] = {
@@ -47,6 +47,7 @@ const DisplaySeatingChart = () => {
         (student) => student.seatInfo.assigned === true
       );
       setAssignedStudents(assigned);
+
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -56,13 +57,27 @@ const DisplaySeatingChart = () => {
   useEffect(() => {
     getClassroomData();
     setSelectedStudent({});
+    
     window.scrollTo(0, 0);
   }, []);
 
+  const closeStudentInfo = (clickedStudent) => {
+    setSelectedStudent({})
+  }
+
+
+  useEffect(() => {
+    if(assignedStudents.length > 0) {
+      setShowMsg(false)
+    } else {
+      setShowMsg(true)
+    }
+  }, [assignedStudents])
+
   return (
     <>
-      <div className="flex h-screen min-w-screen">
-        <div className="flex flex-col items-center w-full">
+      <div className="flex h-screen min-w-screen justify-center">
+        <div className="flex flex-col items-center max-w-4xl ">
           {/* Top Navbar */}
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -99,8 +114,8 @@ const DisplaySeatingChart = () => {
                       id={`furniture-${item._id}`}
                       key={`${item._id}`}
                       initial={{
-                        x: Math.max(0, initialX),
-                        y: Math.max(0, initialY),
+                        x: initialX,
+                        y: initialY,
                         rotate: item.rotation || 0,
                       }}
                       className={`absolute ${shape.style.width} ${shape.style.height}`}
@@ -123,8 +138,9 @@ const DisplaySeatingChart = () => {
                     (student) => student._id === studentObj.student
                   );
 
+                  const { borderColorClass } = getLastJournalInfo(assignedStudent)
+
                   return (
-                    <>
                       <motion.div
                         id={`motion-div-${studentObj.student}`}
                         key={`${studentObj.student}-${index}`}
@@ -132,7 +148,13 @@ const DisplaySeatingChart = () => {
                           x: Math.max(0, initialX),
                           y: Math.max(0, initialY),
                         }}
-                        className={`absolute mx-1 bg-${assignedStudent.borderColorClass} pb-1 px-[6px] rounded-2xl`}
+                        className={`absolute mx-1 bg-${
+                          borderColorClass
+                        } ${
+                          borderColorClass === "sandwich"
+                            ? "bg-opacity-30 border-4 border-sandwich"
+                            : `border-4 border-${borderColorClass}`
+                        } px-[2px] rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
                         }}
@@ -140,62 +162,80 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              className="flex object-cover mt-2 w-[72px] h-[65px] rounded-2xl"
+                              alt="student"
+                              className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
+                                borderColorClass ===
+                                "sandwich"
+                                  ? "opacity-50"
+                                  : ""
+                              }`}
                               src={SampleAvatar}
                             />
                           </div>
                           <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                            {assignedStudent.firstName}
+                            {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
                           </h3>
                         </div>
                       </motion.div>
-                    </>
                   );
                 })}
               </div>
             </>
           ) : (
-            "Loading..."
+            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+              {/* placeholder for now */}
+              <div className={`absolute mt-[250px] px-32 -ml-10`}>
+                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                  Sorry, this feature is not available right now. Please try
+                  again later
+                </h4>
+              </div>
+            </div>
           )}
 
           {/* Student Info Modal */}
           <div
             className={`${
               Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
-            } top-[33%] left-[20%] flex-col w-[500px] z-20`}
+            }  flex-col mt-[340px] w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}
               classroomId={classroomId}
               userData={userData}
-              setSelectedStudent={setSelectedStudent}
+              isEditMode={true}
+              handleClick={() => closeStudentInfo(selectedStudent)}
             />
           </div>
 
           {/* Room View & List Buttons */}
-          <div className="flex justify-around w-full mt-8 items-center ">
-            <div className="">
-              <button className="text-body font-body rounded-xl px-[1rem] bg-sandwich flex items-center h-20 w-72 border-[3px] border-sandwich justify-center">
-                <h4 className="pr-2">Room View</h4>
-                <img src={classBoxesIcon} alt="Student Room View" />
-              </button>
-            </div>
-            <div className="">
-              <button className="text-body font-body border-[5px] border-sandwich rounded-xl px-[1rem] flex items-center w-72 justify-center">
-                <Link
-                  className="flex items-center px-[1rem] h-16"
-                  to={`/viewclasslist/${userData._id}/${classroomId}`}
-                >
-                  <h4 className="pr-5">List View</h4>
-                  <img src={listIcon} alt="Student List View" />
-                </Link>
-              </button>
-            </div>
+          <div className="flex justify-around w-full mt-10 items-center ">
+            <ButtonView
+              buttonText="Room View"
+              btnImageWhenOpen={classBoxesIcon}
+              isSelected={true}
+            />
+            <Link
+              className="flex items-center h-16"
+              to={`/viewclasslist/${userData._id}/${classroomId}`}
+            >
+              <ButtonView
+                buttonText="List View"
+                defaultBtnImage={listIcon}
+                isSelected={false}
+              />
+            </Link>
           </div>
         </div>
-      <div className="bottom-0 fixed w-screen">
-        <TeacherNavbar />
-      </div>
+        <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
+          <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+            Click the Navbar's "Edit" button to add students and furniture to
+            your classroom layout!
+          </h4>
+        </div>
+        <div className="bottom-0 fixed w-screen">
+          <TeacherNavbar />
+        </div>
       </div>
     </>
   );

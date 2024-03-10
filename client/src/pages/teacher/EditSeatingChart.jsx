@@ -9,16 +9,19 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import { useNavigate } from "react-router-dom";
 import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
-import RosterImg from "../../images/Three People.png";
-import FurnitureImg from "../../images/Desk.png";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import { applyColorsToStudents } from "../../utils/editSeatChartUtil";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import saveButton from "../../images/button.png";
+import RosterImg from "../../images/Three People.png";
+import FurnitureImg from "../../images/Desk.png";
+import openRosterImg from "../../images/ThreePplLight.png";
+import openFurnitureImg from "../../images/DeskImgLight.png";
+import MsgModal from "../../components/SeatingChart/MsgModal";
+import ButtonView from "../../components/ButtonView";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -29,7 +32,6 @@ const EditSeatingChart = () => {
 
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [unassignedStudents, setUnassignedStudents] = useState([]);
-  const navigate = useNavigate();
 
   const [studentPositions, setStudentPositions] = useState({});
   const [furniturePositions, setFurniturePositions] = useState({});
@@ -40,6 +42,8 @@ const EditSeatingChart = () => {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [showMsg, setShowMsg] = useState(false);
+  const [noStudentMsg, setNoStudentMsg] = useState(false);
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -73,9 +77,7 @@ const EditSeatingChart = () => {
         classroomId
       );
 
-      const studentsWithBorderColor = applyColorsToStudents(classroomStudents);
-
-      setStudents(studentsWithBorderColor);
+      setStudents(classroomStudents);
       const positions = {};
       classroom.students.forEach((student) => {
         positions[student.student] = {
@@ -111,8 +113,17 @@ const EditSeatingChart = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     refreshData();
-  }, [teacherId, classroomId, counter]);
+  }, [counter]);
+
+  useEffect(() => {
+    if (assignedStudents.length === 0) {
+      setNoStudentMsg(true);
+    } else {
+      setNoStudentMsg(false);
+    }
+  }, [assignedStudents]);
 
   const handleDragEnd = (itemId, key, y) => {
     let studentCoords = null;
@@ -126,6 +137,7 @@ const EditSeatingChart = () => {
         );
 
         console.log("furnish coords: " + furnishCoords);
+        console.log("furniture rotation: " + furniturePositions[itemId]?.rotation)
 
         if (furnishCoords) {
           setFurniturePositions((prevPositions) => ({
@@ -134,7 +146,7 @@ const EditSeatingChart = () => {
               x: parseInt(furnishCoords[1]),
               y: parseInt(furnishCoords[2]),
               assigned: true,
-              rotation: furniturePositions[itemId]?.rotation,
+              rotation: furniturePositions[itemId]?.rotation || classroom.furniture[itemId]?.rotation,
             },
           }));
         } else {
@@ -173,13 +185,15 @@ const EditSeatingChart = () => {
     const updatedFurniturePositions = Object.keys(furniturePositions).map(
       (itemId) => {
         const furniture = furniturePositions[itemId];
-        console.log("furniture: " + JSON.stringify(furniture));
+        const furnitureItem = classroom.furniture.find(item => item._id === itemId);
+        const furnitureRotation = furnitureItem?.rotation;
+
         return {
           itemId,
           x: furniture.x,
           y: furniture.y,
           assigned: furniture.assigned,
-          rotation: furniture.rotation || 0,
+          rotation: furniture.rotation || furnitureRotation,
         };
       }
     );
@@ -196,7 +210,11 @@ const EditSeatingChart = () => {
         classroomId,
         updatedFurniturePositions
       );
-      console.log("Submitted :)");
+      // Show brief save message for 3 secs
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 2500);
       updateInfo();
     } catch (error) {
       console.log("Ooops didnt work");
@@ -206,14 +224,14 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen">
-        <div className="flex flex-col w-full items-center">
-          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId}/>
+      <div className="flex min-h-screen min-w-screen justify-center">
+        <div className="flex flex-col w-full items-center max-w-3xl h-screen">
+          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px]"
+                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}
@@ -251,7 +269,15 @@ const EditSeatingChart = () => {
               </div>
             </>
           ) : (
-            "Loading..."
+            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+              {/* placeholder for now */}
+              <div className={`absolute mt-[250px] px-32 -ml-10`}>
+                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                  Sorry, this feature is not available right now. Please try
+                  again later
+                </h4>
+              </div>
+            </div>
           )}
 
           {showStudentRosterModal && (
@@ -276,53 +302,69 @@ const EditSeatingChart = () => {
 
           <div className="flex flex-row w-full justify-between mt-10">
             {/* Open Choose Students Modal */}
-            <button
-              onClick={() => {
-                setShowStudentRosterModal(true);
+
+            <ButtonView
+              buttonText="Student Roster"
+              defaultBtnImage={RosterImg}
+              btnImageWhenOpen={openRosterImg}
+              handleClick={() => {
+                setShowStudentRosterModal(!showStudentRosterModal);
                 setShowFurnitureModal(false);
               }}
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
-            >
-              <h5
-                className={`text-[24px] ${
-                  showStudentRosterModal ? "font-[900] underline " : ""
-                }`}
-              >
-                Student Roster
-              </h5>
-              <img src={RosterImg} />
-            </button>
+              isSelected={showStudentRosterModal}
+            />
 
             {/* Open Choose Furniture Modal */}
-            <button
-              className="flex flex-row justify-around items-center px-[24px] border-4 border-[#D2C2A4] rounded-xl mx-8"
-              onClick={() => {
-                setShowFurnitureModal(true);
+
+            <ButtonView
+              buttonText="Classroom Objects"
+              defaultBtnImage={FurnitureImg}
+              btnImageWhenOpen={openFurnitureImg}
+              handleClick={() => {
+                setShowFurnitureModal(!showFurnitureModal);
                 setShowStudentRosterModal(false);
               }}
-            >
-              <h5
-                className={`text-[24px] ${
-                  showFurnitureModal ? "font-[900] underline " : ""
-                }`}
-              >
-                Classroom Objects
-              </h5>
-              <img src={FurnitureImg} />
-            </button>
-          </div>
-          <div className="flex w-full justify-around max-w-3xl">
+              isSelected={showFurnitureModal}
+            />
+
+            {/* Save Layout button */}
             <button
-              className="bg-yellow border p-5 my-8 h-10 rounded flex items-center"
+              className="relative overflow-hidden mx-4 rounded-xl"
               onClick={handleSave}
             >
-              Save
+              <img
+                alt="Save Seating Chart"
+                className=" object-auto w-72 h-full"
+                src={saveButton}
+              />
+              <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
+                Save
+              </h4>
             </button>
+          </div>
+
+          {/* Msg shows when no students are in the classroom */}
+          <div
+            className={`${
+              noStudentMsg ? "absolute" : "hidden"
+            } mt-[350px] px-24`}
+          >
+            <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+              Click "Student Roster" to start adding students to your seating
+              chart!
+            </h4>
           </div>
         </div>
       </div>
-      <div className="bottom-0 fixed w-screen">
-            <TeacherNavbar />
+      
+      {/* Tells user they have saved the layout */}
+      <MsgModal
+        msgText="Save Successful!"
+        showMsg={showMsg}
+        textColor="text-black"
+      />
+      <div className="fixed bottom-0 w-screen">
+        <TeacherNavbar />
       </div>
     </>
   );

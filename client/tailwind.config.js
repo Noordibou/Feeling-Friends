@@ -65,6 +65,7 @@ module.exports = {
       'graphite': '#A59F8B',
       'gray': '#808080',
       'darkSandwich': '#9E9268',
+      'black': '#000000',
       // Teacher Navbar
       'sky': '#3DA4DE',
       'grass': '#52B85A',

@@ -1,7 +1,9 @@
-const rows = 8;
-const cols = 8; 
+import subEmotionInfo from "../data/subEmotions";
 
-const layout = [];
+export const rows = 8;
+export const cols = 8; 
+
+export const layout = [];
 
 for (let i = 0; i < rows; i++) {
   for (let j = 0; j < cols; j++) {
@@ -9,15 +11,34 @@ for (let i = 0; i < rows; i++) {
   } 
 }
 
-function getBackgroundColorClass(zor) {
-  if (zor === 'Unmotivated' ) return "blue";
-  if (zor === 'Ready to Learn') return "green";
-  if (zor === 'Wiggly') return "yellow";
-  if (zor === 'Explosive') return "orange";
+export function getEmotionColor(chosenEmotion) {
+  const emotionColors = {
+    Nervous: "lightOrange",
+    Sad: "lightBlue",
+    Angry: "pink",
+    Scared: "lightLavender",
+    Happy: "darkTeal",
+    Proud: "lightYellow",
+  };
+
+  for (const emotionInfo of subEmotionInfo) {
+    if (emotionInfo.subEmotions.includes(chosenEmotion)) {
+      const mainEmotion = emotionInfo.emotion;
+      return emotionColors[mainEmotion];
+    }
+  }
+  return "darkSandwich";
+}
+
+export function getBackgroundColorClass(zor) {
+  if (zor === "Unmotivated") return "blue";
+  if (zor === "Ready to Learn") return "green";
+  if (zor === "Wiggly") return "yellow";
+  if (zor === "Explosive") return "orange";
   return "sandwich";
 };
 
-function getBorderColorClass(zor) {
+export function getBorderColorClass(zor) {
   if (zor === 'Unmotivated' ) return "border-blue";
   if (zor === 'Ready to Learn') return "border-green";
   if (zor === 'Wiggly') return "border-yellow";
@@ -25,7 +46,7 @@ function getBorderColorClass(zor) {
   return "";
 };
 
-const calculateZorPercentage = (classroom) => {
+export const calculateZorPercentage = (classroom) => {
   if (classroom.students && classroom.students.length > 0) {
     const totalStudents = classroom.students.length;
     const zorCounts = {
@@ -61,15 +82,3 @@ const calculateZorPercentage = (classroom) => {
   }
   return {};
 };
-
-
-
-module.exports={
-    layout,
-    rows,
-    cols,
-    getBackgroundColorClass,
-    getBorderColorClass,
-    calculateZorPercentage,
-
-}

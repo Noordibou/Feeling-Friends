@@ -11,8 +11,14 @@ import TeacherNavbar from "../../components/TeacherNavbar";
 import GoBack from "../../components/GoBack";
 import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
+import SaveButton from "../../components/SaveButton";
+
+
 
 const CreateClass = () => {
+
+  
+
   const navigate = useNavigate();
   const { userData, updateUser } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
@@ -23,6 +29,7 @@ const CreateClass = () => {
   });
   const [allStudents, setAllStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDays, setSelectedDays] = useState([]);
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -130,6 +137,14 @@ const CreateClass = () => {
         )
       : allStudents;
 
+  const toggleDaySelection = (day) => {
+    setSelectedDays((currentSelectedDays) =>
+      currentSelectedDays.includes(day)
+        ? currentSelectedDays.filter((d) => d !== day)
+        : [...currentSelectedDays, day]
+    );
+  };
+
   return (
     <>
       <div className="h-screen ">
@@ -192,7 +207,21 @@ const CreateClass = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center bg-sandwich rounded-[1rem]  pt-[0.8rem]">
+          <div className="flex justify-center space-x-[1rem] py-[1rem]">
+            {["MON", "TUES", "WED", "THU", "FRI"].map((day) => (
+              <button
+                key={day}
+                onClick={() => toggleDaySelection(day)}
+                className={`${
+                  selectedDays.includes(day) ? "border-notebookPaper border-[0.2rem]" : "border-sandwich border-[0.2rem]"
+                } font-poppins text-lg text-black font-semibold rounded-[100%] `}
+              >
+                {day}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-center bg-sandwich rounded-[1rem]">
+            
             <h2 className="text-header2 font-header2">
               <a href="/edit-seating-chart/:teacherId/:classroomId">
                 <u>Edit Seating Chart</u>
@@ -264,9 +293,7 @@ const CreateClass = () => {
             </div>
           </div>
           <div className="flex justify-center mt-[2rem]">
-            <button className="save-button" onClick={handleCreateClassroom}>
-              Save
-            </button>
+            <SaveButton onClick={handleCreateClassroom} />
           </div>
         </div>
         <div className="bottom-0 fixed w-screen">

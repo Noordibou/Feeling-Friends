@@ -50,18 +50,6 @@ const getStudentById = async (req, res) => {
     }
 }
 
-const findStudentBySchoolId = async (schoolStudentId) => {
-  try {
-    // Find the student by schoolStudentId
-    const student = await Student.findOne({ schoolStudentId });
-    return !!student?.schoolStudentId; // Return true if student exists, false otherwise
-  } catch (error) {
-    // Handle any errors
-    console.error('Error finding student by schoolStudentId:', error);
-    throw error; // Rethrow the error to handle it elsewhere
-  }
-};
-
 // Updates a specific student's journal entry
 // if there is already a checkin or checkout, it will over write the previous entry
 // TODO: ? make an alert or something that tells user they already have a checkin/out for this class today, and ask are they sure they want to overwrite it
@@ -197,5 +185,4 @@ module.exports = {
     getStudentById,
     updateStudentJournalEntry,
     deleteStudent,
-    findStudentBySchoolId
 }

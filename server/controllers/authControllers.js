@@ -3,8 +3,6 @@ const Teacher = require("../models/Teacher");
 const User = require("../models/User");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
-const {findStudentBySchoolId} = require("./studentController")
-const {findTeacherBySchoolId} = require("./teacherController")
 
 const Signup = async (req, res, next) => {
   console.log(req.body);
@@ -16,46 +14,39 @@ const Signup = async (req, res, next) => {
       return res.json({ message: "User already exists" });
     }
 
-
-
-    let existingStudent = null;
-    let existingTeacher = null;
+    existingStudent = null
+    existingTeacher = null
 
     if (role === "student") {
-      existingStudent = await findStudentBySchoolId(userDetails.schoolStudentId)
 
-      console.log("existing student: " + JSON.stringify(existingStudent))
-      if (!existingStudent) {
-        // generate a random school id
-        let result = '';
-        const characters = '0123456789';
-        const length = 10;
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        console.log("student id: " + result)
-        userDetails.schoolStudentId = result
-
-        existingStudent = await Student.create(userDetails);
+      // generate a random school id
+      let result = '';
+      const characters = '0123456789';
+      const length = 10;
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
       }
+      console.log("student id: " + result)
+      userDetails.schoolStudentId = result
+
+      existingStudent = await Student.create(userDetails);
+
     } else if (role === "teacher") {
-      existingTeacher = findTeacherBySchoolId(userDetails.schoolTeacherId)
-      console.log("existing teacher: " + JSON.stringify(existingTeacher))
-      if (!existingTeacher) {
-        // generate a random school id
-        let result = '';
-        const characters = '0123456789';
-        const length = 10;
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        console.log("teacher id: " + result)
-        userDetails.schoolTeacherId = result
-
-        existingTeacher = await Teacher.create(userDetails);
+      
+      // generate a random school id
+      let result = '';
+      const characters = '0123456789';
+      const length = 10;
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
       }
+      console.log("teacher id: " + result)
+      userDetails.schoolTeacherId = result
+
+      existingTeacher = await Teacher.create(userDetails);
+
     }
 
     const userData = {

@@ -67,16 +67,6 @@ const getTeacherById = async (req, res) => {
   }
 };
 
-const findTeacherBySchoolId = async (schoolTeacherId) => {
-  try {
-    const teacher = await Teacher.findOne({ schoolTeacherId });
-    return !!teacher?.schoolTeacherId;
-  } catch (error) {
-    console.error('Error finding student by schoolTeacherId:', error);
-    throw error;
-  }
-};
-
 const updateTeacherInfo = async (req, res) => {
   try {
     res.json(
@@ -567,5 +557,4 @@ module.exports = {
   addFurniture,
   updateFurniturePositions,
   deleteFurniture,
-  findTeacherBySchoolId,
 };

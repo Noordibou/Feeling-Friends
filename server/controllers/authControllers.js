@@ -3,43 +3,71 @@ const Teacher = require("../models/Teacher");
 const User = require("../models/User");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
+const {findStudentBySchoolId} = require("./studentController")
+const {findTeacherBySchoolId} = require("./teacherController")
 
 const Signup = async (req, res, next) => {
   console.log(req.body);
   try {
-    const { email, password, username, role, studentDetails, teacherDetails } = req.body;
+    const { email, password, username, role, userDetails } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
 
+
+
     let existingStudent = null;
     let existingTeacher = null;
 
-if (role === 'student') {
-  existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
-  if (!existingStudent) {
-    existingStudent = await Student.create(studentDetails);
-  }
-} else if (role === 'teacher') {
-  existingTeacher = await Teacher.findOne({ schoolTeacherId: teacherDetails.schoolTeacherId });
-  if (!existingTeacher) {
-    existingTeacher = await Teacher.create(teacherDetails);
-  }
-}
+    if (role === "student") {
+      existingStudent = await findStudentBySchoolId(userDetails.schoolStudentId)
 
-const userData = {
-  email,
-  password,
-  username,
-  role,
-  student: existingStudent ? existingStudent._id : null,
-  teacher: existingTeacher ? existingTeacher._id : null,
-};
+      console.log("existing student: " + JSON.stringify(existingStudent))
+      if (!existingStudent) {
+        // generate a random school id
+        let result = '';
+        const characters = '0123456789';
+        const length = 10;
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        console.log("student id: " + result)
+        userDetails.schoolStudentId = result
 
-const user = await User.create(userData);
+        existingStudent = await Student.create(userDetails);
+      }
+    } else if (role === "teacher") {
+      existingTeacher = findTeacherBySchoolId(userDetails.schoolTeacherId)
+      console.log("existing teacher: " + JSON.stringify(existingTeacher))
+      if (!existingTeacher) {
+        // generate a random school id
+        let result = '';
+        const characters = '0123456789';
+        const length = 10;
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        console.log("teacher id: " + result)
+        userDetails.schoolTeacherId = result
 
+        existingTeacher = await Teacher.create(userDetails);
+      }
+    }
+
+    const userData = {
+      email,
+      password,
+      username,
+      role,
+      student: existingStudent ? existingStudent._id : null,
+      teacher: existingTeacher ? existingTeacher._id : null,
+    };
+
+    const user = await User.create(userData);
 
     const token = createSecretToken(user._id, user.student, user.role);
 
@@ -48,7 +76,9 @@ const user = await User.create(userData);
       httpOnly: false,
     });
 
-    res.status(201).json({ message: "User signed up successfully", success: true, user });
+    res
+      .status(201)
+      .json({ message: "User signed up successfully", success: true, user });
     next();
   } catch (error) {
     console.error(error);

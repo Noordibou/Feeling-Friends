@@ -137,7 +137,7 @@ const Login = () => {
             </button> */}
             <div className="text-center font-input text-lightGray mt-4">
               New to our app?{" "}
-              <a className="underline" href="/">
+              <a className="underline" href="/signup">
                 Register
               </a>
             </div>

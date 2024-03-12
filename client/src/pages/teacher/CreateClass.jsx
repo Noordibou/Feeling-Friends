@@ -230,7 +230,7 @@ const CreateClass = () => {
           </div>
         </div>
 
-        <div className="w-[80%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[80%] overflow-y-auto ">
+        <div className="w-[80%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[60%] overflow-y-auto ">
           <h2 className="text-header2 font-header2 text-center">
             <a href="/addstudent/:teacherId/:classroomId">
               <u>+ Add student</u>
@@ -292,10 +292,9 @@ const CreateClass = () => {
               )}
             </div>
           </div>
-          <div className="flex justify-center mt-[2rem]">
-            <SaveButton onClick={handleCreateClassroom} />
-          </div>
         </div>
+        <div className="h-[25%]">
+        <SaveButton onClick={handleCreateClassroom} /></div>
         <div className="bottom-0 fixed w-screen">
           <TeacherNavbar />
         </div>

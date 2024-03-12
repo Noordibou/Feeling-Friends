@@ -9,6 +9,8 @@ import {
 } from "../../api/teachersApi";
 import TeacherNavbar from "../../components/TeacherNavbar";
 import GoBack from "../../components/GoBack";
+import youngStudent from "../../images/young-student.png";
+import { getBackgroundColorClass } from "../../utils/classroomColors";
 
 const CreateClass = () => {
   const navigate = useNavigate();
@@ -131,40 +133,42 @@ const CreateClass = () => {
   return (
     <>
       <div className="h-screen ">
-
-      <div className="flex justify-around items-center pt-8">
-  <div className="absolute left-14">
-    <GoBack />
-  </div>
-  <span className="text-header1 w-full text-center font-header1">
-    Add New Classroom
-  </span>
-</div>
+        <div className="flex justify-around items-center pt-8">
+          <div className="absolute left-14">
+            <GoBack />
+          </div>
+          <span className="text-header1 w-full text-center font-header1">
+            Add New Classroom
+          </span>
+        </div>
 
         <div className="bg-sandwich w-[80%]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
-        <h2 className="mb-[0.5rem] ml-[0.5rem] text-header2 font-header2">Title or Subject</h2>
+          <h2 className="mb-[0.5rem] ml-[0.5rem] text-header2 font-header2">
+            Title or Subject
+          </h2>
           <FormField
             label="Math"
             value={newClassData?.classSubject || ""}
             onChange={(e) => handleInputChange("classSubject", e.target.value)}
           />
           <div className="rounded-[1rem]">
-              <div className="flex-col text-sm font-body">
+            <div className="flex-col text-sm font-body">
+              <h2 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header2 font-header2">
+                Location
+              </h2>
+              <FormField
+                label="Classroom 101"
+                value={newClassData?.location || ""}
+                onChange={(e) => handleInputChange("location", e.target.value)}
+              />
+            </div>
 
-                <h2 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header2 font-header2">Location</h2>
-                <FormField
-                  label="Classroom 101"
-                  value={newClassData?.location || ""}
-                  onChange={(e) =>
-                    handleInputChange("location", e.target.value)
-                  }
-                />
-              </div>
-
-              <div>
-                <div className="flex gap-[8rem]">
-                  <div className="w-[50%]">
-                  <h2 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header2 font-header2">Check-in:</h2>
+            <div>
+              <div className="flex gap-[8rem]">
+                <div className="w-[50%]">
+                  <h2 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header2 font-header2">
+                    Check-in:
+                  </h2>
                   <FormField
                     label="00:00 AM"
                     value={newClassData?.checkIn || ""}
@@ -172,9 +176,11 @@ const CreateClass = () => {
                       handleInputChange("checkIn", e.target.value)
                     }
                   />
-                  </div>
-                  <div className="w-[50%]">
-                  <h2 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header2 font-header2">Check-out:</h2>
+                </div>
+                <div className="w-[50%]">
+                  <h2 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header2 font-header2">
+                    Check-out:
+                  </h2>
                   <FormField
                     label="00:00 PM"
                     value={newClassData?.checkOut || ""}
@@ -182,9 +188,9 @@ const CreateClass = () => {
                       handleInputChange("checkOut", e.target.value)
                     }
                   />
-                  </div>
                 </div>
               </div>
+            </div>
           </div>
           <div className="flex justify-center bg-sandwich rounded-[1rem]  pt-[0.8rem]">
             <h2 className="text-header2 font-header2">
@@ -202,7 +208,7 @@ const CreateClass = () => {
             </a>
           </h2>
           <div className="flex justify-center pt-[3rem]">
-            <div className="flex flex-col w-[60%] gap-5 text-center">
+            <div className="flex flex-col w-[80%] gap-5 text-center">
               <input
                 type="text"
                 placeholder="Search students..."
@@ -212,20 +218,44 @@ const CreateClass = () => {
               />
               {filteredStudents.length > 0 && (
                 <div className="text-center">
-                  <label>Students:</label>
-                  <ul className="columns-3">
+                  <ul className="columns-2">
                     {filteredStudents.map((student) => (
                       <li key={student._id}>
-                        <button
+                        <div
                           onClick={() => handleAddStudent(student._id)}
-                          className={`p-1 ${
-                            isStudentSelected(student._id)
-                              ? "bg-darkSandwich rounded-lg m-2 text-white"
-                              : "bg-white rounded-lg m-2"
+                          className={`flex cursor-pointer font-poppins text-black border-${getBackgroundColorClass(
+                            student?.journalEntries[
+                              student?.journalEntries.length - 1
+                            ]?.checkout?.ZOR ||
+                              student?.journalEntries[
+                                student?.journalEntries.length - 1
+                              ]?.checkin?.ZOR
+                          )} bg-${getBackgroundColorClass(
+                            student?.journalEntries[
+                              student?.journalEntries.length - 1
+                            ]?.checkout?.ZOR ||
+                              student?.journalEntries[
+                                student?.journalEntries.length - 1
+                              ]?.checkin?.ZOR
+                          )} mb-[0.5rem] border-[0.2rem] rounded-lg opacity-${
+                            isStudentSelected(student._id) ? "100" : "60"
                           }`}
                         >
-                          {student.firstName} {student.lastName}
-                        </button>
+                          <div>
+                            <img
+                              src={
+                                student.avatarImg === "none"
+                                  ? youngStudent
+                                  : student.avatarImg
+                              }
+                              alt={student.lastName}
+                              className="w-[3rem] h-[3rem] rounded-lg"
+                            />
+                          </div>
+                          <div className="m-auto">
+                            {student.firstName} {student.lastName}
+                          </div>
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -234,11 +264,9 @@ const CreateClass = () => {
             </div>
           </div>
           <div className="flex justify-center mt-[2rem]">
-          <button
-                  className="save-button"
-                  onClick={handleCreateClassroom}
-                >Save
-                </button>
+            <button className="save-button" onClick={handleCreateClassroom}>
+              Save
+            </button>
           </div>
         </div>
         <div className="bottom-0 fixed w-screen">

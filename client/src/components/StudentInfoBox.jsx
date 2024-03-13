@@ -67,7 +67,7 @@ const StudentInfoBox = ({
                 <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
               </div>
             ) : (
-              <div className="flex flex-row w-72 h-20">
+              <div className="flex flex-col w-72 h-16">
                 <h5 className="font-[Poppins]">
                   {student.firstName} {student.lastName} hasn't checked in
                   today.

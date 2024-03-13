@@ -4,7 +4,7 @@ import Classroom from "../images/Classroom.png";
 import Goal from "../images/Goal.png";
 import Settings from "../images/Settings.png";
 
-export default function TeacherNavbar({ setIsEditMode }) {
+export default function TeacherNavbar({ setIsEditMode, teacherId, classroomId }) {
   const [isEditMode, setEditMode] = useState(false);
 
   const redirectTo = (url) => {
@@ -13,14 +13,18 @@ export default function TeacherNavbar({ setIsEditMode }) {
 
   const handleEditClick = () => {
     const supportsEditMode = typeof setIsEditMode === 'function';
+    const classroomPageUrl = `/classroom/${teacherId}/${classroomId}`;
 
-    if (supportsEditMode) {
+    // Check if the current page is the classroom page
+    if (window.location.pathname === classroomPageUrl) {
+      redirectTo(`/edit-seating-chart/${teacherId}/${classroomId}`);
+    } else if (supportsEditMode) {
       // Toggle edit mode using the function passed down as a prop
       setIsEditMode((prevEditMode) => !prevEditMode);
-  } else {
-    // Display a message or perform some other action when edit mode is not supported
-    alert("This page does not support edit mode.");
-  }
+    } else {
+      // Display a message or perform some other action when edit mode is not supported
+      alert("This page does not support edit mode.");
+    }
   };
 
   return (

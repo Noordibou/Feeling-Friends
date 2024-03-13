@@ -234,7 +234,7 @@ const DisplaySeatingChart = () => {
           </h4>
         </div>
         <div className="bottom-0 fixed w-screen">
-          <TeacherNavbar />
+        <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div>
       </div>
     </>

@@ -18,35 +18,9 @@ const Signup = async (req, res, next) => {
     existingTeacher = null
 
     if (role === "student") {
-
-      // generate a random school id
-      let result = '';
-      const characters = '0123456789';
-      const length = 10;
-      const charactersLength = characters.length;
-      for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      console.log("student id: " + result)
-      userDetails.schoolStudentId = result
-
       existingStudent = await Student.create(userDetails);
-
     } else if (role === "teacher") {
-      
-      // generate a random school id
-      let result = '';
-      const characters = '0123456789';
-      const length = 10;
-      const charactersLength = characters.length;
-      for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      console.log("teacher id: " + result)
-      userDetails.schoolTeacherId = result
-
       existingTeacher = await Teacher.create(userDetails);
-
     }
 
     const userData = {
@@ -70,6 +44,8 @@ const Signup = async (req, res, next) => {
     res
       .status(201)
       .json({ message: "User signed up successfully", success: true, user });
+
+
     next();
   } catch (error) {
     console.error(error);
@@ -124,7 +100,8 @@ const Login = async (req, res) => {
 
     let token = null;
 
-    let redirectPath = '/';
+    let redirectPath = null;
+
 
     // TODO: *might be able to prevent user from going to different urls based on role
 

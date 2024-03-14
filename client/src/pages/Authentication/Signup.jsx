@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Button from "../../images/button.png";
 import URL from "../../URL";
 import BtnRainbow from "../../components/BtnRainbow";
 
@@ -81,7 +80,12 @@ const Signup = () => {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/login");
+          if (inputValue.role === "student"){
+            navigate("/student-home");
+          } else {
+            navigate("/teacher-home");
+          }
+          
         }, 1000);
       } else {
         handleError(message);

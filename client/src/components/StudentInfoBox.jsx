@@ -32,7 +32,7 @@ const StudentInfoBox = ({
         >
           <img
             src={student.avatarImg === "none" ? avatarImg : student.avatarImg}
-            alt={`Avatar for ${student.firstName} ${student.lastName}`}
+            alt={student.firstName}
             className="flex w-24 h-24 rounded-2xl mr-4 "
           />
         </div>

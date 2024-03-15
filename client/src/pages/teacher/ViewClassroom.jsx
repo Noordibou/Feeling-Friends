@@ -14,7 +14,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
-const DisplaySeatingChart = () => {
+const ViewClassroom = () => {
   const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [assignedStudents, setAssignedStudents] = useState([]);
@@ -162,14 +162,14 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              alt="student"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
                                 borderColorClass ===
                                 "sandwich"
                                   ? "opacity-50"
                                   : ""
                               }`}
-                              src={SampleAvatar}
+                              src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
+                              alt={assignedStudent.firstName}
                             />
                           </div>
                           <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
@@ -241,4 +241,4 @@ const DisplaySeatingChart = () => {
   );
 };
 
-export default DisplaySeatingChart;
+export default ViewClassroom;

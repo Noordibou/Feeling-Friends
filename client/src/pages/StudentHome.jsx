@@ -89,8 +89,8 @@ const StudentHome = () => {
           <h2 className="text-header2 font-header2 text-center">How are you feeling?</h2>
           <div className="">
             {/* first row */}
-            <div className="w-screen max-w-lg flex justify-between my-14">
-              <button className="rounded-full w-32 h-32 bg-lightYellow" onClick={() => handleEmotion("Proud")}>
+            {/* <div className="w-screen max-w-lg flex justify-between my-14">
+              <button className="rounded-full w-32 h-32" onClick={() => handleEmotion("Proud")}>
                 <img src={proudImg} alt="Proud Emoji" />
                 <div className="flex flex-row justify-center">
                   <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">P</h3>
@@ -100,7 +100,7 @@ const StudentHome = () => {
                   <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">d</h3>
                 </div>
               </button>
-              <button className="rounded-full w-32 h-32 bg-lightOrange" onClick={() => handleEmotion("Nervous")}>
+              <button className="rounded-full w-32 h-32" onClick={() => handleEmotion("Nervous")}>
                 <img src={anxiousImg} alt="Anxious Emoji" />
                 <div className="flex flex-row justify-center">
                   <h3 className="text-[1.8rem] font-header2 rotate-[28deg] -translate-y-[1.1rem] tracking-[0.2rem]  ">N</h3>
@@ -113,7 +113,7 @@ const StudentHome = () => {
                 </div>
 
               </button>
-              <button className="rounded-full w-32 h-32 bg-lightBlue" onClick={() => handleEmotion("Sad")}>
+              <button className="rounded-full w-32 h-32" onClick={() => handleEmotion("Sad")}>
                 <img src={sadImg} alt="Sad Emoji" />
                 <div className="flex flex-row justify-center">
                   <h3 className="text-[1.8rem] font-header2 rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">S</h3>
@@ -121,10 +121,10 @@ const StudentHome = () => {
                   <h3 className="text-[1.8rem] font-header2 -rotate-[8deg] -translate-y-[0.2rem] tracking-[0.2rem]  ">d</h3>
                 </div>
               </button>
-            </div>
+            </div> */}
             {/* second row */}
-            <div className="w-screen max-w-lg flex justify-between my-14">
-              <button className="rounded-full w-32 h-32 bg-darkTeal" onClick={() => handleEmotion("Happy")}>
+            {/* <div className="w-screen max-w-lg flex justify-between my-14">
+              <button className="rounded-full w-32 h-32" onClick={() => handleEmotion("Happy")}>
                 <img src={happyImg} alt="Happy Emoji" />
                 <div className="flex flex-row justify-center">
                   <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">H</h3>
@@ -134,7 +134,7 @@ const StudentHome = () => {
                   <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">y</h3>
                 </div>
               </button>
-              <button className="rounded-full w-32 h-32 bg-lightLavender" onClick={() => handleEmotion("Scared")}>
+              <button className="rounded-full w-32 h-32" onClick={() => handleEmotion("Scared")}>
                 <img src={scaredImg} alt="Scared Emoji" />
                 <div className="flex flex-row justify-center">
                   <h3 className="text-[1.8rem] font-header2 rotate-[28deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">S</h3>
@@ -145,7 +145,7 @@ const StudentHome = () => {
                   <h3 className="text-[1.8rem] font-header2 -rotate-[28deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">d</h3>
                 </div>
               </button>
-              <button className="rounded-full w-32 h-32 bg-pink" onClick={() => handleEmotion("Angry")}>
+              <button className="rounded-full w-32 h-32" onClick={() => handleEmotion("Angry")}>
                 <img src={angryImg} alt="Angry Emoji" />
                 <div className="flex flex-row justify-center">
                   <h3 className="text-[1.8rem] font-header2 rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">A</h3>
@@ -155,8 +155,10 @@ const StudentHome = () => {
                   <h3 className="text-[1.8rem] font-header2 -rotate-[18deg] -translate-y-[0.5rem] tracking-[0.2rem]  ">y</h3>
                 </div>
               </button>
-            </div>
-            <CurvedWords handleEmotion={handleEmotion}/>
+            </div> */}
+
+            {/* TODO:  */}
+            <CurvedWords emotion="Angry" image={angryImg} rotationList={["rotate-[18deg]", "rotate-[8deg]", "rotate-[0deg]", "-rotate-[8deg]", "-rotate-[18deg]"]}  translateList={["-translate-y-[0.5rem]", "-translate-y-[0.2rem]", "translate-y-[0rem]", "-translate-y-[0.2rem]", "-translate-y-[0.5rem]"]}  handleEmotion={handleEmotion}/>
           </div>
         </div>
       </div>

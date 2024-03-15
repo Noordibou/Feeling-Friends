@@ -5,9 +5,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import URL from "../../URL";
 import BtnRainbow from "../../components/BtnRainbow";
+import { useAuth } from "./AuthContext";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { handleLogin } = useAuth();
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
@@ -79,6 +81,8 @@ const Signup = () => {
       const { success, message } = data;
       if (success) {
         handleSuccess(message);
+
+        handleLogin(data.user);
         setTimeout(() => {
           if (inputValue.role === "student"){
             navigate("/student-home");

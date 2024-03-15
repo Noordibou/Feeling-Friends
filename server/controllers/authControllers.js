@@ -34,7 +34,9 @@ const Signup = async (req, res, next) => {
 
     const user = await User.create(userData);
 
-    const token = createSecretToken(user._id, user.student, user.role);
+    const newIdByRole = ( role === "student" ? user.student : user.teacher)
+
+    const token = createSecretToken(user._id, newIdByRole, user.role);
 
     res.cookie("token", token, {
       withCredentials: true,

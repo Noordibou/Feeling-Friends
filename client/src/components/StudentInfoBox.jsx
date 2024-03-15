@@ -4,9 +4,6 @@ import avatarImg from "../images/Sample_Avatar.png";
 import xButton from "../images/x-button.png";
 import { getLastJournalInfo } from "../utils/editSeatChartUtil";
 
-// this is the long box that tells the teacher how the student is feeling, shows ZOR, and shows their goals & needs 
-// this is used on classroom view page and manage class list page
-
 const StudentInfoBox = ({
   student,
   userData,
@@ -41,7 +38,7 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-col w-[80%] justify-center px-4">
+        <div className="flex flex-col w-[80%] px-4">
           {/* last emotion */}
           <div className="pb-2 flex justify-between">
             {lastCheck ? (
@@ -62,7 +59,7 @@ const StudentInfoBox = ({
               bgColorClass
                 ? "bg-notebookPaper py-2 flex justify-around"
                 : "w-full"
-            } px-2 rounded-md`}
+            } px-2 rounded-md `}
           >
             {lastCheck ? (
               <div className="flex flex-col w-72">
@@ -70,7 +67,7 @@ const StudentInfoBox = ({
                 <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
               </div>
             ) : (
-              <div className="flex flex-col w-72">
+              <div className="flex flex-col w-72 h-16">
                 <h5 className="font-[Poppins]">
                   {student.firstName} {student.lastName} hasn't checked in
                   today.

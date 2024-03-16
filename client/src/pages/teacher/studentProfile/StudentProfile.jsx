@@ -227,10 +227,10 @@ export default function StudentProfile() {
             )}`}
           >
               <img
-  src={studentProfile?.avatarImg === "none" ? youngStudent : studentProfile?.avatarImg}
-  alt="student"
-  className="rounded-md object-fill w-32"
-/>
+                src={studentProfile?.avatarImg === "none" ? youngStudent : studentProfile?.avatarImg}
+                alt="student"
+                className="rounded-md object-fill w-32"
+              />
             
           </div>
           {editMode ? ( 
@@ -372,6 +372,8 @@ export default function StudentProfile() {
         <div className="">
           {studentProfile && (
             <div className=" mt-12 rounded-2xl ">
+
+              {/* ----------- REACT CALENDAR - MONTH VIEW ----------- */}
               <Calendar
                 className="react-calendar"
                 tileClassName={({ date }) => {
@@ -385,6 +387,8 @@ export default function StudentProfile() {
                 }}
                 onClickDay={handleDateClick}
               />
+
+              {/* ---------------------------------------------------- */}
             </div>
           )}
           <div>

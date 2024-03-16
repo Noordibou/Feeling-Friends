@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import angryImg from '../images/angry.png'
-import proudImg from '../images/proud.png'
-import anxiousImg from '../images/anxious.png'
-import sadImg from '../images/sad.png'
-import happyImg from '../images/happy.png'
-import scaredImg from '../images/scared.png'
-import { useUser } from '../context/UserContext';
+import angryImg from "../images/angry.png";
+import proudImg from "../images/proud.png";
+import anxiousImg from "../images/anxious.png";
+import sadImg from "../images/sad.png";
+import happyImg from "../images/happy.png";
+import scaredImg from "../images/scared.png";
+import { useUser } from "../context/UserContext";
 import ProgressBar from "../components/ProgressBar";
 import CurvedWords from "../components/CurvedWord";
 import subEmotionInfo from "../data/subEmotions";
@@ -15,58 +15,57 @@ const StudentHome = () => {
   const navigate = useNavigate();
 
   const { userData, setIsCheckInOrOut, isCheckinOrOut } = useUser();
-  const [greeting, setGreeting] = useState("")
-  const [checkInBtn, setCheckInBtn] = useState("bg-white")
-  const [checkOutBtn, setCheckOutBtn] = useState("bg-white")
+  const [greeting, setGreeting] = useState("");
+  const [checkInBtn, setCheckInBtn] = useState("bg-white");
+  const [checkOutBtn, setCheckOutBtn] = useState("bg-white");
 
   const handleClick = (click) => {
-
-    setIsCheckInOrOut(click)
+    setIsCheckInOrOut(click);
     // for button color:
     if (checkOutBtn === "bg-bg-white" && click === "checkout") {
-      setCheckInBtn("bg-white")
-      setCheckOutBtn("bg-lightOrange")
+      setCheckInBtn("bg-white");
+      setCheckOutBtn("bg-lightOrange");
     } else if (checkOutBtn === "bg-lightOrange" && click === "checkout") {
-      setCheckOutBtn("bg-lightOrange")
-      setCheckInBtn("bg-white")
-    } else if (checkInBtn === 'bg-white' && click === "checkin") {
-      setCheckInBtn("bg-lightOrange")
-      setCheckOutBtn("bg-white")
+      setCheckOutBtn("bg-lightOrange");
+      setCheckInBtn("bg-white");
+    } else if (checkInBtn === "bg-white" && click === "checkin") {
+      setCheckInBtn("bg-lightOrange");
+      setCheckOutBtn("bg-white");
     } else {
-      setCheckOutBtn("bg-lightOrange")
-      setCheckInBtn("bg-white")
+      setCheckOutBtn("bg-lightOrange");
+      setCheckInBtn("bg-white");
     }
-  }
+  };
 
   const handleEmotion = (chosenEmotion) => {
     if (!isCheckinOrOut) {
       // temp fix, might create modal or something...?
-      alert("Please choose checkin or checkout before choosing your feeling!")
+      alert("Please choose checkin or checkout before choosing your feeling!");
     } else {
       navigate(`/emotion`, {
         state: {
           emotion: chosenEmotion,
         },
-      })
+      });
     }
-  }
+  };
 
   const checkTimeOfDay = () => {
     let date = new Date();
-    let hour = date.getHours()
+    let hour = date.getHours();
 
     if (hour < 12) {
-      setGreeting("Good Morning")
+      setGreeting("Good Morning");
     } else if (hour >= 12 && hour < 17) {
-      setGreeting("Good afternoon")
+      setGreeting("Good afternoon");
     } else {
-      setGreeting("Good evening")
+      setGreeting("Good evening");
     }
-  }
+  };
 
   useEffect(() => {
     checkTimeOfDay();
-    console.log('student data:', userData);
+    console.log("student data:", userData);
   }, [userData]);
 
   return (
@@ -107,62 +106,60 @@ const StudentHome = () => {
           <div className="">
             {/* first row */}
             <div className="w-screen max-w-lg flex justify-between my-14">
-            <CurvedWords
-              emotion="Proud"
-              image={proudImg}
-              rotationList={subEmotionInfo[0].rotationList}
-              translateList={subEmotionInfo[0].translateList}
-              handleEmotion={handleEmotion}
-            />
-            <CurvedWords
-              emotion="Nervous"
-              image={anxiousImg}
-              rotationList={subEmotionInfo[2].rotationList}
-              translateList={subEmotionInfo[2].translateList}
-              handleEmotion={handleEmotion}
-            />
-            <CurvedWords
-              emotion="Sad"
-              image={sadImg}
-              rotationList={subEmotionInfo[1].rotationList}
-              translateList={subEmotionInfo[1].translateList}
-              handleEmotion={handleEmotion}
-            />
-          </div>
+              <CurvedWords
+                emotion="Proud"
+                image={proudImg}
+                rotationList={subEmotionInfo[0].rotationList}
+                translateList={subEmotionInfo[0].translateList}
+                handleEmotion={handleEmotion}
+              />
+              <CurvedWords
+                emotion="Nervous"
+                image={anxiousImg}
+                rotationList={subEmotionInfo[2].rotationList}
+                translateList={subEmotionInfo[2].translateList}
+                handleEmotion={handleEmotion}
+              />
+              <CurvedWords
+                emotion="Sad"
+                image={sadImg}
+                rotationList={subEmotionInfo[1].rotationList}
+                translateList={subEmotionInfo[1].translateList}
+                handleEmotion={handleEmotion}
+              />
+            </div>
             {/* second row */}
             <div className="w-screen max-w-lg flex justify-between my-14">
-            <CurvedWords
-              emotion="Happy"
-              image={happyImg}
-              rotationList={subEmotionInfo[3].rotationList}
-              translateList={subEmotionInfo[3].translateList}
-              handleEmotion={handleEmotion}
-            />
-            <CurvedWords
-              emotion="Scared"
-              image={scaredImg}
-              rotationList={subEmotionInfo[4].rotationList}
-              translateList={subEmotionInfo[4].translateList}
-              handleEmotion={handleEmotion}
-            />
-            <CurvedWords
-              emotion="Angry"
-              image={angryImg}
-              rotationList={subEmotionInfo[5].rotationList}
-              translateList={subEmotionInfo[5].translateList}
-              handleEmotion={handleEmotion}
-            />
-          </div>
-
-            
+              <CurvedWords
+                emotion="Happy"
+                image={happyImg}
+                rotationList={subEmotionInfo[3].rotationList}
+                translateList={subEmotionInfo[3].translateList}
+                handleEmotion={handleEmotion}
+              />
+              <CurvedWords
+                emotion="Scared"
+                image={scaredImg}
+                rotationList={subEmotionInfo[4].rotationList}
+                translateList={subEmotionInfo[4].translateList}
+                handleEmotion={handleEmotion}
+              />
+              <CurvedWords
+                emotion="Angry"
+                image={angryImg}
+                rotationList={subEmotionInfo[5].rotationList}
+                translateList={subEmotionInfo[5].translateList}
+                handleEmotion={handleEmotion}
+              />
+            </div>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
-      export default StudentHome;
+export default StudentHome;
 
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";

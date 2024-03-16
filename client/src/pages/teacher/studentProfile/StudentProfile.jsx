@@ -210,6 +210,33 @@ export default function StudentProfile() {
   //     seteditModeNotices(false);
   //   };
 
+
+// --------- Trying something with week view --------- //
+// Get today's date
+let today = new Date();
+
+// Calculate the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+let dayOfWeek = today.getDay();
+
+// Calculate the difference in days to last Monday
+let daysToLastMonday = (dayOfWeek + 6) % 7;
+
+// Subtract the difference in days to get the date of last Monday
+let lastMonday = new Date(today);
+lastMonday.setDate(today.getDate() - daysToLastMonday);
+
+console.log("Last Monday:", lastMonday);
+
+// Calculate the difference in days to this Sunday
+let daysToThisSunday = (7 - dayOfWeek) % 7;
+
+// Add the difference in days to get the date of this Sunday
+let thisSunday = new Date(today);
+thisSunday.setDate(today.getDate() + daysToThisSunday);
+
+console.log("This Sunday:", thisSunday);
+
+
   return (
     <>
     <div className="flex flex-col items-center bg-notebookPaper h-screen">
@@ -372,8 +399,9 @@ export default function StudentProfile() {
         <div className="">
           {studentProfile && (
             <div className=" mt-12 rounded-2xl ">
-
+              
               {/* ----------- REACT CALENDAR - MONTH VIEW ----------- */}
+              {/* USES REACT-CALENDAR */}
               <Calendar
                 className="react-calendar"
                 tileClassName={({ date }) => {
@@ -388,7 +416,42 @@ export default function StudentProfile() {
                 onClickDay={handleDateClick}
               />
 
-              {/* ---------------------------------------------------- */}
+              {/* --------------------------------------------------- */}
+
+
+              {/* ----------- REACT CALENDAR - WEEK VIEW ----------- */}
+                {/* USES REACT-BIG-CALENDAR */}
+
+
+                  {/* <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+                    endAccessor="end"
+                    views={['month', 'week']}
+                    style={{ height: 500 }}
+                    dayPropGetter={dayPropGetter}
+                  /> */}
+
+                <Calendar
+                  className="react-calendar"
+                  tileClassName={({ date }) => {
+                    const event = events.find(
+                      (event) => event.date.toDateString() === date.toDateString()
+                    );
+                    if (event) {
+                      return `${event.className} `;
+                    }
+                    return "";
+                  }}
+                  onClickDay={handleDateClick}
+                  minDate={lastMonday}
+                  maxDate={thisSunday}
+                />
+
+
+                {/* -------------------------------------------------- */}
+
             </div>
           )}
           <div>

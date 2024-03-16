@@ -37,6 +37,18 @@
   .react-calendar__navigation button[disabled] {
     background-color: #f0f0f0;
   }
+
+  button[disabled].react-calendar__tile {
+    display: none !important;
+  }
+
+  .react-calendar__navigation__next2-button {
+    display: none !important;
+  }
+
+  .react-calendar__navigation__prev2-button {
+    display: none !important;
+  }
   
   abbr[title] {
     text-decoration: none;

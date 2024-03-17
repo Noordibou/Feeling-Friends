@@ -377,7 +377,7 @@ export default function StudentProfile() {
               
               {/* ----------- REACT CALENDAR - MONTH VIEW ----------- */}
               {/* USES REACT-CALENDAR */}
-              <Calendar
+              {/* <Calendar
                 className="react-calendar"
                 tileClassName={({ date }) => {
                   const event = events.find(
@@ -389,7 +389,7 @@ export default function StudentProfile() {
                   return "";
                 }}
                 onClickDay={handleDateClick}
-              />
+              /> */}
 
               {/* --------------------------------------------------- */}
 

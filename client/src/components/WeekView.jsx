@@ -30,25 +30,85 @@ const WeekView = ({ events, handleDateClick }) => {
     return date >= visibleDates.start && date <= visibleDates.end;
   }
 
+
+
+  // const goToNextWeek = () => {
+  //   const nextMonday = new Date(visibleDates.end);
+  //   nextMonday.setDate(nextMonday.getDate() + 1);
+  //   nextMonday.setHours(0, 0, 0, 0);
+  //   const nextSunday = new Date(nextMonday);
+  //   nextSunday.setDate(nextMonday.getDate() + 6);
+  //   nextSunday.setHours(23, 59, 59, 999);
+  //   setVisibleDates({ start: nextMonday, end: nextSunday });
+  // };
+
+  // const goToPreviousWeek = () => {
+  //   const prevSunday = new Date(visibleDates.start);
+  //   prevSunday.setDate(prevSunday.getDate() - 1);
+  //   prevSunday.setHours(23, 59, 59, 999);
+  //   const prevMonday = new Date(prevSunday);
+  //   prevMonday.setDate(prevSunday.getDate() - 6);
+  //   prevMonday.setHours(0, 0, 0, 0);
+  //   setVisibleDates({ start: prevMonday, end: prevSunday });
+  // };
+
   const goToNextWeek = () => {
     const nextMonday = new Date(visibleDates.end);
-    nextMonday.setDate(nextMonday.getDate() + 1);
+    nextMonday.setDate(nextMonday.getDate() + 1); // Move to next day
     nextMonday.setHours(0, 0, 0, 0);
+    
     const nextSunday = new Date(nextMonday);
-    nextSunday.setDate(nextMonday.getDate() + 6);
+    nextSunday.setDate(nextMonday.getDate() + 6); // Move to following Sunday
     nextSunday.setHours(23, 59, 59, 999);
+  
+    console.log("Next Monday:", nextMonday);
+    console.log("Next Sunday:", nextSunday);
+  
+    // Check if nextMonday is in the next month
+    if (nextSunday.getMonth() !== visibleDates.end.getMonth()) {
+      console.log("Transitioning to next month" + JSON.stringify(nextSunday.getMonth()));
+      // Trigger click event on the next button
+      const nextButton = document.querySelector(".react-calendar__navigation__next-button");
+      if (nextButton) {
+        nextButton.click();
+      }
+    }
+  
     setVisibleDates({ start: nextMonday, end: nextSunday });
   };
 
-  const goToPreviousWeek = () => {
-    const prevSunday = new Date(visibleDates.start);
-    prevSunday.setDate(prevSunday.getDate() - 1);
+  //update this one!!!
+  const goToPrevWeek = () => {
+    const prevSunday = new Date(visibleDates.start); // Start from the current week's start
+    prevSunday.setDate(prevSunday.getDate() - 1); // Move to previous Sunday
     prevSunday.setHours(23, 59, 59, 999);
+  
     const prevMonday = new Date(prevSunday);
-    prevMonday.setDate(prevSunday.getDate() - 6);
+    prevMonday.setDate(prevSunday.getDate() - 6); // Move to previous Monday
     prevMonday.setHours(0, 0, 0, 0);
+  
+    console.log("Prev Sunday:", prevSunday);
+    console.log("Prev Monday:", prevMonday);
+  
+    // Check if prevMonday is in the previous month
+    if (prevMonday.getMonth() !== visibleDates.start.getMonth()) {
+      console.log("Transitioning to previous month" + JSON.stringify(prevMonday.getMonth()));
+      // Trigger click event on the prev button
+      const prevButton = document.querySelector(".react-calendar__navigation__prev-button");
+      if (prevButton) {
+        prevButton.click();
+      }
+    }
+  
     setVisibleDates({ start: prevMonday, end: prevSunday });
   };
+
+  const goToNextMonth = () => {
+    const nextButton = document.querySelector(".react-calendar__navigation__next-button");
+      if (nextButton) {
+        nextButton.click();
+      }
+  }
 
   useEffect(() => {
     setVisibleDates(getVisibleDates());
@@ -58,17 +118,23 @@ const WeekView = ({ events, handleDateClick }) => {
     <div>
       <div>
         <button
-          className="react-calendar__navigation__prev-button"
-          onClick={goToPreviousWeek}
+          className=""
+          onClick={goToPrevWeek}
         >
           Previous Week
         </button>
         <button
-          className="react-calendar__navigation__next-button"
+          className=""
           onClick={goToNextWeek}
         >
           Next Week
         </button>
+        {/* <button
+          className="bg-darkTeal"
+          onClick={goToNextMonth}
+        >
+          try to click to next month
+        </button> */}
       </div>
       <Calendar
         className="react-calendar"

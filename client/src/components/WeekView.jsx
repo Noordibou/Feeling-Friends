@@ -11,17 +11,15 @@ const WeekView = ({ events, handleDateClick }) => {
     let today = new Date();
     let dayOfWeek = today.getDay();
 
-    // Calculate last Monday
     let daysToLastMonday = (dayOfWeek + 6) % 7;
     let lastMonday = new Date(today);
     lastMonday.setDate(today.getDate() - daysToLastMonday);
-    lastMonday.setHours(0, 0, 0, 0); // Set time to midnight
+    lastMonday.setHours(0, 0, 0, 0);
 
-    // Calculate this Sunday
     let daysToThisSunday = (7 - dayOfWeek) % 7;
     let thisSunday = new Date(today);
     thisSunday.setDate(today.getDate() + daysToThisSunday);
-    thisSunday.setHours(23, 59, 59, 999); // Set time to end of day
+    thisSunday.setHours(23, 59, 59, 999);
 
     return { start: lastMonday, end: thisSunday };
   }
@@ -32,11 +30,11 @@ const WeekView = ({ events, handleDateClick }) => {
 
   const goToNextWeek = () => {
     const nextMonday = new Date(visibleDates.end);
-    nextMonday.setDate(nextMonday.getDate() + 1); // Move to next day
+    nextMonday.setDate(nextMonday.getDate() + 1);
     nextMonday.setHours(0, 0, 0, 0);
     
     const nextSunday = new Date(nextMonday);
-    nextSunday.setDate(nextMonday.getDate() + 6); // Move to following Sunday
+    nextSunday.setDate(nextMonday.getDate() + 6);
     nextSunday.setHours(23, 59, 59, 999);
   
     console.log("Next Monday:", nextMonday);
@@ -55,14 +53,13 @@ const WeekView = ({ events, handleDateClick }) => {
     setVisibleDates({ start: nextMonday, end: nextSunday });
   };
 
-  //update this one!!!
   const goToPrevWeek = () => {
-    const prevSunday = new Date(visibleDates.start); // Start from the current week's start
-    prevSunday.setDate(prevSunday.getDate() - 1); // Move to previous Sunday
+    const prevSunday = new Date(visibleDates.start);
+    prevSunday.setDate(prevSunday.getDate() - 1);
     prevSunday.setHours(23, 59, 59, 999);
   
     const prevMonday = new Date(prevSunday);
-    prevMonday.setDate(prevSunday.getDate() - 6); // Move to previous Monday
+    prevMonday.setDate(prevSunday.getDate() - 6);
     prevMonday.setHours(0, 0, 0, 0);
   
     console.log("Prev Sunday:", prevSunday);

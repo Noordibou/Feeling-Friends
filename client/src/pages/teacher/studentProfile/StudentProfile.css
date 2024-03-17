@@ -41,11 +41,9 @@
   button[disabled].react-calendar__tile {
     display: none !important;
   }
-
   .react-calendar__navigation__next2-button {
     display: none !important;
   }
-
   .react-calendar__navigation__prev2-button {
     display: none !important;
   }

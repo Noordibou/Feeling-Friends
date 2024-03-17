@@ -30,28 +30,6 @@ const WeekView = ({ events, handleDateClick }) => {
     return date >= visibleDates.start && date <= visibleDates.end;
   }
 
-
-
-  // const goToNextWeek = () => {
-  //   const nextMonday = new Date(visibleDates.end);
-  //   nextMonday.setDate(nextMonday.getDate() + 1);
-  //   nextMonday.setHours(0, 0, 0, 0);
-  //   const nextSunday = new Date(nextMonday);
-  //   nextSunday.setDate(nextMonday.getDate() + 6);
-  //   nextSunday.setHours(23, 59, 59, 999);
-  //   setVisibleDates({ start: nextMonday, end: nextSunday });
-  // };
-
-  // const goToPreviousWeek = () => {
-  //   const prevSunday = new Date(visibleDates.start);
-  //   prevSunday.setDate(prevSunday.getDate() - 1);
-  //   prevSunday.setHours(23, 59, 59, 999);
-  //   const prevMonday = new Date(prevSunday);
-  //   prevMonday.setDate(prevSunday.getDate() - 6);
-  //   prevMonday.setHours(0, 0, 0, 0);
-  //   setVisibleDates({ start: prevMonday, end: prevSunday });
-  // };
-
   const goToNextWeek = () => {
     const nextMonday = new Date(visibleDates.end);
     nextMonday.setDate(nextMonday.getDate() + 1); // Move to next day
@@ -103,13 +81,6 @@ const WeekView = ({ events, handleDateClick }) => {
     setVisibleDates({ start: prevMonday, end: prevSunday });
   };
 
-  const goToNextMonth = () => {
-    const nextButton = document.querySelector(".react-calendar__navigation__next-button");
-      if (nextButton) {
-        nextButton.click();
-      }
-  }
-
   useEffect(() => {
     setVisibleDates(getVisibleDates());
   }, []);
@@ -129,12 +100,6 @@ const WeekView = ({ events, handleDateClick }) => {
         >
           Next Week
         </button>
-        {/* <button
-          className="bg-darkTeal"
-          onClick={goToNextMonth}
-        >
-          try to click to next month
-        </button> */}
       </div>
       <Calendar
         className="react-calendar"

@@ -4,6 +4,13 @@ import "react-calendar/dist/Calendar.css";
 import "../pages/teacher/studentProfile/StudentProfile.css";
 
 
+/* 
+  FIXME: 
+  when you go forward and find a week that is in 2 different months, and then go backward, it doesn't show the calendar.
+  
+  same when you go backward, find a week that's in 2 different months, and then go forward. 
+*/
+
 const WeekView = ({ events, handleDateClick }) => {
   const [visibleDates, setVisibleDates] = useState(getVisibleDates());
 

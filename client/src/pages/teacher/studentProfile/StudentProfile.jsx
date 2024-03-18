@@ -24,6 +24,8 @@ export default function StudentProfile() {
   const [editMode, setEditMode] = useState(false);
   const [editModeNotices, setEditModeNotices] = useState(false);
 
+  const [isMonthView, setIsMonthView] = useState(true)
+
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
@@ -373,11 +375,15 @@ export default function StudentProfile() {
         </div>
         <div className="">
           {studentProfile && (
-            <div className=" mt-12 rounded-2xl ">
-              
+            <div className="bg-white mt-12 rounded-2xl ">
+             
+
+
               {/* ----------- REACT CALENDAR - MONTH VIEW ----------- */}
               {/* USES REACT-CALENDAR */}
-              {/* <Calendar
+
+              <div className={`${isMonthView ? "" : "hidden"}`}>
+              <Calendar
                 className="react-calendar"
                 tileClassName={({ date }) => {
                   const event = events.find(
@@ -389,16 +395,38 @@ export default function StudentProfile() {
                   return "";
                 }}
                 onClickDay={handleDateClick}
-              /> */}
+              />
+              </div>
 
               {/* --------------------------------------------------- */}
 
 
               {/* ----------- REACT CALENDAR - WEEK VIEW ----------- */}
-
+                <div className={`${!isMonthView ? "" : "hidden"}`}>
                 <WeekView events={events} handleDateClick={handleDateClick}/>
-
+                </div>
               {/* -------------------------------------------------- */}
+                
+                 {/* TODO:
+                Make use state called isMonthView
+                make a container
+                make buttons
+                add toggle functionality
+                  -if true, style certain way, else hidden
+                  -set onClick to setIsMonthView(!isMonthView)              
+              */}
+
+
+              {/* Calendar View Container */}
+              <div className="flex justify-around py-3 rounded-b-2xl border-t-0 border-8 border-graphite">
+                <button className={`${!isMonthView ? "bg-graphite underline font-semibold" : ""} border-2 border-graphite rounded-lg py-3 px-16`} onClick={() => setIsMonthView(false)}>
+                  <h4 className="font-[Poppins]">Week View</h4>
+                </button>
+                <button className={`${isMonthView ? "bg-graphite underline font-semibold " : ""}bg-notebook border-2 border-graphite rounded-lg py-3 px-16`} onClick={() => setIsMonthView(true)}>
+                  <h4 className="font-[Poppins]">Month View</h4>
+                </button>
+
+              </div>
 
             </div>
           )}

@@ -11,7 +11,7 @@ import "../pages/teacher/studentProfile/StudentProfile.css";
   same when you go backward, find a week that's in 2 different months, and then go forward. 
 */
 
-const WeekView = ({ events, handleDateClick }) => {
+const WeekView = ({ events, handleDateClick, isMonthView }) => {
   const [visibleDates, setVisibleDates] = useState(getVisibleDates());
 
   function getVisibleDates() {
@@ -87,7 +87,8 @@ const WeekView = ({ events, handleDateClick }) => {
 
   useEffect(() => {
     setVisibleDates(getVisibleDates());
-  }, []);
+    console.log("hi there")
+  }, [isMonthView]);
 
   return (
     <div>

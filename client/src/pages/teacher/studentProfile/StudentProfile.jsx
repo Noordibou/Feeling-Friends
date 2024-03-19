@@ -387,7 +387,6 @@ export default function StudentProfile() {
 
                 {/* ----------- REACT CALENDAR - MONTH VIEW ----------- */}
                 {isMonthView &&
-                <div className={`${isMonthView ? "" : "hidden"}`}>
                   <Calendar
                     className="react-calendar"
                     tileClassName={({ date }) => {
@@ -402,14 +401,11 @@ export default function StudentProfile() {
                     }}
                     onClickDay={isMonthView ? handleDateClick : null}
                   />
-                </div>
                 }
                 {/* REACT CALENDAR - WEEK VIEW */}
                 
                 {!isMonthView &&
-                <div className={`${!isMonthView ? "" : "hidden"}`}>
                   <WeekView events={events} handleDateClick={handleDateClick} isMonthView={isMonthView}/>
-                </div>
                 }
 
                 <div className="flex justify-around py-3 rounded-b-2xl border-t-0 border-8 border-graphite">

@@ -216,7 +216,7 @@ export default function StudentProfile() {
 
   return (
     <>
-      <div className="flex flex-col items-center bg-notebookPaper h-screen">
+      <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
         <div className="pb-[4rem]">
           <div className="flex items-center">
             <div>
@@ -385,7 +385,7 @@ export default function StudentProfile() {
               <div className="bg-white mt-12 rounded-2xl ">
                 {/* Calendar View Container */}
 
-                {/* ----------- REACT CALENDAR - MONTH VIEW ----------- */}
+                {/* REACT CALENDAR - MONTH VIEW */}
                 {isMonthView &&
                   <Calendar
                     className="react-calendar"

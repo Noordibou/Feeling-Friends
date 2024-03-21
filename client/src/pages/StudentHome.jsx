@@ -63,6 +63,12 @@ const StudentHome = () => {
     }
   };
 
+  const chunkedData = [];
+  const chunkSize = 3;
+  for (let i = 0; i < subEmotionInfo.length; i += chunkSize) {
+    chunkedData.push(subEmotionInfo.slice(i, i + chunkSize));
+  }
+
   useEffect(() => {
     checkTimeOfDay();
     console.log("student data:", userData);
@@ -104,54 +110,20 @@ const StudentHome = () => {
             How are you feeling?
           </h2>
           <div className="">
-            {/* first row */}
-            <div className="w-screen max-w-lg flex justify-between my-14">
-              <CurvedWords
-                emotion="Proud"
-                image={proudImg}
-                rotationList={subEmotionInfo[0].rotationList}
-                translateList={subEmotionInfo[0].translateList}
-                handleEmotion={handleEmotion}
-              />
-              <CurvedWords
-                emotion="Nervous"
-                image={anxiousImg}
-                rotationList={subEmotionInfo[2].rotationList}
-                translateList={subEmotionInfo[2].translateList}
-                handleEmotion={handleEmotion}
-              />
-              <CurvedWords
-                emotion="Sad"
-                image={sadImg}
-                rotationList={subEmotionInfo[1].rotationList}
-                translateList={subEmotionInfo[1].translateList}
-                handleEmotion={handleEmotion}
-              />
-            </div>
-            {/* second row */}
-            <div className="w-screen max-w-lg flex justify-between my-14">
-              <CurvedWords
-                emotion="Happy"
-                image={happyImg}
-                rotationList={subEmotionInfo[3].rotationList}
-                translateList={subEmotionInfo[3].translateList}
-                handleEmotion={handleEmotion}
-              />
-              <CurvedWords
-                emotion="Scared"
-                image={scaredImg}
-                rotationList={subEmotionInfo[4].rotationList}
-                translateList={subEmotionInfo[4].translateList}
-                handleEmotion={handleEmotion}
-              />
-              <CurvedWords
-                emotion="Angry"
-                image={angryImg}
-                rotationList={subEmotionInfo[5].rotationList}
-                translateList={subEmotionInfo[5].translateList}
-                handleEmotion={handleEmotion}
-              />
-            </div>
+            {chunkedData.map((chunk, index) => (
+                <div key={index} className="w-screen max-w-lg flex justify-between my-14">
+                  {chunk.map((emotionInfo, idx) => (
+                    <CurvedWords
+                      key={idx}
+                      emotion={emotionInfo.emotion}
+                      image={emotionInfo.eImage}
+                      rotationList={emotionInfo.rotationList}
+                      translateList={emotionInfo.translateList}
+                      handleEmotion={handleEmotion}
+                    />
+                  ))}
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -160,53 +132,3 @@ const StudentHome = () => {
 };
 
 export default StudentHome;
-
-// import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useCookies } from "react-cookie";
-// import axios from "axios";
-// import { ToastContainer, toast } from "react-toastify";
-
-// const StudentHome = () => {
-//   const navigate = useNavigate();
-//   const [cookies, removeCookie] = useCookies([]);
-//   const [username, setUsername] = useState("");
-//   // useEffect(() => {
-//   //   const verifyCookie = async () => {
-//   //     if (!cookies.token) {
-//   //       navigate("/login");
-//   //     }
-//   //     const { data } = await axios.post(
-//   //       "http://localhost:3001",
-//   //       {},
-//   //       { withCredentials: true }
-//   //     );
-//   //     const { status, user } = data;
-//   //     setUsername(user);
-//   //     return status
-//   //       ? toast(`Hello ${user}`, {
-//   //           position: "top-right",
-//   //         })
-//   //       : (removeCookie("token"), navigate("/login"));
-//   //   };
-//   //   verifyCookie();
-//   // }, [cookies, navigate, removeCookie]);
-//   const Logout = () => {
-//     removeCookie("token");
-//     navigate("/login");
-//   };
-//   return (
-//     <>
-//       <div className="home_page">
-//         <h4>
-//           {" "}
-//           Welcome <span>{username}</span>
-//         </h4>
-//         <button onClick={}>LOGOUT</button>
-//       </div>
-//       <ToastContainer />
-//     </>
-//   );
-// };
-
-// export default StudentHome;

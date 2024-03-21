@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
 
-  // TODO: 
-  // can start degree at 18 and keep doing -8 each time
-  // // if any different, provide an array of values
-  
-  // TODO:
-  // but for translate, might need to have an array of set values, 
-  // // 0.5, 0.2 0.1
-  // // if any different, provide an array
-
 const CurvedWords = ({emotion, image, rotationList, translateList, handleEmotion}) => {
 
   const emotionArray = emotion.split("")

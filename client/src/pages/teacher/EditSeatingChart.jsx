@@ -13,7 +13,7 @@ import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import TeacherNavbar from "../../components/TeacherNavbar";
+import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import saveButton from "../../images/button.png";
 import RosterImg from "../../images/Three People.png";

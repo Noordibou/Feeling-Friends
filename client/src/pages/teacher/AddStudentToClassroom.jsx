@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { addStudentToClassroom } from '../../api/teachersApi';
-import TeacherNavbar from '../../components/TeacherNavbar';
+import TeacherNavbar from '../../components/Navbar/TeacherNavbar';
 
 export default function AddStudent() {
     const { teacherId, classroomId } = useParams();

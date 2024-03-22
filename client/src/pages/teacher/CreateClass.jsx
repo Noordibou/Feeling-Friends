@@ -7,7 +7,7 @@ import {
   createClassroom,
   getAllStudents,
 } from "../../api/teachersApi";
-import TeacherNavbar from "../../components/TeacherNavbar";
+import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import GoBack from "../../components/GoBack";
 
 const CreateClass = () => {

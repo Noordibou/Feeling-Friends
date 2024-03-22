@@ -9,7 +9,7 @@ import StudentInfoBox from "../../components/StudentInfoBox";
 import { Link } from "react-router-dom";
 import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
-import TeacherNavbar from "../../components/TeacherNavbar";
+import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";

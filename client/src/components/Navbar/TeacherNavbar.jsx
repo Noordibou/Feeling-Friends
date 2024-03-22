@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Exterior from "../images/Exterior.png";
-import Classroom from "../images/Classroom.png";
-import Goal from "../images/Goal.png";
-import Settings from "../images/Settings.png";
+import Exterior from "../../images/Exterior.png";
+import Classroom from "../../images/Classroom.png";
+import Goal from "../../images/Goal.png";
+import Settings from "../../images/Settings.png";
 
 export default function TeacherNavbar({ setIsEditMode, teacherId, classroomId }) {
   const [isEditMode, setEditMode] = useState(false);

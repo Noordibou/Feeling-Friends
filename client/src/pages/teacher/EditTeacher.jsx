@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getTeacherById } from '../../api/teachersApi';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import TeacherNavbar from '../../components/TeacherNavbar';
+import TeacherNavbar from '../../components/Navbar/TeacherNavbar';
 import Logout from '../../components/LogoutButton';
 
 const EditTeacher = () => {
@@ -94,10 +94,7 @@ const EditTeacher = () => {
                     </form>
                 </div>
                 <div className='flex flex-row mt-3 underline gap-1'>
-                    <Logout location='teacherLogout' />
-                    <div className='font-semibold underline text-body -mt-0.5'>
-                        {userData.firstName} {userData.lastName}
-                    </div>
+                    <Logout location='settings' userData={userData} />
                 </div>
             <div className="bottom-0 fixed w-screen">
                 <TeacherNavbar  />

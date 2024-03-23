@@ -88,33 +88,31 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
       if (prevButton) {
         prevButton.click();
       }
-    }
-    // if visible start is prev month and prevMonday is prev month, but the visible end is next month, 
-  
+    } 
     setVisibleDates({ start: prevMonday, end: prevSunday });
   };
 
   useEffect(() => {
     setVisibleDates(getVisibleDates());
-    console.log("hi there")
-
   }, [isMonthView]);
   
 
   return (
     <div>
-      <div>
+      <div className="relative top-6">
         <button
-          className=""
+          alt="previous-week"
+          className="absolute left-6 py-3 px-5 bg-white"
           onClick={goToPrevWeek}
         >
-          Previous Week
+          &lt;
         </button>
         <button
-          className=""
+          alt="next-week"
+          className="absolute right-6 py-3 px-5 bg-white"
           onClick={goToNextWeek}
         >
-          Next Week
+          &gt;
         </button>
       </div>
       <Calendar

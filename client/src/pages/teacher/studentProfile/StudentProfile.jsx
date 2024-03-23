@@ -10,6 +10,7 @@ import "./StudentProfile.css";
 import xButton from '../../../images/x-button.png';
 import FileBase from 'react-file-base64';
 import WeekView from "../../../components/WeekView.jsx";
+import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 
@@ -25,6 +26,8 @@ export default function StudentProfile() {
   const [editModeNotices, setEditModeNotices] = useState(false);
 
   const [isMonthView, setIsMonthView] = useState(true)
+  const [lastSelectedCheck, setLastSelectedCheck] = useState({})
+  const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false)
 
 
   useEffect(() => {
@@ -60,6 +63,24 @@ export default function StudentProfile() {
     const selectedEntries = studentProfile.journalEntries.filter(
       (entry) => new Date(entry.date).toDateString() === date.toDateString()
     );
+
+    // -------- for the Student Box modal on calendar --------- //
+    const lastEntry = selectedEntries[selectedEntries.length - 1];
+
+    let lastCheck;
+    if(lastEntry) {
+      if (lastEntry.checkout) {
+        lastCheck = {...lastEntry.checkout, date: lastEntry.date};
+      } else if (lastEntry.checkin) {
+        lastCheck = {...lastEntry.checkin, date: lastEntry.date};
+      }
+    } else {
+      lastCheck= null
+    }
+    setLastSelectedCheck(lastCheck)
+    setOpenStudentInfoModal(true)
+    // -------------------------------------------------------- //
+    
     setSelectedEntries(selectedEntries);
   };
 
@@ -382,7 +403,7 @@ export default function StudentProfile() {
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-12 rounded-2xl ">
+              <div className="bg-white mt-12 rounded-2xl border-graphite border-8">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -405,10 +426,12 @@ export default function StudentProfile() {
                 {/* REACT CALENDAR - WEEK VIEW */}
                 
                 {!isMonthView &&
+                <div className={`${openStudentInfoModal ? "flex bg-graphite z-20": ""} `}>
                   <WeekView events={events} handleDateClick={handleDateClick} isMonthView={isMonthView}/>
+                </div>
                 }
-
-                <div className="flex justify-around py-3 rounded-b-2xl border-t-0 border-8 border-graphite">
+                
+                <div className="flex justify-around py-3 rounded-b-2xl ">
                   <button
                     className={`${
                       !isMonthView ? "bg-graphite underline font-semibold" : ""
@@ -428,6 +451,15 @@ export default function StudentProfile() {
                 </div>
               </div>
             )}
+            {/* Selected Day Student Info Modal */}
+            { openStudentInfoModal &&
+              <div className={`relative bg-graphite rounded-lg bg-opacity-70 ${isMonthView ? "-top-96 h-96 w-full" : "-top-[250px] h-[245px] w-full"} z-20`}> 
+                <div className={`flex h-full justify-center items-center`}>
+                  
+                  <StudentProfileBoxInfo student={studentProfile} selectedEntry={lastSelectedCheck} setOpenStudentInfoModal={setOpenStudentInfoModal}/>
+                </div>
+              </div>
+            }
             <div>
               {selectedDate && (
                 <div className="my-4 p-4 border-8 border-sandwich rounded-2xl ">

@@ -13,6 +13,7 @@ import "../pages/teacher/studentProfile/StudentProfile.css";
 
 const WeekView = ({ events, handleDateClick, isMonthView }) => {
   const [visibleDates, setVisibleDates] = useState(getVisibleDates());
+  const [currMonth, setCurrMonth] = useState("")
 
   function getVisibleDates() {
     let today = new Date();
@@ -46,9 +47,13 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
   
     console.log("Next Monday:", nextMonday);
     console.log("Next Sunday:", nextSunday);
+    
+    const curentMonth = document.querySelector('.react-calendar__navigation__label__labelText');
+    const currentMonthText = curentMonth.textContent.split(" ")[0];
+    setCurrMonth(currentMonthText)
   
     // Check if nextMonday is in the next month
-    if (nextSunday.getMonth() !== visibleDates.end.getMonth()) {
+    if (nextSunday.getMonth() !== visibleDates.end.getMonth() || (visibleDates.start.getMonth() !== visibleDates.end.getMonth() && currentMonthText.substring(0, 3) !== visibleDates.end.toString().split(" ")[1])) {
       console.log("Transitioning to next month" + JSON.stringify(nextSunday.getMonth()));
       // Trigger click event on the next button
       const nextButton = document.querySelector(".react-calendar__navigation__next-button");
@@ -72,8 +77,11 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
     console.log("Prev Sunday:", prevSunday);
     console.log("Prev Monday:", prevMonday);
   
-    // Check if prevMonday is in the previous month
-    if (prevMonday.getMonth() !== visibleDates.start.getMonth()) {
+    const curentMonth = document.querySelector('.react-calendar__navigation__label__labelText');
+    const currentMonthText = curentMonth.textContent.split(" ")[0];
+    setCurrMonth(currentMonthText)
+
+    if ((prevMonday.getMonth() !== visibleDates.start.getMonth()) || (visibleDates.start.getMonth() !== visibleDates.end.getMonth() && currentMonthText.substring(0, 3) !== visibleDates.start.toString().split(" ")[1])) {
       console.log("Transitioning to previous month" + JSON.stringify(prevMonday.getMonth()));
       // Trigger click event on the prev button
       const prevButton = document.querySelector(".react-calendar__navigation__prev-button");
@@ -81,6 +89,7 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
         prevButton.click();
       }
     }
+    // if visible start is prev month and prevMonday is prev month, but the visible end is next month, 
   
     setVisibleDates({ start: prevMonday, end: prevSunday });
   };
@@ -88,7 +97,9 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
   useEffect(() => {
     setVisibleDates(getVisibleDates());
     console.log("hi there")
+
   }, [isMonthView]);
+  
 
   return (
     <div>

@@ -11,6 +11,7 @@ import xButton from '../../../images/x-button.png';
 import FileBase from 'react-file-base64';
 import WeekView from "../../../components/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
+import editIcon from "../../../images/edit_icon.png"
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 
@@ -238,9 +239,54 @@ export default function StudentProfile() {
   return (
     <>
       <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
-        <div className="pb-[4rem]">
+        <div className="flex flex-col items-center pb-[4rem] ">
           <div className="flex items-center">
-            <div>
+                       
+            <div className="pt-[4rem]">
+              
+                <div className="flex flex-row w-full mb-5 ml-3">
+                  <Link
+                    className="text-header1 font-header1"
+                    to={`/viewclasslist/${teacherId}/${classroomId}`}
+                  >
+                    &lt;
+                  </Link>
+                  <div className="text-center w-full">
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={studentProfile.firstName}
+                      onChange={handleInputChange}
+                      className="w-1/4 py-2 px-2 mx-3 rounded-md bg-sandwich"
+                    />
+                  ) : (
+                    <span className="text-header1 font-header1 px-2">
+                      {studentProfile?.firstName}
+                    </span>
+                  )}
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={studentProfile.lastName}
+                      onChange={handleInputChange}
+                      className="w-1/4 py-2 px-2 rounded-md bg-sandwich"
+                    />
+                  ) : (
+                    <span className="text-header1 font-header1">
+                      {studentProfile?.lastName}
+                    </span>
+                  )}
+                  </div>
+              </div>
+
+              {/* Image + Student Info Container + Button */}
+              <div className="flex flex-row justify-center">
+
+
+              {/* Image */}
+              <div className="mr-5 w-1/4">
               <div
                 className={`w-32 rounded-md mr-4 border-8 border-${getBackgroundColorClass(
                   studentProfile?.journalEntries[
@@ -262,7 +308,7 @@ export default function StudentProfile() {
                 />
               </div>
               {editMode ? (
-                <div className=" inline-flex text-[12px] mt-2 w-3/4 font-header1 underline">
+                <div className="inline-flex text-[12px] mt-2 font-header1 underline">
                   <FileBase
                     type="file"
                     multiple={false}
@@ -271,44 +317,9 @@ export default function StudentProfile() {
                 </div>
               ) : null}
             </div>
-            <div>
-              <h2 className="pt-[4rem]">
-                <div className="flex flex-row ">
-                  <Link
-                    className="text-header1 font-header1"
-                    to={`/viewclasslist/${teacherId}/${classroomId}`}
-                  >
-                    &lt;
-                  </Link>
-                  {editMode ? (
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={studentProfile.firstName}
-                      onChange={handleInputChange}
-                      className="w-1/4 px-2 mx-3 rounded-md bg-sandwich"
-                    />
-                  ) : (
-                    <span className="text-header1 font-header1 px-2">
-                      {studentProfile?.firstName}
-                    </span>
-                  )}
-                  {editMode ? (
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={studentProfile.lastName}
-                      onChange={handleInputChange}
-                      className="w-1/4 px-2 rounded-md bg-sandwich"
-                    />
-                  ) : (
-                    <span className="text-header1 font-header1">
-                      {studentProfile?.lastName}
-                    </span>
-                  )}
-                </div>
-              </h2>
 
+                {/* Student Info Container */}
+              <div className="flex flex-col w-52 ml-3">
               <p>Age: {calculateAge(studentProfile?.birthday)}</p>
               {editMode ? (
                 <div>
@@ -318,7 +329,7 @@ export default function StudentProfile() {
                     name="gradeYear"
                     value={studentProfile.gradeYear}
                     onChange={handleInputChange}
-                    className="rounded-md bg-sandwich w-1/3 px-2"
+                    className="rounded-md bg-sandwich w-8/12 px-2 my-1"
                   />
                 </div>
               ) : (
@@ -334,7 +345,7 @@ export default function StudentProfile() {
                     name="schoolStudentId"
                     value={studentProfile.schoolStudentId}
                     onChange={handleInputChange}
-                    className="rounded-md bg-sandwich w-1/3 px-2"
+                    className="rounded-md bg-sandwich w-7/12 px-2 my-1"
                   />
                 </div>
               ) : (
@@ -350,7 +361,7 @@ export default function StudentProfile() {
                     name="birthday"
                     value={studentProfile.birthday}
                     onChange={handleInputChange}
-                    className="rounded-md bg-sandwich w-1/3 px-2"
+                    className="rounded-md bg-sandwich w-8/12 px-2 my-1"
                   />
                 </div>
               ) : (
@@ -369,7 +380,7 @@ export default function StudentProfile() {
                         iepStatus: e.target.value,
                       })
                     }
-                    className="rounded-md bg-sandwich px-2"
+                    className="rounded-md bg-sandwich px-2 my-1"
                   >
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
@@ -380,13 +391,17 @@ export default function StudentProfile() {
                   IEP: <span>{studentProfile?.iepStatus}</span>
                 </p>
               )}
+              </div>
+
+                {/* Button container */}
+              <div className="flex items-center border-l-4 border-sandwich pl-5">
               {editMode ? (
-                <div>
-                  <button className="mt-2 underline" onClick={handleSaveClick}>
+                <div className="flex flex-col">
+                  <button className="mt-2 px-4 py-2 bg-lightBlue rounded-md" onClick={handleSaveClick}>
                     Save
                   </button>
                   <button
-                    className="mt-2 ml-2 underline"
+                    className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
                     onClick={handleCancelClick}
                   >
                     Cancel
@@ -394,20 +409,23 @@ export default function StudentProfile() {
                 </div>
               ) : (
                 <div>
-                  <button className="mt-2 underline" onClick={handleEditClick}>
+                  <button className="items-center justify-between rounded-md flex flex-row py-3 px-3 bg-lightOrange" onClick={handleEditClick}>
                     Edit
+                    <img className="pl-2" src={editIcon} alt="edit icon" />
                   </button>
                 </div>
               )}
+              </div>
+              </div>
             </div>
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-12 rounded-2xl border-graphite border-8">
+              <div className="bg-white mt-12 rounded-2xl border-graphite border-8 w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
-                {isMonthView &&
+                {isMonthView && (
                   <Calendar
                     className="react-calendar"
                     tileClassName={({ date }) => {
@@ -422,15 +440,23 @@ export default function StudentProfile() {
                     }}
                     onClickDay={isMonthView ? handleDateClick : null}
                   />
-                }
+                )}
                 {/* REACT CALENDAR - WEEK VIEW */}
-                
-                {!isMonthView &&
-                <div className={`${openStudentInfoModal ? "flex bg-graphite z-20": ""} `}>
-                  <WeekView events={events} handleDateClick={handleDateClick} isMonthView={isMonthView}/>
-                </div>
-                }
-                
+
+                {!isMonthView && (
+                  <div
+                    className={`${
+                      openStudentInfoModal ? "flex bg-graphite z-20" : ""
+                    } `}
+                  >
+                    <WeekView
+                      events={events}
+                      handleDateClick={handleDateClick}
+                      isMonthView={isMonthView}
+                    />
+                  </div>
+                )}
+
                 <div className="flex justify-around py-3 rounded-b-2xl ">
                   <button
                     className={`${
@@ -452,16 +478,25 @@ export default function StudentProfile() {
               </div>
             )}
             {/* Selected Day Student Info Modal */}
-            { openStudentInfoModal &&
-              <div className={`absolute bg-graphite rounded-lg bg-opacity-70 ${isMonthView ? "top-80 mt-2 h-96 w-[510px]" : "top-80 mt-2 h-[245px] w-[510px]"} z-20`}> 
+            {openStudentInfoModal && (
+              <div
+                className={`absolute bg-graphite rounded-lg bg-opacity-70 ${
+                  isMonthView
+                    ? "top-80 mt-2 h-96 w-[510px]"
+                    : "top-80 mt-2 h-[245px] w-[510px]"
+                } z-20`}
+              >
                 <div className={`flex h-full justify-center items-center`}>
-                  
-                  <StudentProfileBoxInfo student={studentProfile} selectedEntry={lastSelectedCheck} setOpenStudentInfoModal={setOpenStudentInfoModal}/>
+                  <StudentProfileBoxInfo
+                    student={studentProfile}
+                    selectedEntry={lastSelectedCheck}
+                    setOpenStudentInfoModal={setOpenStudentInfoModal}
+                  />
                 </div>
               </div>
-            }
+            )}
             <div>
-              {selectedDate && (
+              {/* {selectedDate && (
                 <div className="my-4 p-4 border-8 border-sandwich rounded-2xl ">
                   <h4>
                     <strong>
@@ -491,7 +526,7 @@ export default function StudentProfile() {
                     <p>No journal entries for this date.</p>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
           <div className="mb-20 max-w-lg">

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import angryImg from "../images/angry.png";
-import proudImg from "../images/proud.png";
-import anxiousImg from "../images/anxious.png";
-import sadImg from "../images/sad.png";
-import happyImg from "../images/happy.png";
-import scaredImg from "../images/scared.png";
 import { useUser } from "../context/UserContext";
 import ProgressBar from "../components/ProgressBar";
 import CurvedWords from "../components/CurvedWord";
@@ -22,7 +16,7 @@ const StudentHome = () => {
   const handleClick = (click) => {
     setIsCheckInOrOut(click);
     // for button color:
-    if (checkOutBtn === "bg-bg-white" && click === "checkout") {
+    if (checkOutBtn === "bg-white" && click === "checkout") {
       setCheckInBtn("bg-white");
       setCheckOutBtn("bg-lightOrange");
     } else if (checkOutBtn === "bg-lightOrange" && click === "checkout") {

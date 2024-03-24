@@ -47,10 +47,11 @@ const StudentProfileBoxInfo = ({
 
         {/* text container */}
         <div className="flex flex-col px-4">
+          <h5 className="pl-5 font-[Poppins]">{selectedEntry ? selectedEntry.date : null}</h5>
           {/* last emotion */}
           <div className="pb-2">
             {selectedEntry ? (
-              <div className="font-[Poppins] text-md ml-5">
+              <div className="font-[Poppins] ml-5">
                 <span>
                   {student?.firstName} {student?.lastName} is feeling{" "}
                 </span>

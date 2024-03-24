@@ -243,7 +243,7 @@ export default function StudentProfile() {
     <>
       <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
         <div className="flex flex-col items-center pb-[4rem] ">
-          <div className="flex items-center">
+          <div className="flex items-center h-80">
                        
             <div className="pt-[4rem]">
               
@@ -407,7 +407,7 @@ export default function StudentProfile() {
                 <div>
                   <button className="items-center justify-between rounded-md flex flex-row py-3 px-3 bg-lightOrange" onClick={handleEditClick}>
                     Edit
-                    <img className="pl-2" src={editIcon} alt="edit icon" />
+                    <img className="pl-2 h-6" src={editIcon} alt="edit icon" />
                   </button>
                 </div>
               )}
@@ -442,7 +442,7 @@ export default function StudentProfile() {
                 {!isMonthView && (
                   <div
                     className={`${
-                      openStudentInfoModal ? "flex bg-graphite z-20" : ""
+                      openStudentInfoModal ? "flex z-20" : ""
                     } `}
                   >
                     <WeekView
@@ -478,9 +478,9 @@ export default function StudentProfile() {
               <div
                 className={`absolute bg-graphite rounded-lg bg-opacity-70 ${
                   isMonthView
-                    ? "top-80 mt-2 h-96 w-[510px]"
-                    : "top-80 mt-2 h-[245px] w-[510px]"
-                } z-20`}
+                    ? "top-80 mt-14 h-96 w-[530px]"
+                    : "top-80 mt-14 h-[245px] w-[530px]"
+                }`}
               >
                 <div className={`flex h-full justify-center items-center`}>
                   <StudentProfileBoxInfo

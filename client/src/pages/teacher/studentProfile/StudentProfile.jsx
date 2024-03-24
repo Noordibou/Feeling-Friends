@@ -12,6 +12,7 @@ import FileBase from 'react-file-base64';
 import WeekView from "../../../components/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
 import editIcon from "../../../images/edit_icon.png"
+import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 
@@ -29,8 +30,9 @@ export default function StudentProfile() {
   const [isMonthView, setIsMonthView] = useState(true)
   const [lastSelectedCheck, setLastSelectedCheck] = useState({})
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false)
+  const [borderColorClass, setBorderColorClass] = useState("")
 
-
+  
   useEffect(() => {
     const fetchStudentProfile = async () => {
       try {
@@ -40,6 +42,7 @@ export default function StudentProfile() {
           studentId
         );
         setStudentProfile(profile);
+        setBorderColorClass(getLastJournalInfo(profile))
 
         const studentEvents = profile.journalEntries.map((entry) => ({
           title: "",
@@ -288,14 +291,7 @@ export default function StudentProfile() {
               {/* Image */}
               <div className="mr-5 w-1/4">
               <div
-                className={`w-32 rounded-md mr-4 border-8 border-${getBackgroundColorClass(
-                  studentProfile?.journalEntries[
-                    studentProfile?.journalEntries.length - 1
-                  ]?.checkout?.ZOR ||
-                    studentProfile?.journalEntries[
-                      studentProfile?.journalEntries.length - 1
-                    ]?.checkin?.ZOR
-                )}`}
+                className={`w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
               >
                 <img
                   src={

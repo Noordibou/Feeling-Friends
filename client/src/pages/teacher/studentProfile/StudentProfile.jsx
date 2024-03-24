@@ -58,7 +58,7 @@ export default function StudentProfile() {
       }
     };
     fetchStudentProfile();
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
@@ -243,9 +243,9 @@ export default function StudentProfile() {
     <>
       <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
         <div className="flex flex-col items-center pb-[4rem] ">
-          <div className="flex items-center h-80">
+          <div className="flex items-center h-72">
                        
-            <div className="pt-[4rem]">
+            <div className="pt-[1.5rem]">
               
                 <div className="flex flex-row w-full mb-5 ml-3">
                   <Link
@@ -393,7 +393,7 @@ export default function StudentProfile() {
               <div className="flex items-center border-l-4 border-sandwich pl-5">
               {editMode ? (
                 <div className="flex flex-col">
-                  <button className="mt-2 px-4 py-2 bg-lightBlue rounded-md" onClick={handleSaveClick}>
+                  <button className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md" onClick={handleSaveClick}>
                     Save
                   </button>
                   <button
@@ -405,9 +405,9 @@ export default function StudentProfile() {
                 </div>
               ) : (
                 <div>
-                  <button className="items-center justify-between rounded-md flex flex-row py-3 px-3 bg-lightOrange" onClick={handleEditClick}>
+                  <button className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange" onClick={handleEditClick}>
                     Edit
-                    <img className="pl-2 h-6" src={editIcon} alt="edit icon" />
+                    <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
                   </button>
                 </div>
               )}
@@ -417,7 +417,7 @@ export default function StudentProfile() {
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-12 rounded-2xl border-sandwich border-8 w-[530px]">
+              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -476,10 +476,10 @@ export default function StudentProfile() {
             {/* Selected Day Student Info Modal */}
             {openStudentInfoModal && (
               <div
-                className={`absolute bg-sandwich rounded-lg bg-opacity-70 ${
+                className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
                   isMonthView
-                    ? "top-80 mt-14 h-96 w-[530px]"
-                    : "top-80 mt-14 h-[245px] w-[530px]"
+                    ? "top-72 mt-12 h-96 w-[530px]"
+                    : "top-72 mt-12 h-[245px] w-[530px]"
                 }`}
               >
                 <div className={`flex h-full justify-center items-center`}>
@@ -525,11 +525,26 @@ export default function StudentProfile() {
               )} */}
             </div>
           </div>
-          <div className="mb-20 max-w-2xl">
-            <div className="mt-6 mb-2">
+          <div className="mb-20 mt-10 max-w-2xl">
+            <div className="flex mt-6 mb-2 items-center w-full justify-between">
               <h1 className="text-black text-4xl font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
+              {editModeNotices ? (
+                <div className="flex px-2 ">
+                  <button className="px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md" onClick={handleIEPSaveClick}>
+                    Save IEP
+                  </button>
+                  {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
+                </div>
+              ) : (
+                <div className="flex px-2 ">
+                  <button className="flex flex-row items-center px-3 py-2 bg-lightOrange rounded-md" onClick={handleEditIEPClick}>
+                    Edit IEP
+                    <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
+                  </button>
+                </div>
+              )}
             </div>
             <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[530px]">
               <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
@@ -792,20 +807,7 @@ export default function StudentProfile() {
                   </button>
                 )}
               </div>
-              {editModeNotices ? (
-                <div className="px-2 ">
-                  <button className="pr-2" onClick={handleIEPSaveClick}>
-                    Save
-                  </button>
-                  {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
-                </div>
-              ) : (
-                <div>
-                  <button className="underline" onClick={handleEditIEPClick}>
-                    Edit IEP
-                  </button>
-                </div>
-              )}
+              
             </div>
             {/* <div className="text-sm font-sm underline">
           <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>

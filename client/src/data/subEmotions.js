@@ -24,19 +24,20 @@ const subEmotionInfo = [
             "Proud",
             "Secure",
             "Excited"                
-        ]
-    },
-    {
-        emotion: "Sad",
-        eImage: sadImg,
-        wheelImg: sadWheel,
-        subEmotions: [
-            "Guilty",
-            "Sad",
-            "Disappointed",
-            "Ashamed",
-            "Hurt",
-            "Lonely"                
+        ],
+        rotationList: [
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.1rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
     },
     {
@@ -50,6 +51,47 @@ const subEmotionInfo = [
             "Anxious",
             "Confused",
             "Embarrassed"                
+        ],
+        rotationList: [
+            "rotate-[28deg]",
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+            "-rotate-[28deg]"
+        ],
+        translateList: [
+            "-translate-y-[1.1rem]",
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.1rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
+            "-translate-y-[1.1rem]",
+        ]
+    },
+    {
+        emotion: "Sad",
+        eImage: sadImg,
+        wheelImg: sadWheel,
+        subEmotions: [
+            "Guilty",
+            "Sad",
+            "Disappointed",
+            "Ashamed",
+            "Hurt",
+            "Lonely"                
+        ],
+        rotationList: [
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]"
+        ],
+        translateList: [
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.1rem]",
+            "-translate-y-[0.2rem]",
         ]
     },
     {
@@ -63,6 +105,20 @@ const subEmotionInfo = [
             "Content",
             "Hopeful",
             "Grateful"                
+        ],
+        rotationList: [
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "translate-y-[0rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
     },
     {
@@ -76,7 +132,25 @@ const subEmotionInfo = [
             "Helpless",
             "Threatened",
             "Insecure"                
+        ],
+        rotationList: [
+            "rotate-[28deg]",
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+            "-rotate-[28deg]"
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "translate-y-[0rem]",
+            "translate-y-[0rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
+
     },
     {
         emotion: "Angry",
@@ -89,6 +163,20 @@ const subEmotionInfo = [
             "Angry",
             "Grumpy",
             "Disgusted"                
+        ],
+        rotationList: [
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "translate-y-[0rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
     },
 ]

@@ -17,6 +17,7 @@ const subEmotionInfo = [
         emotion: "Proud",
         eImage: proudImg,
         wheelImg: proudWheel,
+        advice: "It's easier to feel happy when we reflect on good things in our life.",
         subEmotions: [
             "Confident",
             "Ambitious",
@@ -44,6 +45,7 @@ const subEmotionInfo = [
         emotion: "Nervous",
         eImage: anxiousImg,
         wheelImg: anxiousWheel,
+        advice: "It's normal to feel anxious. Try this activity to help!",
         subEmotions: [
             "Pressured",
             "Overwhelmed",
@@ -75,6 +77,7 @@ const subEmotionInfo = [
         emotion: "Sad",
         eImage: sadImg,
         wheelImg: sadWheel,
+        advice: "Everyone feels sad sometimes! How can we deal with those feelings?",
         subEmotions: [
             "Guilty",
             "Sad",
@@ -98,6 +101,7 @@ const subEmotionInfo = [
         emotion: "Happy",
         eImage: happyImg,
         wheelImg: happyWheel,
+        advice: "When our body feels good it can help our brain to feel good, too.",
         subEmotions: [
             "Glad",
             "Thoughtful",
@@ -125,6 +129,7 @@ const subEmotionInfo = [
         emotion: "Scared",
         eImage: scaredImg,
         wheelImg: scaredWheel,
+        advice: "Feeling scared is never fun, but there are ways we can make it feel better!",
         subEmotions: [
             "Scared",
             "Rejected",
@@ -156,6 +161,7 @@ const subEmotionInfo = [
         emotion: "Angry",
         eImage: angryImg,
         wheelImg: angryWheel,
+        advice: "Everyone feels angry sometimes. Try this to calm down.",
         subEmotions: [
             "Jealous",
             "Frustrated",

@@ -7,10 +7,10 @@ import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
 import { getEmotionColor } from "../../utils/classroomColors.js";
+import CopingSkillCard from "../../components/CopingSkillCard.jsx";
 
 const Summary = () => {
   const { userData } = useUser();
-  const [emotion, setEmotion] = useState("");
   const location = useLocation();
   const emotionFromParams = location.state?.emotion || "";
   const bottomContentRef = useRef();
@@ -20,20 +20,8 @@ const Summary = () => {
     window.scrollTo(0, 0);
     if(emotionFromParams) {
       setEmotionColor(getEmotionColor(emotionFromParams))
-      setEmotion(emotionFromParams);
     }
   }, [userData]);
-
-  const getEmotionTips = () => {
-    const emotionObject = emotionsExplained.find(
-      (emotionObject) => emotionObject.emotion === emotionFromParams
-    );
-    if (emotionObject) {
-      return emotionObject.tips;
-    } else {
-      return [];
-    }
-  };
 
   return (
     <>
@@ -62,59 +50,10 @@ const Summary = () => {
           </div>
         </section>
 
-        {/* bottom orange section */}
-        <div
-          className={`bg-${emotionColor} w-full h-8/12 rounded-[2rem] p-[2rem] flex flex-col
-             rounded-b`}
-        >
-          {/* Learn more */}
-          <section className="flex flex-row justify-around mt-2">
-            <div className="w-8/12">
-              <h2 className="text-[1.75rem] font-semibold font-karla">
-                Getting to know our emotions can help with school success
-              </h2>
-              <h2
-                className="underline text-header2 font-karla font-body font-semibold mt-7"
-                onClick={() => {
-                  if (bottomContentRef.current) {
-                    window.scrollTo({
-                      top: bottomContentRef.current.offsetTop,
-                      behavior: "smooth",
-                    });
-                  }
-                }}
-              >
-                Learn more
-              </h2>
-            </div>
-            <div className="">
-              <img src={QuestionFrog} alt="Avatar" className="w-full h-full" />
-            </div>
-          </section>
+        {/* bottom section */}
 
-          {/* emotion explanation */}
-          <section className="mt-40 mb-20">
-            <div className="flex flex-col items-center">
-              {/* Sub emotion transition sentence */}
-                <div>
-                  <h2 className="font-header2 md:text-[2.5rem] text-md px-5">
-                    What can we do when we feel{" "}
-                    {emotionFromParams.toLowerCase()}?
-                  </h2>
-                </div>
-              <ul
-                ref={bottomContentRef}
-                className="font-body leading-relaxed w-8/12 flex flex-col justify-center mt-5"
-              >
-                {getEmotionTips().map((tip, index) => (
-                  <li className="list-disc text-sm mt-[1rem]" key={index}>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        </div>
+        <CopingSkillCard emotion={emotionFromParams.toLowerCase()} emotionColor={emotionColor} emotionFromParams={emotionFromParams}/>
+        
       </div>
     </>
   );

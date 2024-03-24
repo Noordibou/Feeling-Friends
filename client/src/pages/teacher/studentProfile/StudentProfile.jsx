@@ -453,7 +453,7 @@ export default function StudentProfile() {
             )}
             {/* Selected Day Student Info Modal */}
             { openStudentInfoModal &&
-              <div className={`relative bg-graphite rounded-lg bg-opacity-70 ${isMonthView ? "-top-96 h-96 w-full" : "-top-[250px] h-[245px] w-full"} z-20`}> 
+              <div className={`absolute bg-graphite rounded-lg bg-opacity-70 ${isMonthView ? "top-80 mt-2 h-96 w-[510px]" : "top-80 mt-2 h-[245px] w-[510px]"} z-20`}> 
                 <div className={`flex h-full justify-center items-center`}>
                   
                   <StudentProfileBoxInfo student={studentProfile} selectedEntry={lastSelectedCheck} setOpenStudentInfoModal={setOpenStudentInfoModal}/>

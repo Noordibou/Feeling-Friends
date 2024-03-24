@@ -525,7 +525,7 @@ export default function StudentProfile() {
               )} */}
             </div>
           </div>
-          <div className="mb-20 max-w-lg">
+          <div className="mb-20 max-w-2xl">
             <div className="mt-6 mb-2">
               <h1 className="text-black text-4xl font-bold font-header1">
                 Individual Education Program (IEP)

@@ -535,7 +535,7 @@ export default function StudentProfile() {
                 Individual Education Program (IEP)
               </h1>
             </div>
-            <div className="border-4 bg-sandwich border-sandwich rounded-2xl">
+            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[530px]">
               <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
                 <h3 className="font-header4">Content Area Notices</h3>
                 <h3 className="underline flex justify-end pb-2">

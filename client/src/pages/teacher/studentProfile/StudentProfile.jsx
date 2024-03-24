@@ -417,7 +417,7 @@ export default function StudentProfile() {
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-12 rounded-2xl border-graphite border-8 w-[530px]">
+              <div className="bg-white mt-12 rounded-2xl border-sandwich border-8 w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -456,16 +456,16 @@ export default function StudentProfile() {
                 <div className="flex justify-around py-3 rounded-b-2xl ">
                   <button
                     className={`${
-                      !isMonthView ? "bg-graphite underline font-semibold" : ""
-                    } border-2 border-graphite rounded-lg py-3 px-16`}
+                      !isMonthView ? "bg-sandwich underline font-semibold" : ""
+                    } border-2 border-sandwich rounded-lg py-3 px-16`}
                     onClick={() => setIsMonthView(false)}
                   >
                     <h4 className="font-[Poppins]">Week View</h4>
                   </button>
                   <button
                     className={`${
-                      isMonthView ? "bg-graphite underline font-semibold " : ""
-                    }bg-notebook border-2 border-graphite rounded-lg py-3 px-16`}
+                      isMonthView ? "bg-sandwich underline font-semibold " : ""
+                    }bg-notebook border-2 border-sandwich rounded-lg py-3 px-16`}
                     onClick={() => setIsMonthView(true)}
                   >
                     <h4 className="font-[Poppins]">Month View</h4>
@@ -476,7 +476,7 @@ export default function StudentProfile() {
             {/* Selected Day Student Info Modal */}
             {openStudentInfoModal && (
               <div
-                className={`absolute bg-graphite rounded-lg bg-opacity-70 ${
+                className={`absolute bg-sandwich rounded-lg bg-opacity-70 ${
                   isMonthView
                     ? "top-80 mt-14 h-96 w-[530px]"
                     : "top-80 mt-14 h-[245px] w-[530px]"

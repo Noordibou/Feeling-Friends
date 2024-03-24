@@ -7,14 +7,13 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
-import xButton from '../../../images/x-button.png';
-import FileBase from 'react-file-base64';
+import xButton from "../../../images/x-button.png";
+import FileBase from "react-file-base64";
 import WeekView from "../../../components/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
-import editIcon from "../../../images/edit_icon.png"
+import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
-
 
 export default function StudentProfile() {
   const { teacherId, classroomId, studentId } = useParams();
@@ -27,12 +26,11 @@ export default function StudentProfile() {
   const [editMode, setEditMode] = useState(false);
   const [editModeNotices, setEditModeNotices] = useState(false);
 
-  const [isMonthView, setIsMonthView] = useState(true)
-  const [lastSelectedCheck, setLastSelectedCheck] = useState({})
-  const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false)
-  const [borderColorClass, setBorderColorClass] = useState("")
+  const [isMonthView, setIsMonthView] = useState(true);
+  const [lastSelectedCheck, setLastSelectedCheck] = useState({});
+  const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
+  const [borderColorClass, setBorderColorClass] = useState("");
 
-  
   useEffect(() => {
     const fetchStudentProfile = async () => {
       try {
@@ -42,7 +40,7 @@ export default function StudentProfile() {
           studentId
         );
         setStudentProfile(profile);
-        setBorderColorClass(getLastJournalInfo(profile))
+        setBorderColorClass(getLastJournalInfo(profile));
 
         const studentEvents = profile.journalEntries.map((entry) => ({
           title: "",
@@ -58,7 +56,7 @@ export default function StudentProfile() {
       }
     };
     fetchStudentProfile();
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
@@ -72,19 +70,19 @@ export default function StudentProfile() {
     const lastEntry = selectedEntries[selectedEntries.length - 1];
 
     let lastCheck;
-    if(lastEntry) {
+    if (lastEntry) {
       if (lastEntry.checkout) {
-        lastCheck = {...lastEntry.checkout, date: lastEntry.date};
+        lastCheck = { ...lastEntry.checkout, date: lastEntry.date };
       } else if (lastEntry.checkin) {
-        lastCheck = {...lastEntry.checkin, date: lastEntry.date};
+        lastCheck = { ...lastEntry.checkin, date: lastEntry.date };
       }
     } else {
-      lastCheck= null
+      lastCheck = null;
     }
-    setLastSelectedCheck(lastCheck)
-    setOpenStudentInfoModal(true)
+    setLastSelectedCheck(lastCheck);
+    setOpenStudentInfoModal(true);
     // -------------------------------------------------------- //
-    
+
     setSelectedEntries(selectedEntries);
   };
 
@@ -92,14 +90,14 @@ export default function StudentProfile() {
     setOriginalStudentProfile(studentProfile);
     setEditMode(true);
   };
-  
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setStudentProfile({
       ...studentProfile,
       [name]: value,
     });
-  };          
+  };
 
   const handleSaveClick = async () => {
     try {
@@ -117,7 +115,6 @@ export default function StudentProfile() {
     }
   };
 
-
   const handleCancelClick = () => {
     setStudentProfile(originalStudentProfile);
     setEditMode(false);
@@ -127,21 +124,21 @@ export default function StudentProfile() {
   const handleEditIEPClick = () => {
     setOriginalStudentProfile(studentProfile);
     setEditModeNotices(true);
-  
+
     if (!studentProfile.contentAreaNotices) {
       setStudentProfile((prevProfile) => ({
         ...prevProfile,
         contentAreaNotices: [],
       }));
     }
-  
+
     if (!studentProfile.learningChallenges) {
       setStudentProfile((prevProfile) => ({
         ...prevProfile,
         learningChallenges: [],
       }));
     }
-  
+
     if (!studentProfile.accomodationsAndAssisstiveTech) {
       setStudentProfile((prevProfile) => ({
         ...prevProfile,
@@ -149,7 +146,6 @@ export default function StudentProfile() {
       }));
     }
   };
-  
 
   const handleIEPChange = (event, index, field, category) => {
     const updatedItems = [...studentProfile[category]];
@@ -173,7 +169,7 @@ export default function StudentProfile() {
         teacherId,
         classroomId,
         studentId,
-        updatedStudent,
+        updatedStudent
       );
 
       setStudentProfile(updatedProfile);
@@ -183,7 +179,6 @@ export default function StudentProfile() {
       console.error(error);
     }
   };
-
 
   const handleIEPDeleteClick = (index, category) => {
     const updatedItems = [...studentProfile[category]];
@@ -196,7 +191,7 @@ export default function StudentProfile() {
   };
 
   const handleIEPAddClick = (category) => {
-    const newItem = getNewItemForCategory(category); 
+    const newItem = getNewItemForCategory(category);
 
     setStudentProfile((prevProfile) => ({
       ...prevProfile,
@@ -206,21 +201,21 @@ export default function StudentProfile() {
 
   const getNewItemForCategory = (category) => {
     switch (category) {
-      case 'contentAreaNotices':
+      case "contentAreaNotices":
         return {
-          contentArea: '',
-          benchmark: '',
+          contentArea: "",
+          benchmark: "",
         };
-      case 'learningChallenges':
+      case "learningChallenges":
         return {
-          challenge: '',
+          challenge: "",
           date: formatDate(new Date()),
         };
-      case 'accomodationsAndAssisstiveTech':
+      case "accomodationsAndAssisstiveTech":
         return {
-          accomodation: '',
-          frequency: '',
-          location: '',
+          accomodation: "",
+          frequency: "",
+          location: "",
         };
       default:
         return {};
@@ -229,8 +224,10 @@ export default function StudentProfile() {
 
   const handleFileUpload = (file) => {
     setStudentProfile({
-      ...studentProfile, avatarImg: file.base64 });
-};
+      ...studentProfile,
+      avatarImg: file.base64,
+    });
+  };
 
   // not working yet
   //    const handleIEPCancelClick = () => {
@@ -238,23 +235,20 @@ export default function StudentProfile() {
   //     seteditModeNotices(false);
   //   };
 
-
   return (
     <>
       <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
         <div className="flex flex-col items-center pb-[4rem] ">
           <div className="flex items-center h-72">
-                       
             <div className="pt-[1.5rem]">
-              
-                <div className="flex flex-row w-full mb-5 ml-3">
-                  <Link
-                    className="text-header1 font-header1"
-                    to={`/viewclasslist/${teacherId}/${classroomId}`}
-                  >
-                    &lt;
-                  </Link>
-                  <div className="text-center w-full">
+              <div className="flex flex-row w-full mb-5 ml-3">
+                <Link
+                  className="text-header1 font-header1"
+                  to={`/viewclasslist/${teacherId}/${classroomId}`}
+                >
+                  &lt;
+                </Link>
+                <div className="text-center w-full">
                   {editMode ? (
                     <input
                       type="text"
@@ -281,137 +275,145 @@ export default function StudentProfile() {
                       {studentProfile?.lastName}
                     </span>
                   )}
-                  </div>
+                </div>
               </div>
 
               {/* Image + Student Info Container + Button */}
               <div className="flex flex-row justify-center">
-
-
-              {/* Image */}
-              <div className="mr-5 w-1/4">
-              <div
-                className={`w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
-              >
-                <img
-                  src={
-                    studentProfile?.avatarImg === "none"
-                      ? youngStudent
-                      : studentProfile?.avatarImg
-                  }
-                  alt="student"
-                  className="rounded-md object-fill w-32"
-                />
-              </div>
-              {editMode ? (
-                <div className="inline-flex text-[12px] mt-2 font-header1 underline">
-                  <FileBase
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => handleFileUpload({ base64 })}
-                  />
+                {/* Image */}
+                <div className="mr-5 w-1/4">
+                  <div
+                    className={`w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
+                  >
+                    <img
+                      src={
+                        studentProfile?.avatarImg === "none"
+                          ? youngStudent
+                          : studentProfile?.avatarImg
+                      }
+                      alt="student"
+                      className="rounded-md object-fill w-32"
+                    />
+                  </div>
+                  {editMode ? (
+                    <div className="inline-flex text-[12px] mt-2 font-header1 underline">
+                      <FileBase
+                        type="file"
+                        multiple={false}
+                        onDone={({ base64 }) => handleFileUpload({ base64 })}
+                      />
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
-            </div>
 
                 {/* Student Info Container */}
-              <div className="flex flex-col w-52 ml-3">
-              <p>Age: {calculateAge(studentProfile?.birthday)}</p>
-              {editMode ? (
-                <div>
-                  <label>Grade: </label>
-                  <input
-                    type="text"
-                    name="gradeYear"
-                    value={studentProfile.gradeYear}
-                    onChange={handleInputChange}
-                    className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                  />
+                <div className="flex flex-col w-52 ml-3">
+                  <p>Age: {calculateAge(studentProfile?.birthday)}</p>
+                  {editMode ? (
+                    <div>
+                      <label>Grade: </label>
+                      <input
+                        type="text"
+                        name="gradeYear"
+                        value={studentProfile.gradeYear}
+                        onChange={handleInputChange}
+                        className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                      />
+                    </div>
+                  ) : (
+                    <p>
+                      Grade: <span>{studentProfile?.gradeYear}th</span>
+                    </p>
+                  )}
+                  {editMode ? (
+                    <div>
+                      <label>Student ID: </label>
+                      <input
+                        type="text"
+                        name="schoolStudentId"
+                        value={studentProfile.schoolStudentId}
+                        onChange={handleInputChange}
+                        className="rounded-md bg-sandwich w-7/12 px-2 my-1"
+                      />
+                    </div>
+                  ) : (
+                    <p>
+                      Student ID: <span>{studentProfile?.schoolStudentId}</span>
+                    </p>
+                  )}
+                  {editMode ? (
+                    <div>
+                      <label>Birthday: </label>
+                      <input
+                        type="text"
+                        name="birthday"
+                        value={studentProfile.birthday}
+                        onChange={handleInputChange}
+                        className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                      />
+                    </div>
+                  ) : (
+                    <p>
+                      Birthday: <span>{studentProfile?.birthday}</span>
+                    </p>
+                  )}
+                  {editMode ? (
+                    <div>
+                      <label>IEP: </label>
+                      <select
+                        value={studentProfile.iepStatus}
+                        onChange={(e) =>
+                          setStudentProfile({
+                            ...studentProfile,
+                            iepStatus: e.target.value,
+                          })
+                        }
+                        className="rounded-md bg-sandwich px-2 my-1"
+                      >
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                    </div>
+                  ) : (
+                    <p>
+                      IEP: <span>{studentProfile?.iepStatus}</span>
+                    </p>
+                  )}
                 </div>
-              ) : (
-                <p>
-                  Grade: <span>{studentProfile?.gradeYear}th</span>
-                </p>
-              )}
-              {editMode ? (
-                <div>
-                  <label>Student ID: </label>
-                  <input
-                    type="text"
-                    name="schoolStudentId"
-                    value={studentProfile.schoolStudentId}
-                    onChange={handleInputChange}
-                    className="rounded-md bg-sandwich w-7/12 px-2 my-1"
-                  />
-                </div>
-              ) : (
-                <p>
-                  Student ID: <span>{studentProfile?.schoolStudentId}</span>
-                </p>
-              )}
-              {editMode ? (
-                <div>
-                  <label>Birthday: </label>
-                  <input
-                    type="text"
-                    name="birthday"
-                    value={studentProfile.birthday}
-                    onChange={handleInputChange}
-                    className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                  />
-                </div>
-              ) : (
-                <p>
-                  Birthday: <span>{studentProfile?.birthday}</span>
-                </p>
-              )}
-              {editMode ? (
-                <div>
-                  <label>IEP: </label>
-                  <select
-                    value={studentProfile.iepStatus}
-                    onChange={(e) =>
-                      setStudentProfile({
-                        ...studentProfile,
-                        iepStatus: e.target.value,
-                      })
-                    }
-                    className="rounded-md bg-sandwich px-2 my-1"
-                  >
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select>
-                </div>
-              ) : (
-                <p>
-                  IEP: <span>{studentProfile?.iepStatus}</span>
-                </p>
-              )}
-              </div>
 
                 {/* Button container */}
-              <div className="flex items-center border-l-4 border-sandwich pl-5">
-              {editMode ? (
-                <div className="flex flex-col">
-                  <button className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md" onClick={handleSaveClick}>
-                    Save
-                  </button>
-                  <button
-                    className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                    onClick={handleCancelClick}
-                  >
-                    Cancel
-                  </button>
+                <div className="flex items-center border-l-4 border-sandwich pl-5">
+                  {editMode ? (
+                    <div className="flex flex-col">
+                      <button
+                        className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                        onClick={handleSaveClick}
+                      >
+                        Save
+                      </button>
+                      <button
+                        className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
+                        onClick={handleCancelClick}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <button
+                        className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange"
+                        onClick={handleEditClick}
+                      >
+                        Edit
+                        <img
+                          className="pl-2 h-4"
+                          src={editIcon}
+                          alt="edit icon"
+                        />
+                      </button>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div>
-                  <button className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange" onClick={handleEditClick}>
-                    Edit
-                    <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
-                  </button>
-                </div>
-              )}
-              </div>
               </div>
             </div>
           </div>
@@ -441,9 +443,7 @@ export default function StudentProfile() {
 
                 {!isMonthView && (
                   <div
-                    className={`${
-                      openStudentInfoModal ? "flex z-20" : ""
-                    } `}
+                    className={`${openStudentInfoModal ? "flex z-20" : ""} `}
                   >
                     <WeekView
                       events={events}
@@ -532,14 +532,20 @@ export default function StudentProfile() {
               </h1>
               {editModeNotices ? (
                 <div className="flex px-2 ">
-                  <button className="px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md" onClick={handleIEPSaveClick}>
+                  <button
+                    className="px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                    onClick={handleIEPSaveClick}
+                  >
                     Save IEP
                   </button>
                   {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
                 </div>
               ) : (
                 <div className="flex px-2 ">
-                  <button className="flex flex-row items-center px-3 py-2 bg-lightOrange rounded-md" onClick={handleEditIEPClick}>
+                  <button
+                    className="flex flex-row items-center px-3 py-2 bg-lightOrange rounded-md"
+                    onClick={handleEditIEPClick}
+                  >
                     Edit IEP
                     <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
                   </button>
@@ -807,13 +813,7 @@ export default function StudentProfile() {
                   </button>
                 )}
               </div>
-              
             </div>
-            {/* <div className="text-sm font-sm underline">
-          <Link to={`/viewclasslist/${teacherId}/${classroomId}`}>
-            &lt; Back
-          </Link>
-        </div> */}
           </div>
         </div>
         <div className="fixed bottom-0 w-screen">

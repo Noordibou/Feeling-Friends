@@ -44,9 +44,6 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
     const nextSunday = new Date(nextMonday);
     nextSunday.setDate(nextMonday.getDate() + 6);
     nextSunday.setHours(23, 59, 59, 999);
-  
-    console.log("Next Monday:", nextMonday);
-    console.log("Next Sunday:", nextSunday);
     
     const curentMonth = document.querySelector('.react-calendar__navigation__label__labelText');
     const currentMonthText = curentMonth.textContent.split(" ")[0];
@@ -73,10 +70,7 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
     const prevMonday = new Date(prevSunday);
     prevMonday.setDate(prevSunday.getDate() - 6);
     prevMonday.setHours(0, 0, 0, 0);
-  
-    console.log("Prev Sunday:", prevSunday);
-    console.log("Prev Monday:", prevMonday);
-  
+    
     const curentMonth = document.querySelector('.react-calendar__navigation__label__labelText');
     const currentMonthText = curentMonth.textContent.split(" ")[0];
     setCurrMonth(currentMonthText)

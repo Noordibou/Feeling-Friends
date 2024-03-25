@@ -5,15 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ProgressBar from "../../components/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
 import { getEmotionColor } from "../../utils/classroomColors";
-import {
-  proudZorImages,
-  angryZorImages,
-  sadZorImages,
-  nervousZorImages,
-  scaredZorImages,
-  happyZorImages,
-  girlZorImages
-} from "../../data/zorImages";
 
 const GoalsNeeds = () => {
   const navigate = useNavigate();
@@ -21,8 +12,6 @@ const GoalsNeeds = () => {
 
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
-  const zoneFromLocation = location.state?.zone || "";
-  const mainFromLocation = location.state?.mainEmotion || "";
 
   const [inputMode1, setInputMode1] = useState(false);
   const [inputMode2, setInputMode2] = useState(false);
@@ -34,38 +23,6 @@ const GoalsNeeds = () => {
   const [selectedNeed, setSelectedNeed] = useState(null);
 
   const [emotionColor, setEmotionColor] = useState("")
-  
-  const getIndex = (zone, emotion) => {
-    let index = 0;
-
-    switch (emotion) {
-      case "happy":
-        index += 0; // Happy images start at index 0
-        break;
-      case "angry":
-        index += 1; // Angry images start after happy images
-        break;
-      // Add cases for other emotions if needed
-    }
-
-    switch (zone) {
-      case "Unmotivated":
-        break; // No adjustment needed for Unmotivated zone
-      case "readytolearn":
-        index += 1; // Skip first image for readytolearn zone
-        break;
-      case "Wiggly":
-        index += 2; // Skip first two images for Wiggly zone
-        break;
-      case "Explosive":
-        index += 3; // Skip first three images for Explosive zone
-        break;
-    }
-
-    return index;
-  };
-
-  const imageIndex = getIndex(zoneFromLocation, mainFromLocation);
 
   const handleInputChange1 = (e) => {
     setUserInput1(e.target.value);
@@ -117,16 +74,8 @@ const GoalsNeeds = () => {
         <div className="flex w-full justify-center mt-20">
           <ProgressBar totalPages="5" currentPage="4" />
         </div>
-        <div className="flex flex-row justify-center mt-20 mb-[2.5rem]">
-        <h6 className="text-sm font-normal w-3/12">I'm feeling {zoneFromLocation === "readytolearn" ? "ready to learn" : zoneFromLocation.toLowerCase()} !</h6>
-          {girlZorImages[imageIndex] && (
-            <img src={girlZorImages[imageIndex]} alt="Girl Zor Image" className="h-52" />
-          )}
-
-          {happyZorImages[imageIndex] && (
-            <img src={happyZorImages[imageIndex]} alt="Emotion Image" className="h-40 self-end" />
-          )}
-          <h6 className="text-sm font-normal w-1/4 mt-10">Me too!</h6>
+        <div className="items-center justify-center mt-20 mb-[2.5rem]">
+          <img className="w-[33rem]" src={Wiggly} alt="Wiggly" />
         </div>
 
         <div className="max-w-lg mt-5">
@@ -137,23 +86,13 @@ const GoalsNeeds = () => {
           <div className="w-full">
             <div className="flex flex-row justify-between mt-3">
               <button
-                className={`bg-${
-                  selectedGoal === "Finish homework during study hall"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
-                onClick={() =>
-                  handleGoalClick("Finish homework during study hall")
-                }
+                className={`bg-${selectedGoal === "Finish homework during study hall" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
+                onClick={() => handleGoalClick("Finish homework during study hall")}
               >
                 Finish homework during study hall
               </button>
               <button
-                className={`bg-${
-                  selectedGoal === "Better manage my energy"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
+                className={`bg-${selectedGoal === "Better manage my energy" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
                 onClick={() => handleGoalClick("Better manage my energy")}
               >
                 Better manage my energy
@@ -162,21 +101,13 @@ const GoalsNeeds = () => {
 
             <div className="flex flex-row justify-between">
               <button
-                className={`bg-${
-                  selectedGoal === "Do my best in class"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
+                className={`bg-${selectedGoal === "Do my best in class" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
                 onClick={() => handleGoalClick("Do my best in class")}
               >
                 Do my best in class
               </button>
               <button
-                className={`bg-${
-                  selectedGoal === "Be more present"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
+                className={`bg-${selectedGoal === "Be more present" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
                 onClick={() => handleGoalClick("Be more present")}
               >
                 Be more present
@@ -194,15 +125,13 @@ const GoalsNeeds = () => {
                   />
                   <button
                     onClick={() => {
-                      console.log("User input 1:", userInput1);
+                      console.log('User input 1:', userInput1);
                       updateUserDataAccumulated({ goal: userInput1 });
                       setSelectedGoal(userInput1);
                       setInputMode1(false);
-                      setUserInput1("");
+                      setUserInput1('');
                     }}
-                    className={`bg-${
-                      selectedGoal === userInput1 ? emotionColor : "themeWhite"
-                    } mt-2 p-4 w-full text-body font-body border-2 border-${emotionColor} hover:bg-${emotionColor}/60 rounded-[1rem]`}
+                    className={`bg-${selectedGoal === userInput1 ? emotionColor : 'themeWhite'} mt-2 p-4 w-full text-body font-body border-2 border-${emotionColor} hover:bg-${emotionColor}/60 rounded-[1rem]`}
                   >
                     Save
                   </button>
@@ -210,11 +139,7 @@ const GoalsNeeds = () => {
               ) : (
                 <div className="p-2">
                   <button
-                    className={`bg-${
-                      selectedGoal === "Something else"
-                        ? emotionColor
-                        : "themeWhite"
-                    } p-4 w-full text-body font-body border-2 border-${emotionColor} hover:bg-${emotionColor}`}
+                    className={`bg-${selectedGoal === "Something else" ? emotionColor : 'themeWhite'} p-4 w-full text-body font-body border-2 border-${emotionColor} hover:bg-${emotionColor}`}
                     onClick={() => {
                       setSelectedGoal("Something else");
                       setInputMode1(true);
@@ -229,28 +154,18 @@ const GoalsNeeds = () => {
         </div>
 
         <div className="max-w-lg mt-5">
-          <h2 className="text-header2 font-header2">
-            What do you need from an adult to succeed today?
-          </h2>
+          <h2 className="text-header2 font-header2">What do you need from an adult to succeed today?</h2>
 
           <div className="w-full">
             <div className="flex flex-row justify-between mt-3">
               <button
-                className={`bg-${
-                  selectedNeed === "Check in with my teacher"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
+                className={`bg-${selectedNeed === "Check in with my teacher" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover:bg-${emotionColor}`}
                 onClick={() => handleNeedClick("Check in with my teacher")}
               >
                 Check in with my teacher
               </button>
               <button
-                className={`bg-${
-                  selectedNeed === "Help with homework"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover-bg-${emotionColor}`}
+                className={`bg-${selectedNeed === "Help with homework" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover-bg-${emotionColor}`}
                 onClick={() => handleNeedClick("Help with homework")}
               >
                 Help with homework
@@ -259,21 +174,13 @@ const GoalsNeeds = () => {
 
             <div className="flex flex-row justify-between">
               <button
-                className={`bg-${
-                  selectedNeed === "Extra practice"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover-bg-${emotionColor}`}
+                className={`bg-${selectedNeed === "Extra practice" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} rounded-[1rem] hover-bg-${emotionColor}`}
                 onClick={() => handleNeedClick("Extra practice")}
               >
                 Extra practice
               </button>
               <button
-                className={`bg-${
-                  selectedNeed === "Help with focusing"
-                    ? emotionColor
-                    : "themeWhite"
-                } m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor} rounded-[1rem]`}
+                className={`bg-${selectedNeed === "Help with focusing" ? emotionColor : 'themeWhite'} m-2 p-4 w-1/2 text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor} rounded-[1rem]`}
                 onClick={() => handleNeedClick("Help with focusing")}
               >
                 Help with focusing
@@ -290,15 +197,13 @@ const GoalsNeeds = () => {
                 />
                 <button
                   onClick={() => {
-                    console.log("User input 2:", userInput2);
+                    console.log('User input 2:', userInput2);
                     updateUserDataAccumulated({ need: userInput2 });
                     setSelectedNeed(userInput2);
                     setInputMode2(false);
-                    setUserInput2("");
+                    setUserInput2('');
                   }}
-                  className={`bg-${
-                    selectedNeed === userInput2 ? emotionColor : "themeWhite"
-                  } mt-2 p-4 w-full text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor}/60 rounded-[1rem]`}
+                  className={`bg-${selectedNeed === userInput2 ? emotionColor : 'themeWhite'} mt-2 p-4 w-full text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor}/60 rounded-[1rem]`}
                 >
                   Save
                 </button>
@@ -306,11 +211,7 @@ const GoalsNeeds = () => {
             ) : (
               <div className="p-2">
                 <button
-                  className={`bg-${
-                    selectedNeed === "Something else"
-                      ? emotionColor
-                      : "themeWhite"
-                  } p-4 w-full text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor}`}
+                  className={`bg-${selectedNeed === "Something else" ? emotionColor : 'themeWhite'} p-4 w-full text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor}`}
                   onClick={() => {
                     setSelectedNeed("Something else");
                     setInputMode2(true);

@@ -41,10 +41,8 @@ const CopingSkillCard = ({ emotion, emotionColor }) => {
   const copingSkillCard = copingSkills[mainEmotion] || "";
 
   const findMainEmotion = (subEmotion) => {
-    console.log("sadf");
-    // Iterate through the subEmotionInfo array
+    
     for (const emotionInfo of subEmotionInfo) {
-      // Check if the subEmotion exists in the subEmotions array
       if (
         emotionInfo.subEmotions.includes(
           subEmotion.charAt(0).toUpperCase() + subEmotion.slice(1)
@@ -54,14 +52,11 @@ const CopingSkillCard = ({ emotion, emotionColor }) => {
         return emotionInfo.emotion.toLowerCase();
       }
     }
-    // Return null if subEmotion is not found
     return null;
   };
 
   useEffect(() => {
-    const temp = findMainEmotion(emotion);
-    console.log("temp" + temp);
-    setMainEmotion(temp);
+    setMainEmotion(findMainEmotion(emotion));
   }, []);
 
   return (

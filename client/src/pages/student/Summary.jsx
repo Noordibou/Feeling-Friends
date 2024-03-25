@@ -1,8 +1,6 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import SummaryPerson from "../../images/SummaryPerson.png";
-import emotionsExplained from "../../data/emotionData.js";
 import { useLocation } from "react-router-dom";
-import QuestionFrog from "../../images/Question_Frog.png";
 import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
@@ -13,7 +11,6 @@ const Summary = () => {
   const { userData } = useUser();
   const location = useLocation();
   const emotionFromParams = location.state?.emotion || "";
-  const bottomContentRef = useRef();
   const [emotionColor, setEmotionColor] = useState("")
 
   useEffect(() => {

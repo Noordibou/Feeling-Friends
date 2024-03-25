@@ -101,7 +101,7 @@ const subEmotionInfo = [
         emotion: "Happy",
         eImage: happyImg,
         wheelImg: happyWheel,
-        advice: "When our body feels good it can help our brain to feel good, too.",
+        advice: "When our body feels good, it can help our brain to feel good, too.",
         subEmotions: [
             "Glad",
             "Thoughtful",

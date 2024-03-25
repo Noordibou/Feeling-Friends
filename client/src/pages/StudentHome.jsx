@@ -73,7 +73,7 @@ const StudentHome = () => {
       {/* page container */}
       <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen">
         <div className="flex w-full justify-center mt-20">
-          <ProgressBar totalPages="6" currentPage="1" />
+          <ProgressBar totalPages="5" currentPage="1" />
         </div>
         {/* Check time Section */}
         <div className="mt-20 flex-col text-center">

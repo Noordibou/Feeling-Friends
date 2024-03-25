@@ -72,7 +72,7 @@ const GoalsNeeds = () => {
     <>
       <div className="flex flex-col w-screen items-center bg-notebookPaper">
         <div className="flex w-full justify-center mt-20">
-          <ProgressBar totalPages="6" currentPage="5" />
+          <ProgressBar totalPages="5" currentPage="4" />
         </div>
         <div className="items-center justify-center mt-20 mb-[2.5rem]">
           <img className="w-[33rem]" src={Wiggly} alt="Wiggly" />

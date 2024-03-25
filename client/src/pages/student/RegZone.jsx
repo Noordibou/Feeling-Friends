@@ -49,7 +49,7 @@ const RegZone = () => {
     <>
       <div className="bg-notebookPaper pt-[3.5rem]">
       <div className="flex w-full justify-center mt-6 mb-10">
-          <ProgressBar totalPages="6" currentPage="4"/>
+          <ProgressBar totalPages="5" currentPage="3"/>
         </div>
 
         <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">

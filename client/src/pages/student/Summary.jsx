@@ -24,7 +24,7 @@ const Summary = () => {
     <>
       <div className="pt-[4rem] min-h-screen">
         <div className="flex w-full justify-center mb-20">
-          <ProgressBar totalPages="6" currentPage="6" />
+          <ProgressBar totalPages="5" currentPage="5" />
         </div>
 
         <section>

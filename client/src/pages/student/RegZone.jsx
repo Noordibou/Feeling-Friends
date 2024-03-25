@@ -55,7 +55,7 @@ const RegZone = () => {
           <ProgressBar totalPages="5" currentPage="3"/>
         </div>
 
-        <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">
+        <div className="w-10/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">
           <h2 className="mt-[2rem]">Check in with your body - what zone are you in?</h2>
           {/* component goes here */}
           <ZorImageRender sliderValue={sliderValue} chosenSubEmotion={emotion} />

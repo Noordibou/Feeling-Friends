@@ -45,7 +45,7 @@ const Summary = () => {
               good day at school!
             </h1>
           </div>
-          <div className="flex justify-center mt-24 mb-32">
+          <div className="flex justify-center mt-24 mb-28">
             <Logout location="studentLogout" btnColor={emotionColor} />
           </div>
         </section>

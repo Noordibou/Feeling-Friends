@@ -10,7 +10,7 @@ import {
 } from "../data/zorImages";
 import subEmotionInfo from "../data/subEmotions";
 
-const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
+const ZorImageRender = ({ sliderValue, chosenSubEmotion, setMainEmotionForParams }) => {
   const [mainEmotion, setMainEmotion] = useState("");
   const [zone, setZone] = useState("");
 
@@ -39,6 +39,7 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
 
   useEffect(() => {
     setMainEmotion(findMainEmotion(chosenSubEmotion));
+    setMainEmotionForParams(mainEmotion)
   });
 
   const getZone = (sliderValue) => {

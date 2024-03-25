@@ -100,11 +100,11 @@ const CopingSkillCard = ({ emotion, emotionColor }) => {
 
         {/* Coping Skills Section */}
         <section
-          className="flex flex-col mb-24 mt-14 w-full justify-center  items-center"
+          className="flex flex-col mb-24 mt-28 w-full justify-center  items-center"
           ref={bottomContentRef}
         >
           <div className="flex flex-col justify-center items-center max-w-[580px]">
-            <h3 className="text-[1.75rem] font-semibold font-karla mb-5 self-start w-2/3 -ml-10">
+            <h3 className="text-[1.75rem] font-semibold font-karla mb-5 self-start w-9/12 -ml-10">
               {copingText}
             </h3>
 

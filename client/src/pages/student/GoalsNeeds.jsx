@@ -74,12 +74,9 @@ const GoalsNeeds = () => {
         <div className="flex w-full justify-center mt-20">
           <ProgressBar totalPages="5" currentPage="4" />
         </div>
-        <div className="items-center justify-center mt-20 mb-[2.5rem]">
-          <img className="w-[33rem]" src={Wiggly} alt="Wiggly" />
-        </div>
-
-        <div className="max-w-lg mt-5">
-          <h2 className="text-header2 font-header2 bg-${emotionColor}">
+        
+        <div className="max-w-lg mt-16">
+          <h2 className="text-header2 text-center font-header2">
             What’s your most important goal for the day?
           </h2>
 
@@ -139,7 +136,7 @@ const GoalsNeeds = () => {
               ) : (
                 <div className="p-2">
                   <button
-                    className={`bg-${selectedGoal === "Something else" ? emotionColor : 'themeWhite'} p-4 w-full text-body font-body border-2 border-${emotionColor} hover:bg-${emotionColor}`}
+                    className={`bg-${selectedGoal === "Something else" ? emotionColor : 'themeWhite'} rounded-xl p-4 w-full text-body font-body border-2 border-${emotionColor} hover:bg-${emotionColor}`}
                     onClick={() => {
                       setSelectedGoal("Something else");
                       setInputMode1(true);
@@ -154,7 +151,7 @@ const GoalsNeeds = () => {
         </div>
 
         <div className="max-w-lg mt-5">
-          <h2 className="text-header2 font-header2">What do you need from an adult to succeed today?</h2>
+          <h2 className="text-header2 font-header2 text-center">What do you need from an adult to succeed today?</h2>
 
           <div className="w-full">
             <div className="flex flex-row justify-between mt-3">
@@ -211,7 +208,7 @@ const GoalsNeeds = () => {
             ) : (
               <div className="p-2">
                 <button
-                  className={`bg-${selectedNeed === "Something else" ? emotionColor : 'themeWhite'} p-4 w-full text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor}`}
+                  className={`bg-${selectedNeed === "Something else" ? emotionColor : 'themeWhite'} rounded-xl p-4 w-full text-body font-body border-2 border-${emotionColor} hover-bg-${emotionColor}`}
                   onClick={() => {
                     setSelectedNeed("Something else");
                     setInputMode2(true);

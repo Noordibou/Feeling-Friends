@@ -25,7 +25,8 @@ export function getEmotionColor(chosenEmotion) {
   for (const emotionInfo of subEmotionInfo) {
     if (emotionInfo.subEmotions.includes(chosenEmotion)) {
       const mainEmotion = emotionInfo.emotion;
-      return emotionColors[mainEmotion];
+      const mainColor = emotionColors[mainEmotion]
+      return mainColor;
     }
   }
   return "darkSandwich";

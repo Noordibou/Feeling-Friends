@@ -16,9 +16,11 @@ const Summary = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     if(emotionFromParams) {
-      setEmotionColor(getEmotionColor(emotionFromParams))
+      const color = getEmotionColor(emotionFromParams)
+      setEmotionColor(color)
+      console.log("emotion color: " + JSON.stringify(color))
     }
-  }, [userData]);
+  }, [userData, emotionFromParams]);
 
   return (
     <>
@@ -49,7 +51,7 @@ const Summary = () => {
 
         {/* bottom section */}
 
-        <CopingSkillCard emotion={emotionFromParams.toLowerCase()} emotionColor={emotionColor} emotionFromParams={emotionFromParams}/>
+        <CopingSkillCard emotion={emotionFromParams.toLowerCase()} emotionColor={emotionColor}/>
         
       </div>
     </>

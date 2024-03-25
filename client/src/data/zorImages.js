@@ -28,7 +28,11 @@ import happyUnmotivated from "../images/zor/happy-unmotivated.png"
 import happyRTL from "../images/zor/happy-readytolearn.png"
 import happyWiggly from "../images/zor/happy-wiggly.png"
 import happyExplosive from "../images/zor/happy-explosive.png"
-
+//girl
+import girlUnmotivated from "../images/zor/femalestudent-unmotivated.png"
+import girlRTL from "../images/zor/femalestudent-readytolearn.png"
+import girlWiggly from "../images/zor/femalestudent-wiggly.png"
+import girlExplosive from "../images/zor/femalestudent-explosive.png"
 
 const proudZorImages = [
     proudUnmotivated,
@@ -72,6 +76,12 @@ const happyZorImages = [
     happyExplosive
 ]
 
+const girlZorImages = [
+    girlUnmotivated,
+    girlRTL,
+    girlWiggly,
+    girlExplosive
+]
 
 export {
     proudZorImages,
@@ -79,5 +89,6 @@ export {
     sadZorImages,
     nervousZorImages,
     scaredZorImages,
-    happyZorImages
+    happyZorImages,
+    girlZorImages
 }

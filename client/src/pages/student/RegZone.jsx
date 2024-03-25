@@ -4,7 +4,7 @@ import { useUser } from "../../context/UserContext";
 import Slider from "../../components/Slider";
 import ProgressBar from "../../components/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
-import ZorImageRender from "../../components/zorImageRender";
+import ZorImageRender from "../../components/ZorImageRender";
 
 const RegZone = () => {
   const navigate = useNavigate();
@@ -45,6 +45,7 @@ const RegZone = () => {
       setEmotion(emotionFromParams);
       console.log("emotion from location: " + emotionFromParams)
     }
+    console.log("slide value: " + sliderValue)
   }, [location.state?.emotion]);
 
   return (
@@ -55,11 +56,9 @@ const RegZone = () => {
         </div>
 
         <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] font-header2 md:text-header2 text-header3 leading-tight">
-
-          {/* component goes here */}
-          <ZorImageRender sliderValue={sliderValue}  />
-          <img src={Wiggly} alt="wiggly" className="ml-auto mr-auto" />
           <h2 className="mt-[2rem]">Check in with your body - what zone are you in?</h2>
+          {/* component goes here */}
+          <ZorImageRender sliderValue={sliderValue} chosenSubEmotion={emotion} />
         </div>
 
         {/* slider view */}

@@ -11,7 +11,7 @@ const SubEmotion = () => {
 
   const handleEmotionClick = (chosenEmotion) => {
     updateUserDataAccumulated({ emotion: chosenEmotion });
-    navigate("/insight", {
+    navigate("/regzone", {
       state: {
         emotion: chosenEmotion,
       },

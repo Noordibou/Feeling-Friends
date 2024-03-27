@@ -74,7 +74,6 @@ const CopingSkillCard = ({ emotion, emotionColor }) => {
             <button
               className="flex flex-row"
               onClick={() => {
-                console.log("Bottom Content Ref:", bottomContentRef.current);
                 if (bottomContentRef.current) {
                   window.scrollTo({
                     top: bottomContentRef.current.offsetTop,

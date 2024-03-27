@@ -303,8 +303,6 @@ const addStudentToClassroom = async (req, res) => {
         .json({ error: "Student is already in the classroom" });
     }
 
-    console.log("studentID: " + studentId)
-
     classroom.students.push({ student: studentId });
     await teacher.save();
 

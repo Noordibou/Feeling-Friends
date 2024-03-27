@@ -60,6 +60,8 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
         return nervousZorImages.find((image) => image.includes(zone.toLowerCase()));
       case "scared":
         return scaredZorImages.find((image) => image.includes(zone.toLowerCase()));
+      case "proud":
+        return proudZorImages.find((image) => image.includes(zone.toLowerCase()));
       case "girl":
         return girlZorImages.find((image) => image.includes(zone.toLowerCase()));
       default:

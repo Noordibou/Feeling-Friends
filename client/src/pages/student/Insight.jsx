@@ -56,6 +56,10 @@ const Insight = () => {
               )}
             </div>
           </div>
+
+          <div className="hidden bg-lightBlue"></div>
+          <div className="hidden bg-lightLavender"></div>
+          <div className="hidden bg-lightYellow"></div>
   
           {/* Text under tip */}
           <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] mt-[5rem] font-header2 md:text-header2 text-header3 leading-tight">

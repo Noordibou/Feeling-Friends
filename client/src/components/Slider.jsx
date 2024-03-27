@@ -17,7 +17,6 @@ const Slider = ({ updateSliderValue }) => {
 
         setValue(Math.round(newProgress * 100))
         updateSliderValue(Math.round(newProgress * 100))
-        // console.log("Position x-axis: " + Math.round(newProgress * 100))
     }
 
     return (

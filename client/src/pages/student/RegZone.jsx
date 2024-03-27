@@ -45,7 +45,6 @@ const RegZone = () => {
       setEmotion(emotionFromParams);
       console.log("emotion from location: " + emotionFromParams)
     }
-    console.log("slide value: " + sliderValue)
   }, [location.state?.emotion]);
 
   return (

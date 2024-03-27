@@ -14,15 +14,6 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
   const [mainEmotion, setMainEmotion] = useState("");
   const [zone, setZone] = useState("");
 
-  const emotionImageMap = {
-    proud: proudZorImages,
-    angry: angryZorImages,
-    sad: sadZorImages,
-    nervous: nervousZorImages,
-    scared: scaredZorImages,
-    happy: happyZorImages,
-  };
-
   const findMainEmotion = (subEmotion) => {
     for (const emotionInfo of subEmotionInfo) {
       if (
@@ -30,7 +21,6 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
           subEmotion.charAt(0).toUpperCase() + subEmotion.slice(1)
         )
       ) {
-        console.log("emotions info: " + emotionInfo.emotion.toLowerCase());
         return emotionInfo.emotion.toLowerCase();
       }
     }
@@ -70,23 +60,24 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
         return nervousZorImages.find((image) => image.includes(zone.toLowerCase()));
       case "scared":
         return scaredZorImages.find((image) => image.includes(zone.toLowerCase()));
+      case "proud":
+        return proudZorImages.find((image) => image.includes(zone.toLowerCase()));
       case "girl":
-        return girlZorImages.find((image) => image.includes(zone));
+        return girlZorImages.find((image) => image.includes(zone.toLowerCase()));
       default:
         return null;
     }
   };
 
-  const imagePath = getImage(mainEmotion, zone);
-  const girlZoneIndex = Math.floor(sliderValue / 25);
-  const girlImage = girlZorImages[girlZoneIndex];
+  const emotionImagePath = getImage(mainEmotion, zone);
+  const girlImage = getImage("girl", zone);
 
   return (
     <div className="w-full mt-14">
         <div className="flex flex-row justify-center">
         <h6 className="text-sm font-normal w-3/12">I'm feeling {zone === "readytolearn" ? "ready to learn" : zone} !</h6>
         {girlImage && <img src={girlImage} alt="Girl Zor Image" className="h-52 self-end mx-3" />}
-        {imagePath && <img src={imagePath} alt="Emotion Image" className="h-36 self-end mx-3" />}
+        {emotionImagePath && <img src={emotionImagePath} alt="Emotion Image" className="h-36 self-end mx-3" />}
         <h6 className="text-sm font-normal w-1/4 mt-10">Me too!</h6>
         </div>
     </div>

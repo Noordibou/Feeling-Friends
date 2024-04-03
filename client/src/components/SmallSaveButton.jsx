@@ -1,11 +1,26 @@
-import Background from "../images/button.png"
+import { motion } from "framer-motion"
+import Background from "../images/smallbutton.png"
 
 export default function SmallSaveButton() {
     return (
-        <div className="flex justify-center items-center">
-        <button style={{ backgroundImage: `url('${Background}')` }} className="text-body text-[Poppins] rounded-xl px-[1rem] flex items-center w-[700px] h-[80px]">
-            <h4 className="pr-2">Save</h4>
-        </button>
+        <>
+        
+        
+        <div 
+        style={{ backgroundImage: `url('${Background}')` }} 
+        className="w-[200px] h-[88px] rounded-xl overflow-hidden cursor-pointer">
+        <div className="w-200px h-88px flex justify-center">
+        <span className="font-poppins text-white text-lg font-semibold absolute z-20 mt-[24px]">Save</span>
         </div>
+        <motion.div 
+        whileHover={{ x: 24 }}
+        transition={{ ease: "linear", duration: 0.3 }}
+        style={{ backgroundImage: `url('${Background}')` }} 
+        className="rounded-xl w-[200px] h-[88px] z-10">
+        </motion.div>
+
+        </div>
+        
+        </>
     );
 }

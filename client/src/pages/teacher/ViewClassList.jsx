@@ -171,7 +171,7 @@ export default function ViewClassList() {
                 key="list-of-students-1"
               >
                 {sortedStudents.length > 0 ? (
-                  <div key={`container`} className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 h-32">
+                  <div key={`container`} className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 h-32">
                     {sortedStudents.map((student, index) => {
                       return (
                         <div key={`student-info-${index}`} className="w-[490px]">

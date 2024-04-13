@@ -313,6 +313,8 @@ const EditSeatingChart = () => {
                 setShowFurnitureModal(false);
               }}
               isSelected={showStudentRosterModal}
+              flexType="flex-row"
+              buttonSize="long"
             />
 
             {/* Open Choose Furniture Modal */}
@@ -326,6 +328,8 @@ const EditSeatingChart = () => {
                 setShowStudentRosterModal(false);
               }}
               isSelected={showFurnitureModal}
+              flexType="flex-row"
+              buttonSize="long"
             />
 
             {/* Save Layout button */}

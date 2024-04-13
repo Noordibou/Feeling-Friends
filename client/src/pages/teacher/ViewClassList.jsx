@@ -119,10 +119,34 @@ export default function ViewClassList() {
                   </div>
                 </>
               ) : (
+                <div className="flex flex-row mb-10">
                 <ClassInfoNavbar
                   teacherId={teacherId}
                   classroomId={classroomId}
                 />
+                 {/* Room View & List Buttons */}
+                  <div className="flex justify-around w-72 mt-8 items-center">
+                    <Link
+                      className="flex items-center h-16"
+                      to={`/classroom/${userData._id}/${classroomId}`}
+                    >
+                      <ButtonView
+                        buttonText="Room View"
+                        defaultBtnImage={classBoxesIcon}
+                        isSelected={false}
+                        flexType="flex-col-reverse"
+                        buttonSize="small"
+                      />
+                    </Link>
+                    <ButtonView
+                      buttonText="List View"
+                      btnImageWhenOpen={listIcon}
+                      isSelected={true}
+                      flexType="flex-col-reverse"
+                      buttonSize="small"
+                    />
+                  </div>
+            </div>
               )}
 
               <ToggleButton students={students} setStudents={setStudents} />
@@ -185,7 +209,7 @@ export default function ViewClassList() {
             </div>
 
             {/* Room View & List Buttons */}
-            <div className="flex justify-between w-full items-center ">
+            {/* <div className="flex justify-between w-full items-center ">
               <Link
                 className="flex items-center h-16"
                 to={`/classroom/${userData._id}/${classroomId}`}
@@ -201,7 +225,7 @@ export default function ViewClassList() {
                 btnImageWhenOpen={listIcon}
                 isSelected={true}
               />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="fixed bottom-0 w-screen">

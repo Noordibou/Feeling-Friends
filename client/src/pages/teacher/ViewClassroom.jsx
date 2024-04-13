@@ -79,8 +79,31 @@ const ViewClassroom = () => {
       <div className="flex h-screen min-w-screen justify-center">
         <div className="flex flex-col items-center max-w-4xl ">
           {/* Top Navbar */}
-          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
-
+          <div className="flex">
+            <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
+            {/* Room View & List Buttons */}
+          <div className="flex justify-around w-72 mt-8 items-center ">
+            <ButtonView
+              buttonText="Room View"
+              btnImageWhenOpen={classBoxesIcon}
+              isSelected={true}
+              flexType="flex-col-reverse"
+              buttonSize="small"
+            />
+            <Link
+              className="flex items-center h-16"
+              to={`/viewclasslist/${userData._id}/${classroomId}`}
+            >
+              <ButtonView
+                buttonText="List View"
+                defaultBtnImage={listIcon}
+                isSelected={false}
+                flexType="flex-col-reverse"
+                buttonSize="small"
+              />
+            </Link>
+          </div>
+          </div>
           {classroom ? (
             <>
               {/* Classroom Container */}
@@ -206,25 +229,6 @@ const ViewClassroom = () => {
               isEditMode={true}
               handleClick={() => closeStudentInfo(selectedStudent)}
             />
-          </div>
-
-          {/* Room View & List Buttons */}
-          <div className="flex justify-around w-full mt-10 items-center ">
-            <ButtonView
-              buttonText="Room View"
-              btnImageWhenOpen={classBoxesIcon}
-              isSelected={true}
-            />
-            <Link
-              className="flex items-center h-16"
-              to={`/viewclasslist/${userData._id}/${classroomId}`}
-            >
-              <ButtonView
-                buttonText="List View"
-                defaultBtnImage={listIcon}
-                isSelected={false}
-              />
-            </Link>
           </div>
         </div>
         <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>

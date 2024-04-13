@@ -63,7 +63,7 @@ export default function ViewClassList() {
   return (
     <>
       <div className="flex h-screen min-w-screen-xl justify-center">
-        <div className="flex flex-col max-w-4xl">
+        <div className="flex flex-col items-center max-w-4xl">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -134,7 +134,6 @@ export default function ViewClassList() {
                         buttonText="Room View"
                         defaultBtnImage={classBoxesIcon}
                         isSelected={false}
-                        flexType="flex-col-reverse"
                         buttonSize="small"
                       />
                     </Link>
@@ -142,7 +141,6 @@ export default function ViewClassList() {
                       buttonText="List View"
                       btnImageWhenOpen={listIcon}
                       isSelected={true}
-                      flexType="flex-col-reverse"
                       buttonSize="small"
                     />
                   </div>
@@ -173,10 +171,10 @@ export default function ViewClassList() {
                 key="list-of-students-1"
               >
                 {sortedStudents.length > 0 ? (
-                  <div key={`container`} className="w-[80%]">
+                  <div key={`container`} className="w-[86%]">
                     {sortedStudents.map((student, index) => {
                       return (
-                        <div key={`student-info-${index}`} className="my-6 ">
+                        <div key={`student-info-${index}`} className="my-6">
                           <StudentInfoBox
                             student={student}
                             userData={userData}
@@ -207,25 +205,6 @@ export default function ViewClassList() {
                 </button>
               </div>
             </div>
-
-            {/* Room View & List Buttons */}
-            {/* <div className="flex justify-between w-full items-center ">
-              <Link
-                className="flex items-center h-16"
-                to={`/classroom/${userData._id}/${classroomId}`}
-              >
-                <ButtonView
-                  buttonText="Room View"
-                  defaultBtnImage={classBoxesIcon}
-                  isSelected={false}
-                />
-              </Link>
-              <ButtonView
-                buttonText="List View"
-                btnImageWhenOpen={listIcon}
-                isSelected={true}
-              />
-            </div> */}
           </div>
         </div>
         <div className="fixed bottom-0 w-screen">

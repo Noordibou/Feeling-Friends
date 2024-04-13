@@ -87,7 +87,6 @@ const ViewClassroom = () => {
               buttonText="Room View"
               btnImageWhenOpen={classBoxesIcon}
               isSelected={true}
-              flexType="flex-col-reverse"
               buttonSize="small"
             />
             <Link
@@ -98,7 +97,6 @@ const ViewClassroom = () => {
                 buttonText="List View"
                 defaultBtnImage={listIcon}
                 isSelected={false}
-                flexType="flex-col-reverse"
                 buttonSize="small"
               />
             </Link>

@@ -17,7 +17,7 @@ const ButtonView = ({
     <>
       <div className={`${buttonSize !== "small" ? "mx-2" : ""}`}>
         <button
-          className={`text-[16px]  text-[Poppins] rounded-xl flex ${flexType} items-center ${buttonSize === "small" ? "pt-3 h-24 w-28" : "h-20 w-[270px] border-[4px] border-sandwich" }  justify-around ${
+          className={`text-[16px]  text-[Poppins] rounded-xl flex items-center ${buttonSize === "small" ? "flex-col-reverse pt-3 h-24 w-28" : "h-20 w-[270px] border-[4px] border-sandwich" }  justify-around ${
             isSelected ? "underline font-[700] bg-sandwich" : "bg-notebookPaper"
           }`}
           onClick={handleClick}

@@ -22,7 +22,7 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
     <div className="flex items-center justify-around mb-[0.5rem] mt-10 w-full ">
       <div className="flex items-center ">
         <GoBack />
-        <h2 className="text-header4 font-header2 ml-[2rem] ">
+        <h2 className="text-[25px] ml-[2rem] ">
           {classroom.classSubject}
         </h2>
       </div>

@@ -12,7 +12,7 @@ const StudentInfoBox = ({
   isEditMode,
 }) => {
   
-  const {bgColorClass, lastCheck, lastEmotion} = getLastJournalInfo(student);
+  const {bgColorClass, lastCheck, lastEmotion, borderColorClass} = getLastJournalInfo(student);
 
   return (
     <div className="relative flex flex-col h-full w-full" key={`${student.id}`}>
@@ -20,33 +20,38 @@ const StudentInfoBox = ({
       <div
         className={`${
           bgColorClass
-            ? `bg-${bgColorClass} border-${bgColorClass}`
+            ? `bg-notebookPaper border-${borderColorClass}`
             : "bg-[#ece6d2] border-sandwich"
-        } border-4 shadow-2xl p-2 h-full rounded-lg flex flex-row`}
+        } border-4 shadow-2xl h-full rounded-lg flex flex-row `}
       >
         {/* student image */}
         <div
-          className={`flex h-full my-auto ${
-            bgColorClass ? "w-full" : "w-28 opacity-50"
+          className={`flex ${
+            bgColorClass ? `w-full bg-${bgColorClass} border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
           }`}
         >
           <img
             src={student.avatarImg === "none" ? avatarImg : student.avatarImg}
             alt={student.firstName}
-            className="flex w-24 h-24 rounded-2xl mr-4 "
+            className={`flex w-24 h-24 rounded-2xl p-2 self-center  ${
+              borderColorClass ===
+              "sandwich"
+                ? "opacity-50"
+                : ""
+            }`}
           />
         </div>
 
         {/* text container */}
-        <div className="flex flex-col w-[80%] px-4">
+        <div className="flex flex-col w-[80%] px-4 my-5">
           {/* last emotion */}
           <div className="pb-2 flex justify-between">
             {lastCheck ? (
-              <div className="font-[Poppins] text-md">
+              <div className="font-[Poppins] text-[18px]">
                 <span>
                   {student.firstName} {student.lastName} is feeling{" "}
                 </span>
-                <b>{lastEmotion}</b>
+                <b className="font-semibold underline">{lastEmotion}</b>
               </div>
             ) : (
               <></>
@@ -63,8 +68,8 @@ const StudentInfoBox = ({
           >
             {lastCheck ? (
               <div className="flex flex-col w-72">
-                <h5 className="font-[Poppins]">Goals: {lastCheck.goal}</h5>
-                <h5 className="font-[Poppins]">Needs: {lastCheck.need}</h5>
+                <h5 className="font-[Poppins]"><b>Goals:</b> {lastCheck.goal}</h5>
+                <h5 className="font-[Poppins]"><b>Needs:</b> {lastCheck.need}</h5>
               </div>
             ) : (
               <div className="flex flex-col w-72 h-16">

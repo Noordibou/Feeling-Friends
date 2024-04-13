@@ -313,6 +313,7 @@ const EditSeatingChart = () => {
                 setShowFurnitureModal(false);
               }}
               isSelected={showStudentRosterModal}
+              buttonSize="long"
             />
 
             {/* Open Choose Furniture Modal */}
@@ -326,6 +327,7 @@ const EditSeatingChart = () => {
                 setShowStudentRosterModal(false);
               }}
               isSelected={showFurnitureModal}
+              buttonSize="long"
             />
 
             {/* Save Layout button */}

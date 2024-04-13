@@ -46,7 +46,7 @@ const StudentInfoBox = ({
                 <span>
                   {student.firstName} {student.lastName} is feeling{" "}
                 </span>
-                <b>{lastEmotion}</b>
+                <b className="font-semibold underline">{lastEmotion}</b>
               </div>
             ) : (
               <></>

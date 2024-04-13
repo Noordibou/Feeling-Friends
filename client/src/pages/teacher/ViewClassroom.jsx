@@ -159,7 +159,7 @@ const ViewClassroom = () => {
                     (student) => student._id === studentObj.student
                   );
 
-                  const { borderColorClass } = getLastJournalInfo(assignedStudent)
+                  const { borderColorClass, bgColorClass } = getLastJournalInfo(assignedStudent)
 
                   return (
                       <motion.div
@@ -170,7 +170,7 @@ const ViewClassroom = () => {
                           y: Math.max(0, initialY),
                         }}
                         className={`absolute mx-1 bg-${
-                          borderColorClass
+                          bgColorClass
                         } ${
                           borderColorClass === "sandwich"
                             ? "bg-opacity-30 border-4 border-sandwich"

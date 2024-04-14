@@ -51,7 +51,7 @@ function calculateAge(birthday) {
     return `${formattedHours}:${formattedMinutes} ${period}`;
   }
 
-  module.exports ={
+  export {
     calculateAge,
     formatDate,
     getCurrentDate,

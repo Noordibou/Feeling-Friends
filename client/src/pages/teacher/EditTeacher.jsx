@@ -100,7 +100,7 @@ const EditTeacher = () => {
                     </div>
                 </div>
             <div className="bottom-0 fixed w-screen">
-                <TeacherNavbar />
+                <TeacherNavbar  />
             </div>
             </div>
         </>

@@ -3,7 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logout from '../components/LogoutButton.jsx';
 
+// TODO: make greeting message more dynamic based on time of day
 
+// this is the initial greeting on the teacher home page
+// changes based on whether it's in edit or display mode
 
 const Greeting = ({ isEditMode, userData }) => {
     if (isEditMode) {

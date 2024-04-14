@@ -31,6 +31,12 @@ const autoJournalEntries = async () => {
                 };
                 await updateStudentJournalEntry(req, res);
             }
+            // Delete oldest journal entry if entries exceed 30
+            if (student.journalEntries.length > 30) {
+                student.journalEntries.shift(); // Remove the oldest entry
+                await student.save(); // Save changes to the student document
+                console.log('Oldest journal entry deleted for student:', student._id);
+            }
         }
         console.log('Random journal entries added successfully to all students');
         process.exit(0)

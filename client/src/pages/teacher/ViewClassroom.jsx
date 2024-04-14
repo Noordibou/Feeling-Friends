@@ -14,7 +14,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 
-const DisplaySeatingChart = () => {
+const ViewClassroom = () => {
   const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [assignedStudents, setAssignedStudents] = useState([]);
@@ -79,8 +79,29 @@ const DisplaySeatingChart = () => {
       <div className="flex h-screen min-w-screen justify-center">
         <div className="flex flex-col items-center max-w-4xl ">
           {/* Top Navbar */}
-          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
-
+          <div className="flex">
+            <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
+            {/* Room View & List Buttons */}
+          <div className="flex justify-around w-72 mt-8 items-center ">
+            <ButtonView
+              buttonText="Room View"
+              btnImageWhenOpen={classBoxesIcon}
+              isSelected={true}
+              buttonSize="small"
+            />
+            <Link
+              className="flex items-center h-16"
+              to={`/viewclasslist/${userData._id}/${classroomId}`}
+            >
+              <ButtonView
+                buttonText="List View"
+                defaultBtnImage={listIcon}
+                isSelected={false}
+                buttonSize="small"
+              />
+            </Link>
+          </div>
+          </div>
           {classroom ? (
             <>
               {/* Classroom Container */}
@@ -138,7 +159,7 @@ const DisplaySeatingChart = () => {
                     (student) => student._id === studentObj.student
                   );
 
-                  const { borderColorClass } = getLastJournalInfo(assignedStudent)
+                  const { borderColorClass, bgColorClass } = getLastJournalInfo(assignedStudent)
 
                   return (
                       <motion.div
@@ -149,7 +170,7 @@ const DisplaySeatingChart = () => {
                           y: Math.max(0, initialY),
                         }}
                         className={`absolute mx-1 bg-${
-                          borderColorClass
+                          bgColorClass
                         } ${
                           borderColorClass === "sandwich"
                             ? "bg-opacity-30 border-4 border-sandwich"
@@ -162,14 +183,14 @@ const DisplaySeatingChart = () => {
                         <div className="">
                           <div className="flex w-full justify-center h-full items-center">
                             <img
-                              alt="student"
                               className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
                                 borderColorClass ===
                                 "sandwich"
                                   ? "opacity-50"
                                   : ""
                               }`}
-                              src={SampleAvatar}
+                              src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
+                              alt={assignedStudent.firstName}
                             />
                           </div>
                           <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
@@ -207,25 +228,6 @@ const DisplaySeatingChart = () => {
               handleClick={() => closeStudentInfo(selectedStudent)}
             />
           </div>
-
-          {/* Room View & List Buttons */}
-          <div className="flex justify-around w-full mt-10 items-center ">
-            <ButtonView
-              buttonText="Room View"
-              btnImageWhenOpen={classBoxesIcon}
-              isSelected={true}
-            />
-            <Link
-              className="flex items-center h-16"
-              to={`/viewclasslist/${userData._id}/${classroomId}`}
-            >
-              <ButtonView
-                buttonText="List View"
-                defaultBtnImage={listIcon}
-                isSelected={false}
-              />
-            </Link>
-          </div>
         </div>
         <div className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}>
           <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
@@ -234,11 +236,11 @@ const DisplaySeatingChart = () => {
           </h4>
         </div>
         <div className="bottom-0 fixed w-screen">
-          <TeacherNavbar />
+        <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div>
       </div>
     </>
   );
 };
 
-export default DisplaySeatingChart;
+export default ViewClassroom;

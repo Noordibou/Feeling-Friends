@@ -11,6 +11,22 @@ export default function TeacherNavbar() {
     return `font-poppins text-notebookPaper text-md nav-text-shadow ${isActive ? 'underline' : ''}`;
   };
 
+  const handleEditClick = () => {
+    const supportsEditMode = typeof setIsEditMode === 'function';
+    const classroomPageUrl = `/classroom/${teacherId}/${classroomId}`;
+
+    // Check if the current page is the classroom page
+    if (window.location.pathname === classroomPageUrl) {
+      redirectTo(`/edit-seating-chart/${teacherId}/${classroomId}`);
+    } else if (supportsEditMode) {
+      // Toggle edit mode using the function passed down as a prop
+      setIsEditMode((prevEditMode) => !prevEditMode);
+    } else {
+      // Display a message or perform some other action when edit mode is not supported
+      alert("This page does not support edit mode.");
+    }
+  };
+
   return (
     <div className="flex w-full">
       

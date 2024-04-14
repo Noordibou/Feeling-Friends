@@ -62,8 +62,8 @@ export default function ViewClassList() {
 
   return (
     <>
-      <div className="flex h-screen min-w-screen-xl justify-center">
-        <div className="flex flex-col max-w-4xl">
+      <div className="flex h-screen min-w-screen justify-center">
+        <div className="flex flex-col items-center w-full">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -72,7 +72,7 @@ export default function ViewClassList() {
                   <SimpleTopNav pageTitle="Manage Classroom" />
 
                   {/* Classroom Info (on Edit only) */}
-                  <div className="bg-sandwich w-[80%] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
+                  <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
                     <h2 className="text-header2 font-header2 my-[0.5rem]">
                       {classroom.classSubject}
                     </h2>
@@ -119,10 +119,32 @@ export default function ViewClassList() {
                   </div>
                 </>
               ) : (
+                <div className="flex flex-row mb-10">
                 <ClassInfoNavbar
                   teacherId={teacherId}
                   classroomId={classroomId}
                 />
+                 {/* Room View & List Buttons */}
+                  <div className="flex justify-around w-72 mt-8 items-center">
+                    <Link
+                      className="flex items-center h-16"
+                      to={`/classroom/${userData._id}/${classroomId}`}
+                    >
+                      <ButtonView
+                        buttonText="Room View"
+                        defaultBtnImage={classBoxesIcon}
+                        isSelected={false}
+                        buttonSize="small"
+                      />
+                    </Link>
+                    <ButtonView
+                      buttonText="List View"
+                      btnImageWhenOpen={listIcon}
+                      isSelected={true}
+                      buttonSize="small"
+                    />
+                  </div>
+            </div>
               )}
 
               <ToggleButton students={students} setStudents={setStudents} />
@@ -143,16 +165,16 @@ export default function ViewClassList() {
 
               {/* Scrollable list of students */}
               <div
-                className={`flex justify-center overflow-y-auto custom-scrollbar ${
-                  isEditMode ? "" : "h-[55%]"
+                className={`flex w-full justify-center overflow-y-auto custom-scrollbar ${
+                  isEditMode ? "h-[35%]" : "h-[55%]"
                 } pt-3 `}
                 key="list-of-students-1"
               >
                 {sortedStudents.length > 0 ? (
-                  <div key={`container`} className="w-[80%]">
+                  <div key={`container`} className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 h-32">
                     {sortedStudents.map((student, index) => {
                       return (
-                        <div key={`student-info-${index}`} className="my-6 ">
+                        <div key={`student-info-${index}`} className="w-[490px]">
                           <StudentInfoBox
                             student={student}
                             userData={userData}
@@ -174,38 +196,19 @@ export default function ViewClassList() {
           )}
 
           {/* Buttons for Home and save/edit */}
-          <div className="flex flex-col mt-[1rem] pb-6">
+          <div className="flex flex-col w-[70%] mt-[1rem] pb-6">
             <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
                 <button onClick={() => setIsEditMode(!isEditMode)}>
-                  {isEditMode ? "Save Changes" : "Edit Students"}
+                  {isEditMode ? "Save Changes" : ""}
                 </button>
               </div>
-            </div>
-
-            {/* Room View & List Buttons */}
-            <div className="flex justify-between w-full items-center ">
-              <Link
-                className="flex items-center h-16"
-                to={`/classroom/${userData._id}/${classroomId}`}
-              >
-                <ButtonView
-                  buttonText="Room View"
-                  defaultBtnImage={classBoxesIcon}
-                  isSelected={false}
-                />
-              </Link>
-              <ButtonView
-                buttonText="List View"
-                btnImageWhenOpen={listIcon}
-                isSelected={true}
-              />
             </div>
           </div>
         </div>
         <div className="fixed bottom-0 w-screen">
-          <TeacherNavbar />
+        <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div>
       </div>
     </>

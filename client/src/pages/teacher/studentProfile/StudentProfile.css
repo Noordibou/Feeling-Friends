@@ -1,15 +1,13 @@
 .react-calendar {
     width: 500px;
     max-width: 100%;
-    background-color: #fff;
     color: #222;
-    border-radius: 16px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
     padding: 20px;
-    border-color: #E2DBC2;
-    border-width: 8px;
+    border: none;
     font-weight: bold;
   }
   
@@ -36,6 +34,16 @@
   
   .react-calendar__navigation button[disabled] {
     background-color: #f0f0f0;
+  }
+
+  button[disabled].react-calendar__tile {
+    display: none !important;
+  }
+  .react-calendar__navigation__next2-button {
+    display: none !important;
+  }
+  .react-calendar__navigation__prev2-button {
+    display: none !important;
   }
   
   abbr[title] {

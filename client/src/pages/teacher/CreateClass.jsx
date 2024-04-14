@@ -13,8 +13,6 @@ import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
 import SaveButton from "../../components/SaveButton";
 
-
-
 const CreateClass = () => {
 
   
@@ -293,11 +291,14 @@ const CreateClass = () => {
             </div>
           </div>
         </div>
-        <div className="h-[25%]">
-        <SaveButton onClick={handleCreateClassroom} /></div>
+        <div className="h-[25%] w-full flex justify-center mt-[1rem]">
+        <div onClick={handleCreateClassroom}>
+        <SaveButton /></div>
+        
         <div className="bottom-0 fixed w-screen">
           <TeacherNavbar />
         </div>
+      </div>
       </div>
     </>
   );

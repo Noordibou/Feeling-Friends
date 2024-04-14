@@ -24,6 +24,12 @@ export default function ViewClassList() {
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    classSubject: '',
+    location: '',
+    checkIn: '',
+    checkOut: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,10 +41,13 @@ export default function ViewClassList() {
           classroomId
         );
         setStudents(classroomStudents);
+        setUserInfo(userData)
       } catch (error) {
         console.log(error);
       }
     };
+
+    console.log("classroom: " + JSON.stringify(classroom))
 
     window.scrollTo(0, 0);
     fetchData();
@@ -58,6 +67,44 @@ export default function ViewClassList() {
     }
   };
 
+  const saveClassroomInfo = async () => {
+    // finding the index of this classroom needing to be updated
+    const classroomIndex = userInfo.classrooms.findIndex(
+      (c) => c._id === classroom._id
+    );
+
+    // double check that this classroom actually exists
+    if (classroomIndex === -1) {
+      console.error("Classroom not found");
+      return;
+    }
+
+    const updatedUserInfo = { ...userInfo };
+
+    // formatting new data from classrooms to the userData copy
+    updatedUserInfo.classrooms[classroomIndex] = {
+      ...updatedUserInfo.classrooms[classroomIndex],
+      classSubject: classroom.classSubject,
+      location: classroom.location,
+      checkIn: classroom.checkIn,
+      checkOut: classroom.checkOut,
+    };
+
+    // update teacher from react context
+    await updateUser(updatedUserInfo);
+
+    console.log("User updated:", JSON.stringify(updatedUserInfo));
+    setIsEditMode(!isEditMode)
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setClassroom({
+      ...classroom,
+      [name]: value,
+    });
+  };
+
   const sortedStudents = sortByCriteria(students);
 
   return (
@@ -73,36 +120,56 @@ export default function ViewClassList() {
 
                   {/* Classroom Info (on Edit only) */}
                   <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
-                    <h2 className="text-header2 font-header2 my-[0.5rem]">
-                      {classroom.classSubject}
-                    </h2>
+                    {/* TODO: Update */}
+
+                    <input
+                      className="flex w-44 h-10 border-2 border-gray rounded my-3 pl-3 text-[22px]"
+                      name="classSubject"
+                      placeholder="Subject"
+                      value={classroom.classSubject}
+                      onChange={handleChange}
+
+                    />
                     <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
                       <div className="flex justify-between mx-2">
                         <div className="flex-col text-sm font-body">
                           <h2>Location:</h2>
-                          <h2 className="font-semibold">
-                            {classroom.location}
-                          </h2>
+
+                          {/* TODO: Update */}
+                          <input
+                            className="border-2 w-56 border-gray rounded pl-3 py-1 text-[18px]"
+                            name="location"
+                            placeholder="Room 123"
+                            value={classroom.location}
+                            onChange={handleChange}
+                          />
                         </div>
 
                         <div className="flex-col text-sm font-body ">
                           <div className="flex gap-4">
                             <div>
                               <h2>Check-in:</h2>
-                              <h2>
-                                {classroom.checkIn
-                                  ? `${classroom.checkIn}AM`
-                                  : "-"}
-                              </h2>
+                              {/* TODO: Update */}
+                              <input
+                                className="flex w-24 border-2 border-gray rounded pl-2 py-1 text-[18px]"
+                                name="checkIn"
+                                type="time"
+                                value={classroom.checkIn}
+                                onChange={handleChange}
+                              />
                             </div>
                             <div>
                               <h2>Check-out:</h2>
-                              <h2>
-                                {classroom.checkOut
-                                  ? `${classroom.checkOut}AM`
-                                  : "-"}
-                              </h2>
-                            </div>
+
+                              {/* TODO: Update */}
+                              <input
+                                className="flex w-24 border-2 border-gray rounded pl-2 py-1 text-[18px]"
+                                name="checkOut"
+                                type="time"
+                                value={classroom.checkOut}
+                                onChange={handleChange}
+                              />                            
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -120,11 +187,11 @@ export default function ViewClassList() {
                 </>
               ) : (
                 <div className="flex flex-row mb-10">
-                <ClassInfoNavbar
-                  teacherId={teacherId}
-                  classroomId={classroomId}
-                />
-                 {/* Room View & List Buttons */}
+                  <ClassInfoNavbar
+                    teacherId={teacherId}
+                    classroomId={classroomId}
+                  />
+                  {/* Room View & List Buttons */}
                   <div className="flex justify-around w-72 mt-8 items-center">
                     <Link
                       className="flex items-center h-16"
@@ -144,7 +211,7 @@ export default function ViewClassList() {
                       buttonSize="small"
                     />
                   </div>
-            </div>
+                </div>
               )}
 
               <ToggleButton students={students} setStudents={setStudents} />
@@ -171,10 +238,16 @@ export default function ViewClassList() {
                 key="list-of-students-1"
               >
                 {sortedStudents.length > 0 ? (
-                  <div key={`container`} className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 h-32">
+                  <div
+                    key={`container`}
+                    className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 h-32"
+                  >
                     {sortedStudents.map((student, index) => {
                       return (
-                        <div key={`student-info-${index}`} className="w-[490px]">
+                        <div
+                          key={`student-info-${index}`}
+                          className="w-[490px]"
+                        >
                           <StudentInfoBox
                             student={student}
                             userData={userData}
@@ -200,7 +273,9 @@ export default function ViewClassList() {
             <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
-                <button onClick={() => setIsEditMode(!isEditMode)}>
+              
+                {/* <button onClick={() => setIsEditMode(!isEditMode)}> */}
+                <button onClick={saveClassroomInfo}>
                   {isEditMode ? "Save Changes" : ""}
                 </button>
               </div>
@@ -208,7 +283,7 @@ export default function ViewClassList() {
           </div>
         </div>
         <div className="fixed bottom-0 w-screen">
-        <TeacherNavbar setIsEditMode={setIsEditMode} />
+          <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div>
       </div>
     </>

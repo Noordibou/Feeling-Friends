@@ -268,7 +268,7 @@ export default function ViewClassList() {
               <div>
               
                 {/* <button onClick={() => setIsEditMode(!isEditMode)}> */}
-                <button onClick={saveClassroomInfo}>
+                <button className={`${isEditMode ? "flex": "hidden"} px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md`} onClick={saveClassroomInfo}>
                   {isEditMode ? "Save Changes" : ""}
                 </button>
               </div>

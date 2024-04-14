@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import GoBack from "./GoBack";
 import { getTeacherClassroom } from "../api/teachersApi";
+import { formatTime } from "../utils/dateFormat";
 
 const ClassInfoNavbar = ({ teacherId, classroomId }) => {
   const [classroom, setClassroom] = useState("");
@@ -35,11 +36,11 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
         <div className="flex gap-4">
           <div className="border-l-4 pl-4 border-sandwich ">
             <h2>Check-in</h2>
-            <h2 className="font-semibold">{classroom.checkIn ? `${classroom.checkIn}AM` : "-"}</h2>
+            <h2 className="font-semibold">{classroom.checkIn ? formatTime(classroom.checkIn) : "-"}</h2>
           </div>
           <div className="border-r-4 pr-4 border-sandwich ">
             <h2>Check-out</h2>
-            <h2 className="font-semibold">{classroom.checkOut ? `${classroom.checkOut}PM` : "-"}</h2>
+            <h2 className="font-semibold">{classroom.checkOut ? formatTime(classroom.checkOut) : "-"}</h2>
           </div>
         </div>
       </div>

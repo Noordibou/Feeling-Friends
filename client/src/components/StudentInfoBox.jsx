@@ -43,14 +43,16 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-col w-[80%] px-4 my-5">
+        <div className="flex flex-row w-[80%] px-4 my-5">
+          <div>
           {/* last emotion */}
           <div className="pb-2 flex justify-between">
             {lastCheck ? (
-              <div className="font-[Poppins] text-[18px]">
-                <span>
-                  {student.firstName} {student.lastName} is feeling{" "}
-                </span>
+              <div className="font-[Poppins] text-[17px] px-2">
+                <h4>
+                  {student.firstName} {student.lastName}
+                </h4>
+                <span>is feeling{" "}</span>
                 <b className="font-semibold underline">{lastEmotion}</b>
               </div>
             ) : (
@@ -67,20 +69,21 @@ const StudentInfoBox = ({
             } px-2 rounded-md `}
           >
             {lastCheck ? (
-              <div className="flex flex-col w-72">
-                <h5 className="font-[Poppins]"><b>Goals:</b> {lastCheck.goal}</h5>
-                <h5 className="font-[Poppins]"><b>Needs:</b> {lastCheck.need}</h5>
+              <div className="flex flex-col w-60">
+                <h5 className="font-[Poppins] text-[14px]"><b>Goals:</b> {lastCheck.goal}</h5>
+                <h5 className="font-[Poppins] text-[14px]"><b>Needs:</b> {lastCheck.need}</h5>
               </div>
             ) : (
-              <div className="flex flex-col w-72 h-16">
+              <div className="flex flex-col w-60 h-16">
                 <h5 className="font-[Poppins]">
                   {student.firstName} {student.lastName} hasn't checked in
                   today.
                 </h5>
               </div>
             )}
-
-            <div
+            </div>
+          </div>
+          <div
               className={`flex items-center underline text-md ${
                 bgColorClass ? "w-24" : "w-full flex justify-end h-full pt-4"
               } px-2`}
@@ -89,7 +92,6 @@ const StudentInfoBox = ({
                 More &gt;
               </Link>
             </div>
-          </div>
         </div>
       </div>
       {isEditMode ? (

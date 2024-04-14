@@ -120,8 +120,6 @@ export default function ViewClassList() {
 
                   {/* Classroom Info (on Edit only) */}
                   <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
-                    {/* TODO: Update */}
-
                     <input
                       className="flex w-44 h-10 border-2 border-gray rounded my-3 pl-3 text-[22px]"
                       name="classSubject"
@@ -134,8 +132,6 @@ export default function ViewClassList() {
                       <div className="flex justify-between mx-2">
                         <div className="flex-col text-sm font-body">
                           <h2>Location:</h2>
-
-                          {/* TODO: Update */}
                           <input
                             className="border-2 w-56 border-gray rounded pl-3 py-1 text-[18px]"
                             name="location"
@@ -149,7 +145,6 @@ export default function ViewClassList() {
                           <div className="flex gap-4">
                             <div>
                               <h2>Check-in:</h2>
-                              {/* TODO: Update */}
                               <input
                                 className="flex w-24 border-2 border-gray rounded pl-2 py-1 text-[18px]"
                                 name="checkIn"
@@ -160,8 +155,6 @@ export default function ViewClassList() {
                             </div>
                             <div>
                               <h2>Check-out:</h2>
-
-                              {/* TODO: Update */}
                               <input
                                 className="flex w-24 border-2 border-gray rounded pl-2 py-1 text-[18px]"
                                 name="checkOut"

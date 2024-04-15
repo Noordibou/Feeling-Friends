@@ -58,7 +58,7 @@ const AssignedStudent = ({
               className={`absolute border-4 px-[4px] rounded-2xl ${
                 selectedStyling ? "border-black" : ` border-${borderColorClass}`
               } ${borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${borderColorClass}`}`}
-              onClick={() => {
+              onDoubleClick={() => {
                 setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
               }}
               onDragEnd={(event, info) => {

@@ -73,6 +73,7 @@ const ClassroomFurniture = ({
             }}
             onClick={() => {
               setSelectedItems(toggleSelected(item._id, alreadySelected, selectedItems))
+              handleDragEnd(item._id, "furniture");
             }}
             onDoubleClick={() => {
               if (!isDragging) {

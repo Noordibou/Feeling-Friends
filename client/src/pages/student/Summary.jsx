@@ -25,7 +25,7 @@ const Summary = () => {
   return (
     <>
       <div className="pt-[4rem] flex flex-col items-center min-h-screen">
-        <div className="max-w-[750px] ">
+        <div className="max-w-[1200px] ">
         <div className="flex w-full justify-center mb-20">
           <ProgressBar totalPages="5" currentPage="5" />
         </div>

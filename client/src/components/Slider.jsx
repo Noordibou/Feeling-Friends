@@ -22,7 +22,7 @@ const Slider = ({ updateSliderValue }) => {
     return (
         <>
             <div className="">
-                <div className="relative flex pt-32 flex-col items-center justify-center">
+                <div className="relative flex pt-44 flex-col items-center justify-center">
                     
                     {/* slider bar */}
                     <div 

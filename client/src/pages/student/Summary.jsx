@@ -24,7 +24,8 @@ const Summary = () => {
 
   return (
     <>
-      <div className="pt-[4rem] min-h-screen">
+      <div className="pt-[4rem] flex flex-col items-center min-h-screen">
+        <div className="max-w-[1200px] ">
         <div className="flex w-full justify-center mb-20">
           <ProgressBar totalPages="5" currentPage="5" />
         </div>
@@ -52,7 +53,7 @@ const Summary = () => {
         {/* bottom section */}
 
         <CopingSkillCard emotion={emotionFromParams.toLowerCase()} emotionColor={emotionColor}/>
-        
+        </div>
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import FriendWheel from "../images/friendwheel.png";
 import Divider from "../images/divider.png";
 import DarkLogo from "../images/darklogo.png";
 import FriendFooter from "../images/friendfooter.png";
+import { motion } from "framer-motion";
 
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -54,16 +55,20 @@ const Home = () => {
               classrooms.
             </p>
             <p>
-              <button>Get Started</button>
+              Button
             </p>
           </div>
-          <div className="w-[35%]">
+          <motion.div className="w-[35%]"
+          animate={{ rotate: [0, 360] }}
+          transition={{ 
+          duration: 10, repeat: Infinity,  ease: "linear"}}
+          >
             <img
               src={FriendWheel}
               alt="Friend Wheel"
               className="w-[60%] ml-auto mr-auto"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 

@@ -9,6 +9,7 @@ import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from '../../../images/x-button.png';
 import FileBase from 'react-file-base64';
+import Nav from "../../../components/Navbar/Nav.jsx";
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 
@@ -212,8 +213,8 @@ export default function StudentProfile() {
 
   return (
     <>
-    <div className="flex flex-col items-center bg-notebookPaper h-screen">
-      <div className="pb-[4rem]">
+    <div className="flex flex-col items-center bg-notebookPaper ">
+      <div className="pb-[4rem] lg:z-40">
         <div className="flex items-center">
        <div>
           <div
@@ -673,9 +674,12 @@ export default function StudentProfile() {
         </div> */}
         </div>
     </div>
-    <div className="fixed bottom-0 w-screen">
+    {/* <div className="fixed bottom-0 w-screen">
       <TeacherNavbar />
-    </div>
+    </div> */}
+    <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav  teacherId={teacherId} classroomId={classroomId}/>
+        </div>
       </div>
     </>
   );

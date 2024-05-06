@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import TeacherNavbar from '../../components/Navbar/TeacherNavbar';
 import Logout from '../../components/LogoutButton';
+import Nav from '../../components/Navbar/Nav';
 
 const EditTeacher = () => {
     const navigate = useNavigate();
@@ -96,9 +97,12 @@ const EditTeacher = () => {
                 <div className='flex flex-row mt-3 underline gap-1'>
                     <Logout location='settings' userData={userData} />
                 </div>
-            <div className="bottom-0 fixed w-screen">
+            {/* <div className="bottom-0 fixed w-screen">
                 <TeacherNavbar  />
-            </div>
+            </div> */}
+            <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav  />
+        </div>
             </div>
         </>
     );

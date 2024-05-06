@@ -13,6 +13,7 @@ import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
+import Nav from "../../components/Navbar/Nav";
 
 const DisplaySeatingChart = () => {
   const { userData } = useUser();
@@ -77,7 +78,7 @@ const DisplaySeatingChart = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center max-w-4xl ">
+        <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
           <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
 
@@ -233,8 +234,11 @@ const DisplaySeatingChart = () => {
             your classroom layout!
           </h4>
         </div>
-        <div className="bottom-0 fixed w-screen">
+        {/* <div className="bottom-0 fixed w-screen">
         <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
+        </div> */}
+        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav  teacherId={teacherId} classroomId={classroomId}/>
         </div>
       </div>
     </>

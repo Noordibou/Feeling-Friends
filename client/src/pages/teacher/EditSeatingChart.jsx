@@ -23,6 +23,7 @@ import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import ButtonView from "../../components/ButtonView";
 import BtnRainbow from "../../components/BtnRainbow";
+import Nav from "../../components/Navbar/Nav";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -355,9 +356,12 @@ const EditSeatingChart = () => {
         showMsg={showMsg}
         textColor="text-black"
       />
-      <div className="fixed bottom-0 w-screen">
+      {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
-      </div>
+      </div> */}
+      <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav />
+        </div>
     </>
   );
 };

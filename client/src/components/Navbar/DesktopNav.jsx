@@ -39,7 +39,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
   return (
     <>
     <div
-      className="justify-start lg:grid hidden w-36 h-screen bg-notebookPaper transition-all duration-500 ease-in-out"
+      className="justify-start lg:grid hidden w-36 h-screen bg-notebookPaper transition-all duration-500 ease-in-out z-10"
       style={{
         opacity: `${isOpen ? "1" : "0"}`,
         top: ` ${isOpen ? "0" : "-100%"}`

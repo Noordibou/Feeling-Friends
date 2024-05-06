@@ -66,7 +66,7 @@ const TeacherHome = () => {
   return (
     <>
       <div className="flex flex-col justify-center">
-        <div className="h-screen lg:ml-28 lg:mt-10">
+        <div className="h-screen lg:ml-28 lg:z-40">
           <div className=" mb-3">
             <Greeting isEditMode={isEditMode} userData={userData} />
           </div>
@@ -91,7 +91,7 @@ const TeacherHome = () => {
                     ) : null}
                   </div>
 
-                  <Link to={`/classroom/${userData._id}/${classroom._id}`}>
+                  
                     <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
                       <div className="flex justify-between mb-[1rem] mx-2">
                         <div className="flex-col text-sm font-body">
@@ -136,9 +136,14 @@ const TeacherHome = () => {
                             )
                           )}
                         </div>
+                        <div className="flex items-center ">
+                          <h2 className="font-semibold underline p-2">
+                          <Link to={`/classroom/${userData._id}/${classroom._id}`}> Details{'>'}
+                          </Link>
+                          </h2>
+                          </div>
                       </div>
                     </div>
-                  </Link>
                 </div>
               ))
             ) : (

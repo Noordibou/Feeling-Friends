@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { addStudentToClassroom } from '../../api/teachersApi';
 import TeacherNavbar from '../../components/Navbar/TeacherNavbar';
+import Nav from '../../components/Navbar/Nav';
 
 export default function AddStudent() {
     const { teacherId, classroomId } = useParams();
@@ -42,8 +43,11 @@ export default function AddStudent() {
                     Add Student
                 </button>
             </form>
-        <div className="fixed bottom-0 w-screen">
+        {/* <div className="fixed bottom-0 w-screen">
             <TeacherNavbar />
+        </div> */}
+        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav  />
         </div>
         </div>
         </>

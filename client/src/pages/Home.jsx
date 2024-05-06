@@ -4,6 +4,7 @@ import Divider from "../images/divider.png";
 import DarkLogo from "../images/darklogo.png";
 import FriendFooter from "../images/friendfooter.png";
 import Button from "../components/Button.jsx";
+import { motion } from "framer-motion";
 
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -54,18 +55,24 @@ const Home = () => {
               activity set, while helping teachers better manage their
               classrooms.
             </p>
+
             <div className="w-full flex justify-center mt-[2rem]">
             <a href="/signup"><Button buttonText="Get Started" /></a>
             </div>
             <p className="font-poppins text-md text-graphite flex justify-center mt-[2rem]">Already have an account?&nbsp;<a className="font-semibold underline" href="/login">Login</a></p>
+
           </div>
-          <div className="w-[35%]">
+          <motion.div className="w-[35%]"
+          animate={{ rotate: [0, 360] }}
+          transition={{ 
+          duration: 10, repeat: Infinity,  ease: "linear"}}
+          >
             <img
               src={FriendWheel}
               alt="Friend Wheel"
               className="w-[60%] ml-auto mr-auto"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 

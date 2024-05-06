@@ -3,6 +3,7 @@ import FriendWheel from "../images/friendwheel.png";
 import Divider from "../images/divider.png";
 import DarkLogo from "../images/darklogo.png";
 import FriendFooter from "../images/friendfooter.png";
+import Button from "../components/Button.jsx";
 import { motion } from "framer-motion";
 
 // import { useEffect, useState } from "react";
@@ -43,7 +44,7 @@ const Home = () => {
           <img src={Logo} alt="logo" className="w-[350px]" />
         </div>
 
-        <div className="flex w-full justify-center items-center mt-[9rem]">
+        <div className="flex w-full justify-center items-center mt-[12rem]">
           <div className="w-[40%]">
             <p className="text-header1 font-header1">
               Having big feelings is tough. Feeling Friends can help.
@@ -54,9 +55,12 @@ const Home = () => {
               activity set, while helping teachers better manage their
               classrooms.
             </p>
-            <p>
-              Button
-            </p>
+
+            <div className="w-full flex justify-center mt-[2rem]">
+            <a href="/signup"><Button buttonText="Get Started" /></a>
+            </div>
+            <p className="font-poppins text-md text-graphite flex justify-center mt-[2rem]">Already have an account?&nbsp;<a className="font-semibold underline" href="/login">Login</a></p>
+
           </div>
           <motion.div className="w-[35%]"
           animate={{ rotate: [0, 360] }}

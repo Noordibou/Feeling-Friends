@@ -38,10 +38,24 @@ function calculateAge(birthday) {
     return `${month}-${day}-${year}`;
   }
 
-  module.exports ={
+  function formatTime(time) {
+    if (!time) return '';
+
+    const [hours, minutes] = time.split(':');
+
+    let formattedHours = parseInt(hours, 10) % 12 || 12;
+
+    const formattedMinutes = minutes.padStart(2, '0');
+    const period = parseInt(hours, 10) >= 12 ? 'PM' : 'AM';
+
+    return `${formattedHours}:${formattedMinutes} ${period}`;
+  }
+
+  export {
     calculateAge,
     formatDate,
-    getCurrentDate
+    getCurrentDate,
+    formatTime
   }
 
 

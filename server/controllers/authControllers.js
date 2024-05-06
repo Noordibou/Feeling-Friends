@@ -7,48 +7,47 @@ const bcrypt = require("bcryptjs");
 const Signup = async (req, res, next) => {
   console.log(req.body);
   try {
-    const { email, password, username, role, studentDetails, teacherDetails } = req.body;
+    const { email, password, username, role, userDetails } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
 
-    let existingStudent = null;
-    let existingTeacher = null;
+    existingStudent = null
+    existingTeacher = null
 
-if (role === 'student') {
-  existingStudent = await Student.findOne({ schoolStudentId: studentDetails.schoolStudentId });
-  if (!existingStudent) {
-    existingStudent = await Student.create(studentDetails);
-  }
-} else if (role === 'teacher') {
-  existingTeacher = await Teacher.findOne({ schoolTeacherId: teacherDetails.schoolTeacherId });
-  if (!existingTeacher) {
-    existingTeacher = await Teacher.create(teacherDetails);
-  }
-}
+    if (role === "student") {
+      existingStudent = await Student.create(userDetails);
+    } else if (role === "teacher") {
+      existingTeacher = await Teacher.create(userDetails);
+    }
 
-const userData = {
-  email,
-  password,
-  username,
-  role,
-  student: existingStudent ? existingStudent._id : null,
-  teacher: existingTeacher ? existingTeacher._id : null,
-};
+    const userData = {
+      email,
+      password,
+      username,
+      role,
+      student: existingStudent ? existingStudent._id : null,
+      teacher: existingTeacher ? existingTeacher._id : null,
+    };
 
-const user = await User.create(userData);
+    const user = await User.create(userData);
 
+    const newIdByRole = ( role === "student" ? user.student : user.teacher)
 
-    const token = createSecretToken(user._id, user.student, user.role);
+    const token = createSecretToken(user._id, newIdByRole, user.role);
 
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
     });
 
-    res.status(201).json({ message: "User signed up successfully", success: true, user });
+    res
+      .status(201)
+      .json({ message: "User signed up successfully", success: true, user });
+
+
     next();
   } catch (error) {
     console.error(error);
@@ -103,7 +102,8 @@ const Login = async (req, res) => {
 
     let token = null;
 
-    let redirectPath = '/';
+    let redirectPath = null;
+
 
     // TODO: *might be able to prevent user from going to different urls based on role
 

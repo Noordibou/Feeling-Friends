@@ -18,7 +18,7 @@ export function getLastJournalInfo(student) {
   if (todaysEntries.length === 0) {
     return {
       borderColorClass: "sandwich",
-      bgColorClass: "sandwich",
+      bgColorClass: "notebookPaper",
       lastCheck: null,
       lastEmotion: "",
     };

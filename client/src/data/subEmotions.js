@@ -17,6 +17,7 @@ const subEmotionInfo = [
         emotion: "Proud",
         eImage: proudImg,
         wheelImg: proudWheel,
+        advice: "It's easier to feel happy when we reflect on good things in our life.",
         subEmotions: [
             "Confident",
             "Ambitious",
@@ -24,25 +25,27 @@ const subEmotionInfo = [
             "Proud",
             "Secure",
             "Excited"                
-        ]
-    },
-    {
-        emotion: "Sad",
-        eImage: sadImg,
-        wheelImg: sadWheel,
-        subEmotions: [
-            "Guilty",
-            "Sad",
-            "Disappointed",
-            "Ashamed",
-            "Hurt",
-            "Lonely"                
+        ],
+        rotationList: [
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.1rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
     },
     {
         emotion: "Nervous",
         eImage: anxiousImg,
         wheelImg: anxiousWheel,
+        advice: "It's normal to feel anxious. Try this activity to help!",
         subEmotions: [
             "Pressured",
             "Overwhelmed",
@@ -50,12 +53,55 @@ const subEmotionInfo = [
             "Anxious",
             "Confused",
             "Embarrassed"                
+        ],
+        rotationList: [
+            "rotate-[28deg]",
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+            "-rotate-[28deg]"
+        ],
+        translateList: [
+            "-translate-y-[1.1rem]",
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.1rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
+            "-translate-y-[1.1rem]",
+        ]
+    },
+    {
+        emotion: "Sad",
+        eImage: sadImg,
+        wheelImg: sadWheel,
+        advice: "Everyone feels sad sometimes! How can we deal with those feelings?",
+        subEmotions: [
+            "Guilty",
+            "Sad",
+            "Disappointed",
+            "Ashamed",
+            "Hurt",
+            "Lonely"                
+        ],
+        rotationList: [
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]"
+        ],
+        translateList: [
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.1rem]",
+            "-translate-y-[0.2rem]",
         ]
     },
     {
         emotion: "Happy",
         eImage: happyImg,
         wheelImg: happyWheel,
+        advice: "When our body feels good, it can help our brain to feel good, too.",
         subEmotions: [
             "Glad",
             "Thoughtful",
@@ -63,12 +109,27 @@ const subEmotionInfo = [
             "Content",
             "Hopeful",
             "Grateful"                
+        ],
+        rotationList: [
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "translate-y-[0rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
     },
     {
         emotion: "Scared",
         eImage: scaredImg,
         wheelImg: scaredWheel,
+        advice: "Feeling scared is never fun, but there are ways we can make it feel better!",
         subEmotions: [
             "Scared",
             "Rejected",
@@ -76,12 +137,31 @@ const subEmotionInfo = [
             "Helpless",
             "Threatened",
             "Insecure"                
+        ],
+        rotationList: [
+            "rotate-[28deg]",
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+            "-rotate-[28deg]"
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "translate-y-[0rem]",
+            "translate-y-[0rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
+
     },
     {
         emotion: "Angry",
         eImage: angryImg,
         wheelImg: angryWheel,
+        advice: "Everyone feels angry sometimes. Try this to calm down.",
         subEmotions: [
             "Jealous",
             "Frustrated",
@@ -89,6 +169,20 @@ const subEmotionInfo = [
             "Angry",
             "Grumpy",
             "Disgusted"                
+        ],
+        rotationList: [
+            "rotate-[18deg]",
+            "rotate-[8deg]",
+            "rotate-[0deg]",
+            "-rotate-[8deg]",
+            "-rotate-[18deg]",
+        ],
+        translateList: [
+            "-translate-y-[0.5rem]",
+            "-translate-y-[0.2rem]",
+            "translate-y-[0rem]",
+            "-translate-y-[0.2rem]",
+            "-translate-y-[0.5rem]",
         ]
     },
 ]

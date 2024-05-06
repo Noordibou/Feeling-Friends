@@ -184,5 +184,5 @@ module.exports = {
     getAllStudents,
     getStudentById,
     updateStudentJournalEntry,
-    deleteStudent
+    deleteStudent,
 }

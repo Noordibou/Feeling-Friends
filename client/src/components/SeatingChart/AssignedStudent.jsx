@@ -58,7 +58,7 @@ const AssignedStudent = ({
               className={`absolute border-4 px-[4px] rounded-2xl ${
                 selectedStyling ? "border-black" : ` border-${borderColorClass}`
               } ${borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${borderColorClass}`}`}
-              onClick={() => {
+              onDoubleClick={() => {
                 setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
               }}
               onDragEnd={(event, info) => {
@@ -84,7 +84,8 @@ const AssignedStudent = ({
                   <img
                     draggable={false}
                     className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
-                    src={SampleAvatar}
+                    src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
+                    alt={assignedStudent.firstName}
                   />
                 </div>
                 <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">

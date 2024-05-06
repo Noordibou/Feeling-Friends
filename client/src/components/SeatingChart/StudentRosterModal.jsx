@@ -28,7 +28,7 @@ const AddStudentModal = ({
   return (
     <>
       {/* bg cover over classroom */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] absolute mr-auto ml-auto z-10 mt-[117px] w-[752px] h-[61%] rounded-lg opacity-90"></div>
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] absolute mr-auto ml-auto z-10 mt-[108px] w-[752px] h-[61%] rounded-lg opacity-90"></div>
 
       {/* add student modal */}
 

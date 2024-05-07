@@ -12,7 +12,7 @@ import GoBack from "../../components/GoBack";
 import Nav from "../../components/Navbar/Nav";
 import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
-import SaveButton from "../../components/SaveButton";
+import Button from "../../components/Button";
 
 const CreateClass = () => {
 
@@ -294,10 +294,9 @@ const CreateClass = () => {
         </div>
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
         <div onClick={handleCreateClassroom}>
-        <SaveButton />
+        <Button />
         </div>
-        
-        </div>
+
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav  />
         </div>

@@ -40,7 +40,8 @@ const Home = () => {
     <>
       <div className="flex h-screen">
         <div className="absolute top-0 pt-[4rem] pl-[4rem]">
-          <img src={Logo} alt="logo" className="w-[350px]" />
+          <img src={Logo} alt="logo" 
+          className="w-[350px]" width={350} />
         </div>
 
         <div className="flex w-full justify-center items-center mt-[9rem]">

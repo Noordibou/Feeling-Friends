@@ -70,7 +70,7 @@ const TeacherHome = () => {
           <div className=" mb-3">
             <Greeting isEditMode={isEditMode} userData={userData} />
           </div>
-          <div className="custom-scrollbar h-[60%] grid lg:grid-cols-2 ">
+          <div className="custom-scrollbar h-[60%] grid">
             {userData && userData.classrooms ? (
               classroomsData.map(({ classroom, zorPercentages }, index) => (
                 <div

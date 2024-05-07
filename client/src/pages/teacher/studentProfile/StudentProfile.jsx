@@ -1,4 +1,4 @@
-import TeacherNavbar from "../../../components/TeacherNavbar.jsx";
+import TeacherNavbar from "../../../components/Navbar/TeacherNavbar.jsx";
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
@@ -13,6 +13,7 @@ import WeekView from "../../../components/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
 import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
+import Nav from "../../../components/Navbar/Nav.jsx";
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 export default function StudentProfile() {
@@ -238,7 +239,7 @@ export default function StudentProfile() {
   return (
     <>
       <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
-        <div className="flex flex-col items-center pb-[4rem] ">
+        <div className="flex flex-col items-center pb-[4rem] lg:z-40 ">
           <div className="flex items-center h-72">
             <div className="pt-[1.5rem]">
               <div className="flex flex-row w-full mb-5 ml-3">
@@ -816,8 +817,11 @@ export default function StudentProfile() {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-0 w-screen">
-          <TeacherNavbar />
+         {/* <div className="fixed bottom-0 w-screen">
+      <TeacherNavbar />
+    </div> */}
+    <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav  teacherId={teacherId} classroomId={classroomId}/>
         </div>
       </div>
     </>

@@ -45,7 +45,7 @@ function calculateAge(birthday) {
 
     let formattedHours = parseInt(hours, 10) % 12 || 12;
 
-    const formattedMinutes = minutes.padStart(2, '0');
+    const formattedMinutes = minutes ? String(minutes).padStart(2, '0') : '00';
     const period = parseInt(hours, 10) >= 12 ? 'PM' : 'AM';
 
     return `${formattedHours}:${formattedMinutes} ${period}`;

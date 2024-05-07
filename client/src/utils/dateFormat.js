@@ -38,23 +38,16 @@ function getCurrentDate() {
   return `${month}-${day}-${year}`;
 }
 
-// function formatTime(time) {
-//   if (!time) return '';
+function formatTime(time) {
+  if (!time) return "";
+  const [hours, minutes] = time.split(":");
 
-//   const [hours, minutes] = time.split(':');
+  let formattedHours = parseInt(hours, 10) % 12 || 12;
 
-//   let formattedHours = parseInt(hours, 10) % 12 || 12;
+  const formattedMinutes = minutes ? String(minutes).padStart(2, "0") : "00";
+  const period = parseInt(hours, 10) >= 12 ? "PM" : "AM";
 
-//   const formattedMinutes = minutes.padStart(2, '0');
-//   const period = parseInt(hours, 10) >= 12 ? 'PM' : 'AM';
-
-//   return `${formattedHours}:${formattedMinutes} ${period}`;
-// }
-
-export {
-  calculateAge,
-  formatDate,
-  getCurrentDate,
-  // formatTime
+  return `${formattedHours}:${formattedMinutes} ${period}`;
 }
 
+export { calculateAge, formatDate, getCurrentDate, formatTime };

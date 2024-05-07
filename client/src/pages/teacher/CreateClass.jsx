@@ -293,7 +293,9 @@ const CreateClass = () => {
         </div>
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
         <div onClick={handleCreateClassroom}>
-        <Button /></div>
+        <Button />
+        </div>
+          </div>
         
         <div className="bottom-0 fixed w-screen">
           <TeacherNavbar />

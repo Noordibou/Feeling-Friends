@@ -75,7 +75,6 @@ const Home = () => {
                 Login
               </a>
             </div>
-            <p className="font-poppins text-md text-graphite flex justify-center mt-[2rem]">Already have an account?&nbsp;<a className="font-semibold underline" href="/login">Login</a></p>
 
           </div>
           <motion.div

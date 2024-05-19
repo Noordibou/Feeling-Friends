@@ -29,7 +29,8 @@ module.exports = {
       'button': '1.6rem',
       'lg': '1.75rem',
       'md': '1.2rem',
-      "sm": '1.2rem'
+      "sm": '1rem',
+      "xs": '0.75rem'
     },
 
     fontWeight: {

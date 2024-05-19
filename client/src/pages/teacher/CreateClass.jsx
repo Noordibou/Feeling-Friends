@@ -7,8 +7,9 @@ import {
   createClassroom,
   getAllStudents,
 } from "../../api/teachersApi";
-import TeacherNavbar from "../../components/TeacherNavbar";
+import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import GoBack from "../../components/GoBack";
+import Nav from "../../components/Navbar/Nav";
 import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
 import Button from "../../components/Button";
@@ -293,12 +294,14 @@ const CreateClass = () => {
         </div>
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
         <div onClick={handleCreateClassroom}>
-        <Button /></div>
-        
-        <div className="bottom-0 fixed w-screen">
-          <TeacherNavbar />
+        <Button />
         </div>
-      </div>
+        </div>
+
+        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav  />
+
+          </div>
       </div>
     </>
   );

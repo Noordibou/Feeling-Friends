@@ -10,13 +10,14 @@ import {
 import "./scrollbar.css";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
-import TeacherNavbar from "../../components/TeacherNavbar.jsx";
+import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
 import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
+import Nav from "../../components/Navbar/Nav.jsx";
 
 export default function ViewClassList() {
   const { teacherId, classroomId } = useParams();
@@ -110,7 +111,7 @@ export default function ViewClassList() {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full lg:z-40">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -275,8 +276,11 @@ export default function ViewClassList() {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-0 w-screen">
-          <TeacherNavbar setIsEditMode={setIsEditMode} />
+        {/* <div className="fixed bottom-0 w-screen">
+        <TeacherNavbar setIsEditMode={setIsEditMode} />
+        </div> */}
+        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav setIsEditMode={setIsEditMode} />
         </div>
       </div>
     </>

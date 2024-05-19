@@ -45,6 +45,7 @@ const Home = () => {
 
   return (
     <>
+
       <div className="h-full">
         <div className="flex w-full justify-center pt-[7rem] p-[1rem] max-sm:pt-[3rem] max-sm:p-[1.5rem]">
           <img src={Logo} alt="logo" />

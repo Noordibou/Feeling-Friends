@@ -8,7 +8,7 @@ console.log("it's running the file!")
 
 const autoJournalEntries = async () => {
     try {
-        mongoose.connect(process.env.DATABASE_URL, {
+        await mongoose.connect(process.env.DATABASE_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
@@ -31,21 +31,41 @@ const autoJournalEntries = async () => {
                 };
                 await updateStudentJournalEntry(req, res);
             }
-            // Delete oldest journal entry if entries exceed 30
+
+            // Log the current journal entries length
+            console.log(`This student has ${student.journalEntries.length} journal entries`);
+
+            // Delete oldest journal entries if entries exceed 30
             if (student.journalEntries.length > 30) {
-                student.journalEntries.shift(); // Remove the oldest entry
-                await student.save(); // Save changes to the student document
-                console.log('Oldest journal entry deleted for student:', student._id);
+                const excessEntries = student.journalEntries.length - 30;
+                student.journalEntries.splice(0, excessEntries); // Remove the oldest entries
+                console.log(`Removing ${excessEntries} oldest journal entries for student ${student._id}`);
+                
+                // Try to save the document and catch versioning errors
+                try {
+                    await student.save(); // Save changes to the student document
+                    console.log('Excess journal entries deleted for student:', student._id);
+                } catch (saveError) {
+                    if (saveError instanceof mongoose.Error.VersionError) {
+                        console.error('Version conflict for student:', student._id, 'Retrying...');
+                        // Reload the document and retry
+                        const freshStudent = await Student.findById(student._id);
+                        freshStudent.journalEntries.splice(0, excessEntries);
+                        await freshStudent.save();
+                    } else {
+                        throw saveError;
+                    }
+                }
             }
         }
         console.log('Random journal entries added successfully to all students');
-        process.exit(0)
+        process.exit(0);
     } catch (error) {
-        console.log("it's erroring")
+        console.log("it's erroring");
         console.error('Error adding random journal entries: ', error);
-        process.exit(1)
+        process.exit(1);
     }
 }
 
-// executes for cron job
+// Executes for cron job
 autoJournalEntries();

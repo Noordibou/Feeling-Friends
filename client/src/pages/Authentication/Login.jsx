@@ -5,7 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 import Button from "../../images/button.png";
 import { useAuth } from "./AuthContext";
 import "react-toastify/dist/ReactToastify.css";
-import URL from '../../URL'
 import BtnRainbow from "../../components/BtnRainbow";
 
 const Login = () => {
@@ -61,7 +60,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        URL+"/login",
+        process.env.REACT_APP_URL +"/login",
         { ...inputValue },
         { withCredentials: true }
       );

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import URL from '../URL'
+import React from 'react'
 
-const TEACHERS_API_URL = URL + '/api/teachers';
+const TEACHERS_API_URL = process.env.REACT_APP_URL + '/api/teachers';
 
 export const createTeacher = async (teacher) => {
     try {

@@ -279,7 +279,7 @@ export default function ViewClassList() {
         {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div> */}
-        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+        <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav setIsEditMode={setIsEditMode} />
         </div>
       </div>

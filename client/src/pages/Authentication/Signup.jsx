@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import URL from "../../URL";
 import BtnRainbow from "../../components/BtnRainbow";
 import { useAuth } from "./AuthContext";
 
@@ -68,7 +67,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        URL + "/signup",
+        process.env.REACT_APP_URL + "/signup",
         {
           email,
           password,

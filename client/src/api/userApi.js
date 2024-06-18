@@ -1,9 +1,9 @@
 
 import axios from 'axios';
-import URL from '../URL'
+// import URL from '../URL'
 
 
-const API_URL = URL;
+const API_URL = process.env.REACT_APP_URL;
 
 export const getUserById = async (userId) => {
     

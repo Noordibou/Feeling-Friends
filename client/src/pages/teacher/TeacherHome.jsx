@@ -109,12 +109,12 @@ const TeacherHome = () => {
                           <div className="flex gap-[4rem] font-semibold">
                             <h2>
                               {classroom.checkIn
-                                ? `${classroom.checkIn}AM`
+                                ? `${classroom.checkIn}`
                                 : "-"}
                             </h2>
                             <h2>
                               {classroom.checkOut
-                                ? `${classroom.checkOut}PM`
+                                ? `${classroom.checkOut}`
                                 : "-"}
                             </h2>
                           </div>

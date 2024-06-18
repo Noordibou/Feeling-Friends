@@ -153,28 +153,28 @@ const Home = () => {
                 </li>
                 <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
                   Brianne Camesi{" "}
-                  <a href="#">
+                  <a href="https://github.com/freckledspider">
                     <img className="inline" src={GitHub} />
                   </a>{" "}
-                  <a href="#">
+                  <a href="https://www.linkedin.com/in/briannecamesi/">
                     <img className="inline" src={LinkedIn} />
                   </a>
                 </li>
                 <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
                   Noor Dibou{" "}
-                  <a href="#">
+                  <a href="https://github.com/Noordibou">
                     <img className="inline" src={GitHub} />
                   </a>{" "}
-                  <a href="#">
+                  <a href="https://linkedin.com/in/noordibou/">
                     <img className="inline" src={LinkedIn} />
                   </a>
                 </li>
                 <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
                   Alex Grimes{" "}
-                  <a href="#">
+                  <a href="https://github.com/agrimes23">
                     <img className="inline" src={GitHub} />
                   </a>{" "}
-                  <a href="#">
+                  <a href="https://www.linkedin.com/in/alex-grimes-dev/">
                     <img className="inline" src={LinkedIn} />
                   </a>
                 </li>
@@ -187,10 +187,10 @@ const Home = () => {
                 </li>
                 <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
                   Anthony Sudol{" "}
-                  <a href="#">
+                  <a href="https://github.com/howdytony">
                     <img className="inline" src={GitHub} />
                   </a>{" "}
-                  <a href="#">
+                  <a href="https://www.linkedin.com/in/anthonysudol">
                     <img className="inline" src={LinkedIn} />
                   </a>
                 </li>

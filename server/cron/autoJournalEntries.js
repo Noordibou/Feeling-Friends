@@ -26,7 +26,7 @@ const autoJournalEntries = async () => {
                     }
                 };
                 const res = {
-                    json: data => console.log(JSON.stringify(data)),
+                    json: () => {},
                     status: code => ({ json: error => console.error(error) })
                 };
                 await updateStudentJournalEntry(req, res);
@@ -39,12 +39,12 @@ const autoJournalEntries = async () => {
             if (student.journalEntries.length > 30) {
                 const excessEntries = student.journalEntries.length - 30;
                 student.journalEntries.splice(0, excessEntries); // Remove the oldest entries
-                console.log(`Removing ${excessEntries} oldest journal entries for student ${student._id}`);
+                console.log(`Removing ${excessEntries} oldest journal entries for a student`);
                 
                 // Try to save the document and catch versioning errors
                 try {
                     await student.save(); // Save changes to the student document
-                    console.log('Excess journal entries deleted for student:', student._id);
+                    console.log('Excess journal entries deleted a student');
                 } catch (saveError) {
                     if (saveError instanceof mongoose.Error.VersionError) {
                         console.error('Version conflict for student:', student._id, 'Retrying...');
@@ -59,6 +59,7 @@ const autoJournalEntries = async () => {
             }
         }
         console.log('Random journal entries added successfully to all students');
+        console.log('Job completed successfully.')
         process.exit(0);
     } catch (error) {
         console.log("it's erroring");

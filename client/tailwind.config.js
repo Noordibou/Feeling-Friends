@@ -29,7 +29,8 @@ module.exports = {
       'button': '1.6rem',
       'lg': '1.75rem',
       'md': '1.2rem',
-      "sm": '1.2rem'
+      "sm": '1rem',
+      "xs": '0.75rem'
     },
 
     fontWeight: {
@@ -61,8 +62,8 @@ module.exports = {
       'white': '#FFFFFF',
       'lightGray': '#979797',
       // Other
-      'sandwich': '#D2C2A4',
-      'graphite': '#A59F8B',
+      'sandwich': '#E4D1AB',
+      'graphite': '#8D8772',
       'gray': '#808080',
       'darkSandwich': '#9E9268',
       'black': '#000000',

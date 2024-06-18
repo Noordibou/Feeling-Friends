@@ -17,13 +17,12 @@ const Slider = ({ updateSliderValue }) => {
 
         setValue(Math.round(newProgress * 100))
         updateSliderValue(Math.round(newProgress * 100))
-        // console.log("Position x-axis: " + Math.round(newProgress * 100))
     }
 
     return (
         <>
             <div className="">
-                <div className="relative flex pt-32 flex-col items-center justify-center">
+                <div className="relative flex pt-44 flex-col items-center justify-center">
                     
                     {/* slider bar */}
                     <div 

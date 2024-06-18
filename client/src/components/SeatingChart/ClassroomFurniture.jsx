@@ -73,6 +73,7 @@ const ClassroomFurniture = ({
             }}
             onClick={() => {
               setSelectedItems(toggleSelected(item._id, alreadySelected, selectedItems))
+              handleDragEnd(item._id, "furniture");
             }}
             onDoubleClick={() => {
               if (!isDragging) {
@@ -100,6 +101,7 @@ const ClassroomFurniture = ({
             }`}
           >
             <img
+              draggable={false}
               className="flex w-full h-full"
               src={shape.src}
               alt={shape.alt}

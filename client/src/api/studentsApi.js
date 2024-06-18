@@ -1,7 +1,6 @@
 import axios from 'axios';
-import URL from '../URL'
 
-const STUDENTS_API_URL = URL+'/api/students';
+const STUDENTS_API_URL = process.env.REACT_APP_URL +'/api/students';
 
 // // this works ✅
 // export const getStudents = async () => {

@@ -13,7 +13,7 @@ import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import TeacherNavbar from "../../components/TeacherNavbar";
+import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import saveButton from "../../images/button.png";
 import RosterImg from "../../images/Three People.png";
@@ -22,6 +22,8 @@ import openRosterImg from "../../images/ThreePplLight.png";
 import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import ButtonView from "../../components/ButtonView";
+import BtnRainbow from "../../components/BtnRainbow";
+import Nav from "../../components/Navbar/Nav";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -312,6 +314,7 @@ const EditSeatingChart = () => {
                 setShowFurnitureModal(false);
               }}
               isSelected={showStudentRosterModal}
+              buttonSize="long"
             />
 
             {/* Open Choose Furniture Modal */}
@@ -325,22 +328,14 @@ const EditSeatingChart = () => {
                 setShowStudentRosterModal(false);
               }}
               isSelected={showFurnitureModal}
+              buttonSize="long"
             />
 
             {/* Save Layout button */}
-            <button
-              className="relative overflow-hidden mx-4 rounded-xl"
-              onClick={handleSave}
-            >
-              <img
-                alt="Save Seating Chart"
-                className=" object-auto w-72 h-full"
-                src={saveButton}
-              />
-              <h4 className="absolute text-[23px] font-[Poppins] inset-0 flex items-center justify-center text-black font-bold">
-                Save
-              </h4>
-            </button>
+
+            <div className="mx-4">
+              <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
+            </div>
           </div>
 
           {/* Msg shows when no students are in the classroom */}
@@ -363,9 +358,12 @@ const EditSeatingChart = () => {
         showMsg={showMsg}
         textColor="text-black"
       />
-      <div className="fixed bottom-0 w-screen">
+      {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
-      </div>
+      </div> */}
+      <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav />
+        </div>
     </>
   );
 };

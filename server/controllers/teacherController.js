@@ -303,8 +303,6 @@ const addStudentToClassroom = async (req, res) => {
         .json({ error: "Student is already in the classroom" });
     }
 
-    console.log("studentID: " + studentId)
-
     classroom.students.push({ student: studentId });
     await teacher.save();
 
@@ -456,7 +454,6 @@ const addFurniture = async (req, res) => {
 }
 
 const updateFurniturePositions = async (req, res) => {
-  console.log("Oh heyy it hit the backend update furniture positions hmm")
   try {
     const teacherId = req.params.id;
     const classroomId = req.params.classroomId;
@@ -496,13 +493,10 @@ const updateFurniturePositions = async (req, res) => {
 };
 
 const deleteFurniture = async (req, res) => {
-  console.log("oh hi")
   try {
     const teacherId = req.params.id;
     const classroomId = req.params.classroomId;
     const itemIdsToDelete = req.body;
-    console.log("what is this: " + JSON.stringify(itemIdsToDelete))
-    console.log("req.body: " + JSON.stringify(req.body))
     const teacher = await Teacher.findById(teacherId);
 
     if (!teacher) {
@@ -514,7 +508,6 @@ const deleteFurniture = async (req, res) => {
     if (!classroom) {
       return res.status(404).json({ error: "Classroom not found" });
     }
-    console.log("okay here")
     // Find the furniture item to delete
     itemIdsToDelete.forEach(itemId => {
       // Find the furniture item to delete

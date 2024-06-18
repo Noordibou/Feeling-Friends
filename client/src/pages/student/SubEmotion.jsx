@@ -11,7 +11,7 @@ const SubEmotion = () => {
 
   const handleEmotionClick = (chosenEmotion) => {
     updateUserDataAccumulated({ emotion: chosenEmotion });
-    navigate("/insight", {
+    navigate("/regzone", {
       state: {
         emotion: chosenEmotion,
       },
@@ -37,13 +37,14 @@ const SubEmotion = () => {
   return (
     <div className="flex flex-col items-center h-screen min-w-screen ">
       <div className="flex w-full justify-center mt-20">
-        <ProgressBar totalPages="6" currentPage="2" />
+        <ProgressBar totalPages="5" currentPage="2" />
       </div>
-      <div className="flex flex-col text-center h-full mt justify-center w-full items-center">
-        <div className="font-header2 text-header2 z-10">
+      <div className="font-header2 text-header2 text-center pt-8 ">
           <h2>Choose the emotion closest to</h2>
           <span>what you're feeling.</span>
         </div>
+      <div className="flex flex-col text-center mt-10 h-full w-full items-center">
+        
         <div className="relative font-header3 mt-5 md:text-header3 text-[1.1rem] ">
           <img
             src={wheelImg}
@@ -71,26 +72,13 @@ const SubEmotion = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {/* TODO: Need to make clickable area into a triangle, so that user can click on the section and it will redirect */}
-                  {/* <div className="bg-pink"
-                  style={{
-                    width: 0,
-                    height: 0,
-                    borderLeft: "20px solid transparent", // Adjust the size of the triangle
-                    borderRight: "20px solid transparent", // Adjust the size of the triangle
-                    borderBottom: "30px solid #000", // Adjust the color of the triangle
-                    textAlign: "center", // Center the text horizontally within the triangle
-                    lineHeight: "20px", // Center the text vertically within the triangle
-                  }}
-                  > */}
                     {subEmotion}
-                  {/* </div> */}
                 </button>
               );
             })}
           </div>
         </div>
-        <div className="z-10 -mt-20 justify-center w-11/12">
+        <div className="-mt-20 justify-center w-11/12 md:w-[750px]">
           <div className="flex justify-between">
             <button
               className="rounded-full w-24 h-24"

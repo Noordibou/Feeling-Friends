@@ -4,6 +4,7 @@ import { useUser } from "../context/UserContext";
 import ProgressBar from "../components/ProgressBar";
 import CurvedWords from "../components/CurvedWord";
 import subEmotionInfo from "../data/subEmotions";
+import withAuth from "../hoc/withAuth";
 
 const StudentHome = () => {
   const navigate = useNavigate();
@@ -125,4 +126,4 @@ const StudentHome = () => {
   );
 };
 
-export default StudentHome;
+export default withAuth(['student'])(StudentHome);

@@ -16,6 +16,7 @@ import "tailwind-scrollbar";
 import "./scrollbar.css";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
+import withAuth from "../../hoc/withAuth.js";
 
 
 
@@ -169,4 +170,4 @@ const TeacherHome = () => {
   );
 };
 
-export default TeacherHome;
+export default withAuth(['teacher'])(TeacherHome);

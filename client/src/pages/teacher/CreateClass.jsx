@@ -13,6 +13,7 @@ import Nav from "../../components/Navbar/Nav";
 import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
 import Button from "../../components/Button";
+import withAuth from "../../hoc/withAuth";
 
 const CreateClass = () => {
 
@@ -318,4 +319,4 @@ const FormField = ({ label, value, onChange }) => (
   </div>
 );
 
-export default CreateClass;
+export default withAuth(['teacher'])(CreateClass)

@@ -6,6 +6,7 @@ import { useUser } from "../../context/UserContext";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
+import withAuth from "../../hoc/withAuth";
 
 const EditTeacher = () => {
   const navigate = useNavigate();
@@ -151,4 +152,4 @@ const EditTeacher = () => {
   );
 };
 
-export default EditTeacher;
+export default withAuth(['teacher'])(EditTeacher)

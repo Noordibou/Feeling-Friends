@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { checkAuthApi } from "../api/userApi"
 
 const withAuth = (allowedRoles) => (WrappedComponent) => {
   const WrapperComponent = (props) => {
@@ -11,10 +11,7 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
       const checkAuth = async () => {
         try {
           // check for authentication
-          const response = await axios.get(
-            `${process.env.REACT_APP_URL}/check-auth`,
-            { withCredentials: true }
-          );
+          const response = await checkAuthApi()
           // if it returns as true, there's an authenticated token
           if (response.data.status) {
             const userRole = response.data.role;

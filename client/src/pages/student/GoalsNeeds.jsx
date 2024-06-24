@@ -13,7 +13,7 @@ const GoalsNeeds = () => {
 
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
-
+  const previousPage = location.state?.previousPage
   const [inputMode1, setInputMode1] = useState(false);
   const [inputMode2, setInputMode2] = useState(false);
 
@@ -58,14 +58,17 @@ const GoalsNeeds = () => {
     navigate("/summary", {
       state: {
         emotion: emotionFromLocation,
+        previousPage: "/goalsneeds"
       },
     });
   };
 
   useEffect(() => {
-    console.log("emotion from location: " + emotionFromLocation)
     if (emotionFromLocation) {
       setEmotionColor(getEmotionColor(emotionFromLocation))
+    }
+    if (!previousPage || previousPage !== "/regzone") {
+      navigate("/student-home")
     }
   }, [])
 

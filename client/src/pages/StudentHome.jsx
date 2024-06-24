@@ -40,6 +40,7 @@ const StudentHome = () => {
       navigate(`/emotion`, {
         state: {
           emotion: chosenEmotion,
+          previousPage: '/student-home'
         },
       });
     }

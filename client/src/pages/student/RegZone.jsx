@@ -14,6 +14,7 @@ const RegZone = () => {
   const [sliderValue, setSliderValue] = useState(0);
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
+  const previousPage = location.state?.previousPage
 
   const handleZoneClick = () => {
     let regZone;
@@ -36,6 +37,7 @@ const RegZone = () => {
     navigate("/goalsneeds", {
       state: {
         emotion: emotionFromLocation,
+        previousPage: "/regzone"
       },
     });
   };
@@ -47,6 +49,12 @@ const RegZone = () => {
       console.log("emotion from location: " + emotionFromParams)
     }
   }, [location.state?.emotion]);
+
+  useEffect(() => {
+    if (!previousPage || previousPage !== "/emotion") {
+      navigate("/student-home")
+    }
+  }, [])
 
   return (
     <>

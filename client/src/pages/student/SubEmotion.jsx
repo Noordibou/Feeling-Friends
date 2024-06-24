@@ -3,12 +3,20 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import ProgressBar from "../../components/ProgressBar";
 import subEmotionInfo from "../../data/subEmotions";
+import { useEffect } from "react";
 
 const SubEmotion = () => {
   const navigate = useNavigate();
   const { updateUserDataAccumulated } = useUser();
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
+  const previousPage = location.state?.previousPage
+
+  useEffect(() => {
+    if (!previousPage || previousPage !== "/student-home") {
+      navigate("/student-home")
+    }
+  }, [])
 
   if (!emotionFromLocation) {
     // Handle the case when selectedEmotion is undefined
@@ -20,6 +28,7 @@ const SubEmotion = () => {
     navigate("/regzone", {
       state: {
         emotion: chosenEmotion,
+        previousPage: "/emotion"
       },
     });
   };
@@ -28,6 +37,7 @@ const SubEmotion = () => {
     navigate("/emotion", {
       state: {
         emotion: newEmotion,
+        previousPage: "/emotion"
       },
     });
   }
@@ -39,7 +49,6 @@ const SubEmotion = () => {
   const angleBetweenButtons = (2 * Math.PI) / subEmotions.length;
 
   const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion);
-
 
   return (
     <div className="flex flex-col items-center h-screen min-w-screen ">

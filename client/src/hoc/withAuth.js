@@ -20,21 +20,21 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
             const userRole = response.data.role;
             // check for roles in the returned response
             if (allowedRoles.includes(userRole)) {
-              setIsAuthorized(true)
+              setIsAuthorized(true);
             } else {
               if (userRole === "teacher") {
                 navigate("/teacher-home");
               } else if (userRole === "student") {
-                navigate("/student-home")
+                navigate("/student-home");
               } else {
-                navigate("/login")
+                navigate("/login");
               }
-              setIsAuthorized(false)
+              setIsAuthorized(false);
             }
           } else {
             // User is not authenticated
-            navigate("/login")
-            setIsAuthorized(false)
+            navigate("/login");
+            setIsAuthorized(false);
           }
         } catch (error) {
           console.error("Authentication error:", error);
@@ -45,14 +45,14 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
       checkAuth();
     }, [navigate]);
 
+    // Show a loading state while checking authorization
     if (isAuthorized === null) {
-        // Show a loading state while checking authorization
-        return <div>Loading...</div>;
-      }
-  
+      return <div>Loading...</div>;
+    }
+
     if (isAuthorized) {
-    // User is authorized
-    return <WrappedComponent {...props} />;
+      // User is authorized
+      return <WrappedComponent {...props} />;
     }
   };
 

@@ -3,6 +3,8 @@ const Teacher = require("../models/Teacher");
 const User = require("../models/User");
 const { createSecretToken } = require("../util/secretToken");
 const bcrypt = require("bcryptjs");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 const Signup = async (req, res, next) => {
   console.log(req.body);
@@ -163,14 +165,46 @@ const Logout = async (req, res) => {
   } catch (error) {
     console.error("Error clearing cookie:", error);
     res.status(500).send({ message: 'Error clearing cookie' });
-  }
-  
+  }  
 }
+
+const checkAuth = (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json({ status: false });
+  }
+  jwt.verify(token, process.env.TOKEN_KEY, async (err, decodedToken) => {
+    if (err) {
+      console.error("Token verification failed:", err);
+      return res.json({ status: false });
+    } else {
+      console.log("try");
+      try {
+        const user = await User.findById(decodedToken.id);
+
+        if (user) {
+          return res.json({
+            status: true,
+            user: user.username,
+            role: user.role,
+          });
+        } else {
+          return res.json({ status: false });
+        }
+      } catch (error) {
+        console.error("Error finding user:", error);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  });
+};
+
 
 module.exports = {
   Signup,
   Login,
   Logout,
   findUser,
-  findUserById, 
+  findUserById,
+  checkAuth,
 };

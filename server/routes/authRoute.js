@@ -1,10 +1,7 @@
-const { Signup, Login, findUser, findUserById, Logout } = require('../controllers/authControllers')
+const { Signup, Login, findUser, findUserById, Logout, checkAuth } = require('../controllers/authControllers')
 const { userVerification } = require('../middleware/authMiddleware')
-const { signUpValidation, verifyUser } = require("../middleware/index")
+const { signUpValidation } = require("../middleware/index")
 const router = require("express").Router();
-const User = require("../models/User");
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
 
 
 // const studentAccessToTeacherHome = (req, res, next) => {
@@ -31,36 +28,6 @@ router.post('/', userVerification);
 router.get('/logout', Logout)
 router.get("/users", findUser);
 router.get('/users/:id', findUserById)
-router.get('/check-auth', (req, res) => {
-
-    const token = req.cookies.token;
-    console.log("boop the check auth is getting hit")
-    if (!token) {
-        return res.json({ status: false });
-    }
-    console.log("heloo")
-    jwt.verify(token, process.env.TOKEN_KEY, async (err, decodedToken) => {
-        console.log("verifying...")
-        if (err) {
-        console.error('Token verification failed:', err);
-        return res.json({ status: false });
-        } else {
-            console.log("try")
-        try {
-            const user = await User.findById(decodedToken.id);
-    
-            if (user) {
-            return res.json({ status: true, user: user.username, role: user.role });
-            } else {
-            return res.json({ status: false });
-            }
-        } catch (error) {
-            console.error('Error finding user:', error);
-            return res.status(500).json({ message: 'Internal server error' });
-        }
-        }
-    });
-
-})
+router.get('/check-auth', checkAuth) // for authenticating user navigation
 
 module.exports = router;

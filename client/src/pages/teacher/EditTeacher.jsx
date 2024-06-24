@@ -55,6 +55,11 @@ const EditTeacher = () => {
     }
   };
 
+  if (!userData) {
+    return <div>Loading...</div>; // Or redirect to another page, or show an error message
+  }
+
+
   return (
     <>
       <div className="flex items-start justify-end underline lg:-mt-16 lg:mb-20 mr-4 md:pt-8 ">

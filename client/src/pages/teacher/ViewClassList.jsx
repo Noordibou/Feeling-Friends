@@ -18,8 +18,9 @@ import StudentInfoBox from "../../components/StudentInfoBox.jsx";
 import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
+import withAuth from "../../hoc/withAuth.js";
 
-export default function ViewClassList() {
+const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
   const { userData, updateUser } = useUser();
   const [classroom, setClassroom] = useState(null);
@@ -286,3 +287,5 @@ export default function ViewClassList() {
     </>
   );
 }
+
+export default withAuth(['teacher'])(ViewClassList)

@@ -14,9 +14,10 @@ import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx
 import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
 import Nav from "../../../components/Navbar/Nav.jsx";
+import withAuth from "../../../hoc/withAuth.js";
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
-export default function StudentProfile() {
+const StudentProfile = () => {
   const { teacherId, classroomId, studentId } = useParams();
   const [studentProfile, setStudentProfile] = useState(null);
   const [error, setError] = useState(null);
@@ -827,3 +828,5 @@ export default function StudentProfile() {
     </>
   );
 }
+
+export default withAuth(['teacher'])(StudentProfile)

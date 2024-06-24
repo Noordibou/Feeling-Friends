@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { addStudentToClassroom } from '../../api/teachersApi';
 import TeacherNavbar from '../../components/Navbar/TeacherNavbar';
 import Nav from '../../components/Navbar/Nav';
+import withAuth from '../../hoc/withAuth';
 
-export default function AddStudent() {
+const AddStudent = () => {
     const { teacherId, classroomId } = useParams();
     const [studentId, setStudentId] = useState('');
     const navigate = useNavigate();
@@ -53,3 +54,5 @@ export default function AddStudent() {
         </>
     );
 }
+
+export default withAuth(['teacher'])(AddStudent)

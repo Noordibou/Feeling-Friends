@@ -4,6 +4,7 @@ import deepBreathing from "../../images/RegZoneDeepBreathingCard.png";
 import imagineExercise from "../../images/coping skill card_ Overwhelmed.png";
 import ProgressBar from "../../components/ProgressBar";
 import { getEmotionColor } from "../../utils/classroomColors";
+import withAuth from "../../hoc/withAuth";
 
 const Insight = () => {
     const navigate = useNavigate();
@@ -60,6 +61,8 @@ const Insight = () => {
           <div className="hidden bg-lightBlue"></div>
           <div className="hidden bg-lightLavender"></div>
           <div className="hidden bg-lightYellow"></div>
+          <div className="hidden bg-pink"></div>
+          <div className="hidden bg-lightOrange"></div>
   
           {/* Text under tip */}
           <div className="w-7/12 text-center ml-auto mr-auto md:pt-[2rem] py-[1rem] mt-[5rem] font-header2 md:text-header2 text-header3 leading-tight">
@@ -71,4 +74,4 @@ const Insight = () => {
     );
   };
 
-export default Insight;
+export default withAuth(['student'])(Insight)

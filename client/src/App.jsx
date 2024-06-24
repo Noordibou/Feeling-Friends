@@ -42,7 +42,6 @@ export default function App() {
             <Route path="/edit/:teacherId" element={<EditTeacher />} />
             <Route path="/createclass" element={<CreateClass />} />
             <Route path="/addstudent/:teacherId/:classroomId" element={<AddStudentToClassroom />} />
-            <Route path="/furnituremodal" element={<FurnitureModal />} />
             {/* Student Routes */}
             <Route path="/student-home" element={<StudentHome />} />
             <Route path="/emotion" element={<SubEmotion />} />

@@ -1,19 +1,34 @@
+import withAuth from "../../hoc/withAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import ProgressBar from "../../components/ProgressBar";
 import subEmotionInfo from "../../data/subEmotions";
+import { useEffect } from "react";
 
 const SubEmotion = () => {
   const navigate = useNavigate();
   const { updateUserDataAccumulated } = useUser();
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
+  const previousPage = location.state?.previousPage
+
+  useEffect(() => {
+    if (!previousPage || previousPage !== "/student-home") {
+      navigate("/student-home")
+    }
+  }, [])
+
+  if (!emotionFromLocation) {
+    // Handle the case when selectedEmotion is undefined
+    return <div>Loading...</div>; // Or redirect to another page, or show an error message
+  }
 
   const handleEmotionClick = (chosenEmotion) => {
     updateUserDataAccumulated({ emotion: chosenEmotion });
     navigate("/regzone", {
       state: {
         emotion: chosenEmotion,
+        previousPage: "/emotion"
       },
     });
   };
@@ -22,6 +37,7 @@ const SubEmotion = () => {
     navigate("/emotion", {
       state: {
         emotion: newEmotion,
+        previousPage: "/emotion"
       },
     });
   }
@@ -123,4 +139,4 @@ const SubEmotion = () => {
   );
 };
 
-export default SubEmotion;
+export default withAuth(['student'])(SubEmotion)

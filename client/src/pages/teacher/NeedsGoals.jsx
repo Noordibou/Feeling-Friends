@@ -1,9 +1,9 @@
 import React from "react";
 import saveButton from '../../images/button.png'
 import BtnRainbow from "../../components/BtnRainbow";
+import withAuth from "../../hoc/withAuth";
 
-
-export default function NeedsGoals() {
+const NeedsGoals = () => {
   return (
     <>
       <div className="h-screen">
@@ -127,3 +127,5 @@ export default function NeedsGoals() {
     </>
   );
 }
+
+export default withAuth(['teacher'])(NeedsGoals)

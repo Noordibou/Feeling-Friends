@@ -6,6 +6,7 @@ import { useUser } from "../../context/UserContext";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
+import withAuth from "../../hoc/withAuth";
 
 const EditTeacher = () => {
   const navigate = useNavigate();
@@ -53,6 +54,11 @@ const EditTeacher = () => {
       console.error(error);
     }
   };
+
+  if (!userData) {
+    return <div>Loading...</div>; // Or redirect to another page, or show an error message
+  }
+
 
   return (
     <>
@@ -151,4 +157,4 @@ const EditTeacher = () => {
   );
 };
 
-export default EditTeacher;
+export default withAuth(['teacher'])(EditTeacher)

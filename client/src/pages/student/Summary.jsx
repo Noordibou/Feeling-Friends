@@ -6,11 +6,15 @@ import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
 import { getEmotionColor } from "../../utils/classroomColors.js";
 import CopingSkillCard from "../../components/CopingSkillCard.jsx";
+import withAuth from "../../hoc/withAuth.js";
+import { useNavigate } from "react-router-dom";
 
 const Summary = () => {
-  const { userData } = useUser();
-  const location = useLocation();
+  const { userData } = useUser()
+  const location = useLocation()
+  const navigate = useNavigate()
   const emotionFromParams = location.state?.emotion || "";
+  const previousPage = location.state?.previousPage
   const [emotionColor, setEmotionColor] = useState("")
 
   useEffect(() => {
@@ -21,6 +25,12 @@ const Summary = () => {
       console.log("emotion color: " + JSON.stringify(color))
     }
   }, [userData, emotionFromParams]);
+  
+  useEffect(() => {
+    if (!previousPage || previousPage !== "/goalsneeds") {
+      navigate("/student-home")
+    }
+  }, [])
 
   return (
     <>
@@ -59,4 +69,4 @@ const Summary = () => {
   );
 };
 
-export default Summary;
+export default withAuth(['student'])(Summary)

@@ -14,6 +14,7 @@ import ClassInfoNavbar from "../../components/ClassInfoNavbar";
 import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 import Nav from "../../components/Navbar/Nav";
+import withAuth from "../../hoc/withAuth";
 
 const ViewClassroom = () => {
   const { userData } = useUser();
@@ -247,4 +248,4 @@ const ViewClassroom = () => {
   );
 };
 
-export default ViewClassroom;
+export default withAuth(['teacher'])(ViewClassroom)

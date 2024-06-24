@@ -24,6 +24,7 @@ import MsgModal from "../../components/SeatingChart/MsgModal";
 import ButtonView from "../../components/ButtonView";
 import BtnRainbow from "../../components/BtnRainbow";
 import Nav from "../../components/Navbar/Nav";
+import withAuth from "../../hoc/withAuth";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -368,4 +369,4 @@ const EditSeatingChart = () => {
   );
 };
 
-export default EditSeatingChart;
+export default withAuth(['teacher'])(EditSeatingChart)

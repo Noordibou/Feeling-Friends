@@ -4,6 +4,7 @@ import deepBreathing from "../../images/RegZoneDeepBreathingCard.png";
 import imagineExercise from "../../images/coping skill card_ Overwhelmed.png";
 import ProgressBar from "../../components/ProgressBar";
 import { getEmotionColor } from "../../utils/classroomColors";
+import withAuth from "../../hoc/withAuth";
 
 const Insight = () => {
     const navigate = useNavigate();
@@ -71,4 +72,4 @@ const Insight = () => {
     );
   };
 
-export default Insight;
+export default withAuth(['student'])(Insight)

@@ -5,6 +5,7 @@ import Slider from "../../components/Slider";
 import ProgressBar from "../../components/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
 import ZorImageRender from "../../components/ZorImageRender";
+import withAuth from "../../hoc/withAuth";
 
 const RegZone = () => {
   const navigate = useNavigate();
@@ -122,4 +123,4 @@ const RegZone = () => {
   );
 };
 
-export default RegZone;
+export default withAuth(['student'])(RegZone)

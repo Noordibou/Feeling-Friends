@@ -1,3 +1,4 @@
+import withAuth from "../../hoc/withAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import ProgressBar from "../../components/ProgressBar";
@@ -8,6 +9,11 @@ const SubEmotion = () => {
   const { updateUserDataAccumulated } = useUser();
   const location = useLocation();
   const emotionFromLocation = location.state?.emotion || "";
+
+  if (!emotionFromLocation) {
+    // Handle the case when selectedEmotion is undefined
+    return <div>Loading...</div>; // Or redirect to another page, or show an error message
+  }
 
   const handleEmotionClick = (chosenEmotion) => {
     updateUserDataAccumulated({ emotion: chosenEmotion });
@@ -33,6 +39,7 @@ const SubEmotion = () => {
   const angleBetweenButtons = (2 * Math.PI) / subEmotions.length;
 
   const matchedEmotions = subEmotionInfo.filter((emotion) => emotion !== selectedEmotion);
+
 
   return (
     <div className="flex flex-col items-center h-screen min-w-screen ">
@@ -123,4 +130,4 @@ const SubEmotion = () => {
   );
 };
 
-export default SubEmotion;
+export default withAuth(['student'])(SubEmotion)

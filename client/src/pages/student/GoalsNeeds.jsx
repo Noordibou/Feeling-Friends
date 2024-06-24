@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ProgressBar from "../../components/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
 import { getEmotionColor } from "../../utils/classroomColors";
+import withAuth from "../../hoc/withAuth";
 
 const GoalsNeeds = () => {
   const navigate = useNavigate();
@@ -233,4 +234,4 @@ const GoalsNeeds = () => {
   );
 }
 
-export default GoalsNeeds;
+export default withAuth(['student'])(GoalsNeeds)

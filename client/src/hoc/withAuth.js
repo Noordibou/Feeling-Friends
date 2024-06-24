@@ -45,7 +45,15 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
       checkAuth();
     }, [navigate]);
 
+    if (isAuthorized === null) {
+        // Show a loading state while checking authorization
+        return <div>Loading...</div>;
+      }
+  
+    if (isAuthorized) {
+    // User is authorized
     return <WrappedComponent {...props} />;
+    }
   };
 
   return WrapperComponent;

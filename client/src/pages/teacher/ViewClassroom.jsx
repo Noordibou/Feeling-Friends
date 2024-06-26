@@ -15,6 +15,8 @@ import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
+import GoBack from "../../components/GoBack";
+import SimpleTopNav from "../../components/SimpleTopNav";
 
 const ViewClassroom = () => {
   const { userData } = useUser();
@@ -81,28 +83,30 @@ const ViewClassroom = () => {
       <div className="flex h-screen min-w-screen justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex">
+          <div className="flex flex-row my-10">            
+              <SimpleTopNav pageTitle={classroom?.classSubject} fontsize="text-[24px]" />
+            
             <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
             {/* Room View & List Buttons */}
-          <div className="flex justify-around w-72 mt-8 items-center ">
-            <ButtonView
-              buttonText="Room View"
-              btnImageWhenOpen={classBoxesIcon}
-              isSelected={true}
-              buttonSize="small"
-            />
-            <Link
-              className="flex items-center h-16"
-              to={`/viewclasslist/${userData._id}/${classroomId}`}
-            >
+            <div className="flex justify-between gap-4 items-center ">
               <ButtonView
-                buttonText="List View"
-                defaultBtnImage={listIcon}
-                isSelected={false}
+                buttonText="Room View"
+                btnImageWhenOpen={classBoxesIcon}
+                isSelected={true}
                 buttonSize="small"
               />
-            </Link>
-          </div>
+              <Link
+                className="flex items-center h-16"
+                to={`/viewclasslist/${userData._id}/${classroomId}`}
+              >
+                <ButtonView
+                  buttonText="List View"
+                  defaultBtnImage={listIcon}
+                  isSelected={false}
+                  buttonSize="small"
+                />
+              </Link>
+            </div>
           </div>
           {classroom ? (
             <>
@@ -161,45 +165,48 @@ const ViewClassroom = () => {
                     (student) => student._id === studentObj.student
                   );
 
-                  const { borderColorClass, bgColorClass } = getLastJournalInfo(assignedStudent)
+                  const { borderColorClass, bgColorClass } =
+                    getLastJournalInfo(assignedStudent);
 
                   return (
-                      <motion.div
-                        id={`motion-div-${studentObj.student}`}
-                        key={`${studentObj.student}-${index}`}
-                        initial={{
-                          x: Math.max(0, initialX),
-                          y: Math.max(0, initialY),
-                        }}
-                        className={`absolute mx-1 bg-${
-                          bgColorClass
-                        } ${
-                          borderColorClass === "sandwich"
-                            ? "bg-opacity-30 border-4 border-sandwich"
-                            : `border-4 border-${borderColorClass}`
-                        } px-[2px] rounded-2xl`}
-                        onClick={() => {
-                          setSelectedStudent(assignedStudent);
-                        }}
-                      >
-                        <div className="">
-                          <div className="flex w-full justify-center h-full items-center">
-                            <img
-                              className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
-                                borderColorClass ===
-                                "sandwich"
-                                  ? "opacity-50"
-                                  : ""
-                              }`}
-                              src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
-                              alt={assignedStudent.firstName}
-                            />
-                          </div>
-                          <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                            {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
-                          </h3>
+                    <motion.div
+                      id={`motion-div-${studentObj.student}`}
+                      key={`${studentObj.student}-${index}`}
+                      initial={{
+                        x: Math.max(0, initialX),
+                        y: Math.max(0, initialY),
+                      }}
+                      className={`absolute mx-1 bg-${bgColorClass} ${
+                        borderColorClass === "sandwich"
+                          ? "bg-opacity-30 border-4 border-sandwich"
+                          : `border-4 border-${borderColorClass}`
+                      } px-[2px] rounded-2xl`}
+                      onClick={() => {
+                        setSelectedStudent(assignedStudent);
+                      }}
+                    >
+                      <div className="">
+                        <div className="flex w-full justify-center h-full items-center">
+                          <img
+                            className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
+                              borderColorClass === "sandwich"
+                                ? "opacity-50"
+                                : ""
+                            }`}
+                            src={
+                              assignedStudent.avatarImg === "none"
+                                ? SampleAvatar
+                                : assignedStudent.avatarImg
+                            }
+                            alt={assignedStudent.firstName}
+                          />
                         </div>
-                      </motion.div>
+                        <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
+                          {assignedStudent.firstName}{" "}
+                          {assignedStudent.lastName.charAt(0)}.
+                        </h3>
+                      </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -241,7 +248,7 @@ const ViewClassroom = () => {
         <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div> */}
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav  teacherId={teacherId} classroomId={classroomId}/>
+          <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
       </div>
     </>

@@ -12,7 +12,7 @@ const GoBack = () => {
 
     return (
         <button className="flex justify-center">
-            <img src={Back} alt="back arrow" className="h-[1.5rem] w-[1rem]" onClick={goBack}/>
+            <img src={Back} alt="back arrow" className="h-[24px] w-[20px]" onClick={goBack}/>
         </button>
     )
   }

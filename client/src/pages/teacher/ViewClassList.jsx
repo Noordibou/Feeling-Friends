@@ -120,7 +120,11 @@ const ViewClassList = () => {
               {isEditMode ? (
                 <>
                   {/* Top Nav (on Edit only)*/}
-                  <SimpleTopNav pageTitle="Manage Classroom" />
+                  <div className="mt-8">
+                    <SimpleTopNav pageTitle="Manage Classroom" 
+                    fontsize="text-[30px]"
+                    />
+                  </div>
 
                   {/* Classroom Info (on Edit only) */}
                   <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
@@ -184,18 +188,13 @@ const ViewClassList = () => {
                 </>
               ) : (
                 <div className="flex flex-row my-10">
-                  <div className="flex w-[20%] justify-center items-center">
-                    <GoBack />
-                    <h2 className="text-[24px] ml-[2rem] font-semibold">
-                      {classroom.classSubject}
-                    </h2>
-                  </div>
+                  <SimpleTopNav pageTitle={classroom?.classSubject} fontsize="text-[24px]" />
                   <ClassInfoNavbar
                     teacherId={teacherId}
                     classroomId={classroomId}
                   />
                   {/* Room View & List Buttons */}
-                  <div className="flex justify-around w-72 items-center">
+                  <div className="flex justify-between gap-4 items-center " >
                     <Link
                       className="flex items-center h-16"
                       to={`/classroom/${userData._id}/${classroomId}`}

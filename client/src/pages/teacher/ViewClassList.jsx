@@ -19,6 +19,8 @@ import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
+import GoBack from "../../components/GoBack.jsx"
+
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -181,13 +183,19 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-row mb-10">
+                <div className="flex flex-row my-10">
+                  <div className="flex w-[20%] justify-center items-center">
+                    <GoBack />
+                    <h2 className="text-[24px] ml-[2rem] font-semibold">
+                      {classroom.classSubject}
+                    </h2>
+                  </div>
                   <ClassInfoNavbar
                     teacherId={teacherId}
                     classroomId={classroomId}
                   />
                   {/* Room View & List Buttons */}
-                  <div className="flex justify-around w-72 mt-8 items-center">
+                  <div className="flex justify-around w-72 items-center">
                     <Link
                       className="flex items-center h-16"
                       to={`/classroom/${userData._id}/${classroomId}`}

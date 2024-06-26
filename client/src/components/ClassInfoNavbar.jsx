@@ -20,13 +20,13 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
   }, [teacherId, classroomId]);
 
   return (
-    <div className="flex items-center justify-around mb-[0.5rem] mt-10 w-full ">
-      <div className="flex items-center ">
+    <div className="flex items-center w-[400px] px-4">
+      {/* <div className="flex items-center ">
         <GoBack />
         <h2 className="text-[24px] ml-[2rem] font-semibold">
           {classroom.classSubject}
         </h2>
-      </div>
+      </div> */}
 
       {/* class details */}
       <div className="flex-col text-xs font-body border-l-4 pl-4 border-sandwich pr-4 border-r-4">

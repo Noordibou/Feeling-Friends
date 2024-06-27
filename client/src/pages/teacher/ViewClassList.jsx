@@ -121,8 +121,9 @@ const ViewClassList = () => {
                 <>
                   {/* Top Nav (on Edit only)*/}
                   <div className="mt-8">
-                    <SimpleTopNav pageTitle="Manage Classroom" 
-                    fontsize="text-[30px]"
+                    <SimpleTopNav
+                      pageTitle="Manage Classroom"
+                      fontsize="text-[30px]"
                     />
                   </div>
 
@@ -134,7 +135,6 @@ const ViewClassList = () => {
                       placeholder="Subject"
                       value={classroom.classSubject}
                       onChange={handleChange}
-
                     />
                     <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
                       <div className="flex justify-between mx-2">
@@ -169,8 +169,8 @@ const ViewClassList = () => {
                                 type="time"
                                 value={classroom.checkOut}
                                 onChange={handleChange}
-                              />                            
-                              </div>
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -187,31 +187,40 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-row my-10">
-                  <SimpleTopNav pageTitle={classroom?.classSubject} fontsize="text-[24px]" />
-                  <ClassInfoNavbar
-                    teacherId={teacherId}
-                    classroomId={classroomId}
-                  />
-                  {/* Room View & List Buttons */}
-                  <div className="flex justify-between gap-4 items-center " >
-                    <Link
-                      className="flex items-center h-16"
-                      to={`/classroom/${userData._id}/${classroomId}`}
-                    >
+                <div className="flex flex-col md:flex-row my-10 gap-8">
+                  <div className="flex justify-center">
+                    <SimpleTopNav
+                      pageTitle={classroom?.classSubject}
+                      fontsize="text-[24px]"
+                    />
+                  </div>
+                  <div className="flex flex-col-reverse md:flex-row gap-8">
+                    <div className="flex justify-center">
+                      <ClassInfoNavbar
+                        teacherId={teacherId}
+                        classroomId={classroomId}
+                      />
+                    </div>
+                    {/* Room View & List Buttons */}
+                    <div className="flex justify-between gap-4 items-center">
+                      <Link
+                        className="flex items-center h-16"
+                        to={`/classroom/${userData._id}/${classroomId}`}
+                      >
+                        <ButtonView
+                          buttonText="Room View"
+                          defaultBtnImage={classBoxesIcon}
+                          isSelected={false}
+                          buttonSize="small"
+                        />
+                      </Link>
                       <ButtonView
-                        buttonText="Room View"
-                        defaultBtnImage={classBoxesIcon}
-                        isSelected={false}
+                        buttonText="List View"
+                        btnImageWhenOpen={listIcon}
+                        isSelected={true}
                         buttonSize="small"
                       />
-                    </Link>
-                    <ButtonView
-                      buttonText="List View"
-                      btnImageWhenOpen={listIcon}
-                      isSelected={true}
-                      buttonSize="small"
-                    />
+                    </div>
                   </div>
                 </div>
               )}
@@ -275,9 +284,13 @@ const ViewClassList = () => {
             <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
-              
                 {/* <button onClick={() => setIsEditMode(!isEditMode)}> */}
-                <button className={`${isEditMode ? "flex": "hidden"} px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md`} onClick={saveClassroomInfo}>
+                <button
+                  className={`${
+                    isEditMode ? "flex" : "hidden"
+                  } px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md`}
+                  onClick={saveClassroomInfo}
+                >
                   {isEditMode ? "Save Changes" : ""}
                 </button>
               </div>

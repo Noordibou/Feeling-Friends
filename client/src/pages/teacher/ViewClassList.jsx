@@ -210,8 +210,8 @@ const ViewClassList = () => {
                             x2="35"
                             y2="30"
                             stroke="#8D8772"
-                            stroke-width="4"
-                            stroke-linecap="round"
+                            strokeWidth="4"
+                            strokeLinecap="round"
                           />
 
                           <line
@@ -220,8 +220,8 @@ const ViewClassList = () => {
                             x2="65"
                             y2="30"
                             stroke="#8D8772"
-                            stroke-width="4"
-                            stroke-linecap="round"
+                            strokeWidth="4"
+                            strokeLinecap="round"
                           />
                         </svg>
                       </div>

@@ -25,8 +25,8 @@ const GoBack = () => {
             x2="32"
             y2="35"
             stroke="#8D8772"
-            stroke-width="5"
-            stroke-linecap="round"
+            strokeWidth="5"
+            strokeLinecap="round"
           />
 
           <line
@@ -35,8 +35,8 @@ const GoBack = () => {
             x2="32"
             y2="65"
             stroke="#8D8772"
-            stroke-width="5"
-            stroke-linecap="round"
+            strokeWidth="5"
+            strokeLinecap="round"
           />
         </svg>
       </button>

@@ -11,10 +11,36 @@ const GoBack = () => {
     }
 
     return (
-        <button className="flex justify-center">
-            <img src={Back} alt="back arrow" className="h-[24px] w-[20px]" onClick={goBack}/>
-        </button>
-    )
+      <button className="flex justify-center" onClick={goBack}>
+        <svg
+          className={``}
+          width="70"
+          height="70"
+          viewBox="0 0 1 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            x1="10"
+            y1="50"
+            x2="32"
+            y2="35"
+            stroke="#8D8772"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <line
+            x1="10"
+            y1="50"
+            x2="32"
+            y2="65"
+            stroke="#8D8772"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    );
   }
 
 export default GoBack;

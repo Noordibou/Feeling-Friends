@@ -196,9 +196,9 @@ const ViewClassList = () => {
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
-                    <div className="flex flex-col px-4 md:flex-row justify-center border-t-2 border-b-2 border-gray md:border-none">
+                    <div className="flex flex-col px-4 md:flex-row justify-center border-t-2 border-b-2 border-sandwich md:border-none">
                       <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                        <h2 className="md:hidden my-5 md:my-0">Details</h2>
+                        <h2 className="md:hidden my-5 md:my-0 font-semibold font-[Poppins]">Details</h2>
                         <svg
                           className={`transition-transform duration-300 md:hidden ${isOpen? 'rotate-180' : ''}`}
                           width="70"
@@ -210,7 +210,7 @@ const ViewClassList = () => {
                             x1="50"
                             y1="10"
                             x2="35"
-                            y2="32"
+                            y2="30"
                             stroke="#8D8772"
                             stroke-width="4"
                             stroke-linecap="round"
@@ -220,7 +220,7 @@ const ViewClassList = () => {
                             x1="50"
                             y1="10"
                             x2="65"
-                            y2="32"
+                            y2="30"
                             stroke="#8D8772"
                             stroke-width="4"
                             stroke-linecap="round"

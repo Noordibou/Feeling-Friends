@@ -188,8 +188,8 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col md:flex-row my-10 xl:gap-8">
-                  <div className="flex justify-start md:justify-center ">
+                <div className="flex flex-col w-full md:flex-row px-5 my-10 xl:gap-8">
+                  <div className="flex md:justify-center ">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
                       fontsize="text-[18px] xl:text-[24px]"
@@ -200,7 +200,7 @@ const ViewClassList = () => {
                       <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
                         <h2 className="md:hidden my-5 md:my-0 font-semibold font-[Poppins]">Details</h2>
                         <svg
-                          className={`transition-transform duration-300 md:hidden ${isOpen? 'rotate-180' : ''}`}
+                          className={`transition-transform duration-300 md:hidden ${isOpen? '' : 'rotate-180'}`}
                           width="70"
                           height="70"
                           viewBox="0 -25 100 100"

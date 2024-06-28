@@ -11,12 +11,12 @@ const GoBack = () => {
     }
 
     return (
-      <button className="flex justify-center" onClick={goBack}>
+      <button className="flex" onClick={goBack}>
         <svg
           className={``}
           width="70"
           height="70"
-          viewBox="0 0 1 100"
+          viewBox="25 0 1 100"
           xmlns="http://www.w3.org/2000/svg"
         >
           <line

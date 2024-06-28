@@ -20,8 +20,8 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
   }, [teacherId, classroomId]);
 
   return (
-    <div className="flex items-center mx-4">
-      <div className="flex-col text-xs font-body md:border-l-4 pl-4 border-sandwich pr-4 md:border-r-4">
+    <div className="flex items-center md:mx-4 mb-5">
+      <div className="flex-col text-xs font-body md:border-l-4 md:pl-4 border-sandwich pr-4 md:border-r-4">
         <div className="flex py-[2px] text-[14px]">
           <h2>Location:</h2>
           <h2 className="font-semibold pl-2 text-graphite">{classroom.location}</h2>
@@ -29,13 +29,13 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
 
         {/* check in/out section */}
         <div className="flex flex-col md:flex-row py-[2px] text-[14px]">
-          <div className="flex">
+          <div className="flex md:flex-col xl:flex-row">
             <h2>Check-in: </h2>
             <h2 className="font-semibold pl-2 text-graphite">
               {classroom.checkIn ? formatTime(classroom.checkIn) : "-"}
             </h2>
           </div>
-          <div className="flex md:pl-4 text-[14px]">
+          <div className="flex md:flex-col xl:flex-row md:pl-4 text-[14px]">
             <h2>Check-out:</h2>
             <h2 className="font-semibold pl-2 text-graphite">
               {classroom.checkOut ? formatTime(classroom.checkOut) : "-"}

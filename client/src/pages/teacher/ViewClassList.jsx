@@ -192,13 +192,13 @@ const ViewClassList = () => {
                   <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
-                      fontsize="text-[18px] xl:text-[24px]"
+                      fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
                     <div className="flex flex-col px-4 md:flex-row justify-center border-t-2 border-b-2 border-sandwich md:border-none">
                       <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                        <h2 className="md:hidden my-5 md:my-0 font-semibold font-[Poppins]">Details</h2>
+                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">Details</h2>
                         <svg
                           className={`transition-transform duration-300 md:hidden ${isOpen? '' : 'rotate-180'}`}
                           width="70"
@@ -235,7 +235,7 @@ const ViewClassList = () => {
                       </div>
                     </div>
                     {/* Room View & List Buttons */}
-                    <div className="flex justify-around md:justify-between gap-4 items-center my-5 md:my-0">
+                    <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
                       <Link
                         className="flex items-center h-16"
                         to={`/classroom/${userData._id}/${classroomId}`}

@@ -189,7 +189,7 @@ const ViewClassList = () => {
                 </>
               ) : (
                 <div className="flex flex-col w-full md:flex-row px-5 my-10 xl:gap-8">
-                  <div className="flex md:justify-center ">
+                  <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
                       fontsize="text-[18px] xl:text-[24px]"
@@ -235,7 +235,7 @@ const ViewClassList = () => {
                       </div>
                     </div>
                     {/* Room View & List Buttons */}
-                    <div className="flex justify-center md:justify-between gap-4 items-center my-8 md:my-0">
+                    <div className="flex justify-around md:justify-between gap-4 items-center my-5 md:my-0">
                       <Link
                         className="flex items-center h-16"
                         to={`/classroom/${userData._id}/${classroomId}`}

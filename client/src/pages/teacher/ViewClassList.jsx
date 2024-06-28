@@ -11,7 +11,7 @@ import "./scrollbar.css";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
-import ClassInfoNavbar from "../../components/ClassInfoNavbar.jsx";
+import ClassDetails from "../../components/ClassDetails.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
@@ -19,8 +19,6 @@ import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
-import GoBack from "../../components/GoBack.jsx"
-
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -188,7 +186,7 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col w-full md:flex-row px-5 my-10 xl:gap-8">
+                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
                   <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
@@ -196,7 +194,7 @@ const ViewClassList = () => {
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
-                    <div className="flex flex-col px-4 md:flex-row justify-center border-t-2 border-b-2 border-sandwich md:border-none">
+                    <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
                       <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
                         <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">Details</h2>
                         <svg
@@ -227,8 +225,8 @@ const ViewClassList = () => {
                           />
                         </svg>
                       </div>
-                      <div className={`transition-max-h overflow-hidden ${isOpen ? "h-full" : "max-h-0"}`}>
-                      <ClassInfoNavbar
+                      <div className={`transition-max-h md:flex overflow-hidden ${isOpen ? "h-full" : "max-h-0"} md:max-h-full md:h-auto`}>
+                      <ClassDetails
                         teacherId={teacherId}
                         classroomId={classroomId}
                       />

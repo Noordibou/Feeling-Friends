@@ -243,7 +243,7 @@ const CreateClass = () => {
                 placeholder="Search students..."
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="mb-4 p-[1rem] rounded-lg bg-notebookPaper rounded-3xl border-[0.5rem] border-sandwich font-karla text-lg"
+                className="mb-4 p-[1rem] bg-notebookPaper rounded-3xl border-[0.5rem] border-sandwich font-karla text-lg"
               />
               {filteredStudents.length > 0 && (
                 <div className="text-center">

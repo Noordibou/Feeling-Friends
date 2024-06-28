@@ -3,7 +3,7 @@ import GoBack from "./GoBack";
 import { getTeacherClassroom } from "../api/teachersApi";
 import { formatTime } from "../utils/dateFormat";
 
-const ClassInfoNavbar = ({ teacherId, classroomId }) => {
+const ClassDetails = ({ teacherId, classroomId }) => {
   const [classroom, setClassroom] = useState("");
 
   useEffect(() => {
@@ -51,4 +51,4 @@ const ClassInfoNavbar = ({ teacherId, classroomId }) => {
   );
 };
 
-export default ClassInfoNavbar;
+export default ClassDetails;

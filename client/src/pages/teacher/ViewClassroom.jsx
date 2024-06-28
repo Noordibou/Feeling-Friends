@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
-import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import ClassDetails from "../../components/ClassDetails";
 import ButtonView from "../../components/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 import Nav from "../../components/Navbar/Nav";
@@ -27,6 +27,7 @@ const ViewClassroom = () => {
   const constraintsRef = useRef(null);
   const [selectedStudent, setSelectedStudent] = useState({});
   const [showMsg, setShowMsg] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const getClassroomData = async () => {
     try {
@@ -83,12 +84,54 @@ const ViewClassroom = () => {
       <div className="flex h-screen min-w-screen justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-row my-10">            
-              <SimpleTopNav pageTitle={classroom?.classSubject} fontsize="text-[24px]" />
-            
-            <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
-            {/* Room View & List Buttons */}
-            <div className="flex justify-between gap-4 items-center ">
+          <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
+                  <div className="flex md:justify-center">
+                    <SimpleTopNav
+                      pageTitle={classroom?.classSubject}
+                      fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
+                    />
+                  </div>
+                  <div className="flex flex-col-reverse md:flex-row xl:gap-8">
+                    <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+                      <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
+                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">Details</h2>
+                        <svg
+                          className={`transition-transform duration-300 md:hidden ${isOpen? '' : 'rotate-180'}`}
+                          width="70"
+                          height="70"
+                          viewBox="0 -25 100 100"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <line
+                            x1="50"
+                            y1="10"
+                            x2="35"
+                            y2="30"
+                            stroke="#8D8772"
+                            stroke-width="4"
+                            stroke-linecap="round"
+                          />
+
+                          <line
+                            x1="50"
+                            y1="10"
+                            x2="65"
+                            y2="30"
+                            stroke="#8D8772"
+                            stroke-width="4"
+                            stroke-linecap="round"
+                          />
+                        </svg>
+                      </div>
+                      <div className={`transition-max-h md:flex overflow-hidden ${isOpen ? "h-full" : "max-h-0"} md:max-h-full md:h-auto`}>
+                      <ClassDetails
+                        teacherId={teacherId}
+                        classroomId={classroomId}
+                      />
+                      </div>
+                    </div>
+                    {/* Room View & List Buttons */}
+                    <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
               <ButtonView
                 buttonText="Room View"
                 btnImageWhenOpen={classBoxesIcon}
@@ -107,6 +150,7 @@ const ViewClassroom = () => {
                 />
               </Link>
             </div>
+          </div>
           </div>
           {classroom ? (
             <>

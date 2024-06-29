@@ -332,7 +332,7 @@ const ViewClassList = () => {
         <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div> */}
         <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav setIsEditMode={setIsEditMode} />
+          <Nav setIsEditMode={setIsEditMode} teacherId={teacherId} classroomId={classroomId}  />
         </div>
       </div>
     </>

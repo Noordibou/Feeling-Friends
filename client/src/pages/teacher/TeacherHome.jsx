@@ -162,7 +162,7 @@ const TeacherHome = () => {
         </div>
           {/* <div className="w-[35%] lg:order-first"> */}
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav setIsEditMode={setIsEditMode} />
+          <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />
         </div>
 
       </div>

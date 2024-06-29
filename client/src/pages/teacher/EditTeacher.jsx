@@ -24,6 +24,7 @@ const EditTeacher = () => {
     email: "",
     password: "",
   });
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -69,17 +70,16 @@ const EditTeacher = () => {
       </div>
       <div className="h-screen flex flex-col items-center pt-8">
         <div className="mt-4 mb-3">
-        <h1 className=" font-header1 text-header2 ">Manage settings</h1>
-        <p className="text-header3 font-header3 text-center">
-        Preferences for your account details and more.
-        </p>
+          <h1 className=" font-header1 text-header2 ">Manage settings</h1>
+          <p className="text-header3 font-header3 text-center">
+            Preferences for your account details and more.
+          </p>
         </div>
 
-          <form className="flex flex-col gap-2" onSubmit={handleFormSubmit}>
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] w-[320px]">
-
+        <form className="flex flex-col gap-2" onSubmit={handleFormSubmit}>
+          <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] w-[320px]">
             <h2 className="font-header4 text-header3">Account profile</h2>
-              <div className="flex flex-col">
+            <div className="flex flex-col">
               <label>Prefix </label>
               <input
                 type="text"
@@ -143,12 +143,51 @@ const EditTeacher = () => {
                     <label>Password </label>
                     <input type="password" name="password" value={formData.password} onChange={handleInputChange} className='rounded-lg px-2 py-0.5'  />
                 </div> */}
+          </div>
+          {/* Display Section */}
+          <div className="flex p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] w-[320px]">
+            {/* Display Header */}
+            <div className="flex w-full justify-between" onClick={() => setIsOpen(!isOpen)}>
+              <h2 className="font-semibold font-header4 text-header3 font-[Poppins]">
+                Display
+              </h2>
+
+                <svg
+                  className={`transition-transform duration-300 ${
+                    isOpen ? "" : "rotate-180"
+                  }`}
+                  width="33"
+                  height="33"
+                  viewBox="30 10 40 40"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line
+                    x1="50"
+                    y1="20"
+                    x2="35"
+                    y2="40"
+                    stroke="#000000"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+
+                  <line
+                    x1="50"
+                    y1="20"
+                    x2="65"
+                    y2="40"
+                    stroke="#000000"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
             </div>
-            <button className="border rounded-md my-4" type="submit">
-              Update Teacher
-            </button>
-          </form>
-        
+          <button className="border rounded-md my-4" type="submit">
+            Update Teacher
+          </button>
+        </form>
+
         {/* <div className='flex flex-row mt-3 underline gap-1'>
                     <Logout location='settings' userData={userData} />
                 </div> */}

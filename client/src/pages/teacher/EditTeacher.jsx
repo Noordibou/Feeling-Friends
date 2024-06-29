@@ -7,6 +7,8 @@ import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
+import Button from "../../components/Button.jsx";
+
 
 const EditTeacher = () => {
   const navigate = useNavigate();
@@ -72,10 +74,12 @@ const EditTeacher = () => {
         Preferences for your account details and more.
         </p>
         </div>
-        <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] w-[320px]">
-          <h2 className="font-header4 text-header3">Account profile</h2>
+
           <form className="flex flex-col gap-2" onSubmit={handleFormSubmit}>
-            <div className="flex flex-col">
+            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] w-[320px]">
+
+            <h2 className="font-header4 text-header3">Account profile</h2>
+              <div className="flex flex-col">
               <label>Prefix </label>
               <input
                 type="text"
@@ -139,18 +143,18 @@ const EditTeacher = () => {
                     <label>Password </label>
                     <input type="password" name="password" value={formData.password} onChange={handleInputChange} className='rounded-lg px-2 py-0.5'  />
                 </div> */}
-
+            </div>
             <button className="border rounded-md my-4" type="submit">
               Update Teacher
             </button>
           </form>
-        </div>
+        
         {/* <div className='flex flex-row mt-3 underline gap-1'>
                     <Logout location='settings' userData={userData} />
                 </div> */}
 
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav />
+          <Nav teacherId={userData._id} />
         </div>
       </div>
     </>

@@ -11,7 +11,7 @@ import "./scrollbar.css";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
-import ClassInfoNavbar from "../../components/ClassInfoNavbar.jsx";
+import ClassDetails from "../../components/ClassDetails.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
@@ -32,6 +32,7 @@ const ViewClassList = () => {
     checkIn: '',
     checkOut: '',
   });
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +119,12 @@ const ViewClassList = () => {
               {isEditMode ? (
                 <>
                   {/* Top Nav (on Edit only)*/}
-                  <SimpleTopNav pageTitle="Manage Classroom" />
+                  <div className="mt-8">
+                    <SimpleTopNav
+                      pageTitle="Manage Classroom"
+                      fontsize="text-[30px]"
+                    />
+                  </div>
 
                   {/* Classroom Info (on Edit only) */}
                   <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-14">
@@ -128,7 +134,6 @@ const ViewClassList = () => {
                       placeholder="Subject"
                       value={classroom.classSubject}
                       onChange={handleChange}
-
                     />
                     <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
                       <div className="flex justify-between mx-2">
@@ -163,8 +168,8 @@ const ViewClassList = () => {
                                 type="time"
                                 value={classroom.checkOut}
                                 onChange={handleChange}
-                              />                            
-                              </div>
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -181,30 +186,72 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-row mb-10">
-                  <ClassInfoNavbar
-                    teacherId={teacherId}
-                    classroomId={classroomId}
-                  />
-                  {/* Room View & List Buttons */}
-                  <div className="flex justify-around w-72 mt-8 items-center">
-                    <Link
-                      className="flex items-center h-16"
-                      to={`/classroom/${userData._id}/${classroomId}`}
-                    >
+                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
+                  <div className="flex md:justify-center">
+                    <SimpleTopNav
+                      pageTitle={classroom?.classSubject}
+                      fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
+                    />
+                  </div>
+                  <div className="flex flex-col-reverse md:flex-row xl:gap-8">
+                    <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+                      <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
+                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">Details</h2>
+                        <svg
+                          className={`transition-transform duration-300 md:hidden ${isOpen? '' : 'rotate-180'}`}
+                          width="70"
+                          height="70"
+                          viewBox="0 -25 100 100"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <line
+                            x1="50"
+                            y1="10"
+                            x2="35"
+                            y2="30"
+                            stroke="#8D8772"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+
+                          <line
+                            x1="50"
+                            y1="10"
+                            x2="65"
+                            y2="30"
+                            stroke="#8D8772"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </div>
+                      <div className={`transition-max-h md:flex overflow-hidden ${isOpen ? "h-full" : "max-h-0"} md:max-h-full md:h-auto`}>
+                      <ClassDetails
+                        teacherId={teacherId}
+                        classroomId={classroomId}
+                      />
+                      </div>
+                    </div>
+                    {/* Room View & List Buttons */}
+                    <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
+                      <Link
+                        className="flex items-center h-16"
+                        to={`/classroom/${userData._id}/${classroomId}`}
+                      >
+                        <ButtonView
+                          buttonText="Room View"
+                          defaultBtnImage={classBoxesIcon}
+                          isSelected={false}
+                          buttonSize="small"
+                        />
+                      </Link>
                       <ButtonView
-                        buttonText="Room View"
-                        defaultBtnImage={classBoxesIcon}
-                        isSelected={false}
+                        buttonText="List View"
+                        btnImageWhenOpen={listIcon}
+                        isSelected={true}
                         buttonSize="small"
                       />
-                    </Link>
-                    <ButtonView
-                      buttonText="List View"
-                      btnImageWhenOpen={listIcon}
-                      isSelected={true}
-                      buttonSize="small"
-                    />
+                    </div>
                   </div>
                 </div>
               )}
@@ -268,9 +315,13 @@ const ViewClassList = () => {
             <div className="flex justify-between text-body font-body pb-2">
               <a href="/teacher-home">&lt; All Classes</a>
               <div>
-              
                 {/* <button onClick={() => setIsEditMode(!isEditMode)}> */}
-                <button className={`${isEditMode ? "flex": "hidden"} px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md`} onClick={saveClassroomInfo}>
+                <button
+                  className={`${
+                    isEditMode ? "flex" : "hidden"
+                  } px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md`}
+                  onClick={saveClassroomInfo}
+                >
                   {isEditMode ? "Save Changes" : ""}
                 </button>
               </div>
@@ -281,7 +332,7 @@ const ViewClassList = () => {
         <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div> */}
         <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav setIsEditMode={setIsEditMode} />
+          <Nav setIsEditMode={setIsEditMode} teacherId={teacherId} classroomId={classroomId}  />
         </div>
       </div>
     </>

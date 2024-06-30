@@ -8,7 +8,7 @@ import Settings from "../../images/Settings.png";
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color: "sky" },
   { url: "/edit-seating-chart", image: Classroom, text: "Edit", color: "grass" },
-  { url: "/editneedsgoals", image: Goal, text: "Goals/Needs", color: "schoolBus" },
+  { url: "/editneedsgoals/:teacherId/:classroomId", image: Goal, text: "Goals/Needs", color:"schoolBus" },  
   { url: "/edit/:teacherId", image: Settings, text: "Settings", color: "apple" }
 ];
 
@@ -22,6 +22,9 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
   const handleItemClick = (url) => {
     if (url.includes(":teacherId")) {
       url = url.replace(":teacherId", teacherId);
+    }
+    if (url.includes(":classroomId")) {
+      url = url.replace(":classroomId", classroomId);
     }
     redirectTo(url);
   };

@@ -14,7 +14,7 @@ import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
-import ClassInfoNavbar from "../../components/ClassInfoNavbar";
+import ClassDetails from "../../components/ClassDetails";
 import saveButton from "../../images/button.png";
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
@@ -229,7 +229,7 @@ const EditSeatingChart = () => {
       {" "}
       <div className="flex min-h-screen min-w-screen justify-center">
         <div className="flex flex-col w-full items-center max-w-3xl h-screen">
-          <ClassInfoNavbar teacherId={teacherId} classroomId={classroomId} />
+          <ClassDetails teacherId={teacherId} classroomId={classroomId} />
 
           {classroom ? (
             <>
@@ -363,7 +363,7 @@ const EditSeatingChart = () => {
         <TeacherNavbar />
       </div> */}
       <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav />
+          <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
     </>
   );

@@ -54,7 +54,12 @@ const EditTeacher = () => {
     try {
       // Update teacher data
       await updateUser(formData);
-
+      // Show brief save message for 3 secs
+      console.log('click click')
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 2500);
       // navigate('/teacher-home');
     } catch (error) {
       console.error(error);
@@ -80,7 +85,7 @@ const EditTeacher = () => {
           </p>
         </div>
 
-        <form className="flex flex-col gap-2" onSubmit={handleFormSubmit}>
+        <form className="flex flex-col gap-2">
           <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[400px] w-[320px]">
             {/* Account Profile */}
             <div
@@ -231,19 +236,19 @@ const EditTeacher = () => {
               <h2>Coming soon...</h2>
             </div>
           </div>
-          <button className="border rounded-md my-4" type="submit">
+          {/* <button className="border rounded-md my-4" type="submit">
             Update Teacher
-          </button>
+          </button> */}
         </form>
-        <div className="fixed bottom-44 right-4">
+        <div className="fixed bottom-44 right-4" role="button" onClick={(e) => handleFormSubmit(e)}>
           <Button buttonText="Save" />
         </div>
 
         {/* <div className='flex flex-row mt-3 underline gap-1'>
                     <Logout location='settings' userData={userData} />
                 </div> */}
-        <div className="max-w-[643px]">
-          <MsgModal  msgText="Save Successful!" showMsg={showMsg} />
+        <div className="flex justify-center">
+          <MsgModal msgText="Save Successful!" showMsg={showMsg} />
         </div>
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={userData._id} />

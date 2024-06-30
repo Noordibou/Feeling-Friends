@@ -27,7 +27,7 @@ const MsgModal = ({ msgText, showMsg }) => {
       <AnimatePresence>
         {showMsg &&(
         <motion.div
-          className={`fixed bottom-0 z-10 w-full object-cover rounded-t-[1rem]`}
+          className={`fixed bottom-0 z-10 w-full max-w-[1024px] lg:max-w-[850px] object-cover rounded-t-[1rem]`}
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}

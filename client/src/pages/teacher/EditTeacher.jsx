@@ -80,7 +80,7 @@ const EditTeacher = () => {
               <input
                 type="text"
                 name="prefix"
-                value={formData.prefix}
+                value={formData.prefix || ""}
                 onChange={handleInputChange}
                 className="rounded-lg px-2 py-0.5"
               />
@@ -90,7 +90,7 @@ const EditTeacher = () => {
               <input
                 type="text"
                 name="firstName"
-                value={formData.firstName}
+                value={formData.firstName || ""}
                 onChange={handleInputChange}
                 className="rounded-lg px-2 py-0.5"
               />
@@ -100,7 +100,7 @@ const EditTeacher = () => {
               <input
                 type="text"
                 name="lastName"
-                value={formData.lastName}
+                value={formData.lastName || ""}
                 onChange={handleInputChange}
                 className="rounded-lg px-2 py-0.5"
               />
@@ -110,7 +110,7 @@ const EditTeacher = () => {
               <input
                 type="text"
                 name="school"
-                value={formData.school}
+                value={formData.school || ""}
                 onChange={handleInputChange}
                 className="rounded-lg px-2 py-0.5"
               />
@@ -120,7 +120,7 @@ const EditTeacher = () => {
               <input
                 type="text"
                 name="email"
-                value={formData.email}
+                value={formData.email || ""}
                 onChange={handleInputChange}
                 className="rounded-lg px-2 py-0.5"
               />
@@ -130,7 +130,7 @@ const EditTeacher = () => {
               <input
                 type="text"
                 name="phone"
-                value={formData.phone}
+                value={formData.phone || ""}
                 onChange={handleInputChange}
                 className="rounded-lg px-2 py-0.5"
               />

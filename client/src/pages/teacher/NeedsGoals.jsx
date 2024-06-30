@@ -7,12 +7,16 @@ import SimpleTopNav from "../../components/SimpleTopNav";
 import ClassDetails from "../../components/ClassDetails";
 import { getTeacherClassroom, getAllStudentsClassroom } from "../../api/teachersApi";
 import { useUser } from "../../context/UserContext";
+import MsgModal from "../../components/SeatingChart/MsgModal";
+import Button from "../../components/Button"
+import Nav from "../../components/Navbar/Nav";
 
 const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { teacherId, classroomId } = useParams();
   const { userData, updateUser } = useUser();
   const [classroom, setClassroom] = useState(null);
+  const [showMsg, setShowMsg] = useState(false);
   const [students, setStudents] = useState([]);
   const [userInfo, setUserInfo] = useState({
     classSubject: '',
@@ -20,6 +24,16 @@ const NeedsGoals = () => {
     checkIn: '',
     checkOut: '',
   });
+
+
+  const handleSubmit = () => {
+    console.log("click save")
+    // Show brief save message for 3 secs
+    setShowMsg(true);
+    setTimeout(() => {
+      setShowMsg(false);
+    }, 2500);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +59,7 @@ const NeedsGoals = () => {
 
   return (
     <>
-      <div className="flex h-screen justify-center">
+      <div className="flex min-h-screen justify-center">
         <div className="flex max-w-[900px] flex-col">
           <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 md:ml-5">
             <SimpleTopNav
@@ -160,16 +174,6 @@ const NeedsGoals = () => {
                 />
               </div>
             </div>
-
-            <div className="mt-5">
-              <BtnRainbow
-                textColor="text-white"
-                btnText="Save"
-                handleSave={() =>
-                  console.log("Saved! Need actual save function though")
-                }
-              />
-            </div>
           </div>
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
             <h2 className="text-header2 font-header2 text-center">
@@ -221,18 +225,27 @@ const NeedsGoals = () => {
                 />
               </div>
             </div>
-            <div className="mt-5">
-              <BtnRainbow
-                textColor="text-white"
-                btnText="Save"
-                handleSave={() =>
-                  console.log("Saved! Need actual save function though")
-                }
-              />
-            </div>
+{/* Save Button in Bottom Right Corner */}
+<div className="fixed bottom-36 right-10" onClick={handleSubmit}>
+        <Button buttonText="Save" />
+      </div>
           </div>
         </div>
       </div>
+
+      
+      {/* Tells user they have saved the layout */}
+      <div className="flex justify-center">
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
+      </div>
+
+      <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav teacherId={teacherId} classroomId={classroomId}  />
+        </div>
     </>
   );
 }

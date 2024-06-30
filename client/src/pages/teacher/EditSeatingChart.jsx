@@ -354,11 +354,13 @@ const EditSeatingChart = () => {
       </div>
       
       {/* Tells user they have saved the layout */}
-      <MsgModal
-        msgText="Save Successful!"
-        showMsg={showMsg}
-        textColor="text-black"
-      />
+      <div className="flex justify-center">
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
+      </div>
       {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div> */}

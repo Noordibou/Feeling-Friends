@@ -20,21 +20,21 @@ const NeedsGoals = () => {
   const [showMsg, setShowMsg] = useState(false);
   const [students, setStudents] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [answers, setAnswers] = useState([""]);
+  const [goalAnswers, setGoalAnswers] = useState([""]);
   
   const handleInputChange = (index, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
+    const newGoalAnswers = [...goalAnswers];
+    newGoalAnswers[index] = value;
+    setGoalAnswers(newGoalAnswers);
   };
 
   const addAnswer = () => {
-    setAnswers([...answers, ""]);
+    setGoalAnswers([...goalAnswers, ""]);
   };
 
   const removeAnswer = (index) => {
-    const newAnswers = answers.filter((_, i) => i !== index);
-    setAnswers(newAnswers);
+    const newGoalAnswers = goalAnswers.filter((_, i) => i !== index);
+    setGoalAnswers(newGoalAnswers);
   };
 
   const handleSubmit = () => {
@@ -60,8 +60,6 @@ const NeedsGoals = () => {
         console.log(error);
       }
     };
-
-    console.log("classroom: " + JSON.stringify(classroom))
 
     window.scrollTo(0, 0);
     fetchData();
@@ -128,24 +126,24 @@ const NeedsGoals = () => {
             </div>
           </div>
 
-          <h4 className="font-[Poppins] text-[18px] md:text-[24px] text-center px-2">
+          <h4 className="font-[Poppins] text-[18px] md:text-[24px] text-center px-2 mt-4">
             Set preset goal options for your students
           </h4>
           <br />
 
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem]">
-            <h2 className="font-[Poppins] text-[18px] md:text-[24px] ">
+            <h2 className="font-[Poppins] font-semibold text-[18px] md:text-[24px] ">
               "What's your most important <u>goal</u> for the day?"
             </h2>
 
             {/* Divs in place of buttons for this selection probably. Here is one div since they will probably need to be listed from the backend depending on how many choices the teacher has made */}
             {isEditMode ? (
               <>
-                {answers.map((answer, index) => (
+                {goalAnswers.map((answer, index) => (
                   <div
                     className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
                   >
-                    <input
+                    <textarea
                       key={index}
                       value={answer}
                       onChange={(e) => handleInputChange(index, e.target.value)}
@@ -159,6 +157,7 @@ const NeedsGoals = () => {
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
+                          className="w-[18px] sm:w-[24px]"
                         >
                           <line
                             x1="5"
@@ -195,7 +194,7 @@ const NeedsGoals = () => {
             )}
 
             {/* Add new goal div */}
-            <div className="rounded-[1rem] border-graphite border-[4px] p-[1.5rem] mt-[1rem] mb-[1rem]">
+            <div className="rounded-[1rem] border-graphite border-[4px] p-[1.5rem] mt-[1rem] mb-[1.5rem]">
               <h4
                 className="text-[17px] font-[Poppins] text-center"
                 role="button"
@@ -205,7 +204,7 @@ const NeedsGoals = () => {
               </h4>
             </div>
 
-            <div className="flex mx-2 gap-5 items-center ">
+            <div className="flex mx-2 gap-5 items-center justify-center">
               <label for="customGoals" className="text-[17px] font-[Poppins]">
                 Allow students to input custom goals
               </label>{" "}
@@ -214,7 +213,7 @@ const NeedsGoals = () => {
                 id="yes"
                 name="checkbox"
                 value="1"
-                className="w-5 h-5 mr-5"
+                className="w-[50px] h-5 mr-5"
               />
             </div>
           </div>

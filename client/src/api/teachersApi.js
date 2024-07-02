@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 
+const BASE_URL = process.env.REACT_APP_URL
 const TEACHERS_API_URL = process.env.REACT_APP_URL + '/api/teachers';
 
 export const createTeacher = async (teacher) => {
@@ -142,7 +143,7 @@ export const createClassroom = async (id, classroom) => {
 
   export const getAllStudents = async () => {
     try {
-        const response = await axios.get(URL +'/api/students', { withCredentials: true });
+        const response = await axios.get(`${BASE_URL}/api/students`, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.log(error);

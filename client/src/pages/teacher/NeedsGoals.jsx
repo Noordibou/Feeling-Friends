@@ -1,25 +1,67 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import saveButton from '../../images/button.png'
-import BtnRainbow from "../../components/BtnRainbow";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import ClassDetails from "../../components/ClassDetails";
 import { getTeacherClassroom, getAllStudentsClassroom } from "../../api/teachersApi";
 import { useUser } from "../../context/UserContext";
+import MsgModal from "../../components/SeatingChart/MsgModal";
+import Button from "../../components/Button"
+import Nav from "../../components/Navbar/Nav";
+import SmallSaveButton from "../../components/SmallSaveButton"
 
 const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { teacherId, classroomId } = useParams();
+  // Not used now but will probably need once backend is updated
   const { userData, updateUser } = useUser();
   const [classroom, setClassroom] = useState(null);
+  const [showMsg, setShowMsg] = useState(false);
+  // Not used now but will probably need once backend is updated
   const [students, setStudents] = useState([]);
-  const [userInfo, setUserInfo] = useState({
-    classSubject: '',
-    location: '',
-    checkIn: '',
-    checkOut: '',
-  });
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [goalAnswers, setGoalAnswers] = useState([""]);
+  const [needAnswers, setNeedAnswers] = useState([""]);
+  
+  // Can update these functions based on how backend is edited for goals and needs change
+  const handleInputGoalChange = (index, value) => {
+    const newGoalAnswers = [...goalAnswers];
+    newGoalAnswers[index] = value;
+    setGoalAnswers(newGoalAnswers);
+  };
+
+  const handleInputNeedChange = (index, value) => {
+    const newNeedAnswers = [...needAnswers];
+    newNeedAnswers[index] = value;
+    setNeedAnswers(newNeedAnswers);
+  };
+
+  const addAnswer = (answerType) => {
+    if (answerType === "goal") {
+      setGoalAnswers([...goalAnswers, ""]);
+    } else if (answerType === "need") {
+      setNeedAnswers([...needAnswers, ""]);
+    }
+  };
+
+  const removeGoalsAnswer = (index) => {
+    const newGoalAnswers = goalAnswers.filter((_, i) => i !== index);
+    setGoalAnswers(newGoalAnswers);
+  };
+
+  const removeNeedsAnswer = (index) => {
+    const newNeedAnswers = needAnswers.filter((_, i) => i !== index);
+    setNeedAnswers(newNeedAnswers);
+  };
+
+  const handleSubmit = () => {
+    console.log("click save")
+    // Show brief save message for 3 secs
+    setShowMsg(true);
+    setTimeout(() => {
+      setShowMsg(false);
+    }, 2500);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,13 +73,10 @@ const NeedsGoals = () => {
           classroomId
         );
         setStudents(classroomStudents);
-        setUserInfo(userData)
       } catch (error) {
         console.log(error);
       }
     };
-
-    console.log("classroom: " + JSON.stringify(classroom))
 
     window.scrollTo(0, 0);
     fetchData();
@@ -45,7 +84,7 @@ const NeedsGoals = () => {
 
   return (
     <>
-      <div className="flex h-screen justify-center">
+      <div className="flex min-h-screen justify-center pb-[250px]">
         <div className="flex max-w-[900px] flex-col">
           <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 md:ml-5">
             <SimpleTopNav
@@ -91,8 +130,8 @@ const NeedsGoals = () => {
                 </svg>
               </div>
               <div
-                className={`transition-max-h md:flex overflow-hidden ${
-                  isOpen ? "h-full" : "max-h-0"
+                className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
+                  isOpen ? "max-h-[500px]" : "max-h-0"
                 } md:max-h-full md:h-auto`}
               >
                 <ClassDetails
@@ -104,134 +143,219 @@ const NeedsGoals = () => {
             </div>
           </div>
 
-          <h4 className="text-body font-body text-center">
+          <h4 className="font-[Poppins] text-[18px] md:text-[24px] text-center px-2 mt-4">
             Set preset goal options for your students
           </h4>
           <br />
 
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem]">
-            <h2 className="text-header2 font-header2 text-center">
+            <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
               "What's your most important <u>goal</u> for the day?"
             </h2>
 
             {/* Divs in place of buttons for this selection probably. Here is one div since they will probably need to be listed from the backend depending on how many choices the teacher has made */}
-            <div className="bg-white rounded-[1rem] border-graphite border-[4px] p-[1.5rem] flex justify-between mt-[1rem] mb-[1rem]">
-              <div className="text-body font-body">
-                Finish homework during study hall
+            {isEditMode ? (
+              <>
+                {goalAnswers.map((answer, index) => (
+                  <div
+                    key={index}
+                    className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                  >
+                    <textarea
+                      key={index}
+                      value={answer}
+                      onChange={(e) => handleInputGoalChange(index, e.target.value)}
+                      className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
+                    />
+                    <div className="flex text-body font-body items-center pr-4">
+                      {/* delete "x" button */}
+                      <button onClick={() => removeGoalsAnswer(index)}>
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-[18px] sm:w-[24px]"
+                        >
+                          <line
+                            x1="5"
+                            y1="5"
+                            x2="19"
+                            y2="19"
+                            stroke="#000"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                          <line
+                            x1="19"
+                            y1="5"
+                            x2="5"
+                            y2="19"
+                            stroke="#000"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                {/* Add new goal div */}
+                <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+                  <h4
+                    className="text-[17px] font-semibold font-[Poppins] text-center"
+                    role="button"
+                    onClick={() => addAnswer("goal")}
+                  >
+                    Add new goal +
+                  </h4>
+                </div>
+              </>
+            ) : (
+              <div
+                className={`flex p-3 md:p-5 rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+              >
+                <h3 className="text-[17px] font-body">
+                  Finish homework during study hall
+                </h3>
               </div>
-              <div className="text-body font-body">
-                <a href="/">Edit</a> &nbsp; <a href="/">X</a>
-              </div>
-            </div>
+            )}
 
-            {/* Add new goal div */}
-            <div className="rounded-[1rem] border-graphite border-[4px] p-[1.5rem] mt-[1rem] mb-[1rem]">
-              <h4 className="text-body font-body text-center">
-                Add new goal +
-              </h4>
-            </div>
-
-            <div className="flex justify-between">
-              <div>
-                <span className="text-body font-body">
-                  Allow students to input custom goals?
-                </span>
-              </div>
-              <div>
-                <label for="customGoals" className="text-body font-body">
-                  Yes
-                </label>{" "}
-                <input
-                  type="checkbox"
-                  id="yes"
-                  name="checkbox"
-                  value="1"
-                  className="w-5 h-5 mr-[2rem]"
-                />
-                <label for="customGoals" className="text-body font-body">
-                  No
-                </label>{" "}
-                <input
-                  type="checkbox"
-                  id="no"
-                  name="checkbox"
-                  value="1"
-                  className="w-5 h-5"
-                />
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <BtnRainbow
-                textColor="text-white"
-                btnText="Save"
-                handleSave={() =>
-                  console.log("Saved! Need actual save function though")
-                }
+            <div className="flex mx-2 gap-5 items-center justify-center">
+              <label
+                htmlFor="customGoals"
+                className="text-[17px] font-[Poppins]"
+              >
+                Allow students to input custom goals
+              </label>{" "}
+              <input
+                type="checkbox"
+                id="yes"
+                name="checkbox"
+                value="1"
+                className="w-[50px] h-5 mr-5"
               />
             </div>
           </div>
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
-            <h2 className="text-header2 font-header2 text-center">
+          <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
               "What do you <u>need</u> from an adult to succeed today?"
             </h2>
-
-            <div className="bg-white rounded-[1rem] border-graphite border-[4px] p-[1.5rem] flex justify-between mt-[1rem] mb-[1rem]">
-              <div className="text-body font-body">
+            {isEditMode ? (
+              <>
+            {needAnswers.map((answer, index) => (
+                  <div
+                    key={index}
+                    className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                  >
+                    <textarea
+                      key={index}
+                      value={answer}
+                      onChange={(e) => handleInputNeedChange(index, e.target.value)}
+                      className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
+                    />
+                    <div className="flex text-body font-body items-center pr-4">
+                      {/* delete "x" button */}
+                      <button onClick={() => removeNeedsAnswer(index)}>
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-[18px] sm:w-[24px]"
+                        >
+                          <line
+                            x1="5"
+                            y1="5"
+                            x2="19"
+                            y2="19"
+                            stroke="#000"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                          <line
+                            x1="19"
+                            y1="5"
+                            x2="5"
+                            y2="19"
+                            stroke="#000"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                {/* Add new need div */}
+                <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+                  <h4
+                    className="text-[17px] font-semibold font-[Poppins] text-center"
+                    role="button"
+                    onClick={() => addAnswer("need")}
+                  >
+                    Add new need +
+                  </h4>
+                </div>
+              </>
+            ) : (
+            <div
+                className={`flex p-3 md:p-5 rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+              >
+                <h3 className="text-[17px] font-body">
                 Finish homework during study hall
-              </div>
-              <div className="text-body font-body">
-                <a href="/">Edit</a> &nbsp; <a href="/">X</a>
-              </div>
+              </h3>
             </div>
-
-            {/* Add new need div */}
-            <div className="rounded-[1rem] border-graphite border-[4px] p-[1.5rem] mt-[1rem] mb-[1rem]">
-              <h4 className="text-body font-body text-center">
-                Add new need +
-              </h4>
-            </div>
-
-            <div className="flex justify-between">
-              <div>
-                <span className="text-body font-body">
-                  Allow students to input custom needs?
-                </span>
-              </div>
-              <div>
-                <label for="customGoals" className="text-body font-body">
-                  Yes
-                </label>{" "}
-                <input
-                  type="checkbox"
-                  id="yes"
-                  name="checkbox"
-                  value="1"
-                  className="w-5 h-5 mr-[2rem]"
-                />
-                <label for="customGoals" className="text-body font-body">
-                  No
-                </label>{" "}
-                <input
-                  type="checkbox"
-                  id="no"
-                  name="checkbox"
-                  value="1"
-                  className="w-5 h-5"
-                />
-              </div>
-            </div>
-            <div className="mt-5">
-              <BtnRainbow
-                textColor="text-white"
-                btnText="Save"
-                handleSave={() =>
-                  console.log("Saved! Need actual save function though")
-                }
+          )}
+            
+            <div className="flex mx-2 gap-5 items-center justify-center">
+              <label
+                htmlFor="customGoals"
+                className="text-[17px] font-[Poppins]"
+              >
+                Allow students to input custom needs
+              </label>{" "}
+              <input
+                type="checkbox"
+                id="yes"
+                name="checkbox"
+                value="1"
+                className="w-[50px] h-5 mr-5"
               />
+            </div>
+            {/* Save Button on Tablet and Phone screens centered*/}
+            <div className="lg:hidden flex justify-center">
+              <div className="lg:hidden fixed bottom-36 flex " onClick={handleSubmit}>
+                <Button buttonText="Save" />
+              </div>
+            </div>
+            {/* Small Save button for desktop/large screens to the right */}
+            <div>
+              <div className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex " onClick={handleSubmit}>
+                <SmallSaveButton />
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Tells user they have saved the layout */}
+      <div className="flex justify-center">
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
+      </div>
+
+      <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+        <Nav
+          setIsEditMode={setIsEditMode}
+          teacherId={teacherId}
+          classroomId={classroomId}
+        />
       </div>
     </>
   );

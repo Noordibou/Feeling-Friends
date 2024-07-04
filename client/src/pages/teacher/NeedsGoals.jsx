@@ -15,14 +15,17 @@ import SmallSaveButton from "../../components/SmallSaveButton"
 const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { teacherId, classroomId } = useParams();
+  // Not used now but will probably need once backend is updated
   const { userData, updateUser } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [showMsg, setShowMsg] = useState(false);
+  // Not used now but will probably need once backend is updated
   const [students, setStudents] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [goalAnswers, setGoalAnswers] = useState([""]);
   const [needAnswers, setNeedAnswers] = useState([""]);
   
+  // Can update these functions based on how backend is edited for goals and needs change
   const handleInputGoalChange = (index, value) => {
     const newGoalAnswers = [...goalAnswers];
     newGoalAnswers[index] = value;
@@ -167,6 +170,7 @@ const NeedsGoals = () => {
                       className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
                     />
                     <div className="flex text-body font-body items-center pr-4">
+                      {/* delete "x" button */}
                       <button onClick={() => removeGoalsAnswer(index)}>
                         <svg
                           width="24"
@@ -254,6 +258,7 @@ const NeedsGoals = () => {
                       className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
                     />
                     <div className="flex text-body font-body items-center pr-4">
+                      {/* delete "x" button */}
                       <button onClick={() => removeNeedsAnswer(index)}>
                         <svg
                           width="24"

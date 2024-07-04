@@ -113,7 +113,7 @@ const ViewClassList = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full lg:z-40">
+        <div className="flex flex-col items-center w-full lg:z-40 mt-8">
           {classroom ? (
             <>
               {isEditMode ? (

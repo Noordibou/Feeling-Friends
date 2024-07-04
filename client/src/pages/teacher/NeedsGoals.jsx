@@ -85,12 +85,12 @@ const NeedsGoals = () => {
 
   return (
     <>
-      <div className="flex justify-center lg:justify-end underline mt-10 px-5">
+      <div className="flex justify-center lg:justify-end underline lg:mt-8 mt-10 px-5">
         <Logout location="teacherLogout" userData={userData} />
       </div>
       <div className="flex min-h-screen justify-center pb-[250px]">
         <div className="flex max-w-[900px] flex-col">
-          <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 md:ml-5">
+          <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 lg:mt-0 mt-8 mx-4 md:ml-5">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
               fontsize="text-[30px] md:text-[30px] xl:text-[24px]"

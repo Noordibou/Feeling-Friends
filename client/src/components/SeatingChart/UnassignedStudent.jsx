@@ -42,17 +42,22 @@ const UnassignedStudent = ({
               key={`unassigned-${index}`}
               className={`m-2 bg-${
                 borderColorClass
-              } h-[99px] w-[99px] 
-                rounded-2xl ${isSelectedStudent ? `opacity-50` : ``}`}
+              } h-[110px] w-[94px] 
+              rounded-xl ${isSelectedStudent ? `opacity-50 border-black border-2` : ``}`}
               onClick={() => {
                 setIsSelected(toggleSelected(newFormat, alreadySelected, isSelected))
               }}
             >
-              <div className="flex w-full justify-center h-full items-center">
-                <img
-                  className={`flex object-cover h-[84px] w-[84px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-60" : ""}`}
-                  src={SampleAvatar}
-                />
+              <div className="flex flex-col w-full justify-center h-full items-center">
+                <div className="">
+                  <img
+                    className={`flex object-cover h-[75px] w-[75px] rounded-xl ${borderColorClass === "sandwich" ? "opacity-60" : ""}`}
+                    src={SampleAvatar}
+                  />
+                </div>
+                <div className="flex flex-row">
+                  <h2>{unassignedStudent.firstName} {unassignedStudent.lastName.charAt(0)}.</h2>  
+                </div>
               </div>
             </div>
           );

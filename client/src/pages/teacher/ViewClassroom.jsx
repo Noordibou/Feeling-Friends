@@ -172,7 +172,7 @@ const ViewClassroom = () => {
                   Object.keys(selectedStudent).length === 0
                     ? ""
                     : "pointer-events-none"
-                } flex w-[752px] h-[61%] rounded-[1rem] mt-2 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
+                } flex w-[752px] h-[654px] rounded-[1rem] mt-2 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
                 ref={constraintsRef}
               >
                 <div

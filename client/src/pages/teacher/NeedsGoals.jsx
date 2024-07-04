@@ -9,6 +9,7 @@ import MsgModal from "../../components/SeatingChart/MsgModal";
 import Button from "../../components/Button"
 import Nav from "../../components/Navbar/Nav";
 import SmallSaveButton from "../../components/SmallSaveButton"
+import Logout from "../../components/LogoutButton";
 
 const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -84,6 +85,9 @@ const NeedsGoals = () => {
 
   return (
     <>
+      <div className="flex justify-center lg:justify-end underline mt-10 px-5">
+        <Logout location="teacherLogout" userData={userData} />
+      </div>
       <div className="flex min-h-screen justify-center pb-[250px]">
         <div className="flex max-w-[900px] flex-col">
           <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 md:ml-5">
@@ -164,7 +168,9 @@ const NeedsGoals = () => {
                     <textarea
                       key={index}
                       value={answer}
-                      onChange={(e) => handleInputGoalChange(index, e.target.value)}
+                      onChange={(e) =>
+                        handleInputGoalChange(index, e.target.value)
+                      }
                       className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
                     />
                     <div className="flex text-body font-body items-center pr-4">
@@ -239,12 +245,12 @@ const NeedsGoals = () => {
             </div>
           </div>
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
-          <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
+            <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
               "What do you <u>need</u> from an adult to succeed today?"
             </h2>
             {isEditMode ? (
               <>
-            {needAnswers.map((answer, index) => (
+                {needAnswers.map((answer, index) => (
                   <div
                     key={index}
                     className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
@@ -252,7 +258,9 @@ const NeedsGoals = () => {
                     <textarea
                       key={index}
                       value={answer}
-                      onChange={(e) => handleInputNeedChange(index, e.target.value)}
+                      onChange={(e) =>
+                        handleInputNeedChange(index, e.target.value)
+                      }
                       className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
                     />
                     <div className="flex text-body font-body items-center pr-4">
@@ -301,15 +309,15 @@ const NeedsGoals = () => {
                 </div>
               </>
             ) : (
-            <div
+              <div
                 className={`flex p-3 md:p-5 rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 <h3 className="text-[17px] font-body">
-                Finish homework during study hall
-              </h3>
-            </div>
-          )}
-            
+                  Finish homework during study hall
+                </h3>
+              </div>
+            )}
+
             <div className="flex mx-2 gap-5 items-center justify-center">
               <label
                 htmlFor="customGoals"
@@ -327,13 +335,19 @@ const NeedsGoals = () => {
             </div>
             {/* Save Button on Tablet and Phone screens centered*/}
             <div className="lg:hidden flex justify-center">
-              <div className="lg:hidden fixed bottom-36 flex " onClick={handleSubmit}>
+              <div
+                className="lg:hidden fixed bottom-36 flex "
+                onClick={handleSubmit}
+              >
                 <Button buttonText="Save" />
               </div>
             </div>
             {/* Small Save button for desktop/large screens to the right */}
             <div>
-              <div className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex " onClick={handleSubmit}>
+              <div
+                className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
+                onClick={handleSubmit}
+              >
                 <SmallSaveButton />
               </div>
             </div>

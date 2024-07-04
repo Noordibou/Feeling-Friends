@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
   getAllStudentsClassroom,
@@ -13,7 +13,6 @@ import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
-import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassDetails from "../../components/ClassDetails";
 import saveButton from "../../images/button.png";
 import RosterImg from "../../images/Three People.png";
@@ -25,6 +24,8 @@ import ButtonView from "../../components/ButtonView";
 import BtnRainbow from "../../components/BtnRainbow";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
+import SimpleTopNav from "../../components/SimpleTopNav";
+
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -32,6 +33,8 @@ const EditSeatingChart = () => {
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false)
+
 
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [unassignedStudents, setUnassignedStudents] = useState([]);
@@ -229,7 +232,62 @@ const EditSeatingChart = () => {
       {" "}
       <div className="flex min-h-screen min-w-screen justify-center">
         <div className="flex flex-col w-full items-center max-w-3xl h-screen">
-          <ClassDetails teacherId={teacherId} classroomId={classroomId} />
+        <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 px-5 md:ml-5">
+            <SimpleTopNav
+              pageTitle={classroom?.classSubject}
+              fontsize="text-[30px] md:text-[30px] xl:text-[24px]"
+            />
+            <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+              <div
+                className="flex items-center w-full justify-between md:hidden"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">
+                  Details
+                </h2>
+                <svg
+                  className={`transition-transform duration-300 md:hidden ${
+                    isOpen ? "" : "rotate-180"
+                  }`}
+                  width="70"
+                  height="70"
+                  viewBox="0 -25 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line
+                    x1="50"
+                    y1="10"
+                    x2="35"
+                    y2="30"
+                    stroke="#8D8772"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+
+                  <line
+                    x1="50"
+                    y1="10"
+                    x2="65"
+                    y2="30"
+                    stroke="#8D8772"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
+                  isOpen ? "max-h-[500px]" : "max-h-0"
+                } md:max-h-full md:h-auto`}
+              >
+                <ClassDetails
+                  teacherId={teacherId}
+                  classroomId={classroomId}
+                  hasButtons={false}
+                />
+              </div>
+            </div>
+          </div>
 
           {classroom ? (
             <>
@@ -354,11 +412,13 @@ const EditSeatingChart = () => {
       </div>
       
       {/* Tells user they have saved the layout */}
-      <MsgModal
-        msgText="Save Successful!"
-        showMsg={showMsg}
-        textColor="text-black"
-      />
+      <div className="flex justify-center">
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
+      </div>
       {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div> */}

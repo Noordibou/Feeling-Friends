@@ -82,75 +82,86 @@ const ViewClassroom = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center max-w-4xl lg:z-40">
+        <div className="flex flex-col items-center max-w-4xl lg:z-40 lg:mt-0 mt-8">
           {/* Top Navbar */}
           <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
-                  <div className="flex md:justify-center">
-                    <SimpleTopNav
-                      pageTitle={classroom?.classSubject}
-                      fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
-                    />
-                  </div>
-                  <div className="flex flex-col-reverse md:flex-row xl:gap-8">
-                    <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
-                      <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">Details</h2>
-                        <svg
-                          className={`transition-transform duration-300 md:hidden ${isOpen? '' : 'rotate-180'}`}
-                          width="70"
-                          height="70"
-                          viewBox="0 -25 100 100"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <line
-                            x1="50"
-                            y1="10"
-                            x2="35"
-                            y2="30"
-                            stroke="#8D8772"
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                          />
-
-                          <line
-                            x1="50"
-                            y1="10"
-                            x2="65"
-                            y2="30"
-                            stroke="#8D8772"
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </div>
-                      <div className={`transition-max-h md:flex overflow-hidden ${isOpen ? "h-full" : "max-h-0"} md:max-h-full md:h-auto`}>
-                      <ClassDetails
-                        teacherId={teacherId}
-                        classroomId={classroomId}
-                      />
-                      </div>
-                    </div>
-                    {/* Room View & List Buttons */}
-                    <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
-              <ButtonView
-                buttonText="Room View"
-                btnImageWhenOpen={classBoxesIcon}
-                isSelected={true}
-                buttonSize="small"
+            <div className="flex md:justify-center">
+              <SimpleTopNav
+                pageTitle={classroom?.classSubject}
+                fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
               />
-              <Link
-                className="flex items-center h-16"
-                to={`/viewclasslist/${userData._id}/${classroomId}`}
-              >
+            </div>
+            <div className="flex flex-col-reverse md:flex-row xl:gap-8">
+              <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+                <div
+                  className="flex items-center w-full justify-between md:hidden"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">
+                    Details
+                  </h2>
+                  <svg
+                    className={`transition-transform duration-300 md:hidden ${
+                      isOpen ? "" : "rotate-180"
+                    }`}
+                    width="70"
+                    height="70"
+                    viewBox="0 -25 100 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="50"
+                      y1="10"
+                      x2="35"
+                      y2="30"
+                      stroke="#8D8772"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+
+                    <line
+                      x1="50"
+                      y1="10"
+                      x2="65"
+                      y2="30"
+                      stroke="#8D8772"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
+                    isOpen ? "max-h-[500px]" : "max-h-0"
+                  } md:max-h-full md:h-auto`}
+                >
+                  <ClassDetails
+                    teacherId={teacherId}
+                    classroomId={classroomId}
+                  />
+                </div>
+              </div>
+              {/* Room View & List Buttons */}
+              <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
                 <ButtonView
-                  buttonText="List View"
-                  defaultBtnImage={listIcon}
-                  isSelected={false}
+                  buttonText="Room View"
+                  btnImageWhenOpen={classBoxesIcon}
+                  isSelected={true}
                   buttonSize="small"
                 />
-              </Link>
+                <Link
+                  className="flex items-center h-16"
+                  to={`/viewclasslist/${userData._id}/${classroomId}`}
+                >
+                  <ButtonView
+                    buttonText="List View"
+                    defaultBtnImage={listIcon}
+                    isSelected={false}
+                    buttonSize="small"
+                  />
+                </Link>
+              </div>
             </div>
-          </div>
           </div>
           {classroom ? (
             <>

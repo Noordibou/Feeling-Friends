@@ -113,7 +113,7 @@ const ViewClassList = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full lg:z-40">
+        <div className="flex flex-col items-center w-full lg:z-40 mt-8">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -195,10 +195,17 @@ const ViewClassList = () => {
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
                     <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
-                      <div className="flex items-center w-full justify-between md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">Details</h2>
+                      <div
+                        className="flex items-center w-full justify-between md:hidden"
+                        onClick={() => setIsOpen(!isOpen)}
+                      >
+                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">
+                          Details
+                        </h2>
                         <svg
-                          className={`transition-transform duration-300 md:hidden ${isOpen? '' : 'rotate-180'}`}
+                          className={`transition-transform duration-300 md:hidden ${
+                            isOpen ? "" : "rotate-180"
+                          }`}
                           width="70"
                           height="70"
                           viewBox="0 -25 100 100"
@@ -225,11 +232,15 @@ const ViewClassList = () => {
                           />
                         </svg>
                       </div>
-                      <div className={`transition-max-h md:flex overflow-hidden ${isOpen ? "h-full" : "max-h-0"} md:max-h-full md:h-auto`}>
-                      <ClassDetails
-                        teacherId={teacherId}
-                        classroomId={classroomId}
-                      />
+                      <div
+                        className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
+                          isOpen ? "max-h-[500px]" : "max-h-0"
+                        } md:max-h-full md:h-auto`}
+                      >
+                        <ClassDetails
+                          teacherId={teacherId}
+                          classroomId={classroomId}
+                        />
                       </div>
                     </div>
                     {/* Room View & List Buttons */}
@@ -332,7 +343,11 @@ const ViewClassList = () => {
         <TeacherNavbar setIsEditMode={setIsEditMode} />
         </div> */}
         <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav setIsEditMode={setIsEditMode} teacherId={teacherId} classroomId={classroomId}  />
+          <Nav
+            setIsEditMode={setIsEditMode}
+            teacherId={teacherId}
+            classroomId={classroomId}
+          />
         </div>
       </div>
     </>

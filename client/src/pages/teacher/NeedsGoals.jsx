@@ -130,8 +130,8 @@ const NeedsGoals = () => {
                 </svg>
               </div>
               <div
-                className={`transition-max-h md:flex overflow-hidden ${
-                  isOpen ? "h-full" : "max-h-0"
+                className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
+                  isOpen ? "max-h-[500px]" : "max-h-0"
                 } md:max-h-full md:h-auto`}
               >
                 <ClassDetails

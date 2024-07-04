@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import saveButton from '../../images/button.png'
-import BtnRainbow from "../../components/BtnRainbow";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import ClassDetails from "../../components/ClassDetails";

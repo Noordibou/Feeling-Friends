@@ -10,7 +10,7 @@ const CurvedWords = ({emotion, image, rotationList, translateList, handleEmotion
         <img src={image} alt={`${emotion} Emoji`} />
         <div className="flex flex-row justify-center">
           {emotionArray.map((emotionLetter, index) => (
-            <h3 key={index} className={`${rotationList[index]} ${translateList[index]} text-[1.8rem] font-header2 tracking-[0.2rem]`}>
+            <h3 key={index} className={`${rotationList[index]} ${translateList[index]} text-[24px] sm:text-[1.8rem] font-header2 tracking-[0.2rem]`}>
               {emotionLetter}
             </h3>
           ))}

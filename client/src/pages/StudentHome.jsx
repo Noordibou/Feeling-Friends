@@ -74,18 +74,18 @@ const StudentHome = () => {
     <>
       {/* page container */}
       <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen">
-        <div className="flex w-full justify-center mt-20">
+        <div className="flex w-full justify-center mt-10 sm:mt-20">
           <ProgressBar totalPages="5" currentPage="1" />
         </div>
         {/* Check time Section */}
-        <div className="mt-20 flex-col text-center">
-          <h1 className="text-header1 font-header1">
+        <div className="mt-10 sm:mt-20 flex-col text-center">
+          <h1 className="text-[Karla] text-[25px] font-semibold sm:text-header1 sm:font-header1">
             {userData ? `${greeting}, ` + userData.firstName : "Hello"}!
           </h1>
-          <h2 className="text-header2 font-header2 mt-12">
+          <h2 className="text-[Karla] text-[18px] font-semibold sm:text-header2 sm:font-header2 mt-8 sm:mt-12">
             Is this a check in or check out?
           </h2>
-          <div className="flex flex-row mt-8">
+          <div className="flex flex-col sm:flex-row mt-8">
             <button
               className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}
               onClick={() => handleClick("checkin")}

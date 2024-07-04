@@ -22,7 +22,7 @@ const Slider = ({ updateSliderValue }) => {
     return (
         <>
             <div className="">
-                <div className="relative flex pt-44 flex-col items-center justify-center">
+                <div className="relative flex pt-32 sm:pt-44 flex-col items-center justify-center">
                     
                     {/* slider bar */}
                     <div 
@@ -33,7 +33,7 @@ const Slider = ({ updateSliderValue }) => {
                     {/* slider star */}
                     <div className="w-full" ref={constraintsRef}>
                         <motion.img 
-                            className="relative" 
+                            className="relative w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]" 
                             ref={handleRef}
                             src={Star}
                             drag="x" 
@@ -41,10 +41,7 @@ const Slider = ({ updateSliderValue }) => {
                             dragConstraints={constraintsRef}
                             dragElastic={0}
                             onDrag={handleSlide}
-                            style={{
-                                width: handleSize,
-                                height: handleSize
-                            }}
+
                         />
                     </div>
                     

@@ -36,26 +36,26 @@ const Summary = () => {
     <>
       <div className="pt-[4rem] flex flex-col items-center min-h-screen">
         <div className="max-w-[1200px] ">
-        <div className="flex w-full justify-center mb-20">
+        <div className="flex w-full justify-center mb-10 sm:mb-20 ">
           <ProgressBar totalPages="5" currentPage="5" />
         </div>
 
         <section>
           <div className="flex items-center justify-center">
             <img
-              className="h-42 w-82"
+              className="w-60 sm:w-82"
               src={SummaryPerson}
               alt="SummaryPerson"
             />
           </div>
 
           <div className="w-9/12 text-center ml-auto mr-auto pt-[1.5rem]">
-            <h1 className="font-header1 text-header1 leading-tight">
+            <h1 className="font-header1 text-[25px] sm:text-header1 leading-tight">
               {userData ? "Thanks " + userData.firstName : "Thanks!"} - Have a
               good day at school!
             </h1>
           </div>
-          <div className="flex justify-center mt-24 mb-28">
+          <div className="flex justify-center mt-8 sm:mt-24 mb-24 sm:mb-28">
             <Logout location="studentLogout" btnColor={emotionColor} />
           </div>
         </section>

@@ -58,14 +58,14 @@ const RegZone = () => {
 
   return (
     <>
-      <div className="bg-notebookPaper flex flex-col min-w-full h-screen items-center pt-[3.5rem]">
+      <div className="bg-notebookPaper flex flex-col min-w-screen min-h-screen items-center pt-[18px] sm:pt-[3.5rem]">
       <div className="w-full xl:max-w-[900px] items-center h-full flex flex-col">
       <div className="flex w-full justify-center mt-6 mb-10">
           <ProgressBar totalPages="5" currentPage="3"/>
         </div>
 
-        <div className="flex flex-col justify-center w-10/12 xl:max-w-[900px] text-center ml-auto mr-auto py-[1rem] font-header2 md:text-header1 text-header3 leading-tight h-[36%] ">
-          <h2 className="self-center w-[500px] pt-4">Check in with your body - what zone are you in?</h2>
+        <div className="flex flex-col justify-center  xl:max-w-[900px] text-center ml-auto mr-auto py-[1rem] font-header2 md:text-[30px] text-header3 leading-tight ">
+          <h2 className="flex self-center sm:w-[500px] pt-4">Check in with your body - what zone are you in?</h2>
           {/* component goes here */}
           <ZorImageRender sliderValue={sliderValue} chosenSubEmotion={emotion} />
         </div>
@@ -73,7 +73,7 @@ const RegZone = () => {
 
 
         {/* Reg Zone Container */}
-        <div className="absolute bottom-0 flex flex-col justify-end items-center h-[49%] w-full">
+        <div className="absolute bottom-0 flex flex-col justify-end items-center h-[50%] sm:h-[43%] w-full">
       <div className="flex flex-col w-full h-full items-center mx-auto">
           {/* Reg Zone section */}
           <div className="pt-[2rem] flex flex-row self-center h-full w-full xl:max-w-[900px] ">
@@ -95,7 +95,7 @@ const RegZone = () => {
             </div>
 
             {/* wiggly */}
-            <div className="bg-yellow w-[25%] h-full flex flex-col cursor-pointer hover-bg-yellow/60 text-center pt-12">
+            <div className="bg-yellow w-[25%] flex flex-col cursor-pointer hover-bg-yellow/60 text-center pt-12">
               <span className="font-[Poppins] text-[1.1rem] md:text-[1.4rem] text-black">
                 Wiggly
               </span>
@@ -115,7 +115,7 @@ const RegZone = () => {
         <div className="absolute w-full xl:max-w-[900px] h-full">
 
             <Slider updateSliderValue={setSliderValue} />
-            <div className="flex justify-center mt-[3rem]">
+            <div className="flex justify-center mt-[20px] sm:mt-[3rem]">
               <button className="bg-themeWhite px-10 py-3 w-[16rem] p-[1.5rem] font-header2 text-header2 rounded-[1rem]" onClick={handleZoneClick}>
                 OK
               </button>

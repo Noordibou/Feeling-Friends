@@ -73,12 +73,12 @@ const StudentHome = () => {
   return (
     <>
       {/* page container */}
-      <div className="flex w-screen flex-col items-center bg-notebookPaper min-h-screen">
+      <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen flex-grow">
         <div className="flex w-full justify-center mt-10 sm:mt-20">
           <ProgressBar totalPages="5" currentPage="1" />
         </div>
         {/* Check time Section */}
-        <div className="mt-10 sm:mt-20 flex-col text-center">
+        <div className="flex pt-10 sm:pt-20 justify-center sm:justify-normal h-[80%] sm:h-auto flex-col text-center">
           <h1 className="text-[Karla] text-[25px] font-semibold sm:text-header1 sm:font-header1">
             {userData ? `${greeting}, ` + userData.firstName : "Hello"}!
           </h1>
@@ -101,13 +101,13 @@ const StudentHome = () => {
           </div>
         </div>
 
-        <div className="mt-8 sm:mt-16 h-full items-center">
+        <div className="flex flex-col pt-8 sm:pt-16 h-full items-center">
           <h2 className="font-[Karla] font-semibold text-[18px] sm:text-header2 sm:font-header2 text-center">
             How are you feeling?
           </h2>
           <div className="h-full">
             {chunkedData.map((chunk, index) => (
-                <div key={index} className="w-screen max-w-lg flex gap-10 justify-center sm:justify-between mt-8 mb-12 sm:my-14">
+                <div key={index} className="w-screen max-w-lg flex gap-8 justify-center sm:justify-between mt-8 mb-10 sm:my-14">
                   {chunk.map((emotionInfo, idx) => (
                     <CurvedWords
                       key={idx}

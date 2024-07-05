@@ -73,7 +73,7 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
   const girlImage = getImage("girl", zone);
 
   return (
-    <div className="w-full mt-8 sm:mt-16 h-full">
+    <div className="w-full h-full flex items-center">
       <div className="flex flex-row max-w-[750px] justify-center w-full ">
         <div className="flex flex-col justify-between sm:justify-around sm:flex-row sm:w-[50%]">
           <h6 className="text-[15px] sm:h-[250px] self-start sm:text-[1.5rem] xl:text-lg font-normal w-[60%]">
@@ -83,7 +83,7 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
             <img
               src={girlImage}
               alt="Girl Zor Image"
-              className="h-36 sm:h-52 xl:h-64 self-end mx-3"
+              className="h-40 sm:h-52 xl:h-58 mt-5 sm:mt-0 self-end mx-3"
             />
           )}
         </div>
@@ -92,7 +92,7 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
             <img
               src={emotionImagePath}
               alt="Emotion Image"
-              className="h-28 sm:h-36 xl:h-52 self-end mx-3"
+              className="h-28 sm:h-36 xl:h-40 self-end mx-3"
             />
           )}
           <h6 className="text-[15px] self-end sm:self-baseline sm:text-[1.5rem] xl:text-lg font-normal ">

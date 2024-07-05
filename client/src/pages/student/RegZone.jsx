@@ -64,7 +64,7 @@ const RegZone = () => {
           </div>
 
           <div className="flex flex-col justify-center xl:max-w-[900px] text-center ml-auto mr-auto sm:py-[1rem] font-header2 md:text-[30px] text-header3 h-[45%]">
-            <h2 className="flex self-center sm:w-[500px] pt-4">
+            <h2 className="flex self-center sm:w-[500px] pt-4 mx-4 ">
               Check in with your body - what zone are you in?
             </h2>
             <ZorImageRender
@@ -83,7 +83,7 @@ const RegZone = () => {
                   <span className="font-[Poppins] text-[14px] break-words sm:text-[1.1rem] md:text-[1.4rem] text-black">
                     Unmotivated
                   </span>
-                  <span className="font-[Poppins] text-black flex h-full items-end mx-3 pb-4 sm:pt-[15rem] ">
+                  <span className="font-[Poppins] text-black flex h-full items-end sm:self-center mx-3 pb-6 sm:pt-[15rem] ">
                     Low energy
                   </span>
                 </div>
@@ -107,17 +107,17 @@ const RegZone = () => {
                   <span className="font-[Poppins] text-[14px] sm:text-[1.1rem] md:text-[1.4rem] text-black">
                     Explosive
                   </span>
-                  <span className="font-[Poppins] text-black flex h-full items-end pb-4 sm:pt-[15rem]">
+                  <span className="font-[Poppins] text-black flex h-full sm:self-center items-end pb-6 sm:pt-[15rem]">
                     High energy
                   </span>
                 </div>
               </div>
               {/* slider view */}
-              <div className="absolute w-full xl:max-w-[900px] h-full">
+              <div className="absolute w-full xl:max-w-[900px] h-full ">
                 <Slider updateSliderValue={setSliderValue} />
                 <div className="flex justify-center mt-[20px] sm:mt-[3rem]">
                   <button
-                    className="bg-themeWhite px-10 py-3 w-[11rem] sm:w-[16rem] p-[1.5rem] font-header2 text-[18px] sm:text-header2 rounded-[1rem]"
+                    className="bg-themeWhite px-10 py-3 w-[10rem] sm:w-[16rem] p-[1.5rem] font-header2 text-[18px] sm:text-header2 rounded-[1rem]"
                     onClick={handleZoneClick}
                   >
                     OK

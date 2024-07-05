@@ -76,7 +76,7 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
     <div className="w-full h-full flex items-center">
       <div className="flex flex-row max-w-[750px] justify-center w-full ">
         <div className="flex flex-col justify-between sm:justify-around sm:flex-row sm:w-[50%]">
-          <h6 className="text-[15px] sm:h-[250px] self-start sm:text-[1.5rem] xl:text-lg font-normal w-[60%]">
+          <h6 className="text-[15px] sm:h-[250px] self-start sm:text-[1.5rem] xl:text-lg font-normal w-[60%] sm:ml-6">
             I'm feeling {zone === "readytolearn" ? "ready to learn" : zone} !
           </h6>
           {girlImage && (
@@ -95,7 +95,7 @@ const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
               className="h-28 sm:h-36 xl:h-40 self-end mx-3"
             />
           )}
-          <h6 className="text-[15px] self-end sm:self-baseline sm:text-[1.5rem] xl:text-lg font-normal ">
+          <h6 className="text-[15px] self-end sm:self-baseline sm:text-[1.5rem] xl:text-lg font-normal mr-6 sm:m-0">
             Me too!
           </h6>
         </div>

@@ -292,7 +292,7 @@ const EditSeatingChart = () => {
           {classroom ? (
             <>
               <div
-                className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
+                className="flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
                 ref={constraintsRef}
               >
                 {/* Classroom layout here */}

@@ -63,28 +63,28 @@ const SubEmotion = () => {
     (emotion) => emotion !== selectedEmotion
   );
 
-  const radius = isMobile ? 7 : 13; // Adjust the radius for mobile and desktop views
+  const radius = isMobile ? 6 : 13; // Adjust the radius for mobile and desktop views
 
   return (
-    <div className="flex flex-col items-center h-screen min-w-screen ">
+    <div className="flex flex-col items-center h-screen min-w-screen flex-grow">
       <div className="flex w-full justify-center mt-10 sm:mt-20">
         <ProgressBar totalPages="5" currentPage="2" />
       </div>
-      <div className="flex flex-col w-full h-full  flex-grow justify-center">
+      <div className="flex flex-col self-end w-full h-full  flex-grow justify-center">
       <div className="font-[Karla] text-[22px] font-semibold sm:font-header2 sm:text-header2 text-center pt-8 ">
         <h2>Choose the emotion closest to</h2>
         <span>what you're feeling.</span>
       </div>
       {/* sub emotion and other emotions */}
-      <div className="flex flex-col text-center sm:mt-10 h-full w-full items-center">
+      <div className="flex flex-col flex-grow text-center sm:mt-10 h-full w-full items-center">
         {/* sub emotions only */}
-        <div className="relative font-header3 mt-5 sm:text-header3 text-[1.1rem]">
+        <div className="flex flex-col h-[60%] justify-center relative font-header3 mt-5 sm:text-header3 text-[1.1rem]">
           <img
             src={wheelImg}
             alt="emotions wheel"
-            className="w-[20rem] h-[20rem] sm:w-[37rem] sm:h-[35rem] object-fill"
+            className="w-[18rem] h-[18rem] mb-6 md:mb-0 sm:w-[37rem] sm:h-[35rem] object-fill"
           />
-          <div className="absolute right-28 sm:right-[12.5rem] -top-10 sm:-top-20 inset-0 flex flex-col items-center justify-center text-center text-body">
+          <div className="absolute right-24 sm:right-[12.5rem] -top-14 sm:-top-20 inset-0 flex flex-col items-center justify-center text-center text-body">
             {subEmotions.map((subEmotion, index) => {
               const angle = angleBetweenButtons * index;
               const x = radius * Math.cos(angle);
@@ -94,7 +94,7 @@ const SubEmotion = () => {
                 <button
                   key={index}
                   onClick={() => handleEmotionClick(subEmotion)}
-                  className={`absolute cursor-pointer text-[17px] sm:text-header3 hover:font-semibold w-1/2 py-3 sm:py-7`}
+                  className={`absolute cursor-pointer text-[15px] sm:text-header3 hover:font-semibold w-1/2 py-3 sm:py-7`}
                   style={{
                     left: `calc(50% + ${x}rem)`,
                     top: `calc(50% + ${y}rem)`,
@@ -108,7 +108,7 @@ const SubEmotion = () => {
         </div>
 
         {/* other main emotions options */}
-        <div className="-mt-6 sm:-mt-20 justify-center w-11/12 md:w-[750px]">
+        <div className="mt:-mt-10 sm:-mt-20 md:-mt-10 justify-center w-11/12 md:w-[750px]">
           <div className="flex justify-between">
             <button
               className="rounded-full w-16 h-16 sm:w-24 sm:h-2"

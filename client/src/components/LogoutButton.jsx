@@ -36,7 +36,7 @@ const Logout = ({ location, btnColor, userData }) => {
 
   return (
     <div className={`${location === 'studentLogout' ? 'flex w-9/12 max-w-md items-center justify-center' : ''}`}>
-      <button className={`text-body ${location === 'studentLogout' ? `rounded w-full p-4 font-semibold  bg-${btnColor}` : 'underline font-header3 text-sm lg:text-header3 text-graphite pt-4 md:pt-0'}`} onClick={handleLogout}>
+      <button className={`text-[18px] sm:text-body ${location === 'studentLogout' ? `rounded w-full p-4 font-semibold  bg-${btnColor}` : 'underline font-header3 text-sm lg:text-header3 text-graphite pt-4 md:pt-0'}`} onClick={handleLogout}>
         {getButtonText()}
       </button>
     </div>

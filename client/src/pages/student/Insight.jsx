@@ -57,7 +57,7 @@ const Insight = () => {
               )}
             </div>
           </div>
-
+          {/* having these help the colors render for some reason. Without, the colors don't show */}
           <div className="hidden bg-lightBlue"></div>
           <div className="hidden bg-lightLavender"></div>
           <div className="hidden bg-lightYellow"></div>

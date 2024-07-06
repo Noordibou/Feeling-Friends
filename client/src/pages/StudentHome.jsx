@@ -73,27 +73,27 @@ const StudentHome = () => {
   return (
     <>
       {/* page container */}
-      <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen">
-        <div className="flex w-full justify-center mt-20">
+      <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen flex-grow">
+        <div className="flex w-full justify-center mt-10 sm:mt-20">
           <ProgressBar totalPages="5" currentPage="1" />
         </div>
         {/* Check time Section */}
-        <div className="mt-20 flex-col text-center">
-          <h1 className="text-header1 font-header1">
+        <div className="flex pt-10 sm:pt-20 justify-center h-[80%] lg:h-auto flex-col text-center">
+          <h1 className="text-[Karla] text-[25px] font-semibold sm:text-header1 sm:font-header1">
             {userData ? `${greeting}, ` + userData.firstName : "Hello"}!
           </h1>
-          <h2 className="text-header2 font-header2 mt-12">
+          <h2 className="text-[Karla] text-[18px] font-semibold sm:text-header2 sm:font-header2 mt-4 sm:mt-12">
             Is this a check in or check out?
           </h2>
-          <div className="flex flex-row mt-8">
+          <div className="flex flex-col gap-4 sm:gap-0 sm:flex-row mt-8 items-center sm:items-baseline">
             <button
-              className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body ${checkInBtn}`}
+              className={`mx-3 border-2 border-lightOrange w-52 sm:w-60 py-2 sm:py-4 rounded text-[14px] font-[Poppins] sm:font-body ${checkInBtn}`}
               onClick={() => handleClick("checkin")}
             >
               Check-in
             </button>
             <button
-              className={`mx-3 border-2 border-lightOrange w-60 py-4 rounded font-body  ${checkOutBtn}`}
+              className={`mx-3 border-2 border-lightOrange w-52 sm:w-60 py-2 sm:py-4 rounded text-[14px] font-[Poppins] sm:font-body  ${checkOutBtn}`}
               onClick={() => handleClick("checkout")}
             >
               Check-out
@@ -101,13 +101,13 @@ const StudentHome = () => {
           </div>
         </div>
 
-        <div className="mt-16">
-          <h2 className="text-header2 font-header2 text-center">
+        <div className="flex flex-col lg:pt-16 pb-10 h-full items-center">
+          <h2 className="font-[Karla] font-semibold text-[18px] sm:text-header2 sm:font-header2 text-center">
             How are you feeling?
           </h2>
-          <div className="">
+          <div className="h-full">
             {chunkedData.map((chunk, index) => (
-                <div key={index} className="w-screen max-w-lg flex justify-between my-14">
+                <div key={index} className="w-screen max-w-lg flex gap-8 justify-center md:justify-between mt-8 mb-10 md:my-14">
                   {chunk.map((emotionInfo, idx) => (
                     <CurvedWords
                       key={idx}

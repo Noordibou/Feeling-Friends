@@ -61,14 +61,13 @@ const CopingSkillCard = ({ emotion, emotionColor }) => {
 
   return (
     <div
-      className={`bg-${emotionColor} w-full h-8/12 rounded-[2rem] p-[1.5rem] flex flex-col
-             rounded-b justify-center items-center`}
+      className={`bg-${emotionColor} w-full h-8/12 rounded-[2rem] p-[1.5rem] flex flex-col rounded-b justify-center items-center`}
     >
       <div className="max-w-[700px]">
         {/* Learn more */}
         <section className="flex flex-row justify-around mt-2">
           <div className="w-8/12">
-            <h2 className="text-[1.75rem] font-semibold font-karla">
+            <h2 className="text-[20px] mt-2 sm:mt-0 sm:text-[1.75rem] font-semibold font-karla">
               Getting to know our emotions can help with school success
             </h2>
             <button
@@ -82,33 +81,33 @@ const CopingSkillCard = ({ emotion, emotionColor }) => {
                 }
               }}
             >
-              <h2 className="text-header2 font-karla font-body font-semibold mt-7">
+              <h2 className="text-[20px] sm:text-header2 font-karla font-body font-semibold mt-7">
                 Learn more
               </h2>
-              <img src={downArrow} className="flex self-end h-6 pl-10 mb-2" alt="learn more arrow"/>
+              <img src={downArrow} className="flex self-end h-4 sm:h-6 pl-10 mb-2" alt="learn more arrow"/>
             </button>
           </div>
           <div className="">
             <img
               src={avatarImageName}
               alt="wondering avatar"
-              className="h-60 -mr-10"
+              className="h-44 sm:h-60 -mr-10"
             />
           </div>
         </section>
 
         {/* Coping Skills Section */}
         <section
-          className="flex flex-col mb-24 mt-28 w-full justify-center  items-center"
+          className="flex flex-col mb-24 mt-36 sm:mt-28 w-full justify-center  items-center"
           ref={bottomContentRef}
         >
-          <div className="flex flex-col justify-center items-center max-w-[580px]">
-            <h3 className="text-[1.75rem] font-semibold font-karla mb-5 self-start w-9/12 -ml-10">
+          <div className="flex flex-col justify-center items-center max-w-[700px]">
+            <h3 className="text-[20px] sm:text-[1.75rem] font-semibold font-karla mb-5 self-start sm:w-9/12">
               {copingText}
             </h3>
 
             <img
-              className="min-w-[700px]"
+              className="sm:w-[900px]"
               src={copingSkillCard}
               alt="coping skill explained"
             />

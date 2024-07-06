@@ -293,13 +293,13 @@ const ViewClassList = () => {
                 {sortedStudents.length > 0 ? (
                   <div
                     key={`container`}
-                    className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 h-32"
+                    className="mt-6 grid grid-cols-1 xl:grid-cols-2 gap-6 h-32"
                   >
                     {sortedStudents.map((student, index) => {
                       return (
                         <div
                           key={`student-info-${index}`}
-                          className="w-[490px]"
+                          className="w-[460px]"
                         >
                           <StudentInfoBox
                             student={student}

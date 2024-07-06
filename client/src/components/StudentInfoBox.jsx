@@ -27,7 +27,7 @@ const StudentInfoBox = ({
         {/* student image */}
         <div
           className={`flex ${
-            bgColorClass ? `w-full bg-${bgColorClass} border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
+            bgColorClass ? `w-full bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
           }`}
         >
           <img
@@ -84,9 +84,9 @@ const StudentInfoBox = ({
             </div>
           </div>
           <div
-              className={`flex items-center underline text-md ${
-                bgColorClass ? "w-24" : "w-full flex justify-end h-full pt-4"
-              } px-2`}
+              className={`flex items-center justify-end underline text-[17px] ${
+                bgColorClass ? "w-16" : "w-full flex justify-end h-full pt-4"
+              }`}
             >
               <Link to={`/${userData._id}/${classroomId}/${student._id}`}>
                 More &gt;

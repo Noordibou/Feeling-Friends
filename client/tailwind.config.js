@@ -74,10 +74,12 @@ module.exports = {
       'apple': '#F46B1E'
     },
 
-    // extend: {
+    extend: {
+      screens: {
+        "xs": "400px"
+      }
 
-
-    // },
+    },
   },
   plugins: [require('tailwind-scrollbar')],
 }

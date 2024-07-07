@@ -70,6 +70,23 @@ const ViewClassroom = () => {
     setSelectedStudent({})
   }
 
+  const [zoom, setZoom] = useState(1); // Initial zoom level
+  const maxZoomIn = 1; // Maximum zoom in level
+  const minZoomOut = 0.5; // Minimum zoom out level
+
+  const handleZoomIn = () => {
+    if (zoom < maxZoomIn) {
+      setZoom(prevZoom => prevZoom + 0.1); // Increase zoom level
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (zoom > minZoomOut) {
+      setZoom(prevZoom => Math.max(prevZoom - 0.1, minZoomOut)); // Decrease zoom level but not below minZoomOut
+    }
+  };
+
+
 
   useEffect(() => {
     if(assignedStudents.length > 0) {
@@ -163,107 +180,128 @@ const ViewClassroom = () => {
               </div>
             </div>
           </div>
+          <div className="flex md:hidden justify-center mb-4">
+            <button
+              onClick={handleZoomIn}
+              className="mr-2 px-4 py-2 bg-blue text-white rounded"
+            >
+              Zoom In
+            </button>
+            <button
+              onClick={handleZoomOut}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+              Zoom Out
+            </button>
+          </div>
           {classroom ? (
             <>
-              {/* Classroom Container */}
-              <div
-                key={`classroom-${classroomId}`}
-                className={`${
-                  Object.keys(selectedStudent).length === 0
-                    ? ""
-                    : "pointer-events-none"
-                } flex w-[752px] h-[654px] rounded-[1rem] mt-2 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
-                ref={constraintsRef}
-              >
+              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible">
+                {/* Classroom Container */}
                 <div
+                  key={`classroom-${classroomId}`}
                   className={`${
                     Object.keys(selectedStudent).length === 0
-                      ? "hidden"
-                      : "flex"
-                  } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}
-                ></div>
+                      ? ""
+                      : "pointer-events-none"
+                  } flex w-[752px] h-[654px] rounded-[1rem] mt-2 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
+                  ref={constraintsRef}
+                  style={{
+                    transform: `scale(${zoom})`
+                  }}
+                >
+                  <div className="w-[752px]"></div>
 
-                {/* Furniture layout here */}
-                {classroom.furniture.map((item, index) => {
-                  const shape = furnitureShapes.find(
-                    (shape) => shape.name === item.name
-                  );
-                  const initialX = item.x;
-                  const initialY = item.y;
+                  <div
+                    className={`${
+                      Object.keys(selectedStudent).length === 0
+                        ? "hidden"
+                        : "flex"
+                    } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}
+                  ></div>
 
-                  return (
-                    <motion.div
-                      id={`furniture-${item._id}`}
-                      key={`${item._id}`}
-                      initial={{
-                        x: initialX,
-                        y: initialY,
-                        rotate: item.rotation || 0,
-                      }}
-                      className={`absolute ${shape.style.width} ${shape.style.height}`}
-                    >
-                      <img
-                        className="flex w-full h-full"
-                        src={shape.src}
-                        alt={shape.alt}
-                      />
-                    </motion.div>
-                  );
-                })}
+                  {/* Furniture layout here */}
+                  {classroom.furniture.map((item, index) => {
+                    const shape = furnitureShapes.find(
+                      (shape) => shape.name === item.name
+                    );
+                    const initialX = item.x;
+                    const initialY = item.y;
 
-                {/* Assigned Students here */}
-                {assignedStudents.map((studentObj, index) => {
-                  const initialX = studentObj.seatInfo.x;
-                  const initialY = studentObj.seatInfo.y;
+                    return (
+                      <motion.div
+                        id={`furniture-${item._id}`}
+                        key={`${item._id}`}
+                        initial={{
+                          x: initialX,
+                          y: initialY,
+                          rotate: item.rotation || 0,
+                        }}
+                        className={`absolute ${shape.style.width} ${shape.style.height}`}
+                      >
+                        <img
+                          className="flex w-full h-full"
+                          src={shape.src}
+                          alt={shape.alt}
+                        />
+                      </motion.div>
+                    );
+                  })}
 
-                  const assignedStudent = students.find(
-                    (student) => student._id === studentObj.student
-                  );
+                  {/* Assigned Students here */}
+                  {assignedStudents.map((studentObj, index) => {
+                    const initialX = studentObj.seatInfo.x;
+                    const initialY = studentObj.seatInfo.y;
 
-                  const { borderColorClass, bgColorClass } =
-                    getLastJournalInfo(assignedStudent);
+                    const assignedStudent = students.find(
+                      (student) => student._id === studentObj.student
+                    );
 
-                  return (
-                    <motion.div
-                      id={`motion-div-${studentObj.student}`}
-                      key={`${studentObj.student}-${index}`}
-                      initial={{
-                        x: Math.max(0, initialX),
-                        y: Math.max(0, initialY),
-                      }}
-                      className={`absolute mx-1 bg-${bgColorClass} ${
-                        borderColorClass === "sandwich"
-                          ? "bg-opacity-30 border-4 border-sandwich"
-                          : `border-4 border-${borderColorClass}`
-                      } px-[2px] rounded-2xl`}
-                      onClick={() => {
-                        setSelectedStudent(assignedStudent);
-                      }}
-                    >
-                      <div className="">
-                        <div className="flex w-full justify-center h-full items-center">
-                          <img
-                            className={`flex object-cover mt-1 w-[72px] h-[65px] rounded-2xl ${
-                              borderColorClass === "sandwich"
-                                ? "opacity-50"
-                                : ""
-                            }`}
-                            src={
-                              assignedStudent.avatarImg === "none"
-                                ? SampleAvatar
-                                : assignedStudent.avatarImg
-                            }
-                            alt={assignedStudent.firstName}
-                          />
+                    const { borderColorClass, bgColorClass } =
+                      getLastJournalInfo(assignedStudent);
+
+                    return (
+                      <motion.div
+                        id={`motion-div-${studentObj.student}`}
+                        key={`${studentObj.student}-${index}`}
+                        initial={{
+                          x: Math.max(0, initialX),
+                          y: Math.max(0, initialY),
+                        }}
+                        className={`absolute mx-1 bg-${bgColorClass} ${
+                          borderColorClass === "sandwich"
+                            ? "bg-opacity-30 border-4 border-sandwich"
+                            : `border-4 border-${borderColorClass}`
+                        } px-[2px] rounded-2xl`}
+                        onClick={() => {
+                          setSelectedStudent(assignedStudent);
+                        }}
+                      >
+                        <div className="">
+                          <div className="flex w-full justify-center h-full items-center">
+                            <img
+                              className={`flex object-cover mt-1 w-[55px] h-[50px] rounded-2xl ${
+                                borderColorClass === "sandwich"
+                                  ? "opacity-50"
+                                  : ""
+                              }`}
+                              src={
+                                assignedStudent.avatarImg === "none"
+                                  ? SampleAvatar
+                                  : assignedStudent.avatarImg
+                              }
+                              alt={assignedStudent.firstName}
+                            />
+                          </div>
+                          <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">
+                            {assignedStudent.firstName}{" "}
+                            {assignedStudent.lastName.charAt(0)}.
+                          </h3>
                         </div>
-                        <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
-                          {assignedStudent.firstName}{" "}
-                          {assignedStudent.lastName.charAt(0)}.
-                        </h3>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </div>
             </>
           ) : (

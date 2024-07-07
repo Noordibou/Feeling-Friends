@@ -230,12 +230,12 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen justify-center">
-        <div className="flex flex-col w-full items-center max-w-3xl h-screen">
-        <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 px-5 md:ml-5">
+      <div className="flex min-h-screen min-w-screen justify-center mb-32">
+        <div className="flex flex-col w-full items-center max-w-3xl ">
+        <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 px-5 md:ml-5">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
-              fontsize="text-[30px] md:text-[30px] xl:text-[24px]"
+              fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
             />
             <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
               <div
@@ -287,14 +287,41 @@ const EditSeatingChart = () => {
                 />
               </div>
             </div>
+            {/* Room View & List Buttons */}
+            <div className="flex md:hidden justify-around md:justify-between gap-4 items-center mt-5">
+                <ButtonView
+                  buttonText="Student Roster"
+                  defaultBtnImage={RosterImg}
+                  btnImageWhenOpen={openRosterImg}
+                  handleClick={() => {
+                    setShowStudentRosterModal(!showStudentRosterModal);
+                    setShowFurnitureModal(false);
+                  }}
+                  isSelected={showStudentRosterModal}
+                  buttonSize="small"
+                />
+                  <ButtonView
+                    buttonText="Classroom Objects"
+                    defaultBtnImage={FurnitureImg}
+                    btnImageWhenOpen={openFurnitureImg}
+                    handleClick={() => {
+                      setShowFurnitureModal(!showFurnitureModal);
+                      setShowStudentRosterModal(false);
+                    }}
+                    isSelected={showFurnitureModal}
+                    buttonSize="small"
+                  />
+              </div>
           </div>
 
           {classroom ? (
             <>
+              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible">
               <div
-                className="flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
+                className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl "
                 ref={constraintsRef}
               >
+
                 {/* Classroom layout here */}
 
                 <ClassroomFurniture
@@ -315,17 +342,18 @@ const EditSeatingChart = () => {
                   selectedStudents={selectedStudents}
                   handleDragEnd={handleDragEnd}
                 />
-                <div className="flex self-end w-full justify-center mb-8">
+                <div className="self-end flex items-center justify-center mb-8 w-[752px]">
                   {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
-                    className="flex items-center h-[80px] w-[550px] flex-col rounded-2xl border-4 border-darkSandwich"
+                    className="flex items-center w-[280px] py-3 md:py-4 md:w-[550px] flex-col rounded-2xl border-4 border-darkSandwich"
                     onClick={handleRemoveObject}
                   >
-                    <h2 className="flex items-center h-full font-semibold text-[24px] font-[Poppins]">
+                    <h2 className="flex items-center h-full font-semibold text-[15px] md:text-[24px] font-[Poppins]">
                       Remove from Class
                     </h2>
                   </button>
+                </div>
                 </div>
               </div>
             </>
@@ -361,7 +389,7 @@ const EditSeatingChart = () => {
             />
           )}
 
-          <div className="flex flex-row w-full justify-between mt-10">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-center md:items-baseline md:justify-between mt-10">
             {/* Open Choose Students Modal */}
 
             <ButtonView

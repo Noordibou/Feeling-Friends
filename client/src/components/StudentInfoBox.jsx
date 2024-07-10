@@ -22,12 +22,12 @@ const StudentInfoBox = ({
           bgColorClass
             ? `bg-notebookPaper border-${borderColorClass}`
             : "bg-[#ece6d2] border-sandwich"
-        } border-4 shadow-2xl h-full rounded-lg flex flex-row `}
+        } border-4 shadow-2xl h-full w-full rounded-lg flex flex-row `}
       >
         {/* student image */}
         <div
           className={`flex ${
-            bgColorClass ? `w-full bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
+            bgColorClass ? `w-32 md:w-full bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-32 md:w-28 opacity-50 bg-[#ece6d2] border-sandwich"
           }`}
         >
           <img
@@ -43,12 +43,12 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-row w-[80%] px-4 my-5">
+        <div className="flex flex-col md:flex-row w-full md:w-[80%] px-4 my-2 md:my-5">
           <div>
           {/* last emotion */}
           <div className="pb-2 flex justify-between">
             {lastCheck ? (
-              <div className="font-[Poppins] text-[17px] px-2">
+              <div className="font-[Poppins] text-[15px] md:text-[17px] px-2">
                 <h4>
                   {student.firstName} {student.lastName}
                 </h4>
@@ -69,7 +69,7 @@ const StudentInfoBox = ({
             } px-2 rounded-md `}
           >
             {lastCheck ? (
-              <div className="flex flex-col w-60">
+              <div className="hidden md:flex flex-col w-60">
                 <h5 className="font-[Poppins] text-[14px]"><b>Goals:</b> {lastCheck.goal}</h5>
                 <h5 className="font-[Poppins] text-[14px]"><b>Needs:</b> {lastCheck.need}</h5>
               </div>
@@ -84,8 +84,8 @@ const StudentInfoBox = ({
             </div>
           </div>
           <div
-              className={`flex items-center justify-end underline text-[17px] ${
-                bgColorClass ? "w-16" : "w-full flex justify-end h-full pt-4"
+              className={`flex items-center justify-center md:justify-end underline text-[14px] md:text-[17px] ${
+                bgColorClass ? "w-16" : "w-16 md:w-full flex justify-end h-full pt-4"
               }`}
             >
               <Link to={`/${userData._id}/${classroomId}/${student._id}`}>

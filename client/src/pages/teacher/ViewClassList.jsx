@@ -299,7 +299,7 @@ const ViewClassList = () => {
                       return (
                         <div
                           key={`student-info-${index}`}
-                          className="w-[460px]"
+                          className="w-[98%] md:w-[460px]"
                         >
                           <StudentInfoBox
                             student={student}

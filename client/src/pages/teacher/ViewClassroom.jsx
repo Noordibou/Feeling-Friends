@@ -323,8 +323,8 @@ const ViewClassroom = () => {
           {/* Student Info Modal */}
           <div
             className={`${
-              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[25%] md:absolute"
-            }  flex-col md:mt-[220px] md:w-[500px] z-20`}
+              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[35%] md:absolute"
+            }  flex-col md:mt-[220px] w-[80%] md:w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}

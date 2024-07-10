@@ -196,7 +196,7 @@ const ViewClassroom = () => {
           </div>
           {classroom ? (
             <>
-              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] border-[8px]  rounded-[1rem] shadow-inner-md md:shadow-none scrollbar-hide md:scrollbar-auto">
+              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] md:border-none border-[8px]  rounded-[1rem] shadow-inner-md md:shadow-none scrollbar-hide md:scrollbar-auto">
                 {/* Classroom Container */}
                 <div
                   key={`classroom-${classroomId}`}
@@ -204,13 +204,13 @@ const ViewClassroom = () => {
                     Object.keys(selectedStudent).length === 0
                       ? ""
                       : "pointer-events-none"
-                  } flex w-[752px] h-[654px] mt-2 mr-auto ml-auto`}
+                  } flex w-[752px] h-[654px] md:mt-2 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] `}
                   ref={constraintsRef}
                   style={{
                     transform: `scale(${zoom})`
                   }}
                 >
-                  <div className="w-[752px]"></div>
+                  <div className="md:hidden w-[752px]"></div>
 
                   <div
                     className={`${
@@ -319,8 +319,8 @@ const ViewClassroom = () => {
           {/* Student Info Modal */}
           <div
             className={`${
-              Object.keys(selectedStudent).length === 0 ? "hidden" : "absolute"
-            }  flex-col mt-[340px] w-[500px] z-20`}
+              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-60 md:absolute"
+            }  flex-col md:mt-[340px] md:w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}

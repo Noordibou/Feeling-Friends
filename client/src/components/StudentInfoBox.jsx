@@ -15,14 +15,14 @@ const StudentInfoBox = ({
   const {bgColorClass, lastCheck, lastEmotion, borderColorClass} = getLastJournalInfo(student);
 
   return (
-    <div className="relative flex flex-col h-full w-full" key={`${student.id}`}>
+    <div className="relative flex flex-col h-full items-center " key={`${student.id}`}>
       {/* bg object */}
       <div
         className={`${
           bgColorClass
             ? `bg-notebookPaper border-${borderColorClass}`
             : "bg-[#ece6d2] border-sandwich"
-        } border-4 shadow-2xl h-full rounded-lg flex flex-row `}
+        } border-4 shadow-2xl h-full rounded-lg flex w-72 md:w-full flex-col md:flex-row `}
       >
         {/* student image */}
         <div
@@ -43,10 +43,10 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-row w-[80%] px-4 my-5">
+        <div className="flex flex-col md:flex-row items-center text-center md:w-[80%] px-4 my-5">
           <div>
           {/* last emotion */}
-          <div className="pb-2 flex justify-between">
+          <div className="pb-2 flex justify-center md:justify-between">
             {lastCheck ? (
               <div className="font-[Poppins] text-[17px] px-2">
                 <h4>
@@ -95,7 +95,7 @@ const StudentInfoBox = ({
         </div>
       </div>
       {isEditMode ? (
-        <div className="absolute -top-5 self-end -right-5">
+        <div className="absolute -top-5 self-end right-[90px] md:-right-5">
           <button onClick={handleClick}>
             <img src={xButton} alt="x Button" />
           </button>

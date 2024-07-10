@@ -43,7 +43,7 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-col md:flex-row items-center text-center md:w-[80%] px-4 my-5">
+        <div className="flex flex-col md:flex-row items-center text-center md:text-left md:w-[80%] px-4 my-5">
           <div>
           {/* last emotion */}
           <div className="pb-2 flex justify-center md:justify-between">
@@ -95,7 +95,7 @@ const StudentInfoBox = ({
         </div>
       </div>
       {isEditMode ? (
-        <div className="absolute -top-5 self-end right-[90px] md:-right-5">
+        <div className="absolute top-80 md:-top-5 self-end right-[120px] md:-right-5">
           <button onClick={handleClick}>
             <img src={xButton} alt="x Button" />
           </button>

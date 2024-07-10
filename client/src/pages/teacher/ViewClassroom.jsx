@@ -180,6 +180,10 @@ const ViewClassroom = () => {
               </div>
             </div>
           </div>
+          <div className={`${Object.keys(selectedStudent).length === 0
+                        ? "hidden"
+                        : "absolute w-full h-full"
+                    } bg-graphite z-9 top-0 opacity-50`}></div>
           <div className="flex md:hidden justify-center mb-4">
             <button
               onClick={handleZoomIn}
@@ -204,7 +208,7 @@ const ViewClassroom = () => {
                     Object.keys(selectedStudent).length === 0
                       ? ""
                       : "pointer-events-none"
-                  } flex w-[752px] h-[654px] md:mt-2 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] `}
+                  } flex w-[752px] h-[654px] mt-2 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] `}
                   ref={constraintsRef}
                   style={{
                     transform: `scale(${zoom})`
@@ -216,8 +220,8 @@ const ViewClassroom = () => {
                     className={`${
                       Object.keys(selectedStudent).length === 0
                         ? "hidden"
-                        : "flex"
-                    } bg-graphite z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}
+                        : "md:flex"
+                    } md:bg-graphite md:z-10 w-[752px] h-[100%] rounded-[0.5rem] mr-auto ml-auto border-[#D2C2A4] opacity-50 `}
                   ></div>
 
                   {/* Furniture layout here */}
@@ -272,7 +276,7 @@ const ViewClassroom = () => {
                           borderColorClass === "sandwich"
                             ? "bg-opacity-30 border-4 border-sandwich"
                             : `border-4 border-${borderColorClass}`
-                        } px-[2px] rounded-2xl`}
+                        } px-[2px] z-5 rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
                         }}
@@ -320,7 +324,7 @@ const ViewClassroom = () => {
           <div
             className={`${
               Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-60 md:absolute"
-            }  flex-col md:mt-[340px] md:w-[500px] z-20`}
+            }  flex-col md:mt-[220px] md:w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}

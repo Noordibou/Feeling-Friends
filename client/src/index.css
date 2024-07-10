@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 
+@media (max-width: 600px) {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    overflow-y: hidden; /* Hide scrollbar */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+  }
+}
+
+@media (min-width: 600) {
+  .scrollbar-auto {
+    -ms-overflow-style: auto; /* IE and Edge */
+    scrollbar-width: auto; /* Firefox */
+    overflow-y: auto; /* Ensure scrollbar appears only when needed */
+  }
+  .scrollbar-auto::-webkit-scrollbar {
+    display: block; /* Show scrollbar for WebKit browsers */
+  }
+}
+
 /* *,
 ::before,
 ::after {

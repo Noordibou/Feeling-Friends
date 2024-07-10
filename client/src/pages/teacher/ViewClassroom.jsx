@@ -98,8 +98,8 @@ const ViewClassroom = () => {
 
   return (
     <>
-      <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center max-w-4xl lg:z-40 lg:mt-0 mt-8">
+      <div className="flex min-h-screen min-w-screen justify-center">
+        <div className="flex flex-col items-center max-w-4xl lg:z-40 lg:mt-0 mt-8 mb-44">
           {/* Top Navbar */}
           <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
             <div className="flex md:justify-center">
@@ -196,7 +196,7 @@ const ViewClassroom = () => {
           </div>
           {classroom ? (
             <>
-              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible">
+              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] border-[8px]  rounded-[1rem] shadow-inner-md md:shadow-none scrollbar-hide md:scrollbar-auto">
                 {/* Classroom Container */}
                 <div
                   key={`classroom-${classroomId}`}
@@ -204,7 +204,7 @@ const ViewClassroom = () => {
                     Object.keys(selectedStudent).length === 0
                       ? ""
                       : "pointer-events-none"
-                  } flex w-[752px] h-[654px] rounded-[1rem] mt-2 mr-auto ml-auto border-[#D2C2A4] border-[8px]`}
+                  } flex w-[752px] h-[654px] mt-2 mr-auto ml-auto`}
                   ref={constraintsRef}
                   style={{
                     transform: `scale(${zoom})`

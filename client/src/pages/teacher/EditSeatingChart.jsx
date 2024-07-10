@@ -316,9 +316,9 @@ const EditSeatingChart = () => {
 
           {classroom ? (
             <>
-              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible">
+              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] md:border-none border-[8px]  rounded-[1rem] shadow-inner-md md:shadow-none">
               <div
-                className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl "
+                className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem]  shadow-2xl "
                 ref={constraintsRef}
               >
 
@@ -389,9 +389,9 @@ const EditSeatingChart = () => {
             />
           )}
 
-          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-center md:items-baseline md:justify-between mt-10">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-center mt-10">
             {/* Open Choose Students Modal */}
-
+            <div className="hidden md:flex flex-col md:flex-row gap-4 items-center justify-center">
             <ButtonView
               buttonText="Student Roster"
               defaultBtnImage={RosterImg}
@@ -417,7 +417,7 @@ const EditSeatingChart = () => {
               isSelected={showFurnitureModal}
               buttonSize="long"
             />
-
+            </div>
             {/* Save Layout button */}
 
             <div className="mx-4">

@@ -182,8 +182,8 @@ const ViewClassroom = () => {
           </div>
           <div className={`${Object.keys(selectedStudent).length === 0
                         ? "hidden"
-                        : "absolute w-full h-full"
-                    } bg-graphite z-9 top-0 opacity-50`}></div>
+                        : "fixed w-full h-full"
+                    } bg-graphite z-10 top-0 opacity-50`}></div>
           <div className="flex md:hidden justify-center mb-4">
             <button
               onClick={handleZoomIn}
@@ -276,7 +276,7 @@ const ViewClassroom = () => {
                           borderColorClass === "sandwich"
                             ? "bg-opacity-30 border-4 border-sandwich"
                             : `border-4 border-${borderColorClass}`
-                        } px-[2px] z-5 rounded-2xl`}
+                        } px-[2px] z-0 rounded-2xl`}
                         onClick={() => {
                           setSelectedStudent(assignedStudent);
                         }}
@@ -323,7 +323,7 @@ const ViewClassroom = () => {
           {/* Student Info Modal */}
           <div
             className={`${
-              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-60 md:absolute"
+              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[25%] md:absolute"
             }  flex-col md:mt-[220px] md:w-[500px] z-20`}
           >
             <StudentInfoBox
@@ -344,7 +344,7 @@ const ViewClassroom = () => {
         {/* <div className="bottom-0 fixed w-screen">
         <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div> */}
-        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
       </div>

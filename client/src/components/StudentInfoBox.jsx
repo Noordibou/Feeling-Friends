@@ -43,7 +43,7 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-col md:flex-row w-full md:w-[80%] px-4 my-2 md:my-5">
+        <div className="flex flex-col md:flex-row w-full md:w-[80%] px-2 md:px-4 my-2 md:my-5">
           <div>
           {/* last emotion */}
           <div className="pb-2 flex justify-between">

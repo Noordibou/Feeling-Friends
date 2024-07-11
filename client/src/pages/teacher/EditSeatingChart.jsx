@@ -450,7 +450,7 @@ const EditSeatingChart = () => {
       {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div> */}
-      <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+      <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
     </>

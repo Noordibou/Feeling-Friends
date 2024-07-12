@@ -325,7 +325,7 @@ const ViewClassroom = () => {
           <div
             className={`${
               Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[35%] sm:top-[40%] md:absolute"
-            } flex flex-col  w-[80%] md:w-[500px] z-20`}
+            } flex flex-col w-[80%] sm:w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}

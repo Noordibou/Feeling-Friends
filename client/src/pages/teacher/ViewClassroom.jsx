@@ -99,7 +99,7 @@ const ViewClassroom = () => {
   return (
     <>
       <div className="flex min-h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center max-w-4xl lg:z-40 lg:mt-0 mt-8 mb-44 md:mb-0">
+        <div className="flex flex-col items-center max-w-4xl lg:z-40 mt-8 md:mt-0 mb-44 md:mb-0">
           {/* Top Navbar */}
           <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
             <div className="flex md:justify-center">

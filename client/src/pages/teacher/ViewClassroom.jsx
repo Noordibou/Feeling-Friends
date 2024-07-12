@@ -183,7 +183,7 @@ const ViewClassroom = () => {
           <div className={`${Object.keys(selectedStudent).length === 0
                         ? "hidden"
                         : "fixed w-full h-full"
-                    } bg-graphite z-10 top-0 opacity-50`}></div>
+                    } bg-graphite md:hidden md:bg-none z-10 md:z-0 top-0 opacity-50 md:opacity-0`}></div>
           <div className="flex md:hidden justify-center mb-4">
             <button
               onClick={handleZoomIn}

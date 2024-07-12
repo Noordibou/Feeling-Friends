@@ -230,7 +230,7 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen justify-center mb-44 md:mb-0">
+      <div className="flex min-h-screen min-w-screen justify-center mb-10 md:mb-0">
         <div className="flex flex-col w-full items-center max-w-3xl ">
         <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 px-5 md:ml-5">
             <SimpleTopNav

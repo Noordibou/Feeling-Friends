@@ -420,7 +420,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="mx-4">
+            <div className="fixed bottom-36 left-0 right-0 flex justify-center mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20">
               <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>

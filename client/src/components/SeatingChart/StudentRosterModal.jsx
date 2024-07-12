@@ -32,7 +32,7 @@ const AddStudentModal = ({
 
       {/* add student modal */}
 
-      <div className="absolute top-20 md:top-0 md:mt-[222px] z-10 h-[70%] md:h-[55%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
+      <div className="fixed md:absolute top-20 md:top-0 md:mt-[222px] z-10 h-[70%] md:h-[55%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
         <div className="flex flex-col w-full items-end">
           <button onClick={onClose}>
             <img
@@ -44,7 +44,7 @@ const AddStudentModal = ({
         </div>
         {unassignedStudents.length > 0 ? (
           <div className="flex w-full h-full flex-col">
-            <div className="flex flex-row md:h-3/4 flex-wrap overflow-y-auto">
+            <div className="flex flex-row h-[220%] md:h-3/4 flex-wrap overflow-y-auto">
               <UnassignedStudent
                 unassignedStudents={unassignedStudents}
                 students={students}

@@ -43,7 +43,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
             </h2>
             <div className="flex h-full flex-col ">
               {/* Container for Furniture */}
-              <div className="flex flex-col md:flex-row w-full md:flex-wrap h-[65%] md:h-96 items-center md:justify-center overflow-y-auto">
+              <div className="flex flex-col md:flex-row w-full md:flex-wrap h-[65%] md:h-96 items-center md:justify-center overflow-x-hidden overflow-y-auto">
                 {furniture.map((item, key) => {
                   const isSelectedItem = isSelected.some(
                     (selectedItem) => selectedItem.name === item.name

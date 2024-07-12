@@ -99,7 +99,7 @@ const ViewClassroom = () => {
   return (
     <>
       <div className="flex min-h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center max-w-4xl lg:z-40 lg:mt-0 mt-8 mb-44">
+        <div className="flex flex-col items-center max-w-4xl lg:z-40 lg:mt-0 mt-8 mb-44 md:mb-0">
           {/* Top Navbar */}
           <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
             <div className="flex md:justify-center">
@@ -208,12 +208,13 @@ const ViewClassroom = () => {
                     Object.keys(selectedStudent).length === 0
                       ? ""
                       : "pointer-events-none"
-                  } flex w-[752px] h-[654px] mt-2 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] `}
+                  } flex w-[752px] h-[654px] mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] `}
                   ref={constraintsRef}
                   style={{
                     transform: `scale(${zoom})`
                   }}
                 >
+                  {/* to make the classroom width 752 on smaller screens. Not sure why it just doesn't work on the div itself */}
                   <div className="md:hidden w-[752px]"></div>
 
                   <div
@@ -323,8 +324,8 @@ const ViewClassroom = () => {
           {/* Student Info Modal */}
           <div
             className={`${
-              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[35%] md:absolute"
-            }  flex-col md:mt-[220px] w-[80%] md:w-[500px] z-20`}
+              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[35%] sm:top-[40%] md:absolute"
+            } flex flex-col  w-[80%] md:w-[500px] z-20`}
           >
             <StudentInfoBox
               student={selectedStudent}

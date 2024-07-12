@@ -230,7 +230,7 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen justify-center mb-44">
+      <div className="flex min-h-screen min-w-screen justify-center mb-44 md:mb-0">
         <div className="flex flex-col w-full items-center max-w-3xl ">
         <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 px-5 md:ml-5">
             <SimpleTopNav
@@ -316,7 +316,7 @@ const EditSeatingChart = () => {
 
           {classroom ? (
             <>
-              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] md:border-none border-[8px]  rounded-[1rem] shadow-inner-md md:shadow-none">
+              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[50%] md:h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] md:border-none border-[8px] rounded-[1rem] shadow-inner-md md:shadow-none">
               <div
                 className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem]  shadow-2xl "
                 ref={constraintsRef}
@@ -420,7 +420,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="fixed bottom-36 left-0 right-0 flex justify-center mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20">
+            <div className="fixed bottom-36 left-0 right-0 flex justify-center mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
               <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>

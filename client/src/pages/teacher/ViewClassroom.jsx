@@ -101,7 +101,7 @@ const ViewClassroom = () => {
       <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col h-[50vh] md:h-auto w-full md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
+          <div className="flex flex-col h-[45vh] md:h-auto w-full md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
             <div className="flex md:justify-center">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -189,7 +189,7 @@ const ViewClassroom = () => {
           {classroom ? (
             <>
             {/* static classroom */}
-              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[50vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[55vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
 
                 {/* Classroom Container */}
                 {/* movable classroom */}

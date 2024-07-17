@@ -230,9 +230,9 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen justify-center mb-10 md:mb-0">
-        <div className="flex flex-col w-full items-center max-w-3xl ">
-        <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 px-5 md:ml-5">
+      <div className="flex h-screen min-w-screen justify-center md:mb-0">
+        <div className="flex flex-col w-full h-full items-center max-w-3xl">
+        <div className="flex flex-col w-full sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 px-5 md:ml-5">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
               fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
@@ -317,7 +317,7 @@ const EditSeatingChart = () => {
           {classroom ? (
             <>
               {/* inside of the classroom (movable on mobile) */}
-              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[50%] md:h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] md:border-none border-[8px] rounded-[1rem] shadow-inner-md md:shadow-none">
+              <div className="flex w-full xs:w-[400px] sm:w-[400px] md:w-[752px] md:h-[654px] overflow-scroll md:overflow-visible md:border-none shadow-inner-md md:shadow-none">
               {/* static container of the classroom */}
               <div
                 className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem]  shadow-2xl "
@@ -422,7 +422,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="fixed bottom-36 left-0 right-0 flex justify-center mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
+            <div className="fixed bottom-5 left-0 right-0 flex justify-center mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
               <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>
@@ -452,7 +452,7 @@ const EditSeatingChart = () => {
       {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div> */}
-      <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
+      <div className="hidden md:bottom-0 md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
     </>

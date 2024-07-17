@@ -26,8 +26,8 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
   return (
     <>
       {/* Modal */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute mr-auto ml-auto md:mt-[175px] z-10 w-full md:w-[752px] h-full md:h-[61%] rounded-lg opacity-90"></div>
-        <div className="fixed md:absolute top-12 md:mt-[160px] z-20 h-[70%] md:h-[55%] w-[80%] md:w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl ">
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute mr-auto ml-auto md:mt-[175px] z-30 w-full md:w-[752px] h-full md:h-[61%] rounded-lg opacity-90"></div>
+        <div className="fixed md:absolute top-12 md:mt-[160px] z-30 h-[70%] md:h-[55%] w-[80%] md:w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl ">
           <div className="flex flex-col w-full items-end">
             <button onClick={onClose}>
               <img

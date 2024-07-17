@@ -326,7 +326,7 @@ const EditSeatingChart = () => {
                 
               {/* static container of the classroom */}
               <div
-                className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem]  shadow-2xl "
+                className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] shadow-2xl "
                 ref={constraintsRef}
               >
           

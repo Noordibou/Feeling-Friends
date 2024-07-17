@@ -184,7 +184,7 @@ const ViewClassroom = () => {
           <div className={`${Object.keys(selectedStudent).length === 0
                         ? "hidden"
                         : "fixed w-full h-full"
-                    } bg-graphite md:hidden md:bg-none z-10 md:z-0 top-0 opacity-50 md:opacity-0`}></div>
+                    } bg-graphite md:hidden md:bg-none z-30 md:z-0 top-0 opacity-50 md:opacity-0`}></div>
 
           {classroom ? (
             <>
@@ -316,7 +316,7 @@ const ViewClassroom = () => {
           <div
             className={`${
               Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[35%] sm:top-[40%] md:absolute"
-            } flex flex-col w-[80%] sm:w-[500px] z-20`}
+            } flex flex-col w-[80%] sm:w-[500px] z-30`}
           >
             <StudentInfoBox
               student={selectedStudent}

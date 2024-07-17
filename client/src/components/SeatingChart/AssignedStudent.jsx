@@ -83,12 +83,12 @@ const AssignedStudent = ({
                 <div className="flex w-full justify-center h-full items-center">
                   <img
                     draggable={false}
-                    className={`flex object-cover mt-1 w-[70px] h-[65px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
+                    className={`flex object-cover mt-1 w-[55px] h-[50px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
                     src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
                     alt={assignedStudent.firstName}
                   />
                 </div>
-                <h3 className="flex h-full text-[12px] font-[Poppins] text-center flex-col-reverse">
+                <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">
                   {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
                 </h3>
               </div>

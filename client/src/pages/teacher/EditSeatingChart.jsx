@@ -230,14 +230,17 @@ const EditSeatingChart = () => {
   return (
     <>
       {" "}
-      <div className="flex min-h-screen min-w-screen justify-center">
-        <div className="flex flex-col w-full items-center max-w-3xl h-screen">
-        <div className="flex flex-col w-full md:flex-row max-w-[900px] justify-start mb-2 mt-8 mx-4 px-5 md:ml-5">
+      {/* page container */}
+      <div className="flex h-screen min-w-screen justify-center md:mb-0">
+        {/* page container */}
+        <div className="flex flex-col w-full h-full items-center max-w-3xl">
+          {/* top half of page */}
+        <div className="flex flex-col h-[50vh] md:h-auto  w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
-              fontsize="text-[30px] md:text-[30px] xl:text-[24px]"
+              fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
             />
-            <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+            <div className="flex flex-col mx-8 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
               <div
                 className="flex items-center w-full justify-between md:hidden"
                 onClick={() => setIsOpen(!isOpen)}
@@ -287,14 +290,46 @@ const EditSeatingChart = () => {
                 />
               </div>
             </div>
-          </div>
+            {/* Room View & List Buttons */}
+            <div className="flex md:hidden justify-around md:justify-between gap-4 items-center mt-5 bg-notebookPaper">
+                <ButtonView
+                  buttonText="Student Roster"
+                  defaultBtnImage={RosterImg}
+                  btnImageWhenOpen={openRosterImg}
+                  handleClick={() => {
+                    setShowStudentRosterModal(!showStudentRosterModal);
+                    setShowFurnitureModal(false);
+                  }}
+                  isSelected={showStudentRosterModal}
+                  buttonSize="small"
+                />
+                  <ButtonView
+                    buttonText="Classroom Objects"
+                    defaultBtnImage={FurnitureImg}
+                    btnImageWhenOpen={openFurnitureImg}
+                    handleClick={() => {
+                      setShowFurnitureModal(!showFurnitureModal);
+                      setShowStudentRosterModal(false);
+                    }}
+                    isSelected={showFurnitureModal}
+                    buttonSize="small"
+                  />
+              </div> </div>
 
+
+
+          {/* bottom half/classroom part of page */}
           {classroom ? (
             <>
+              {/* inside of the classroom (movable on mobile) */}
+              <div className="flex w-full md:w-[752px] md:h-[654px] h-[80vh] overflow-scroll md:overflow-visible md:border-none shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                
+              {/* static container of the classroom */}
               <div
-                className="flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl"
+                className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] shadow-2xl "
                 ref={constraintsRef}
               >
+          
                 {/* Classroom layout here */}
 
                 <ClassroomFurniture
@@ -315,17 +350,18 @@ const EditSeatingChart = () => {
                   selectedStudents={selectedStudents}
                   handleDragEnd={handleDragEnd}
                 />
-                <div className="flex self-end w-full justify-center mb-8">
+                <div className="self-end flex items-center justify-center mb-8 w-[752px]">
                   {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
-                    className="flex items-center h-[80px] w-[550px] flex-col rounded-2xl border-4 border-darkSandwich"
+                    className="fixed bottom-8 sm:bottom-10 right-0 left-2 sm:left-10 px-2 w-[30%] md:flex md:relative items-center py-3 md:py-4 md:w-[550px] flex-col rounded-2xl border-4 border-darkSandwich bg-notebookPaper"
                     onClick={handleRemoveObject}
                   >
-                    <h2 className="flex items-center h-full font-semibold text-[24px] font-[Poppins]">
+                    <h2 className="md:flex items-center h-full font-semibold text-[15px] md:text-[24px] font-[Poppins]">
                       Remove from Class
                     </h2>
                   </button>
+                </div>
                 </div>
               </div>
             </>
@@ -361,9 +397,9 @@ const EditSeatingChart = () => {
             />
           )}
 
-          <div className="flex flex-row w-full justify-between mt-10">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-center md:mt-10">
             {/* Open Choose Students Modal */}
-
+            <div className="hidden md:flex flex-col md:flex-row gap-4 items-center justify-center">
             <ButtonView
               buttonText="Student Roster"
               defaultBtnImage={RosterImg}
@@ -389,10 +425,10 @@ const EditSeatingChart = () => {
               isSelected={showFurnitureModal}
               buttonSize="long"
             />
-
+            </div>
             {/* Save Layout button */}
 
-            <div className="mx-4">
+            <div className="fixed w-[58%] bottom-10 left-[37%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
               <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>
@@ -422,7 +458,21 @@ const EditSeatingChart = () => {
       {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div> */}
-      <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+                    <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
+            <button
+              onClick={() => console.log("coming soon")}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+              +
+            </button>
+            <button
+              onClick={() => console.log("coming soon")}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+              -
+            </button>
+          </div>
+      <div className="hidden md:block md:bottom-0 md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
     </>

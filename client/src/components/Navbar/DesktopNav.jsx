@@ -64,7 +64,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
             />
           </svg>
         </button>
-        <div className="flex flex-col w-96 mt-20  ">
+        <div className={`${isOpen ? "" : "hidden"} flex flex-col w-96 mt-20  `}>
           {navs.map((item, index) => (
             <motion.div
               key={index}

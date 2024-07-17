@@ -26,9 +26,9 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
   return (
     <>
       {/* Modal */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] absolute mr-auto ml-auto mt-[188px] z-10 w-[752px] h-[61%] rounded-lg opacity-90"></div>
-        <div className="absolute mt-[222px] z-20 h-[55%] w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl">
-          <div className="flex flex-col w-full bg-darkTeal items-end">
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute mr-auto ml-auto md:mt-[175px] z-30 w-full md:w-[752px] h-full md:h-[61%] rounded-lg opacity-90"></div>
+        <div className="fixed md:absolute top-12 md:mt-[160px] z-30 h-[70%] md:h-[55%] w-[80%] md:w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl ">
+          <div className="flex flex-col w-full items-end">
             <button onClick={onClose}>
               <img
                 className="absolute -top-6 -right-6"
@@ -37,13 +37,13 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
               />
             </button>
           </div>
-          <div className="px-10 pb-10 flex h-full flex-col">
-            <h2 className="font-[Poppins] text-[24px] my-5">
+          <div className="px-4 md:px-10 pb-10 flex h-full flex-col">
+            <h2 className="font-[Poppins] text-[17px] md:text-[24px] my-5">
               Tap to add objects to the classroom
             </h2>
             <div className="flex h-full flex-col ">
               {/* Container for Furniture */}
-              <div className="flex flex-row w-full flex-wrap h-96 items-center justify-center overflow-y-auto">
+              <div className="flex flex-col md:flex-row w-full md:flex-wrap h-[65%] md:h-96 items-center md:justify-center overflow-x-hidden overflow-y-auto">
                 {furniture.map((item, key) => {
                   const isSelectedItem = isSelected.some(
                     (selectedItem) => selectedItem.name === item.name
@@ -62,13 +62,13 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
 
                   return (
                     
-                    <div key={`furniture-${key}-container`}>
+                    <div className="flex justify-center" key={`furniture-${key}-container`}>
                       <div
                         id={`furniture-${key}`}
                         key={`${key}`}
                         className={`flex rounded-2xl ${item.style.width} ${
                           item.style.height
-                        } ${isSelectedItem ? "border-2 border-black" : ""} m-5`}
+                        } ${isSelectedItem ? "border-2 border-black" : ""} justify-center my-3 md:m-5`}
                         onClick={ () => {
                           setIsSelected(toggleSelected(newFormat, alreadySelected, isSelected))
                         }}
@@ -76,7 +76,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                         <img
                           id={`furniture-img-${key}`}
                           key={`img-${key}`}
-                          className={`flex rounded-2xl w-full h-full`}
+                          className={`flex rounded-2xl  md:w-full h-[60%] md:h-full`}
                           src={item.src}
                           alt={item.alt}
                         />
@@ -86,13 +86,13 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                   );
                 })}
               </div>
-              <div className="flex items-center h-1/3 justify-center">
+              <div className="flex items-center h-1/3 justify-center pb-6">
                 <button
                   id="unassigned-section"
-                  className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
+                  className="flex items-center md:h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
                   onClick={() => onConfirm()}
                 >
-                  <h2 className="flex items-center h-full font-semibold text-header2">
+                  <h2 className="flex items-center h-full font-semibold py-2 md:py-0 text-[20px] md:text-header2">
                     Confirm
                   </h2>
                 </button>

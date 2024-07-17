@@ -235,12 +235,12 @@ const EditSeatingChart = () => {
         {/* page container */}
         <div className="flex flex-col w-full h-full items-center max-w-3xl">
           {/* top half of page */}
-        <div className="flex flex-col h-[50vh] md:h-auto w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 px-5 md:ml-5">
+        <div className="flex flex-col h-[50vh] md:h-auto  w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
               fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
             />
-            <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+            <div className="flex flex-col mx-8 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
               <div
                 className="flex items-center w-full justify-between md:hidden"
                 onClick={() => setIsOpen(!isOpen)}
@@ -291,7 +291,7 @@ const EditSeatingChart = () => {
               </div>
             </div>
             {/* Room View & List Buttons */}
-            <div className="flex md:hidden justify-around md:justify-between gap-4 items-center mt-5">
+            <div className="flex md:hidden justify-around md:justify-between gap-4 items-center mt-5 bg-notebookPaper">
                 <ButtonView
                   buttonText="Student Roster"
                   defaultBtnImage={RosterImg}
@@ -314,20 +314,35 @@ const EditSeatingChart = () => {
                     isSelected={showFurnitureModal}
                     buttonSize="small"
                   />
-              </div>
-          </div>
+              </div> </div>
+
+              {/* <div className="absolute top-2 left-2 flex md:hidden justify-center my-4 z-20">
+            <button
+              onClick={() => console.log("coming soon")}
+              className="mr-2 px-4 py-2 bg-blue text-white rounded"
+            >
+              +
+            </button>
+            <button
+              onClick={() => console.log("coming soon")}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+              -
+            </button>
+          </div> */}
 
           {/* bottom half/classroom part of page */}
           {classroom ? (
             <>
               {/* inside of the classroom (movable on mobile) */}
               <div className="flex w-full md:w-[752px] md:h-[654px] h-[80vh] overflow-scroll md:overflow-visible md:border-none shadow-inner-md md:shadow-none">
+                
               {/* static container of the classroom */}
               <div
                 className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem]  shadow-2xl "
                 ref={constraintsRef}
               >
-
+          
                 {/* Classroom layout here */}
 
                 <ClassroomFurniture

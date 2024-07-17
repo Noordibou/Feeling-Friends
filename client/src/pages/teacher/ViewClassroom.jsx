@@ -98,17 +98,17 @@ const ViewClassroom = () => {
 
   return (
     <>
-      <div className="flex min-h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center max-w-4xl lg:z-40 mt-8 md:mt-0 mb-44 md:mb-0">
+      <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
+        <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
+          <div className="flex flex-col h-[50vh] md:h-auto w-full sticky md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
             <div className="flex md:justify-center">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
                 fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
               />
             </div>
-            <div className="flex flex-col-reverse md:flex-row xl:gap-8">
+            <div className="flex flex-col-reverse md:flex-row xl:gap-8 bg-notebookPaper">
               <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
                 <div
                   className="flex items-center w-full justify-between md:hidden"
@@ -179,36 +179,27 @@ const ViewClassroom = () => {
                 </Link>
               </div>
             </div>
+
           </div>
           <div className={`${Object.keys(selectedStudent).length === 0
                         ? "hidden"
                         : "fixed w-full h-full"
                     } bg-graphite md:hidden md:bg-none z-10 md:z-0 top-0 opacity-50 md:opacity-0`}></div>
-          <div className="flex md:hidden justify-center mb-4">
-            <button
-              onClick={handleZoomIn}
-              className="mr-2 px-4 py-2 bg-blue text-white rounded"
-            >
-              Zoom In
-            </button>
-            <button
-              onClick={handleZoomOut}
-              className="px-4 py-2 bg-blue text-white rounded"
-            >
-              Zoom Out
-            </button>
-          </div>
+
           {classroom ? (
             <>
-              <div className="flex w-[310px] xs:w-[400px] sm:w-[400px] md:w-[752px] h-[654px] overflow-scroll md:overflow-visible border-[#D2C2A4] md:border-none border-[8px]  rounded-[1rem] shadow-inner-md md:shadow-none scrollbar-hide md:scrollbar-auto">
+            {/* static classroom */}
+              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[50vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none ">
+
                 {/* Classroom Container */}
+                {/* movable classroom */}
                 <div
                   key={`classroom-${classroomId}`}
                   className={`${
                     Object.keys(selectedStudent).length === 0
                       ? ""
                       : "pointer-events-none"
-                  } flex w-[752px] h-[654px] mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] `}
+                  } relative flex w-[752px] h-[654px] rounded-[1rem] mt-10 ml-10  md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem]`}
                   ref={constraintsRef}
                   style={{
                     transform: `scale(${zoom})`
@@ -342,12 +333,26 @@ const ViewClassroom = () => {
             your classroom layout!
           </h4>
         </div>
+        <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">
+            <button
+              onClick={handleZoomIn}
+              className=" px-4 py-2 bg-blue text-white rounded"
+            >
+            +
+            </button>
+            <button
+              onClick={handleZoomOut}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+             -
+            </button>
+          </div>
         {/* <div className="bottom-0 fixed w-screen">
         <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div> */}
-        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
+        {/* <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
-        </div>
+        </div> */}
       </div>
     </>
   );

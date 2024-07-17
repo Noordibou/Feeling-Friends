@@ -101,7 +101,7 @@ const ViewClassroom = () => {
       <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col h-[50vh] md:h-auto w-full sticky md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
+          <div className="flex flex-col h-[50vh] md:h-auto w-full md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
             <div className="flex md:justify-center">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -189,7 +189,7 @@ const ViewClassroom = () => {
           {classroom ? (
             <>
             {/* static classroom */}
-              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[50vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none ">
+              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[50vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
 
                 {/* Classroom Container */}
                 {/* movable classroom */}
@@ -199,7 +199,7 @@ const ViewClassroom = () => {
                     Object.keys(selectedStudent).length === 0
                       ? ""
                       : "pointer-events-none"
-                  } relative flex w-[752px] h-[654px] rounded-[1rem] mt-10 ml-10  md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem]`}
+                  } relative flex w-[752px] h-[654px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] `}
                   ref={constraintsRef}
                   style={{
                     transform: `scale(${zoom})`
@@ -350,9 +350,9 @@ const ViewClassroom = () => {
         {/* <div className="bottom-0 fixed w-screen">
         <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div> */}
-        {/* <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
+        <div className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
-        </div> */}
+        </div>
       </div>
     </>
   );

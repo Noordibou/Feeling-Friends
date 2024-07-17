@@ -316,26 +316,13 @@ const EditSeatingChart = () => {
                   />
               </div> </div>
 
-              {/* <div className="absolute top-2 left-2 flex md:hidden justify-center my-4 z-20">
-            <button
-              onClick={() => console.log("coming soon")}
-              className="mr-2 px-4 py-2 bg-blue text-white rounded"
-            >
-              +
-            </button>
-            <button
-              onClick={() => console.log("coming soon")}
-              className="px-4 py-2 bg-blue text-white rounded"
-            >
-              -
-            </button>
-          </div> */}
+
 
           {/* bottom half/classroom part of page */}
           {classroom ? (
             <>
               {/* inside of the classroom (movable on mobile) */}
-              <div className="flex w-full md:w-[752px] md:h-[654px] h-[80vh] overflow-scroll md:overflow-visible md:border-none shadow-inner-md md:shadow-none">
+              <div className="flex w-full md:w-[752px] md:h-[654px] h-[80vh] overflow-scroll md:overflow-visible md:border-none shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                 
               {/* static container of the classroom */}
               <div
@@ -471,7 +458,21 @@ const EditSeatingChart = () => {
       {/* <div className="fixed bottom-0 w-screen">
         <TeacherNavbar />
       </div> */}
-      <div className="hidden md:bottom-0 md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
+                    <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
+            <button
+              onClick={() => console.log("coming soon")}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+              +
+            </button>
+            <button
+              onClick={() => console.log("coming soon")}
+              className="px-4 py-2 bg-blue text-white rounded"
+            >
+              -
+            </button>
+          </div>
+      <div className="hidden md:block md:bottom-0 md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
     </>

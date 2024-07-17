@@ -18,7 +18,6 @@ import EditTeacher from "./pages/teacher/EditTeacher";
 import EditSeatingChart from "./pages/teacher/EditSeatingChart";
 import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
-import FurnitureModal from "./components/SeatingChart/FurnitureModal";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
 
 export default function App() {

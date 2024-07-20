@@ -26,6 +26,7 @@ const NeedsGoals = () => {
   const [students, setStudents] = useState([]);
   const [goalAnswers, setGoalAnswers] = useState([""]);
   const [needAnswers, setNeedAnswers] = useState([""]);
+  // not sure if this will work with how schema is set up
   const [editGoalMode, setEditGoalMode] = useState(Array(goalAnswers.length).fill(false));
   const [editNeedsMode, setEditNeedsMode] = useState(Array(needAnswers.length).fill(false));
   const [goalsSelectedOption, setGoalsSelectedOption] = useState("no");
@@ -274,34 +275,34 @@ const NeedsGoals = () => {
                 Allow students to input custom needs?
               </label>
               <div className="flex flex-col gap-2 md:flex-row">
-              <div className="flex items-center">
-                <label htmlFor="yes" className="mr-2">
-                  Yes
-                </label>
-                <input
-                  type="checkbox"
-                  id="yes"
-                  name="customGoals"
-                  value="yes"
-                  checked={goalsSelectedOption === "yes"}
-                  onChange={handleGoalsCheckboxChange}
-                  className="w-5 h-5"
-                />
-              </div>
-              <div className="flex items-center">
-                <label htmlFor="no" className="mr-2">
-                  No
-                </label>
-                <input
-                  type="checkbox"
-                  id="no"
-                  name="customGoals"
-                  value="no"
-                  checked={goalsSelectedOption === "no"}
-                  onChange={handleGoalsCheckboxChange}
-                  className="w-5 h-5"
-                />
-              </div>
+                <div className="flex items-center">
+                  <label htmlFor="yes" className="mr-2">
+                    Yes
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="yes"
+                    name="customGoals"
+                    value="yes"
+                    checked={goalsSelectedOption === "yes"}
+                    onChange={handleGoalsCheckboxChange}
+                    className="w-5 h-5"
+                  />
+                </div>
+                <div className="flex items-center">
+                  <label htmlFor="no" className="mr-2">
+                    No
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="no"
+                    name="customGoals"
+                    value="no"
+                    checked={goalsSelectedOption === "no"}
+                    onChange={handleGoalsCheckboxChange}
+                    className="w-5 h-5"
+                  />
+                </div>
               </div>
             </div>
           </div>

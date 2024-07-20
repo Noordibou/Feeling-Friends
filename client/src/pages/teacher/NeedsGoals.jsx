@@ -28,6 +28,8 @@ const NeedsGoals = () => {
   const [needAnswers, setNeedAnswers] = useState([""]);
   const [editGoalMode, setEditGoalMode] = useState(Array(goalAnswers.length).fill(false));
   const [editNeedsMode, setEditNeedsMode] = useState(Array(needAnswers.length).fill(false));
+  const [goalsSelectedOption, setGoalsSelectedOption] = useState("no");
+  const [needsSelectedOption, setNeedsSelectedOption] = useState("no");
 
 
 
@@ -42,6 +44,14 @@ const NeedsGoals = () => {
     const updatedEditNeedsMode = [...editNeedsMode];
     updatedEditNeedsMode[index] = !updatedEditNeedsMode[index];
     setEditNeedsMode(updatedEditNeedsMode);
+  };
+
+  const handleGoalsCheckboxChange = (event) => {
+    setGoalsSelectedOption(event.target.value);
+  };
+
+  const handleNeedsCheckboxChange = (event) => {
+    setNeedsSelectedOption(event.target.value);
   };
 
   // Can update these functions based on how backend is edited for goals and needs change
@@ -256,20 +266,43 @@ const NeedsGoals = () => {
               </h4>
             </div>
 
-            <div className="flex mx-2 gap-5 items-center justify-center">
+            <div className="flex mx-2 gap-5 items-center justify-between">
               <label
                 htmlFor="customGoals"
                 className="text-[17px] font-[Poppins]"
               >
-                Allow students to input custom goals
-              </label>{" "}
-              <input
-                type="checkbox"
-                id="yes"
-                name="checkbox"
-                value="1"
-                className="w-[50px] h-5 mr-5"
-              />
+                Allow students to input custom needs?
+              </label>
+              <div className="flex flex-col gap-2 md:flex-row">
+              <div className="flex items-center">
+                <label htmlFor="yes" className="mr-2">
+                  Yes
+                </label>
+                <input
+                  type="checkbox"
+                  id="yes"
+                  name="customGoals"
+                  value="yes"
+                  checked={goalsSelectedOption === "yes"}
+                  onChange={handleGoalsCheckboxChange}
+                  className="w-5 h-5"
+                />
+              </div>
+              <div className="flex items-center">
+                <label htmlFor="no" className="mr-2">
+                  No
+                </label>
+                <input
+                  type="checkbox"
+                  id="no"
+                  name="customGoals"
+                  value="no"
+                  checked={goalsSelectedOption === "no"}
+                  onChange={handleGoalsCheckboxChange}
+                  className="w-5 h-5"
+                />
+              </div>
+              </div>
             </div>
           </div>
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
@@ -295,9 +328,7 @@ const NeedsGoals = () => {
                   <div
                     className={`flex md:p-5 rounded-[1rem] items-center justify-between mt-[1rem] mb-[1rem] h-[34px] `}
                   >
-                    <h3 className="text-[17px] font-body pl-3">
-                      {answer}
-                    </h3>
+                    <h3 className="text-[17px] font-body pl-3">{answer}</h3>
                   </div>
                 )}
 
@@ -358,20 +389,44 @@ const NeedsGoals = () => {
               </h4>
             </div>
 
-            <div className="flex mx-2 gap-5 items-center justify-center">
+            {/* checkbox options */}
+            <div className="flex mx-2 gap-5 items-center justify-between">
               <label
                 htmlFor="customGoals"
                 className="text-[17px] font-[Poppins]"
               >
-                Allow students to input custom needs
-              </label>{" "}
-              <input
-                type="checkbox"
-                id="yes"
-                name="checkbox"
-                value="1"
-                className="w-[50px] h-5 mr-5"
-              />
+                Allow students to input custom needs?
+              </label>
+              <div className="flex flex-col gap-2 md:flex-row">
+                <div className="flex items-center">
+                  <label htmlFor="yes" className="mr-2">
+                    Yes
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="yes"
+                    name="customNeeds"
+                    value="yes"
+                    checked={needsSelectedOption === "yes"}
+                    onChange={handleNeedsCheckboxChange}
+                    className="w-5 h-5"
+                  />
+                </div>
+                <div className="flex items-center">
+                  <label htmlFor="no" className="mr-2">
+                    No
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="no"
+                    name="customNeeds"
+                    value="no"
+                    checked={needsSelectedOption === "no"}
+                    onChange={handleNeedsCheckboxChange}
+                    className="w-5 h-5"
+                  />
+                </div>
+              </div>
             </div>
             {/* Save Button on Tablet and Phone screens centered*/}
             <div className="lg:hidden flex justify-center">

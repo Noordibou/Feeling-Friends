@@ -18,6 +18,7 @@ import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
+import Logout from "../../components/LogoutButton.jsx";
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -111,8 +112,12 @@ const ViewClassList = () => {
 
   return (
     <>
-      <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full lg:z-40 mt-4">
+
+      <div className="flex flex-col h-screen min-w-screen">
+      <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
+        <Logout location="teacherLogout" userData={userData} />
+      </div>
+        <div className="flex flex-col h-full items-center w-full lg:z-40 md:mt-4">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -185,11 +190,11 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
+                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 xl:gap-8">
                   <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
-                      fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
+                      fontsize="text-[20px] md:text-[18px] xl:text-[24px]"
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">

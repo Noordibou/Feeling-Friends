@@ -24,7 +24,9 @@ const ToggleButton = ({ students, setStudents }) => {
 
     return (
         <>
-            <div className="flex justify-center w-[90%] max-w-[900px] sm:w-[80%] mr-auto ml-auto ">
+            <div className="flex flex-col justify-center w-[90%] max-w-[700px] sm:w-[80%] mr-auto ml-auto">
+                <h4 className="mb-2 md:my-3 font-semibold md:text-body sm:font-body">Sorted By</h4>
+
                 <div className="flex w-full justify-center">
 
 
@@ -36,7 +38,7 @@ const ToggleButton = ({ students, setStudents }) => {
                                 handleSort('zor');
                             }}
                         >
-                            <p className="text-[12px] font-[Poppins] md:text-body sm:font-body text-left">Regulatory Zone</p>
+                            <p className="text-[12px] font-[Poppins] md:text-[18px] sm:font-body text-left">Regulatory Zone</p>
                             <img className="" src={regZoneIcon} alt="" />
                         </button>
                     </div>
@@ -50,7 +52,7 @@ const ToggleButton = ({ students, setStudents }) => {
                                 handleSort('lastName');
                             }}
                         >
-                            <p className="text-[12px] font-[Poppins] md:text-body sm:font-body text-left">Last Name</p>
+                            <p className="text-[12px] font-[Poppins] md:text-[18px] sm:font-body text-left">Last Name</p>
                             { sortCriteria === 'lastName' ? <img src={aToZLigthIcon} alt="" /> : <img src={aToZIcon} alt="" />}
                         </button>
                     </div>

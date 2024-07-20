@@ -17,15 +17,15 @@ const ButtonView = ({
     <>
       <div className={`${buttonSize !== "small" ? "mx-2" : ""}`}>
         <button
-          className={`text-[16px] text-[Poppins] rounded-xl flex items-center ${buttonSize === "small" ? "border-[2px] border-sandwich flex-col-reverse h-[100px] md:h-24 w-24 text-[13px] justify-center" : "border-[4px] border-sandwich h-20 w-[270px] justify-around" }   ${
+          className={`text-[Poppins] rounded-xl flex items-center ${buttonSize === "small" ? "border-[2px] border-sandwich flex-col-reverse h-[80px] md:h-24 w-20 text-[13px] justify-center" : "text-[16px] border-[4px] border-sandwich h-20 w-[270px] justify-around" }   ${
             isSelected ? "underline font-[700] bg-sandwich" : "bg-notebookPaper"
           }`}
           onClick={handleClick}
         >
           <h4 className="pt-2">{buttonText}</h4>
-          <div className="h-10 flex items-center">
+          <div className="h-6 flex items-center">
           <img
-          className="w-10"
+          className="w-6"
             src={!isSelected ? defaultBtnImage : btnImageWhenOpen}
             alt={buttonText}
           />

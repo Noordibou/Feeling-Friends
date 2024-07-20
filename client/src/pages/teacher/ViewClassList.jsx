@@ -10,7 +10,6 @@ import {
 import "./scrollbar.css";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
-import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import ClassDetails from "../../components/ClassDetails.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";

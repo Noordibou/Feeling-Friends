@@ -24,11 +24,11 @@ const ToggleButton = ({ students, setStudents }) => {
 
     return (
         <>
-            <div className="flex justify-center w-[90%] sm:w-[80%] mr-auto ml-auto ">
-                <div className="flex w-full">
+            <div className="flex justify-center w-[90%] max-w-[900px] sm:w-[80%] mr-auto ml-auto ">
+                <div className="flex w-full justify-center">
 
 
-                    <div className="pr-[0.5rem] w-full ">
+                    <div className="flex pr-[0.5rem] w-full justify-center">
                         <button
                             className={`flex items-center justify-between rounded-[1.3rem] ${sortCriteria === 'zor' ? 'border-sandwich border-[4px] bg-sandwich font-semibold' : 'border-[4px] border-sandwich'
                                 } px-[1rem] py-[8px] md:w-[20rem] w-full `}

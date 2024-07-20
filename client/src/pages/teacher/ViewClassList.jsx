@@ -112,7 +112,7 @@ const ViewClassList = () => {
   return (
     <>
       <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full lg:z-40 mt-8">
+        <div className="flex flex-col items-center w-full lg:z-40 mt-4">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -284,8 +284,8 @@ const ViewClassList = () => {
 
               {/* Scrollable list of students */}
               <div
-                className={`flex w-full justify-center overflow-y-auto custom-scrollbar ${
-                  isEditMode ? "h-[35%]" : "h-[55%]"
+                className={`mb-14 px-4 md:px-0 md:mb-0 flex w-full justify-center sm:overflow-y-auto custom-scrollbar ${
+                  isEditMode ? "h-[35%]" : "h-full sm:h-[55%]"
                 } pt-3 `}
                 key="list-of-students-1"
               >

@@ -3,16 +3,20 @@ import { useParams } from "react-router-dom";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import ClassDetails from "../../components/ClassDetails";
-import { getTeacherClassroom, getAllStudentsClassroom } from "../../api/teachersApi";
+import {
+  getTeacherClassroom,
+  getAllStudentsClassroom,
+} from "../../api/teachersApi";
 import { useUser } from "../../context/UserContext";
 import MsgModal from "../../components/SeatingChart/MsgModal";
-import Button from "../../components/Button"
+import Button from "../../components/Button";
 import Nav from "../../components/Navbar/Nav";
-import SmallSaveButton from "../../components/SmallSaveButton"
+import SmallSaveButton from "../../components/SmallSaveButton";
 import Logout from "../../components/LogoutButton";
+import editIcon from "../../images/edit_icon.png";
 
 const NeedsGoals = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const { teacherId, classroomId } = useParams();
   // Not used now but will probably need once backend is updated
   const { userData, updateUser } = useUser();
@@ -20,10 +24,20 @@ const NeedsGoals = () => {
   const [showMsg, setShowMsg] = useState(false);
   // Not used now but will probably need once backend is updated
   const [students, setStudents] = useState([]);
-  const [isEditMode, setIsEditMode] = useState(false);
   const [goalAnswers, setGoalAnswers] = useState([""]);
   const [needAnswers, setNeedAnswers] = useState([""]);
-  
+  const [editMode, setEditMode] = useState(
+    Array(goalAnswers.length).fill(false)
+  );
+
+
+  // keeps track of which lines are being edited
+  const toggleEditMode = (index) => {
+    const updatedEditMode = [...editMode];
+    updatedEditMode[index] = !updatedEditMode[index];
+    setEditMode(updatedEditMode);
+  };
+
   // Can update these functions based on how backend is edited for goals and needs change
   const handleInputGoalChange = (index, value) => {
     const newGoalAnswers = [...goalAnswers];
@@ -56,13 +70,13 @@ const NeedsGoals = () => {
   };
 
   const handleSubmit = () => {
-    console.log("click save")
+    console.log("click save");
     // Show brief save message for 3 secs
     setShowMsg(true);
     setTimeout(() => {
       setShowMsg(false);
     }, 2500);
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -158,22 +172,39 @@ const NeedsGoals = () => {
             </h2>
 
             {/* Divs in place of buttons for this selection probably. Here is one div since they will probably need to be listed from the backend depending on how many choices the teacher has made */}
-            {isEditMode ? (
-              <>
-                {goalAnswers.map((answer, index) => (
+            {goalAnswers.map((answer, index) => (
+            
+
                   <div
                     key={index}
                     className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
                   >
+                    {editMode[index] ? (
                     <textarea
                       key={index}
                       value={answer}
                       onChange={(e) =>
                         handleInputGoalChange(index, e.target.value)
                       }
-                      className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
+                      className="w-10/12 px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
                     />
-                    <div className="flex text-body font-body items-center pr-4">
+                  ) : (
+                    <div
+                    className={`flex rounded-[1rem] items-center justify-between mt-[1rem] mb-[1rem] bg-green`}
+                  >
+                    <h3 className="text-[17px] font-body">
+                      Finish homework during study hall
+                    </h3>
+                  </div>
+
+                  )}
+                    <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-2 w-2/12 gap-1 md:gap-0">
+                      {/* edit button */}
+                      <button onClick={() => toggleEditMode(index)}>
+                        <img className={` h-5 md:h-7 px-3 ${editMode[index] ?"" : "opacity-50"}`} src={editIcon} alt="edit" />
+                        
+                      </button>
+
                       {/* delete "x" button */}
                       <button onClick={() => removeGoalsAnswer(index)}>
                         <svg
@@ -205,28 +236,24 @@ const NeedsGoals = () => {
                         </svg>
                       </button>
                     </div>
-                  </div>
-                ))}
-                {/* Add new goal div */}
-                <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
-                  <h4
-                    className="text-[17px] font-semibold font-[Poppins] text-center"
-                    role="button"
-                    onClick={() => addAnswer("goal")}
-                  >
-                    Add new goal +
-                  </h4>
-                </div>
-              </>
-            ) : (
-              <div
-                className={`flex p-3 md:p-5 rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                    </div>
+                    
+                  
+                  
+                
+                  ))}
+
+
+            {/* Add new goal div */}
+            <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+              <h4
+                className="text-[17px] font-semibold font-[Poppins] text-center"
+                role="button"
+                onClick={() => addAnswer("goal")}
               >
-                <h3 className="text-[17px] font-body">
-                  Finish homework during study hall
-                </h3>
-              </div>
-            )}
+                Add new goal +
+              </h4>
+            </div>
 
             <div className="flex mx-2 gap-5 items-center justify-center">
               <label
@@ -248,7 +275,7 @@ const NeedsGoals = () => {
             <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
               "What do you <u>need</u> from an adult to succeed today?"
             </h2>
-            {isEditMode ? (
+            {/* {isEditMode ? (
               <>
                 {needAnswers.map((answer, index) => (
                   <div
@@ -263,9 +290,9 @@ const NeedsGoals = () => {
                       }
                       className="w-full px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
                     />
-                    <div className="flex text-body font-body items-center pr-4">
+                    <div className="flex text-body font-body items-center pr-4"> */}
                       {/* delete "x" button */}
-                      <button onClick={() => removeNeedsAnswer(index)}>
+                      {/* <button onClick={() => removeNeedsAnswer(index)}>
                         <svg
                           width="24"
                           height="24"
@@ -296,9 +323,9 @@ const NeedsGoals = () => {
                       </button>
                     </div>
                   </div>
-                ))}
+                ))} */}
                 {/* Add new need div */}
-                <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+                {/* <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
                   <h4
                     className="text-[17px] font-semibold font-[Poppins] text-center"
                     role="button"
@@ -316,7 +343,7 @@ const NeedsGoals = () => {
                   Finish homework during study hall
                 </h3>
               </div>
-            )}
+            )} */}
 
             <div className="flex mx-2 gap-5 items-center justify-center">
               <label
@@ -366,13 +393,12 @@ const NeedsGoals = () => {
 
       <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
         <Nav
-          setIsEditMode={setIsEditMode}
           teacherId={teacherId}
           classroomId={classroomId}
         />
       </div>
     </>
   );
-}
+};
 
-export default withAuth(['teacher'])(NeedsGoals)
+export default withAuth(["teacher"])(NeedsGoals);

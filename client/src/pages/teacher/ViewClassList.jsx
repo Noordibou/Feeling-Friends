@@ -10,7 +10,6 @@ import {
 import "./scrollbar.css";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
-import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import ClassDetails from "../../components/ClassDetails.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
@@ -19,6 +18,7 @@ import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
+import Logout from "../../components/LogoutButton.jsx";
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -112,8 +112,12 @@ const ViewClassList = () => {
 
   return (
     <>
-      <div className="flex h-screen min-w-screen justify-center">
-        <div className="flex flex-col items-center w-full lg:z-40 mt-8">
+
+      <div className="flex flex-col h-screen min-w-screen">
+      <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
+        <Logout location="teacherLogout" userData={userData} />
+      </div>
+        <div className="flex flex-col h-full items-center w-full lg:z-40 md:mt-4">
           {classroom ? (
             <>
               {isEditMode ? (
@@ -186,11 +190,11 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-10 xl:gap-8">
+                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 xl:gap-8">
                   <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
-                      fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
+                      fontsize="text-[20px] md:text-[18px] xl:text-[24px]"
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
@@ -285,8 +289,8 @@ const ViewClassList = () => {
 
               {/* Scrollable list of students */}
               <div
-                className={`flex w-full justify-center overflow-y-auto custom-scrollbar ${
-                  isEditMode ? "h-[35%]" : "h-[55%]"
+                className={`mb-14 px-4 md:px-0 md:mb-0 flex w-full justify-center sm:overflow-y-auto custom-scrollbar ${
+                  isEditMode ? "h-[35%]" : "h-full sm:h-[55%]"
                 } pt-3 `}
                 key="list-of-students-1"
               >

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import  sortByCriteria  from '../utils/sortStudents.js';
+import aToZIcon from "../images/sort-z-a.png"
+import regZoneIcon from '../images/reg_zone_icon.png'
+import aToZLigthIcon from "../images/sort-z-a-light.png"
 
 // This is specifically for sorting (sort by regulatory zone and sort by last name)
 
@@ -21,30 +24,40 @@ const ToggleButton = ({ students, setStudents }) => {
 
     return (
         <>
-            <div className="flex justify-center w-[70%] mr-auto ml-auto">
-                <div className="flex">
-                    <div className="pr-[0.5rem]">
+            <div className="flex flex-col justify-center w-[90%] max-w-[700px] sm:w-[80%] mr-auto ml-auto">
+                <h4 className="mb-2 md:my-3 font-semibold md:text-body sm:font-body">Sorted By</h4>
+
+                <div className="flex w-full justify-center">
+
+
+                    <div className="flex pr-[0.5rem] w-full justify-center">
                         <button
-                            className={`md:text-body font-body rounded-[0.7rem] ${sortCriteria === 'zor' ? 'border-sandwich border-[4px] bg-sandwich' : 'border-[4px] border-sandwich'
-                                } pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] md:w-[20rem] w-[16rem]`}
+                            className={`flex items-center justify-between rounded-[1.3rem] ${sortCriteria === 'zor' ? 'border-sandwich border-[4px] bg-sandwich font-semibold' : 'border-[4px] border-sandwich'
+                                } px-[1rem] py-[8px] md:w-[20rem] w-full `}
                             onClick={() => {
                                 handleSort('zor');
                             }}
                         >
-                            Sort by Regulatory Zone
+                            <p className="text-[12px] font-[Poppins] md:text-[18px] sm:font-body text-left">Regulatory Zone</p>
+                            <img className="" src={regZoneIcon} alt="" />
                         </button>
                     </div>
-                    <div className="pl-[0.5rem]">
+
+
+                    <div className="pl-[0.5rem] w-full">
                         <button
-                            className={`md:text-body font-body rounded-[0.7rem] ${sortCriteria === 'lastName' ? 'border-sandwich border-[4px] bg-sandwich' : 'border-[4px] border-sandwich'
-                                } pl-[1rem] pr-[1rem] pb-[2px] pt-[2px] md:w-[20rem] w-[16rem] `}
+                            className={`flex items-center justify-between md:text-body font-body rounded-[1.3rem] ${sortCriteria === 'lastName' ? 'border-sandwich border-[4px] bg-sandwich font-semibold' : 'border-[4px] border-sandwich'
+                                } pl-[1rem] pr-[1rem] py-[8px] md:w-[20rem] w-full `}
                             onClick={() => {
                                 handleSort('lastName');
                             }}
                         >
-                            Sort by Last Name
+                            <p className="text-[12px] font-[Poppins] md:text-[18px] sm:font-body text-left">Last Name</p>
+                            { sortCriteria === 'lastName' ? <img src={aToZLigthIcon} alt="" /> : <img src={aToZIcon} alt="" />}
                         </button>
                     </div>
+
+
                 </div>
             </div>
         </>

@@ -281,9 +281,9 @@ const StudentProfile = () => {
               </div>
 
               {/* Image + Student Info Container + Button */}
-              <div className="flex flex-row justify-center">
+              <div className="flex flex-col md:flex-row justify-center">
                 {/* Image */}
-                <div className="mr-5 w-1/4">
+                <div className="self-center md:self-left md:mr-5">
                   <div
                     className={`w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
                   >
@@ -307,7 +307,7 @@ const StudentProfile = () => {
                     </div>
                   ) : null}
                 </div>
-
+                  <div className="flex ">
                 {/* Student Info Container */}
                 <div className="flex flex-col w-52 ml-3">
                   <p>Age: {calculateAge(studentProfile?.birthday)}</p>
@@ -416,12 +416,13 @@ const StudentProfile = () => {
                     </div>
                   )}
                 </div>
+                </div>
               </div>
             </div>
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[530px]">
+              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -455,11 +456,11 @@ const StudentProfile = () => {
                   </div>
                 )}
 
-                <div className="flex justify-around py-3 rounded-b-2xl ">
+                <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-around py-3 rounded-b-2xl items-center">
                   <button
                     className={`${
                       !isMonthView ? "bg-sandwich underline font-semibold" : ""
-                    } border-2 border-sandwich rounded-lg py-3 px-16`}
+                    } border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
                     onClick={() => setIsMonthView(false)}
                   >
                     <h4 className="font-[Poppins]">Week View</h4>
@@ -467,7 +468,7 @@ const StudentProfile = () => {
                   <button
                     className={`${
                       isMonthView ? "bg-sandwich underline font-semibold " : ""
-                    }bg-notebook border-2 border-sandwich rounded-lg py-3 px-16`}
+                    }bg-notebook border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
                     onClick={() => setIsMonthView(true)}
                   >
                     <h4 className="font-[Poppins]">Month View</h4>
@@ -528,7 +529,7 @@ const StudentProfile = () => {
             </div>
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
-            <div className="flex mt-6 mb-2 items-center w-full justify-between">
+            <div className="flex mt-6 mb-2 items-center w-full justify-between ">
               <h1 className="text-black text-4xl font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
@@ -554,7 +555,7 @@ const StudentProfile = () => {
                 </div>
               )}
             </div>
-            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[530px]">
+            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[80%] md:w-[530px] mx-auto">
               <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
                 <h3 className="font-header4">Content Area Notices</h3>
                 <h3 className="underline flex justify-end pb-2">

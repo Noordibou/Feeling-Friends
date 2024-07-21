@@ -35,7 +35,7 @@ const StudentProfileBoxInfo = ({
 
 
   return (
-    <div className="relative flex flex-col w-[450px]" key={`${student?._id}`}>
+    <div className="relative flex flex-col md:w-[450px]" key={`${student?._id}`}>
       {/* bg object */}
       <div
         className={`${

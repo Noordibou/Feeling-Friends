@@ -451,7 +451,7 @@ const StudentProfile = () => {
 
                 {!isMonthView && (
                   <div
-                    className={`${openStudentInfoModal ? "flex z-20" : ""} `}
+                    className={`${openStudentInfoModal ? "flex z-20 " : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"} `}
                   >
                     <WeekView
                       events={events}
@@ -486,8 +486,8 @@ const StudentProfile = () => {
               <div
                 className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
                   isMonthView
-                    ? "top-96 md:top-72 mt-6 md:mt-12 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                    : "top-96 md:top-72 mt-6 md:mt-12 h-[245px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    ? "top-96 md:top-72 mt-6 md:mt-2 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    : "top-96 md:top-72 mt-6 md:mt-2 h-[245px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
                 }`}
               >
                 <div className={`flex h-full justify-center items-center`}>

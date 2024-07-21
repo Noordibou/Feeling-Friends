@@ -564,7 +564,7 @@ const StudentProfile = () => {
                 {editModeNotices
                   ? studentProfile?.contentAreaNotices.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex justify-end -mr-3">
+                        <div key={index} className="flex w-full justify-between -mr-3">
                           <input
                             type="text"
                             value={iepEntry.contentArea}
@@ -576,8 +576,10 @@ const StudentProfile = () => {
                                 "contentAreaNotices"
                               )
                             }
-                            className="mr-20 pl-2 rounded-md bg-sandwich"
+                            className="rounded-md bg-sandwich"
                           />
+
+                          <div className="w-full flex justify-end ">
                           <input
                             type="text"
                             value={iepEntry.benchmark}
@@ -589,9 +591,8 @@ const StudentProfile = () => {
                                 "contentAreaNotices"
                               )
                             }
-                            className="ml-10 pl-2 w-1/3 rounded-md bg-sandwich"
+                            className="w-[80px] rounded-md bg-sandwich"
                           />
-                          {editModeNotices ? (
                             <button
                               className="ml-1"
                               onClick={() =>
@@ -607,7 +608,7 @@ const StudentProfile = () => {
                                 className="w-4"
                               />
                             </button>
-                          ) : null}
+                            </div>
                         </div>
                       )
                     )
@@ -651,8 +652,9 @@ const StudentProfile = () => {
                                 "learningChallenges"
                               )
                             }
-                            className="mr-14 pl-2 rounded-md bg-sandwich "
+                            className=" rounded-md bg-sandwich "
                           />
+                          <div className="w-full flex justify-end ">
                           <input
                             type="text"
                             defaultValue={formatDate(iepEntry.date)}
@@ -664,9 +666,9 @@ const StudentProfile = () => {
                                 "learningChallenges"
                               )
                             }
-                            className="ml-24 pl-4 w-1/4 rounded-md bg-sandwich"
+                            className="w-5/12 md:w-1/4 rounded-md bg-sandwich"
                           />
-                          {editModeNotices ? (
+
                             <button
                               className="ml-1"
                               onClick={() =>
@@ -682,7 +684,7 @@ const StudentProfile = () => {
                                 className="w-4"
                               />
                             </button>
-                          ) : null}
+                        </div>
                         </div>
                       )
                     )
@@ -712,15 +714,18 @@ const StudentProfile = () => {
                 <h3 className="font-header4">
                   Accommodations & Assistive Tech
                 </h3>
-                <div className="flex flex-row gap-4 justify-end pb-2">
-                  <h3 className="underline">Frequency</h3>
-                  <h3 className="underline">Location</h3>
+                <div className="grid grid-cols-4 gap-4 pb-2">
+                  <div className="col-span-1"></div> 
+                  <div className="col-span-1"></div> 
+                  <h3 className="underline col-span-1">Frequency</h3>
+                  <h3 className="underline col-span-1">Location</h3>
                 </div>
                 {editModeNotices
                   ? studentProfile?.accomodationsAndAssisstiveTech.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex flex-row justify-end ">
-                          <div className="mr-24">
+                        <div key={index} className="grid grid-cols-4 gap-4 items-center">
+                          {/* accomodation list */}
+                          <div className="ml-5">
                             <input
                               type="text"
                               value={iepEntry.accomodation}
@@ -732,9 +737,11 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="pl-2 -ml-4 rounded-md bg-sandwich"
+                              className="pl-2 -ml-4 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1 max-w-xs"
                             />
                           </div>
+                          <div></div>
+                          {/* frequency */}
                           <div className="inline px-1">
                             <select
                               value={iepEntry.frequency}
@@ -746,7 +753,7 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="rounded-md bg-sandwich w-20"
+                              className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1"
                             >
                               <option value=""></option>
                               <option value="Daily">Daily</option>
@@ -755,6 +762,8 @@ const StudentProfile = () => {
                               <option value="As Needed">As Needed</option>
                             </select>
                           </div>
+
+                          {/* location */}
                           <div className="flex flex-row justify-end ">
                             <input
                               type="text"
@@ -767,9 +776,8 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="inline pl-1 w-20 rounded-md bg-sandwich"
+                              className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
                             />
-                            {editModeNotices ? (
                               <button
                                 className="-mr-2"
                                 onClick={() =>
@@ -785,7 +793,6 @@ const StudentProfile = () => {
                                   className="w-4 ml-1 "
                                 />
                               </button>
-                            ) : null}
                           </div>
                         </div>
                       )
@@ -794,7 +801,7 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="flex justify-between font-body"
+                          className="grid grid-cols-4 text-[14px] md:font-body"
                         >
                           <p> {iepEntry.accomodation}</p>
                           <p className="ml-28"> {iepEntry.frequency}</p>
@@ -819,9 +826,6 @@ const StudentProfile = () => {
             </div>
           </div>
         </div>
-         {/* <div className="fixed bottom-0 w-screen">
-      <TeacherNavbar />
-    </div> */}
     <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav  teacherId={teacherId} classroomId={classroomId}/>
         </div>

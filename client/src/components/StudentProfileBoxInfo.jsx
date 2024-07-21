@@ -35,7 +35,7 @@ const StudentProfileBoxInfo = ({
 
 
   return (
-    <div className="relative flex flex-col md:w-[450px]" key={`${student?._id}`}>
+    <div className="relative flex flex-col w-[85%] md:w-[450px]" key={`${student?._id}`}>
       {/* bg object */}
       <div
         className={`${
@@ -47,11 +47,11 @@ const StudentProfileBoxInfo = ({
 
         {/* text container */}
         <div className="flex flex-col px-4">
-          <h5 className="pl-5 font-[Poppins]">{selectedEntry ? selectedEntry.date : null}</h5>
+          <h5 className="pl-5 font-[Poppins] text-[12px] md:text-[16px]">{selectedEntry ? selectedEntry.date : null}</h5>
           {/* last emotion */}
           <div className="pb-2">
             {selectedEntry ? (
-              <div className="font-[Poppins] ml-5">
+              <div className="font-[Poppins] text-[14px] md:text-[16px] ml-5">
                 <span>
                   {student?.firstName} {student?.lastName} is feeling{" "}
                 </span>
@@ -71,12 +71,12 @@ const StudentProfileBoxInfo = ({
             } px-5 rounded-md `} 
           >
             {selectedEntry ? (
-              <div className="flex flex-col w-72">
+              <div className="flex flex-col text-[12px] md:text-[16px] w-full md:w-72">
                 <h5 className="font-[Poppins]">Goals: {selectedEntry.goal}</h5>
                 <h5 className="font-[Poppins]">Needs: {selectedEntry.need}</h5>
               </div>
             ) : (
-              <div className="flex flex-col w-72 h-16">
+              <div className="flex flex-col text-[14px] md:text-[16px] w-full md:w-72 h-16">
                 <h5 className="font-[Poppins]">
                   {student?.firstName} {student?.lastName} didn't check in or out.
                 </h5>

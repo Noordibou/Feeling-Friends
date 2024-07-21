@@ -58,7 +58,7 @@ const StudentProfile = () => {
       }
     };
     fetchStudentProfile();
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
@@ -239,13 +239,18 @@ const StudentProfile = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
+      {/* Page conatainer including bottom nav */}
+      <div className="flex flex-col items-center bg-notebookPaper min-h-screen mt-5 md:mt-10">
+        {/* Page container (no nav) */}
         <div className="flex flex-col items-center pb-[4rem] lg:z-40 ">
-          <div className="flex items-center h-72">
-            <div className="pt-[1.5rem]">
+          {/* top student section */}
+          <div className="flex">
+            <div className="">
+              
+              
               <div className="flex flex-row w-full mb-5 ml-3">
                 <Link
-                  className="text-header1 font-header1"
+                  className="md:text-header1 text-[33px] font-header1"
                   to={`/viewclasslist/${teacherId}/${classroomId}`}
                 >
                   &lt;
@@ -257,10 +262,10 @@ const StudentProfile = () => {
                       name="firstName"
                       value={studentProfile.firstName}
                       onChange={handleInputChange}
-                      className="w-1/4 py-2 px-2 mx-3 rounded-md bg-sandwich"
+                      className="w-4/12 md:w-1/4 py-2 px-2 mx-3 text-[20px] rounded-md bg-sandwich"
                     />
                   ) : (
-                    <span className="text-header1 font-header1 px-2">
+                    <span className="md:text-header1 text-[33px] font-header1 px-2">
                       {studentProfile?.firstName}
                     </span>
                   )}
@@ -270,10 +275,10 @@ const StudentProfile = () => {
                       name="lastName"
                       value={studentProfile.lastName}
                       onChange={handleInputChange}
-                      className="w-1/4 py-2 px-2 rounded-md bg-sandwich"
+                      className="w-4/12 md:w-1/4 py-2 px-2 text-[20px] rounded-md bg-sandwich"
                     />
                   ) : (
-                    <span className="text-header1 font-header1">
+                    <span className="md:text-header1 text-[33px] font-header1">
                       {studentProfile?.lastName}
                     </span>
                   )}
@@ -281,11 +286,11 @@ const StudentProfile = () => {
               </div>
 
               {/* Image + Student Info Container + Button */}
-              <div className="flex flex-col md:flex-row justify-center">
+              <div className="flex flex-col md:flex-row items-center justify-center">
                 {/* Image */}
-                <div className="self-center md:self-left md:mr-5">
+                <div className="flex flex-col items-center md:self-left md:mr-5">
                   <div
-                    className={`w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
+                    className={`flex items-center justify-center w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
                   >
                     <img
                       src={
@@ -298,7 +303,7 @@ const StudentProfile = () => {
                     />
                   </div>
                   {editMode ? (
-                    <div className="inline-flex text-[12px] mt-2 font-header1 underline">
+                    <div className="inline-flex text-[12px] self-right ml-14 mt-2 font-header1 underline">
                       <FileBase
                         type="file"
                         multiple={false}
@@ -307,9 +312,9 @@ const StudentProfile = () => {
                     </div>
                   ) : null}
                 </div>
-                  <div className="flex ">
+                  <div className="flex justify-center my-5 md:my-0">
                 {/* Student Info Container */}
-                <div className="flex flex-col w-52 ml-3">
+                <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
                   <p>Age: {calculateAge(studentProfile?.birthday)}</p>
                   {editMode ? (
                     <div>
@@ -529,14 +534,14 @@ const StudentProfile = () => {
             </div>
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
-            <div className="flex mt-6 mb-2 items-center w-full justify-between ">
+            <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
               <h1 className="text-black text-4xl font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
               {editModeNotices ? (
                 <div className="flex px-2 ">
                   <button
-                    className="px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                    className="px-3 py-2 bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
                     onClick={handleIEPSaveClick}
                   >
                     Save IEP
@@ -546,7 +551,7 @@ const StudentProfile = () => {
               ) : (
                 <div className="flex px-2 ">
                   <button
-                    className="flex flex-row items-center px-3 py-2 bg-lightOrange rounded-md"
+                    className="flex flex-row items-center text-[14px] md:text-[15px] px-3 py-2 bg-lightOrange rounded-md"
                     onClick={handleEditIEPClick}
                   >
                     Edit IEP
@@ -555,16 +560,16 @@ const StudentProfile = () => {
                 </div>
               )}
             </div>
-            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[80%] md:w-[530px] mx-auto">
-              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
+            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
+              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4 ">
                 <h3 className="font-header4">Content Area Notices</h3>
-                <h3 className="underline flex justify-end pb-2">
+                <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
                   Learning Benchmark
                 </h3>
                 {editModeNotices
                   ? studentProfile?.contentAreaNotices.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex w-full justify-between -mr-3">
+                        <div key={index} className="flex w-full justify-between xs:-mr-3">
                           <input
                             type="text"
                             value={iepEntry.contentArea}
@@ -576,7 +581,7 @@ const StudentProfile = () => {
                                 "contentAreaNotices"
                               )
                             }
-                            className="rounded-md bg-sandwich"
+                            className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px]"
                           />
 
                           <div className="w-full flex justify-end ">
@@ -591,7 +596,7 @@ const StudentProfile = () => {
                                 "contentAreaNotices"
                               )
                             }
-                            className="w-[80px] rounded-md bg-sandwich"
+                            className="w-[80px] rounded-md bg-sandwich text-[14px] md:text-[16px]"
                           />
                             <button
                               className="ml-1"
@@ -616,9 +621,9 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="flex justify-between font-body"
+                          className="flex justify-between font-body text-[14px] md:text-[16px]"
                         >
-                          <p> {iepEntry.contentArea}</p>
+                          <p className="w-7/12"> {iepEntry.contentArea}</p>
                           <p> {iepEntry.benchmark}</p>
                         </div>
                       )
@@ -634,13 +639,13 @@ const StudentProfile = () => {
                   </button>
                 )}
               </div>
-              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
+              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
                 <h3 className="font-header4">Learning Challenges</h3>
-                <p className="underline flex justify-end pb-2">Diagnosed</p>
+                <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">Diagnosed</p>
                 {editModeNotices
                   ? studentProfile?.learningChallenges.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex justify-end -mr-3">
+                        <div key={index} className="flex justify-end xs:-mr-3">
                           <input
                             type="text"
                             value={iepEntry.challenge}
@@ -652,7 +657,7 @@ const StudentProfile = () => {
                                 "learningChallenges"
                               )
                             }
-                            className=" rounded-md bg-sandwich "
+                            className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
                           />
                           <div className="w-full flex justify-end ">
                           <input
@@ -666,7 +671,7 @@ const StudentProfile = () => {
                                 "learningChallenges"
                               )
                             }
-                            className="w-5/12 md:w-1/4 rounded-md bg-sandwich"
+                            className="w-1/2 md:w-1/4 rounded-md bg-sandwich text-[14px] md:text-[16px]"
                           />
 
                             <button
@@ -692,9 +697,9 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="flex justify-between font-body"
+                          className="flex justify-between font-body text-[14px] md:text-[16px]"
                         >
-                          <p>{iepEntry.challenge}</p>
+                          <p className="w-7/12">{iepEntry.challenge}</p>
                           <p>{formatDate(iepEntry.date)}</p>
                         </div>
                       )
@@ -710,20 +715,20 @@ const StudentProfile = () => {
                   </button>
                 )}
               </div>
-              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
+              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
                 <h3 className="font-header4">
                   Accommodations & Assistive Tech
                 </h3>
-                <div className="grid grid-cols-4 gap-4 pb-2">
+                <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
                   <div className="col-span-1"></div> 
                   <div className="col-span-1"></div> 
-                  <h3 className="underline col-span-1">Frequency</h3>
-                  <h3 className="underline col-span-1">Location</h3>
+                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">Frequency</h3>
+                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">Location</h3>
                 </div>
                 {editModeNotices
                   ? studentProfile?.accomodationsAndAssisstiveTech.map(
                       (iepEntry, index) => (
-                        <div key={index} className="grid grid-cols-4 gap-4 items-center">
+                        <div key={index} className="grid grid-cols-4 gap-1 sm:gap-4 items-center">
                           {/* accomodation list */}
                           <div className="ml-5">
                             <input
@@ -737,7 +742,7 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="pl-2 -ml-4 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1 max-w-xs"
+                              className="w-[280%] xs:w-[220%] sm:w-[250%] flex pl-2 -ml-4 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1"
                             />
                           </div>
                           <div></div>
@@ -779,7 +784,7 @@ const StudentProfile = () => {
                               className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
                             />
                               <button
-                                className="-mr-2"
+                                className="xs:-mr-2"
                                 onClick={() =>
                                   handleIEPDeleteClick(
                                     index,
@@ -801,11 +806,12 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="grid grid-cols-4 text-[14px] md:font-body"
+                          className="grid grid-cols-4 text-[14px] md:text-[16px] font-body my-3"
                         >
-                          <p> {iepEntry.accomodation}</p>
-                          <p className="ml-28"> {iepEntry.frequency}</p>
-                          <p> {iepEntry.location}</p>
+                          <p className="w-[200%]"> {iepEntry.accomodation}</p>
+                          <p></p>
+                          <p className="text-right"> {iepEntry.frequency}</p>
+                          <p className="text-right"> {iepEntry.location}</p>
                         </div>
                       )
                     )}

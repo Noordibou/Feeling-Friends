@@ -329,7 +329,7 @@ const StudentProfile = () => {
                     </div>
                   ) : (
                     <p>
-                      Grade: <span>{studentProfile?.gradeYear}th</span>
+                      Grade: <span>{studentProfile?.gradeYear}</span>
                     </p>
                   )}
                   {editMode ? (
@@ -389,7 +389,7 @@ const StudentProfile = () => {
                 </div>
 
                 {/* Button container */}
-                <div className="flex items-center border-l-4 border-sandwich pl-5">
+                <div className="flex items-center text-[14px] md:text-[15px] border-l-4 border-sandwich pl-5">
                   {editMode ? (
                     <div className="flex flex-col">
                       <button
@@ -461,7 +461,7 @@ const StudentProfile = () => {
                   </div>
                 )}
 
-                <div className="flex flex-col gap-3 md:gap-0 md:flex-row justify-around py-3 rounded-b-2xl items-center">
+                <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center">
                   <button
                     className={`${
                       !isMonthView ? "bg-sandwich underline font-semibold" : ""

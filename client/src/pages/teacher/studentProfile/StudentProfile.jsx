@@ -15,6 +15,9 @@ import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
 import Nav from "../../../components/Navbar/Nav.jsx";
 import withAuth from "../../../hoc/withAuth.js";
+import Logout from "../../../components/LogoutButton.jsx";
+import { useUser } from "../../../context/UserContext";
+
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 const StudentProfile = () => {
@@ -32,6 +35,8 @@ const StudentProfile = () => {
   const [lastSelectedCheck, setLastSelectedCheck] = useState({});
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
+
+  const { userData } = useUser();
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
@@ -58,7 +63,7 @@ const StudentProfile = () => {
       }
     };
     fetchStudentProfile();
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
@@ -240,9 +245,12 @@ const StudentProfile = () => {
   return (
     <>
       {/* Page conatainer including bottom nav */}
-      <div className="flex flex-col items-center bg-notebookPaper min-h-screen mt-5 md:mt-10">
+      <div className="flex flex-col  bg-notebookPaper min-h-screen">
+      <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
+        <Logout location="teacherLogout" userData={userData} />
+      </div>
         {/* Page container (no nav) */}
-        <div className="flex flex-col items-center pb-[4rem] lg:z-40 ">
+        <div className="flex flex-col items-center pb-[4rem] lg:z-40 mt-5 md:mt-10">
           {/* top student section */}
           <div className="flex">
             <div className="">
@@ -486,8 +494,8 @@ const StudentProfile = () => {
               <div
                 className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
                   isMonthView
-                    ? "top-96 md:top-72 mt-6 md:mt-2 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                    : "top-96 md:top-72 mt-6 md:mt-2 h-[245px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    ? "top-96 md:top-72 mt-20 md:mt-2 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    : "top-96 md:top-72 mt-20 md:mt-2 h-[245px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
                 }`}
               >
                 <div className={`flex h-full justify-center items-center`}>
@@ -500,37 +508,6 @@ const StudentProfile = () => {
               </div>
             )}
             <div>
-              {/* {selectedDate && (
-                <div className="my-4 p-4 border-8 border-sandwich rounded-2xl ">
-                  <h4>
-                    <strong>
-                      Journal Entries for {selectedDate.toDateString()}:
-                    </strong>
-                  </h4>
-                  {selectedEntries.length > 0 ? (
-                    selectedEntries.map((entry) => (
-                      <div key={entry._id}>
-                        <p>
-                          Zone of Regulation:{" "}
-                          {entry.checkin?.ZOR || entry.checkout?.ZOR}
-                        </p>
-                        <p>
-                          Feelings:{" "}
-                          {entry.checkin?.emotion || entry.checkout?.emotion}
-                        </p>
-                        <p>
-                          Needs: {entry.checkin?.need || entry.checkout?.need}
-                        </p>
-                        <p>
-                          Goal: {entry.checkin?.goal || entry.checkout?.goal}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No journal entries for this date.</p>
-                  )}
-                </div>
-              )} */}
             </div>
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
@@ -645,7 +622,7 @@ const StudentProfile = () => {
                 {editModeNotices
                   ? studentProfile?.learningChallenges.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex justify-end xs:-mr-3">
+                        <div key={index} className="flex justify-end">
                           <input
                             type="text"
                             value={iepEntry.challenge}
@@ -784,7 +761,7 @@ const StudentProfile = () => {
                               className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
                             />
                               <button
-                                className="xs:-mr-2"
+                                className=""
                                 onClick={() =>
                                   handleIEPDeleteClick(
                                     index,

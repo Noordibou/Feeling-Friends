@@ -15,6 +15,9 @@ import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
 import Nav from "../../../components/Navbar/Nav.jsx";
 import withAuth from "../../../hoc/withAuth.js";
+import Logout from "../../../components/LogoutButton.jsx";
+import { useUser } from "../../../context/UserContext";
+
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
 const StudentProfile = () => {
@@ -32,6 +35,8 @@ const StudentProfile = () => {
   const [lastSelectedCheck, setLastSelectedCheck] = useState({});
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
+
+  const { userData } = useUser();
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
@@ -239,13 +244,21 @@ const StudentProfile = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center bg-notebookPaper min-h-screen">
-        <div className="flex flex-col items-center pb-[4rem] lg:z-40 ">
-          <div className="flex items-center h-72">
-            <div className="pt-[1.5rem]">
+      {/* Page conatainer including bottom nav */}
+      <div className="flex flex-col  bg-notebookPaper min-h-screen">
+      <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
+        <Logout location="teacherLogout" userData={userData} />
+      </div>
+        {/* Page container (no nav) */}
+        <div className="flex flex-col items-center pb-[4rem] lg:z-40 mt-5 md:mt-10">
+          {/* top student section */}
+          <div className="flex">
+            <div className="">
+              
+              
               <div className="flex flex-row w-full mb-5 ml-3">
                 <Link
-                  className="text-header1 font-header1"
+                  className="md:text-header1 text-[33px] font-header1"
                   to={`/viewclasslist/${teacherId}/${classroomId}`}
                 >
                   &lt;
@@ -257,10 +270,10 @@ const StudentProfile = () => {
                       name="firstName"
                       value={studentProfile.firstName}
                       onChange={handleInputChange}
-                      className="w-1/4 py-2 px-2 mx-3 rounded-md bg-sandwich"
+                      className="w-4/12 md:w-1/4 py-2 px-2 mx-3 text-[20px] rounded-md bg-sandwich"
                     />
                   ) : (
-                    <span className="text-header1 font-header1 px-2">
+                    <span className="md:text-header1 text-[33px] font-header1 px-2">
                       {studentProfile?.firstName}
                     </span>
                   )}
@@ -270,10 +283,10 @@ const StudentProfile = () => {
                       name="lastName"
                       value={studentProfile.lastName}
                       onChange={handleInputChange}
-                      className="w-1/4 py-2 px-2 rounded-md bg-sandwich"
+                      className="w-4/12 md:w-1/4 py-2 px-2 text-[20px] rounded-md bg-sandwich"
                     />
                   ) : (
-                    <span className="text-header1 font-header1">
+                    <span className="md:text-header1 text-[33px] font-header1">
                       {studentProfile?.lastName}
                     </span>
                   )}
@@ -281,11 +294,11 @@ const StudentProfile = () => {
               </div>
 
               {/* Image + Student Info Container + Button */}
-              <div className="flex flex-row justify-center">
+              <div className="flex flex-col md:flex-row items-center justify-center">
                 {/* Image */}
-                <div className="mr-5 w-1/4">
+                <div className="flex flex-col items-center md:self-left md:mr-5">
                   <div
-                    className={`w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
+                    className={`flex items-center justify-center w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
                   >
                     <img
                       src={
@@ -298,7 +311,7 @@ const StudentProfile = () => {
                     />
                   </div>
                   {editMode ? (
-                    <div className="inline-flex text-[12px] mt-2 font-header1 underline">
+                    <div className="inline-flex text-[12px] self-right ml-14 mt-2 font-header1 underline">
                       <FileBase
                         type="file"
                         multiple={false}
@@ -307,9 +320,9 @@ const StudentProfile = () => {
                     </div>
                   ) : null}
                 </div>
-
+                  <div className="flex justify-center my-5 md:my-0">
                 {/* Student Info Container */}
-                <div className="flex flex-col w-52 ml-3">
+                <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
                   <p>Age: {calculateAge(studentProfile?.birthday)}</p>
                   {editMode ? (
                     <div>
@@ -324,7 +337,7 @@ const StudentProfile = () => {
                     </div>
                   ) : (
                     <p>
-                      Grade: <span>{studentProfile?.gradeYear}th</span>
+                      Grade: <span>{studentProfile?.gradeYear}</span>
                     </p>
                   )}
                   {editMode ? (
@@ -384,7 +397,7 @@ const StudentProfile = () => {
                 </div>
 
                 {/* Button container */}
-                <div className="flex items-center border-l-4 border-sandwich pl-5">
+                <div className="flex items-center text-[14px] md:text-[15px] border-l-4 border-sandwich pl-5">
                   {editMode ? (
                     <div className="flex flex-col">
                       <button
@@ -416,12 +429,13 @@ const StudentProfile = () => {
                     </div>
                   )}
                 </div>
+                </div>
               </div>
             </div>
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[530px]">
+              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -445,7 +459,7 @@ const StudentProfile = () => {
 
                 {!isMonthView && (
                   <div
-                    className={`${openStudentInfoModal ? "flex z-20" : ""} `}
+                    className={`${openStudentInfoModal ? "flex z-20 " : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"} `}
                   >
                     <WeekView
                       events={events}
@@ -455,11 +469,11 @@ const StudentProfile = () => {
                   </div>
                 )}
 
-                <div className="flex justify-around py-3 rounded-b-2xl ">
+                <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center">
                   <button
                     className={`${
                       !isMonthView ? "bg-sandwich underline font-semibold" : ""
-                    } border-2 border-sandwich rounded-lg py-3 px-16`}
+                    } border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
                     onClick={() => setIsMonthView(false)}
                   >
                     <h4 className="font-[Poppins]">Week View</h4>
@@ -467,7 +481,7 @@ const StudentProfile = () => {
                   <button
                     className={`${
                       isMonthView ? "bg-sandwich underline font-semibold " : ""
-                    }bg-notebook border-2 border-sandwich rounded-lg py-3 px-16`}
+                    }bg-notebook border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
                     onClick={() => setIsMonthView(true)}
                   >
                     <h4 className="font-[Poppins]">Month View</h4>
@@ -480,8 +494,8 @@ const StudentProfile = () => {
               <div
                 className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
                   isMonthView
-                    ? "top-72 mt-12 h-96 w-[530px]"
-                    : "top-72 mt-12 h-[245px] w-[530px]"
+                    ? "top-96 md:top-72 mt-20 md:mt-2 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    : "top-96 md:top-72 mt-20 md:mt-2 h-[245px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
                 }`}
               >
                 <div className={`flex h-full justify-center items-center`}>
@@ -494,48 +508,17 @@ const StudentProfile = () => {
               </div>
             )}
             <div>
-              {/* {selectedDate && (
-                <div className="my-4 p-4 border-8 border-sandwich rounded-2xl ">
-                  <h4>
-                    <strong>
-                      Journal Entries for {selectedDate.toDateString()}:
-                    </strong>
-                  </h4>
-                  {selectedEntries.length > 0 ? (
-                    selectedEntries.map((entry) => (
-                      <div key={entry._id}>
-                        <p>
-                          Zone of Regulation:{" "}
-                          {entry.checkin?.ZOR || entry.checkout?.ZOR}
-                        </p>
-                        <p>
-                          Feelings:{" "}
-                          {entry.checkin?.emotion || entry.checkout?.emotion}
-                        </p>
-                        <p>
-                          Needs: {entry.checkin?.need || entry.checkout?.need}
-                        </p>
-                        <p>
-                          Goal: {entry.checkin?.goal || entry.checkout?.goal}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No journal entries for this date.</p>
-                  )}
-                </div>
-              )} */}
             </div>
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
-            <div className="flex mt-6 mb-2 items-center w-full justify-between">
+            <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
               <h1 className="text-black text-4xl font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
               {editModeNotices ? (
                 <div className="flex px-2 ">
                   <button
-                    className="px-3 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                    className="px-3 py-2 bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
                     onClick={handleIEPSaveClick}
                   >
                     Save IEP
@@ -545,7 +528,7 @@ const StudentProfile = () => {
               ) : (
                 <div className="flex px-2 ">
                   <button
-                    className="flex flex-row items-center px-3 py-2 bg-lightOrange rounded-md"
+                    className="flex flex-row items-center text-[14px] md:text-[15px] px-3 py-2 bg-lightOrange rounded-md"
                     onClick={handleEditIEPClick}
                   >
                     Edit IEP
@@ -554,16 +537,16 @@ const StudentProfile = () => {
                 </div>
               )}
             </div>
-            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[530px]">
-              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4 ">
+            <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
+              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4 ">
                 <h3 className="font-header4">Content Area Notices</h3>
-                <h3 className="underline flex justify-end pb-2">
+                <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
                   Learning Benchmark
                 </h3>
                 {editModeNotices
                   ? studentProfile?.contentAreaNotices.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex justify-end -mr-3">
+                        <div key={index} className="flex w-full justify-between xs:-mr-3">
                           <input
                             type="text"
                             value={iepEntry.contentArea}
@@ -575,8 +558,10 @@ const StudentProfile = () => {
                                 "contentAreaNotices"
                               )
                             }
-                            className="mr-20 pl-2 rounded-md bg-sandwich"
+                            className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px]"
                           />
+
+                          <div className="w-full flex justify-end ">
                           <input
                             type="text"
                             value={iepEntry.benchmark}
@@ -588,9 +573,8 @@ const StudentProfile = () => {
                                 "contentAreaNotices"
                               )
                             }
-                            className="ml-10 pl-2 w-1/3 rounded-md bg-sandwich"
+                            className="w-[80px] rounded-md bg-sandwich text-[14px] md:text-[16px]"
                           />
-                          {editModeNotices ? (
                             <button
                               className="ml-1"
                               onClick={() =>
@@ -606,7 +590,7 @@ const StudentProfile = () => {
                                 className="w-4"
                               />
                             </button>
-                          ) : null}
+                            </div>
                         </div>
                       )
                     )
@@ -614,9 +598,9 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="flex justify-between font-body"
+                          className="flex justify-between font-body text-[14px] md:text-[16px]"
                         >
-                          <p> {iepEntry.contentArea}</p>
+                          <p className="w-7/12"> {iepEntry.contentArea}</p>
                           <p> {iepEntry.benchmark}</p>
                         </div>
                       )
@@ -632,13 +616,13 @@ const StudentProfile = () => {
                   </button>
                 )}
               </div>
-              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
+              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
                 <h3 className="font-header4">Learning Challenges</h3>
-                <p className="underline flex justify-end pb-2">Diagnosed</p>
+                <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">Diagnosed</p>
                 {editModeNotices
                   ? studentProfile?.learningChallenges.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex justify-end -mr-3">
+                        <div key={index} className="flex justify-end">
                           <input
                             type="text"
                             value={iepEntry.challenge}
@@ -650,8 +634,9 @@ const StudentProfile = () => {
                                 "learningChallenges"
                               )
                             }
-                            className="mr-14 pl-2 rounded-md bg-sandwich "
+                            className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
                           />
+                          <div className="w-full flex justify-end ">
                           <input
                             type="text"
                             defaultValue={formatDate(iepEntry.date)}
@@ -663,9 +648,9 @@ const StudentProfile = () => {
                                 "learningChallenges"
                               )
                             }
-                            className="ml-24 pl-4 w-1/4 rounded-md bg-sandwich"
+                            className="w-1/2 md:w-1/4 rounded-md bg-sandwich text-[14px] md:text-[16px]"
                           />
-                          {editModeNotices ? (
+
                             <button
                               className="ml-1"
                               onClick={() =>
@@ -681,7 +666,7 @@ const StudentProfile = () => {
                                 className="w-4"
                               />
                             </button>
-                          ) : null}
+                        </div>
                         </div>
                       )
                     )
@@ -689,9 +674,9 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="flex justify-between font-body"
+                          className="flex justify-between font-body text-[14px] md:text-[16px]"
                         >
-                          <p>{iepEntry.challenge}</p>
+                          <p className="w-7/12">{iepEntry.challenge}</p>
                           <p>{formatDate(iepEntry.date)}</p>
                         </div>
                       )
@@ -707,19 +692,22 @@ const StudentProfile = () => {
                   </button>
                 )}
               </div>
-              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-4 py-4">
+              <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
                 <h3 className="font-header4">
                   Accommodations & Assistive Tech
                 </h3>
-                <div className="flex flex-row gap-4 justify-end pb-2">
-                  <h3 className="underline">Frequency</h3>
-                  <h3 className="underline">Location</h3>
+                <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
+                  <div className="col-span-1"></div> 
+                  <div className="col-span-1"></div> 
+                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">Frequency</h3>
+                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">Location</h3>
                 </div>
                 {editModeNotices
                   ? studentProfile?.accomodationsAndAssisstiveTech.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex flex-row justify-end ">
-                          <div className="mr-24">
+                        <div key={index} className="grid grid-cols-4 gap-1 sm:gap-4 items-center">
+                          {/* accomodation list */}
+                          <div className="ml-5">
                             <input
                               type="text"
                               value={iepEntry.accomodation}
@@ -731,9 +719,11 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="pl-2 -ml-4 rounded-md bg-sandwich"
+                              className="w-[280%] xs:w-[220%] sm:w-[250%] flex pl-2 -ml-4 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1"
                             />
                           </div>
+                          <div></div>
+                          {/* frequency */}
                           <div className="inline px-1">
                             <select
                               value={iepEntry.frequency}
@@ -745,7 +735,7 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="rounded-md bg-sandwich w-20"
+                              className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1"
                             >
                               <option value=""></option>
                               <option value="Daily">Daily</option>
@@ -754,6 +744,8 @@ const StudentProfile = () => {
                               <option value="As Needed">As Needed</option>
                             </select>
                           </div>
+
+                          {/* location */}
                           <div className="flex flex-row justify-end ">
                             <input
                               type="text"
@@ -766,11 +758,10 @@ const StudentProfile = () => {
                                   "accomodationsAndAssisstiveTech"
                                 )
                               }
-                              className="inline pl-1 w-20 rounded-md bg-sandwich"
+                              className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
                             />
-                            {editModeNotices ? (
                               <button
-                                className="-mr-2"
+                                className=""
                                 onClick={() =>
                                   handleIEPDeleteClick(
                                     index,
@@ -784,7 +775,6 @@ const StudentProfile = () => {
                                   className="w-4 ml-1 "
                                 />
                               </button>
-                            ) : null}
                           </div>
                         </div>
                       )
@@ -793,11 +783,12 @@ const StudentProfile = () => {
                       (iepEntry, index) => (
                         <div
                           key={index}
-                          className="flex justify-between font-body"
+                          className="grid grid-cols-4 text-[14px] md:text-[16px] font-body my-3"
                         >
-                          <p> {iepEntry.accomodation}</p>
-                          <p className="ml-28"> {iepEntry.frequency}</p>
-                          <p> {iepEntry.location}</p>
+                          <p className="w-[200%]"> {iepEntry.accomodation}</p>
+                          <p></p>
+                          <p className="text-right"> {iepEntry.frequency}</p>
+                          <p className="text-right"> {iepEntry.location}</p>
                         </div>
                       )
                     )}
@@ -818,9 +809,6 @@ const StudentProfile = () => {
             </div>
           </div>
         </div>
-         {/* <div className="fixed bottom-0 w-screen">
-      <TeacherNavbar />
-    </div> */}
     <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav  teacherId={teacherId} classroomId={classroomId}/>
         </div>

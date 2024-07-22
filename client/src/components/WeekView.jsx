@@ -84,8 +84,8 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
   
 
   return (
-    <div>
-      <div className="relative top-6">
+    <div className=" w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
+      <div className="relative top-6 ">
         <button
           alt="previous-week"
           className="absolute left-6 py-3 px-5 bg-white"

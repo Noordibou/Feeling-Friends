@@ -13,10 +13,11 @@ import Nav from "../../components/Navbar/Nav";
 import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
 import Button from "../../components/Button";
+import Checkbox from "../../components/Checkbox";
+
+
 
 const CreateClass = () => {
-
-  
 
   const navigate = useNavigate();
   const { userData, updateUser } = useUser();
@@ -144,6 +145,8 @@ const CreateClass = () => {
     );
   };
 
+
+  
   return (
     <>
       <div className="h-screen ">
@@ -157,19 +160,45 @@ const CreateClass = () => {
         </div>
 
         <div className="bg-sandwich w-[80%]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
-          <h2 className="mb-[0.5rem] ml-[0.5rem] text-header2 font-header2">
+          <h3 className="mb-[0.5rem] ml-[0.5rem] text-header3 font-header2">
             Title or Subject
-          </h2>
+          </h3>
           <FormField
             label="Math"
             value={newClassData?.classSubject || ""}
             onChange={(e) => handleInputChange("classSubject", e.target.value)}
           />
+
+          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[0.5rem] text-header3 font-header2">
+          Days of the Week
+          </h3>
+          <div className="flex justify-center space-x-[1.5rem] py-[1rem] font-poppins text-md">
+          Sun <Checkbox label="Sunday" />
+
+          <label for="Monday">Mon
+          <input type="checkbox" id="Monday"></input></label>
+          
+          <label for="Tuesday">Tue
+          <input type="checkbox" id="Tuesday"></input></label>
+          
+          <label for="Wednesday">Wed
+          <input type="checkbox" id="Wedneday"></input></label>
+          
+          <label for="Thursday">Thurs
+          <input type="checkbox" id="Thursday"></input></label>
+          
+          <label for="Friday">Fri
+          <input type="checkbox" id="Friday"></input></label>
+          
+          <label for="Saturday">Sat
+          <input type="checkbox" id="Saturday"></input></label>
+          
+          </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">
-              <h2 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header2 font-header2">
+              <h3 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header3 font-header2">
                 Location
-              </h2>
+              </h3>
               <FormField
                 label="Classroom 101"
                 value={newClassData?.location || ""}
@@ -180,9 +209,9 @@ const CreateClass = () => {
             <div>
               <div className="flex gap-[8rem]">
                 <div className="w-[50%]">
-                  <h2 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header2 font-header2">
+                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header3 font-header2">
                     Check-in:
-                  </h2>
+                  </h3>
                   <FormField
                     label="00:00 AM"
                     value={newClassData?.checkIn || ""}
@@ -192,9 +221,9 @@ const CreateClass = () => {
                   />
                 </div>
                 <div className="w-[50%]">
-                  <h2 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header2 font-header2">
+                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header3 font-header2">
                     Check-out:
-                  </h2>
+                  </h3>
                   <FormField
                     label="00:00 PM"
                     value={newClassData?.checkOut || ""}
@@ -205,19 +234,6 @@ const CreateClass = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex justify-center space-x-[1rem] py-[1rem]">
-            {["MON", "TUES", "WED", "THU", "FRI"].map((day) => (
-              <button
-                key={day}
-                onClick={() => toggleDaySelection(day)}
-                className={`${
-                  selectedDays.includes(day) ? "border-notebookPaper border-[0.2rem]" : "border-sandwich border-[0.2rem]"
-                } font-poppins text-lg text-black font-semibold rounded-[100%] `}
-              >
-                {day}
-              </button>
-            ))}
           </div>
           <div className="flex justify-center bg-sandwich rounded-[1rem]">
             
@@ -306,6 +322,8 @@ const CreateClass = () => {
     </>
   );
 };
+
+
 const FormField = ({ label, value, onChange }) => (
   <div>
     <input

@@ -291,7 +291,7 @@ const EditSeatingChart = () => {
               </div>
             </div>
             {/* Room View & List Buttons */}
-            <div className="flex md:hidden justify-around md:justify-between gap-4 items-center mt-5 bg-notebookPaper">
+            <div className="flex md:hidden justify-around md:justify-between gap-2 md:gap-4 items-center mt-5 bg-notebookPaper">
                 <ButtonView
                   buttonText="Student Roster"
                   defaultBtnImage={RosterImg}

@@ -101,7 +101,7 @@ const ViewClassroom = () => {
       <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col h-[35vh] md:h-auto w-full md:justify-center md:mt-14 pt-2 px-5 xl:gap-8 z-20">
+          <div className="flex flex-col h-[35vh] md:h-auto w-full md:justify-center md:mt-14 pt-2 px-2 xl:gap-8 z-20">
             <div className="flex flex-col md:flex-row">
             <div className="flex md:justify-center">
               <SimpleTopNav
@@ -121,7 +121,7 @@ const ViewClassroom = () => {
                 </div>
               </div>
               {/* Room View & List Buttons */}
-              <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
+              <div className="flex justify-around md:justify-between gap-2 items-center mb-5 md:mb-0">
                 <ButtonView
                   buttonText="Room View"
                   btnImageWhenOpen={classBoxesIcon}

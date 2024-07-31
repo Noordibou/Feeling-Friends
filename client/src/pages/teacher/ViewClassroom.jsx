@@ -101,7 +101,7 @@ const ViewClassroom = () => {
       <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col h-[45vh] md:h-auto w-full md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
+          <div className="flex flex-col h-[27vh] md:h-auto w-full md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
             <div className="flex md:justify-center">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -109,48 +109,10 @@ const ViewClassroom = () => {
               />
             </div>
             <div className="flex flex-col-reverse md:flex-row xl:gap-8 bg-notebookPaper">
-              <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+              <div className="hidden md:flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+                
                 <div
-                  className="flex items-center w-full justify-between md:hidden"
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">
-                    Details
-                  </h2>
-                  <svg
-                    className={`transition-transform duration-300 md:hidden ${
-                      isOpen ? "" : "rotate-180"
-                    }`}
-                    width="70"
-                    height="70"
-                    viewBox="0 -25 100 100"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <line
-                      x1="50"
-                      y1="10"
-                      x2="35"
-                      y2="30"
-                      stroke="#8D8772"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-
-                    <line
-                      x1="50"
-                      y1="10"
-                      x2="65"
-                      y2="30"
-                      stroke="#8D8772"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
-                    isOpen ? "max-h-[500px]" : "max-h-0"
-                  } md:max-h-full md:h-auto`}
+                  className={`flex overflow-hidden max-h-[500px] md:max-h-full h-auto`}
                 >
                   <ClassDetails
                     teacherId={teacherId}
@@ -189,7 +151,7 @@ const ViewClassroom = () => {
           {classroom ? (
             <>
             {/* static classroom */}
-              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[55vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[73vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
 
                 {/* Classroom Container */}
                 {/* movable classroom */}

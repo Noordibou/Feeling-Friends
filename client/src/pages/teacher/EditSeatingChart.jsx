@@ -235,53 +235,17 @@ const EditSeatingChart = () => {
         {/* page container */}
         <div className="flex flex-col w-full h-full items-center max-w-3xl">
           {/* top half of page */}
-        <div className="flex flex-col h-[50vh] md:h-auto  w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
+        <div className="flex flex-col h-[28vh] md:h-auto w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
+          <div className="w-1/3">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
               fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
             />
-            <div className="flex flex-col mx-8 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+            </div>
+            <div className="flex flex-col mx-8 md:flex-row justify-center md:items-center">
+              
               <div
-                className="flex items-center w-full justify-between md:hidden"
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">
-                  Details
-                </h2>
-                <svg
-                  className={`transition-transform duration-300 md:hidden ${
-                    isOpen ? "" : "rotate-180"
-                  }`}
-                  width="70"
-                  height="70"
-                  viewBox="0 -25 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <line
-                    x1="50"
-                    y1="10"
-                    x2="35"
-                    y2="30"
-                    stroke="#8D8772"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-
-                  <line
-                    x1="50"
-                    y1="10"
-                    x2="65"
-                    y2="30"
-                    stroke="#8D8772"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <div
-                className={`transition-all duration-500 ease-in-out md:flex overflow-hidden ${
-                  isOpen ? "max-h-[500px]" : "max-h-0"
-                } md:max-h-full md:h-auto`}
+                className={`hidden md:flex overflow-hidden max-h-[500px] md:max-h-full md:h-auto`}
               >
                 <ClassDetails
                   teacherId={teacherId}

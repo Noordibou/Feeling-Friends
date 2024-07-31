@@ -101,7 +101,8 @@ const ViewClassroom = () => {
       <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col h-[27vh] md:h-auto w-full md:justify-center md:flex-row md:mt-14 pt-2 px-5 md:mb-10 xl:gap-8 z-20" >
+          <div className="flex flex-col h-[35vh] md:h-auto w-full md:justify-center md:mt-14 pt-2 px-5 xl:gap-8 z-20">
+            <div className="flex flex-col md:flex-row">
             <div className="flex md:justify-center">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -110,7 +111,6 @@ const ViewClassroom = () => {
             </div>
             <div className="flex flex-col-reverse md:flex-row xl:gap-8 bg-notebookPaper">
               <div className="hidden md:flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
-                
                 <div
                   className={`flex overflow-hidden max-h-[500px] md:max-h-full h-auto`}
                 >
@@ -140,19 +140,31 @@ const ViewClassroom = () => {
                   />
                 </Link>
               </div>
+              </div>
             </div>
-
+            <div className="flex items-center justify-center h-full">
+            <h2 className="text-[14px] md:text-[16px] font-semibold font-[Poppins] underline bg-sandwich rounded-[1rem] mb-[1rem] p-[0.8rem] ">
+              <a href={`/edit-seating-chart/${teacherId}/${classroomId}`}>
+                Edit Seating Chart
+              </a>
+            </h2>
           </div>
-          <div className={`${Object.keys(selectedStudent).length === 0
-                        ? "hidden"
-                        : "fixed w-full h-full"
-                    } bg-graphite md:hidden md:bg-none z-30 md:z-0 top-0 opacity-50 md:opacity-0`}></div>
+          </div>
+
+
+
+          <div
+            className={`${
+              Object.keys(selectedStudent).length === 0
+                ? "hidden"
+                : "fixed w-full h-full"
+            } bg-graphite md:hidden md:bg-none z-30 md:z-0 top-0 opacity-50 md:opacity-0`}
+          ></div>
 
           {classroom ? (
             <>
-            {/* static classroom */}
-              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[73vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
-
+              {/* static classroom */}
+              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[65vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                 {/* Classroom Container */}
                 {/* movable classroom */}
                 <div
@@ -164,7 +176,7 @@ const ViewClassroom = () => {
                   } relative flex w-[752px] h-[654px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] `}
                   ref={constraintsRef}
                   style={{
-                    transform: `scale(${zoom})`
+                    transform: `scale(${zoom})`,
                   }}
                 >
                   {/* to make the classroom width 752 on smaller screens. Not sure why it just doesn't work on the div itself */}
@@ -277,7 +289,9 @@ const ViewClassroom = () => {
           {/* Student Info Modal */}
           <div
             className={`${
-              Object.keys(selectedStudent).length === 0 ? "hidden" : "fixed top-[35%] sm:top-[40%] md:absolute"
+              Object.keys(selectedStudent).length === 0
+                ? "hidden"
+                : "fixed top-[35%] sm:top-[40%] md:absolute"
             } flex flex-col w-[80%] sm:w-[500px] z-30`}
           >
             <StudentInfoBox
@@ -296,19 +310,19 @@ const ViewClassroom = () => {
           </h4>
         </div>
         <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">
-            <button
-              onClick={handleZoomIn}
-              className=" px-4 py-2 bg-blue text-white rounded"
-            >
+          <button
+            onClick={handleZoomIn}
+            className=" px-4 py-2 bg-blue text-white rounded"
+          >
             +
-            </button>
-            <button
-              onClick={handleZoomOut}
-              className="px-4 py-2 bg-blue text-white rounded"
-            >
-             -
-            </button>
-          </div>
+          </button>
+          <button
+            onClick={handleZoomOut}
+            className="px-4 py-2 bg-blue text-white rounded"
+          >
+            -
+          </button>
+        </div>
         {/* <div className="bottom-0 fixed w-screen">
         <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
         </div> */}

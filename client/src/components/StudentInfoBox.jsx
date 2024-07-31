@@ -27,13 +27,13 @@ const StudentInfoBox = ({
         {/* student image */}
         <div
           className={`flex ${
-            bgColorClass ? `w-32 sm:w-full bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-32 sm:w-28 opacity-50 bg-[#ece6d2] border-sandwich"
+            bgColorClass ? `w-28 md:w-32 sm:w-full bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
           }`}
         >
           <img
             src={student.avatarImg === "none" ? avatarImg : student.avatarImg}
             alt={student.firstName}
-            className={`flex w-24 h-24 rounded-2xl p-2 self-center  ${
+            className={`flex w-20 h-20 md:w-24 md:h-24 rounded-2xl p-2 self-center  ${
               borderColorClass ===
               "sandwich"
                 ? "opacity-50"
@@ -46,9 +46,9 @@ const StudentInfoBox = ({
         <div className="flex flex-col sm:flex-row w-full sm:w-[80%] px-2 sm:px-4 my-2 sm:my-5">
           <div>
           {/* last emotion */}
-          <div className="pb-2 flex justify-between">
+          <div className="md:pb-2 flex justify-between">
             {lastCheck ? (
-              <div className="font-[Poppins] text-[15px] sm:text-[17px] px-2">
+              <div className="font-[Poppins] text-[14px] sm:text-[17px] px-2">
                 <h4>
                   {student.firstName} {student.lastName}
                 </h4>

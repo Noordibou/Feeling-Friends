@@ -192,7 +192,7 @@ const NeedsGoals = () => {
             {goalAnswers.map((answer, index) => (
               <div
                 key={index}
-                className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                className={`flex ${editGoalMode[index] ? "bg-white" : "bg-sandwich" } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 {editGoalMode[index] ? (
                   <textarea
@@ -314,7 +314,7 @@ const NeedsGoals = () => {
             {needAnswers.map((answer, index) => (
               <div
                 key={index}
-                className={`flex bg-white rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                className={`flex ${editNeedsMode[index] ? "bg-white" : "bg-sandwich" } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 {editNeedsMode[index] ? (
                   <textarea

@@ -22,7 +22,7 @@ module.exports = {
       'header1': '2.5rem',
       'header2': '1.75rem',
       'header3': '1.3rem',
-      'header4': '1.8rem',
+      'header4': '1.2rem',
       'body': '1.4rem',
       'regZone': '1.5rem',
       'input': '1.5rem',
@@ -34,13 +34,14 @@ module.exports = {
     },
 
     fontWeight: {
-      'header1': '700',
-      'header2': '700',
-      'header3': '400',
-      'header4': '700',
+      'header1': '800',
+      'header2': '800',
+      'header3': '800',
+      'header4': '800',
       'body': '400',
       'semibold': '600',
-      'normal': '400'
+      'normal': '400',
+      'bold': '900'
     },
 
     colors: {

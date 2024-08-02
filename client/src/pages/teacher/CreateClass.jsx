@@ -151,16 +151,16 @@ const CreateClass = () => {
     <>
       <div className="h-screen ">
         <div className="flex justify-around items-center pt-8">
-          <div className="absolute left-14">
+          <div className="absolute left-[28%]">
             <GoBack />
           </div>
-          <span className="text-header1 w-full text-center font-header1">
+          <span className="text-header2 w-full relative left-[31%] font-semibold font-header2">
             Add New Classroom
           </span>
         </div>
 
-        <div className="bg-sandwich w-[80%]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
-          <h3 className="mb-[0.5rem] ml-[0.5rem] text-header3 font-header2">
+        <div className="bg-sandwich max-w-[45%] min-w-[25rem]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
+          <h3 className="mb-[0.5rem] ml-[0.5rem] font-black text-header4 font-header4">
             Title or Subject
           </h3>
           <FormField
@@ -169,34 +169,28 @@ const CreateClass = () => {
             onChange={(e) => handleInputChange("classSubject", e.target.value)}
           />
 
-          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[0.5rem] text-header3 font-header2">
+          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[0.5rem]  text-header4 font-header4">
           Days of the Week
           </h3>
-          <div className="flex justify-center space-x-[1.5rem] py-[1rem] font-poppins text-md">
+          <div className="flex justify-center space-x-[0.1rem] py-[1rem] font-poppins text-md">
           Sun <Checkbox label="Sunday" />
 
-          <label for="Monday">Mon
-          <input type="checkbox" id="Monday"></input></label>
+          Mon <Checkbox label="Monday" />
           
-          <label for="Tuesday">Tue
-          <input type="checkbox" id="Tuesday"></input></label>
+          Tues <Checkbox label="Tuesday" />
           
-          <label for="Wednesday">Wed
-          <input type="checkbox" id="Wedneday"></input></label>
+          Wed <Checkbox label="Wednesday" />
           
-          <label for="Thursday">Thurs
-          <input type="checkbox" id="Thursday"></input></label>
+          Thurs <Checkbox label="Thursday" />
           
-          <label for="Friday">Fri
-          <input type="checkbox" id="Friday"></input></label>
+          Fri <Checkbox label="Friday" />
           
-          <label for="Saturday">Sat
-          <input type="checkbox" id="Saturday"></input></label>
+          Sat <Checkbox label="Saturday" />
           
           </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">
-              <h3 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header3 font-header2">
+              <h3 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header4 font-header4">
                 Location
               </h3>
               <FormField
@@ -209,7 +203,7 @@ const CreateClass = () => {
             <div>
               <div className="flex gap-[8rem]">
                 <div className="w-[50%]">
-                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header3 font-header2">
+                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header4 font-header4">
                     Check-in:
                   </h3>
                   <FormField
@@ -221,7 +215,7 @@ const CreateClass = () => {
                   />
                 </div>
                 <div className="w-[50%]">
-                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header3 font-header2">
+                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header4 font-header4">
                     Check-out:
                   </h3>
                   <FormField
@@ -237,7 +231,7 @@ const CreateClass = () => {
           </div>
           <div className="flex justify-center bg-sandwich rounded-[1rem]">
             
-            <h2 className="text-header2 font-header2">
+            <h2 className="text-md font-body">
               <a href="/edit-seating-chart/:teacherId/:classroomId">
                 <u>Edit Seating Chart</u>
               </a>

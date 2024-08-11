@@ -14,7 +14,7 @@ import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
 import Button from "../../components/Button";
 import Checkbox from "../../components/Checkbox";
-
+import Divider from "../../images/divider.png";
 
 
 const CreateClass = () => {
@@ -154,13 +154,13 @@ const CreateClass = () => {
           <div className="absolute left-[28%]">
             <GoBack />
           </div>
-          <span className="text-header2 w-full relative left-[31%] font-semibold font-header2">
+          <span className="text-header2 font-semibold font-header2 w-[40%]">
             Add New Classroom
           </span>
         </div>
 
-        <div className="bg-sandwich max-w-[45%] min-w-[25rem]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
-          <h3 className="mb-[0.5rem] ml-[0.5rem] font-black text-header4 font-header4">
+        <div className="bg-sandwich max-w-[40%] min-w-[25rem]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
+          <h3 className="mb-[0.5rem] ml-[0.5rem] font-poppins font-bold text-sm">
             Title or Subject
           </h3>
           <FormField
@@ -169,7 +169,7 @@ const CreateClass = () => {
             onChange={(e) => handleInputChange("classSubject", e.target.value)}
           />
 
-          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[0.5rem]  text-header4 font-header4">
+          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem]  font-poppins font-bold text-sm">
           Days of the Week
           </h3>
           <div className="flex justify-center space-x-[0.1rem] py-[1rem] font-poppins text-md">
@@ -190,7 +190,7 @@ const CreateClass = () => {
           </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">
-              <h3 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] text-header4 font-header4">
+              <h3 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] font-poppins font-bold text-sm">
                 Location
               </h3>
               <FormField
@@ -203,7 +203,7 @@ const CreateClass = () => {
             <div>
               <div className="flex gap-[8rem]">
                 <div className="w-[50%]">
-                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header4 font-header4">
+                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[1rem] font-poppins font-bold text-sm">
                     Check-in:
                   </h3>
                   <FormField
@@ -215,7 +215,7 @@ const CreateClass = () => {
                   />
                 </div>
                 <div className="w-[50%]">
-                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[0.5rem] text-header4 font-header4">
+                  <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[1rem] font-poppins font-bold text-sm">
                     Check-out:
                   </h3>
                   <FormField
@@ -229,34 +229,43 @@ const CreateClass = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center bg-sandwich rounded-[1rem]">
+          <div className="flex justify-center bg-sandwich rounded-[1rem] mt-[1rem]">
             
-            <h2 className="text-md font-body">
+            <h2 className="text-sm font-body">
               <a href="/edit-seating-chart/:teacherId/:classroomId">
                 <u>Edit Seating Chart</u>
               </a>
             </h2>
           </div>
         </div>
+      
+        <div className="flex justify-center pt-[1.5rem]">
+        <div className="w-[40%]"><span className="text-md font-bold font-poppins">Class size</span> 
+        <span className="text-md font-poppins">&nbsp;&nbsp;&nbsp;0 student(s)</span></div>
+        </div>
+        <div className="flex justify-center">
+        <div className="w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem] italic">Students will appear here when added</div>
+        </div>
+        
+        <div className="flex justify-center">
+        <img src={Divider} alt="Divider" className="w-[40%]"/>
+        </div>
 
-        <div className="w-[80%] ml-auto mr-auto p-[2rem] rounded-[1rem] h-[60%] overflow-y-auto ">
-          <h2 className="text-header2 font-header2 text-center">
-            <a href="/addstudent/:teacherId/:classroomId">
-              <u>+ Add student</u>
-            </a>
+          <div className="flex justify-center pt-[2rem]">
+            <div className="flex flex-col w-[40%] gap-5 text-center">
+            <h2 className="text-header3 font-poppins font-bold text-sm text-left">
+              Add Students to Classroom
           </h2>
-          <div className="flex justify-center pt-[3rem]">
-            <div className="flex flex-col w-[80%] gap-5 text-center">
               <input
                 type="text"
-                placeholder="Search students..."
+                placeholder="Type to search for student"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="mb-4 p-[1rem] rounded-lg bg-notebookPaper rounded-3xl border-[0.5rem] border-sandwich font-karla text-lg"
+                className="mb-4 p-[0.4rem] pl-[0.8rem] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm"
               />
               {filteredStudents.length > 0 && (
                 <div className="text-center">
-                  <ul className="columns-2">
+                  <ul className="columns-3">
                     {filteredStudents.map((student) => (
                       <li key={student._id}>
                         <div
@@ -300,7 +309,6 @@ const CreateClass = () => {
                 </div>
               )}
             </div>
-          </div>
         </div>
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
         <div onClick={handleCreateClassroom}>

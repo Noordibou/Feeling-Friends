@@ -15,6 +15,8 @@ import { getBackgroundColorClass } from "../../utils/classroomColors";
 import Button from "../../components/Button";
 import Checkbox from "../../components/Checkbox";
 import Divider from "../../images/divider.png";
+import Arrow from "../../images/dropdownarrow.svg";
+import Sort from "../../images/sortaz.svg";
 
 
 const CreateClass = () => {
@@ -261,8 +263,15 @@ const CreateClass = () => {
                 placeholder="Type to search for student"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="mb-4 p-[0.4rem] pl-[0.8rem] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm"
+                className="p-[0.4rem] pl-[0.8rem] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm"
               />
+              <div>
+                <div className="flex justify-between items-center">
+                <div className="flex justify-center items-center gap-2 p-[0.2rem] w-[40%] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">
+                  Sort by Last Name <img src={Sort} /></div>
+                <div className="flex justify-center items-center gap-2 p-[0.6rem] w-[40%] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">Grade Level: 5th<img src={Arrow} /></div>
+                </div>
+              </div>
               {filteredStudents.length > 0 && (
                 <div className="text-center">
                   <ul className="columns-3">
@@ -310,6 +319,8 @@ const CreateClass = () => {
               )}
             </div>
         </div>
+
+
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
         <div onClick={handleCreateClassroom}>
         <Button />

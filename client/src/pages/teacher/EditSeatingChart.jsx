@@ -20,7 +20,7 @@ import FurnitureImg from "../../images/Desk.png";
 import openRosterImg from "../../images/ThreePplLight.png";
 import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
-import ButtonView from "../../components/ButtonView";
+import SeatingChartButton from "../../components/TeacherView/SeatingChartButton";
 import BtnRainbow from "../../components/BtnRainbow";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
@@ -236,10 +236,10 @@ const EditSeatingChart = () => {
         <div className="flex flex-col w-full h-full items-center max-w-3xl">
           {/* top half of page */}
         <div className="flex flex-col h-[28vh] md:h-auto w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
-          <div className="w-2/3">
+          <div className="flex">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
-              fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
+              fontsize="text-[25px] xl:text-[24px]"
             />
             </div>
             <div className="flex flex-col mx-8 md:flex-row justify-center md:items-center">
@@ -256,7 +256,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Room View & List Buttons */}
             <div className="flex md:hidden justify-around md:justify-between gap-2 md:gap-4 items-center mt-5 bg-notebookPaper">
-                <ButtonView
+                <SeatingChartButton
                   buttonText="Student Roster"
                   defaultBtnImage={RosterImg}
                   btnImageWhenOpen={openRosterImg}
@@ -267,7 +267,7 @@ const EditSeatingChart = () => {
                   isSelected={showStudentRosterModal}
                   buttonSize="small"
                 />
-                  <ButtonView
+                  <SeatingChartButton
                     buttonText="Classroom Objects"
                     defaultBtnImage={FurnitureImg}
                     btnImageWhenOpen={openFurnitureImg}
@@ -364,7 +364,7 @@ const EditSeatingChart = () => {
           <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-center md:mt-10">
             {/* Open Choose Students Modal */}
             <div className="hidden md:flex flex-col md:flex-row gap-4 items-center justify-center">
-            <ButtonView
+            <SeatingChartButton
               buttonText="Student Roster"
               defaultBtnImage={RosterImg}
               btnImageWhenOpen={openRosterImg}
@@ -378,7 +378,7 @@ const EditSeatingChart = () => {
 
             {/* Open Choose Furniture Modal */}
 
-            <ButtonView
+            <SeatingChartButton
               buttonText="Classroom Objects"
               defaultBtnImage={FurnitureImg}
               btnImageWhenOpen={openFurnitureImg}

@@ -1,10 +1,6 @@
 import React from "react";
 
-// This component is for the buttons that are sandwich/notepaper color
-// // mainly the two buttons in manage class list and classroom, 
-// // as well as in the edit seating chart for student roster and classroom furniture
-
-const ButtonView = ({
+const SeatingChartButton = ({
   buttonText,
   defaultBtnImage,
   handleClick,
@@ -25,7 +21,7 @@ const ButtonView = ({
           <h4 className="pl-2 md:pl-0 md:pt-2">{buttonText}</h4>
           <div className="h-6 flex items-center">
           <img
-          className="w-10 pl-2 xs:w-6"
+          className="w-10 pl-2"
             src={!isSelected ? defaultBtnImage : btnImageWhenOpen}
             alt={buttonText}
           />
@@ -36,4 +32,4 @@ const ButtonView = ({
   );
 };
 
-export default ButtonView;
+export default SeatingChartButton;

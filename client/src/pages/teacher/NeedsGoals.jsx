@@ -116,16 +116,18 @@ const NeedsGoals = () => {
 
   return (
     <>
-      <div className="flex justify-center lg:justify-end underline lg:mt-8 mt-10 px-5">
+      <div className="hidden md:flex justify-center lg:justify-end underline lg:mt-8 mt-10 px-5">
         <Logout location="teacherLogout" userData={userData} />
       </div>
       <div className="flex min-h-screen justify-center pb-[250px]">
         <div className="flex max-w-[900px] flex-col">
           <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 lg:mt-0 mt-8 mx-4 md:ml-5">
+          <div className="flex md:justify-center">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
-              fontsize="text-[30px] md:text-[30px] xl:text-[24px]"
+              fontsize="text-[25px] xl:text-[24px]"
             />
+            </div>
             <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
               <div
                 className="flex items-center w-full justify-between md:hidden"
@@ -192,7 +194,9 @@ const NeedsGoals = () => {
             {goalAnswers.map((answer, index) => (
               <div
                 key={index}
-                className={`flex ${editGoalMode[index] ? "bg-white" : "bg-sandwich" } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                className={`flex ${
+                  editGoalMode[index] ? "bg-white" : "bg-sandwich"
+                } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 {editGoalMode[index] ? (
                   <textarea
@@ -213,13 +217,17 @@ const NeedsGoals = () => {
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
                   <button onClick={() => toggleEditGoalMode(index)}>
-                    <img
-                      className={` h-5 md:h-7 px-3 ${
-                        editGoalMode[index] ? "" : "opacity-50"
-                      }`}
-                      src={editIcon}
-                      alt="edit"
-                    />
+                    {editGoalMode[index] ? (
+                      <span class="material-symbols-outlined text-[36px] flex px-3 py-[15px]">
+                        check
+                      </span>
+                    ) : (
+                      <img
+                        className={` h-5 md:h-7 px-3`}
+                        src={editIcon}
+                        alt="edit"
+                      />
+                    )}
                   </button>
 
                   {/* delete "x" button */}
@@ -314,7 +322,9 @@ const NeedsGoals = () => {
             {needAnswers.map((answer, index) => (
               <div
                 key={index}
-                className={`flex ${editNeedsMode[index] ? "bg-white" : "bg-sandwich" } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                className={`flex ${
+                  editNeedsMode[index] ? "bg-white" : "bg-sandwich"
+                } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 {editNeedsMode[index] ? (
                   <textarea
@@ -336,15 +346,18 @@ const NeedsGoals = () => {
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
                   <button onClick={() => toggleEditNeedsMode(index)}>
-                    <img
-                      className={` h-5 md:h-7 px-3 ${
-                        editNeedsMode[index] ? "" : "opacity-50"
-                      }`}
-                      src={editIcon}
-                      alt="edit"
-                    />
+                    {editNeedsMode[index] ? (
+                      <span class="material-symbols-outlined text-[36px] flex px-3 py-[18px]">
+                        check
+                      </span>
+                    ) : (
+                      <img
+                        className={` h-5 md:h-7 px-3`}
+                        src={editIcon}
+                        alt="edit"
+                      />
+                    )}
                   </button>
-
                   {/* delete "x" button */}
                   <button onClick={() => removeNeedsAnswer(index)}>
                     <svg

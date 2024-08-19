@@ -74,7 +74,7 @@ const EditTeacher = () => {
   return (
     <>
       <div className="flex flex-col h-screen w-screen ">
-        <div className="flex justify-center lg:justify-end underline mt-10 px-5">
+        <div className="hidden md:flex justify-center lg:justify-end underline mt-10 px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <div className="flex flex-col items-center pt-8">
@@ -256,10 +256,6 @@ const EditTeacher = () => {
               <SmallSaveButton />
             </div>
           </div>
-
-          {/* <div className='flex flex-row mt-3 underline gap-1'>
-                    <Logout location='settings' userData={userData} />
-                </div> */}
           <div className="flex justify-center">
             <MsgModal msgText="Save Successful!" showMsg={showMsg} />
           </div>

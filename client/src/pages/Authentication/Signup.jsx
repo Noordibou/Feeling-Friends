@@ -262,9 +262,12 @@ const Signup = () => {
             </div>
 
             <div className="flex flex-col w-full text-center justify-around">
-              <div className="mt-[1rem] w-full flex justify-center">
+              <button
+                className="mt-[1rem] w-full flex justify-center"
+                type="submit"
+              >
                 <Button buttonText="Create Account" />
-              </div>
+              </button>
               <span className="text-md pt-10 font-body text-lightGray">
                 Already registered?{" "}
                 <Link className="underline" to={"/login"}>

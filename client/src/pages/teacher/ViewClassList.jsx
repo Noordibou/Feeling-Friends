@@ -8,6 +8,8 @@ import {
   getTeacherById,
 } from "../../api/teachersApi";
 import "./scrollbar.css";
+import Button from "../../components/Button.jsx";
+import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 import ToggleButton from "../../components/ToggleButton.jsx";
 import sortByCriteria from "../../utils/sortStudents.js";
 import ClassDetails from "../../components/ClassDetails.jsx";
@@ -16,6 +18,7 @@ import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
 import ButtonView from "../../components/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
+import MsgModal from "../../components/SeatingChart/MsgModal.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import Logout from "../../components/LogoutButton.jsx";
@@ -26,6 +29,7 @@ const ViewClassList = () => {
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
   const [userInfo, setUserInfo] = useState({
     classSubject: '',
     location: '',
@@ -97,7 +101,12 @@ const ViewClassList = () => {
     await updateUser(updatedUserInfo);
 
     console.log("User updated:", JSON.stringify(updatedUserInfo));
-    setIsEditMode(!isEditMode)
+    setIsEditMode(false);
+    // Show brief save message for 3 secs
+    setShowMsg(true);
+    setTimeout(() => {
+      setShowMsg(false);
+    }, 2500);
   };
 
   const handleChange = (e) => {
@@ -114,8 +123,8 @@ const ViewClassList = () => {
     <>
       <div className="flex flex-col min-h-screen md:h-screen min-w-screen mb-44 md:mb-0 lg:pb-0">
         <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
-        <Logout location="teacherLogout" userData={userData} />
-      </div>
+          <Logout location="teacherLogout" userData={userData} />
+        </div>
         <div className="flex flex-col h-full items-center w-full lg:z-40 mt-4">
           {classroom ? (
             <>
@@ -202,7 +211,7 @@ const ViewClassList = () => {
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
                     <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
-                    <div
+                      <div
                         className="flex items-center w-full justify-between md:hidden"
                         onClick={() => setIsOpen(!isOpen)}
                       >
@@ -285,22 +294,6 @@ const ViewClassList = () => {
                       >
                         Add new student
                       </Link>
-                      {/* Buttons for Home and save/edit */}
-                      <div className="flex flex-col w-[90%] mt-[1rem]">
-                        <div className="flex justify-center text-body font-body pb-2">
-                          <div>
-                            {/* <button onClick={() => setIsEditMode(!isEditMode)}> */}
-                            <button
-                              className={`${
-                                isEditMode ? "flex" : "hidden"
-                              } px-3 py-2 bg-lightCyan text-[14px] sm:text-[16px] border-lightBlue border-2 rounded-md`}
-                              onClick={saveClassroomInfo}
-                            >
-                              {isEditMode ? "Save Changes" : ""}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   ) : (
                     ""
@@ -336,6 +329,26 @@ const ViewClassList = () => {
                         </div>
                       );
                     })}
+                    {isEditMode && (
+                      <>
+                        {/* Save Button on Tablet and Phone screens centered */}
+                        <div className="lg:hidden flex justify-center">
+                          <div
+                            className="fixed bottom-36 flex"
+                            onClick={saveClassroomInfo}
+                          >
+                            <Button buttonText="Save" />
+                          </div>
+                        </div>
+
+                        {/* Small Save button for desktop/large screens to the right */}
+                        <div className="hidden lg:flex lg:fixed lg:bottom-36 lg:right-10">
+                          <div onClick={saveClassroomInfo}>
+                            <SmallSaveButton />
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <p>No students found.</p>
@@ -346,18 +359,22 @@ const ViewClassList = () => {
             "Loading..."
           )}
         </div>
-        {/* <div className="fixed bottom-0 w-screen">
-        <TeacherNavbar setIsEditMode={setIsEditMode} />
-        </div> */}
-
+      </div>
+            {/* Tells user they have saved the layout */}
+            <div className="flex justify-center">
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
       </div>
       <div className="bottom-0 z-40 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav
-            setIsEditMode={setIsEditMode}
-            teacherId={teacherId}
-            classroomId={classroomId}
-          />
-        </div>
+        <Nav
+          setIsEditMode={setIsEditMode}
+          teacherId={teacherId}
+          classroomId={classroomId}
+        />
+      </div>
     </>
   );
 }

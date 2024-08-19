@@ -74,7 +74,7 @@ const EditTeacher = () => {
   return (
     <>
       <div className="flex flex-col h-screen w-screen ">
-        <div className="hidden md:flex justify-center lg:justify-end underline mt-10 px-5">
+        <div className="flex justify-center lg:justify-end underline mt-10 px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <div className="flex flex-col items-center pt-8">

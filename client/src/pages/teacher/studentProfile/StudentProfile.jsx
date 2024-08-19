@@ -512,7 +512,7 @@ const StudentProfile = () => {
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
             <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
-              <h1 className="text-black text-4xl font-bold font-header1">
+              <h1 className="text-black text-sm sm:text-md font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
               {editModeNotices ? (

@@ -22,6 +22,7 @@ import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import SeatingChartButton from "../../components/TeacherView/SeatingChartButton";
 import BtnRainbow from "../../components/BtnRainbow";
+import CloseButton from "../../images/x-button.png"
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
@@ -314,14 +315,15 @@ const EditSeatingChart = () => {
                   selectedStudents={selectedStudents}
                   handleDragEnd={handleDragEnd}
                 />
-                <div className="self-end flex items-center justify-center mb-8 w-[752px]">
+                <div className="self-end flex items-center justify-between mb-8 md:mb-0 w-[45%]">
                   {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
-                    className="fixed bottom-8 sm:bottom-10 right-0 left-2 sm:left-10 px-2 w-[30%] md:flex md:relative items-center py-3 md:py-4 md:w-[550px] flex-col rounded-2xl border-4 border-darkSandwich bg-notebookPaper"
+                    className="fixed bottom-8 sm:bottom-10 right-0 left-2 xs:left-10 md:left-52 px-2 md:relative justify-between items-center py-3 md:py-4 w-[30%] flex flex-row md:w-[550px] md:bg-notebookPaper"
                     onClick={handleRemoveObject}
                   >
-                    <h2 className="md:flex items-center h-full font-semibold text-[15px] md:text-[24px] font-[Poppins]">
+                    <img src={CloseButton} alt="remove from class" />
+                    <h2 className="flex flex-wrap items-center h-full font-semibold text-[15px] md:text-[24px] font-[Poppins]">
                       Remove from Class
                     </h2>
                   </button>
@@ -392,7 +394,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="fixed w-[58%] bottom-10 left-[37%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
+            <div className="fixed w-[40%] bottom-10 left-[50%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
               <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BtnRainbow from "../../components/BtnRainbow";
+import Button from "../../components/Button";
 import { useAuth } from "./AuthContext";
 import FriendsWaving from "../../images/friendswaving.svg";
 import AboutFF from "../../images/aboutFF.svg";
@@ -262,8 +262,8 @@ const Signup = () => {
             </div>
 
             <div className="flex flex-col w-full text-center justify-around">
-              <div className="mt-[0.5rem] w-full">
-                <BtnRainbow textColor="text-white" btnText="Create Account" />
+              <div className="mt-[1rem] w-full flex justify-center">
+                <Button buttonText="Create Account" />
               </div>
               <span className="text-md pt-10 font-body text-lightGray">
                 Already registered?{" "}

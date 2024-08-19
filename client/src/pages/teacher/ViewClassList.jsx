@@ -112,7 +112,7 @@ const ViewClassList = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen md:h-screen min-w-screen mb-44 lg:pb-0">
+      <div className="flex flex-col min-h-screen md:h-screen min-w-screen mb-44 md:mb-0 lg:pb-0">
         {/* <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
         <Logout location="teacherLogout" userData={userData} />
       </div> */}
@@ -193,7 +193,7 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 xl:gap-8">
+                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 md:mb-0 xl:gap-8">
                   <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}

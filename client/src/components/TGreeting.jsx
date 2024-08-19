@@ -10,8 +10,8 @@ import Logout from "../components/LogoutButton.jsx";
 const Greeting = ({ isEditMode, userData }) => {
   if (isEditMode) {
     return (
-      <div className="ml-8">
-        <div className="flex items-start justify-end underline mt-4 lg:mt-0 lg:mb-12 mr-4 ">
+      <div className="lg:mt-16 mt-20 md:mt-0 ml-8">
+        <div className="hidden md:flex items-start justify-end underline mt-4 lg:mt-0 lg:mb-12 mr-4 ">
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <h1 className="text-header4 font-header4 text-start  mx-6">
@@ -41,8 +41,8 @@ const Greeting = ({ isEditMode, userData }) => {
 
   return (
     
-      <div className="font-body text-start lg:mt-16">
-        <div className="flex items-start justify-end underline lg:-mt-16 lg:mb-20 mr-4 md:pt-8 ">
+      <div className="font-body text-start lg:mt-16 mt-20 md:mt-0">
+        <div className="hidden md:flex items-start justify-end underline lg:-mt-16 lg:mb-20 mr-4 md:pt-8 ">
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <div className="ml-10 mt-4">

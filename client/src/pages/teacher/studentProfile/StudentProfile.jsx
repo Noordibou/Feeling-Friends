@@ -246,7 +246,7 @@ const StudentProfile = () => {
     <>
       {/* Page conatainer including bottom nav */}
       <div className="flex flex-col  bg-notebookPaper min-h-screen">
-      <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
+      <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
         <Logout location="teacherLogout" userData={userData} />
       </div>
         {/* Page container (no nav) */}

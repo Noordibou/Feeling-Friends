@@ -113,9 +113,9 @@ const ViewClassList = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen md:h-screen min-w-screen mb-44 md:mb-0 lg:pb-0">
-        {/* <div className="flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
+        <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
         <Logout location="teacherLogout" userData={userData} />
-      </div> */}
+      </div>
         <div className="flex flex-col h-full items-center w-full lg:z-40 mt-4">
           {classroom ? (
             <>

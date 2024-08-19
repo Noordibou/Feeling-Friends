@@ -192,7 +192,9 @@ const NeedsGoals = () => {
             {goalAnswers.map((answer, index) => (
               <div
                 key={index}
-                className={`flex ${editGoalMode[index] ? "bg-white" : "bg-sandwich" } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                className={`flex ${
+                  editGoalMode[index] ? "bg-white" : "bg-sandwich"
+                } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 {editGoalMode[index] ? (
                   <textarea
@@ -213,13 +215,17 @@ const NeedsGoals = () => {
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
                   <button onClick={() => toggleEditGoalMode(index)}>
-                    <img
-                      className={` h-5 md:h-7 px-3 ${
-                        editGoalMode[index] ? "" : "opacity-50"
-                      }`}
-                      src={editIcon}
-                      alt="edit"
-                    />
+                    {editGoalMode[index] ? (
+                      <span class="material-symbols-outlined text-[36px] flex px-3 py-[15px]">
+                        check
+                      </span>
+                    ) : (
+                      <img
+                        className={` h-5 md:h-7 px-3`}
+                        src={editIcon}
+                        alt="edit"
+                      />
+                    )}
                   </button>
 
                   {/* delete "x" button */}
@@ -314,7 +320,9 @@ const NeedsGoals = () => {
             {needAnswers.map((answer, index) => (
               <div
                 key={index}
-                className={`flex ${editNeedsMode[index] ? "bg-white" : "bg-sandwich" } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                className={`flex ${
+                  editNeedsMode[index] ? "bg-white" : "bg-sandwich"
+                } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
               >
                 {editNeedsMode[index] ? (
                   <textarea
@@ -336,15 +344,18 @@ const NeedsGoals = () => {
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
                   <button onClick={() => toggleEditNeedsMode(index)}>
-                    <img
-                      className={` h-5 md:h-7 px-3 ${
-                        editNeedsMode[index] ? "" : "opacity-50"
-                      }`}
-                      src={editIcon}
-                      alt="edit"
-                    />
+                    {editNeedsMode[index] ? (
+                      <span class="material-symbols-outlined text-[36px] flex px-3 py-[18px]">
+                        check
+                      </span>
+                    ) : (
+                      <img
+                        className={` h-5 md:h-7 px-3`}
+                        src={editIcon}
+                        alt="edit"
+                      />
+                    )}
                   </button>
-
                   {/* delete "x" button */}
                   <button onClick={() => removeNeedsAnswer(index)}>
                     <svg

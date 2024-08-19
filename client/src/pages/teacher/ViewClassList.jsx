@@ -31,12 +31,12 @@ const ViewClassList = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [showMsg, setShowMsg] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    classSubject: '',
-    location: '',
-    checkIn: '',
-    checkOut: '',
+    classSubject: "",
+    location: "",
+    checkIn: "",
+    checkOut: "",
   });
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,13 +48,13 @@ const ViewClassList = () => {
           classroomId
         );
         setStudents(classroomStudents);
-        setUserInfo(userData)
+        setUserInfo(userData);
       } catch (error) {
         console.log(error);
       }
     };
 
-    console.log("classroom: " + JSON.stringify(classroom))
+    console.log("classroom: " + JSON.stringify(classroom));
 
     window.scrollTo(0, 0);
     fetchData();
@@ -360,8 +360,8 @@ const ViewClassList = () => {
           )}
         </div>
       </div>
-            {/* Tells user they have saved the layout */}
-            <div className="flex justify-center">
+      {/* Tells user they have saved the layout */}
+      <div className="flex justify-center">
         <MsgModal
           msgText="Save Successful!"
           showMsg={showMsg}
@@ -377,6 +377,6 @@ const ViewClassList = () => {
       </div>
     </>
   );
-}
+};
 
-export default withAuth(['teacher'])(ViewClassList)
+export default withAuth(["teacher"])(ViewClassList);

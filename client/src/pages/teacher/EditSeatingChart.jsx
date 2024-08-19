@@ -236,10 +236,10 @@ const EditSeatingChart = () => {
         <div className="flex flex-col w-full h-full items-center max-w-3xl">
           {/* top half of page */}
         <div className="flex flex-col h-[28vh] md:h-auto w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
-          <div className="w-2/3">
+          <div className="flex">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}
-              fontsize="text-[22px] md:text-[30px] xl:text-[24px]"
+              fontsize="text-[25px] xl:text-[24px]"
             />
             </div>
             <div className="flex flex-col mx-8 md:flex-row justify-center md:items-center">

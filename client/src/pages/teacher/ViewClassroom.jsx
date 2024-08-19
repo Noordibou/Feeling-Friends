@@ -107,7 +107,7 @@ const ViewClassroom = () => {
                 <div className="flex md:justify-center">
                   <SimpleTopNav
                     pageTitle={classroom?.classSubject}
-                    fontsize="text-[22px] md:text-[18px] xl:text-[24px]"
+                    fontsize="text-[25px] xl:text-[24px]"
                   />
                 </div>
                 

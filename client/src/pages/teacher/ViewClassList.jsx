@@ -193,11 +193,11 @@ const ViewClassList = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 md:mb-0 xl:gap-8">
+                <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 md:mb-0 xl:gap-8 ">
                   <div className="flex md:justify-center">
                     <SimpleTopNav
                       pageTitle={classroom?.classSubject}
-                      fontsize="text-[20px] md:text-[18px] xl:text-[24px]"
+                      fontsize="text-[25px] xl:text-[24px]"
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">

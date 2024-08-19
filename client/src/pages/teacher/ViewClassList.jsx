@@ -201,8 +201,49 @@ const ViewClassList = () => {
                     />
                   </div>
                   <div className="flex flex-col-reverse md:flex-row xl:gap-8">
-                    <div className="hidden md:flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
-                      <div className={`flex overflow-hidden max-h-full`}>
+                    <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
+                    <div
+                        className="flex items-center w-full justify-between md:hidden"
+                        onClick={() => setIsOpen(!isOpen)}
+                      >
+                        <h2 className="md:hidden my-5 md:my-0 font-semibold text-[15px] font-[Poppins]">
+                          Details
+                        </h2>
+                        <svg
+                          className={`transition-transform duration-500 md:hidden ${
+                            isOpen ? "" : "rotate-180"
+                          }`}
+                          width="70"
+                          height="70"
+                          viewBox="0 -25 100 100"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <line
+                            x1="50"
+                            y1="10"
+                            x2="35"
+                            y2="30"
+                            stroke="#8D8772"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+
+                          <line
+                            x1="50"
+                            y1="10"
+                            x2="65"
+                            y2="30"
+                            stroke="#8D8772"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        className={`transition-all duration-700 ease-in-out md:flex overflow-hidden ${
+                          isOpen ? "max-h-[500px]" : "max-h-0"
+                        } md:max-h-full md:h-auto`}
+                      >
                         <ClassDetails
                           teacherId={teacherId}
                           classroomId={classroomId}
@@ -269,7 +310,7 @@ const ViewClassList = () => {
 
               {/* Scrollable list of students */}
               <div
-                className={`px-4 md:px-0 md:mb-0 flex w-full md:justify-center md:overflow-y-auto md:custom-scrollbar ${
+                className={`px-4 md:px-0 md:mb-0 flex w-full justify-center md:overflow-y-auto md:custom-scrollbar ${
                   isEditMode ? "h-full md:h-[35%]" : "h-full sm:h-[55%]"
                 } pt-3 `}
                 key="list-of-students-1"

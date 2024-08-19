@@ -21,7 +21,7 @@ const SeatingChartButton = ({
           <h4 className="pl-2 md:pl-0 md:pt-2">{buttonText}</h4>
           <div className="h-6 flex items-center">
           <img
-          className="w-10 pl-2 xs:w-6"
+          className="w-10 pl-2"
             src={!isSelected ? defaultBtnImage : btnImageWhenOpen}
             alt={buttonText}
           />

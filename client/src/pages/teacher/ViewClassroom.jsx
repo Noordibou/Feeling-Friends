@@ -11,7 +11,7 @@ import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassDetails from "../../components/ClassDetails";
-import ButtonView from "../../components/ButtonView";
+import ButtonView from "../../components/TeacherView/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
@@ -101,7 +101,7 @@ const ViewClassroom = () => {
       <div className="flex flex-col md:flex-row h-screen w-screen md:justify-center">
         <div className="flex flex-col items-center max-w-4xl lg:z-40">
           {/* Top Navbar */}
-          <div className="flex flex-col h-[35vh] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 xl:gap-8 z-20">
+          <div className="flex flex-col h-[40vh] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 xl:gap-8 z-20">
             <div className="flex justify-center w-full flex-col md:flex-row">
               <div className="flex">
                 <div className="flex md:justify-center">
@@ -122,10 +122,10 @@ const ViewClassroom = () => {
                     </div>
                 </div>
               </div>
-              {/* Room View & List Buttons */}
+              {/* Seating Chart & Class List Buttons */}
               <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
                 <ButtonView
-                  buttonText="Room View"
+                  buttonText="Seating Chart"
                   btnImageWhenOpen={classBoxesIcon}
                   isSelected={true}
                   buttonSize="small"
@@ -135,7 +135,7 @@ const ViewClassroom = () => {
                   to={`/viewclasslist/${userData._id}/${classroomId}`}
                 >
                   <ButtonView
-                    buttonText="List View"
+                    buttonText="Class List"
                     defaultBtnImage={listIcon}
                     isSelected={false}
                     buttonSize="small"
@@ -165,7 +165,7 @@ const ViewClassroom = () => {
           {classroom ? (
             <>
               {/* static classroom */}
-              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[65vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+              <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[60vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                 {/* Classroom Container */}
                 {/* movable classroom */}
                 <div

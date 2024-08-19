@@ -16,7 +16,7 @@ import ClassDetails from "../../components/ClassDetails.jsx";
 import classBoxesIcon from "../../images/ClassBoxesIconDark.png";
 import listIcon from "../../images/ListIconLight.png";
 import StudentInfoBox from "../../components/StudentInfoBox.jsx";
-import ButtonView from "../../components/ButtonView.jsx";
+import ButtonView from "../../components/TeacherView/ButtonView.jsx";
 import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import MsgModal from "../../components/SeatingChart/MsgModal.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
@@ -266,14 +266,14 @@ const ViewClassList = () => {
                         to={`/classroom/${userData._id}/${classroomId}`}
                       >
                         <ButtonView
-                          buttonText="Room View"
+                          buttonText="Seating Chart"
                           defaultBtnImage={classBoxesIcon}
                           isSelected={false}
                           buttonSize="small"
                         />
                       </Link>
                       <ButtonView
-                        buttonText="List View"
+                        buttonText="Class List"
                         btnImageWhenOpen={listIcon}
                         isSelected={true}
                         buttonSize="small"

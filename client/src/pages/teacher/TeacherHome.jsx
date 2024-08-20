@@ -67,7 +67,7 @@ const TeacherHome = () => {
   return (
     <>
       <div className="flex flex-col justify-center">
-        <div className="h-screen lg:ml-28 lg:z-40">
+        <div className="h-screen lg:ml-28">
           <div className=" mb-3">
             <Greeting isEditMode={isEditMode} userData={userData} />
           </div>

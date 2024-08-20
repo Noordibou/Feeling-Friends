@@ -5,6 +5,8 @@ import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
 import NavButton from "../../images/NavButton.png";
 import NavLogo from "../../images/NavLogo.png";
+import { useNavigate } from "react-router-dom";
+
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color:"sky" },
@@ -15,7 +17,7 @@ const navs = [
 
 export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classroomId}) {
   const [isEditMode, setEditMode] = useState(false);
-
+  const navigate = useNavigate()
   const redirectTo = (url) => {
     window.location.href = url;
   };
@@ -48,7 +50,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
 
   return (
     <>
-    <div className="hidden lg:inline-flex mt-4 ml-2 ">
+    <div className="hidden lg:inline-flex mt-4 ml-2">
     <button
           type="button"
           className="items-center m-3 mt-4"
@@ -56,10 +58,12 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
         >
           <img src={NavButton} alt="Exterior" width={52} height={48}/>
         </button>
-        <img src={NavLogo} alt="Exterior" width={56} height={12} className="w-24 h-12 mt-4 "/>
+        <button aria-label="Go to teacher home" onClick={() => navigate("/teacher-home")}>
+          <img src={NavLogo} alt="Exterior" width={56} height={12} className="w-24 h-12 mt-4" />
+        </button>
 
     </div>
-    <div className="flex w-full lg:hidden ">
+    <div className="flex w-full lg:hidden">
       {navs.map((item, index) => (
         <div
           key={index}

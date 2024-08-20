@@ -174,20 +174,20 @@ const CreateClass = () => {
           <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem]  font-poppins font-bold text-sm">
           Days of the Week
           </h3>
-          <div className="flex justify-center space-x-[0.1rem] py-[1rem] font-poppins text-md">
-          Sun <Checkbox label="Sunday" />
+          <div className="flex justify-center py-[1rem] font-poppins text-md">
+          Sun <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Sunday" /></span>
 
-          Mon <Checkbox label="Monday" />
+          Mon <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Monday" /></span>
           
-          Tues <Checkbox label="Tuesday" />
+          Tues <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Tuesday" /></span>
           
-          Wed <Checkbox label="Wednesday" />
+          Wed <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Wednesday" /></span>
           
-          Thurs <Checkbox label="Thursday" />
+          Thurs <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Thursday" /></span>
           
-          Fri <Checkbox label="Friday" />
+          Fri <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Friday" /></span>
           
-          Sat <Checkbox label="Saturday" />
+          Sat <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Saturday" /></span>
           
           </div>
           <div className="rounded-[1rem]">
@@ -273,30 +273,12 @@ const CreateClass = () => {
                 </div>
               </div>
               {filteredStudents.length > 0 && (
-                <div className="text-center">
+                <div>
                   <ul className="columns-3">
                     {filteredStudents.map((student) => (
                       <li key={student._id}>
-                        <div
-                          onClick={() => handleAddStudent(student._id)}
-                          className={`flex cursor-pointer font-poppins text-black border-${getBackgroundColorClass(
-                            student?.journalEntries[
-                              student?.journalEntries.length - 1
-                            ]?.checkout?.ZOR ||
-                              student?.journalEntries[
-                                student?.journalEntries.length - 1
-                              ]?.checkin?.ZOR
-                          )} bg-${getBackgroundColorClass(
-                            student?.journalEntries[
-                              student?.journalEntries.length - 1
-                            ]?.checkout?.ZOR ||
-                              student?.journalEntries[
-                                student?.journalEntries.length - 1
-                              ]?.checkin?.ZOR
-                          )} mb-[0.5rem] border-[0.2rem] rounded-lg opacity-${
-                            isStudentSelected(student._id) ? "100" : "60"
-                          }`}
-                        >
+                        <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
+                        <Checkbox label="selectStudent" />
                           <div>
                             <img
                               src={
@@ -305,11 +287,12 @@ const CreateClass = () => {
                                   : student.avatarImg
                               }
                               alt={student.lastName}
-                              className="w-[3rem] h-[3rem] rounded-lg"
+                              className="w-[3rem] h-[3rem] rounded-[1rem] ml-[0.5rem]"
                             />
                           </div>
-                          <div className="m-auto">
-                            {student.firstName} {student.lastName}
+                          <div className="text-left m-auto text-xs font-poppins">
+                            <span className="font-bold">{student.firstName} {student.lastName}</span><br/>
+                            {student.gradeYear}
                           </div>
                         </div>
                       </li>
@@ -323,7 +306,7 @@ const CreateClass = () => {
 
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
         <div onClick={handleCreateClassroom}>
-        <Button />
+        <Button buttonText="Submit"/>
         </div>
         </div>
 

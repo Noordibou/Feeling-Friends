@@ -4,7 +4,7 @@ function Checkbox({ label }) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <label style={{ display: 'flex', alignItems: 'center' }}>
+    <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
       <input
         id={label}
         type="checkbox"

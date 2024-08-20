@@ -77,10 +77,8 @@ input[type="checkbox"] {
   height: 24px;
   width: 24px;
   background: none;
-  border: 3px #A59F8B solid;
+  border: 2px #A59F8B solid;
   border-radius: 0.2rem;
-  margin-right: 25px;
-  margin-left: 5px;
 }
 
 .checkbox--active {

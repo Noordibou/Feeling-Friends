@@ -100,7 +100,7 @@ const ViewClassroom = () => {
         <div className="hidden md:flex w-full justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
-        <div className="flex flex-col items-center ">
+        <div className="flex flex-col md:items-center ">
           <div className="flex flex-col max-w-4xl lg:z-40 ">
             {/* Top Navbar */}
             <div className="flex flex-col h-[40vh] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 xl:gap-8 z-20">

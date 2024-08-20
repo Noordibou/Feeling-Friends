@@ -1,13 +1,23 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Back from "../images/go-back.png";
 
 
 
 const GoBack = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+  
     const goBack = () => {
-        navigate(-1)
+        if (location.pathname.includes('/edit-seating-chart')) {
+            const parts = location.pathname.split('/');
+            const teacherId = parts[2];
+            const classroomId = parts[3];
+  
+            navigate(`/classroom/${teacherId}/${classroomId}`);
+        } else {
+            navigate('/teacher-home');
+        }
     }
 
     return (

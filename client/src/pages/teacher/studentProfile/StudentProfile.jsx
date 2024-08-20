@@ -246,22 +246,46 @@ const StudentProfile = () => {
     <>
       {/* Page conatainer including bottom nav */}
       <div className="flex flex-col  bg-notebookPaper min-h-screen">
-      <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
-        <Logout location="teacherLogout" userData={userData} />
-      </div>
+        <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
+          <Logout location="teacherLogout" userData={userData} />
+        </div>
         {/* Page container (no nav) */}
         <div className="flex flex-col items-center pb-[4rem] lg:z-40 mt-5 md:mt-10">
           {/* top student section */}
           <div className="flex">
             <div className="">
-              
-              
               <div className="flex flex-row w-full mb-5 ml-3">
                 <Link
                   className="md:text-header1 text-[33px] font-header1"
                   to={`/viewclasslist/${teacherId}/${classroomId}`}
                 >
-                  &lt;
+                  <svg
+                    className={``}
+                    width="70"
+                    height="70"
+                    viewBox="25 0 1 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="10"
+                      y1="50"
+                      x2="32"
+                      y2="35"
+                      stroke="#8D8772"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                    />
+
+                    <line
+                      x1="10"
+                      y1="50"
+                      x2="32"
+                      y2="65"
+                      stroke="#8D8772"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </Link>
                 <div className="text-center w-full">
                   {editMode ? (
@@ -320,115 +344,116 @@ const StudentProfile = () => {
                     </div>
                   ) : null}
                 </div>
-                  <div className="flex justify-center my-5 md:my-0">
-                {/* Student Info Container */}
-                <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
-                  <p>Age: {calculateAge(studentProfile?.birthday)}</p>
-                  {editMode ? (
-                    <div>
-                      <label>Grade: </label>
-                      <input
-                        type="text"
-                        name="gradeYear"
-                        value={studentProfile.gradeYear}
-                        onChange={handleInputChange}
-                        className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                      />
-                    </div>
-                  ) : (
-                    <p>
-                      Grade: <span>{studentProfile?.gradeYear}</span>
-                    </p>
-                  )}
-                  {editMode ? (
-                    <div>
-                      <label>Student ID: </label>
-                      <input
-                        type="text"
-                        name="schoolStudentId"
-                        value={studentProfile.schoolStudentId}
-                        onChange={handleInputChange}
-                        className="rounded-md bg-sandwich w-7/12 px-2 my-1"
-                      />
-                    </div>
-                  ) : (
-                    <p>
-                      Student ID: <span>{studentProfile?.schoolStudentId}</span>
-                    </p>
-                  )}
-                  {editMode ? (
-                    <div>
-                      <label>Birthday: </label>
-                      <input
-                        type="text"
-                        name="birthday"
-                        value={studentProfile.birthday}
-                        onChange={handleInputChange}
-                        className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                      />
-                    </div>
-                  ) : (
-                    <p>
-                      Birthday: <span>{studentProfile?.birthday}</span>
-                    </p>
-                  )}
-                  {editMode ? (
-                    <div>
-                      <label>IEP: </label>
-                      <select
-                        value={studentProfile.iepStatus}
-                        onChange={(e) =>
-                          setStudentProfile({
-                            ...studentProfile,
-                            iepStatus: e.target.value,
-                          })
-                        }
-                        className="rounded-md bg-sandwich px-2 my-1"
-                      >
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
-                    </div>
-                  ) : (
-                    <p>
-                      IEP: <span>{studentProfile?.iepStatus}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* Button container */}
-                <div className="flex items-center text-[14px] md:text-[15px] border-l-4 border-sandwich pl-5">
-                  {editMode ? (
-                    <div className="flex flex-col">
-                      <button
-                        className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
-                        onClick={handleSaveClick}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                        onClick={handleCancelClick}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <button
-                        className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange"
-                        onClick={handleEditClick}
-                      >
-                        Edit
-                        <img
-                          className="pl-2 h-4"
-                          src={editIcon}
-                          alt="edit icon"
+                <div className="flex justify-center my-5 md:my-0">
+                  {/* Student Info Container */}
+                  <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
+                    <p>Age: {calculateAge(studentProfile?.birthday)}</p>
+                    {editMode ? (
+                      <div>
+                        <label>Grade: </label>
+                        <input
+                          type="text"
+                          name="gradeYear"
+                          value={studentProfile.gradeYear}
+                          onChange={handleInputChange}
+                          className="rounded-md bg-sandwich w-8/12 px-2 my-1"
                         />
-                      </button>
-                    </div>
-                  )}
-                </div>
+                      </div>
+                    ) : (
+                      <p>
+                        Grade: <span>{studentProfile?.gradeYear}</span>
+                      </p>
+                    )}
+                    {editMode ? (
+                      <div>
+                        <label>Student ID: </label>
+                        <input
+                          type="text"
+                          name="schoolStudentId"
+                          value={studentProfile.schoolStudentId}
+                          onChange={handleInputChange}
+                          className="rounded-md bg-sandwich w-7/12 px-2 my-1"
+                        />
+                      </div>
+                    ) : (
+                      <p>
+                        Student ID:{" "}
+                        <span>{studentProfile?.schoolStudentId}</span>
+                      </p>
+                    )}
+                    {editMode ? (
+                      <div>
+                        <label>Birthday: </label>
+                        <input
+                          type="text"
+                          name="birthday"
+                          value={studentProfile.birthday}
+                          onChange={handleInputChange}
+                          className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                        />
+                      </div>
+                    ) : (
+                      <p>
+                        Birthday: <span>{studentProfile?.birthday}</span>
+                      </p>
+                    )}
+                    {editMode ? (
+                      <div>
+                        <label>IEP: </label>
+                        <select
+                          value={studentProfile.iepStatus}
+                          onChange={(e) =>
+                            setStudentProfile({
+                              ...studentProfile,
+                              iepStatus: e.target.value,
+                            })
+                          }
+                          className="rounded-md bg-sandwich px-2 my-1"
+                        >
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    ) : (
+                      <p>
+                        IEP: <span>{studentProfile?.iepStatus}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Button container */}
+                  <div className="flex items-center text-[14px] md:text-[15px] border-l-4 border-sandwich pl-5">
+                    {editMode ? (
+                      <div className="flex flex-col">
+                        <button
+                          className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                          onClick={handleSaveClick}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
+                          onClick={handleCancelClick}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange"
+                          onClick={handleEditClick}
+                        >
+                          Edit
+                          <img
+                            className="pl-2 h-4"
+                            src={editIcon}
+                            alt="edit icon"
+                          />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -459,7 +484,11 @@ const StudentProfile = () => {
 
                 {!isMonthView && (
                   <div
-                    className={`${openStudentInfoModal ? "flex z-20 " : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"} `}
+                    className={`${
+                      openStudentInfoModal
+                        ? "flex z-20 "
+                        : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    } `}
                   >
                     <WeekView
                       events={events}
@@ -507,8 +536,7 @@ const StudentProfile = () => {
                 </div>
               </div>
             )}
-            <div>
-            </div>
+            <div></div>
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
             <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
@@ -546,7 +574,10 @@ const StudentProfile = () => {
                 {editModeNotices
                   ? studentProfile?.contentAreaNotices.map(
                       (iepEntry, index) => (
-                        <div key={index} className="flex w-full justify-between xs:-mr-3">
+                        <div
+                          key={index}
+                          className="flex w-full justify-between xs:-mr-3"
+                        >
                           <input
                             type="text"
                             value={iepEntry.contentArea}
@@ -562,19 +593,19 @@ const StudentProfile = () => {
                           />
 
                           <div className="w-full flex justify-end ">
-                          <input
-                            type="text"
-                            value={iepEntry.benchmark}
-                            onChange={(event) =>
-                              handleIEPChange(
-                                event,
-                                index,
-                                "benchmark",
-                                "contentAreaNotices"
-                              )
-                            }
-                            className="w-[80px] rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                          />
+                            <input
+                              type="text"
+                              value={iepEntry.benchmark}
+                              onChange={(event) =>
+                                handleIEPChange(
+                                  event,
+                                  index,
+                                  "benchmark",
+                                  "contentAreaNotices"
+                                )
+                              }
+                              className="w-[80px] rounded-md bg-sandwich text-[14px] md:text-[16px]"
+                            />
                             <button
                               className="ml-1"
                               onClick={() =>
@@ -590,7 +621,7 @@ const StudentProfile = () => {
                                 className="w-4"
                               />
                             </button>
-                            </div>
+                          </div>
                         </div>
                       )
                     )
@@ -618,7 +649,9 @@ const StudentProfile = () => {
               </div>
               <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
                 <h3 className="font-header4">Learning Challenges</h3>
-                <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">Diagnosed</p>
+                <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
+                  Diagnosed
+                </p>
                 {editModeNotices
                   ? studentProfile?.learningChallenges.map(
                       (iepEntry, index) => (
@@ -637,19 +670,19 @@ const StudentProfile = () => {
                             className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
                           />
                           <div className="w-full flex justify-end ">
-                          <input
-                            type="text"
-                            defaultValue={formatDate(iepEntry.date)}
-                            onChange={(event) =>
-                              handleIEPChange(
-                                event,
-                                index,
-                                "date",
-                                "learningChallenges"
-                              )
-                            }
-                            className="w-1/2 md:w-1/4 rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                          />
+                            <input
+                              type="text"
+                              defaultValue={formatDate(iepEntry.date)}
+                              onChange={(event) =>
+                                handleIEPChange(
+                                  event,
+                                  index,
+                                  "date",
+                                  "learningChallenges"
+                                )
+                              }
+                              className="w-1/2 md:w-1/4 rounded-md bg-sandwich text-[14px] md:text-[16px]"
+                            />
 
                             <button
                               className="ml-1"
@@ -666,7 +699,7 @@ const StudentProfile = () => {
                                 className="w-4"
                               />
                             </button>
-                        </div>
+                          </div>
                         </div>
                       )
                     )
@@ -697,15 +730,22 @@ const StudentProfile = () => {
                   Accommodations & Assistive Tech
                 </h3>
                 <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
-                  <div className="col-span-1"></div> 
-                  <div className="col-span-1"></div> 
-                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">Frequency</h3>
-                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">Location</h3>
+                  <div className="col-span-1"></div>
+                  <div className="col-span-1"></div>
+                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
+                    Frequency
+                  </h3>
+                  <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
+                    Location
+                  </h3>
                 </div>
                 {editModeNotices
                   ? studentProfile?.accomodationsAndAssisstiveTech.map(
                       (iepEntry, index) => (
-                        <div key={index} className="grid grid-cols-4 gap-1 sm:gap-4 items-center">
+                        <div
+                          key={index}
+                          className="grid grid-cols-4 gap-1 sm:gap-4 items-center"
+                        >
                           {/* accomodation list */}
                           <div className="ml-5">
                             <input
@@ -760,21 +800,21 @@ const StudentProfile = () => {
                               }
                               className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
                             />
-                              <button
-                                className=""
-                                onClick={() =>
-                                  handleIEPDeleteClick(
-                                    index,
-                                    "accomodationsAndAssisstiveTech"
-                                  )
-                                }
-                              >
-                                <img
-                                  src={xButton}
-                                  alt="xButton"
-                                  className="w-4 ml-1 "
-                                />
-                              </button>
+                            <button
+                              className=""
+                              onClick={() =>
+                                handleIEPDeleteClick(
+                                  index,
+                                  "accomodationsAndAssisstiveTech"
+                                )
+                              }
+                            >
+                              <img
+                                src={xButton}
+                                alt="xButton"
+                                className="w-4 ml-1 "
+                              />
+                            </button>
                           </div>
                         </div>
                       )
@@ -809,8 +849,8 @@ const StudentProfile = () => {
             </div>
           </div>
         </div>
-    <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav  teacherId={teacherId} classroomId={classroomId}/>
+        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
       </div>
     </>

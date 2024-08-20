@@ -136,17 +136,19 @@ const Signup = () => {
   return (
     <div className="form_container flex flex-col min-w-screen min-h-screen items-center justify-center">
       {/* mobile logo */}
-      <div className="flex md:hidden w-full justify-center pt-[3rem] p-[1.5rem]">
+      <button aria-label="go to landing page" className="flex md:hidden w-full justify-center pt-[3rem] p-[1.5rem]" onClick={() => navigate("/")}>
         <img src={Logo} alt="logo" />
-      </div>
+      </button>
       {/* desktop logo */}
-      <img
-        src={NavLogo}
-        alt="Exterior"
-        width={56}
-        height={12}
-        className="hidden md:flex w-32 h-14 mt-6 self-start mx-14"
-      />
+      <button className="w-full" aria-label="go to landing page" onClick={() => navigate("/")}>
+        <img
+          src={NavLogo}
+          alt="Exterior"
+          width={56}
+          height={12}
+          className="hidden md:flex w-32 h-14 mt-6 self-start mx-14"
+        />
+      </button>
       <div className="flex flex-col w-10/12 sm:w-8/12 max-w-lg mt-10">
         {/* <h2 className="flex font-header2 text-header2 mb-4">Create Account</h2> */}
 

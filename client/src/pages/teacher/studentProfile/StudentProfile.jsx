@@ -250,7 +250,7 @@ const StudentProfile = () => {
           <Logout location="teacherLogout" userData={userData} />
         </div>
         {/* Page container (no nav) */}
-        <div className="flex flex-col items-center pb-[4rem] lg:z-40 mt-5 md:mt-10">
+        <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10">
           {/* top student section */}
           <div className="flex">
             <div className="">
@@ -523,8 +523,8 @@ const StudentProfile = () => {
               <div
                 className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
                   isMonthView
-                    ? "top-96 md:top-72 mt-20 md:mt-12 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                    : "top-96 md:top-72 mt-20 md:mt-12 h-[246px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    ? "top-96 md:top-72 mt-10 md:mt-16 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                    : "top-96 md:top-72 mt-10 md:mt-16 h-[246px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
                 }`}
               >
                 <div className={`flex h-full justify-center items-center`}>

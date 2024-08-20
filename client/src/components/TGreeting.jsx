@@ -1,13 +1,12 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { checkTimeOfDay } from '../utils/dailyGreeting.js'
 import Logout from "../components/LogoutButton.jsx";
 
-// TODO: make greeting message more dynamic based on time of day
-
-// this is the initial greeting on the teacher home page
-// changes based on whether it's in edit or display mode
-
 const Greeting = ({ isEditMode, userData }) => {
+
+  const [greeting, setGreeting] = useState(checkTimeOfDay());
+
   if (isEditMode) {
     return (
       <div className="lg:mt-16 mt-20 md:mt-0 ml-8">
@@ -47,7 +46,7 @@ const Greeting = ({ isEditMode, userData }) => {
         </div>
         <div className="ml-10 mt-4">
         <h1 className="text-header4 md:text-header1 font-header1 text-start">
-          Good morning, {userData.prefix} {userData.firstName}!
+          {greeting}, {userData.prefix} {userData.firstName}!
         </h1>
         {userData && (
           <h2 className="text-button md:text-header4 font-header3 text-start pb-2">

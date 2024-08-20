@@ -5,12 +5,14 @@ import ProgressBar from "../components/ProgressBar";
 import CurvedWords from "../components/CurvedWord";
 import subEmotionInfo from "../data/subEmotions";
 import withAuth from "../hoc/withAuth";
+import { checkTimeOfDay } from '../utils/dailyGreeting'
+
 
 const StudentHome = () => {
   const navigate = useNavigate();
 
   const { userData, setIsCheckInOrOut, isCheckinOrOut } = useUser();
-  const [greeting, setGreeting] = useState("");
+  const [greeting, setGreeting] = useState(checkTimeOfDay());
   const [checkInBtn, setCheckInBtn] = useState("bg-white");
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white");
 
@@ -46,29 +48,12 @@ const StudentHome = () => {
     }
   };
 
-  const checkTimeOfDay = () => {
-    let date = new Date();
-    let hour = date.getHours();
-
-    if (hour < 12) {
-      setGreeting("Good Morning");
-    } else if (hour >= 12 && hour < 17) {
-      setGreeting("Good afternoon");
-    } else {
-      setGreeting("Good evening");
-    }
-  };
-
   const chunkedData = [];
   const chunkSize = 3;
   for (let i = 0; i < subEmotionInfo.length; i += chunkSize) {
     chunkedData.push(subEmotionInfo.slice(i, i + chunkSize));
   }
 
-  useEffect(() => {
-    checkTimeOfDay();
-    console.log("student data:", userData);
-  }, [userData]);
 
   return (
     <>

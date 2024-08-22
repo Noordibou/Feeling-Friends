@@ -5,6 +5,13 @@ import TeacherNavbar from '../../components/Navbar/TeacherNavbar';
 import Nav from '../../components/Navbar/Nav';
 import withAuth from '../../hoc/withAuth';
 
+
+// TODO:
+// // logout button only for desktop
+// // add inputs for basic student info and way to upload photo (check out code on student profile page)
+// // add way to add IEP
+// // make certain fields required
+
 const AddStudent = () => {
     const { teacherId, classroomId } = useParams();
     const [studentId, setStudentId] = useState('');

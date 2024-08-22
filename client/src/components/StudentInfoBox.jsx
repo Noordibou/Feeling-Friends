@@ -27,7 +27,7 @@ const StudentInfoBox = ({
         {/* student image */}
         <div
           className={`flex ${
-            bgColorClass ? `w-28 md:w-32 sm:w-full bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
+            bgColorClass ? `w-28 md:w-32 bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
           }`}
         >
           <img
@@ -43,7 +43,7 @@ const StudentInfoBox = ({
         </div>
 
         {/* text container */}
-        <div className="flex flex-col sm:flex-row w-full sm:w-[80%] px-2 sm:px-4 my-2 sm:my-5">
+        <div className="flex flex-col justify-between sm:flex-row w-full sm:w-[80%] px-2 sm:px-4 my-2 sm:my-5">
           <div>
           {/* last emotion */}
           <div className="md:pb-2 flex justify-between">

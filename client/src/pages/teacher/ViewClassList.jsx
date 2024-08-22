@@ -121,12 +121,12 @@ const ViewClassList = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen md:h-screen min-w-screen mb-44 md:mb-0 lg:pb-0">
+      <div className="flex flex-col min-h-screen min-w-screen mb-44 lg:mb-0 lg:pb-0">
         <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <div className="flex flex-col items-center">
-          <div className="flex flex-col h-full items-center w-full max-w-4xl lg:z-40 mt-2">
+          <div className="flex flex-col h-full items-center w-full max-w-5xl lg:z-40 mt-2">
             {classroom ? (
               <>
                 {isEditMode ? (
@@ -305,7 +305,7 @@ const ViewClassList = () => {
                 {/* Scrollable list of students */}
                 <div
                   className={`px-4 md:px-0 md:mb-0 flex w-full justify-center md:overflow-y-auto md:custom-scrollbar ${
-                    isEditMode ? "h-full md:h-[35%]" : "h-full sm:h-[55%]"
+                    isEditMode ? "h-full md:h-[35vh]" : "h-full md:h-[50vh] lg:h-[55vh]"
                   } pt-3 `}
                   key="list-of-students-1"
                 >

@@ -15,12 +15,10 @@ const { calculateAge } = require("../../utils/dateFormat");
 
 // TODO:
 
-// // add way to add IEP
 // // make certain fields required
 
 const AddStudent = () => {
   const { teacherId, classroomId } = useParams();
-  const [studentId, setStudentId] = useState("");
   const [studentProfile, setStudentProfile] = useState({
     email: "",
     firstName: "",
@@ -28,7 +26,7 @@ const AddStudent = () => {
     gradeYear: "",
     schoolStudentId: "",
     birthday: "",
-    iepStatus: "Yes",
+    iepStatus: "",
     avatarImg: youngStudent,
     contentAreaNotices: [],
     learningChallenges: [],
@@ -96,10 +94,8 @@ const AddStudent = () => {
         notesForStudent: studentProfile.notesForStudent,
       };
 
-      // Assuming `addStudentToClassroom` sends the POST request to the backend
       await createNewStudentAndUser(requestData);
 
-      // Reset form after successful submission
       setStudentProfile({
         email: "",
         name: "",
@@ -107,7 +103,7 @@ const AddStudent = () => {
         schoolStudentId: "",
         birthday: "",
         iepStatus: "No",
-        avatarImg: youngStudent, // Reset to default image
+        avatarImg: youngStudent,
         contentAreaNotices: [{ contentArea: "", benchmark: "" }],
         learningChallenges: [{ challenge: "", date: "" }],
         accomodationsAndAssisstiveTech: [
@@ -124,19 +120,21 @@ const AddStudent = () => {
 
   return (
     <>
-      <div className="flex flex-col  bg-notebookPaper min-h-screen">
+      <div className="flex flex-col  bg-notebookPaper min-h-screen mb-32 xs:mb-10 md:mb-0 ">
         <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
           <Logout location="teacherLogout" userData={userData} />
         </div>
 
-        <div className="flex w-full justify-center mt-10">
-          <div className="max-w-2xl flex md:justify-start">
+        <div className="flex w-full justify-center mt-5 md:mt-10">
+          <div className="w-full max-w-2xl flex md:justify-start">
             <SimpleTopNav
               pageTitle="Add New Student"
               fontsize="text-[25px] xl:text-[24px]"
             />
           </div>
         </div>
+
+        <form onSubmit={handleAddStudent}>
         <div className="flex flex-col md:flex-row items-center justify-center mt-10">
           {/* Image */}
           <div className="flex flex-col items-center md:self-left">
@@ -160,7 +158,7 @@ const AddStudent = () => {
           </div>
           <div className="flex justify-center my-5 md:my-0">
             {/* Student Info Container */}
-            <div className="flex flex-col w-44 md:w-80 ml-3 text-[14px] md:text-[16px]">
+            <div className="flex flex-col w-60 xs:w-80 ml-3 text-[14px] md:text-[16px]">
               <div>
                 <label>First Name*: </label>
                 <input
@@ -169,6 +167,7 @@ const AddStudent = () => {
                   value={studentProfile.firstName}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                  required
                 />
               </div>
               <div>
@@ -179,6 +178,7 @@ const AddStudent = () => {
                   value={studentProfile.lastName}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                  required
                 />
               </div>
               <div className="flex items-center">
@@ -189,10 +189,10 @@ const AddStudent = () => {
                   value={studentProfile.email}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                  required
                 />
               </div>
 
-              {/* TODO: make this into a dropdown */}
               <div>
                 <label htmlFor="gradeYear">Grade: </label>
                 <select
@@ -258,7 +258,9 @@ const AddStudent = () => {
                   value={studentProfile.iepStatus}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich px-2 my-1"
+                  required
                 >
+                  <option value="" disabled></option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
@@ -267,10 +269,13 @@ const AddStudent = () => {
           </div>
         </div>
 
+        {/* section bar */}
+        <div className="flex md:hidden w-[90%] sm:w-[50%] mx-auto border-2 border-sandwich rounded-xl mt-5 mb-10 sm:my-16"></div>
+
         {/* add iep section */}
 
         {studentProfile.iepStatus === "Yes" && (
-          <div className="flex w-full justify-center mt-16 ">
+          <div className="flex w-full justify-center mb-32 md:mb-0 mt-10">
             <div className="flex flex-col justify-center">
               <h1 className="text-black text-sm sm:text-md font-bold font-header1 mb-4 max-w-2xl">
                 Individual Education Program (IEP)
@@ -557,22 +562,23 @@ const AddStudent = () => {
         )}
 
         <div className="lg:hidden flex justify-center">
-          <div
+          <button
             className="lg:hidden fixed bottom-36 flex "
-            onClick={handleAddStudent}
+            type="submit"
           >
             <Button buttonText="Save" />
-          </div>
+          </button>
         </div>
         {/* Small Save button for desktop/large screens to the right */}
         <div>
-          <div
+          <button
             className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
-            onClick={handleAddStudent}
+            type="submit"
           >
             <SmallSaveButton />
-          </div>
+          </button>
         </div>
+        </form>
 
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />

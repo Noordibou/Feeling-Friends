@@ -184,7 +184,6 @@ const createStudentAndUser = async (req, res) => {
     // Safer to do this on the backend than generating on the frontend. Because password hasing is done before this, need to hash it here.
     // const tempPassword = Math.random().toString(36).slice(-8);
     const tempPassword = "tempPass1234"
-    const hashedPassword = await bcrypt.hash(tempPassword, 10);
     
      // Prepare student data
      const studentData = {
@@ -209,7 +208,7 @@ const createStudentAndUser = async (req, res) => {
     const userData = {
       email,
       username,
-      password: hashedPassword,
+      password: tempPassword,
       role: "student",
       student: newStudent._id // Add the student ID to the user data
     };

@@ -9,14 +9,16 @@ const GoBack = () => {
     const location = useLocation();
   
     const goBack = () => {
-        if (location.pathname.includes('/edit-seating-chart')) {
-            const parts = location.pathname.split('/');
-            const teacherId = parts[2];
-            const classroomId = parts[3];
-  
-            navigate(`/classroom/${teacherId}/${classroomId}`);
+        if (location.pathname.includes("/edit-seating-chart")) {
+          const parts = location.pathname.split("/");
+          const teacherId = parts[2];
+          const classroomId = parts[3];
+
+          navigate(`/classroom/${teacherId}/${classroomId}`);
+        } else if (location.pathname.includes("/addstudent")) {
+          navigate("/createclass");
         } else {
-            navigate('/teacher-home');
+          navigate("/teacher-home");
         }
     }
 

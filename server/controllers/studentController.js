@@ -1,5 +1,6 @@
 const Student = require('../models/Student.js');
 const User = require('../models/User.js');
+const bcrypt = require("bcryptjs");
 
 // I don't think this works, use the Authentication Signup function
 const createNewStudent = async (req, res) => {
@@ -176,6 +177,54 @@ exports.updateStudentSeatInfo = async (req, res) => {
   }
 };
 
+const createStudentAndUser = async (req, res) => {
+  try {
+    const { firstName, lastName, seatNumber, birthday, gradeYear, schoolStudentId, avatarImg, iepStatus, contentAreaNotices, learningChallenges, accomodationsAndAssisstiveTech, notesForStudent, email } = req.body;
+    const username = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
+    // Safer to do this on the backend than generating on the frontend. Eventually will create code to email the temp password to user
+    // const tempPassword = Math.random().toString(36).slice(-8);
+    const tempPassword = "tempPass1234"
+    
+     const studentData = {
+      firstName,
+      lastName,
+      seatNumber,
+      birthday,
+      gradeYear,
+      schoolStudentId,
+      avatarImg,
+      iepStatus,
+      contentAreaNotices,
+      learningChallenges,
+      accomodationsAndAssisstiveTech,
+      notesForStudent
+    };
+
+    const newStudent = await Student.create(studentData);
+
+    const userData = {
+      email,
+      username,
+      password: tempPassword,
+      role: "student",
+      student: newStudent._id
+    };
+
+    const newUser = await User.create(userData);
+
+    newStudent.user = newUser._id;
+    await newStudent.save();
+
+
+    res.status(201).json({ message: 'Student and user created successfully', user: newUser, student: newStudent });
+
+    // TODO: Not built yet
+    // // Optionally send email with temp password and username
+    // await sendWelcomeEmail(email, username, tempPassword);
+  } catch (error) {
+    console.error("Error creating user and student:", error);
+  }
+};
 
 
 
@@ -185,4 +234,5 @@ module.exports = {
     getStudentById,
     updateStudentJournalEntry,
     deleteStudent,
+    createStudentAndUser,
 }

@@ -74,18 +74,15 @@ module.exports = {
         'schoolBus': '#F5D73A',
         'apple': '#F46B1E'
       },
-
-      extend: {
-        screens: {
-          "xs": "400px"
-        },
-        boxShadow: {
-          'inner-md': 'inset 0 8px 13px rgba(110, 110, 110, 0.6), inset 0 -8px 13px rgba(110, 110, 110, 0.6), inset 8px 0 13px rgba(110, 110, 110, 0.6), inset -8px 0 13px rgba(110, 110, 110, 0.6)',
-          'inner-lg': 'inset 0 10px 15px rgba(0, 0, 0, 0.6)',
-          'inner-xl': 'inset 0 20px 25px rgba(0, 0, 0, 0.6)',
-          // Add more custom shadows as needed
-        },
-      }
+      screens: {
+        "xs": "400px"
+      },
+      boxShadow: {
+        'inner-md': 'inset 0 8px 13px rgba(110, 110, 110, 0.6), inset 0 -8px 13px rgba(110, 110, 110, 0.6), inset 8px 0 13px rgba(110, 110, 110, 0.6), inset -8px 0 13px rgba(110, 110, 110, 0.6)',
+        'inner-lg': 'inset 0 10px 15px rgba(0, 0, 0, 0.6)',
+        'inner-xl': 'inset 0 20px 25px rgba(0, 0, 0, 0.6)',
+        // Add more custom shadows as needed
+      },
     },
   },
   plugins: [require('tailwind-scrollbar')],

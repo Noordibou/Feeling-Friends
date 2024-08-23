@@ -1,7 +1,7 @@
 import { useUser } from "../../context/UserContext";
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { addStudentToClassroom } from "../../api/teachersApi";
+import { createNewStudentAndUser } from "../../api/studentsApi";
 import Nav from "../../components/Navbar/Nav";
 import Logout from "../../components/LogoutButton.jsx";
 import withAuth from "../../hoc/withAuth";
@@ -19,10 +19,10 @@ const { calculateAge } = require("../../utils/dateFormat");
 const AddStudent = () => {
   const { teacherId, classroomId } = useParams();
   const [studentId, setStudentId] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [studentProfile, setStudentProfile] = useState({
-    name: "",
+    email: "",
+    firstName: "",
+    lastName: "",
     gradeYear: "",
     schoolStudentId: "",
     birthday: "",
@@ -41,24 +41,11 @@ const AddStudent = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "firstName") {
-      setFirstName(value);
-      setStudentProfile({
-        ...studentProfile,
-        name: `${value} ${lastName}`,
-      });
-    } else if (name === "lastName") {
-      setLastName(value);
-      setStudentProfile({
-        ...studentProfile,
-        name: `${firstName} ${value}`,
-      });
-    } else {
       setStudentProfile({
         ...studentProfile,
         [name]: value,
       });
-    }
+
   };
 
   const handleFileUpload = (file) => {
@@ -99,19 +86,42 @@ const AddStudent = () => {
   };
 
   const handleAddStudent = async () => {
+    console.log("handle student starting")
     try {
-      await addStudentToClassroom(teacherId, classroomId, studentProfile);
+      const requestData = {
+
+          ...studentProfile,
+          contentAreaNotices: studentProfile.contentAreaNotices,
+          learningChallenges: studentProfile.learningChallenges,
+          accomodationsAndAssisstiveTech: studentProfile.accomodationsAndAssisstiveTech,
+          notesForStudent: studentProfile.notesForStudent,
+      };
+  
+      // Assuming `addStudentToClassroom` sends the POST request to the backend
+      await createNewStudentAndUser(requestData);
+  
+      // Reset form after successful submission
       setStudentProfile({
+        email: "",
         name: "",
         gradeYear: "",
         schoolStudentId: "",
         birthday: "",
         iepStatus: "No",
-        avatarImg: youngStudent,
+        avatarImg: youngStudent, // Reset to default image
+        contentAreaNotices: [{ contentArea: "", benchmark: "" }],
+        learningChallenges: [{ challenge: "", date: "" }],
+        accomodationsAndAssisstiveTech: [
+          { accomodation: "", location: "", frequency: "" },
+        ],
+        notesForStudent: [{ note: "", date: "" }],
       });
+  
+      // Navigate to the class list page after adding the student
+      console.log("woop done!")
       navigate(`/viewclasslist/${teacherId}/${classroomId}`);
     } catch (error) {
-      console.error(error);
+      console.error("Failed to add student:", error);
     }
   };
 
@@ -159,7 +169,7 @@ const AddStudent = () => {
               <input
                 type="text"
                 name="firstName"
-                value={firstName}
+                value={studentProfile.firstName}
                 onChange={handleInputChange}
                 className="rounded-md bg-sandwich w-8/12 px-2 my-1"
               />
@@ -169,7 +179,17 @@ const AddStudent = () => {
               <input
                 type="text"
                 name="lastName"
-                value={lastName}
+                value={studentProfile.lastName}
+                onChange={handleInputChange}
+                className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+              />
+            </div>
+            <div>
+              <label>Parent's Email: </label>
+              <input
+                type="text"
+                name="email"
+                value={studentProfile.email}
                 onChange={handleInputChange}
                 className="rounded-md bg-sandwich w-8/12 px-2 my-1"
               />

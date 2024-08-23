@@ -1,5 +1,6 @@
 const Student = require('../models/Student.js');
 const User = require('../models/User.js');
+const bcrypt = require("bcryptjs");
 
 // I don't think this works, use the Authentication Signup function
 const createNewStudent = async (req, res) => {
@@ -176,6 +177,52 @@ exports.updateStudentSeatInfo = async (req, res) => {
   }
 };
 
+const createStudentAndUser = async (req, res) => {
+  try {
+    const { firstName, lastName, seatNumber, birthday, gradeYear, schoolStudentId, avatarImg, iepStatus, contentAreaNotices, learningChallenges, accomodationsAndAssisstiveTech, notesForStudent, email } = req.body;
+    const username = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
+    // Safer to do this on the backend than generating on the frontend. Because password hasing is done before this, need to hash it here.
+    const tempPassword = Math.random().toString(36).slice(-8);
+    const hashedPassword = await bcrypt.hash(tempPassword, 10);
+    
+    // 1. Collect data from the form
+    const userData = {
+      email: email,
+      username: username,
+      password: hashedPassword,
+      role: "student",
+    };
+
+    const studentData = {
+      firstName: firstName,
+      lastName: lastName,
+      seatNumber: seatNumber,
+      birthday: birthday,
+      gradeYear: gradeYear,
+      schoolStudentId: schoolStudentId,
+      avatarImg: avatarImg,
+      iepStatus: iepStatus,
+      contentAreaNotices: contentAreaNotices,
+      learningChallenges: learningChallenges,
+      accomodationsAndAssisstiveTech: accomodationsAndAssisstiveTech,
+      notesForStudent: notesForStudent,
+    };
+
+    // 2. Create the User document
+    // Insert user and student data into the database (pseudo-code)
+    const newUser = await User.create(userData);
+    const newStudent = await Student.create(studentData);
+
+    // Respond with success
+    res.status(201).json({ message: 'Student and user created successfully', user: newUser, student: newStudent });
+
+    // TODO: Not built yet
+    // // Optionally send email with temp password and username
+    // await sendWelcomeEmail(email, username, tempPassword);
+  } catch (error) {
+    console.error("Error creating user and student:", error);
+  }
+};
 
 
 
@@ -185,4 +232,5 @@ module.exports = {
     getStudentById,
     updateStudentJournalEntry,
     deleteStudent,
+    createStudentAndUser,
 }

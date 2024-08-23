@@ -185,7 +185,6 @@ const createStudentAndUser = async (req, res) => {
     // const tempPassword = Math.random().toString(36).slice(-8);
     const tempPassword = "tempPass1234"
     
-     // Prepare student data
      const studentData = {
       firstName,
       lastName,
@@ -201,26 +200,22 @@ const createStudentAndUser = async (req, res) => {
       notesForStudent
     };
 
-    // Create the Student document
     const newStudent = await Student.create(studentData);
 
-    // Prepare user data with the newly created student's ID
     const userData = {
       email,
       username,
       password: tempPassword,
       role: "student",
-      student: newStudent._id // Add the student ID to the user data
+      student: newStudent._id
     };
 
-    // Create the User document
     const newUser = await User.create(userData);
 
-    // Update the student document with the new user ID
     newStudent.user = newUser._id;
     await newStudent.save();
 
-    // Respond with success
+
     res.status(201).json({ message: 'Student and user created successfully', user: newUser, student: newStudent });
 
     // TODO: Not built yet

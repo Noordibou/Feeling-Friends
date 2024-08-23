@@ -19,29 +19,48 @@ const { calculateAge } = require("../../utils/dateFormat");
 const AddStudent = () => {
   const { teacherId, classroomId } = useParams();
   const [studentId, setStudentId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [studentProfile, setStudentProfile] = useState({
     name: "",
     gradeYear: "",
     schoolStudentId: "",
     birthday: "",
-    iepStatus: "No",
+    iepStatus: "Yes",
     avatarImg: youngStudent,
     contentAreaNotices: [{ contentArea: "", benchmark: "" }],
     learningChallenges: [{ challenge: "", date: "" }],
     accomodationsAndAssisstiveTech: [
       { accomodation: "", location: "", frequency: "" },
     ],
+    notesForStudent: [{ note: "", date: "" }],
   });
   const navigate = useNavigate();
   const { userData } = useUser();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setStudentProfile({
-      ...studentProfile,
-      [name]: value,
-    });
+
+    if (name === "firstName") {
+      setFirstName(value);
+      setStudentProfile({
+        ...studentProfile,
+        name: `${value} ${lastName}`,
+      });
+    } else if (name === "lastName") {
+      setLastName(value);
+      setStudentProfile({
+        ...studentProfile,
+        name: `${firstName} ${value}`,
+      });
+    } else {
+      setStudentProfile({
+        ...studentProfile,
+        [name]: value,
+      });
+    }
   };
+
   const handleFileUpload = (file) => {
     setStudentProfile({
       ...studentProfile,
@@ -135,6 +154,26 @@ const AddStudent = () => {
           <div className="flex justify-center my-5 md:my-0">
             {/* Student Info Container */}
             <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
+            <div>
+              <label>First Name: </label>
+              <input
+                type="text"
+                name="firstName"
+                value={firstName}
+                onChange={handleInputChange}
+                className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+              />
+            </div>
+            <div>
+              <label>Last Name: </label>
+              <input
+                type="text"
+                name="lastName"
+                value={lastName}
+                onChange={handleInputChange}
+                className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+              />
+            </div>
               <div className="h-7">
                 {studentProfile.birthday && (
                   <p>Age: {calculateAge(studentProfile.birthday)}</p>
@@ -192,11 +231,18 @@ const AddStudent = () => {
 
         {/* add iep section */}
         {studentProfile.iepStatus === "Yes" && (
-          <div className="self-center flex flex-col w-96 mt-32">
-            <div className="content-area-notices">
-              <h3>Content Area Notices</h3>
+          <div className="self-center bg-sandwich p-4 rounded-xl flex flex-col w-[35rem] mt-32">
+            {/* Content Area Notices */}
+            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
+              <h3 className="font-header4">Content Area Notices</h3>
+              <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
+                Learning Benchmark
+              </h3>
               {studentProfile.contentAreaNotices.map((notice, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  className="flex w-full justify-between xs:-mr-3 py-2"
+                >
                   <input
                     type="text"
                     name="contentArea"
@@ -205,23 +251,27 @@ const AddStudent = () => {
                       handleArrayChange("contentAreaNotices", index, e)
                     }
                     placeholder="Content Area"
+                    className="w-full flex rounded-md bg-sandwich text-[14px] px-2 md:text-[16px]"
                   />
-                  <input
-                    type="text"
-                    name="benchmark"
-                    value={notice.benchmark}
-                    onChange={(e) =>
-                      handleArrayChange("contentAreaNotices", index, e)
-                    }
-                    placeholder="Benchmark"
-                  />
-                  <button
-                    onClick={() =>
-                      removeItemFromArray("contentAreaNotices", index)
-                    }
-                  >
-                    Remove
-                  </button>
+                  <div className="w-full flex justify-end ">
+                    <input
+                      type="text"
+                      name="benchmark"
+                      value={notice.benchmark}
+                      onChange={(e) =>
+                        handleArrayChange("contentAreaNotices", index, e)
+                      }
+                      placeholder="Benchmark"
+                      className="w-[120px] rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
+                    />
+                    <button
+                      onClick={() =>
+                        removeItemFromArray("contentAreaNotices", index)
+                      }
+                    >
+                      <img src={xButton} alt="remove" className="w-4 ml-1 " />
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
@@ -236,10 +286,13 @@ const AddStudent = () => {
               </button>
             </div>
 
-            <div className="learning-challenges">
-              <h3>Learning Challenges</h3>
+            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
+              <h3 className="font-header4">Learning Challenges</h3>
+              <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
+                Diagnosed
+              </p>
               {studentProfile.learningChallenges.map((challenge, index) => (
-                <div key={index}>
+                <div key={index} className="flex justify-end">
                   <input
                     type="text"
                     name="challenge"
@@ -248,23 +301,27 @@ const AddStudent = () => {
                       handleArrayChange("learningChallenges", index, e)
                     }
                     placeholder="Challenge"
+                    className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
                   />
-                  <input
-                    type="date"
-                    name="date"
-                    value={challenge.date}
-                    onChange={(e) =>
-                      handleArrayChange("learningChallenges", index, e)
-                    }
-                    placeholder="Date"
-                  />
-                  <button
-                    onClick={() =>
-                      removeItemFromArray("learningChallenges", index)
-                    }
-                  >
-                    Remove
-                  </button>
+                  <div className="w-full flex justify-end ">
+                    <input
+                      type="date"
+                      name="date"
+                      value={challenge.date}
+                      onChange={(e) =>
+                        handleArrayChange("learningChallenges", index, e)
+                      }
+                      placeholder="Date"
+                      className="w-[130px] rounded-md bg-sandwich text-[14px] md:text-[16px] ml-3 px-2"
+                    />
+                    <button
+                      onClick={() =>
+                        removeItemFromArray("learningChallenges", index)
+                      }
+                    >
+                      <img src={xButton} alt="remove" className="w-4 ml-1 " />
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
@@ -279,11 +336,24 @@ const AddStudent = () => {
               </button>
             </div>
 
-            <div className="accomodations-and-assistive-tech">
-              <h3>Accommodations and Assistive Tech</h3>
+            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
+              <h3 className="font-header4">Accommodations & Assistive Tech</h3>
+              <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
+                <div className="col-span-1"></div>
+                <div className="col-span-1"></div>
+                <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
+                  Frequency
+                </h3>
+                <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
+                  Location
+                </h3>
+              </div>
               {studentProfile.accomodationsAndAssisstiveTech.map(
                 (accomodation, index) => (
-                  <div key={index}>
+                  <div
+                    key={index}
+                    className="grid grid-cols-4 gap-1 sm:gap-4 items-center"
+                  >
                     <input
                       type="text"
                       name="accomodation"
@@ -296,21 +366,10 @@ const AddStudent = () => {
                         )
                       }
                       placeholder="Accommodation"
+                      className="w-[220%] flex pl-2 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1 px-2"
                     />
-                    <input
-                      type="text"
-                      name="location"
-                      value={accomodation.location}
-                      onChange={(e) =>
-                        handleArrayChange(
-                          "accomodationsAndAssisstiveTech",
-                          index,
-                          e
-                        )
-                      }
-                      placeholder="Location"
-                    />
-                    <input
+                    <div></div>
+                    <select
                       type="text"
                       name="frequency"
                       value={accomodation.frequency}
@@ -322,17 +381,42 @@ const AddStudent = () => {
                         )
                       }
                       placeholder="Frequency"
-                    />
-                    <button
-                      onClick={() =>
-                        removeItemFromArray(
-                          "accomodationsAndAssisstiveTech",
-                          index
-                        )
-                      }
+                      className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1"
                     >
-                      Remove
-                    </button>
+                      <option value=""></option>
+                      <option value="Daily">Daily</option>
+                      <option value="Weekly">Weekly</option>
+                      <option value="Monthly">Monthly</option>
+                      <option value="As Needed">As Needed</option>
+                    </select>
+
+                    <div className="flex flex-row justify-end ">
+                      <input
+                        type="text"
+                        name="location"
+                        value={accomodation.location}
+                        onChange={(e) =>
+                          handleArrayChange(
+                            "accomodationsAndAssisstiveTech",
+                            index,
+                            e
+                          )
+                        }
+                        placeholder="Location"
+                        className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1 px-2"
+                      />
+
+                      <button
+                        onClick={() =>
+                          removeItemFromArray(
+                            "accomodationsAndAssisstiveTech",
+                            index
+                          )
+                        }
+                      >
+                        <img src={xButton} alt="remove" className="w-4 ml-1 " />
+                      </button>
+                    </div>
                   </div>
                 )
               )}
@@ -346,6 +430,59 @@ const AddStudent = () => {
                 }
               >
                 Add Accommodation
+              </button>
+            </div>
+
+            <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
+              <h3 className="font-header4">Notes</h3>
+              <div className="grid grid-cols-2 gap-1 md:gap-4 pb-2">
+                <div className="col-span-1"></div>
+                <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
+                  Date
+                </h3>
+              </div>
+              {studentProfile.notesForStudent.map((studentNote, index) => (
+                <div key={index} className="flex justify-end">
+                  <input
+                    type="text"
+                    name="note"
+                    value={studentNote.note}
+                    onChange={(e) =>
+                      handleArrayChange("notesForStudent", index, e)
+                    }
+                    placeholder="Note"
+                    className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
+                  />
+                  <div className="w-full flex justify-end ">
+                    <input
+                      type="date"
+                      name="date"
+                      value={studentNote.date}
+                      onChange={(e) =>
+                        handleArrayChange("notesForStudent", index, e)
+                      }
+                      placeholder="Date"
+                      className="w-[130px] rounded-md bg-sandwich text-[14px] md:text-[16px] ml-3 px-2"
+                    />
+                    <button
+                      onClick={() =>
+                        removeItemFromArray("notesForStudent", index)
+                      }
+                    >
+                      <img src={xButton} alt="remove" className="w-4 ml-1 " />
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <button
+                onClick={() =>
+                  addItemToArray("notesForStudent", {
+                    note: "",
+                    date: "",
+                  })
+                }
+              >
+                Add Note
               </button>
             </div>
           </div>

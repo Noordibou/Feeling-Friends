@@ -181,7 +181,7 @@ const createStudentAndUser = async (req, res) => {
   try {
     const { firstName, lastName, seatNumber, birthday, gradeYear, schoolStudentId, avatarImg, iepStatus, contentAreaNotices, learningChallenges, accomodationsAndAssisstiveTech, notesForStudent, email } = req.body;
     const username = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
-    // Safer to do this on the backend than generating on the frontend. Because password hasing is done before this, need to hash it here.
+    // Safer to do this on the backend than generating on the frontend. Eventually will create code to email the temp password to user
     // const tempPassword = Math.random().toString(36).slice(-8);
     const tempPassword = "tempPass1234"
     

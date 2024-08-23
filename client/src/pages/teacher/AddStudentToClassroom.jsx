@@ -13,10 +13,6 @@ import Button from "../../components/Button.jsx";
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 const { calculateAge } = require("../../utils/dateFormat");
 
-// TODO:
-
-// // make certain fields required
-
 const AddStudent = () => {
   const { teacherId, classroomId } = useParams();
   const [studentProfile, setStudentProfile] = useState({

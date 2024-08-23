@@ -119,7 +119,7 @@ const AddStudent = () => {
   
       // Navigate to the class list page after adding the student
       console.log("woop done!")
-      navigate(`/viewclasslist/${teacherId}/${classroomId}`);
+      navigate(`/teacher-home`);
     } catch (error) {
       console.error("Failed to add student:", error);
     }

@@ -182,36 +182,44 @@ const createStudentAndUser = async (req, res) => {
     const { firstName, lastName, seatNumber, birthday, gradeYear, schoolStudentId, avatarImg, iepStatus, contentAreaNotices, learningChallenges, accomodationsAndAssisstiveTech, notesForStudent, email } = req.body;
     const username = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
     // Safer to do this on the backend than generating on the frontend. Because password hasing is done before this, need to hash it here.
-    const tempPassword = Math.random().toString(36).slice(-8);
+    // const tempPassword = Math.random().toString(36).slice(-8);
+    const tempPassword = "tempPass1234"
     const hashedPassword = await bcrypt.hash(tempPassword, 10);
     
-    // 1. Collect data from the form
+     // Prepare student data
+     const studentData = {
+      firstName,
+      lastName,
+      seatNumber,
+      birthday,
+      gradeYear,
+      schoolStudentId,
+      avatarImg,
+      iepStatus,
+      contentAreaNotices,
+      learningChallenges,
+      accomodationsAndAssisstiveTech,
+      notesForStudent
+    };
+
+    // Create the Student document
+    const newStudent = await Student.create(studentData);
+
+    // Prepare user data with the newly created student's ID
     const userData = {
-      email: email,
-      username: username,
+      email,
+      username,
       password: hashedPassword,
       role: "student",
+      studentId: newStudent._id // Add the student ID to the user data
     };
 
-    const studentData = {
-      firstName: firstName,
-      lastName: lastName,
-      seatNumber: seatNumber,
-      birthday: birthday,
-      gradeYear: gradeYear,
-      schoolStudentId: schoolStudentId,
-      avatarImg: avatarImg,
-      iepStatus: iepStatus,
-      contentAreaNotices: contentAreaNotices,
-      learningChallenges: learningChallenges,
-      accomodationsAndAssisstiveTech: accomodationsAndAssisstiveTech,
-      notesForStudent: notesForStudent,
-    };
-
-    // 2. Create the User document
-    // Insert user and student data into the database (pseudo-code)
+    // Create the User document
     const newUser = await User.create(userData);
-    const newStudent = await Student.create(studentData);
+
+    // Update the student document with the new user ID
+    newStudent.user = newUser._id;
+    await newStudent.save();
 
     // Respond with success
     res.status(201).json({ message: 'Student and user created successfully', user: newUser, student: newStudent });

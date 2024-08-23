@@ -211,7 +211,7 @@ const createStudentAndUser = async (req, res) => {
       username,
       password: hashedPassword,
       role: "student",
-      studentId: newStudent._id // Add the student ID to the user data
+      student: newStudent._id // Add the student ID to the user data
     };
 
     // Create the User document

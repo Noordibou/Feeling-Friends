@@ -34,7 +34,7 @@ const EditSeatingChart = () => {
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isRemoveMode, setIsRemoveMode] = useState(false)
 
 
   const [assignedStudents, setAssignedStudents] = useState([]);
@@ -305,6 +305,8 @@ const EditSeatingChart = () => {
                   handleDragEnd={handleDragEnd}
                   selectedItems={selectedItems}
                   setSelectedItems={setSelectedItems}
+                  isRemoveMode={isRemoveMode}
+                  handleRemoveObject={handleRemoveObject}
                 />
 
                 <AssignedStudent
@@ -314,13 +316,16 @@ const EditSeatingChart = () => {
                   constraintsRef={constraintsRef}
                   selectedStudents={selectedStudents}
                   handleDragEnd={handleDragEnd}
+                  isRemoveMode={isRemoveMode}
+                  handleRemoveObject={handleRemoveObject}
                 />
                 <div className="self-end flex items-center justify-between mb-8 md:mb-0 w-[45%]">
+
                   {/* Unassigned Section */}
                   <button
                     id="unassigned-section"
                     className="fixed bottom-8 sm:bottom-10 right-0 left-2 xs:left-10 md:left-52 px-2 md:relative justify-between items-center py-3 md:py-4 w-[30%] flex flex-row md:w-[550px] md:bg-notebookPaper"
-                    onClick={handleRemoveObject}
+                    onClick={() => setIsRemoveMode(!isRemoveMode)}
                   >
                     <img src={CloseButton} alt="remove from class" />
                     <h2 className="flex flex-wrap items-center h-full font-semibold text-[15px] md:text-[24px] font-[Poppins]">

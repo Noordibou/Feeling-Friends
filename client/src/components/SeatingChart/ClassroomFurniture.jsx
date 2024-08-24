@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import furnitureShapes from "../../data/furnitureShapes";
 import { toggleSelected } from "../../utils/editSeatChartUtil";
+import xButton from "../../images/x-button.png"
 
 const ClassroomFurniture = ({
   classroom,
@@ -11,6 +12,8 @@ const ClassroomFurniture = ({
   handleDragEnd,
   selectedItems,
   setSelectedItems,
+  isRemoveMode,
+  handleRemoveObject
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -59,8 +62,7 @@ const ClassroomFurniture = ({
               rotate: item.rotation || 0,
             }}
             animate={{
-              rotate:
-                furniturePositions[item._id]?.rotation || item.rotation,
+              rotate: furniturePositions[item._id]?.rotation || item.rotation,
             }}
             drag
             dragElastic={0}
@@ -71,41 +73,56 @@ const ClassroomFurniture = ({
               handleDragEnd(item._id, "furniture");
               setIsDragging(false);
             }}
-            onClick={() => {
-              setSelectedItems(toggleSelected(item._id, alreadySelected, selectedItems))
-              handleDragEnd(item._id, "furniture");
-            }}
-            onDoubleClick={() => {
-              if (!isDragging) {
-                setFurniturePositions((prevPositions) => {
-                  const prevRotation =
-                    furniturePositions[item._id]?.rotation ||
-                    item.rotation ||
-                    0;
-                  const newRotation = prevRotation + 90;
-
-                  return {
-                    ...prevPositions,
-                    [item._id]: {
-                      x: item.x,
-                      y: item.y,
-                      assigned: true,
-                      rotation: newRotation,
-                    },
-                  };
-                });
-              }
-            }}
-            className={`absolute border-4 rounded-xl ${shape.style.width} ${shape.style.height} ${
-              selectedStyling ? "border-black" : " border-notebookPaper border-opacity-0"
-            }`}
+            className={`absolute rounded-xl ${shape.style.width} ${shape.style.height}`}
           >
-            <img
-              draggable={false}
-              className="flex w-full h-full"
-              src={shape.src}
-              alt={shape.alt}
-            />
+            {/* TODO: add x button */}
+            <div className="relative">
+              <button
+                className="absolute -top-2 -left-2 z-10"
+                onClick={() => {
+                  if (!isDragging) {
+                    setFurniturePositions((prevPositions) => {
+                      const prevRotation =
+                        furniturePositions[item._id]?.rotation ||
+                        item.rotation ||
+                        0;
+                      const newRotation = prevRotation + 90;
+
+                      return {
+                        ...prevPositions,
+                        [item._id]: {
+                          x: item.x,
+                          y: item.y,
+                          assigned: true,
+                          rotation: newRotation,
+                        },
+                      };
+                    });
+                  }
+                }}
+              >
+                <span className="material-symbols-outlined  text-[30px]">
+                  refresh
+                </span>
+              </button>
+              {isRemoveMode && (
+                <button
+                  className="absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center"
+                  onClick={() => {
+                    console.log("click click remove");
+                  }}
+                >
+                  <img src={xButton} alt="remove item" className="h-6 w-6" />
+                </button>
+              )}
+
+              <img
+                draggable={false}
+                className="flex w-full h-full"
+                src={shape.src}
+                alt={shape.alt}
+              />
+            </div>
           </motion.div>
         );
       })}

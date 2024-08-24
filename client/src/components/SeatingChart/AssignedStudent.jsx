@@ -3,6 +3,7 @@ import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { toggleSelected } from "../../utils/editSeatChartUtil";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
+import xButton from "../../images/x-button.png"
 
 const AssignedStudent = ({
   assignedStudents,
@@ -11,6 +12,8 @@ const AssignedStudent = ({
   selectedStudents,
   setSelectedStudents,
   handleDragEnd,
+  isRemoveMode,
+  handleRemoveObject
 }) => {
   return (
     <>
@@ -41,7 +44,7 @@ const AssignedStudent = ({
           );
 
           const { borderColorClass } = getLastJournalInfo(assignedStudent)
-
+          // TODO: add X button at top right corner of student div
           return (
             <motion.div
               id={`motion-div-${studentObj.student}`}
@@ -57,10 +60,11 @@ const AssignedStudent = ({
               }}
               className={`absolute border-4 px-[4px] rounded-2xl ${
                 selectedStyling ? "border-black" : ` border-${borderColorClass}`
-              } ${borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${borderColorClass}`}`}
-              onDoubleClick={() => {
-                setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
-              }}
+              } ${
+                borderColorClass === "sandwich"
+                  ? "bg-[#ece6d2]"
+                  : `bg-${borderColorClass}`
+              }`}
               onDragEnd={(event, info) => {
                 const containerBounds =
                   constraintsRef.current.getBoundingClientRect();
@@ -79,17 +83,37 @@ const AssignedStudent = ({
                 handleDragEnd(studentObj.student, "assigned", containerY);
               }}
             >
-              <div className="">
+              <div className="relative">
+                {/* X Button */}
+                {isRemoveMode && (
+                  <button
+                    className="absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center"
+                    onClick={() => {
+                      // Handle the X button click here
+                      // handleRemoveObject <= need to refactor first 
+                      console.log("X button clicked");
+                    }}
+                  >
+                    <img src={xButton} alt="remove button" />
+                  </button>
+                )}
                 <div className="flex w-full justify-center h-full items-center">
                   <img
                     draggable={false}
-                    className={`flex object-cover mt-1 w-[55px] h-[50px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
-                    src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
+                    className={`flex object-cover mt-1 w-[55px] h-[50px] rounded-2xl ${
+                      borderColorClass === "sandwich" ? "opacity-50" : ""
+                    }`}
+                    src={
+                      assignedStudent.avatarImg === "none"
+                        ? SampleAvatar
+                        : assignedStudent.avatarImg
+                    }
                     alt={assignedStudent.firstName}
                   />
                 </div>
                 <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">
-                  {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
+                  {assignedStudent.firstName}{" "}
+                  {assignedStudent.lastName.charAt(0)}.
                 </h3>
               </div>
             </motion.div>

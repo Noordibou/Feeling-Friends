@@ -59,7 +59,7 @@ const AssignedStudent = ({
                 y: Math.max(0, initialY),
               }}
               className={`absolute border-4 px-[4px] rounded-2xl ${
-                selectedStyling ? "border-black" : ` border-${borderColorClass}`
+                selectedStyling ? `border-[#d40606]` : `border-${borderColorClass}`
               } ${
                 borderColorClass === "sandwich"
                   ? "bg-[#ece6d2]"
@@ -87,14 +87,16 @@ const AssignedStudent = ({
                 {/* X Button */}
                 {isRemoveMode && (
                   <button
-                    className="absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center"
+                    className="absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center bg-blue"
                     onClick={() => {
                       // Handle the X button click here
                       // handleRemoveObject <= need to refactor first 
                       console.log("X button clicked");
+                      setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
                     }}
                   >
-                    <img src={xButton} alt="remove button" />
+                    {/* <img src={xButton} alt="remove button" /> */}
+                    <p className="flex items-center font-bold text-white text-lg h-full -mt-1">-</p>
                   </button>
                 )}
                 <div className="flex w-full justify-center h-full items-center">

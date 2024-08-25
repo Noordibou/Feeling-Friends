@@ -107,12 +107,13 @@ const ClassroomFurniture = ({
               </button>
               {isRemoveMode && (
                 <button
-                  className="absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center"
+                  className="absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center bg-blue "
                   onClick={() => {
                     console.log("click click remove");
                   }}
                 >
-                  <img src={xButton} alt="remove item" className="h-6 w-6" />
+                  {/* <img src={xButton} alt="remove item" className="h-6 w-6" /> */}
+                  <p className="flex items-center font-bold text-white text-lg h-full -mt-1">-</p>
                 </button>
               )}
 

@@ -58,9 +58,7 @@ const AssignedStudent = ({
                 x: Math.max(0, initialX),
                 y: Math.max(0, initialY),
               }}
-              className={`absolute border-4 px-[4px] rounded-2xl ${
-                selectedStyling ? `border-[#d40606]` : `border-${borderColorClass}`
-              } ${
+              className={`absolute border-4 border-${borderColorClass} px-[4px] rounded-2xl ${
                 borderColorClass === "sandwich"
                   ? "bg-[#ece6d2]"
                   : `bg-${borderColorClass}`
@@ -87,7 +85,7 @@ const AssignedStudent = ({
                 {/* X Button */}
                 {isRemoveMode && (
                   <button
-                    className="absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center bg-blue"
+                    className="absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center bg-blue z-20 "
                     onClick={() => {
                       // Handle the X button click here
                       // handleRemoveObject <= need to refactor first 
@@ -96,7 +94,7 @@ const AssignedStudent = ({
                     }}
                   >
                     {/* <img src={xButton} alt="remove button" /> */}
-                    <p className="flex items-center font-bold text-white text-lg h-full -mt-1">-</p>
+                    <p className="flex items-center font-bold text-white text-lg h-full -mt-1">{ selectedStyling ? "+" : "-"}</p>
                   </button>
                 )}
                 <div className="flex w-full justify-center h-full items-center">
@@ -118,6 +116,9 @@ const AssignedStudent = ({
                   {assignedStudent.lastName.charAt(0)}.
                 </h3>
               </div>
+
+              {/* Overlay */}
+              {selectedStyling ? <div className={`absolute w-[112%] h-[111%] rounded-xl -m-[4px] px-[4px] border-4 border-sandwich bg-sandwich opacity-50 border-opacity-50 inset-0 z-10`}></div> : <div></div>}
             </motion.div>
           );
         } else {

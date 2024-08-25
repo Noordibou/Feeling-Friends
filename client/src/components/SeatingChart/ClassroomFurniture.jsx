@@ -73,9 +73,8 @@ const ClassroomFurniture = ({
               handleDragEnd(item._id, "furniture");
               setIsDragging(false);
             }}
-            className={`absolute rounded-xl ${shape.style.width} ${shape.style.height}`}
+            className={`absolute rounded-xl ${shape.style.width} ${shape.style.height} ${ selectedStyling ? "opacity-50" : ""}`}
           >
-            {/* TODO: add x button */}
             <div className="relative">
               <button
                 className="absolute -top-2 -left-2 z-10"
@@ -109,11 +108,14 @@ const ClassroomFurniture = ({
                 <button
                   className="absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center bg-blue "
                   onClick={() => {
-                    console.log("click click remove");
+                    // Handle the X button click here
+                    // handleRemoveObject <= need to refactor first 
+                    console.log("X button clicked");
+                    setSelectedItems(toggleSelected(item._id, alreadySelected, selectedItems));
                   }}
                 >
                   {/* <img src={xButton} alt="remove item" className="h-6 w-6" /> */}
-                  <p className="flex items-center font-bold text-white text-lg h-full -mt-1">-</p>
+                  <p className="flex items-center font-bold text-white text-lg h-full -mt-1">{ selectedStyling ? "+" : "-"}</p>
                 </button>
               )}
 

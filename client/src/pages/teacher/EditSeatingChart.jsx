@@ -26,6 +26,7 @@ import CloseButton from "../../images/x-button.png"
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
+import Logout from "../../components/LogoutButton";
 
 
 const EditSeatingChart = () => {
@@ -233,10 +234,13 @@ const EditSeatingChart = () => {
       {" "}
       {/* page container */}
       <div className="flex h-screen min-w-screen justify-center md:mb-0">
+      <div className="hidden md:flex md:absolute w-full justify-end underline mt-4 px-2 md:px-5">
+          <Logout location="teacherLogout" userData={userData} />
+        </div>
         {/* page container */}
         <div className="flex flex-col w-full h-full items-center max-w-3xl">
           {/* top half of page */}
-        <div className="flex flex-col h-[28vh] md:h-auto w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 mx-4 md:ml-5 z-20">
+        <div className="flex flex-col h-[28vh] md:h-auto w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 md:mt-20 mx-4 md:ml-5 z-20">
           <div className="flex">
             <SimpleTopNav
               pageTitle={classroom?.classSubject}

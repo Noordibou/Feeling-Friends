@@ -218,12 +218,12 @@ const NeedsGoals = () => {
                   {/* edit button */}
                   <button onClick={() => toggleEditGoalMode(index)}>
                     {editGoalMode[index] ? (
-                      <span class="material-symbols-outlined text-[36px] flex px-3 py-[15px]">
+                      <span className="material-symbols-outlined text-[28px] md:text-[36px] font-bold mt-1 flex px-3 md:py-[18px]">
                         check
                       </span>
                     ) : (
                       <img
-                        className={` h-5 md:h-7 px-3`}
+                        className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}
                         src={editIcon}
                         alt="edit"
                       />
@@ -238,7 +238,7 @@ const NeedsGoals = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-[18px] sm:w-[24px]"
+                      className={`"w-[16px] ${ editGoalMode[index] ?"mt-2" : ""} sm:w-[24px]"`}
                     >
                       <line
                         x1="5"
@@ -347,12 +347,12 @@ const NeedsGoals = () => {
                   {/* edit button */}
                   <button onClick={() => toggleEditNeedsMode(index)}>
                     {editNeedsMode[index] ? (
-                      <span class="material-symbols-outlined text-[36px] flex px-3 py-[18px]">
+                      <span className="material-symbols-outlined text-[28px] md:text-[36px] font-bold mt-1 flex px-3 md:py-[18px]">
                         check
                       </span>
                     ) : (
                       <img
-                        className={` h-5 md:h-7 px-3`}
+                        className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}
                         src={editIcon}
                         alt="edit"
                       />
@@ -366,7 +366,7 @@ const NeedsGoals = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-[18px] sm:w-[24px]"
+                      className={`"w-[16px] ${ editNeedsMode[index] ?"mt-2" : ""} sm:w-[24px]"`}
                     >
                       <line
                         x1="5"

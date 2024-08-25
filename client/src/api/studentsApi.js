@@ -20,6 +20,17 @@ export const createStudent = async (student) => {
   
 };
 
+
+export const createNewStudentAndUser = async (student) => {
+    try {
+        const response = await axios.post(`${STUDENTS_API_URL}/create-student`, student);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+  
+};
+
 // this works ✅
 export const getStudentById = async (id) => {
     try {

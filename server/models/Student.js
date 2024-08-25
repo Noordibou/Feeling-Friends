@@ -50,6 +50,14 @@ const StudentSchema = new mongoose.Schema({
         location: { type: String },
         frequency: { type: String },
 
+    }],
+    notesForStudent: [{
+        note: { type: String },
+        date: {
+            type: Date,
+            get: date => date.toISOString().slice(0, 10),
+            set: dateString => new Date(dateString)
+        }
     }]
 })
 

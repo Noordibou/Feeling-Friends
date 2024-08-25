@@ -1,9 +1,9 @@
-import proudImg from '../images/proud.png'
-import sadImg from '../images/sad.png'
-import anxiousImg from '../images/anxious.png';
-import angryImg from '../images/angry.png';
-import happyImg from '../images/happy.png';
-import scaredImg from '../images/scared.png';
+import proudImg from '../images/student/characters/proud.png'
+import sadImg from '../images/student/characters/sad.png'
+import anxiousImg from '../images/student/characters/anxious.png';
+import angryImg from '../images/student/characters/angry.png';
+import happyImg from '../images/student/characters/happy.png';
+import scaredImg from '../images/student/characters/scared.png';
 // wheels
 import proudWheel from "../images/ProudRabbitAndWheel.png"
 import angryWheel from "../images/AngryCrabAndWheel.png"

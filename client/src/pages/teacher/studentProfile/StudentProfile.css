@@ -122,3 +122,8 @@
     color: white;
   }
   
+  @media (max-width: 400px) {
+    .react-calendar__navigation__label .react-calendar__navigation__label__labelText {
+      font-size: 18px !important;
+    }
+  }

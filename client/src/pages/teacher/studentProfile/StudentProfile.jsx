@@ -515,14 +515,10 @@ const StudentProfile = () => {
                 </div>
               </div>
             )}
-            {/* Selected Day Student Info Modal */}
+            {/* Selected Day Student Info Modal Overlay*/}
             {openStudentInfoModal && (
               <div
-                className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
-                  isMonthView
-                    ? "top-96 md:top-72 mt-10 md:mt-16 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                    : "top-96 md:top-72 mt-10 md:mt-16 h-[246px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                }`}
+                className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-96 md:top-80 mt-[150px] sm:mt-[130px] md:mt-[120px] my-2 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]`}
               >
                 <div className={`flex h-full justify-center items-center`}>
                   <StudentProfileBoxInfo

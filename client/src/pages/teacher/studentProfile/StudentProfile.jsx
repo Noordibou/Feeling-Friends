@@ -460,7 +460,7 @@ const StudentProfile = () => {
           </div>
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
+              <div className="mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -484,7 +484,7 @@ const StudentProfile = () => {
 
                 {!isMonthView && (
                   <div
-                    className={`${
+                    className={`week-view ${
                       openStudentInfoModal
                         ? "flex z-20 "
                         : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
@@ -498,19 +498,19 @@ const StudentProfile = () => {
                   </div>
                 )}
 
-                <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center">
+                <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center bg-notebookPaper">
                   <button
                     className={`${
-                      !isMonthView ? "bg-sandwich underline font-semibold" : ""
-                    } border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
+                      !isMonthView ? "bg-sandwich font-semibold" : ""
+                    } border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
                     onClick={() => setIsMonthView(false)}
                   >
                     <h4 className="font-[Poppins]">Week View</h4>
                   </button>
                   <button
                     className={`${
-                      isMonthView ? "bg-sandwich underline font-semibold " : ""
-                    }bg-notebook border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
+                      isMonthView ? "bg-sandwich font-semibold " : ""
+                    }bg-notebook border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
                     onClick={() => setIsMonthView(true)}
                   >
                     <h4 className="font-[Poppins]">Month View</h4>

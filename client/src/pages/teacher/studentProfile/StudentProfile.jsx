@@ -252,9 +252,9 @@ const StudentProfile = () => {
         {/* Page container (no nav) */}
         <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10">
           {/* top student section */}
-          <div className="flex">
-            <div className="">
-              <div className="flex flex-row w-full mb-5 ml-3">
+          <div className="flex w-full">
+            <div className="w-full flex flex-col justify-center">
+              <div className="flex self-center flex-row w-full max-w-lg mb-5">
                 <Link
                   className="md:text-header1 text-[33px] font-header1"
                   to={`/viewclasslist/${teacherId}/${classroomId}`}
@@ -287,7 +287,7 @@ const StudentProfile = () => {
                     />
                   </svg>
                 </Link>
-                <div className="text-center w-full">
+                <div className="">
                   {editMode ? (
                     <input
                       type="text"
@@ -335,7 +335,7 @@ const StudentProfile = () => {
                     />
                   </div>
                   {editMode ? (
-                    <div className="inline-flex text-[12px] self-right ml-14 mt-2 font-header1 underline">
+                    <div className="inline-flex text-[12px] self-right mt-2 font-header1 underline w-36 truncate">
                       <FileBase
                         type="file"
                         multiple={false}
@@ -420,47 +420,44 @@ const StudentProfile = () => {
                       </p>
                     )}
                   </div>
-
-                  {/* Button container */}
-                  <div className="flex items-center text-[14px] md:text-[15px] border-l-4 border-sandwich pl-5">
-                    {editMode ? (
-                      <div className="flex flex-col">
-                        <button
-                          className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
-                          onClick={handleSaveClick}
-                        >
-                          Save
-                        </button>
-                        <button
-                          className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                          onClick={handleCancelClick}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <button
-                          className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange"
-                          onClick={handleEditClick}
-                        >
-                          Edit
-                          <img
-                            className="pl-2 h-4"
-                            src={editIcon}
-                            alt="edit icon"
-                          />
-                        </button>
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Button container */}
+          <div className="sm:mt-4 flex items-center text-[14px] md:text-[15px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-full max-w-xs sm:max-w-md md:max-w-lg justify-center">
+            {editMode ? (
+              <div className="flex gap-4">
+                <button
+                  className="px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                  onClick={handleSaveClick}
+                >
+                  Save
+                </button>
+                <button
+                  className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
+                  onClick={handleCancelClick}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="mt-16 sm:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
+                <button
+                  className="items-center justify-between rounded-md flex flex-row py-2 px-3 font-[Poppins]"
+                  onClick={handleEditClick}
+                >
+                  edit student info
+                  <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
+                </button>
+              </div>
+            )}
+          </div>
+
           <div className="">
             {studentProfile && (
-              <div className="bg-white mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
+              <div className="mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
                 {/* Calendar View Container */}
 
                 {/* REACT CALENDAR - MONTH VIEW */}
@@ -484,7 +481,7 @@ const StudentProfile = () => {
 
                 {!isMonthView && (
                   <div
-                    className={`${
+                    className={`week-view ${
                       openStudentInfoModal
                         ? "flex z-20 "
                         : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
@@ -498,19 +495,19 @@ const StudentProfile = () => {
                   </div>
                 )}
 
-                <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center">
+                <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center bg-notebookPaper">
                   <button
                     className={`${
-                      !isMonthView ? "bg-sandwich underline font-semibold" : ""
-                    } border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
+                      !isMonthView ? "bg-sandwich font-semibold" : ""
+                    } border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
                     onClick={() => setIsMonthView(false)}
                   >
                     <h4 className="font-[Poppins]">Week View</h4>
                   </button>
                   <button
                     className={`${
-                      isMonthView ? "bg-sandwich underline font-semibold " : ""
-                    }bg-notebook border-2 border-sandwich rounded-lg py-3 w-52 text-center`}
+                      isMonthView ? "bg-sandwich font-semibold " : ""
+                    }bg-notebook border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
                     onClick={() => setIsMonthView(true)}
                   >
                     <h4 className="font-[Poppins]">Month View</h4>
@@ -518,14 +515,10 @@ const StudentProfile = () => {
                 </div>
               </div>
             )}
-            {/* Selected Day Student Info Modal */}
+            {/* Selected Day Student Info Modal Overlay*/}
             {openStudentInfoModal && (
               <div
-                className={`absolute bg-sandwich rounded-2xl bg-opacity-70 ${
-                  isMonthView
-                    ? "top-96 md:top-72 mt-10 md:mt-16 h-96 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                    : "top-96 md:top-72 mt-10 md:mt-16 h-[246px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                }`}
+                className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-96 md:top-80 mt-[150px] sm:mt-[130px] md:mt-[120px] my-2 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]`}
               >
                 <div className={`flex h-full justify-center items-center`}>
                   <StudentProfileBoxInfo
@@ -536,17 +529,16 @@ const StudentProfile = () => {
                 </div>
               </div>
             )}
-            <div></div>
           </div>
-          <div className="mb-20 mt-10 max-w-2xl">
-            <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
+          <div className="mb-20 mt-6 max-w-2xl">
+            <div className="flex flex-col gap-4 md:gap-0 mt-6 mb-2 items-center w-full justify-between ">
               <h1 className="text-black text-sm sm:text-md font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
               {editModeNotices ? (
-                <div className="flex px-2 ">
+                <div className="flex px-2 my-2 w-full">
                   <button
-                    className="px-3 py-2 bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
+                    className="px-3 py-2 w-full justify-center items-center bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
                     onClick={handleIEPSaveClick}
                   >
                     Save IEP
@@ -554,12 +546,12 @@ const StudentProfile = () => {
                   {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
                 </div>
               ) : (
-                <div className="flex px-2 ">
+                <div className="flex my-2 px-2 w-full">
                   <button
-                    className="flex flex-row items-center text-[14px] md:text-[15px] px-3 py-2 bg-lightOrange rounded-md"
+                    className="flex flex-row w-full justify-center items-center text-[14px] md:text-[16px] px-3 py-2 border-2 border-sandwich rounded-2xl font-[Poppins]"
                     onClick={handleEditIEPClick}
                   >
-                    Edit IEP
+                    edit IEP
                     <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
                   </button>
                 </div>

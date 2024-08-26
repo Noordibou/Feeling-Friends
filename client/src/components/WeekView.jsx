@@ -84,25 +84,25 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
   
 
   return (
-    <div className=" w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
+    <div className="w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
       <div className="relative top-6 ">
         <button
           alt="previous-week"
-          className="absolute left-6 py-3 px-5 bg-white"
+          className="absolute left-6 py-3 px-5 bg-notebookPaper"
           onClick={goToPrevWeek}
         >
           &lt;
         </button>
         <button
           alt="next-week"
-          className="absolute right-6 py-3 px-5 bg-white"
+          className="absolute right-6 py-3 px-5 bg-notebookPaper"
           onClick={goToNextWeek}
         >
           &gt;
         </button>
       </div>
       <Calendar
-        className="react-calendar"
+        className="react-calendar week-view"
         tileClassName={({ date }) => {
           const event = events.find(
             (event) => event.date.toDateString() === date.toDateString()

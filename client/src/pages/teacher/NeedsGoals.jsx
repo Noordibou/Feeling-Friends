@@ -218,9 +218,18 @@ const NeedsGoals = () => {
                   {/* edit button */}
                   <button onClick={() => toggleEditGoalMode(index)}>
                     {editGoalMode[index] ? (
-                      <span className="material-symbols-outlined text-[28px] md:text-[36px] font-bold mt-1 flex px-3 md:py-[18px]">
-                        check
-                      </span>
+                      <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
+                    >
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
                     ) : (
                       <img
                         className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}
@@ -345,11 +354,20 @@ const NeedsGoals = () => {
 
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
-                  <button onClick={() => toggleEditNeedsMode(index)}>
+                  <button className="my-4" onClick={() => toggleEditNeedsMode(index)}>
                     {editNeedsMode[index] ? (
-                      <span className="material-symbols-outlined text-[28px] md:text-[36px] font-bold mt-1 flex px-3 md:py-[18px]">
-                        check
-                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
                     ) : (
                       <img
                         className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}

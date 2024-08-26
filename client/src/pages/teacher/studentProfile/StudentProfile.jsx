@@ -252,9 +252,9 @@ const StudentProfile = () => {
         {/* Page container (no nav) */}
         <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10">
           {/* top student section */}
-          <div className="flex">
-            <div className="">
-              <div className="flex flex-row w-full mb-5 ml-3">
+          <div className="flex w-full">
+            <div className="w-full flex flex-col justify-center">
+              <div className="flex self-center flex-row w-full max-w-lg mb-5">
                 <Link
                   className="md:text-header1 text-[33px] font-header1"
                   to={`/viewclasslist/${teacherId}/${classroomId}`}
@@ -287,7 +287,7 @@ const StudentProfile = () => {
                     />
                   </svg>
                 </Link>
-                <div className="text-center w-full">
+                <div className="">
                   {editMode ? (
                     <input
                       type="text"
@@ -335,7 +335,7 @@ const StudentProfile = () => {
                     />
                   </div>
                   {editMode ? (
-                    <div className="inline-flex text-[12px] self-right ml-14 mt-2 font-header1 underline">
+                    <div className="inline-flex text-[12px] self-right mt-2 font-header1 underline w-36 truncate">
                       <FileBase
                         type="file"
                         multiple={false}
@@ -420,44 +420,41 @@ const StudentProfile = () => {
                       </p>
                     )}
                   </div>
-
-                  {/* Button container */}
-                  <div className="flex items-center text-[14px] md:text-[15px] border-l-4 border-sandwich pl-5">
-                    {editMode ? (
-                      <div className="flex flex-col">
-                        <button
-                          className="mt-2 px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
-                          onClick={handleSaveClick}
-                        >
-                          Save
-                        </button>
-                        <button
-                          className="mt-2 px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                          onClick={handleCancelClick}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <button
-                          className="items-center justify-between rounded-md flex flex-row py-2 px-3 bg-lightOrange"
-                          onClick={handleEditClick}
-                        >
-                          Edit
-                          <img
-                            className="pl-2 h-4"
-                            src={editIcon}
-                            alt="edit icon"
-                          />
-                        </button>
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Button container */}
+          <div className="sm:mt-4 flex items-center text-[14px] md:text-[15px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-full max-w-xs sm:max-w-md md:max-w-lg justify-center">
+            {editMode ? (
+              <div className="flex gap-4">
+                <button
+                  className="px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
+                  onClick={handleSaveClick}
+                >
+                  Save
+                </button>
+                <button
+                  className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
+                  onClick={handleCancelClick}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="mt-16 sm:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
+                <button
+                  className="items-center justify-between rounded-md flex flex-row py-2 px-3 font-[Poppins]"
+                  onClick={handleEditClick}
+                >
+                  edit student info
+                  <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
+                </button>
+              </div>
+            )}
+          </div>
+
           <div className="">
             {studentProfile && (
               <div className="mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
@@ -536,10 +533,9 @@ const StudentProfile = () => {
                 </div>
               </div>
             )}
-            <div></div>
           </div>
-          <div className="mb-20 mt-10 max-w-2xl">
-            <div className="flex flex-row gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
+          <div className="mb-20 mt-6 max-w-2xl">
+            <div className="flex flex-col gap-4 md:gap-0 mt-6 mb-2 items-center w-full justify-between ">
               <h1 className="text-black text-sm sm:text-md font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>

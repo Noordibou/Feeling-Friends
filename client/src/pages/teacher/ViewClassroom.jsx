@@ -18,6 +18,8 @@ import withAuth from "../../hoc/withAuth";
 import GoBack from "../../components/GoBack";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
+import editIcon from "../../images/edit_icon.png";
+
 
 const ViewClassroom = () => {
   const { userData } = useUser();
@@ -145,12 +147,13 @@ const ViewClassroom = () => {
                   </Link>
                 </div>
               </div>
-              <div className="flex items-center justify-center h-full">
-                <h2 className="text-[14px] md:text-[16px] font-semibold font-[Poppins] underline bg-sandwich rounded-[1rem] mb-[1rem] p-[0.8rem] ">
+              <div className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3">
+                <h2 className="text-[16px] md:text-[18px] font-[Poppins] text-center underline">
                   <a href={`/edit-seating-chart/${teacherId}/${classroomId}`}>
-                    Edit Seating Chart
+                    edit seating chart
                   </a>
                 </h2>
+                <img src={editIcon} alt="edit icon" />
               </div>
             </div>
 

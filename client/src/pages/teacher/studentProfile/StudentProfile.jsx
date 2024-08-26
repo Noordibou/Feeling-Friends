@@ -539,14 +539,14 @@ const StudentProfile = () => {
             <div></div>
           </div>
           <div className="mb-20 mt-10 max-w-2xl">
-            <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
+            <div className="flex flex-row gap-4 md:gap-0 md:flex-row mt-6 mb-2 items-center w-full justify-between ">
               <h1 className="text-black text-sm sm:text-md font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
               {editModeNotices ? (
-                <div className="flex px-2 ">
+                <div className="flex px-2 my-2 w-full">
                   <button
-                    className="px-3 py-2 bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
+                    className="px-3 py-2 w-full justify-center items-center bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
                     onClick={handleIEPSaveClick}
                   >
                     Save IEP
@@ -554,12 +554,12 @@ const StudentProfile = () => {
                   {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
                 </div>
               ) : (
-                <div className="flex px-2 ">
+                <div className="flex my-2 px-2 w-full">
                   <button
-                    className="flex flex-row items-center text-[14px] md:text-[15px] px-3 py-2 bg-lightOrange rounded-md"
+                    className="flex flex-row w-full justify-center items-center text-[14px] md:text-[16px] px-3 py-2 border-2 border-sandwich rounded-2xl font-[Poppins]"
                     onClick={handleEditIEPClick}
                   >
-                    Edit IEP
+                    edit IEP
                     <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
                   </button>
                 </div>

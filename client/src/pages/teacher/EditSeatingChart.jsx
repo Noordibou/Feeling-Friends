@@ -49,7 +49,6 @@ const EditSeatingChart = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   const [selectedItems, setSelectedItems] = useState([]);
-  const [counter, setCounter] = useState(0);
   const [showMsg, setShowMsg] = useState(false);
   const [noStudentMsg, setNoStudentMsg] = useState(false);
 
@@ -116,14 +115,13 @@ const EditSeatingChart = () => {
   const updateInfo = async () => {
     const updatedUserData = await getTeacherById(teacherId);
     updateUser(updatedUserData);
-    refreshData();
-    setCounter(counter + 1);
+    await refreshData();
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     refreshData();
-  }, [counter]);
+    console.log("refresh successful")
+  }, [userData])
 
   useEffect(() => {
     if (assignedStudents.length === 0) {
@@ -218,12 +216,13 @@ const EditSeatingChart = () => {
         classroomId,
         updatedFurniturePositions
       );
+      await handleRemoveObject();
       // Show brief save message for 3 secs
       setShowMsg(true);
       setTimeout(() => {
         setShowMsg(false);
       }, 2500);
-      updateInfo();
+      await updateInfo();
     } catch (error) {
       console.log("Ooops didnt work");
     }

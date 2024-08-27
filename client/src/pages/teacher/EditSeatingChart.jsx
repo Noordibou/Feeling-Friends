@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
   getAllStudentsClassroom,
@@ -14,7 +14,6 @@ import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
 import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
 import ClassDetails from "../../components/ClassDetails";
-import saveButton from "../../images/button.png";
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
 import openRosterImg from "../../images/ThreePplLight.png";
@@ -22,7 +21,6 @@ import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import SeatingChartButton from "../../components/TeacherView/SeatingChartButton";
 import BtnRainbow from "../../components/BtnRainbow";
-import CloseButton from "../../images/x-button.png"
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";

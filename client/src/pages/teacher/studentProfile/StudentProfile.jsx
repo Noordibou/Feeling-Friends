@@ -1,4 +1,3 @@
-import TeacherNavbar from "../../../components/Navbar/TeacherNavbar.jsx";
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
@@ -25,8 +24,6 @@ const StudentProfile = () => {
   const [studentProfile, setStudentProfile] = useState(null);
   const [error, setError] = useState(null);
   const [events, setEvents] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedEntries, setSelectedEntries] = useState([]);
   const [originalStudentProfile, setOriginalStudentProfile] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editModeNotices, setEditModeNotices] = useState(false);
@@ -67,7 +64,6 @@ const StudentProfile = () => {
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
-    setSelectedDate(date);
 
     const selectedEntries = studentProfile.journalEntries.filter(
       (entry) => new Date(entry.date).toDateString() === date.toDateString()
@@ -88,9 +84,7 @@ const StudentProfile = () => {
     }
     setLastSelectedCheck(lastCheck);
     setOpenStudentInfoModal(true);
-    // -------------------------------------------------------- //
 
-    setSelectedEntries(selectedEntries);
   };
 
   const handleEditClick = () => {

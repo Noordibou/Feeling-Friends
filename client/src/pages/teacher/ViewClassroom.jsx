@@ -9,13 +9,11 @@ import StudentInfoBox from "../../components/StudentInfoBox";
 import { Link } from "react-router-dom";
 import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
-import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassDetails from "../../components/ClassDetails";
 import ButtonView from "../../components/TeacherView/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
-import GoBack from "../../components/GoBack";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
 import editIcon from "../../images/edit_icon.png";
@@ -31,7 +29,6 @@ const ViewClassroom = () => {
   const [selectedStudent, setSelectedStudent] = useState({});
   const [showMsg, setShowMsg] = useState(false);
   const [assignedFurniture, setAssignedFurniture] = useState([])
-  const [isOpen, setIsOpen] = useState(false);
 
   const getClassroomData = async () => {
     try {

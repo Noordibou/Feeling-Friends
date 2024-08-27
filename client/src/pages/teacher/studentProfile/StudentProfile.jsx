@@ -16,6 +16,8 @@ import Nav from "../../../components/Navbar/Nav.jsx";
 import withAuth from "../../../hoc/withAuth.js";
 import Logout from "../../../components/LogoutButton.jsx";
 import { useUser } from "../../../context/UserContext";
+import SmallSaveButton from "../../../components/SmallSaveButton";
+import Button from "../../../components/Button";
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -64,7 +66,6 @@ const StudentProfile = () => {
   }, [teacherId, classroomId, studentId]);
 
   const handleDateClick = (date) => {
-
     const selectedEntries = studentProfile.journalEntries.filter(
       (entry) => new Date(entry.date).toDateString() === date.toDateString()
     );
@@ -84,7 +85,6 @@ const StudentProfile = () => {
     }
     setLastSelectedCheck(lastCheck);
     setOpenStudentInfoModal(true);
-
   };
 
   const handleEditClick = () => {
@@ -100,7 +100,9 @@ const StudentProfile = () => {
     });
   };
 
-  const handleSaveClick = async () => {
+  // TODO: Add IEP save here too. 
+  const handleSaveClick = async (e) => {
+    e.preventDefault()
     try {
       const updatedProfile = await updateStudent(
         teacherId,
@@ -116,7 +118,8 @@ const StudentProfile = () => {
     }
   };
 
-  const handleCancelClick = () => {
+  const handleCancelClick = (e) => {
+    e.preventDefault()
     setStudentProfile(originalStudentProfile);
     setEditMode(false);
     // seteditModeNotices(false);
@@ -159,7 +162,9 @@ const StudentProfile = () => {
     });
   };
 
-  const handleIEPSaveClick = async (category) => {
+  // TODO: merge with handleSaveClick
+  const handleIEPSaveClick = async (category, e) => {
+    e.preventDefault()
     try {
       const updatedStudent = {
         ...studentProfile,
@@ -230,12 +235,6 @@ const StudentProfile = () => {
     });
   };
 
-  // not working yet
-  //    const handleIEPCancelClick = () => {
-  //     setStudentProfile(originalStudentProfile);
-  //     seteditModeNotices(false);
-  //   };
-
   return (
     <>
       {/* Page conatainer including bottom nav */}
@@ -244,6 +243,7 @@ const StudentProfile = () => {
           <Logout location="teacherLogout" userData={userData} />
         </div>
         {/* Page container (no nav) */}
+        <form onSubmit={handleSaveClick}>
         <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10">
           {/* top student section */}
           <div className="flex w-full">
@@ -282,154 +282,156 @@ const StudentProfile = () => {
                   </svg>
                 </Link>
                 <div className="">
-                  {editMode ? (
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={studentProfile.firstName}
-                      onChange={handleInputChange}
-                      className="w-4/12 md:w-1/4 py-2 px-2 mx-3 text-[20px] rounded-md bg-sandwich"
-                    />
-                  ) : (
-                    <span className="md:text-header1 text-[33px] font-header1 px-2">
-                      {studentProfile?.firstName}
-                    </span>
-                  )}
-                  {editMode ? (
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={studentProfile.lastName}
-                      onChange={handleInputChange}
-                      className="w-4/12 md:w-1/4 py-2 px-2 text-[20px] rounded-md bg-sandwich"
-                    />
-                  ) : (
-                    <span className="md:text-header1 text-[33px] font-header1">
-                      {studentProfile?.lastName}
-                    </span>
-                  )}
+                  {/* First & Last Name */}
+                  <fieldset>
+                    {editMode ? (
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={studentProfile.firstName}
+                        onChange={handleInputChange}
+                        className="w-4/12 md:w-1/4 py-2 px-2 mx-3 text-[20px] rounded-md bg-sandwich"
+                      />
+                    ) : (
+                      <span className="md:text-header1 text-[33px] font-header1 px-2">
+                        {studentProfile?.firstName}
+                      </span>
+                    )}
+                    {editMode ? (
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={studentProfile.lastName}
+                        onChange={handleInputChange}
+                        className="w-4/12 md:w-1/4 py-2 px-2 text-[20px] rounded-md bg-sandwich"
+                      />
+                    ) : (
+                      <span className="md:text-header1 text-[33px] font-header1">
+                        {studentProfile?.lastName}
+                      </span>
+                    )}
+                  </fieldset>
                 </div>
               </div>
 
               {/* Image + Student Info Container + Button */}
-              <div className="flex flex-col md:flex-row items-center justify-center">
-                {/* Image */}
-                <div className="flex flex-col items-center md:self-left md:mr-5">
-                  <div
-                    className={`flex items-center justify-center w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
-                  >
-                    <img
-                      src={
-                        studentProfile?.avatarImg === "none"
-                          ? youngStudent
-                          : studentProfile?.avatarImg
-                      }
-                      alt="student"
-                      className="rounded-md object-fill w-32"
-                    />
-                  </div>
-                  {editMode ? (
-                    <div className="inline-flex text-[12px] self-right mt-2 font-header1 underline w-36 truncate">
-                      <FileBase
-                        type="file"
-                        multiple={false}
-                        onDone={({ base64 }) => handleFileUpload({ base64 })}
+              <div>
+                {/* Field set section for student info */}
+                <fieldset className="flex flex-col md:flex-row items-center justify-center">
+                  {/* Image */}
+                  <div className="flex flex-col items-center md:self-left md:mr-5">
+                    <div
+                      className={`flex items-center justify-center w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
+                    >
+                      <img
+                        src={
+                          studentProfile?.avatarImg === "none"
+                            ? youngStudent
+                            : studentProfile?.avatarImg
+                        }
+                        alt="student"
+                        className="rounded-md object-fill w-32"
                       />
                     </div>
-                  ) : null}
-                </div>
-                <div className="flex justify-center my-5 md:my-0">
-                  {/* Student Info Container */}
-                  <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
-                    <p>Age: {calculateAge(studentProfile?.birthday)}</p>
                     {editMode ? (
-                      <div>
-                        <label>Grade: </label>
-                        <input
-                          type="text"
-                          name="gradeYear"
-                          value={studentProfile.gradeYear}
-                          onChange={handleInputChange}
-                          className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                      <div className="inline-flex text-[12px] self-right mt-2 font-header1 underline w-36 truncate">
+                        <FileBase
+                          type="file"
+                          multiple={false}
+                          onDone={({ base64 }) => handleFileUpload({ base64 })}
                         />
                       </div>
-                    ) : (
-                      <p>
-                        Grade: <span>{studentProfile?.gradeYear}</span>
-                      </p>
-                    )}
-                    {editMode ? (
-                      <div>
-                        <label>Student ID: </label>
-                        <input
-                          type="text"
-                          name="schoolStudentId"
-                          value={studentProfile.schoolStudentId}
-                          onChange={handleInputChange}
-                          className="rounded-md bg-sandwich w-7/12 px-2 my-1"
-                        />
-                      </div>
-                    ) : (
-                      <p>
-                        Student ID:{" "}
-                        <span>{studentProfile?.schoolStudentId}</span>
-                      </p>
-                    )}
-                    {editMode ? (
-                      <div>
-                        <label>Birthday: </label>
-                        <input
-                          type="text"
-                          name="birthday"
-                          value={studentProfile.birthday}
-                          onChange={handleInputChange}
-                          className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                        />
-                      </div>
-                    ) : (
-                      <p>
-                        Birthday: <span>{studentProfile?.birthday}</span>
-                      </p>
-                    )}
-                    {editMode ? (
-                      <div>
-                        <label>IEP: </label>
-                        <select
-                          value={studentProfile.iepStatus}
-                          onChange={(e) =>
-                            setStudentProfile({
-                              ...studentProfile,
-                              iepStatus: e.target.value,
-                            })
-                          }
-                          className="rounded-md bg-sandwich px-2 my-1"
-                        >
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-                    ) : (
-                      <p>
-                        IEP: <span>{studentProfile?.iepStatus}</span>
-                      </p>
-                    )}
+                    ) : null}
                   </div>
-                </div>
+                  <div className="flex justify-center my-5 md:my-0">
+                    {/* Student Info Container */}
+                    <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
+                      <p>Age: {calculateAge(studentProfile?.birthday)}</p>
+                      {editMode ? (
+                        <div>
+                          <label>Grade: </label>
+                          <input
+                            type="text"
+                            name="gradeYear"
+                            value={studentProfile.gradeYear}
+                            onChange={handleInputChange}
+                            className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                          />
+                        </div>
+                      ) : (
+                        <p>
+                          Grade: <span>{studentProfile?.gradeYear}</span>
+                        </p>
+                      )}
+                      {editMode ? (
+                        <div>
+                          <label>Student ID: </label>
+                          <input
+                            type="text"
+                            name="schoolStudentId"
+                            value={studentProfile.schoolStudentId}
+                            onChange={handleInputChange}
+                            className="rounded-md bg-sandwich w-7/12 px-2 my-1"
+                          />
+                        </div>
+                      ) : (
+                        <p>
+                          Student ID:{" "}
+                          <span>{studentProfile?.schoolStudentId}</span>
+                        </p>
+                      )}
+                      {editMode ? (
+                        <div>
+                          <label>Birthday: </label>
+                          <input
+                            type="text"
+                            name="birthday"
+                            value={studentProfile.birthday}
+                            onChange={handleInputChange}
+                            className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                          />
+                        </div>
+                      ) : (
+                        <p>
+                          Birthday: <span>{studentProfile?.birthday}</span>
+                        </p>
+                      )}
+                      {editMode ? (
+                        <div>
+                          <label>IEP: </label>
+                          <select
+                            value={studentProfile.iepStatus}
+                            onChange={(e) =>
+                              setStudentProfile({
+                                ...studentProfile,
+                                iepStatus: e.target.value,
+                              })
+                            }
+                            className="rounded-md bg-sandwich px-2 my-1"
+                          >
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      ) : (
+                        <p>
+                          IEP: <span>{studentProfile?.iepStatus}</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </fieldset>
               </div>
             </div>
           </div>
 
+          {/* TODO: Delete these buttons */}
           {/* Button container */}
           <div className="sm:mt-4 flex items-center text-[14px] md:text-[15px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-full max-w-xs sm:max-w-md md:max-w-lg justify-center">
             {editMode ? (
               <div className="flex gap-4">
                 <button
-                  className="px-4 py-2 bg-lightCyan border-lightBlue border-2 rounded-md"
-                  onClick={handleSaveClick}
-                >
-                  Save
-                </button>
-                <button
+                  type="button"
                   className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
                   onClick={handleCancelClick}
                 >
@@ -439,6 +441,7 @@ const StudentProfile = () => {
             ) : (
               <div className="mt-16 sm:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
                 <button
+                  type="button"
                   className="items-center justify-between rounded-md flex flex-row py-2 px-3 font-[Poppins]"
                   onClick={handleEditClick}
                 >
@@ -529,19 +532,21 @@ const StudentProfile = () => {
               <h1 className="text-black text-sm sm:text-md font-bold font-header1">
                 Individual Education Program (IEP)
               </h1>
+              {/* TODO: delete this save button */}
               {editModeNotices ? (
                 <div className="flex px-2 my-2 w-full">
                   <button
-                    className="px-3 py-2 w-full justify-center items-center bg-lightCyan text-[14px] md:text-[16px] border-lightBlue border-2 rounded-md"
-                    onClick={handleIEPSaveClick}
-                  >
-                    Save IEP
-                  </button>
-                  {/* <button onClick={handleIEPCancelClick}>Cancel</button> */}
+                  type="button"
+                  className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
+                  onClick={handleCancelClick}
+                >
+                  Cancel
+                </button>
                 </div>
               ) : (
                 <div className="flex my-2 px-2 w-full">
                   <button
+                    type="button"
                     className="flex flex-row w-full justify-center items-center text-[14px] md:text-[16px] px-3 py-2 border-2 border-sandwich rounded-2xl font-[Poppins]"
                     onClick={handleEditIEPClick}
                   >
@@ -551,6 +556,8 @@ const StudentProfile = () => {
                 </div>
               )}
             </div>
+
+            <fieldset>
             <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
               <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4 ">
                 <h3 className="font-header4">Content Area Notices</h3>
@@ -833,14 +840,30 @@ const StudentProfile = () => {
                 )}
               </div>
             </div>
+            </fieldset>
           </div>
         </div>
+        <div className="lg:hidden flex justify-center">
+          <div
+            className="lg:hidden fixed bottom-36 flex "
+            type="submit"
+          >
+            <Button buttonText="Save" />
+          </div>
+        </div>
+        <div
+            className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
+            type="submit"
+          >
+            <SmallSaveButton />
+          </div>
+        </form>
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>
       </div>
     </>
   );
-}
+};
 
-export default withAuth(['teacher'])(StudentProfile)
+export default withAuth(["teacher"])(StudentProfile);

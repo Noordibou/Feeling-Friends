@@ -438,7 +438,7 @@ const StudentProfile = () => {
                   </button>
                 </div>
               ) : (
-                <div className="mt-16 sm:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
+                <div className="mt-2 md:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
                   <button
                     type="button"
                     className="items-center justify-between rounded-md flex flex-row py-2 px-3 font-[Poppins]"

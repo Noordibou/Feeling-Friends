@@ -22,6 +22,7 @@ import openFurnitureImg from "../../images/DeskImgLight.png";
 import MsgModal from "../../components/SeatingChart/MsgModal";
 import SeatingChartButton from "../../components/TeacherView/SeatingChartButton";
 import BtnRainbow from "../../components/BtnRainbow";
+import CloseButton from "../../images/x-button.png"
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
@@ -34,7 +35,7 @@ const EditSeatingChart = () => {
   const [classroom, setClassroom] = useState(null);
   const [students, setStudents] = useState([]);
   const constraintsRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isRemoveMode, setIsRemoveMode] = useState(false)
 
 
   const [assignedStudents, setAssignedStudents] = useState([]);
@@ -48,7 +49,6 @@ const EditSeatingChart = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   const [selectedItems, setSelectedItems] = useState([]);
-  const [counter, setCounter] = useState(0);
   const [showMsg, setShowMsg] = useState(false);
   const [noStudentMsg, setNoStudentMsg] = useState(false);
 
@@ -107,7 +107,6 @@ const EditSeatingChart = () => {
       );
       setAssignedStudents(assigned);
     } catch (error) {
-      console.log("oof error ");
       console.log(error);
     }
   };
@@ -115,14 +114,12 @@ const EditSeatingChart = () => {
   const updateInfo = async () => {
     const updatedUserData = await getTeacherById(teacherId);
     updateUser(updatedUserData);
-    refreshData();
-    setCounter(counter + 1);
+    await refreshData();
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     refreshData();
-  }, [counter]);
+  }, [userData])
 
   useEffect(() => {
     if (assignedStudents.length === 0) {
@@ -143,9 +140,6 @@ const EditSeatingChart = () => {
           /translateX\(([^)]+)px\) translateY\(([^)]+)px\)/
         );
 
-        console.log("furnish coords: " + furnishCoords);
-        console.log("furniture rotation: " + furniturePositions[itemId]?.rotation)
-
         if (furnishCoords) {
           setFurniturePositions((prevPositions) => ({
             ...prevPositions,
@@ -156,8 +150,6 @@ const EditSeatingChart = () => {
               rotation: furniturePositions[itemId]?.rotation || classroom.furniture[itemId]?.rotation,
             },
           }));
-        } else {
-          console.log("woops, no furnished coords");
         }
       } else {
         const motionDiv = document.getElementById(`motion-div-${itemId}`);
@@ -205,11 +197,6 @@ const EditSeatingChart = () => {
       }
     );
 
-    console.log(
-      "updated funriture positions: " +
-        JSON.stringify(updatedFurniturePositions)
-    );
-
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       await updateFurniturePositions(
@@ -217,14 +204,15 @@ const EditSeatingChart = () => {
         classroomId,
         updatedFurniturePositions
       );
+      await handleRemoveObject();
       // Show brief save message for 3 secs
       setShowMsg(true);
       setTimeout(() => {
         setShowMsg(false);
       }, 2500);
-      updateInfo();
+      await updateInfo();
     } catch (error) {
-      console.log("Ooops didnt work");
+      console.log(error);
     }
   };
 
@@ -308,6 +296,8 @@ const EditSeatingChart = () => {
                   handleDragEnd={handleDragEnd}
                   selectedItems={selectedItems}
                   setSelectedItems={setSelectedItems}
+                  isRemoveMode={isRemoveMode}
+                  handleRemoveObject={handleRemoveObject}
                 />
 
                 <AssignedStudent
@@ -317,19 +307,9 @@ const EditSeatingChart = () => {
                   constraintsRef={constraintsRef}
                   selectedStudents={selectedStudents}
                   handleDragEnd={handleDragEnd}
+                  isRemoveMode={isRemoveMode}
+                  handleRemoveObject={handleRemoveObject}
                 />
-                <div className="self-end flex items-center justify-center mb-8 w-[752px]">
-                  {/* Unassigned Section */}
-                  <button
-                    id="unassigned-section"
-                    className="fixed bottom-8 sm:bottom-10 right-0 left-2 sm:left-10 px-2 w-[30%] md:flex md:relative items-center py-3 md:py-4 md:w-[550px] flex-col rounded-2xl border-4 border-darkSandwich bg-notebookPaper"
-                    onClick={handleRemoveObject}
-                  >
-                    <h2 className="md:flex items-center h-full font-semibold text-[15px] md:text-[24px] font-[Poppins]">
-                      Remove from Class
-                    </h2>
-                  </button>
-                </div>
                 </div>
               </div>
             </>
@@ -396,7 +376,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="fixed w-[58%] bottom-10 left-[37%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
+            <div className="fixed w-[40%] bottom-10 left-[50%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
               <BtnRainbow textColor="text-black" btnText="Save" handleSave={handleSave}/>
             </div>
           </div>

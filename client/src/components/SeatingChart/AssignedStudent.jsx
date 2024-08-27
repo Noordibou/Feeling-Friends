@@ -3,6 +3,7 @@ import { motion, useMotionValue } from "framer-motion";
 import SampleAvatar from "../../images/Sample_Avatar.png";
 import { toggleSelected } from "../../utils/editSeatChartUtil";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
+import xButton from "../../images/x-button.png"
 
 const AssignedStudent = ({
   assignedStudents,
@@ -10,7 +11,7 @@ const AssignedStudent = ({
   constraintsRef,
   selectedStudents,
   setSelectedStudents,
-  handleDragEnd,
+  handleDragEnd
 }) => {
   return (
     <>
@@ -41,7 +42,6 @@ const AssignedStudent = ({
           );
 
           const { borderColorClass } = getLastJournalInfo(assignedStudent)
-
           return (
             <motion.div
               id={`motion-div-${studentObj.student}`}
@@ -55,12 +55,11 @@ const AssignedStudent = ({
                 x: Math.max(0, initialX),
                 y: Math.max(0, initialY),
               }}
-              className={`absolute border-4 px-[4px] rounded-2xl ${
-                selectedStyling ? "border-black" : ` border-${borderColorClass}`
-              } ${borderColorClass === "sandwich" ? "bg-[#ece6d2]" : `bg-${borderColorClass}`}`}
-              onDoubleClick={() => {
-                setSelectedStudents(toggleSelected(newFormat, alreadySelected, selectedStudents));
-              }}
+              className={`absolute border-4 border-${borderColorClass} px-[4px] rounded-2xl ${
+                borderColorClass === "sandwich"
+                  ? "bg-[#ece6d2]"
+                  : `bg-${borderColorClass}`
+              }`}
               onDragEnd={(event, info) => {
                 const containerBounds =
                   constraintsRef.current.getBoundingClientRect();
@@ -79,19 +78,53 @@ const AssignedStudent = ({
                 handleDragEnd(studentObj.student, "assigned", containerY);
               }}
             >
-              <div className="">
+              <div className="relative">
+                {/* Add to Removal List Button */}
+
+                <button
+                  className={`absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center ${selectedStyling ? "bg-emerald-500" : "bg-red-500"} z-20 `}
+                  onClick={() => {
+                    setSelectedStudents(
+                      toggleSelected(
+                        newFormat,
+                        alreadySelected,
+                        selectedStudents
+                      )
+                    );
+                  }}
+                >
+                  <p className="flex items-center font-bold text-white text-lg h-full -mt-1">
+                    {selectedStyling ? "+" : "-"}
+                  </p>
+                </button>
                 <div className="flex w-full justify-center h-full items-center">
                   <img
                     draggable={false}
-                    className={`flex object-cover mt-1 w-[55px] h-[50px] rounded-2xl ${borderColorClass === "sandwich" ? "opacity-50" : ""}`}
-                    src={assignedStudent.avatarImg === "none" ? SampleAvatar : assignedStudent.avatarImg}
+                    className={`flex object-cover mt-1 w-[55px] h-[50px] rounded-2xl ${
+                      borderColorClass === "sandwich" ? "opacity-50" : ""
+                    }`}
+                    src={
+                      assignedStudent.avatarImg === "none"
+                        ? SampleAvatar
+                        : assignedStudent.avatarImg
+                    }
                     alt={assignedStudent.firstName}
                   />
                 </div>
                 <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">
-                  {assignedStudent.firstName} {assignedStudent.lastName.charAt(0)}.
+                  {assignedStudent.firstName}{" "}
+                  {assignedStudent.lastName.charAt(0)}.
                 </h3>
               </div>
+
+              {/* Overlay */}
+              {selectedStyling ? (
+                <div
+                  className={`absolute w-[112%] h-[111%] rounded-xl -m-[4px] px-[4px] border-4 border-sandwich bg-sandwich opacity-50 border-opacity-50 inset-0 z-10`}
+                ></div>
+              ) : (
+                <div></div>
+              )}
             </motion.div>
           );
         } else {

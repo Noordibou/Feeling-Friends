@@ -104,9 +104,8 @@ const ClassroomFurniture = ({
                   refresh
                 </span>
               </button>
-              {isRemoveMode && (
                 <button
-                  className="absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center bg-blue "
+                  className={`absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center ${selectedStyling ? "bg-green" : "bg-red-400"}`}
                   onClick={() => {
                     // Handle the X button click here
                     // handleRemoveObject <= need to refactor first 
@@ -117,7 +116,6 @@ const ClassroomFurniture = ({
                   {/* <img src={xButton} alt="remove item" className="h-6 w-6" /> */}
                   <p className="flex items-center font-bold text-white text-lg h-full -mt-1">{ selectedStyling ? "+" : "-"}</p>
                 </button>
-              )}
 
               <img
                 draggable={false}

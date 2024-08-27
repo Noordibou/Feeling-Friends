@@ -116,6 +116,29 @@ const StudentProfile = () => {
       setError("An error occurred while saving the student profile.");
       console.error(error);
     }
+
+    try {
+      const updatedStudent = {
+        ...studentProfile,
+        // Ensure all IEP-related categories are included
+        contentAreaNotices: studentProfile.contentAreaNotices || [],
+        learningChallenges: studentProfile.learningChallenges || [],
+        accomodationsAndAssisstiveTech: studentProfile.accomodationsAndAssisstiveTech || [],
+      };
+  
+      const updatedProfile = await updateStudent(
+        teacherId,
+        classroomId,
+        studentId,
+        updatedStudent
+      );
+  
+      setStudentProfile(updatedProfile);
+      setEditModeNotices(false);
+    } catch (error) {
+      setError("An error occurred while saving IEP data.");
+      console.error(error);
+    }
   };
 
   const handleCancelClick = (e) => {
@@ -163,28 +186,28 @@ const StudentProfile = () => {
   };
 
   // TODO: merge with handleSaveClick
-  const handleIEPSaveClick = async (category, e) => {
-    e.preventDefault()
-    try {
-      const updatedStudent = {
-        ...studentProfile,
-        [category]: studentProfile[category] || [],
-      };
+  // const handleIEPSaveClick = async (category, e) => {
+  //   e.preventDefault()
+  //   try {
+  //     const updatedStudent = {
+  //       ...studentProfile,
+  //       [category]: studentProfile[category] || [],
+  //     };
 
-      const updatedProfile = await updateStudent(
-        teacherId,
-        classroomId,
-        studentId,
-        updatedStudent
-      );
+  //     const updatedProfile = await updateStudent(
+  //       teacherId,
+  //       classroomId,
+  //       studentId,
+  //       updatedStudent
+  //     );
 
-      setStudentProfile(updatedProfile);
-      setEditModeNotices(false);
-    } catch (error) {
-      setError(`Error saving ${category}`);
-      console.error(error);
-    }
-  };
+  //     setStudentProfile(updatedProfile);
+  //     setEditModeNotices(false);
+  //   } catch (error) {
+  //     setError(`Error saving ${category}`);
+  //     console.error(error);
+  //   }
+  // };
 
   const handleIEPDeleteClick = (index, category) => {
     const updatedItems = [...studentProfile[category]];
@@ -633,6 +656,7 @@ const StudentProfile = () => {
                   studentProfile?.contentAreaNotices.length === 0) ||
                   editModeNotices) && (
                   <button
+                    type="button"
                     className="mt-2"
                     onClick={() => handleIEPAddClick("contentAreaNotices")}
                   >
@@ -711,6 +735,7 @@ const StudentProfile = () => {
                   studentProfile?.learningChallenges.length === 0) ||
                   editModeNotices) && (
                   <button
+                    type="button"
                     className="mt-2"
                     onClick={() => handleIEPAddClick("learningChallenges")}
                   >
@@ -830,6 +855,7 @@ const StudentProfile = () => {
                     0) ||
                   editModeNotices) && (
                   <button
+                    type="button"
                     className="mt-2"
                     onClick={() =>
                       handleIEPAddClick("accomodationsAndAssisstiveTech")
@@ -844,19 +870,19 @@ const StudentProfile = () => {
           </div>
         </div>
         <div className="lg:hidden flex justify-center">
-          <div
+          <button
             className="lg:hidden fixed bottom-36 flex "
             type="submit"
           >
             <Button buttonText="Save" />
-          </div>
+          </button>
         </div>
-        <div
+        <button
             className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
             type="submit"
           >
             <SmallSaveButton />
-          </div>
+          </button>
         </form>
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />

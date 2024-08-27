@@ -21,7 +21,8 @@
 
   .week-view .react-calendar__tile {
     height: 170px;
-    font-size: 18px;
+    font-size: 20px;
+    font-family: Karla;
   }
   
   .react-calendar__navigation button {

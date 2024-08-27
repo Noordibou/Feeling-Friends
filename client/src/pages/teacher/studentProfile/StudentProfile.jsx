@@ -493,6 +493,7 @@ const StudentProfile = () => {
 
                   <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center bg-notebookPaper">
                     <button
+                      type="button"
                       className={`${
                         !isMonthView ? "bg-sandwich font-semibold" : ""
                       } border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
@@ -501,6 +502,7 @@ const StudentProfile = () => {
                       <h4 className="font-[Poppins]">Week View</h4>
                     </button>
                     <button
+                      type="button"
                       className={`${
                         isMonthView ? "bg-sandwich font-semibold " : ""
                       }bg-notebook border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}

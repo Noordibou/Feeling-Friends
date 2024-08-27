@@ -17,8 +17,8 @@ module.exports = {
         'karla': 'Karla',
         'poppins': 'Poppins',
         'inter': 'Inter',
+        'arrow': ['Arial', 'Helvetica', 'sans-serif'],
       },
-
       fontSize: {
         'header1': '2.5rem',
         'header2': '1.75rem',

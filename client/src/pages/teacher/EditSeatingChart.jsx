@@ -107,7 +107,6 @@ const EditSeatingChart = () => {
       );
       setAssignedStudents(assigned);
     } catch (error) {
-      console.log("oof error ");
       console.log(error);
     }
   };
@@ -120,7 +119,6 @@ const EditSeatingChart = () => {
 
   useEffect(() => {
     refreshData();
-    console.log("refresh successful")
   }, [userData])
 
   useEffect(() => {
@@ -142,9 +140,6 @@ const EditSeatingChart = () => {
           /translateX\(([^)]+)px\) translateY\(([^)]+)px\)/
         );
 
-        console.log("furnish coords: " + furnishCoords);
-        console.log("furniture rotation: " + furniturePositions[itemId]?.rotation)
-
         if (furnishCoords) {
           setFurniturePositions((prevPositions) => ({
             ...prevPositions,
@@ -155,8 +150,6 @@ const EditSeatingChart = () => {
               rotation: furniturePositions[itemId]?.rotation || classroom.furniture[itemId]?.rotation,
             },
           }));
-        } else {
-          console.log("woops, no furnished coords");
         }
       } else {
         const motionDiv = document.getElementById(`motion-div-${itemId}`);
@@ -204,11 +197,6 @@ const EditSeatingChart = () => {
       }
     );
 
-    console.log(
-      "updated funriture positions: " +
-        JSON.stringify(updatedFurniturePositions)
-    );
-
     try {
       await updateSeatingChart(teacherId, classroomId, updatedPositions);
       await updateFurniturePositions(
@@ -224,7 +212,7 @@ const EditSeatingChart = () => {
       }, 2500);
       await updateInfo();
     } catch (error) {
-      console.log("Ooops didnt work");
+      console.log(error);
     }
   };
 

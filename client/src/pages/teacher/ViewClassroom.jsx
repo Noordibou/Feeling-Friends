@@ -105,7 +105,7 @@ const ViewClassroom = () => {
         <div className="flex flex-col md:items-center ">
           <div className="flex flex-col max-w-4xl lg:z-40 ">
             {/* Top Navbar */}
-            <div className="flex flex-col h-[40vh] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 xl:gap-8 z-20">
+            <div className="flex flex-col h-[40vh] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 z-20">
               <div className="flex justify-center w-full flex-col md:flex-row ">
                 <div className="flex">
                   <div className="flex md:justify-center">
@@ -147,14 +147,13 @@ const ViewClassroom = () => {
                   </Link>
                 </div>
               </div>
-              <div className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3">
+              <a href={`/edit-seating-chart/${teacherId}/${classroomId}`} className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3">
                 <h2 className="text-[16px] md:text-[18px] font-[Poppins] text-center underline">
-                  <a href={`/edit-seating-chart/${teacherId}/${classroomId}`}>
+                  
                     edit seating chart
-                  </a>
                 </h2>
-                <img src={editIcon} alt="edit icon" />
-              </div>
+                <img src={editIcon} alt="edit icon" className="h-6 w-6" />
+              </a>
             </div>
 
             <div

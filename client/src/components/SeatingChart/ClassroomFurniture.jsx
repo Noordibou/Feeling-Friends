@@ -11,9 +11,7 @@ const ClassroomFurniture = ({
   constraintsRef,
   handleDragEnd,
   selectedItems,
-  setSelectedItems,
-  isRemoveMode,
-  handleRemoveObject
+  setSelectedItems
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -73,7 +71,7 @@ const ClassroomFurniture = ({
               handleDragEnd(item._id, "furniture");
               setIsDragging(false);
             }}
-            className={`absolute rounded-xl ${shape.style.width} ${shape.style.height} ${ selectedStyling ? "opacity-50" : ""}`}
+            className={`absolute rounded-xl ${shape.style.width} ${shape.style.height}`}
           >
             <div className="relative">
               <button
@@ -105,11 +103,8 @@ const ClassroomFurniture = ({
                 </span>
               </button>
                 <button
-                  className={`absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center ${selectedStyling ? "bg-green" : "bg-red-400"}`}
+                  className={`absolute -top-2 -right-2 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center ${selectedStyling ? "bg-emerald-500" : "bg-red-500"} z-20`}
                   onClick={() => {
-                    // Handle the X button click here
-                    // handleRemoveObject <= need to refactor first 
-                    console.log("X button clicked");
                     setSelectedItems(toggleSelected(item._id, alreadySelected, selectedItems));
                   }}
                 >
@@ -119,7 +114,7 @@ const ClassroomFurniture = ({
 
               <img
                 draggable={false}
-                className="flex w-full h-full"
+                className={`flex w-full h-full ${ selectedStyling ? "opacity-50" : ""}`}
                 src={shape.src}
                 alt={shape.alt}
               />

@@ -42,7 +42,6 @@ const AssignedStudent = ({
           );
 
           const { borderColorClass } = getLastJournalInfo(assignedStudent)
-          // TODO: add X button at top right corner of student div
           return (
             <motion.div
               id={`motion-div-${studentObj.student}`}
@@ -83,9 +82,8 @@ const AssignedStudent = ({
                 {/* Add to Removal List Button */}
 
                 <button
-                  className={`absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center ${selectedStyling ? "bg-emerald-500" : "bg-red-400"} z-20 `}
+                  className={`absolute -top-4 left-12 mt-1 ml-1 rounded-full h-6 w-6 flex items-center justify-center ${selectedStyling ? "bg-emerald-500" : "bg-red-500"} z-20 `}
                   onClick={() => {
-                    console.log("X button clicked");
                     setSelectedStudents(
                       toggleSelected(
                         newFormat,

@@ -28,11 +28,11 @@ const AddStudentModal = ({
   return (
     <>
       {/* bg cover over classroom */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute mr-auto ml-auto z-30 md:mt-[175px] md:w-[752px] w-screen h-screen md:h-[61%] rounded-lg opacity-90"></div>
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute mr-auto ml-auto z-30 md:mt-[235px] md:w-[752px] w-screen h-screen md:h-[61%] rounded-lg opacity-90"></div>
 
       {/* add student modal */}
 
-      <div className="fixed md:absolute top-20 md:top-0 md:mt-[222px] z-30 h-[70%] md:h-[55%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
+      <div className="fixed md:absolute top-20 md:top-0 md:mt-[265px] z-30 h-[70%] md:h-[55%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
         <div className="flex flex-col w-full items-end">
           <button onClick={onClose}>
             <img

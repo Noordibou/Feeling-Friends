@@ -100,7 +100,6 @@ const StudentProfile = () => {
     });
   };
 
-  // TODO: Add IEP save here too. 
   const handleSaveClick = async (e) => {
     e.preventDefault()
     try {
@@ -184,30 +183,6 @@ const StudentProfile = () => {
       [category]: updatedItems,
     });
   };
-
-  // TODO: merge with handleSaveClick
-  // const handleIEPSaveClick = async (category, e) => {
-  //   e.preventDefault()
-  //   try {
-  //     const updatedStudent = {
-  //       ...studentProfile,
-  //       [category]: studentProfile[category] || [],
-  //     };
-
-  //     const updatedProfile = await updateStudent(
-  //       teacherId,
-  //       classroomId,
-  //       studentId,
-  //       updatedStudent
-  //     );
-
-  //     setStudentProfile(updatedProfile);
-  //     setEditModeNotices(false);
-  //   } catch (error) {
-  //     setError(`Error saving ${category}`);
-  //     console.error(error);
-  //   }
-  // };
 
   const handleIEPDeleteClick = (index, category) => {
     const updatedItems = [...studentProfile[category]];
@@ -450,7 +425,6 @@ const StudentProfile = () => {
               </div>
             </div>
 
-            {/* TODO: Delete these buttons */}
             {/* Button container */}
             <div className="sm:mt-4 flex items-center text-[14px] md:text-[15px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-full max-w-xs sm:max-w-md md:max-w-lg justify-center">
               {editMode ? (
@@ -557,7 +531,6 @@ const StudentProfile = () => {
                 <h1 className="text-black text-sm sm:text-md font-bold font-header1">
                   Individual Education Program (IEP)
                 </h1>
-                {/* TODO: delete this save button */}
                 {editModeNotices ? (
                   <div className="flex px-2 my-2 w-full">
                     <button

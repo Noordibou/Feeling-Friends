@@ -171,7 +171,7 @@ const ViewClassroom = () => {
             {classroom ? (
               <>
                 {/* static classroom */}
-                <div className="relative flex w-full md:w-[752px] md:h-[654px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                <div className="relative flex w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                   {/* Classroom Container */}
                   {/* movable classroom */}
                   <div
@@ -180,7 +180,7 @@ const ViewClassroom = () => {
                       Object.keys(selectedStudent).length === 0
                         ? ""
                         : "pointer-events-none"
-                    } relative flex w-[752px] h-[654px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] `}
+                    } relative flex w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] `}
                     ref={constraintsRef}
                     style={{
                       transform: `scale(${zoom})`,

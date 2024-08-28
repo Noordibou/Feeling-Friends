@@ -348,7 +348,7 @@ const EditSeatingChart = () => {
             />
           )}
 
-          <div className="hidden md:flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-start md:mt-5">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-start md:mt-5">
             {/* Open Choose Students Modal */}
             <div className="hidden md:flex flex-col md:flex-row gap-4 items-center justify-center">
               <SeatingChartButton
@@ -379,7 +379,7 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="absolute w-[40%] bottom-10 left-[50%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0 md:mb-52 lg:mb-10">
+            <div className="absolute w-52 left-[15%] bottom-10 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0 md:mb-52 lg:mb-10">
               <BtnRainbow
                 textColor="text-black"
                 btnText="Save"

@@ -144,8 +144,10 @@ const StudentProfile = () => {
     e.preventDefault()
     setStudentProfile(originalStudentProfile);
     setEditMode(false);
-    // seteditModeNotices(false);
+    setEditModeNotices(false);
   };
+
+  
 
   const handleEditIEPClick = () => {
     setOriginalStudentProfile(studentProfile);
@@ -174,10 +176,13 @@ const StudentProfile = () => {
   };
 
   const handleIEPChange = (event, index, field, category) => {
-    const updatedItems = [...studentProfile[category]];
-
+    // Make a deep copy of the studentProfile state to avoid mutating the original state
+    const updatedItems = [...studentProfile[category]].map(item => ({ ...item }));
+  
+    // Update the specific field
     updatedItems[index][field] = event.target.value;
-
+  
+    // Set the updated state
     setStudentProfile({
       ...studentProfile,
       [category]: updatedItems,
@@ -838,9 +843,7 @@ const StudentProfile = () => {
                           )
                         )}
                     {((editModeNotices &&
-                      studentProfile?.accomodationsAndAssisstiveTech.length ===
-                        0) ||
-                      editModeNotices) && (
+                      studentProfile?.accomodationsAndAssisstiveTech.length === 0) || editModeNotices) && (
                       <button
                         type="button"
                         className="mt-2"

@@ -35,7 +35,7 @@
   
   .react-calendar__navigation button:enabled:hover,
   .react-calendar__navigation button:enabled:focus {
-    background-color: #f8f8fa;
+    background-color: #FFF9E4;
   }
   
   .react-calendar__navigation button[disabled] {

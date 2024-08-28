@@ -107,9 +107,9 @@ const ViewClassroom = () => {
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <div className="flex flex-col md:items-center ">
-          <div className="flex flex-col max-w-4xl lg:z-40 ">
+          <div className="flex flex-col h-screen max-w-4xl lg:z-40 ">
             {/* Top Navbar */}
-            <div className="flex flex-col h-[40vh] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 z-20">
+            <div className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-6 pt-2 px-2 z-20">
               <div className="flex justify-center w-full flex-col md:flex-row ">
                 <div className="flex">
                   <div className="flex md:justify-center">
@@ -171,7 +171,7 @@ const ViewClassroom = () => {
             {classroom ? (
               <>
                 {/* static classroom */}
-                <div className="relative flex w-full md:w-[752px] md:h-[654px] h-[60vh] overflow-scroll md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                <div className="relative flex w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                   {/* Classroom Container */}
                   {/* movable classroom */}
                   <div
@@ -180,7 +180,7 @@ const ViewClassroom = () => {
                       Object.keys(selectedStudent).length === 0
                         ? ""
                         : "pointer-events-none"
-                    } relative flex w-[752px] h-[654px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] `}
+                    } relative flex w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] `}
                     ref={constraintsRef}
                     style={{
                       transform: `scale(${zoom})`,
@@ -309,7 +309,7 @@ const ViewClassroom = () => {
                 handleClick={() => closeStudentInfo(selectedStudent)}
               />
             </div>
-          </div>
+          
           <div
             className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
           >
@@ -331,9 +331,7 @@ const ViewClassroom = () => {
               -
             </button>
           </div>
-          {/* <div className="bottom-0 fixed w-screen">
-        <TeacherNavbar  teacherId={teacherId} classroomId={classroomId} />
-        </div> */}
+          </div>
           <div className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
             <Nav teacherId={teacherId} classroomId={classroomId} />
           </div>

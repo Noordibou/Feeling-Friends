@@ -26,7 +26,6 @@ import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
 
-
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
   const { userData, updateUser } = useUser();
@@ -36,7 +35,7 @@ const EditSeatingChart = () => {
 
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [unassignedStudents, setUnassignedStudents] = useState([]);
-  const [furnitureList, setFurnitureList] = useState([])
+  const [furnitureList, setFurnitureList] = useState([]);
 
   const [studentPositions, setStudentPositions] = useState({});
   const [furniturePositions, setFurniturePositions] = useState({});
@@ -80,8 +79,8 @@ const EditSeatingChart = () => {
       const furniture = classroom.furniture.filter(
         (item) => item.assigned === true
       );
-      console.log("furniture: " + JSON.stringify(furniture))
-      setFurnitureList(furniture)
+      console.log("furniture: " + JSON.stringify(furniture));
+      setFurnitureList(furniture);
 
       const classroomStudents = await getAllStudentsClassroom(
         teacherId,
@@ -123,10 +122,9 @@ const EditSeatingChart = () => {
 
   useEffect(() => {
     refreshData();
-  }, [userData])
+  }, [userData]);
 
   useEffect(() => {
-
     if (assignedStudents.length === 0 && furnitureList.length === 0) {
       setEmptyMsg(true);
     } else {
@@ -152,7 +150,9 @@ const EditSeatingChart = () => {
               x: parseInt(furnishCoords[1]),
               y: parseInt(furnishCoords[2]),
               assigned: true,
-              rotation: furniturePositions[itemId]?.rotation || classroom.furniture[itemId]?.rotation,
+              rotation:
+                furniturePositions[itemId]?.rotation ||
+                classroom.furniture[itemId]?.rotation,
             },
           }));
         }
@@ -189,7 +189,9 @@ const EditSeatingChart = () => {
     const updatedFurniturePositions = Object.keys(furniturePositions).map(
       (itemId) => {
         const furniture = furniturePositions[itemId];
-        const furnitureItem = classroom.furniture.find(item => item._id === itemId);
+        const furnitureItem = classroom.furniture.find(
+          (item) => item._id === itemId
+        );
         const furnitureRotation = furnitureItem?.rotation;
 
         return {
@@ -229,10 +231,12 @@ const EditSeatingChart = () => {
         <div className="hidden md:flex md:absolute w-full justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
+
+        {/* FIXME: might neeed to fix page container (this should be full screen) */}
         {/* page container */}
-        <div className="flex flex-col w-full h-full items-center max-w-3xl">
+        <div className="flex flex-col w-full h-screen items-center max-w-3xl">
           {/* top half of page */}
-          <div className="flex flex-col h-[28vh] md:h-auto w-screen md:w-full top-0 sticky md:flex-row max-w-[900px] justify-start mb-2 mt-5 md:mt-20 mx-4 md:ml-5 z-20">
+          <div className="flex flex-col h-[180px] md:h-auto w-screen md:w-full top-0 md:flex-row max-w-[752px] justify-start mb-2 md:mb-0 mt-5 md:mt-10 lg:mt-16 mx-4 md:ml-5 z-20">
             <div className="flex">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -281,10 +285,10 @@ const EditSeatingChart = () => {
           {classroom ? (
             <>
               {/* inside of the classroom (movable on mobile) */}
-              <div className="flex w-full md:w-[752px] md:h-[654px] h-[80vh] overflow-scroll md:overflow-visible md:border-none shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+              <div className="relative w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                 {/* static container of the classroom */}
                 <div
-                  className="relative flex w-[752px] h-[654px] rounded-[1rem] mt-3 mr-auto ml-auto md:border-[#D2C2A4] md:border-[8px]  md:rounded-[1rem] shadow-2xl "
+                  className="relative w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] "
                   ref={constraintsRef}
                 >
                   {/* Classroom layout here */}
@@ -344,7 +348,7 @@ const EditSeatingChart = () => {
             />
           )}
 
-          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-center md:mt-10">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-start md:mt-5">
             {/* Open Choose Students Modal */}
             <div className="hidden md:flex flex-col md:flex-row gap-4 items-center justify-center">
               <SeatingChartButton
@@ -375,34 +379,35 @@ const EditSeatingChart = () => {
             </div>
             {/* Save Layout button */}
 
-            <div className="fixed w-[40%] bottom-10 left-[50%] right-0 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0">
+            <div className="absolute w-52 left-[15%] bottom-10 flex justify-center md:mx-4 md:relative md:bottom-0 md:left-auto md:right-auto z-20 md:z-0 md:mb-52 lg:mb-10">
               <BtnRainbow
                 textColor="text-black"
                 btnText="Save"
                 handleSave={handleSave}
               />
             </div>
-          </div>
+            
 
-          {/* Msg shows when no students are in the classroom */}
-          <div
-            className={`${
-              emptyMsg ? "absolute" : "hidden"
-            } mt-[350px] px-24`}
-          >
-            <h4 className="text-black font-[Poppins] text-[32px] max-w-[730px] text-center font-semibold bg-notebookPaper">
-              Nothing yet! Click Student Roster or Classroom Objects to get started!
-            </h4>
+            {/* Msg shows when no students are in the classroom */}
+            <div
+              className={`${emptyMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
+            >
+              <h4 className="text-black font-[Poppins] text-[32px] max-w-[730px] text-center font-semibold bg-notebookPaper">
+                Nothing yet! Click Student Roster or Classroom Objects to get
+                started!
+              </h4>
+            </div>
           </div>
         </div>
-      </div>
-      {/* Tells user they have saved the layout */}
-      <div className="flex justify-center">
-        <MsgModal
-          msgText="Save Successful!"
-          showMsg={showMsg}
-          textColor="text-black"
-        />
+        {/* Tells user they have saved the layout */}
+        <div className="flex justify-center">
+          <MsgModal
+            msgText="Save Successful!"
+            showMsg={showMsg}
+            textColor="text-black"
+          />
+        </div>
+
       </div>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
         <button
@@ -425,4 +430,4 @@ const EditSeatingChart = () => {
   );
 };
 
-export default withAuth(['teacher'])(EditSeatingChart)
+export default withAuth(["teacher"])(EditSeatingChart);

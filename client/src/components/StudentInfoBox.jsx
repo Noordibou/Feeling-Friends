@@ -27,7 +27,7 @@ const StudentInfoBox = ({
         {/* student image */}
         <div
           className={`flex ${
-            bgColorClass ? `w-28 md:w-32 bg-${bgColorClass} flex justify-center border-${borderColorClass}` : "w-28 opacity-50 bg-[#ece6d2] border-sandwich"
+            bgColorClass ? `w-28 md:w-32 bg-${bgColorClass} justify-center border-${borderColorClass}` : "w-28 md:w-32 opacity-50 bg-[#ece6d2] justify-center border-sandwich"
           }`}
         >
           <img
@@ -62,11 +62,11 @@ const StudentInfoBox = ({
 
           {/* goals & needs */}
           <div
-            className={`${
+            className={`flex px-2 rounded-md ${
               bgColorClass
-                ? "bg-notebookPaper py-2 flex sm:justify-around"
-                : "w-full"
-            } px-2 rounded-md flex`}
+                ? "bg-notebookPaper py-2 sm:justify-around"
+                : ""
+            }`}
           >
             {lastCheck ? (
               <div className="hidden xs:flex flex-col sm:w-60">
@@ -75,9 +75,8 @@ const StudentInfoBox = ({
               </div>
             ) : (
               <div className="flex flex-col sm:w-60 sm:h-16">
-                <h5 className="font-[Poppins] text-[14px] sm:text-[17px]">
-                  {student.firstName} {student.lastName} hasn't checked in
-                  today.
+                <h5 className="font-[Poppins] text-[14px] sm:text-[17px] w-24 xs:w-44 sm:w-60">
+                  {student.firstName} {student.lastName} hasn't checked in today.
                 </h5>
               </div>
             )}

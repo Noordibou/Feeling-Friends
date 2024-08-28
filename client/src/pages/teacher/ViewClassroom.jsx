@@ -9,13 +9,11 @@ import StudentInfoBox from "../../components/StudentInfoBox";
 import { Link } from "react-router-dom";
 import classBoxesIcon from "../../images/ClassBoxesIcon.png";
 import listIcon from "../../images/ListIcon.png";
-import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import ClassDetails from "../../components/ClassDetails";
 import ButtonView from "../../components/TeacherView/ButtonView";
 import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
 import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
-import GoBack from "../../components/GoBack";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
 import editIcon from "../../images/edit_icon.png";
@@ -30,7 +28,7 @@ const ViewClassroom = () => {
   const constraintsRef = useRef(null);
   const [selectedStudent, setSelectedStudent] = useState({});
   const [showMsg, setShowMsg] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [assignedFurniture, setAssignedFurniture] = useState([])
 
   const getClassroomData = async () => {
     try {
@@ -51,10 +49,16 @@ const ViewClassroom = () => {
         };
       });
 
-      const assigned = classroom.students.filter(
+      const students = classroom.students.filter(
         (student) => student.seatInfo.assigned === true
       );
-      setAssignedStudents(assigned);
+      setAssignedStudents(students);
+
+      const furniture = classroom.furniture.filter(
+        (item) => item.assigned === true
+      );
+      
+      setAssignedFurniture(furniture)
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -89,10 +93,10 @@ const ViewClassroom = () => {
   };
 
   useEffect(() => {
-    if (assignedStudents.length > 0) {
-      setShowMsg(false);
-    } else {
+    if (assignedStudents.length === 0 && assignedFurniture.length === 0) {
       setShowMsg(true);
+    } else {
+      setShowMsg(false);
     }
   }, [assignedStudents]);
 
@@ -309,9 +313,8 @@ const ViewClassroom = () => {
           <div
             className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
           >
-            <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
-              Click the Navbar's "Edit" button to add students and furniture to
-              your classroom layout!
+            <h4 className="text-black font-[Poppins] text-[32px] mt-32 md:mt-20 max-w-[740px] text-center font-semibold bg-notebookPaper">
+              Nothing assigned yet!
             </h4>
           </div>
           <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">

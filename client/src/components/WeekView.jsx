@@ -78,6 +78,9 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
     setVisibleDates({ start: prevMonday, end: prevSunday });
   };
 
+  document.querySelector('.react-calendar__navigation__prev-button').style.display = 'none';
+  document.querySelector('.react-calendar__navigation__next-button').style.display = 'none';
+
   useEffect(() => {
     setVisibleDates(getVisibleDates());
   }, [isMonthView]);
@@ -85,20 +88,22 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
 
   return (
     <div className="w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
-      <div className="relative top-6 ">
+      <div className="relative top-[22px]">
         <button
+          type="button"
           alt="previous-week"
-          className="absolute left-6 py-3 px-5 bg-notebookPaper"
+          className="absolute font-arrow text-gray text-[16px] font-semibold left-[19.5px] py-3 px-5 bg-notebookPaper "
           onClick={goToPrevWeek}
         >
-          &lt;
+          ‹
         </button>
         <button
+          type="button"
           alt="next-week"
-          className="absolute right-6 py-3 px-5 bg-notebookPaper"
+          className="absolute font-arrow text-gray text-[16px] font-semibold right-[15.5px] md:right-[49.5px] py-3 px-5 bg-notebookPaper"
           onClick={goToNextWeek}
         >
-          &gt;
+          ›
         </button>
       </div>
       <Calendar

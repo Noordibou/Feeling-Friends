@@ -109,7 +109,7 @@ const ViewClassroom = () => {
         <div className="flex flex-col md:items-center ">
           <div className="flex flex-col h-screen max-w-4xl lg:z-40 ">
             {/* Top Navbar */}
-            <div className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-14 pt-2 px-2 z-20">
+            <div className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-6 pt-2 px-2 z-20">
               <div className="flex justify-center w-full flex-col md:flex-row ">
                 <div className="flex">
                   <div className="flex md:justify-center">

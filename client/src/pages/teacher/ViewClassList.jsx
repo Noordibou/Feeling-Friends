@@ -203,7 +203,7 @@ const ViewClassList = () => {
                     </div>
                   </>
                 ) : (
-                  <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-14 px-5 mb-5 md:mb-0">
+                  <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-6 px-5 mb-5 md:mb-0">
                     <div className="flex md:justify-center">
                       <SimpleTopNav
                         pageTitle={classroom?.classSubject}

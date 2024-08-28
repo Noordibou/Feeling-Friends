@@ -27,6 +27,11 @@ const StudentProfile = () => {
   const [error, setError] = useState(null);
   const [events, setEvents] = useState([]);
   const [originalStudentProfile, setOriginalStudentProfile] = useState(null);
+  const [originalIEPData, setOriginalIEPData] = useState({
+    contentAreaNotices: null,
+    learningChallenges: null,
+    accomodationsAndAssisstiveTech: null,
+  });
   const [editMode, setEditMode] = useState(false);
   const [editModeNotices, setEditModeNotices] = useState(false);
 
@@ -141,38 +146,30 @@ const StudentProfile = () => {
   };
 
   const handleCancelClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setStudentProfile(originalStudentProfile);
     setEditMode(false);
+  };
+
+  const handleCancelIEPClick = (e) => {
+    e.preventDefault();
+    setStudentProfile((prevProfile) => ({
+      ...prevProfile,
+      contentAreaNotices: originalIEPData.contentAreaNotices,
+      learningChallenges: originalIEPData.learningChallenges,
+      accomodationsAndAssisstiveTech: originalIEPData.accomodationsAndAssisstiveTech,
+    }));
     setEditModeNotices(false);
   };
 
-  
 
   const handleEditIEPClick = () => {
-    setOriginalStudentProfile(studentProfile);
+    setOriginalIEPData({
+      contentAreaNotices: studentProfile.contentAreaNotices || [],
+      learningChallenges: studentProfile.learningChallenges || [],
+      accomodationsAndAssisstiveTech: studentProfile.accomodationsAndAssisstiveTech || [],
+    });
     setEditModeNotices(true);
-
-    if (!studentProfile.contentAreaNotices) {
-      setStudentProfile((prevProfile) => ({
-        ...prevProfile,
-        contentAreaNotices: [],
-      }));
-    }
-
-    if (!studentProfile.learningChallenges) {
-      setStudentProfile((prevProfile) => ({
-        ...prevProfile,
-        learningChallenges: [],
-      }));
-    }
-
-    if (!studentProfile.accomodationsAndAssisstiveTech) {
-      setStudentProfile((prevProfile) => ({
-        ...prevProfile,
-        accomodationsAndAssisstiveTech: [],
-      }));
-    }
   };
 
   const handleIEPChange = (event, index, field, category) => {
@@ -543,7 +540,7 @@ const StudentProfile = () => {
                     <button
                       type="button"
                       className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                      onClick={handleCancelClick}
+                      onClick={handleCancelIEPClick}
                     >
                       Cancel
                     </button>

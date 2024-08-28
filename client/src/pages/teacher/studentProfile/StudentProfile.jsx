@@ -31,6 +31,7 @@ const StudentProfile = () => {
     contentAreaNotices: null,
     learningChallenges: null,
     accomodationsAndAssisstiveTech: null,
+    notesForStudent: null
   });
   const [editMode, setEditMode] = useState(false);
   const [editModeNotices, setEditModeNotices] = useState(false);
@@ -158,6 +159,7 @@ const StudentProfile = () => {
       contentAreaNotices: originalIEPData.contentAreaNotices,
       learningChallenges: originalIEPData.learningChallenges,
       accomodationsAndAssisstiveTech: originalIEPData.accomodationsAndAssisstiveTech,
+      notesForStudent: originalIEPData.notesForStudent,
     }));
     setEditModeNotices(false);
   };
@@ -168,6 +170,7 @@ const StudentProfile = () => {
       contentAreaNotices: studentProfile.contentAreaNotices || [],
       learningChallenges: studentProfile.learningChallenges || [],
       accomodationsAndAssisstiveTech: studentProfile.accomodationsAndAssisstiveTech || [],
+      notesForStudent: studentProfile.notesForStudent || []
     });
     setEditModeNotices(true);
   };
@@ -575,7 +578,7 @@ const StudentProfile = () => {
                           (iepEntry, index) => (
                             <div
                               key={index}
-                              className="flex w-full justify-between xs:-mr-3"
+                              className="flex w-full justify-between xs:-mr-3 py-1"
                             >
                               <input
                                 type="text"
@@ -655,7 +658,7 @@ const StudentProfile = () => {
                     {editModeNotices
                       ? studentProfile?.learningChallenges.map(
                           (iepEntry, index) => (
-                            <div key={index} className="flex justify-end">
+                            <div key={index} className="flex justify-end py-1">
                               <input
                                 type="text"
                                 value={iepEntry.challenge}
@@ -671,7 +674,7 @@ const StudentProfile = () => {
                               />
                               <div className="w-full flex justify-end ">
                                 <input
-                                  type="text"
+                                  type="date"
                                   defaultValue={formatDate(iepEntry.date)}
                                   onChange={(event) =>
                                     handleIEPChange(
@@ -681,7 +684,7 @@ const StudentProfile = () => {
                                       "learningChallenges"
                                     )
                                   }
-                                  className="w-1/2 md:w-1/4 rounded-md bg-sandwich text-[14px] md:text-[16px]"
+                                  className="w-1/2 rounded-md bg-sandwich text-[14px] md:text-[16px]"
                                 />
 
                                 <button
@@ -745,7 +748,7 @@ const StudentProfile = () => {
                           (iepEntry, index) => (
                             <div
                               key={index}
-                              className="grid grid-cols-4 gap-1 sm:gap-4 items-center"
+                              className="grid grid-cols-4 gap-1 sm:gap-4 items-center py-1"
                             >
                               {/* accomodation list */}
                               <div className="ml-5">
@@ -847,6 +850,85 @@ const StudentProfile = () => {
                         onClick={() =>
                           handleIEPAddClick("accomodationsAndAssisstiveTech")
                         }
+                      >
+                        Add
+                      </button>
+                    )}
+                  </div>
+                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
+                    <h3 className="font-header4">Notes</h3>
+                    <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
+                      Date
+                    </p>
+                    {editModeNotices
+                      ? studentProfile?.notesForStudent.map(
+                          (iepEntry, index) => (
+                            <div key={index} className="flex justify-end py-1">
+                              <input
+                                type="text"
+                                value={iepEntry.note}
+                                onChange={(event) =>
+                                  handleIEPChange(
+                                    event,
+                                    index,
+                                    "note",
+                                    "notesForStudent"
+                                  )
+                                }
+                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
+                              />
+                              <div className="w-full flex justify-end ">
+                                <input
+                                  type="date"
+                                  defaultValue={formatDate(iepEntry.date)}
+                                  onChange={(event) =>
+                                    handleIEPChange(
+                                      event,
+                                      index,
+                                      "date",
+                                      "notesForStudent"
+                                    )
+                                  }
+                                  className="w-1/2 rounded-md bg-sandwich text-[14px] md:text-[16px]"
+                                />
+
+                                <button
+                                  className="ml-1"
+                                  onClick={() =>
+                                    handleIEPDeleteClick(
+                                      index,
+                                      "notesForStudent"
+                                    )
+                                  }
+                                >
+                                  <img
+                                    src={xButton}
+                                    alt="xButton"
+                                    className="w-4"
+                                  />
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        )
+                      : studentProfile?.notesForStudent.map(
+                          (iepEntry, index) => (
+                            <div
+                              key={index}
+                              className="flex justify-between font-body text-[14px] md:text-[16px]"
+                            >
+                              <p className="w-7/12">{iepEntry.note}</p>
+                              <p>{formatDate(iepEntry.date)}</p>
+                            </div>
+                          )
+                        )}
+                    {((editModeNotices &&
+                      studentProfile?.notesForStudent.length === 0) ||
+                      editModeNotices) && (
+                      <button
+                        type="button"
+                        className="mt-2"
+                        onClick={() => handleIEPAddClick("notesForStudent")}
                       >
                         Add
                       </button>

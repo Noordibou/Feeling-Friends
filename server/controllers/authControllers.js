@@ -70,17 +70,54 @@ const findUserById = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      
       return res.status(404).json({ message: 'User not found' });
     }
 
+    let responseData = {
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+    };
+
     
-    res.status(200).json({ user });
+    res.status(200).json({ responseData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+const findUserByTeacherId = async (req, res) => {
+  console.log("hello check check")
+  try {
+    // Extract teacherId from the request parameters
+    const teacherId = req.params.teacherId;
+
+    // Find a user where the teacher field matches the teacherId
+    const user = await User.findOne({ teacher: teacherId });
+
+    console.log("user: " + JSON.stringify(user))
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Prepare the response data
+    let responseData = {
+      email: user.email,
+      username: user.username
+    };
+
+    console.log("response data from backend contorllelr: " + JSON.stringify(responseData))
+
+    res.status(200).json({ responseData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 const Login = async (req, res) => {
   try {
@@ -200,11 +237,11 @@ const checkAuth = (req, res) => {
 
 const updateTeacherAcctInfo = async (req, res, next) => {
   try {
-    const { userId } = req.params;
+    const { teacherId } = req.params;
     const { email, username } = req.body;
 
-    // Find the user by their ID
-    const user = await User.findById(userId);
+    // Find the user by their teacher ID
+    const user = await User.findOne({ teacher: teacherId });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -238,5 +275,6 @@ module.exports = {
   findUser,
   findUserById,
   checkAuth,
-  updateTeacherAcctInfo
+  updateTeacherAcctInfo,
+  findUserByTeacherId
 };

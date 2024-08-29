@@ -13,6 +13,16 @@ export const getUserById = async (userId) => {
   }
 };
 
+export const getUserByTeacherId = async (teacherId) => {
+  try {
+    const response = await axios.get(`${API_URL}/users/teacher/${teacherId}`);
+    return response.data.responseData;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error;
+  }
+};
+
 export const logoutUser = async () => {
   try {
     return await axios.get(`${API_URL}/logout`, { withCredentials: true });
@@ -31,9 +41,9 @@ export const checkAuthApi = async () => {
   }
 };
 
-export const updateTeacherAcct = async (userId, teacher) => {
+export const updateTeacherAcct = async (teacherId, teacher) => {
   try {
-    return await axios.get(`${API_URL}/users/${userId}/teacher`, teacher, {
+    return await axios.put(`${API_URL}/users/teacher/${teacherId}`, teacher, {
       withCredentials: true,
     });
   } catch (error) {

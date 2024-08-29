@@ -12,6 +12,7 @@ import MsgModal from '../../components/SeatingChart/MsgModal.jsx'
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 import FileBase from "react-file-base64";
 import youngStudent from "../../images/young-student.png";
+import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
 
 
 const EditTeacher = () => {
@@ -26,7 +27,7 @@ const EditTeacher = () => {
     school: "",
     phone: "",
     email: "",
-
+    username: ""
   });
   const [isDisplayOpen, setIsDisplayOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
@@ -37,13 +38,23 @@ const EditTeacher = () => {
     const fetchTeacherData = async () => {
       try {
         const response = await getTeacherById(userData._id);
-        setFormData(response);
+        const acctResponse = await getUserByTeacherId(userData._id)
+        // Combine data from both responses
+        const combinedData = {
+          ...response,
+          email: acctResponse.email,
+          username: acctResponse.username,
+        };
+        setFormData(combinedData);
+        console.log("Combined formData:", JSON.stringify(combinedData));
       } catch (error) {
         console.error(error);
       }
     };
     fetchTeacherData();
+    
   }, [userData]);
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -57,8 +68,12 @@ const EditTeacher = () => {
     event.preventDefault();
     console.log("form adata: " + JSON.stringify(formData))
     try {
-      // Update teacher data
-      await updateUser(formData);
+      const { email, username, ...teacherData } = formData;
+
+      // Update teacher-specific fields
+      await updateTeacherAcct(userData._id, { email, username });
+  
+      await updateUser(teacherData);
       // Show brief save message for 3 secs
       console.log('click click')
       setShowMsg(true);
@@ -82,7 +97,7 @@ const EditTeacher = () => {
   //     avatarImg: file.base64,
   //   });
   // };
-
+  
   return (
     <>
       <div className="flex flex-col min-h-screen w-screen ">
@@ -142,7 +157,7 @@ const EditTeacher = () => {
                   <input
                     type="text"
                     name="email"
-                    value={formData.email || ""}
+                    value={formData?.email || ""}
                     onChange={handleInputChange}
                     className="rounded-lg px-2 py-0.5"
                   />
@@ -152,7 +167,7 @@ const EditTeacher = () => {
                   <input
                     type="text"
                     name="username"
-                    value={formData.username || ""}
+                    value={formData?.username || ""}
                     onChange={handleInputChange}
                     className="rounded-lg px-2 py-0.5"
                   />
@@ -269,26 +284,6 @@ const EditTeacher = () => {
                     type="text"
                     name="school"
                     value={formData.school || ""}
-                    onChange={handleInputChange}
-                    className="rounded-lg px-2 py-0.5"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label>Email </label>
-                  <input
-                    type="text"
-                    name="email"
-                    value={formData.email || ""}
-                    onChange={handleInputChange}
-                    className="rounded-lg px-2 py-0.5"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label>Phone </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone || ""}
                     onChange={handleInputChange}
                     className="rounded-lg px-2 py-0.5"
                   />

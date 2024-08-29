@@ -10,6 +10,9 @@ import withAuth from "../../hoc/withAuth";
 import Button from "../../components/Button.jsx";
 import MsgModal from '../../components/SeatingChart/MsgModal.jsx'
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
+import FileBase from "react-file-base64";
+import youngStudent from "../../images/young-student.png";
+
 
 const EditTeacher = () => {
   const navigate = useNavigate();
@@ -23,10 +26,11 @@ const EditTeacher = () => {
     school: "",
     phone: "",
     email: "",
-    password: "",
+
   });
   const [isDisplayOpen, setIsDisplayOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [isAccountOpen, setIsAccountOpen] = useState(false)
   const [showMsg, setShowMsg] = useState(false)
   
   useEffect(() => {
@@ -51,6 +55,7 @@ const EditTeacher = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    console.log("form adata: " + JSON.stringify(formData))
     try {
       // Update teacher data
       await updateUser(formData);
@@ -70,10 +75,16 @@ const EditTeacher = () => {
     return <div>Loading...</div>; // Or redirect to another page, or show an error message
   }
 
+  const handleFileUpload = (file) => {
+    setFormData({
+      ...formData,
+      avatarImg: file.base64,
+    });
+  };
 
   return (
     <>
-      <div className="flex flex-col h-screen w-screen ">
+      <div className="flex flex-col min-h-screen w-screen ">
         <div className="flex justify-center lg:justify-end underline mt-10 px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
@@ -90,9 +101,87 @@ const EditTeacher = () => {
               {/* Account Profile */}
               <div
                 className="flex w-full justify-between"
+                onClick={() => setIsAccountOpen(!isAccountOpen)}
+              >
+                <h2 className="font-header4 text-header3">Account Settings</h2>
+                <svg
+                  className={`transition-transform duration-300 ${
+                    isAccountOpen ? "" : "rotate-180"
+                  }`}
+                  width="33"
+                  height="33"
+                  viewBox="30 10 40 40"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line
+                    x1="50"
+                    y1="20"
+                    x2="35"
+                    y2="40"
+                    stroke="#000000"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+
+                  <line
+                    x1="50"
+                    y1="20"
+                    x2="65"
+                    y2="40"
+                    stroke="#000000"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              {/* Account Profile Contents */}
+              <div className={`${isAccountOpen ? "" : "hidden"}`}>
+                <div className="flex flex-col">
+                  <label>Email </label>
+                  <input
+                    type="text"
+                    name="email"
+                    value={formData.email || ""}
+                    onChange={handleInputChange}
+                    className="rounded-lg px-2 py-0.5"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label>Username </label>
+                  <input
+                    type="text"
+                    name="username"
+                    value={formData.username || ""}
+                    onChange={handleInputChange}
+                    className="rounded-lg px-2 py-0.5"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label>Phone </label>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={formData.phone || ""}
+                    onChange={handleInputChange}
+                    className="rounded-lg px-2 py-0.5"
+                  />
+                </div>
+                {/* TODO: have a separate modal for this? */}
+                {/* <div className='flex flex-col'>
+                    <label>Password </label>
+                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} className='rounded-lg px-2 py-0.5'  />
+                </div> */}
+              </div>
+            </div>
+
+            {/* TODO: add way to update teacher image */}
+            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]">
+              {/* Account Profile */}
+              <div
+                className="flex w-full justify-between"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
-                <h2 className="font-header4 text-header3">Account profile</h2>
+                <h2 className="font-header4 text-header3">User profile</h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isProfileOpen ? "" : "rotate-180"
@@ -125,6 +214,24 @@ const EditTeacher = () => {
               </div>
               {/* Account Profile Contents */}
               <div className={`${isProfileOpen ? "" : "hidden"}`}>
+                <div className="flex my-5">
+                  <img
+                    src={
+                      formData?.avatarImg === ""
+                        ? youngStudent
+                        : formData?.avatarImg
+                    }
+                    alt="teacher"
+                    className="rounded-md object-fill w-36"
+                  />
+                  <div className="inline-flex text-[12px] font-header1 items-end ml-5 underline w-36">
+                    <FileBase
+                      type="file"
+                      multiple={false}
+                      onDone={({ base64 }) => handleFileUpload({ base64 })}
+                    />
+                  </div>
+                </div>
                 <div className={`flex flex-col `}>
                   <label>Prefix </label>
                   <input

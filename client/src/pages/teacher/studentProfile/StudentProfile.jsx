@@ -8,7 +8,7 @@ import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from "../../../images/x-button.png";
 import FileBase from "react-file-base64";
-import WeekView from "../../../components/WeekView.jsx";
+import WeekView from "../../../components/TeacherView/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
 import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";

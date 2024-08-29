@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { updatePassword } from "../../api/userApi"
 import xButton from "../../images/x-button.png"
 import Button from "../Button";
+import SmallSaveButton from "../SmallSaveButton"
 
 const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg}) => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -45,53 +46,63 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
 
   return (
     <div className={`${showModal ? "flex" : "hidden"}`}>
-        <div className="fixed inset-0 flex items-center justify-center z-10">
-      {/* Background overlay */}
-      <div
-        className="fixed inset-0 bg-graphite opacity-75"
-      ></div>
-      <div className="relative bg-sandwich rounded-xl p-10">
-      <button className="absolute -right-4 -top-4" onClick={handleCloseModal}>
+      <div className="fixed inset-0 flex items-center justify-center z-10">
+        {/* Background overlay */}
+        <div className="fixed inset-0 bg-graphite opacity-75"></div>
+        <div className="relative bg-sandwich w-[80%] sm:w-auto rounded-xl p-6 sm:p-10">
+          <button
+            className="absolute -right-4 -top-4"
+            onClick={handleCloseModal}
+          >
             <img src={xButton} alt="close password change modal" />
-        </button>
-      <h2 className="flex my-8 text-[1.3rem] font-[Poppins]">Update Password</h2>
-      <form  onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-3 font-[Poppins]">
-            <div className="flex flex-col">
+          </button>
+          <h2 className="flex my-8 text-[1.3rem] font-[Poppins]">
+            Update Password
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-3 font-[Poppins]">
+              <div className="flex flex-col">
                 <label>Current Password:</label>
                 <input
-                    className="rounded-md pl-2 py-1"
-                    type="password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    required
+                  className="rounded-md pl-2 py-1"
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  required
                 />
-            </div>
-            <div className="flex flex-col">
+              </div>
+              <div className="flex flex-col">
                 <label>New Password:</label>
                 <input
-                    className="rounded-md pl-2 py-1"
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
+                  className="flex rounded-md pl-2 py-1"
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
                 />
-            </div>
-            <div className="flex flex-col">
+              </div>
+              <div className="flex flex-col">
                 <label>Confirm New Password:</label>
                 <input
-                    className="rounded-md pl-2 py-1"
-                    type="password"
-                    value={confirmNewPassword}
-                    onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    required
+                  className="rounded-md pl-2 py-1"
+                  type="password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  required
                 />
+              </div>
             </div>
-        </div>        
-        <button className="mt-10" type="submit"><Button buttonText="Update Password" /></button>
-      </form>
+            <button className="hidden sm:flex mt-10" type="submit">
+              <Button buttonText="Save" />
+            </button>
+            <div className="flex sm:hidden w-full justify-center mt-10">
+              <button type="submit">
+                <SmallSaveButton />
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

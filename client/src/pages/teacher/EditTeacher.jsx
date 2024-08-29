@@ -107,15 +107,15 @@ const EditTeacher = () => {
           <Logout location="teacherLogout" userData={userData} />
         </div>
         <div className="flex flex-col items-center pt-8">
-          <div className="mt-4 mb-3 max-w-[643px] lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px] ">
+          <div className="mt-4 mb-3 max-w-[643px] lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px] px-5 sm:px-0">
             <h1 className=" font-header1 text-header2 ">Manage settings</h1>
             <p className="text-header3 font-header3 text-start">
               Preferences for your account details and more.
             </p>
           </div>
 
-          <form className="flex flex-col gap-2">
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]">
+          <form className="flex flex-col gap-2 h-screen sm:h-auto max-h-[1200px] mb-32 sm:mb-0">
+            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* Account Profile */}
               <div
                 className="flex w-full justify-between cursor-pointer"
@@ -209,8 +209,8 @@ const EditTeacher = () => {
             </div>
 
             {/* TODO: add way to update teacher image */}
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]">
-              {/* Account Profile */}
+            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
+              {/* User Profile */}
               <div
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -318,7 +318,7 @@ const EditTeacher = () => {
               </motion.div>
             </div>
             {/* Display Section */}
-            <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]  cursor-pointer">
+            <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center cursor-pointer">
               {/* Display Header */}
               <div
                 className="flex w-full justify-between"
@@ -380,9 +380,9 @@ const EditTeacher = () => {
             setShowMsg={setShowMsg}
           ></PasswordChange>
           {/* Save Button on Tablet and Phone screens centered*/}
-          <div className="lg:hidden flex justify-center">
+          <div className="lg:hidden flex justify-center items-center ">
             <div
-              className="lg:hidden fixed bottom-36 flex "
+              className="lg:hidden fixed bottom-32 xs:bottom-36 flex items-center justify-center "
               onClick={(e) => handleFormSubmit(e)}
             >
               <Button buttonText="Save" />

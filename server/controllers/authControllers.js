@@ -268,6 +268,45 @@ const updateTeacherAcctInfo = async (req, res, next) => {
 };
 
 
+const updatePassword = async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    const user = await User.findOne({ teacher: teacherId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the current password matches
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    // Check if new password and confirmation match
+    if (newPassword !== confirmNewPassword) {
+      return res.status(400).json({ message: "New passwords do not match" });
+    }
+
+    // Ensure new password is different from current password
+    const isSamePassword = await bcrypt.compare(newPassword, user.password);
+    if (isSamePassword) {
+      return res.status(400).json({ message: "New password cannot be the same as the current password" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 module.exports = {
   Signup,
   Login,
@@ -276,5 +315,6 @@ module.exports = {
   findUserById,
   checkAuth,
   updateTeacherAcctInfo,
-  findUserByTeacherId
+  findUserByTeacherId,
+  updatePassword
 };

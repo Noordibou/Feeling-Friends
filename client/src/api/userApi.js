@@ -50,3 +50,13 @@ export const updateTeacherAcct = async (teacherId, teacher) => {
     console.error("Check if authorized failed: ", error);
   }
 };
+
+export const updatePassword = async (teacherId, passwords) => {
+  try {
+    return await axios.put(`${API_URL}/users/password/${teacherId}`, passwords, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error("update password failed: ", error);
+  }
+}

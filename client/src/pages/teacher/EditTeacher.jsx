@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { getTeacherById } from "../../api/teachersApi";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import TeacherNavbar from "../../components/Navbar/TeacherNavbar";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
+import PasswordChange from "../../components/TeacherView/PasswordChange.jsx"
 import withAuth from "../../hoc/withAuth";
 import Button from "../../components/Button.jsx";
 import MsgModal from '../../components/SeatingChart/MsgModal.jsx'
@@ -13,6 +13,7 @@ import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 import FileBase from "react-file-base64";
 import youngStudent from "../../images/young-student.png";
 import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
+import editIcon from "../../images/edit_icon.png"
 
 
 const EditTeacher = () => {
@@ -33,6 +34,7 @@ const EditTeacher = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [isAccountOpen, setIsAccountOpen] = useState(false)
   const [showMsg, setShowMsg] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -46,7 +48,6 @@ const EditTeacher = () => {
           username: acctResponse.username,
         };
         setFormData(combinedData);
-        console.log("Combined formData:", JSON.stringify(combinedData));
       } catch (error) {
         console.error(error);
       }
@@ -66,7 +67,7 @@ const EditTeacher = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("form adata: " + JSON.stringify(formData))
+    
     try {
       const { email, username, ...teacherData } = formData;
 
@@ -116,7 +117,7 @@ const EditTeacher = () => {
             <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]">
               {/* Account Profile */}
               <div
-                className="flex w-full justify-between"
+                className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsAccountOpen(!isAccountOpen)}
               >
                 <h2 className="font-header4 text-header3">Account Settings</h2>
@@ -182,11 +183,14 @@ const EditTeacher = () => {
                     className="rounded-lg px-2 py-0.5"
                   />
                 </div>
-                {/* TODO: have a separate modal for this? */}
-                {/* <div className='flex flex-col'>
-                    <label>Password </label>
-                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} className='rounded-lg px-2 py-0.5'  />
-                </div> */}
+                <div className="flex w-full justify-center mt-6 mb-4">
+                  <button className="flex self-center items-center justify-center px-8 border-2 border-graphite rounded-[1.2rem] p-[0.6rem] gap-3" type="button" onClick={() => setShowModal(true)}>
+                  <h2 className="text-[14px] font-[Poppins] text-center underline">
+                    Change Password
+                    </h2>
+                  <img src={editIcon} alt="edit icon" className="h-6 w-6" />
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -194,7 +198,7 @@ const EditTeacher = () => {
             <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]">
               {/* Account Profile */}
               <div
-                className="flex w-full justify-between"
+                className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
                 <h2 className="font-header4 text-header3">User profile</h2>
@@ -288,14 +292,10 @@ const EditTeacher = () => {
                     className="rounded-lg px-2 py-0.5"
                   />
                 </div>
-                {/* <div className='flex flex-col'>
-                    <label>Password </label>
-                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} className='rounded-lg px-2 py-0.5'  />
-                </div> */}
               </div>
             </div>
             {/* Display Section */}
-            <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]">
+            <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]  cursor-pointer">
               {/* Display Header */}
               <div
                 className="flex w-full justify-between"
@@ -340,7 +340,7 @@ const EditTeacher = () => {
               </div>
             </div>
           </form>
-
+          <PasswordChange showModal={showModal} setShowModal={setShowModal} teacherId={userData._id}  showMsg={showMsg} setShowMsg={setShowMsg}></PasswordChange>
           {/* Save Button on Tablet and Phone screens centered*/}
           <div className="lg:hidden flex justify-center">
             <div

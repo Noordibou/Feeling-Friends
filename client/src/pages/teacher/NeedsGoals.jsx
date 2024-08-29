@@ -463,7 +463,7 @@ const NeedsGoals = () => {
             {/* Save Button on Tablet and Phone screens centered*/}
             <div className="lg:hidden flex justify-center">
               <div
-                className="lg:hidden fixed bottom-36 flex "
+                className="lg:hidden fixed bottom-36 flex justify-center"
                 onClick={handleSubmit}
               >
                 <Button buttonText="Save" />

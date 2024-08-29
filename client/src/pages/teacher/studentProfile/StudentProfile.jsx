@@ -939,7 +939,7 @@ const StudentProfile = () => {
               </fieldset>
             </div>
             <div className="lg:hidden flex justify-center">
-              <button className="lg:hidden fixed bottom-36 flex " type="submit">
+              <button className="lg:hidden fixed bottom-36 flex justify-center" type="submit">
                 <Button buttonText="Save" />
               </button>
             </div>

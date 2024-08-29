@@ -97,7 +97,7 @@ const Login = async (req, res) => {
       console.error({ message: `Error, no ${user.role} id found`})
       return res.json({ message: `Error: ${user.role} id required for login. No ${user.role} id found` });
     }
-    const auth = await bcrypt.compare(password, user.password);
+    const auth = await bcrypt.compare(password, user.password);    
     if (!auth) {
       return res.json({ message: 'Incorrect password or email' });
     }
@@ -106,8 +106,6 @@ const Login = async (req, res) => {
 
     let redirectPath = null;
 
-
-    // TODO: *might be able to prevent user from going to different urls based on role
 
     if(user.role === 'student') {
 
@@ -200,6 +198,39 @@ const checkAuth = (req, res) => {
 };
 
 
+const updateTeacherAcctInfo = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { email, username } = req.body;
+
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the email and username fields
+    user.email = email || user.email;
+    user.username = username || user.username;
+
+    // Save the updated user information
+    await user.save();
+
+    res.status(200).json({
+      message: "User updated successfully",
+      success: true,
+      user,
+    });
+
+    next();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 module.exports = {
   Signup,
   Login,
@@ -207,4 +238,5 @@ module.exports = {
   findUser,
   findUserById,
   checkAuth,
+  updateTeacherAcctInfo
 };

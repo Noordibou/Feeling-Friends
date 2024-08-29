@@ -1,4 +1,4 @@
-const { Signup, Login, findUser, findUserById, Logout, checkAuth } = require('../controllers/authControllers')
+const { Signup, Login, findUser, findUserById, Logout, checkAuth, updateTeacherAcctInfo } = require('../controllers/authControllers')
 const { userVerification } = require('../middleware/authMiddleware')
 const { signUpValidation } = require("../middleware/index")
 const router = require("express").Router();
@@ -29,5 +29,6 @@ router.get('/logout', Logout)
 router.get("/users", findUser);
 router.get('/users/:id', findUserById)
 router.get('/check-auth', checkAuth) // for authenticating user navigation
+router.put('/users/:userId/teacher', updateTeacherAcctInfo )
 
 module.exports = router;

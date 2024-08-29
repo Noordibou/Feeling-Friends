@@ -231,12 +231,13 @@ const StudentProfile = () => {
     }
   };
 
-  const handleFileUpload = (file) => {
-    setStudentProfile({
-      ...studentProfile,
-      avatarImg: file.base64,
-    });
-  };
+  // FIXME: this should save to a db
+  // const handleFileUpload = (file) => {
+  //   setStudentProfile({
+  //     ...studentProfile,
+  //     avatarImg: file.base64,
+  //   });
+  // };
 
   return (
     <>
@@ -341,8 +342,8 @@ const StudentProfile = () => {
                           <FileBase
                             type="file"
                             multiple={false}
-                            onDone={({ base64 }) =>
-                              handleFileUpload({ base64 })
+                            onDone={() =>
+                              console.log("nice image!")
                             }
                           />
                         </div>

@@ -30,3 +30,13 @@ export const checkAuthApi = async () => {
     console.error("Check if authorized failed: ", error);
   }
 };
+
+export const updateTeacherAcct = async (userId, teacher) => {
+  try {
+    return await axios.get(`${API_URL}/users/${userId}/teacher`, teacher, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error("Check if authorized failed: ", error);
+  }
+};

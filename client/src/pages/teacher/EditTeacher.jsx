@@ -14,6 +14,7 @@ import FileBase from "react-file-base64";
 import youngStudent from "../../images/young-student.png";
 import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
 import editIcon from "../../images/edit_icon.png"
+import { motion } from 'framer-motion';
 
 
 const EditTeacher = () => {
@@ -152,7 +153,16 @@ const EditTeacher = () => {
                 </svg>
               </div>
               {/* Account Profile Contents */}
-              <div className={`${isAccountOpen ? "" : "hidden"}`}>
+              <motion.div
+                className={`${isAccountOpen ? "" : "hidden"}`}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{
+                  height: isAccountOpen ? "auto" : 0,
+                  opacity: isAccountOpen ? 1 : 0,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+              >
                 <div className="flex flex-col">
                   <label>Email </label>
                   <input
@@ -184,14 +194,18 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex w-full justify-center mt-6 mb-4">
-                  <button className="flex self-center items-center justify-center px-8 border-2 border-graphite rounded-[1.2rem] p-[0.6rem] gap-3" type="button" onClick={() => setShowModal(true)}>
-                  <h2 className="text-[14px] font-[Poppins] text-center underline">
-                    Change Password
+                  <button
+                    className="flex self-center items-center justify-center px-8 border-2 border-graphite rounded-[1.2rem] p-[0.6rem] gap-3"
+                    type="button"
+                    onClick={() => setShowModal(true)}
+                  >
+                    <h2 className="text-[14px] font-[Poppins] text-center underline">
+                      Change Password
                     </h2>
-                  <img src={editIcon} alt="edit icon" className="h-6 w-6" />
+                    <img src={editIcon} alt="edit icon" className="h-6 w-6" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* TODO: add way to update teacher image */}
@@ -232,8 +246,17 @@ const EditTeacher = () => {
                   />
                 </svg>
               </div>
-              {/* Account Profile Contents */}
-              <div className={`${isProfileOpen ? "" : "hidden"}`}>
+              {/* User Profile Contents */}
+              <motion.div
+                className={`${isProfileOpen ? "" : "hidden"}`}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{
+                  height: isProfileOpen ? "auto" : 0,
+                  opacity: isProfileOpen ? 1 : 0,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+              >
                 <div className="flex my-5">
                   <img
                     src={
@@ -292,7 +315,7 @@ const EditTeacher = () => {
                     className="rounded-lg px-2 py-0.5"
                   />
                 </div>
-              </div>
+              </motion.div>
             </div>
             {/* Display Section */}
             <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px]  cursor-pointer">
@@ -335,12 +358,27 @@ const EditTeacher = () => {
                   />
                 </svg>
               </div>
-              <div className={`${isDisplayOpen ? "" : "hidden"}`}>
+              <motion.div
+                className={`${isDisplayOpen ? "" : "hidden"}`}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{
+                  height: isDisplayOpen ? "auto" : 0,
+                  opacity: isDisplayOpen ? 1 : 0,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+              >
                 <h2>Coming soon...</h2>
-              </div>
+              </motion.div>
             </div>
           </form>
-          <PasswordChange showModal={showModal} setShowModal={setShowModal} teacherId={userData._id}  showMsg={showMsg} setShowMsg={setShowMsg}></PasswordChange>
+          <PasswordChange
+            showModal={showModal}
+            setShowModal={setShowModal}
+            teacherId={userData._id}
+            showMsg={showMsg}
+            setShowMsg={setShowMsg}
+          ></PasswordChange>
           {/* Save Button on Tablet and Phone screens centered*/}
           <div className="lg:hidden flex justify-center">
             <div

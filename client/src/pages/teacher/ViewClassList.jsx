@@ -337,7 +337,7 @@ const ViewClassList = () => {
                           {/* Save Button on Tablet and Phone screens centered */}
                           <div className="lg:hidden flex justify-center">
                             <div
-                              className="fixed bottom-36 flex"
+                              className="fixed bottom-36 flex justify-center"
                               onClick={saveClassroomInfo}
                             >
                               <Button buttonText="Save" />

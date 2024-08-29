@@ -70,17 +70,54 @@ const findUserById = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      
       return res.status(404).json({ message: 'User not found' });
     }
 
+    let responseData = {
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+    };
+
     
-    res.status(200).json({ user });
+    res.status(200).json({ responseData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+const findUserByTeacherId = async (req, res) => {
+  console.log("hello check check")
+  try {
+    // Extract teacherId from the request parameters
+    const teacherId = req.params.teacherId;
+
+    // Find a user where the teacher field matches the teacherId
+    const user = await User.findOne({ teacher: teacherId });
+
+    console.log("user: " + JSON.stringify(user))
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Prepare the response data
+    let responseData = {
+      email: user.email,
+      username: user.username
+    };
+
+    console.log("response data from backend contorllelr: " + JSON.stringify(responseData))
+
+    res.status(200).json({ responseData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 const Login = async (req, res) => {
   try {
@@ -97,7 +134,7 @@ const Login = async (req, res) => {
       console.error({ message: `Error, no ${user.role} id found`})
       return res.json({ message: `Error: ${user.role} id required for login. No ${user.role} id found` });
     }
-    const auth = await bcrypt.compare(password, user.password);
+    const auth = await bcrypt.compare(password, user.password);    
     if (!auth) {
       return res.json({ message: 'Incorrect password or email' });
     }
@@ -106,8 +143,6 @@ const Login = async (req, res) => {
 
     let redirectPath = null;
 
-
-    // TODO: *might be able to prevent user from going to different urls based on role
 
     if(user.role === 'student') {
 
@@ -200,6 +235,78 @@ const checkAuth = (req, res) => {
 };
 
 
+const updateTeacherAcctInfo = async (req, res, next) => {
+  try {
+    const { teacherId } = req.params;
+    const { email, username } = req.body;
+
+    // Find the user by their teacher ID
+    const user = await User.findOne({ teacher: teacherId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the email and username fields
+    user.email = email || user.email;
+    user.username = username || user.username;
+
+    // Save the updated user information
+    await user.save();
+
+    res.status(200).json({
+      message: "User updated successfully",
+      success: true,
+      user,
+    });
+
+    next();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+const updatePassword = async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    const user = await User.findOne({ teacher: teacherId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the current password matches
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    // Check if new password and confirmation match
+    if (newPassword !== confirmNewPassword) {
+      return res.status(400).json({ message: "New passwords do not match" });
+    }
+
+    // Ensure new password is different from current password
+    const isSamePassword = await bcrypt.compare(newPassword, user.password);
+    if (isSamePassword) {
+      return res.status(400).json({ message: "New password cannot be the same as the current password" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 module.exports = {
   Signup,
   Login,
@@ -207,4 +314,7 @@ module.exports = {
   findUser,
   findUserById,
   checkAuth,
+  updateTeacherAcctInfo,
+  findUserByTeacherId,
+  updatePassword
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../pages/teacher/studentProfile/StudentProfile.css";
+import "../../pages/teacher/studentProfile/StudentProfile.css";
 
 const WeekView = ({ events, handleDateClick, isMonthView }) => {
   const [visibleDates, setVisibleDates] = useState(getVisibleDates());

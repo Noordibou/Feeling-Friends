@@ -8,7 +8,7 @@ import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
 import xButton from "../../../images/x-button.png";
 import FileBase from "react-file-base64";
-import WeekView from "../../../components/WeekView.jsx";
+import WeekView from "../../../components/TeacherView/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
 import editIcon from "../../../images/edit_icon.png";
 import { getLastJournalInfo } from "../../../utils/editSeatChartUtil.js";
@@ -231,12 +231,13 @@ const StudentProfile = () => {
     }
   };
 
-  const handleFileUpload = (file) => {
-    setStudentProfile({
-      ...studentProfile,
-      avatarImg: file.base64,
-    });
-  };
+  // FIXME: this should save to a db
+  // const handleFileUpload = (file) => {
+  //   setStudentProfile({
+  //     ...studentProfile,
+  //     avatarImg: file.base64,
+  //   });
+  // };
 
   return (
     <>
@@ -341,8 +342,8 @@ const StudentProfile = () => {
                           <FileBase
                             type="file"
                             multiple={false}
-                            onDone={({ base64 }) =>
-                              handleFileUpload({ base64 })
+                            onDone={() =>
+                              console.log("nice image!")
                             }
                           />
                         </div>
@@ -938,7 +939,7 @@ const StudentProfile = () => {
               </fieldset>
             </div>
             <div className="lg:hidden flex justify-center">
-              <button className="lg:hidden fixed bottom-36 flex " type="submit">
+              <button className="lg:hidden fixed bottom-36 flex justify-center" type="submit">
                 <Button buttonText="Save" />
               </button>
             </div>

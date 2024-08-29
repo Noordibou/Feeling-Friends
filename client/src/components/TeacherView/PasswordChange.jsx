@@ -7,7 +7,8 @@ import SmallSaveButton from "../SmallSaveButton"
 const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg}) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState(""); 
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -61,35 +62,78 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-3 font-[Poppins]">
-              <div className="flex flex-col">
+              <div className="relative flex flex-col">
                 <label>Current Password:</label>
                 <input
                   className="rounded-md pl-2 py-1"
-                  type="password"
+                  type={showPassword === "CurrentPW" ? 'text' : 'password'}
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   required
                 />
+                <div
+                  className="absolute right-3 top-7 cursor-pointer"
+                  onMouseDown={() => setShowPassword("CurrentPW")}
+                  onMouseUp={() => setShowPassword("false")}
+                  onMouseLeave={() => setShowPassword("false")}
+                >
+                  {showPassword === "CurrentPW" ? (
+                    <span class="material-symbols-outlined select-none">visibility</span>
+                  ) : (
+                    <span class="material-symbols-outlined select-none">
+                      visibility_off
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col">
+              <div className="relative flex flex-col">
                 <label>New Password:</label>
                 <input
                   className="flex rounded-md pl-2 py-1"
-                  type="password"
+                  type={showPassword === "NewPW" ? 'text' : 'password'}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
                 />
+
+                <div
+                  className="absolute right-3 top-7 cursor-pointer"
+                  onMouseDown={() => setShowPassword("NewPW")}
+                  onMouseUp={() => setShowPassword("false")}
+                  onMouseLeave={() => setShowPassword("false")}
+                >
+                  {showPassword === "NewPW" ? (
+                    <span class="material-symbols-outlined select-none">visibility</span>
+                  ) : (
+                    <span class="material-symbols-outlined select-none">
+                      visibility_off
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col">
+              <div className="relative flex flex-col">
                 <label>Confirm New Password:</label>
                 <input
                   className="rounded-md pl-2 py-1"
-                  type="password"
+                  type={showPassword === "ConfirmNewPW" ? 'text' : 'password'}
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                   required
                 />
+                <div
+                  className="absolute right-3 top-7 cursor-pointer"
+                  onMouseDown={() => setShowPassword("ConfirmNewPW")}
+                  onMouseUp={() => setShowPassword("false")}
+                  onMouseLeave={() => setShowPassword("false")}
+                >
+                  {showPassword === "ConfirmNewPW" ? (
+                    <span class="material-symbols-outlined select-none">visibility</span>
+                  ) : (
+                    <span class="material-symbols-outlined select-none">
+                      visibility_off
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             <button className="hidden sm:flex mt-10" type="submit">

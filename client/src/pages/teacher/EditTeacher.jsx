@@ -16,7 +16,8 @@ import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
 import editIcon from "../../images/edit_icon.png"
 import { motion } from 'framer-motion';
 import TeacherDeleteModal from "../../components/TeacherView/TeacherDeleteModal.jsx";
-
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
 
 
 const EditTeacher = () => {
@@ -40,7 +41,8 @@ const EditTeacher = () => {
   const [showMsg, setShowMsg] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  
+  const {setHasUnsavedChanges} = useUnsavedChanges();
+
   useEffect(() => {
     const fetchTeacherData = async () => {
       try {
@@ -68,6 +70,7 @@ const EditTeacher = () => {
       ...formData,
       [name]: value,
     });
+    setHasUnsavedChanges(true);
   };
 
   const handleFormSubmit = async (event) => {
@@ -86,6 +89,7 @@ const EditTeacher = () => {
       setTimeout(() => {
         setShowMsg(false);
       }, 2500);
+      setHasUnsavedChanges(false);
       // navigate('/teacher-home');
     } catch (error) {
       console.error(error);
@@ -400,6 +404,7 @@ const EditTeacher = () => {
             showMsg={showMsg}
             setShowMsg={setShowMsg}
           ></PasswordChange>
+          <UnsavedChanges />
           {/* Save Button on Tablet and Phone screens centered*/}
           <div className="lg:hidden flex justify-center items-center ">
             <div

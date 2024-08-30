@@ -6,7 +6,7 @@ import Settings from "../../images/Settings.png";
 import NavButton from "../../images/NavButton.png";
 import NavLogo from "../../images/NavLogo.png";
 import { useNavigate } from "react-router-dom";
-
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color:"sky" },
@@ -17,19 +17,28 @@ const navs = [
 
 export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classroomId}) {
   const [isEditMode, setEditMode] = useState(false);
+
+  const {hasUnsavedChanges, openModal } = useUnsavedChanges();
+
+
   const navigate = useNavigate()
-  const redirectTo = (url) => {
+    const redirectTo = (url) => {
     window.location.href = url;
   };
 
   const handleItemClick = (url) => {
+    let finalUrl = url
     if (url.includes(":teacherId")) {
-      url = url.replace(":teacherId", teacherId);
+      finalUrl = url.replace(":teacherId", teacherId);
     }
     if (url.includes(":classroomId")) {
-      url = url.replace(":classroomId", classroomId);
+      finalUrl = url.replace(":classroomId", classroomId);
     }
-    redirectTo(url);
+    if (hasUnsavedChanges) {
+      openModal(() => redirectTo(finalUrl));
+    } else {
+      redirectTo(url);
+    }
   };
 
   const handleEditClick = () => {

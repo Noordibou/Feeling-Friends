@@ -58,7 +58,7 @@ export const updateStudent = async (id, studentUpdate, checkInOutType) => {
 export const deleteStudent = async (id) => {
     try {
         const response = await axios.delete(`${STUDENTS_API_URL}/${id}`, { withCredentials: true })
-        return response.sendStatus(200);
+        return response.status;
     } catch (error) {
         throw error;
     }

@@ -10,6 +10,6 @@ router.post('/create-student', createStudentAndUser)
 router.get('/students', setCacheControlHeader, getAllStudents)
 router.get("/students/:id", setCacheControlHeader, verifyToken, verifyUser, verifyRole(["student"]), getStudentById);
 router.put("/students/:id", verifyToken, verifyUser, updateStudentJournalEntry);
-router.delete("/students/:id", verifyToken, verifyUser, deleteStudent);
+router.delete("/students/:id", deleteStudent);
 
 module.exports = router;

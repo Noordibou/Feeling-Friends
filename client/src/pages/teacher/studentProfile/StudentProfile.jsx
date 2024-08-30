@@ -18,6 +18,7 @@ import Logout from "../../../components/LogoutButton.jsx";
 import { useUser } from "../../../context/UserContext";
 import SmallSaveButton from "../../../components/SmallSaveButton";
 import Button from "../../../components/Button";
+import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx"
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -40,6 +41,7 @@ const StudentProfile = () => {
   const [lastSelectedCheck, setLastSelectedCheck] = useState({});
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const { userData } = useUser();
 
@@ -69,7 +71,7 @@ const StudentProfile = () => {
     };
     fetchStudentProfile();
     window.scrollTo(0, 0);
-  }, [teacherId, classroomId, studentId]);
+  }, [teacherId, classroomId]);
 
   const handleDateClick = (date) => {
     const selectedEntries = studentProfile.journalEntries.filter(
@@ -248,7 +250,7 @@ const StudentProfile = () => {
         </div>
         {/* Page container (no nav) */}
         <form onSubmit={handleSaveClick}>
-          <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10 mb-20 lg:mb-0">
+          <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10 mb-10 md:mb-20 lg:mb-0">
             {/* top student section */}
             <div className="flex w-full">
               <div className="w-full flex flex-col justify-center">
@@ -951,6 +953,12 @@ const StudentProfile = () => {
             </button>
           </div>
         </form>
+        <div className="flex justify-center w-full mb-80 md:mb-20">
+          <button onClick={() => setShowDeleteModal(true)} className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            <h3 className="text-white font-semibold">Delete Student</h3>
+          </button>
+        </div>
+        <ConfirmationModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} studentFullName={studentProfile?.firstName + " " + studentProfile?.lastName} studentId={studentId} teacherId={teacherId} classroomId={classroomId} />
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>

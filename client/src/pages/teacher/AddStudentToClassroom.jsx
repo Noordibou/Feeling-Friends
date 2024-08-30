@@ -310,6 +310,7 @@ const AddStudent = () => {
                           className="w-[120px] rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
                         />
                         <button
+                          type="button"
                           onClick={() =>
                             removeItemFromArray("contentAreaNotices", index)
                           }
@@ -324,6 +325,7 @@ const AddStudent = () => {
                     </div>
                   ))}
                   <button
+                  type="button"
                     onClick={() =>
                       addItemToArray("contentAreaNotices", {
                         contentArea: "",
@@ -342,7 +344,7 @@ const AddStudent = () => {
                     Diagnosed
                   </p>
                   {studentProfile.learningChallenges.map((challenge, index) => (
-                    <div key={index} className="flex justify-end">
+                    <div key={index} className="flex justify-end py-2">
                       <input
                         type="text"
                         name="challenge"
@@ -365,6 +367,7 @@ const AddStudent = () => {
                           className="w-[130px] rounded-md bg-sandwich text-[14px] md:text-[16px] ml-3 px-2"
                         />
                         <button
+                          type="button"
                           onClick={() =>
                             removeItemFromArray("learningChallenges", index)
                           }
@@ -379,6 +382,7 @@ const AddStudent = () => {
                     </div>
                   ))}
                   <button
+                    type="button"
                     onClick={() =>
                       addItemToArray("learningChallenges", {
                         challenge: "",
@@ -409,7 +413,7 @@ const AddStudent = () => {
                     (accomodation, index) => (
                       <div
                         key={index}
-                        className="grid grid-cols-4 gap-1 sm:gap-4 items-center"
+                        className="grid grid-cols-4 gap-1 sm:gap-4 items-center py-2"
                       >
                         <input
                           type="text"
@@ -464,6 +468,7 @@ const AddStudent = () => {
                           />
 
                           <button
+                            type="button"
                             onClick={() =>
                               removeItemFromArray(
                                 "accomodationsAndAssisstiveTech",
@@ -482,6 +487,7 @@ const AddStudent = () => {
                     )
                   )}
                   <button
+                    type="button"
                     onClick={() =>
                       addItemToArray("accomodationsAndAssisstiveTech", {
                         accomodation: "",
@@ -504,7 +510,7 @@ const AddStudent = () => {
                     </h3>
                   </div>
                   {studentProfile.notesForStudent.map((studentNote, index) => (
-                    <div key={index} className="flex justify-end">
+                    <div key={index} className="flex justify-end py-2">
                       <input
                         type="text"
                         name="note"
@@ -527,6 +533,7 @@ const AddStudent = () => {
                           className="w-[130px] rounded-md bg-sandwich text-[14px] md:text-[16px] ml-3 px-2"
                         />
                         <button
+                          type="button"
                           onClick={() =>
                             removeItemFromArray("notesForStudent", index)
                           }
@@ -541,6 +548,7 @@ const AddStudent = () => {
                     </div>
                   ))}
                   <button
+                    type="button"
                     onClick={() =>
                       addItemToArray("notesForStudent", {
                         note: "",

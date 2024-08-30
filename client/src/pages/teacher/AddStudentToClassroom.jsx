@@ -36,7 +36,6 @@ const AddStudent = () => {
   const { userData } = useUser();
   const {setHasUnsavedChanges} = useUnsavedChanges();
 
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 

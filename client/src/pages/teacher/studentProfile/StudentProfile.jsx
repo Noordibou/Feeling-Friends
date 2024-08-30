@@ -19,6 +19,9 @@ import { useUser } from "../../../context/UserContext";
 import SmallSaveButton from "../../../components/SmallSaveButton";
 import Button from "../../../components/Button";
 import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx"
+import UnsavedChanges from "../../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
+
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -42,6 +45,7 @@ const StudentProfile = () => {
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const {setHasUnsavedChanges} = useUnsavedChanges();
 
   const { userData } = useUser();
 
@@ -106,6 +110,7 @@ const StudentProfile = () => {
       ...studentProfile,
       [name]: value,
     });
+    setHasUnsavedChanges(true)
   };
 
   const handleSaveClick = async (e) => {
@@ -118,6 +123,7 @@ const StudentProfile = () => {
         studentProfile
       );
       setStudentProfile(updatedProfile);
+      setHasUnsavedChanges(false);
       setEditMode(false);
     } catch (error) {
       setError("An error occurred while saving the student profile.");
@@ -189,6 +195,7 @@ const StudentProfile = () => {
       ...studentProfile,
       [category]: updatedItems,
     });
+    setHasUnsavedChanges(true)
   };
 
   const handleIEPDeleteClick = (index, category) => {
@@ -958,6 +965,7 @@ const StudentProfile = () => {
             <h3 className="text-white font-semibold">Delete Student</h3>
           </button>
         </div>
+        <UnsavedChanges />
         <ConfirmationModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} studentFullName={studentProfile?.firstName + " " + studentProfile?.lastName} studentId={studentId} teacherId={teacherId} classroomId={classroomId} />
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />

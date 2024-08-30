@@ -35,6 +35,7 @@ const EditTeacher = () => {
     email: "",
     username: ""
   });
+  const [originalFormData, setOriginalFormData] = useState(null)
   const [isDisplayOpen, setIsDisplayOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [isAccountOpen, setIsAccountOpen] = useState(false)
@@ -54,6 +55,7 @@ const EditTeacher = () => {
           email: acctResponse.email,
           username: acctResponse.username,
         };
+        setOriginalFormData(combinedData)
         setFormData(combinedData);
       } catch (error) {
         console.error(error);

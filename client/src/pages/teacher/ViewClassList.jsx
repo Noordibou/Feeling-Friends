@@ -22,6 +22,8 @@ import MsgModal from "../../components/SeatingChart/MsgModal.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import Logout from "../../components/LogoutButton.jsx";
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -37,6 +39,7 @@ const ViewClassList = () => {
     checkOut: "",
   });
   const [isOpen, setIsOpen] = useState(false);
+  const {setHasUnsavedChanges} = useUnsavedChanges();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +104,7 @@ const ViewClassList = () => {
     await updateUser(updatedUserInfo);
 
     console.log("User updated:", JSON.stringify(updatedUserInfo));
+    setHasUnsavedChanges(false)
     setIsEditMode(false);
     // Show brief save message for 3 secs
     setShowMsg(true);
@@ -115,6 +119,7 @@ const ViewClassList = () => {
       ...classroom,
       [name]: value,
     });
+    setHasUnsavedChanges(true)
   };
 
   const sortedStudents = sortByCriteria(students);
@@ -364,6 +369,7 @@ const ViewClassList = () => {
           </div>
         </div>
       </div>
+      <UnsavedChanges />
       {/* Tells user they have saved the layout */}
       <div className="flex justify-center">
         <MsgModal

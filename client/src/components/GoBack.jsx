@@ -1,26 +1,39 @@
 import React from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import Back from "../images/go-back.png";
-
+import { useUnsavedChanges } from "../context/UnsavedChangesContext";
 
 
 const GoBack = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const {hasUnsavedChanges, openModal } = useUnsavedChanges();
+
+    const redirectTo = (url) => {
+      navigate(url);
+    };
   
     const goBack = () => {
-        if (location.pathname.includes("/edit-seating-chart")) {
-          const parts = location.pathname.split("/");
-          const teacherId = parts[2];
-          const classroomId = parts[3];
-
-          navigate(`/classroom/${teacherId}/${classroomId}`);
-        } else if (location.pathname.includes("/addstudent")) {
-          navigate("/createclass");
-        } else {
-          navigate("/teacher-home");
-        }
-    }
+      let url;
+  
+      if (location.pathname.includes("/edit-seating-chart")) {
+        const parts = location.pathname.split("/");
+        const teacherId = parts[2];
+        const classroomId = parts[3];
+        url = `/classroom/${teacherId}/${classroomId}`;
+      } else if (location.pathname.includes("/addstudent")) {
+        url = "/createclass";
+      } else {
+        url = "/teacher-home";
+      }
+  
+      if (hasUnsavedChanges) {
+        openModal(() => redirectTo(url));
+      } else {
+        redirectTo(url);
+      }
+    };
+    
 
     return (
       <button className="flex" onClick={goBack}>

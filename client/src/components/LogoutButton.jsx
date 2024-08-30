@@ -2,22 +2,32 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { logoutUser } from '../api/userApi.js'
+import { useUnsavedChanges } from "../context/UnsavedChangesContext";
 
 const Logout = ({ location, btnColor, userData }) => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
 
-  const handleLogout = async () => {
+  const { hasUnsavedChanges, openModal } = useUnsavedChanges();
+
+  const redirectToLogin = async () => {
     try {
-      console.log("logging out... on frontend home screen")
       removeCookie("token");
       localStorage.removeItem('userData');
       await logoutUser();
       console.log("Logout successful");
+      navigate("/login");
     } catch (error) {
       console.error("Logout Failed: ", error);
     }
-    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    if (hasUnsavedChanges) {
+      openModal(redirectToLogin); // Pass redirectToLogin as the callback
+    } else {
+      redirectToLogin();
+    }
   };
 
   useEffect(() => {

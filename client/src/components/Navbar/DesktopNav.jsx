@@ -24,14 +24,15 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
   const handleItemClick = (url) => {
     let finalUrl = url
     if (url.includes(":teacherId")) {
-      url = url.replace(":teacherId", teacherId);
+      finalUrl = url.replace(":teacherId", teacherId);
     }
     if (url.includes(":classroomId")) {
-      url = url.replace(":classroomId", classroomId);
-    }if (hasUnsavedChanges) {
+      finalUrl = url.replace(":classroomId", classroomId);
+    }
+    if (hasUnsavedChanges) {
       openModal(() => redirectTo(finalUrl));
     } else {
-      redirectTo(url);
+      redirectTo(finalUrl);
     }
   };
 

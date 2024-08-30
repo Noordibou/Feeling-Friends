@@ -7,7 +7,7 @@ import { useUnsavedChanges } from "../context/UnsavedChangesContext";
 const GoBack = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {hasUnsavedChanges, openModal } = useUnsavedChanges();
+    const { hasUnsavedChanges, openModal } = useUnsavedChanges();
 
     const redirectTo = (url) => {
       navigate(url);
@@ -26,7 +26,7 @@ const GoBack = () => {
       } else {
         url = "/teacher-home";
       }
-  
+      console.log("unsaved changes?? " + JSON.stringify(hasUnsavedChanges))
       if (hasUnsavedChanges) {
         openModal(() => redirectTo(url));
       } else {

@@ -18,6 +18,7 @@ import Logout from "../../../components/LogoutButton.jsx";
 import { useUser } from "../../../context/UserContext";
 import SmallSaveButton from "../../../components/SmallSaveButton";
 import Button from "../../../components/Button";
+import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx"
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -40,6 +41,7 @@ const StudentProfile = () => {
   const [lastSelectedCheck, setLastSelectedCheck] = useState({});
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const { userData } = useUser();
 
@@ -951,6 +953,12 @@ const StudentProfile = () => {
             </button>
           </div>
         </form>
+        <div className="flex justify-center w-full mb-20">
+          <button onClick={() => setShowDeleteModal(true)} className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            <h3 className="text-white font-semibold">Delete Student</h3>
+          </button>
+        </div>
+        <ConfirmationModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} studentFullName={studentProfile?.firstName + " " + studentProfile?.lastName}/>
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>

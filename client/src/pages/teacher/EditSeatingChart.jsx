@@ -25,6 +25,8 @@ import Nav from "../../components/Navbar/Nav";
 import withAuth from "../../hoc/withAuth";
 import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
 
 const EditSeatingChart = () => {
   const { teacherId, classroomId } = useParams();
@@ -47,6 +49,8 @@ const EditSeatingChart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showMsg, setShowMsg] = useState(false);
   const [emptyMsg, setEmptyMsg] = useState(false);
+  const {setHasUnsavedChanges} = useUnsavedChanges();
+
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -155,6 +159,7 @@ const EditSeatingChart = () => {
                 classroom.furniture[itemId]?.rotation,
             },
           }));
+          setHasUnsavedChanges(true);
         }
       } else {
         const motionDiv = document.getElementById(`motion-div-${itemId}`);
@@ -171,6 +176,7 @@ const EditSeatingChart = () => {
               assigned: true,
             },
           }));
+          setHasUnsavedChanges(true);
         }
       }
     }
@@ -217,10 +223,12 @@ const EditSeatingChart = () => {
       setTimeout(() => {
         setShowMsg(false);
       }, 2500);
-      await updateInfo();
+      setHasUnsavedChanges(false);
+      await updateInfo();      
     } catch (error) {
       console.log(error);
     }
+    
   };
 
   return (
@@ -407,6 +415,7 @@ const EditSeatingChart = () => {
             textColor="text-black"
           />
         </div>
+        <UnsavedChanges />
 
       </div>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">

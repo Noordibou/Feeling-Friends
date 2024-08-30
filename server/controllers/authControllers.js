@@ -36,6 +36,15 @@ const Signup = async (req, res, next) => {
 
     const user = await User.create(userData);
 
+    // Update the corresponding model with the user._id
+    if (role === "student" && existingStudent) {
+      existingStudent.user = user._id;
+      await existingStudent.save();
+    } else if (role === "teacher" && existingTeacher) {
+      existingTeacher.user = user._id;
+      await existingTeacher.save();
+    }
+
     const newIdByRole = ( role === "student" ? user.student : user.teacher)
 
     const token = createSecretToken(user._id, newIdByRole, user.role);

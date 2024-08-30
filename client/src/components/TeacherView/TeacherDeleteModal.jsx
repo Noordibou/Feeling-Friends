@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { deleteStudent } from "../../api/studentsApi"
+import { deleteTeacher } from "../../api/teachersApi"
 import { useNavigate } from 'react-router-dom';
 
-const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullName, studentId, teacherId, classroomId }) => {
+const TeacherDeleteModal = ({ showDeleteModal, setShowDeleteModal, teacherFullName, teacherId }) => {
 
     const [inputValue, setInputValue] = useState('');
     const navigate = useNavigate();
@@ -12,12 +12,12 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
         setShowDeleteModal(false);
     };
 
-    const deleteOneStudent = async () => {
-      if (inputValue === studentFullName) {
+    const deleteTeacherInSystem = async () => {
+      if (inputValue === teacherFullName) {
         console.log('Deleting student');
-        const response = await deleteStudent(studentId)
+        const response = await deleteTeacher(teacherId)
         if (response === 200) {
-            navigate(`/viewclasslist/${teacherId}/${classroomId}`)
+            navigate(`/signup`)
         }
       } else {
         console.log('Name does not match');
@@ -31,7 +31,7 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
           className="fixed inset-0 bg-graphite opacity-75"
           onClick={resetInput}
         ></div>
-        <div className="relative bg-sandwich w-[80%] sm:w-auto rounded-xl p-6 sm:p-10 font-[Poppins]">
+        <div className="relative bg-sandwich w-[80%] sm:w-auto max-w-[500px] rounded-xl p-6 sm:p-10 font-[Poppins]">
           <button
             onClick={resetInput}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
@@ -53,10 +53,10 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
           </button>
           
           <h1 className="select-none pt-6">
-            Are you sure you want to delete this student? This cannot be undone.
+            Are you sure you want to delete your account and info from the system? This cannot be undone.
           </h1>
-          <h2 className="select-none">Type the student's full name to confirm.</h2>
-          <p className="py-5">{studentFullName}</p>
+          <h2 className="select-none py-2">Type the your full name to confirm.</h2>
+          <p className="py-5">{teacherFullName}</p>
           <input
             type="text"
             value={inputValue}
@@ -67,9 +67,9 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
             <button
             type="button"
             className="bg-red-500 text-white font-semibold mt-4 p-2 rounded-md"
-            onClick={() => deleteOneStudent()}
+            onClick={() => deleteTeacherInSystem()}
             >
-            Delete Student
+            Delete Your Account
             </button>
           </div>
         </div>
@@ -78,4 +78,4 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
   );
 }
 
-export default ConfirmationModal
+export default TeacherDeleteModal

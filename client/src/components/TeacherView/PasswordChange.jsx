@@ -78,9 +78,9 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
                   onMouseLeave={() => setShowPassword("false")}
                 >
                   {showPassword === "CurrentPW" ? (
-                    <span class="material-symbols-outlined select-none">visibility</span>
+                    <span className="material-symbols-outlined select-none">visibility</span>
                   ) : (
-                    <span class="material-symbols-outlined select-none">
+                    <span className="material-symbols-outlined select-none">
                       visibility_off
                     </span>
                   )}
@@ -103,9 +103,9 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
                   onMouseLeave={() => setShowPassword("false")}
                 >
                   {showPassword === "NewPW" ? (
-                    <span class="material-symbols-outlined select-none">visibility</span>
+                    <span className="material-symbols-outlined select-none">visibility</span>
                   ) : (
-                    <span class="material-symbols-outlined select-none">
+                    <span className="material-symbols-outlined select-none">
                       visibility_off
                     </span>
                   )}
@@ -127,9 +127,9 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
                   onMouseLeave={() => setShowPassword("false")}
                 >
                   {showPassword === "ConfirmNewPW" ? (
-                    <span class="material-symbols-outlined select-none">visibility</span>
+                    <span className="material-symbols-outlined select-none">visibility</span>
                   ) : (
-                    <span class="material-symbols-outlined select-none">
+                    <span className="material-symbols-outlined select-none">
                       visibility_off
                     </span>
                   )}

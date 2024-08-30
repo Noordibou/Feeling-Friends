@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getTeacherById } from "../../api/teachersApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,  useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
@@ -15,10 +15,13 @@ import youngStudent from "../../images/young-student.png";
 import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
 import editIcon from "../../images/edit_icon.png"
 import { motion } from 'framer-motion';
+import TeacherDeleteModal from "../../components/TeacherView/TeacherDeleteModal.jsx";
+
 
 
 const EditTeacher = () => {
   const navigate = useNavigate();
+  const { teacherId } = useParams();
   const { userData, updateUser } = useUser();
   const [formData, setFormData] = useState({
     prefix: "",
@@ -36,6 +39,7 @@ const EditTeacher = () => {
   const [isAccountOpen, setIsAccountOpen] = useState(false)
   const [showMsg, setShowMsg] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -372,6 +376,23 @@ const EditTeacher = () => {
               </motion.div>
             </div>
           </form>
+
+          <div className="flex absolute bottom-44 lg:bottom-0 justify-center w-full mb-80 md:mb-20">
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+            >
+              <h3 className="text-white font-semibold">Delete Your Account</h3>
+            </button>
+          </div>
+          <TeacherDeleteModal
+            showDeleteModal={showDeleteModal}
+            setShowDeleteModal={setShowDeleteModal}
+            teacherFullName={
+              formData?.firstName + " " + formData?.lastName
+            }
+            teacherId={teacherId}
+          />
           <PasswordChange
             showModal={showModal}
             setShowModal={setShowModal}

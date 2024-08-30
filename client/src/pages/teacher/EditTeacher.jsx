@@ -383,10 +383,10 @@ const EditTeacher = () => {
             </div>
           </form>
 
-          <div className="flex absolute bottom-44 lg:bottom-0 justify-center w-full mb-80 md:mb-20">
+          <div className="flex absolute bottom-44 lg:bottom-0 justify-center w-full mb-44 md:mb-20">
             <button
               onClick={() => setShowDeleteModal(true)}
-              className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              className="bg-red-500 py-2 px-10 sm:px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             >
               <h3 className="text-white font-semibold">Delete Your Account</h3>
             </button>

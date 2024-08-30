@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../pages/teacher/studentProfile/StudentProfile.css";
+import StudentProfileBoxInfo from "../StudentProfileBoxInfo";
 
-const WeekView = ({ events, handleDateClick, isMonthView }) => {
+
+const WeekView = ({ events, handleDateClick, isMonthView, lastSelectedCheck, openStudentInfoModal, setOpenStudentInfoModal, studentProfile }) => {
   const [visibleDates, setVisibleDates] = useState(getVisibleDates());
   const [currMonth, setCurrMonth] = useState("")
 
@@ -87,7 +89,7 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
   
 
   return (
-    <div className="w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
+    <div className="relative w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
       <div className="relative top-[22px]">
         <button
           type="button"
@@ -120,6 +122,21 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
         tileDisabled={({ date }) => !isDateVisible(date)}
         onClickDay={handleDateClick}
       />
+      {/* Selected Day Student Info Modal Overlay */}
+      {openStudentInfoModal && (
+        <div
+          className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`}
+          style={{ left: "50%", transform: "translateX(-50%)" }}
+        >
+          <div className={`flex h-full justify-center items-center`}>
+            <StudentProfileBoxInfo
+              student={studentProfile}
+              selectedEntry={lastSelectedCheck}
+              setOpenStudentInfoModal={setOpenStudentInfoModal}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

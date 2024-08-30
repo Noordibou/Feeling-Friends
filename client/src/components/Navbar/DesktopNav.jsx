@@ -4,6 +4,7 @@ import Exterior from "../../images/Exterior.png";
 import Classroom from "../../images/Classroom.png";
 import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color: "sky" },
@@ -14,19 +15,25 @@ const navs = [
 
 export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOpen, toggle }) {
   const [isEditMode, setEditMode] = useState(false);
+  const {hasUnsavedChanges, openModal } = useUnsavedChanges();
 
   const redirectTo = (url) => {
     window.location.href = url;
   };
 
   const handleItemClick = (url) => {
+    let finalUrl = url
     if (url.includes(":teacherId")) {
-      url = url.replace(":teacherId", teacherId);
+      finalUrl = url.replace(":teacherId", teacherId);
     }
     if (url.includes(":classroomId")) {
-      url = url.replace(":classroomId", classroomId);
+      finalUrl = url.replace(":classroomId", classroomId);
     }
-    redirectTo(url);
+    if (hasUnsavedChanges) {
+      openModal(() => redirectTo(finalUrl));
+    } else {
+      redirectTo(finalUrl);
+    }
   };
 
   const handleEditClick = () => {

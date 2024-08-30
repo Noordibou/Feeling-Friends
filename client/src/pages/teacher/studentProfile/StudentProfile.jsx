@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
 import { getBackgroundColorClass } from "../../../utils/classroomColors";
 import Calendar from "react-calendar";
@@ -19,6 +19,9 @@ import { useUser } from "../../../context/UserContext";
 import SmallSaveButton from "../../../components/SmallSaveButton";
 import Button from "../../../components/Button";
 import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx"
+import UnsavedChanges from "../../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
+
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -42,8 +45,20 @@ const StudentProfile = () => {
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const {setHasUnsavedChanges} = useUnsavedChanges();
 
   const { userData } = useUser();
+
+  const navigate = useNavigate();
+  const { hasUnsavedChanges, openModal } = useUnsavedChanges();
+
+  const handleNavigation = (url) => {
+    if (hasUnsavedChanges) {
+      openModal(() => navigate(url));
+    } else {
+      navigate(url);
+    }
+  };
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
@@ -106,6 +121,7 @@ const StudentProfile = () => {
       ...studentProfile,
       [name]: value,
     });
+    setHasUnsavedChanges(true)
   };
 
   const handleSaveClick = async (e) => {
@@ -118,6 +134,7 @@ const StudentProfile = () => {
         studentProfile
       );
       setStudentProfile(updatedProfile);
+      setHasUnsavedChanges(false);
       setEditMode(false);
     } catch (error) {
       setError("An error occurred while saving the student profile.");
@@ -189,6 +206,7 @@ const StudentProfile = () => {
       ...studentProfile,
       [category]: updatedItems,
     });
+    setHasUnsavedChanges(true)
   };
 
   const handleIEPDeleteClick = (index, category) => {
@@ -199,6 +217,7 @@ const StudentProfile = () => {
       ...studentProfile,
       [category]: updatedItems,
     });
+    setHasUnsavedChanges(true)
   };
 
   const handleIEPAddClick = (category) => {
@@ -255,9 +274,13 @@ const StudentProfile = () => {
             <div className="flex w-full">
               <div className="w-full flex flex-col justify-center">
                 <div className="flex self-center flex-row w-full max-w-lg mb-5">
-                  <Link
+                  <div
                     className="md:text-header1 text-[33px] font-header1"
-                    to={`/viewclasslist/${teacherId}/${classroomId}`}
+                    onClick={() =>
+                      handleNavigation(
+                        `/viewclasslist/${teacherId}/${classroomId}`
+                      )
+                    }
                   >
                     <svg
                       className={``}
@@ -286,7 +309,7 @@ const StudentProfile = () => {
                         strokeLinecap="round"
                       />
                     </svg>
-                  </Link>
+                  </div>
                   <div className="">
                     {/* First & Last Name */}
                     <fieldset>
@@ -344,9 +367,7 @@ const StudentProfile = () => {
                           <FileBase
                             type="file"
                             multiple={false}
-                            onDone={() =>
-                              console.log("nice image!")
-                            }
+                            onDone={() => console.log("nice image!")}
                           />
                         </div>
                       ) : null}
@@ -466,20 +487,40 @@ const StudentProfile = () => {
 
                   {/* REACT CALENDAR - MONTH VIEW */}
                   {isMonthView && (
-                    <Calendar
-                      className="react-calendar"
-                      tileClassName={({ date }) => {
-                        const event = events.find(
-                          (event) =>
-                            event.date.toDateString() === date.toDateString()
-                        );
-                        if (event) {
-                          return `${event.className} `;
-                        }
-                        return "";
-                      }}
-                      onClickDay={isMonthView ? handleDateClick : null}
-                    />
+                    <div className="relative ">
+                      <Calendar
+                        className="react-calendar"
+                        tileClassName={({ date }) => {
+                          const event = events.find(
+                            (event) =>
+                              event.date.toDateString() === date.toDateString()
+                          );
+                          if (event) {
+                            return `${event.className} `;
+                          }
+                          return "";
+                        }}
+                        onClickDay={isMonthView ? handleDateClick : null}
+                      />
+
+                      {/* Selected Day Student Info Modal Overlay */}
+                      {openStudentInfoModal && (
+                        <div
+                          className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`} // z-index higher than calendar
+                          style={{ left: "50%", transform: "translateX(-50%)" }} // Center modal horizontally
+                        >
+                          <div
+                            className={`flex h-full justify-center items-center`}
+                          >
+                            <StudentProfileBoxInfo
+                              student={studentProfile}
+                              selectedEntry={lastSelectedCheck}
+                              setOpenStudentInfoModal={setOpenStudentInfoModal}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
                   {/* REACT CALENDAR - WEEK VIEW */}
 
@@ -495,6 +536,10 @@ const StudentProfile = () => {
                         events={events}
                         handleDateClick={handleDateClick}
                         isMonthView={isMonthView}
+                        lastSelectedCheck={lastSelectedCheck}
+                        openStudentInfoModal={openStudentInfoModal}
+                        setOpenStudentInfoModal={setOpenStudentInfoModal}
+                        studentProfile={studentProfile}
                       />
                     </div>
                   )}
@@ -522,7 +567,7 @@ const StudentProfile = () => {
                 </div>
               )}
               {/* Selected Day Student Info Modal Overlay*/}
-              {openStudentInfoModal && (
+              {/* {openStudentInfoModal && (
                 <div
                   className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-96 md:top-80 mt-[150px] sm:mt-[130px] md:mt-[120px] my-2 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]`}
                 >
@@ -534,7 +579,7 @@ const StudentProfile = () => {
                     />
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
             <div className="mb-20 mt-6 max-w-2xl">
               <div className="flex flex-col gap-4 md:gap-0 mt-6 mb-2 items-center w-full justify-between ">
@@ -846,7 +891,9 @@ const StudentProfile = () => {
                           )
                         )}
                     {((editModeNotices &&
-                      studentProfile?.accomodationsAndAssisstiveTech.length === 0) || editModeNotices) && (
+                      studentProfile?.accomodationsAndAssisstiveTech.length ===
+                        0) ||
+                      editModeNotices) && (
                       <button
                         type="button"
                         className="mt-2"
@@ -941,7 +988,10 @@ const StudentProfile = () => {
               </fieldset>
             </div>
             <div className="lg:hidden flex justify-center">
-              <button className="lg:hidden fixed bottom-36 flex justify-center" type="submit">
+              <button
+                className="lg:hidden fixed bottom-36 flex justify-center"
+                type="submit"
+              >
                 <Button buttonText="Save" />
               </button>
             </div>
@@ -954,11 +1004,24 @@ const StudentProfile = () => {
           </div>
         </form>
         <div className="flex justify-center w-full mb-80 md:mb-20">
-          <button onClick={() => setShowDeleteModal(true)} className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+          >
             <h3 className="text-white font-semibold">Delete Student</h3>
           </button>
         </div>
-        <ConfirmationModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} studentFullName={studentProfile?.firstName + " " + studentProfile?.lastName} studentId={studentId} teacherId={teacherId} classroomId={classroomId} />
+        <UnsavedChanges />
+        <ConfirmationModal
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
+          studentFullName={
+            studentProfile?.firstName + " " + studentProfile?.lastName
+          }
+          studentId={studentId}
+          teacherId={teacherId}
+          classroomId={classroomId}
+        />
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />
         </div>

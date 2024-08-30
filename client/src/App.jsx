@@ -19,12 +19,14 @@ import EditSeatingChart from "./pages/teacher/EditSeatingChart";
 import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
+import { UnsavedChangesProvider } from "./context/UnsavedChangesContext";
 
 export default function App() {
   return (
     <main className="bg-notebookPaper scrollbar-wrapper h-full min-h-screen scrollhost">
       <AuthProvider>
         <UserProvider>
+        <UnsavedChangesProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
@@ -48,6 +50,7 @@ export default function App() {
             <Route path="/goalsneeds" element={<GoalsNeeds />} />
             <Route path="/summary" element={<Summary />} />
           </Routes>
+          </UnsavedChangesProvider>
         </UserProvider>
       </AuthProvider>
     </main>

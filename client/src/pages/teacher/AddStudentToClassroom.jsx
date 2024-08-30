@@ -11,7 +11,10 @@ import SimpleTopNav from "../../components/SimpleTopNav.jsx";
 import xButton from "../../images/x-button.png";
 import Button from "../../components/Button.jsx";
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
 const { calculateAge } = require("../../utils/dateFormat");
+
 
 const AddStudent = () => {
   const { teacherId, classroomId } = useParams();
@@ -31,6 +34,8 @@ const AddStudent = () => {
   });
   const navigate = useNavigate();
   const { userData } = useUser();
+  const {setHasUnsavedChanges} = useUnsavedChanges();
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +44,7 @@ const AddStudent = () => {
       ...studentProfile,
       [name]: value,
     });
+    setHasUnsavedChanges(true);
   };
 
   const handleFileUpload = (file) => {
@@ -59,6 +65,7 @@ const AddStudent = () => {
         [arrayName]: updatedArray,
       };
     });
+    setHasUnsavedChanges(true);
   };
 
   const addItemToArray = (arrayName, newItem) => {
@@ -91,6 +98,7 @@ const AddStudent = () => {
       };
 
       await createNewStudentAndUser(requestData);
+      setHasUnsavedChanges(false);
 
       setStudentProfile({
         email: "",
@@ -107,7 +115,7 @@ const AddStudent = () => {
         ],
         notesForStudent: [{ note: "", date: "" }],
       });
-
+      
       navigate(`/createclass`);
     } catch (error) {
       console.error("Failed to add student:", error);
@@ -564,7 +572,7 @@ const AddStudent = () => {
             </div>
           </div>
         )}
-
+        <UnsavedChanges />
         <div className="lg:hidden flex justify-center">
           <button
             className="lg:hidden fixed bottom-36 flex "

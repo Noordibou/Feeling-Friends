@@ -14,6 +14,9 @@ import Nav from "../../components/Navbar/Nav";
 import SmallSaveButton from "../../components/SmallSaveButton";
 import Logout from "../../components/LogoutButton";
 import editIcon from "../../images/edit_icon.png";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+
 
 const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +34,7 @@ const NeedsGoals = () => {
   const [editNeedsMode, setEditNeedsMode] = useState(Array(needAnswers.length).fill(false));
   const [goalsSelectedOption, setGoalsSelectedOption] = useState("no");
   const [needsSelectedOption, setNeedsSelectedOption] = useState("no");
+  const {setHasUnsavedChanges} = useUnsavedChanges();
 
 
 
@@ -60,12 +64,14 @@ const NeedsGoals = () => {
     const newGoalAnswers = [...goalAnswers];
     newGoalAnswers[index] = value;
     setGoalAnswers(newGoalAnswers);
+    setHasUnsavedChanges(true);
   };
 
   const handleInputNeedChange = (index, value) => {
     const newNeedAnswers = [...needAnswers];
     newNeedAnswers[index] = value;
     setNeedAnswers(newNeedAnswers);
+    setHasUnsavedChanges(true);
   };
 
   const addAnswer = (answerType) => {
@@ -79,11 +85,13 @@ const NeedsGoals = () => {
   const removeGoalsAnswer = (index) => {
     const newGoalAnswers = goalAnswers.filter((_, i) => i !== index);
     setGoalAnswers(newGoalAnswers);
+    setHasUnsavedChanges(true);
   };
 
   const removeNeedsAnswer = (index) => {
     const newNeedAnswers = needAnswers.filter((_, i) => i !== index);
     setNeedAnswers(newNeedAnswers);
+    setHasUnsavedChanges(true);
   };
 
   const handleSubmit = () => {
@@ -93,6 +101,7 @@ const NeedsGoals = () => {
     setTimeout(() => {
       setShowMsg(false);
     }, 2500);
+    setHasUnsavedChanges(false);
   };
 
   useEffect(() => {
@@ -460,6 +469,7 @@ const NeedsGoals = () => {
                 </div>
               </div>
             </div>
+            <UnsavedChanges />
             {/* Save Button on Tablet and Phone screens centered*/}
             <div className="lg:hidden flex justify-center">
               <div

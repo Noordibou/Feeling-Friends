@@ -134,7 +134,6 @@ const updateStudentJournalEntry = async (req, res) => {
       student.journalEntries.push(journalEntry);
     }
 
-    // FIXME: No current way to catch if student enters the checkin/out more than two times. Find a way maybe on the home screen if they've already done all their checks for the day..?
     await student.save();
 
     res.json(student);
@@ -144,19 +143,31 @@ const updateStudentJournalEntry = async (req, res) => {
   }
 }
 
-// delete a student
 const deleteStudent = async (req, res) => {
-    try {
-        res.json(await Student.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        res.status(400).json(error);
+  try {
+    const studentId = req.params.id;
+
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
     }
-}
+
+    // Find and delete the associated user
+    const userId = student.user;
+    await User.findByIdAndDelete(userId);
+
+    // Delete the student
+    await Student.findByIdAndDelete(studentId);
+
+    res.status(200).json({ message: 'Student and associated user deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting student and user', error });
+  }
+};
 
 // Controller function to update a student's seat information
 exports.updateStudentSeatInfo = async (req, res) => {
   try {
-    // Retrieve the student by ID
     const studentId = req.params.studentId;
     const student = await Student.findById(studentId);
 
@@ -164,10 +175,8 @@ exports.updateStudentSeatInfo = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    // Update the seat information
     student.seatInfo = req.body.seatInfo;
 
-    // Save the changes
     await student.save();
 
     res.json({ message: 'Student seat information updated successfully' });

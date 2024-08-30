@@ -1,18 +1,25 @@
 import { useState } from 'react'
+import { deleteStudent } from "../../api/studentsApi"
+import { useNavigate } from 'react-router-dom';
 
-const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullName }) => {
+const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullName, studentId, teacherId, classroomId }) => {
 
     const [inputValue, setInputValue] = useState('');
+    const navigate = useNavigate();
 
     const resetInput = () => {
         setInputValue('');
         setShowDeleteModal(false);
     };
 
-    const deleteStudent = () => {
+    const deleteOneStudent = async () => {
       if (inputValue === studentFullName) {
         console.log('Deleting student');
-        // Add your delete logic here
+        const response = await deleteStudent(studentId)
+        if (response === 200) {
+            // navigate to class list
+            navigate(`/viewclasslist/${teacherId}/${classroomId}`)
+        }
       } else {
         console.log('Name does not match');
       }
@@ -61,7 +68,7 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
             <button
             type="button"
             className="bg-red-500 text-white font-semibold mt-4 p-2 rounded-md"
-            onClick={deleteStudent}
+            onClick={() => deleteOneStudent()}
             >
             Delete Student
             </button>

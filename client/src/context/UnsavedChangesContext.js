@@ -19,6 +19,7 @@ export const UnsavedChangesProvider = ({ children }) => {
 
   const confirmChanges = () => {
     if (callback) {
+      setHasUnsavedChanges(false)
       callback(); // Executes the redirection or any other action
     }
     closeModal();

@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
 import ProgressBar from "../../components/ProgressBar";
 import { getEmotionColor } from "../../utils/classroomColors.js";
-import CopingSkillCard from "../../components/CopingSkillCard.jsx";
+import CopingSkillCard from "../../components/StudentView/CopingSkillCard.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import { useNavigate } from "react-router-dom";
 

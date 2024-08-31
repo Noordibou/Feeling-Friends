@@ -6,7 +6,11 @@ const UnsavedChanges = () => {
     const { showUnsavedModal, setShowUnsavedModal, confirmChanges } = useUnsavedChanges();
 
   return (
-    <div className={`${showUnsavedModal ? "flex" : "hidden"} fixed inset-0 z-50 flex items-center justify-center`}>
+    <div
+      className={`${
+        showUnsavedModal ? "flex" : "hidden"
+      } fixed inset-0 z-50 flex items-center justify-center`}
+    >
       <div
         className="fixed inset-0 bg-graphite opacity-75"
         onClick={() => setShowUnsavedModal(false)}
@@ -30,41 +34,42 @@ const UnsavedChanges = () => {
         <div className="flex flex-col w-full mb-10 gap-4 mt-10">
           <button
             type="button"
-            className="border-2 border-graphite rounded-xl flex flex-row items-center justify-center gap-2 h-12"
+            className="border-2 hover:border-4 border-graphite rounded-xl flex flex-row items-center justify-center sm:gap-3 h-12"
             onClick={() => setShowUnsavedModal(false)}
           >
             <svg
-              className=""
-              width="50"
-              height="50"
-              viewBox="10 0 1 80"
+              className="pr-4 sm:pr-0" 
+              width="30"
+              height="30"
+              viewBox="0 0 30 60"
               xmlns="http://www.w3.org/2000/svg"
             >
               <line
                 x1="5"
-                y1="40"
+                y1="30"
                 x2="25"
-                y2="28"
+                y2="18"
                 stroke="#8D8772"
                 strokeWidth="4"
                 strokeLinecap="round"
               />
               <line
                 x1="5"
-                y1="40"
+                y1="30"
                 x2="25"
-                y2="52"
+                y2="42"
                 stroke="#8D8772"
                 strokeWidth="4"
                 strokeLinecap="round"
               />
             </svg>
-            <p>No, take me back!</p>
+
+            <p className="text-[0.9rem] sm:text-[1rem]">No, take me back!</p>
           </button>
 
           <button
             type="button"
-            className="bg-orange text-white flex flex-row items-center justify-center py-4 rounded-xl gap-2 h-16"
+            className="bg-orange border-4 border-orange hover:border-lightOrange hover: text-white flex flex-row items-center justify-center py-4 rounded-xl gap-2 h-14"
             onClick={confirmChanges}
           >
             <svg

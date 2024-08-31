@@ -15,8 +15,9 @@ import youngStudent from "../../images/young-student.png";
 import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
 import editIcon from "../../images/edit_icon.png"
 import { motion } from 'framer-motion';
-import TeacherDeleteModal from "../../components/TeacherView/TeacherDeleteModal.jsx";
 import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import { deleteTeacher } from "../../api/teachersApi";
+import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
 
 
@@ -42,6 +43,7 @@ const EditTeacher = () => {
   const [showMsg, setShowMsg] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [inputValue, setInputValue] = useState('');
   const {setHasUnsavedChanges} = useUnsavedChanges();
 
   useEffect(() => {
@@ -73,6 +75,23 @@ const EditTeacher = () => {
       [name]: value,
     });
     setHasUnsavedChanges(true);
+  };
+
+
+  const deleteTeacherInSystem = async () => {
+    if (inputValue === formData?.firstName + " " + formData?.lastName) {
+      console.log('Deleting teacher');
+      const response = await deleteTeacher(teacherId)
+      if (response === 200) {
+        sessionStorage.setItem('teacherDeleteInfo', JSON.stringify({
+          success: true,
+          teacherName: formData?.firstName + " " + formData?.lastName
+        }));
+        navigate(`/signup`)
+      }
+    } else {
+      console.log('Name does not match');
+    }
   };
 
   const handleFormSubmit = async (event) => {
@@ -131,7 +150,7 @@ const EditTeacher = () => {
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsAccountOpen(!isAccountOpen)}
               >
-                <h2 className="font-header4 text-header3">Account Settings</h2>
+                <h2 className="font-header4 text-header3 select-none">Account Settings</h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isAccountOpen ? "" : "rotate-180"
@@ -225,7 +244,7 @@ const EditTeacher = () => {
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
-                <h2 className="font-header4 text-header3">User profile</h2>
+                <h2 className="font-header4 text-header3 select-none">User profile</h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isProfileOpen ? "" : "rotate-180"
@@ -334,7 +353,7 @@ const EditTeacher = () => {
                 className="flex w-full justify-between"
                 onClick={() => setIsDisplayOpen(!isDisplayOpen)}
               >
-                <h2 className="font-semibold font-header4 text-header3 font-[Poppins]">
+                <h2 className="font-semibold font-header4 text-header3 font-[Poppins] select-none">
                   Display
                 </h2>
 
@@ -391,13 +410,17 @@ const EditTeacher = () => {
               <h3 className="text-white font-semibold">Delete Your Account</h3>
             </button>
           </div>
-          <TeacherDeleteModal
+
+          <ConfirmationModal
             showDeleteModal={showDeleteModal}
             setShowDeleteModal={setShowDeleteModal}
-            teacherFullName={
+            itemFullName={
               formData?.firstName + " " + formData?.lastName
             }
-            teacherId={teacherId}
+            deleteMsg={"Are you sure you want to delete your account? This cannot be undone."}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            removeItemFromSystem={deleteTeacherInSystem}
           />
           <PasswordChange
             showModal={showModal}

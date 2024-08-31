@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,6 +12,7 @@ import LinkedIn from "../../images/linkedinicon.svg";
 import UserRole from "../../components/UserRole"
 import NavLogo from "../../images/NavLogo.png"
 import Logo from "../../images/logolarge.svg"
+import { handleError, handleSuccess } from "../../utils/toastHandling"
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -28,6 +29,23 @@ const Signup = () => {
     }
   });
   const { email, password, confirmPassword, username, role, userDetails } = inputValue;
+
+  const [toastShown, setToastShown] = useState(false);
+  
+  useEffect(() => {
+    const storedData = sessionStorage.getItem('teacherDeleteInfo');
+
+    if (storedData) {
+      const { success, teacherName } = JSON.parse(storedData);
+
+      if (success && !toastShown) {
+        handleSuccess(`${teacherName} deleted successfully!`);
+        setToastShown(true);
+        // Clear the data from sessionStorage
+        sessionStorage.removeItem('teacherDeleteInfo');
+      }
+    }
+  }, [toastShown]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -47,29 +65,6 @@ const Signup = () => {
     }
   };
 
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

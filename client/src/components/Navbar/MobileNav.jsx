@@ -7,6 +7,8 @@ import NavButton from "../../images/NavButton.png";
 import NavLogo from "../../images/NavLogo.png";
 import { useNavigate } from "react-router-dom";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
+import { handleError } from "../../utils/toastHandling";
+import { ToastContainer } from "react-toastify";
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color:"sky" },
@@ -53,7 +55,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
       setIsEditMode((prevEditMode) => !prevEditMode);
     } else {
       // Display a message or perform some other action when edit mode is not supported
-      alert("This page does not support edit mode.");
+      handleError("This page does not support edit mode.");
     }
   };
 
@@ -83,6 +85,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
           <div><span className="font-poppins text-notebookPaper text-md nav-text-shadow">{item.text}</span></div>
         </div>
       ))}
+      <ToastContainer />
     </div>
     </>
   );

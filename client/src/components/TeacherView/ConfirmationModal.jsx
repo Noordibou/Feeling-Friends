@@ -2,27 +2,14 @@ import { useState } from 'react'
 import { deleteStudent } from "../../api/studentsApi"
 import { useNavigate } from 'react-router-dom';
 
-const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullName, studentId, teacherId, classroomId }) => {
+const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, itemFullName, deleteMsg, inputValue, setInputValue, removeItemFromSystem }) => {
 
-    const [inputValue, setInputValue] = useState('');
-    const navigate = useNavigate();
-
+    
     const resetInput = () => {
         setInputValue('');
         setShowDeleteModal(false);
     };
 
-    const deleteOneStudent = async () => {
-      if (inputValue === studentFullName) {
-        console.log('Deleting student');
-        const response = await deleteStudent(studentId)
-        if (response === 200) {
-            navigate(`/viewclasslist/${teacherId}/${classroomId}`)
-        }
-      } else {
-        console.log('Name does not match');
-      }
-    };
 
   return (
     <div className={`${showDeleteModal ? "flex" : "hidden"}`}>
@@ -53,10 +40,10 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
           </button>
           
           <h1 className="select-none pt-6">
-            Are you sure you want to delete this student? This cannot be undone.
+            {deleteMsg}
           </h1>
-          <h2 className="select-none">Type the student's full name to confirm.</h2>
-          <p className="py-5">{studentFullName}</p>
+          <h2 className="select-none">Type the below text to confirm.</h2>
+          <p className="py-5">{itemFullName}</p>
           <input
             type="text"
             value={inputValue}
@@ -67,7 +54,7 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
             <button
             type="button"
             className="bg-red-500 text-white font-semibold mt-4 p-2 rounded-md"
-            onClick={() => deleteOneStudent()}
+            onClick={() => removeItemFromSystem()}
             >
             Delete Student
             </button>

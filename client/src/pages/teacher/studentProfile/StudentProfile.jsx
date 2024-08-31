@@ -21,6 +21,7 @@ import Button from "../../../components/Button";
 import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx"
 import UnsavedChanges from "../../../components/TeacherView/UnsavedChanges.jsx";
 import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
+import { deleteStudent } from "../../../api/studentsApi"
 
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
@@ -45,6 +46,7 @@ const StudentProfile = () => {
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [inputValue, setInputValue] = useState('');
   const {setHasUnsavedChanges} = useUnsavedChanges();
 
   const { userData } = useUser();
@@ -228,6 +230,24 @@ const StudentProfile = () => {
       [category]: [...prevProfile[category], newItem],
     }));
   };
+
+
+  const deleteOneStudent = async () => {
+    if (inputValue === studentProfile?.firstName + " " + studentProfile?.lastName) {
+      console.log('Deleting student');
+      const response = await deleteStudent(studentId)
+      if (response === 200) {
+        sessionStorage.setItem('studentDeleteInfo', JSON.stringify({
+          success: true,
+          studentName: studentProfile?.firstName + " " + studentProfile?.lastName
+        }));
+        navigate(`/viewclasslist/${teacherId}/${classroomId}`)
+      }
+    } else {
+      console.log('Name does not match');
+    }
+  };
+
 
   const getNewItemForCategory = (category) => {
     switch (category) {
@@ -1015,12 +1035,13 @@ const StudentProfile = () => {
         <ConfirmationModal
           showDeleteModal={showDeleteModal}
           setShowDeleteModal={setShowDeleteModal}
-          studentFullName={
+          itemFullName={
             studentProfile?.firstName + " " + studentProfile?.lastName
           }
-          studentId={studentId}
-          teacherId={teacherId}
-          classroomId={classroomId}
+          deleteMsg={"Are you sure you want to delete this student? This cannot be undone."}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          removeItemFromSystem={deleteOneStudent}
         />
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />

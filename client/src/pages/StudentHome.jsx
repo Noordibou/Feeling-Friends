@@ -6,6 +6,8 @@ import CurvedWords from "../components/CurvedWord";
 import subEmotionInfo from "../data/subEmotions";
 import withAuth from "../hoc/withAuth";
 import { checkTimeOfDay } from '../utils/dailyGreeting'
+import { handleError } from "../utils/toastHandling";
+import { ToastContainer } from "react-toastify";
 
 
 const StudentHome = () => {
@@ -37,7 +39,7 @@ const StudentHome = () => {
   const handleEmotion = (chosenEmotion) => {
     if (!isCheckinOrOut) {
       // temp fix, might create modal or something...?
-      alert("Please choose checkin or checkout before choosing your feeling!");
+      handleError("Please choose Check-in or Check-out first!");
     } else {
       navigate(`/emotion`, {
         state: {
@@ -107,6 +109,7 @@ const StudentHome = () => {
               ))}
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

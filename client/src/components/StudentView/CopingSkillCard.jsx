@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import question_crab from "../../images/question_crab.png";
-import question_dog from "../../images/question_dog.png";
-import question_mouse from "../../images/question_mouse.png";
-import question_dino from "../../images/question_dino.png";
-import question_rabbit from "../../images/question_rabbit.png";
-import question_frog from "../../images/Question_Frog.png";
+import question_crab from "../../images/student/characters/question_crab.png";
+import question_dog from "../../images/student/characters/question_dog.png";
+import question_mouse from "../../images/student/characters/question_mouse.png";
+import question_dino from "../../images/student/characters/question_dino.png";
+import question_rabbit from "../../images/student/characters/question_rabbit.png";
+import question_frog from "../../images/student/characters/Question_Frog.png";
 import coping_crab from "../../images/copingSkill/crab_coping_skill_card.png";
 import coping_dino from "../../images/copingSkill/dino_coping_skill_card.png";
 import coping_dog from "../../images/copingSkill/dog_coping_skill_card.png";

@@ -3,7 +3,7 @@ import { getCurrentDate } from "./dateFormat";
 
 export function getLastJournalInfo(student) {
   // returns if student has 0 journal entries
-  if (!student.journalEntries || student.journalEntries.length === 0) {
+  if (!student?.journalEntries || student?.journalEntries.length === 0) {
     return {
       borderColorClass: "sandwich",
       bgColorClass: "",

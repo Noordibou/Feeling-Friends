@@ -263,16 +263,16 @@ const ViewClassroom = () => {
                                     : ""
                                 }`}
                                 src={
-                                  assignedStudent.avatarImg === "none"
+                                  assignedStudent?.avatarImg === "none"
                                     ? SampleAvatar
-                                    : assignedStudent.avatarImg
+                                    : assignedStudent?.avatarImg
                                 }
-                                alt={assignedStudent.firstName}
+                                alt={assignedStudent?.firstName}
                               />
                             </div>
                             <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">
-                              {assignedStudent.firstName}{" "}
-                              {assignedStudent.lastName.charAt(0)}.
+                              {assignedStudent?.firstName}{" "}
+                              {assignedStudent?.lastName.charAt(0)}.
                             </h3>
                           </div>
                         </motion.div>

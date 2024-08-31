@@ -17,7 +17,11 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, studentFullNam
         console.log('Deleting student');
         const response = await deleteStudent(studentId)
         if (response === 200) {
-            navigate(`/viewclasslist/${teacherId}/${classroomId}`)
+          sessionStorage.setItem('studentDeleteInfo', JSON.stringify({
+            success: true,
+            studentName: studentFullName
+          }));
+          navigate(`/viewclasslist/${teacherId}/${classroomId}`)
         }
       } else {
         console.log('Name does not match');

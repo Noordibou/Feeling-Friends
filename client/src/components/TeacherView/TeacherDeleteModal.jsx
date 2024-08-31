@@ -14,10 +14,14 @@ const TeacherDeleteModal = ({ showDeleteModal, setShowDeleteModal, teacherFullNa
 
     const deleteTeacherInSystem = async () => {
       if (inputValue === teacherFullName) {
-        console.log('Deleting student');
+        console.log('Deleting teacher');
         const response = await deleteTeacher(teacherId)
         if (response === 200) {
-            navigate(`/signup`)
+          sessionStorage.setItem('teacherDeleteInfo', JSON.stringify({
+            success: true,
+            teacherName: teacherFullName
+          }));
+          navigate(`/signup`)
         }
       } else {
         console.log('Name does not match');

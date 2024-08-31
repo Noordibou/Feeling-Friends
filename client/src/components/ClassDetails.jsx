@@ -1,10 +1,28 @@
 import { useEffect, useState } from "react";
-import GoBack from "./GoBack";
 import { getTeacherClassroom } from "../api/teachersApi";
 import { formatTime } from "../utils/dateFormat";
+import { ToastContainer } from 'react-toastify';
+import { handleSuccess } from "../utils/toastHandling";
+
 
 const ClassDetails = ({ teacherId, classroomId, hasButtons }) => {
   const [classroom, setClassroom] = useState("");
+  const [toastShown, setToastShown] = useState(false);
+  
+  useEffect(() => {
+    const storedData = sessionStorage.getItem('studentDeleteInfo');
+
+    if (storedData) {
+      const { success, studentName } = JSON.parse(storedData);
+
+      if (success && !toastShown) {
+        handleSuccess(`Student ${studentName} deleted successfully!`);
+        setToastShown(true);
+        // Clear the data from sessionStorage
+        sessionStorage.removeItem('studentDeleteInfo');
+      }
+    }
+  }, [toastShown]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +65,7 @@ const ClassDetails = ({ teacherId, classroomId, hasButtons }) => {
           <h2 className="font-semibold pl-2 tracking-wide text-graphite">MON | TUE | WED | THU | FRI</h2>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

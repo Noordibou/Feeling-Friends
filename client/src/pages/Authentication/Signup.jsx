@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -29,6 +29,23 @@ const Signup = () => {
     }
   });
   const { email, password, confirmPassword, username, role, userDetails } = inputValue;
+
+  const [toastShown, setToastShown] = useState(false);
+  
+  useEffect(() => {
+    const storedData = sessionStorage.getItem('teacherDeleteInfo');
+
+    if (storedData) {
+      const { success, teacherName } = JSON.parse(storedData);
+
+      if (success && !toastShown) {
+        handleSuccess(`${teacherName} deleted successfully!`);
+        setToastShown(true);
+        // Clear the data from sessionStorage
+        sessionStorage.removeItem('teacherDeleteInfo');
+      }
+    }
+  }, [toastShown]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;

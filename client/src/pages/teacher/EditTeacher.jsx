@@ -131,7 +131,7 @@ const EditTeacher = () => {
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsAccountOpen(!isAccountOpen)}
               >
-                <h2 className="font-header4 text-header3">Account Settings</h2>
+                <h2 className="font-header4 text-header3 select-none">Account Settings</h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isAccountOpen ? "" : "rotate-180"
@@ -225,7 +225,7 @@ const EditTeacher = () => {
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
-                <h2 className="font-header4 text-header3">User profile</h2>
+                <h2 className="font-header4 text-header3 select-none">User profile</h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isProfileOpen ? "" : "rotate-180"
@@ -334,7 +334,7 @@ const EditTeacher = () => {
                 className="flex w-full justify-between"
                 onClick={() => setIsDisplayOpen(!isDisplayOpen)}
               >
-                <h2 className="font-semibold font-header4 text-header3 font-[Poppins]">
+                <h2 className="font-semibold font-header4 text-header3 font-[Poppins] select-none">
                   Display
                 </h2>
 

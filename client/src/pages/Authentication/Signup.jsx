@@ -12,6 +12,7 @@ import LinkedIn from "../../images/linkedinicon.svg";
 import UserRole from "../../components/UserRole"
 import NavLogo from "../../images/NavLogo.png"
 import Logo from "../../images/logolarge.svg"
+import { handleError, handleSuccess } from "../../utils/toastHandling"
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -47,29 +48,6 @@ const Signup = () => {
     }
   };
 
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

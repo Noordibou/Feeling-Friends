@@ -6,6 +6,7 @@ import Button from "../../images/button.png";
 import { useAuth } from "./AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import BtnRainbow from "../../components/BtnRainbow";
+import { handleError, handleSuccess } from "../../utils/toastHandling";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,30 +27,6 @@ const Login = () => {
     });
   };
 
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -65,7 +42,6 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      console.log("Response from server:", data);
 
       const { success, message, redirectPath } = data;
 
@@ -75,7 +51,7 @@ const Login = () => {
         if (redirectPath) {
           navigate(redirectPath);
         }
-        handleLogin(data.user); // Pass the user data from the response
+        handleLogin(data.user); 
       } else {
         handleError(message);
       }
@@ -143,8 +119,7 @@ const Login = () => {
           </form>
         </div>
 
-        {/* <ToastContainer
-          position="bottom-left"
+        <ToastContainer
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -152,8 +127,7 @@ const Login = () => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          toastClassName="custom-toast" // Apply custom CSS classes to toast messages
-        /> */}
+        />
 
         {/* Temporary fix for public to view a demo of both student and teacher views  */}
         {/* Normally, admin or teacher would register, because we want it to be secure */}

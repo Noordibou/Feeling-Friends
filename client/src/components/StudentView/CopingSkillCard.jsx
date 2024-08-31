@@ -1,18 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
-import question_crab from "../images/question_crab.png";
-import question_dog from "../images/question_dog.png";
-import question_mouse from "../images/question_mouse.png";
-import question_dino from "../images/question_dino.png";
-import question_rabbit from "../images/question_rabbit.png";
-import question_frog from "../images/Question_Frog.png";
-import coping_crab from "../images/copingSkill/crab_coping_skill_card.png";
-import coping_dino from "../images/copingSkill/dino_coping_skill_card.png";
-import coping_dog from "../images/copingSkill/dog_coping_skill_card.png";
-import coping_frog from "../images/copingSkill/frog_coping_skill_card.png";
-import coping_mouse from "../images/copingSkill/mouse_coping_skill_card.png";
-import coping_rabbit from "../images/copingSkill/rabbit_coping_skill_card.png";
-import downArrow from "../images/down_arrow.png";
-import subEmotionInfo from "../data/subEmotions";
+import question_crab from "../../images/question_crab.png";
+import question_dog from "../../images/question_dog.png";
+import question_mouse from "../../images/question_mouse.png";
+import question_dino from "../../images/question_dino.png";
+import question_rabbit from "../../images/question_rabbit.png";
+import question_frog from "../../images/Question_Frog.png";
+import coping_crab from "../../images/copingSkill/crab_coping_skill_card.png";
+import coping_dino from "../../images/copingSkill/dino_coping_skill_card.png";
+import coping_dog from "../../images/copingSkill/dog_coping_skill_card.png";
+import coping_frog from "../../images/copingSkill/frog_coping_skill_card.png";
+import coping_mouse from "../../images/copingSkill/mouse_coping_skill_card.png";
+import coping_rabbit from "../../images/copingSkill/rabbit_coping_skill_card.png";
+import downArrow from "../../images/down_arrow.png";
+import subEmotionInfo from "../../data/subEmotions";
 
 const CopingSkillCard = ({ emotion, emotionColor }) => {
   const [mainEmotion, setMainEmotion] = useState("");

@@ -1,7 +1,7 @@
 import withAuth from "../../hoc/withAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "../../components/StudentView/ProgressBar";
 import subEmotionInfo from "../../data/subEmotions";
 import { useEffect, useState } from "react";
 

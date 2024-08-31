@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion'
-import Star from "../images/star.png";
+import Star from "../../images/star.png";
 
 const Slider = ({ updateSliderValue }) => {
     const [value, setValue] = useState(0)

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import ProgressBar from "../components/ProgressBar";
-import CurvedWords from "../components/CurvedWord";
+import ProgressBar from "../components/StudentView/ProgressBar";
+import CurvedWords from "../components/StudentView/CurvedWord";
 import subEmotionInfo from "../data/subEmotions";
 import withAuth from "../hoc/withAuth";
 import { checkTimeOfDay } from '../utils/dailyGreeting'

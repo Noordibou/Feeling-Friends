@@ -3,7 +3,7 @@ import SummaryPerson from "../../images/SummaryPerson.png";
 import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton.jsx";
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "../../components/StudentView/ProgressBar.jsx";
 import { getEmotionColor } from "../../utils/classroomColors.js";
 import CopingSkillCard from "../../components/StudentView/CopingSkillCard.jsx";
 import withAuth from "../../hoc/withAuth.js";

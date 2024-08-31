@@ -7,8 +7,8 @@ import {
   scaredZorImages,
   happyZorImages,
   girlZorImages
-} from "../data/zorImages";
-import subEmotionInfo from "../data/subEmotions";
+} from "../../data/zorImages";
+import subEmotionInfo from "../../data/subEmotions";
 
 const ZorImageRender = ({ sliderValue, chosenSubEmotion }) => {
   const [mainEmotion, setMainEmotion] = useState("");

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { updateStudent } from "../../api/studentsApi";
 import { useNavigate, useLocation } from "react-router-dom";
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "../../components/StudentView/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
 import { getEmotionColor } from "../../utils/classroomColors";
 import withAuth from "../../hoc/withAuth";

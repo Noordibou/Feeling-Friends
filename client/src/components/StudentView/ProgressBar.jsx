@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import backArrow from "../images/backarrow.png"
+import backArrow from "../../images/backarrow.png"
 
 const ProgressBar = ({ totalPages, currentPage }) => {
   const navigate = useNavigate();

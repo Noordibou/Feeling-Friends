@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import Slider from "../../components/Slider";
-import ProgressBar from "../../components/ProgressBar";
+import Slider from "../../components/StudentView/Slider";
+import ProgressBar from "../../components/StudentView/ProgressBar";
 import Wiggly from "../../images/wiggly.png";
-import ZorImageRender from "../../components/ZorImageRender";
+import ZorImageRender from "../../components/StudentView/ZorImageRender";
 import withAuth from "../../hoc/withAuth";
 
 const RegZone = () => {

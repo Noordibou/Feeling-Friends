@@ -5,6 +5,8 @@ import Classroom from "../../images/Classroom.png";
 import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
+import { handleError } from "../../utils/toastHandling";
+import { ToastContainer } from "react-toastify";
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color: "sky" },
@@ -44,7 +46,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
     } else if (typeof setIsEditMode === 'function') {
       setIsEditMode((prevEditMode) => !prevEditMode);
     } else {
-      alert("This page does not support edit mode.");
+      handleError("This page does not support edit mode.");
     }
   };
 
@@ -85,6 +87,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
               <div><span className="font-poppins text-notebookPaper text-[12px]nav-text-shadow ">{item.text}</span></div>
             </motion.div>
           ))}
+          <ToastContainer />
         </div>
       </div>
     </>

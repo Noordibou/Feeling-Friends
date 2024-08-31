@@ -5,12 +5,12 @@ import angryImg from '../images/student/characters/angry.png';
 import happyImg from '../images/student/characters/happy.png';
 import scaredImg from '../images/student/characters/scared.png';
 // wheels
-import proudWheel from "../images/ProudRabbitAndWheel.png"
-import angryWheel from "../images/AngryCrabAndWheel.png"
-import anxiousWheel from "../images/NervousFrogAndWheel.png"
-import happyWheel from "../images/HappyLambAndWheel.png"
-import sadWheel from "../images/SadMouseAndWheel.png";
-import scaredWheel from "../images/ScaredLizardAndWheel.png"
+import proudWheel from "../images/student/wheel/ProudRabbitAndWheel.png"
+import angryWheel from "../images/student/wheel/AngryCrabAndWheel.png"
+import anxiousWheel from "../images/student/wheel/NervousFrogAndWheel.png"
+import happyWheel from "../images/student/wheel/HappyLambAndWheel.png"
+import sadWheel from "../images/student/wheel/SadMouseAndWheel.png";
+import scaredWheel from "../images/student/wheel/ScaredLizardAndWheel.png"
 
 const subEmotionInfo = [
     {

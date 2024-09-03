@@ -27,21 +27,25 @@ const MsgModal = ({ msgText, showMsg }) => {
       <AnimatePresence>
         {showMsg && (
           <motion.div
-            className={`fixed bottom-0 z-50 w-full max-w-[1024px] lg:max-w-[780px] object-cover rounded-t-[1rem]`}
+            className={`fixed bottom-0 z-50 w-full max-w-[1024px] lg:max-w-[780px] object-cover rounded-t-[1rem] h-44 sm:h-36`}
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: "tween", stiffness: 120, damping: 15 }}
           >
-            <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center mt-2">
+            <div className="absolute top-0 left-0 w-full h-full flex justify-center pt-10 sm:mt-2">
               <h3
                 className={`text-black relative text-center font-[Poppins] font-semibold text-[1.65rem]`}
               >
                 {msgText}
               </h3>
-            </div>
-            <img alt="save success" src={saveBg} className={`w-full h-36`} />
-            <div className="absolute bottom-0 left-12 flex items-end h-full">
+            
+            <div className="flex sm:hidden absolute bottom-0 left-0 w-full items-center justify-center">
+                <img src={successFrog} className="mt-4 sm:mt-2" alt="Success Frog" />
+              </div>
+              </div>
+            <img alt="save success" src={saveBg} className={`w-full h-full sm:h-[200px]`} />
+            <div className="sm:absolute hidden bottom-0 left-12 sm:flex items-end h-full">
               <img src={successFrog} />
             </div>
           </motion.div>

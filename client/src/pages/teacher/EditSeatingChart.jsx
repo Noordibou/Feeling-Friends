@@ -308,8 +308,8 @@ const EditSeatingChart = () => {
                     style={{
                       width: "100%",
                       height: "100%",
-                      transform: `scale(${scale})`, // Apply the scale here
-                      transformOrigin: "top left",  // Scale from the top-left corner
+                      transform: `scale(${scale})`,
+                      transformOrigin: "top left",
                     }}
                   >
                   {/* Classroom layout here */}
@@ -422,13 +422,13 @@ const EditSeatingChart = () => {
           </div>
         </div>
         {/* Tells user they have saved the layout */}
-        <div className="flex justify-center">
+
           <MsgModal
             msgText="Save Successful!"
             showMsg={showMsg}
             textColor="text-black"
           />
-        </div>
+
         <UnsavedChanges />
 
       </div>

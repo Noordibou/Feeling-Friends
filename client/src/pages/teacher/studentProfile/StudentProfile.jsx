@@ -272,13 +272,12 @@ const StudentProfile = () => {
     }
   };
 
-  // FIXME: this should save to a db
-  // const handleFileUpload = (file) => {
-  //   setStudentProfile({
-  //     ...studentProfile,
-  //     avatarImg: file.base64,
-  //   });
-  // };
+  const handleFileUpload = (file) => {
+    setStudentProfile({
+      ...studentProfile,
+      avatarImg: file.base64,
+    });
+  };
 
   return (
     <>
@@ -387,7 +386,7 @@ const StudentProfile = () => {
                           <FileBase
                             type="file"
                             multiple={false}
-                            onDone={() => console.log("nice image!")}
+                            onDone={({ base64 }) => handleFileUpload({ base64 })}
                           />
                         </div>
                       ) : null}
@@ -586,20 +585,6 @@ const StudentProfile = () => {
                   </div>
                 </div>
               )}
-              {/* Selected Day Student Info Modal Overlay*/}
-              {/* {openStudentInfoModal && (
-                <div
-                  className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-96 md:top-80 mt-[150px] sm:mt-[130px] md:mt-[120px] my-2 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]`}
-                >
-                  <div className={`flex h-full justify-center items-center`}>
-                    <StudentProfileBoxInfo
-                      student={studentProfile}
-                      selectedEntry={lastSelectedCheck}
-                      setOpenStudentInfoModal={setOpenStudentInfoModal}
-                    />
-                  </div>
-                </div>
-              )} */}
             </div>
             <div className="mb-20 mt-6 max-w-2xl">
               <div className="flex flex-col gap-4 md:gap-0 mt-6 mb-2 items-center w-full justify-between ">

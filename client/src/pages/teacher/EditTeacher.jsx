@@ -121,13 +121,12 @@ const EditTeacher = () => {
     return <div>Loading...</div>; // Or redirect to another page, or show an error message
   }
 
-  // FIXME: doesnt work because file is too large to save to a db, need to find another way
-  // const handleFileUpload = (file) => {
-  //   setFormData({
-  //     ...formData,
-  //     avatarImg: file.base64,
-  //   });
-  // };
+  const handleFileUpload = (file) => {
+    setFormData({
+      ...formData,
+      avatarImg: file.base64,
+    });
+  };
   
   return (
     <>
@@ -300,7 +299,7 @@ const EditTeacher = () => {
                     <FileBase
                       type="file"
                       multiple={false}
-                      onDone={() => console.log("nice!")}
+                      onDone={({ base64 }) => handleFileUpload({ base64 })}
                     />
                   </div>
                 </div>

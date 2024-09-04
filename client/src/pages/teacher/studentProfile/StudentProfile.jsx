@@ -139,8 +139,8 @@ const StudentProfile = () => {
       setHasUnsavedChanges(false);
       setEditMode(false);
     } catch (error) {
-      setError("An error occurred while saving the student profile.");
-      console.error(error);
+          setError("An error occurred while saving the student profile.");
+          console.error(error);
     }
 
     try {
@@ -525,7 +525,7 @@ const StudentProfile = () => {
                       {/* Selected Day Student Info Modal Overlay */}
                       {openStudentInfoModal && (
                         <div
-                          className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`} // z-index higher than calendar
+                          className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[120%] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`} // z-index higher than calendar
                           style={{ left: "50%", transform: "translateX(-50%)" }} // Center modal horizontally
                         >
                           <div

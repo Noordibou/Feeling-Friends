@@ -232,9 +232,9 @@ const NeedsGoals = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
                     >
                       <path d="M20 6L9 17l-5-5" />
@@ -370,9 +370,9 @@ const NeedsGoals = () => {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
                       >
                         <path d="M20 6L9 17l-5-5" />

@@ -56,7 +56,7 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, itemFullName, 
             className="bg-red-500 text-white font-semibold mt-4 p-2 rounded-md"
             onClick={() => removeItemFromSystem()}
             >
-            Delete Student
+            Delete
             </button>
           </div>
         </div>

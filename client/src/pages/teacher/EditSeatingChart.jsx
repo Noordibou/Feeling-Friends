@@ -50,7 +50,10 @@ const EditSeatingChart = () => {
   const [showMsg, setShowMsg] = useState(false);
   const [emptyMsg, setEmptyMsg] = useState(false);
   const {setHasUnsavedChanges} = useUnsavedChanges();
+  const [scale, setScale] = useState(1);
 
+  const handleZoomIn = () => setScale(prevScale => Math.min(prevScale + 0.1, 1.5));
+  const handleZoomOut = () => setScale(prevScale => Math.max(prevScale - 0.1, 0.5));
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -240,7 +243,6 @@ const EditSeatingChart = () => {
           <Logout location="teacherLogout" userData={userData} />
         </div>
 
-        {/* FIXME: might neeed to fix page container (this should be full screen) */}
         {/* page container */}
         <div className="flex flex-col w-full h-screen items-center max-w-3xl">
           {/* top half of page */}
@@ -298,7 +300,18 @@ const EditSeatingChart = () => {
                 <div
                   className="relative w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] "
                   ref={constraintsRef}
-                >
+                  >
+
+                    {/* Scale wrapper */}
+                  <div
+                    className="absolute top-0 left-0"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      transform: `scale(${scale})`,
+                      transformOrigin: "top left",
+                    }}
+                  >
                   {/* Classroom layout here */}
 
                   <ClassroomFurniture
@@ -321,6 +334,7 @@ const EditSeatingChart = () => {
                     handleDragEnd={handleDragEnd}
                     handleRemoveObject={handleRemoveObject}
                   />
+                </div>
                 </div>
               </div>
             </>
@@ -408,25 +422,25 @@ const EditSeatingChart = () => {
           </div>
         </div>
         {/* Tells user they have saved the layout */}
-        <div className="flex justify-center">
+
           <MsgModal
             msgText="Save Successful!"
             showMsg={showMsg}
             textColor="text-black"
           />
-        </div>
+
         <UnsavedChanges />
 
       </div>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
         <button
-          onClick={() => console.log("coming soon")}
+          onClick={() => handleZoomIn()}
           className="px-4 py-2 bg-blue text-white rounded"
         >
           +
         </button>
         <button
-          onClick={() => console.log("coming soon")}
+          onClick={() => handleZoomOut()}
           className="px-4 py-2 bg-blue text-white rounded"
         >
           -

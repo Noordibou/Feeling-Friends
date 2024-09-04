@@ -20,6 +20,7 @@ import CreateClass from "./pages/teacher/CreateClass";
 import AddStudentToClassroom from "./pages/teacher/AddStudentToClassroom";
 import ViewClassroom from "./pages/teacher/ViewClassroom";
 import { UnsavedChangesProvider } from "./context/UnsavedChangesContext";
+import Custom404 from "./pages/Custom404"
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
             <Route path="/regzone" element={<RegZone />} />
             <Route path="/goalsneeds" element={<GoalsNeeds />} />
             <Route path="/summary" element={<Summary />} />
+            <Route path="*" element={<Custom404 />} />
           </Routes>
           </UnsavedChangesProvider>
         </UserProvider>

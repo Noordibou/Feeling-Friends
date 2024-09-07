@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../pages/teacher/studentProfile/StudentProfile.css";
+import "../../pages/teacher/studentProfile/StudentProfile.css";
+import StudentProfileBoxInfo from "../StudentProfileBoxInfo";
 
 
-/* 
-  FIXME: 
-  when you go forward and find a week that is in 2 different months, and then go backward, it doesn't show the calendar.
-  
-  same when you go backward, find a week that's in 2 different months, and then go forward. 
-*/
-
-const WeekView = ({ events, handleDateClick, isMonthView }) => {
+const WeekView = ({ events, handleDateClick, isMonthView, lastSelectedCheck, openStudentInfoModal, setOpenStudentInfoModal, studentProfile }) => {
   const [visibleDates, setVisibleDates] = useState(getVisibleDates());
   const [currMonth, setCurrMonth] = useState("")
 
@@ -86,31 +80,36 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
     setVisibleDates({ start: prevMonday, end: prevSunday });
   };
 
+  document.querySelector('.react-calendar__navigation__prev-button').style.display = 'none';
+  document.querySelector('.react-calendar__navigation__next-button').style.display = 'none';
+
   useEffect(() => {
     setVisibleDates(getVisibleDates());
   }, [isMonthView]);
   
 
   return (
-    <div>
-      <div className="relative top-6">
+    <div className="relative w-[280px] xs:w-[330px] sm:w-[400px] md:w-[530px]">
+      <div className="relative top-[22px]">
         <button
+          type="button"
           alt="previous-week"
-          className="absolute left-6 py-3 px-5 bg-white"
+          className="absolute font-arrow text-gray text-[16px] font-semibold left-[19.5px] py-3 px-5 bg-notebookPaper "
           onClick={goToPrevWeek}
         >
-          &lt;
+          ‹
         </button>
         <button
+          type="button"
           alt="next-week"
-          className="absolute right-6 py-3 px-5 bg-white"
+          className="absolute font-arrow text-gray text-[16px] font-semibold right-[15.5px] md:right-[49.5px] py-3 px-5 bg-notebookPaper"
           onClick={goToNextWeek}
         >
-          &gt;
+          ›
         </button>
       </div>
       <Calendar
-        className="react-calendar"
+        className="react-calendar week-view"
         tileClassName={({ date }) => {
           const event = events.find(
             (event) => event.date.toDateString() === date.toDateString()
@@ -123,6 +122,21 @@ const WeekView = ({ events, handleDateClick, isMonthView }) => {
         tileDisabled={({ date }) => !isDateVisible(date)}
         onClickDay={handleDateClick}
       />
+      {/* Selected Day Student Info Modal Overlay */}
+      {openStudentInfoModal && (
+        <div
+          className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[368px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`}
+          style={{ left: "50%", transform: "translateX(-50%)" }}
+        >
+          <div className={`flex h-full justify-center items-center`}>
+            <StudentProfileBoxInfo
+              student={studentProfile}
+              selectedEntry={lastSelectedCheck}
+              setOpenStudentInfoModal={setOpenStudentInfoModal}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 const Student = require('../models/Student.js');
 const User = require('../models/User.js');
+const bcrypt = require("bcryptjs");
 
 // I don't think this works, use the Authentication Signup function
 const createNewStudent = async (req, res) => {
@@ -133,7 +134,6 @@ const updateStudentJournalEntry = async (req, res) => {
       student.journalEntries.push(journalEntry);
     }
 
-    // FIXME: No current way to catch if student enters the checkin/out more than two times. Find a way maybe on the home screen if they've already done all their checks for the day..?
     await student.save();
 
     res.json(student);
@@ -143,19 +143,31 @@ const updateStudentJournalEntry = async (req, res) => {
   }
 }
 
-// delete a student
 const deleteStudent = async (req, res) => {
-    try {
-        res.json(await Student.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        res.status(400).json(error);
+  try {
+    const studentId = req.params.id;
+
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
     }
-}
+
+    // Find and delete the associated user
+    const userId = student.user;
+    await User.findByIdAndDelete(userId);
+
+    // Delete the student
+    await Student.findByIdAndDelete(studentId);
+
+    res.status(200).json({ message: 'Student and associated user deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting student and user', error });
+  }
+};
 
 // Controller function to update a student's seat information
 exports.updateStudentSeatInfo = async (req, res) => {
   try {
-    // Retrieve the student by ID
     const studentId = req.params.studentId;
     const student = await Student.findById(studentId);
 
@@ -163,10 +175,8 @@ exports.updateStudentSeatInfo = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    // Update the seat information
     student.seatInfo = req.body.seatInfo;
 
-    // Save the changes
     await student.save();
 
     res.json({ message: 'Student seat information updated successfully' });
@@ -176,6 +186,54 @@ exports.updateStudentSeatInfo = async (req, res) => {
   }
 };
 
+const createStudentAndUser = async (req, res) => {
+  try {
+    const { firstName, lastName, seatNumber, birthday, gradeYear, schoolStudentId, avatarImg, iepStatus, contentAreaNotices, learningChallenges, accomodationsAndAssisstiveTech, notesForStudent, email } = req.body;
+    const username = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`;
+    // Safer to do this on the backend than generating on the frontend. Eventually will create code to email the temp password to user
+    // const tempPassword = Math.random().toString(36).slice(-8);
+    const tempPassword = "tempPass1234"
+    
+     const studentData = {
+      firstName,
+      lastName,
+      seatNumber,
+      birthday,
+      gradeYear,
+      schoolStudentId,
+      avatarImg,
+      iepStatus,
+      contentAreaNotices,
+      learningChallenges,
+      accomodationsAndAssisstiveTech,
+      notesForStudent
+    };
+
+    const newStudent = await Student.create(studentData);
+
+    const userData = {
+      email,
+      username,
+      password: tempPassword,
+      role: "student",
+      student: newStudent._id
+    };
+
+    const newUser = await User.create(userData);
+
+    newStudent.user = newUser._id;
+    await newStudent.save();
+
+
+    res.status(201).json({ message: 'Student and user created successfully', user: newUser, student: newStudent });
+
+    // TODO: Not built yet
+    // // Optionally send email with temp password and username
+    // await sendWelcomeEmail(email, username, tempPassword);
+  } catch (error) {
+    console.error("Error creating user and student:", error);
+  }
+};
 
 
 
@@ -185,4 +243,5 @@ module.exports = {
     getStudentById,
     updateStudentJournalEntry,
     deleteStudent,
+    createStudentAndUser,
 }

@@ -16,6 +16,7 @@ module.exports = {
       'karla': 'Karla',
       'poppins': 'Poppins',
       'inter': 'Inter',
+      'arrow': ['Arial', 'Helvetica', 'sans-serif'],
     },
 
     fontSize: {
@@ -44,41 +45,46 @@ module.exports = {
       'bold': '900'
     },
 
-    colors: {
-      // Emotions
-      'themeWhite': '#FFFFFF',
-      'darkTeal': '#3EB7AC',
-      'lightLavender': '#DDC9E3',
-      'lightYellow': '#FEE96C',
-      'lightOrange': '#FFB449',
-      'lightCyan': '#BFEFEF',
-      'lightBlue': '#7BBBE5',
-      'pink': '#F497A9',
-      // Regulatory zone
-      'blue': '#0886CE',
-      'green': '#459A4C',
-      'yellow': '#FDDA04',
-      'orange': '#F06403',
-      'notebookPaper': '#FFF9E4',
-      'white': '#FFFFFF',
-      'lightGray': '#979797',
-      // Other
-      'sandwich': '#E4D1AB',
-      'graphite': '#8D8772',
-      'gray': '#808080',
-      'darkSandwich': '#9E9268',
-      'black': '#000000',
-      // Teacher Navbar
-      'sky': '#3DA4DE',
-      'grass': '#52B85A',
-      'schoolBus': '#F5D73A',
-      'apple': '#F46B1E'
+      colors: {
+        // Emotions
+        'themeWhite': '#FFFFFF',
+        'darkTeal': '#3EB7AC',
+        'lightLavender': '#DDC9E3',
+        'lightYellow': '#FEE96C',
+        'lightOrange': '#FFB449',
+        'lightCyan': '#BFEFEF',
+        'lightBlue': '#7BBBE5',
+        'pink': '#F497A9',
+        // Regulatory zone
+        'blue': '#0886CE',
+        'green': '#459A4C',
+        'yellow': '#FDDA04',
+        'orange': '#F06403',
+        'notebookPaper': '#FFF9E4',
+        'white': '#FFFFFF',
+        'lightGray': '#979797',
+        // Other
+        'sandwich': '#E4D1AB',
+        'graphite': '#8D8772',
+        'gray': '#808080',
+        'darkSandwich': '#9E9268',
+        'black': '#000000',
+        // Teacher Navbar
+        'sky': '#3DA4DE',
+        'grass': '#52B85A',
+        'schoolBus': '#F5D73A',
+        'apple': '#F46B1E'
+      },
+      screens: {
+        "xs": "400px"
+      },
+      boxShadow: {
+        'inner-md': 'inset 0 8px 13px rgba(110, 110, 110, 0.6), inset 0 -8px 13px rgba(110, 110, 110, 0.6), inset 8px 0 13px rgba(110, 110, 110, 0.6), inset -8px 0 13px rgba(110, 110, 110, 0.6)',
+        'inner-lg': 'inset 0 10px 15px rgba(0, 0, 0, 0.6)',
+        'inner-xl': 'inset 0 20px 25px rgba(0, 0, 0, 0.6)',
+        // Add more custom shadows as needed
+      },
     },
-
-    // extend: {
-
-
-    // },
   },
   plugins: [require('tailwind-scrollbar')],
   plugins: [require("@tailwindcss/forms")]

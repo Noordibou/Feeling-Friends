@@ -28,12 +28,12 @@ const AddStudentModal = ({
   return (
     <>
       {/* bg cover over classroom */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] absolute mr-auto ml-auto z-10 mt-[108px] w-[752px] h-[61%] rounded-lg opacity-90"></div>
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute mr-auto ml-auto z-30 md:mt-[235px] md:w-[752px] w-screen h-screen md:h-[61%] rounded-lg opacity-90"></div>
 
       {/* add student modal */}
 
-      <div className="absolute mt-[145px] z-10 h-[55%] w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
-        <div className="flex flex-col w-full bg-darkTeal items-end">
+      <div className="fixed md:absolute top-20 md:top-0 md:mt-[265px] z-30 h-[70%] md:h-[55%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
+        <div className="flex flex-col w-full items-end">
           <button onClick={onClose}>
             <img
               className="absolute -top-6 -right-6"
@@ -43,8 +43,8 @@ const AddStudentModal = ({
           </button>
         </div>
         {unassignedStudents.length > 0 ? (
-          <div className="flex h-full flex-col">
-            <div className="flex flex-row h-3/4 flex-wrap overflow-y-auto">
+          <div className="flex w-full h-full flex-col">
+            <div className="flex flex-row h-[220%] md:h-3/4 flex-wrap overflow-y-auto">
               <UnassignedStudent
                 unassignedStudents={unassignedStudents}
                 students={students}
@@ -53,15 +53,15 @@ const AddStudentModal = ({
               />
             </div>
 
-            <div className="flex items-center h-1/3 justify-center">
+            <div className="flex items-end h-72 md:h-1/3 justify-center">
               <button
                 id="unassigned-section"
-                className="flex items-center h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
+                className="flex items-center h-[50px] md:h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
                 onClick={() => {
                   handleConfirm();
                 }}
               >
-                <h2 className="flex items-center h-full font-semibold text-header2">
+                <h2 className="flex items-center h-full font-semibold text-[20px] md:text-header2">
                   Confirm
                 </h2>
               </button>

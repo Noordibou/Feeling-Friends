@@ -3,6 +3,8 @@ import Exterior from "../../images/Exterior.png";
 import Classroom from "../../images/Classroom.png";
 import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
+import { handleError } from "../../utils/toastHandling";
+import { ToastContainer } from "react-toastify";
 
 export default function TeacherNavbar({ setIsEditMode, teacherId, classroomId }) {
   const [isEditMode, setEditMode] = useState(false);
@@ -23,7 +25,7 @@ export default function TeacherNavbar({ setIsEditMode, teacherId, classroomId })
       setIsEditMode((prevEditMode) => !prevEditMode);
     } else {
       // Display a message or perform some other action when edit mode is not supported
-      alert("This page does not support edit mode.");
+      handleError("This page does not support edit mode.");
     }
   };
 
@@ -48,6 +50,7 @@ export default function TeacherNavbar({ setIsEditMode, teacherId, classroomId })
         <div className="flex justify-center items-center"><img src={Settings} alt="Settings" /></div>
         <div><span className="font-poppins text-notebookPaper text-md nav-text-shadow">Settings</span></div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

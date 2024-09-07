@@ -17,6 +17,7 @@ import Checkbox from "../../components/Checkbox";
 import Divider from "../../images/divider.png";
 import Arrow from "../../images/dropdownarrow.svg";
 import Sort from "../../images/sortaz.svg";
+import withAuth from "../../hoc/withAuth";
 
 
 const CreateClass = () => {
@@ -355,4 +356,4 @@ const FormField = ({ label, value, onChange }) => (
   </div>
 );
 
-export default CreateClass;
+export default withAuth(['teacher'])(CreateClass)

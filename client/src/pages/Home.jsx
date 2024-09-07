@@ -51,7 +51,7 @@ const Home = () => {
           <img src={Logo} alt="logo" />
         </div>
 
-        <div className="flex max-sm:block w-full justify-center items-center mt-[5rem] max-sm:mt-[1rem] w-[50%]">
+        <div className="flex max-sm:block w-full justify-center items-center mt-[5rem] max-sm:mt-[1rem]">
           <div className="w-[30%] max-sm:w-[100%] max-sm:p-[1.5rem]">
             <p className="text-header2 font-header2">
               Having big feelings is tough. Feeling Friends can help.

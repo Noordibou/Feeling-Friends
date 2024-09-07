@@ -4,26 +4,38 @@ import Exterior from "../../images/Exterior.png";
 import Classroom from "../../images/Classroom.png";
 import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
+import { handleError } from "../../utils/toastHandling";
+import { ToastContainer } from "react-toastify";
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color: "sky" },
   { url: "/edit-seating-chart", image: Classroom, text: "Edit", color: "grass" },
-  { url: "/editneedsgoals", image: Goal, text: "Goals/Needs", color: "schoolBus" },
+  { url: "/editneedsgoals/:teacherId/:classroomId", image: Goal, text: "Goals/Needs", color:"schoolBus" },  
   { url: "/edit/:teacherId", image: Settings, text: "Settings", color: "apple" }
 ];
 
 export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOpen, toggle }) {
   const [isEditMode, setEditMode] = useState(false);
+  const {hasUnsavedChanges, openModal } = useUnsavedChanges();
 
   const redirectTo = (url) => {
     window.location.href = url;
   };
 
   const handleItemClick = (url) => {
+    let finalUrl = url
     if (url.includes(":teacherId")) {
-      url = url.replace(":teacherId", teacherId);
+      finalUrl = url.replace(":teacherId", teacherId);
     }
-    redirectTo(url);
+    if (url.includes(":classroomId")) {
+      finalUrl = url.replace(":classroomId", classroomId);
+    }
+    if (hasUnsavedChanges) {
+      openModal(() => redirectTo(finalUrl));
+    } else {
+      redirectTo(finalUrl);
+    }
   };
 
   const handleEditClick = () => {
@@ -34,7 +46,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
     } else if (typeof setIsEditMode === 'function') {
       setIsEditMode((prevEditMode) => !prevEditMode);
     } else {
-      alert("This page does not support edit mode.");
+      handleError("This page does not support edit mode.");
     }
   };
 
@@ -61,7 +73,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
             />
           </svg>
         </button>
-        <div className="flex flex-col w-96 mt-20  ">
+        <div className={`${isOpen ? "" : "hidden"} flex flex-col w-96 mt-20  `}>
           {navs.map((item, index) => (
             <motion.div
               key={index}
@@ -75,6 +87,7 @@ export default function DesktopNav({ setIsEditMode, teacherId, classroomId, isOp
               <div><span className="font-poppins text-notebookPaper text-[12px]nav-text-shadow ">{item.text}</span></div>
             </motion.div>
           ))}
+          <ToastContainer />
         </div>
       </div>
     </>

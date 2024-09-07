@@ -69,27 +69,31 @@ const CreateClass = () => {
     setNewClassData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  const handleAddStudent = (studentId) => {
-    // Check if the student is already selected
-    const isSelected = newClassData.students.includes(studentId);
-
-    if (isSelected) {
-      // If selected, remove the student from the array
-      setNewClassData((prevData) => ({
-        ...prevData,
-        students: prevData.students.filter((id) => id !== studentId),
-      }));
-    } else {
-      // If not selected, add the student to the array
-      setNewClassData((prevData) => ({
-        ...prevData,
-        students: [...prevData.students, studentId],
-      }));
-    }
+  const handleAddStudent = (student) => {
+    console.log("handleAddStudent called with:", student);
+    setNewClassData((prevData) => {
+      const isSelected = prevData.students.some(s => s._id === student._id);
+      console.log("Is student already selected?", isSelected);
+      if (isSelected) {
+        const updatedStudents = prevData.students.filter(s => s._id !== student._id);
+        console.log("Removing student. Updated students:", updatedStudents);
+        return {
+          ...prevData,
+          students: updatedStudents,
+        };
+      } else {
+        const updatedStudents = [...prevData.students, student];
+        console.log("Adding student. Updated students:", updatedStudents);
+        return {
+          ...prevData,
+          students: updatedStudents,
+        };
+      }
+    });
   };
 
   const isStudentSelected = (studentId) =>
-    newClassData.students.includes(studentId);
+    newClassData.students.some(s => s._id === studentId);
 
   const handleCreateClassroom = async () => {
     try {
@@ -243,10 +247,18 @@ const CreateClass = () => {
       
         <div className="flex justify-center pt-[1.5rem]">
         <div className="w-[40%]"><span className="text-md font-bold font-poppins">Class size</span> 
-        <span className="text-md font-poppins">&nbsp;&nbsp;&nbsp;0 student(s)</span></div>
+        <span className="text-md font-poppins">&nbsp;&nbsp;&nbsp;{newClassData.students.length} student(s)</span></div>
         </div>
         <div className="flex justify-center">
-        <div className="w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem] italic">Students will appear here when added</div>
+        <div className="w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem]">
+          {newClassData.students.length > 0 ? (
+            newClassData.students.map(student => (
+              <div key={student._id}>{student.firstName} {student.lastName}</div>
+            ))
+          ) : (
+            <span className="italic">Students will appear here when added</span>
+          )}
+        </div>
         </div>
         
         <div className="flex justify-center">
@@ -278,7 +290,18 @@ const CreateClass = () => {
                     {filteredStudents.map((student) => (
                       <li key={student._id}>
                         <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
-                        <Checkbox label="selectStudent" />
+                          <input
+                            type="checkbox"
+                            id={`student-${student._id}`}
+                            checked={isStudentSelected(student._id)}
+                            onChange={() => {
+                              console.log("Checkbox changed for:", student);
+                              handleAddStudent(student);
+                            }}
+                          />
+                          <label htmlFor={`student-${student._id}`}>
+                            {student.firstName} {student.lastName}
+                          </label>
                           <div>
                             <img
                               src={

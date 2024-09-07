@@ -33,6 +33,7 @@ const CreateClass = () => {
   const [allStudents, setAllStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([])
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -70,6 +71,30 @@ const CreateClass = () => {
     setNewClassData((prevData) => ({ ...prevData, [field]: value }));
   };
 
+  const handleStudentChange = (student) => {
+    setSelectedStudents((prev) => {
+      if (prev.some((selectedStudent) => selectedStudent._id === student._id)) {
+        // If the student is already selected, remove them
+        return prev.filter((selectedStudent) => selectedStudent._id !== student._id);
+      } else {
+        // Otherwise, add the student to the selected list
+        return [...prev, student];
+      }
+    });
+  };
+
+  const handleDayChange = (day) => {
+    setSelectedDays((prev) => {
+      if (prev.includes(day)) {
+        return prev.filter((selectedDay) => selectedDay !== day);
+      } else {
+        return [...prev, day];
+      }
+    });
+  };
+
+  // probably would use this for the "submit" button
+  // FIXME: need to use selectedStudents instead of maybe prevData??
   const handleAddStudent = (student) => {
     console.log("handleAddStudent called with:", student);
     setNewClassData((prevData) => {
@@ -93,6 +118,7 @@ const CreateClass = () => {
     });
   };
 
+  // TODO: remove if no longer need, replaced with "selectedStudents"
   const isStudentSelected = (studentId) =>
     newClassData.students.some(s => s._id === studentId);
 
@@ -177,23 +203,65 @@ const CreateClass = () => {
           />
 
           <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem]  font-poppins font-bold text-sm">
-          Days of the Week
+            Days of the Week
           </h3>
           <div className="flex justify-center py-[1rem] font-poppins text-md">
-          Sun <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Sunday" /></span>
-
-          Mon <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Monday" /></span>
-          
-          Tues <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Tuesday" /></span>
-          
-          Wed <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Wednesday" /></span>
-          
-          Thurs <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Thursday" /></span>
-          
-          Fri <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Friday" /></span>
-          
-          Sat <span className="ml-[1rem] mr-[1rem]"><Checkbox label="Saturday" /></span>
-          
+            Sun{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Sunday"
+                handleCheckboxChange={() => handleDayChange("Sunday")}
+                isChecked={selectedDays.includes("Sunday")}
+              />
+            </span>
+            Mon{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Monday"
+                handleCheckboxChange={() => handleDayChange("Monday")}
+                isChecked={selectedDays.includes("Monday")}
+              />
+            </span>
+            Tues{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Tuesday"
+                handleCheckboxChange={() => handleDayChange("Tuesday")}
+                isChecked={selectedDays.includes("Tuesday")}
+              />
+            </span>
+            Wed{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Wednesday"
+                handleCheckboxChange={() => handleDayChange("Wednesday")}
+                isChecked={selectedDays.includes("Wednesday")}
+              />
+            </span>
+            Thurs{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Thursday"
+                handleCheckboxChange={() => handleDayChange("Thursday")}
+                isChecked={selectedDays.includes("Thursday")}
+              />
+            </span>
+            Fri{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Friday"
+                handleCheckboxChange={() => handleDayChange("Friday")}
+                isChecked={selectedDays.includes("Friday")}
+              />
+            </span>
+            Sat{" "}
+            <span className="ml-[1rem] mr-[1rem]">
+              <Checkbox
+                id="Saturday"
+                handleCheckboxChange={() => handleDayChange("Saturday")}
+                isChecked={selectedDays.includes("Saturday")}
+              />
+            </span>
           </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">
@@ -237,7 +305,6 @@ const CreateClass = () => {
             </div>
           </div>
           <div className="flex justify-center bg-sandwich rounded-[1rem] mt-[1rem]">
-            
             <h2 className="text-sm font-body">
               <a href="/edit-seating-chart/:teacherId/:classroomId">
                 <u>Edit Seating Chart</u>
@@ -245,99 +312,112 @@ const CreateClass = () => {
             </h2>
           </div>
         </div>
-      
+
         <div className="flex justify-center pt-[1.5rem]">
-        <div className="w-[40%]"><span className="text-md font-bold font-poppins">Class size</span> 
-        <span className="text-md font-poppins">&nbsp;&nbsp;&nbsp;{newClassData.students.length} student(s)</span></div>
+          <div className="w-[40%]">
+            <span className="text-md font-bold font-poppins">Class size</span>
+            <span className="text-md font-poppins">
+              &nbsp;&nbsp;&nbsp;{newClassData.students.length} student(s)
+            </span>
+          </div>
         </div>
         <div className="flex justify-center">
-        <div className="w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem]">
-          {newClassData.students.length > 0 ? (
-            newClassData.students.map(student => (
-              <div key={student._id}>{student.firstName} {student.lastName}</div>
-            ))
-          ) : (
-            <span className="italic">Students will appear here when added</span>
-          )}
-        </div>
-        </div>
-        
-        <div className="flex justify-center">
-        <img src={Divider} alt="Divider" className="w-[40%]"/>
+          <div className="w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem]">
+            {selectedStudents.length > 0 ? (
+              selectedStudents.map((student) => (
+                <div key={student._id}>
+                  {student.firstName} {student.lastName}
+                </div>
+              ))
+            ) : (
+              <span className="italic">
+                Students will appear here when added
+              </span>
+            )}
+          </div>
         </div>
 
-          <div className="flex justify-center pt-[2rem]">
-            <div className="flex flex-col w-[40%] gap-5 text-center">
-            <h2 className="text-header3 font-poppins font-bold text-sm text-left">
+        <div className="flex justify-center">
+          <img src={Divider} alt="Divider" className="w-[40%]" />
+        </div>
+
+        <div className="flex justify-center pt-[2rem]">
+          <div className="flex flex-col w-[40%] gap-5 text-center">
+            <h2 className="text-header3 font-poppins font-bold text-left">
               Add Students to Classroom
-          </h2>
-              <input
-                type="text"
-                placeholder="Type to search for student"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="p-[0.4rem] pl-[0.8rem] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm"
-              />
-              <div>
-                <div className="flex justify-between items-center">
-                <div className="flex justify-center items-center gap-2 p-[0.2rem] w-[40%] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">
-                  Sort by Last Name <img src={Sort} /></div>
-                <div className="flex justify-center items-center gap-2 p-[0.6rem] w-[40%] rounded-[1.2rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">Grade Level: 5th<img src={Arrow} /></div>
+            </h2>
+            <input
+              type="text"
+              placeholder="Type to search for student"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="p-[0.4rem] pl-[0.8rem] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm"
+            />
+            <div>
+              <div className="flex justify-between items-center">
+                <div className="flex justify-center items-center gap-2 p-[0.2rem] w-[40%] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">
+                  Sort by Last Name <img src={Sort} />
+                </div>
+                <div className="flex justify-center items-center gap-2 p-[0.6rem] w-[40%] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">
+                  Grade Level: 5th
+                  <img src={Arrow} />
                 </div>
               </div>
-              {filteredStudents.length > 0 && (
-                <div>
-                  <ul className="columns-3">
-                    {filteredStudents.map((student) => (
-                      <li key={student._id}>
-                        <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
-                          <input
-                            type="checkbox"
-                            id={`student-${student._id}`}
-                            checked={isStudentSelected(student._id)}
-                            onChange={() => {
-                              console.log("Checkbox changed for:", student);
-                              handleAddStudent(student);
-                            }}
-                          />
-                          <label htmlFor={`student-${student._id}`}>
-                            {student.firstName} {student.lastName}
-                          </label>
-                          <div>
-                            <img
-                              src={
-                                student.avatarImg === "none"
-                                  ? youngStudent
-                                  : student.avatarImg
-                              }
-                              alt={student.lastName}
-                              className="w-[3rem] h-[3rem] rounded-[1rem] ml-[0.5rem]"
-                            />
-                          </div>
-                          <div className="text-left m-auto text-xs font-poppins">
-                            <span className="font-bold">{student.firstName} {student.lastName}</span><br/>
-                            {student.gradeYear}
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </div>
+            {filteredStudents.length > 0 && (
+              <div>
+                <ul className="columns-3">
+                  {filteredStudents.map((student) => (
+                    <li key={student._id}>
+                      <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
+                        <Checkbox
+                          id={`student-${student._id}`}
+                          handleCheckboxChange={() =>
+                            handleStudentChange(student)
+                          }
+                          isChecked={selectedStudents.some(
+                            (s) => s._id === student._id
+                          )}
+                        />
+                        <label htmlFor={`student-${student._id}`}>
+                          {student.firstName} {student.lastName}
+                        </label>
+                        <div>
+                          <img
+                            src={
+                              student.avatarImg === "none"
+                                ? youngStudent
+                                : student.avatarImg
+                            }
+                            alt={student.lastName}
+                            className="w-[3rem] h-[3rem] rounded-[1rem] ml-[0.5rem]"
+                          />
+                        </div>
+                        <div className="text-left m-auto text-xs font-poppins">
+                          <span className="font-bold">
+                            {student.firstName} {student.lastName}
+                          </span>
+                          <br />
+                          {student.gradeYear}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
-
 
         <div className="h-[25%] w-full flex justify-center mt-[1rem]">
-        <div onClick={handleCreateClassroom}>
-        <Button buttonText="Submit"/>
-        </div>
+          <div onClick={handleCreateClassroom}>
+            <Button buttonText="Submit" />
+          </div>
         </div>
 
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav  />
-
-          </div>
+          <Nav />
+        </div>
       </div>
     </>
   );

@@ -298,7 +298,7 @@ const ViewClassroom = () => {
               className={`${
                 Object.keys(selectedStudent).length === 0
                   ? "hidden"
-                  : "fixed top-[40%] md:top-[50%] md:absolute"
+                  : "fixed top-[40%] md:top-[45%] md:absolute"
               } flex flex-col self-center sm:w-[500px] z-30`}
             >
               <StudentInfoBox

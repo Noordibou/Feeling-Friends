@@ -11,7 +11,6 @@ import AuthProvider from "./pages/Authentication/AuthContext";
 import ClassList from "./pages/teacher/ViewClassList";
 import NeedsGoals from "./pages/teacher/NeedsGoals";
 import StudentProfile from "./pages/teacher/studentProfile/StudentProfile";
-import SignupSuccess from "./pages/Authentication/SignupSuccess"
 import { UserProvider } from "./context/UserContext";
 import SubEmotion from "./pages/student/SubEmotion";
 import EditTeacher from "./pages/teacher/EditTeacher";
@@ -32,7 +31,6 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/success" element={<SignupSuccess />} />
 
             {/* Teacher Routes */}
             <Route path="/teacher-home" element={<TeacherHome />} />

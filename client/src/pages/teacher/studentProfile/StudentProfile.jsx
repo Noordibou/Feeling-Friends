@@ -22,6 +22,8 @@ import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal
 import UnsavedChanges from "../../../components/TeacherView/UnsavedChanges.jsx";
 import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
 import { deleteStudent } from "../../../api/studentsApi"
+import { handleError } from "../../../utils/toastHandling.js";
+import { ToastContainer } from "react-toastify";
 
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
@@ -273,6 +275,12 @@ const StudentProfile = () => {
   };
 
   const handleFileUpload = (file) => {
+    const base64Size = (file.base64.length * 3) / 4 - (file.base64.endsWith('==') ? 2 : (file.base64.endsWith('=') ? 1 : 0));
+    if (base64Size > 0.3 * 1024 * 1024) { // Limit file size to 0.3MB
+      handleError('File size is too large');
+      return;
+    }
+
     setStudentProfile({
       ...studentProfile,
       avatarImg: file.base64,
@@ -1016,6 +1024,7 @@ const StudentProfile = () => {
             <h3 className="text-white font-semibold">Delete Student</h3>
           </button>
         </div>
+        <ToastContainer />
         <UnsavedChanges />
         <ConfirmationModal
           showDeleteModal={showDeleteModal}

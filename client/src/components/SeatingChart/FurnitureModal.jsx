@@ -25,9 +25,12 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
 
   return (
     <>
-      {/* Modal */}
+      {/* background to modal */}
       <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute top-0 z-30 w-full md:w-[752px] h-full rounded-lg opacity-90"></div>
-        <div className="fixed md:absolute top-8 left-12 sm:left-20 md:left-8 z-30 h-[90%] w-[80%] md:w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl">
+
+        {/* modal */}
+        <div className="w-full md:w-auto flex justify-center items-center ">
+        <div className="fixed md:absolute top-32 md:top-8  z-30 mx-5 h-[70%] md:h-[90%] w-[80%] md:w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl">
           <div className="flex flex-col w-full items-end">
             <button onClick={onClose}>
               <img
@@ -38,7 +41,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
             </button>
           </div>
           <div className="px-4 md:px-10 pb-10 flex h-full flex-col">
-            <h2 className="font-[Poppins] text-[17px] md:text-[24px] my-5">
+            <h2 className="font-[Poppins] text-[20px] md:text-[24px] my-5">
               Tap to add objects to the classroom
             </h2>
             <div className="flex h-full flex-col ">
@@ -99,6 +102,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
               </div>
             </div>
           </div>
+        </div>
         </div>
     </>
   );

@@ -276,8 +276,8 @@ const StudentProfile = () => {
 
   const handleFileUpload = (file) => {
     const base64Size = (file.base64.length * 3) / 4 - (file.base64.endsWith('==') ? 2 : (file.base64.endsWith('=') ? 1 : 0));
-    if (base64Size > 0.1 * 1024 * 1024) { // Limit file size to 0.1MB
-      handleError('File size is too large');
+    if (base64Size > 0.067 * 1024 * 1024) { // Limit file size to 0.067MB
+      handleError('File size is too large. Try using jpg instead.');
       return;
     }
 

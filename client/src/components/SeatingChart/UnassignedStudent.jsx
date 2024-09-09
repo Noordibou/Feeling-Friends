@@ -52,7 +52,7 @@ const UnassignedStudent = ({
                 <div className="">
                   <img
                     className={`flex object-cover px-1 md:px-0 md:h-[75px] md:w-[75px] rounded-xl ${borderColorClass === "sandwich" ? "opacity-60" : ""}`}
-                    src={SampleAvatar}
+                    src={unassignedStudent.avatarImg !== "none" ? unassignedStudent.avatarImg : SampleAvatar}
                   />
                 </div>
                 <div className="flex flex-row text-[12px] text-center md:text-[15px]">

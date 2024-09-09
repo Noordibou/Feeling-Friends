@@ -142,7 +142,7 @@ const EditTeacher = () => {
             </p>
           </div>
 
-          <form className="flex flex-col gap-2 h-screen sm:h-auto max-h-[1200px] mb-32 sm:mb-0">
+          <form className="flex flex-col gap-2 sm:h-auto max-h-[1200px] mb-24 sm:mb-0">
             <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* Account Profile */}
               <div
@@ -401,10 +401,10 @@ const EditTeacher = () => {
             </div>
           </form>
 
-          <div className="flex absolute bottom-44 lg:bottom-0 justify-center w-full mb-44 md:mb-20">
+          <div className="flex relative bottom-10 lg:bottom-0 justify-center w-full my-72">
             <button
               onClick={() => setShowDeleteModal(true)}
-              className="bg-red-500 py-2 px-10 sm:px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              className="bg-red-500 py-2 px-10 sm:px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 absolute"
             >
               <h3 className="text-white font-semibold">Delete Your Account</h3>
             </button>

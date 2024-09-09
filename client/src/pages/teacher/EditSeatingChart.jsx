@@ -336,21 +336,7 @@ const EditSeatingChart = () => {
                   />
                 </div>
                 </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
-              {/* placeholder for now */}
-              <div className={`absolute mt-[250px] px-32 -ml-10`}>
-                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
-                  Sorry, this feature is not available right now. Please try
-                  again later
-                </h4>
-              </div>
-            </div>
-          )}
-
-          {showStudentRosterModal && (
+                {showStudentRosterModal && (
             <AddStudentModal
               setShowStudentRosterModal={setShowStudentRosterModal}
               unassignedStudents={unassignedStudents}
@@ -368,6 +354,19 @@ const EditSeatingChart = () => {
               classroomId={classroomId}
               updateInfo={updateInfo}
             />
+          )}
+              </div>
+            </>
+          ) : (
+            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+              {/* placeholder for now */}
+              <div className={`absolute mt-[250px] px-32 -ml-10`}>
+                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                  Sorry, this feature is not available right now. Please try
+                  again later
+                </h4>
+              </div>
+            </div>
           )}
 
           <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-start md:mt-5">

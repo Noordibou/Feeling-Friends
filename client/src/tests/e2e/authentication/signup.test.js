@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const { signup, logout, deleteTeacherUser } = require('../utils.js');
+const { signup, logout, deleteTeacherUser, getRandomString } = require('../utils.js');
 
 // Configure Chrome options for Selenium
 const chromeOptions = new chrome.Options();
@@ -12,14 +12,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function getRandomString(length) {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
+
 
 // Function to generate random email
 function getRandomEmail() {

@@ -1,6 +1,6 @@
-const { Builder, until } = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const { login, deleteTeacherUser, signupNewUser, logout, expectLoginFail, getRandomString } = require('../utils.js');
+const { login, deleteTeacherUser, signupNewUser, logout, expectFailMsg, getRandomString } = require('../utils.js');
 
 // Configure Chrome options for Selenium
 const chromeOptions = new chrome.Options();
@@ -33,7 +33,9 @@ afterAll(async () => {
             await deleteTeacherUser(driver);
             await driver.get('http://localhost:3000/login');
             await driver.sleep(500);
-            await expectLoginFail(driver, email, password);
+            await login(driver, email, password)
+            await driver.sleep(500)
+            await expectFailMsg(driver, "Incorrect password or email");
         }
     } catch (err) {
         console.error("Error during afterAll:", err);
@@ -54,12 +56,8 @@ test('Login flow and verify local storage and redirection', async () => {
     // GIVEN, THEN, WHEN as comments for each section
     // Login with the newly signed up user
     await login(driver, email, password);
-
-    // FIXME: will delete once finished building test
-    await driver.sleep(500);
-    await driver.navigate().refresh();
     
-    // Use explicit waits instead of sleep to wait for page load and redirect
+    // Use explicit waits for teacher-home to load
     await driver.wait(until.urlIs('http://localhost:3000/teacher-home'), 1000);
 
     // Check redirection
@@ -70,4 +68,29 @@ test('Login flow and verify local storage and redirection', async () => {
     const localStorageData = await driver.executeScript("return localStorage.getItem('userData');");
     expect(localStorageData).not.toBeNull();
     await driver.sleep(500);
+});
+
+test('Login fails and error toast appears with invalid credentials', async () => {
+    // GIVEN:
+    await driver.get('http://localhost:3000/login');
+    const invalidEmail = 'invalid-email@test.com';
+    const invalidPassword = 'InvalidPassword123';
+
+    // THEN:
+    // Attempt login with incorrect credentials
+    await login(driver, invalidEmail, invalidPassword);
+
+    // Check for an error message on the login screen
+    await expectFailMsg(driver, "Incorrect password or email");
+});
+
+test('Login fails and error toast appears with empty fields', async () => {
+    await driver.get('http://localhost:3000/login');
+
+    // Leave both fields empty and attempt to login
+    const submitButton = await driver.findElement(By.css('button[type="submit"]'));
+    await submitButton.click();
+
+    // Check for an error message on the login screen
+    await expectFailMsg(driver, "Please enter both email and password.");
 });

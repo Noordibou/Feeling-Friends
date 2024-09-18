@@ -107,16 +107,14 @@ async function deleteTeacherUser(driver) {
   }
 }
 
-async function expectLoginFail(driver, email, password) {
+async function expectFailMsg(driver, expectedErrorMsg) {
   try {
-    await login(driver, email, password)
-    await driver.sleep(500)
-    await driver.wait(until.elementLocated(By.xpath('//div[@class="Toastify__toast-body"]/div[contains(text(), "Incorrect password or email")]')), 1000);
+    await driver.wait(until.elementLocated(By.xpath(`//div[@class="Toastify__toast-body"]/div[contains(text(), "${expectedErrorMsg}")]`)), 1000);
 
     // Now fetch the element and its text
-    const alertElement = await driver.findElement(By.xpath('//div[@class="Toastify__toast-body"]/div[contains(text(), "Incorrect password or email")]'));
+    const alertElement = await driver.findElement(By.xpath(`//div[@class="Toastify__toast-body"]/div[contains(text(), "${expectedErrorMsg}")]`));
     const alertText = await alertElement.getText();
-    expect(alertText).toBe('Incorrect password or email');
+    expect(alertText).toBe(expectedErrorMsg);
 
     // Assert that local storage is empty
     const checkLSData = await driver.executeScript("return localStorage.getItem('userData');");
@@ -135,4 +133,4 @@ function getRandomString(length) {
   return result;
 }
 
-module.exports = { login, signupNewUser, logout, deleteTeacherUser, expectLoginFail, getRandomString };
+module.exports = { login, signupNewUser, logout, deleteTeacherUser, expectFailMsg, getRandomString };

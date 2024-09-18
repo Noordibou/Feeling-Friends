@@ -9,7 +9,7 @@ async function login(driver, email, password) {
   await passwordInput.sendKeys(password);
 
   // Find the submit button and click it
-  const submitButton = await driver.findElement(By.css("button"));
+  const submitButton = await driver.findElement(By.css('button[type="submit"]'));
   await submitButton.click();
 }
 
@@ -42,4 +42,16 @@ async function signup(driver, firstname, lastname, username, email, password) {
         await submitButton.click()
   }
 
-module.exports = { login, signup };
+  async function logout(driver) {
+    const logoutButton = await driver.findElement(By.xpath("//button[contains(text(), 'Logout')]"));
+
+
+    // Click the logout button
+    await logoutButton.click();
+
+    // Wait for the confirmation, like being redirected to the login page
+    await driver.wait(until.urlContains('/login'), 10000);
+  }
+
+
+module.exports = { login, signup, logout };

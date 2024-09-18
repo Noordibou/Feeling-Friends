@@ -1,16 +1,16 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const { signup } = require('../utils.js');
+const { signup, logout } = require('../utils.js');
 
 // Configure Chrome options for Selenium
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments('--headless'); // Run in headless mode for CI
-// chromeOptions.addArguments('--no-sandbox');
-// chromeOptions.addArguments('--disable-dev-shm-usage');
+chromeOptions.addArguments('--headless'); // Run in headless mode for CI
+chromeOptions.addArguments('--no-sandbox');
+chromeOptions.addArguments('--disable-dev-shm-usage');
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 (async function signupTest() {
     let driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
@@ -22,9 +22,19 @@ function sleep(ms) {
 
         await signupElement.click();
 
-        
+        const email = "wammyonni@email.com"
+        const firstname = "wammy"
+        const lastname = "Onni"
+        const username= "wammyonni2123"
+        const password = "eik3ndhc#dsi32!"
 
-        await sleep(2000);
+
+        await signup(driver, firstname, lastname, username, email, password)
+
+        await driver.wait(until.urlIs('http://localhost:3000/teacher-home'), 10000);
+
+        await logout(driver)
+
 
     } catch (error) {
         console.error('Test failed:', error);

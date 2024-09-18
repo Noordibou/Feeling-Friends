@@ -15,7 +15,7 @@ async function login(driver, email, password) {
   await submitButton.click();
 }
 
-async function signup(driver, firstname, lastname, username, email, password) {
+async function signupNewUser(driver, firstname, lastname, username, email, password) {
   const teacherButtonChoice = await driver.findElement(
     By.xpath('//button[contains(., "I\'m a teacher")]')
   );
@@ -62,7 +62,7 @@ async function logout(driver) {
   await driver.wait(until.urlContains("/login"), 10000);
 }
 
-async function deleteTeacherUser(driver, sleep) {
+async function deleteTeacherUser(driver) {
   // TODO: navigate to student profile (if deleting student)
 
   // navigate to settings tab (if deleting teacher)
@@ -70,13 +70,13 @@ async function deleteTeacherUser(driver, sleep) {
 
   // Click the element
   await settingsElement.click();
-  await sleep(2000)
+  await driver.sleep(1000)
   // get delete button & click
   const deleteAccountButton = await driver.findElement(
     By.xpath("//button[h3[contains(text(), 'Delete')]]")
   );
   deleteAccountButton.click()
-  await sleep(5000)
+  await driver.sleep(1000)
 
   // get user's first and last name
   const userFullNameElement = await driver.findElement(By.id('user-fullname'));
@@ -84,9 +84,6 @@ async function deleteTeacherUser(driver, sleep) {
   // enter that in input
   
   const inputElement = await driver.findElement(By.id('name-input'));
-
-  const isDisplayed = await inputElement.isDisplayed();
-  console.log('Input element is displayed:', isDisplayed);
 
   // Get and print the tag name of the element
   const tagName = await inputElement.getTagName();
@@ -101,28 +98,37 @@ async function deleteTeacherUser(driver, sleep) {
   );
 
   confirmDeleteButton.click()
-
-  await sleep(1000)
-  const localStorageKeys = await driver.executeScript("return Object.keys(window.localStorage);");
-  console.log('Local storage keys:', localStorageKeys); // For debugging
+  await driver.sleep(1000)
 
   // Assert that local storage is empty
-  expect(localStorageKeys.length).toBe(0);
-  const storedData = await driver.executeScript("return sessionStorage.getItem('teacherDeleteInfo');");
-
-  if (storedData) {
-      const { success, teacherName } = JSON.parse(storedData);
-      console.log('Success:', success);
-      console.log('Teacher Name:', teacherName);
-
-      // Verify that the success field indicates successful deletion
-      expect(success).toBe(true); // Adjust based on expected success value
-
-      // Optionally, verify the teacher's name or other data
-      expect(teacherName).toBe('Expected Teacher Name'); // Adjust as needed
-  } else {
-      throw new Error('No data found in sessionStorage for teacherDeleteInfo.');
-  }
+  const userData = await driver.executeScript("return localStorage.getItem('userData');");
+  expect(userData).toBeNull();  
 }
 
-module.exports = { login, signup, logout, deleteTeacherUser };
+
+
+async function expectLoginFail(driver, email, password) {
+  await login(driver, email, password)
+  await driver.sleep(1000)
+  await driver.wait(until.elementLocated(By.xpath('//div[@class="Toastify__toast-body"]/div[contains(text(), "Incorrect password or email")]')), 5000);
+
+  // Now fetch the element and its text
+  const alertElement = await driver.findElement(By.xpath('//div[@class="Toastify__toast-body"]/div[contains(text(), "Incorrect password or email")]'));
+  const alertText = await alertElement.getText();
+  expect(alertText).toBe('Incorrect password or email');
+
+  // Assert that local storage is empty
+  const checkLSData = await driver.executeScript("return localStorage.getItem('userData');");
+  expect(checkLSData).toBeNull();
+}
+
+function getRandomString(length) {
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+module.exports = { login, signupNewUser, logout, deleteTeacherUser, expectLoginFail, getRandomString };

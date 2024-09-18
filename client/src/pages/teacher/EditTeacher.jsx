@@ -87,6 +87,7 @@ const EditTeacher = () => {
           success: true,
           teacherName: formData?.firstName + " " + formData?.lastName
         }));
+        localStorage.removeItem('userData');
         navigate(`/signup`)
       }
     } else {

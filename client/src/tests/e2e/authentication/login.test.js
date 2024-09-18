@@ -1,10 +1,14 @@
 const { Builder, By } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const { login } = require('../utils.js');
+const { login, deleteTeacherUser } = require('../utils.js');
 
 // Configure Chrome options for Selenium
 const chromeOptions = new chrome.Options();
-chromeOptions.addArguments('--headless'); // Uncomment to run in headless mode for CI
+// chromeOptions.addArguments('--headless'); // Uncomment to run in headless mode for CI
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 let driver;
 
@@ -20,8 +24,10 @@ beforeEach(async () => {
     await driver.get('http://localhost:3000/login');
 });
 
+jest.setTimeout(30000);
+
 test('Login flow and verify local storage and redirection', async () => {
-    const email = 'teacher25@email.com';
+    const email = 'youtest@email.com';
     const password = 'Password1!';
 
     await login(driver, email, password);
@@ -41,4 +47,6 @@ test('Login flow and verify local storage and redirection', async () => {
     // Check redirection
     const currentUrl = await driver.getCurrentUrl();
     expect(currentUrl).toBe('http://localhost:3000/teacher-home'); // Adjust URL as necessary
+
+    await deleteTeacherUser(driver, sleep)
 });

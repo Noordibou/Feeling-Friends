@@ -1,4 +1,4 @@
-import { toggleSelected } from "../utils/editSeatChartUtil";
+import { toggleSelected } from "../../utils/editSeatChartUtil";
 
 describe("checks if item is added to the array", () => {
   test.each([

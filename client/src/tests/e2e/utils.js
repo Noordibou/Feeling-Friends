@@ -144,6 +144,22 @@ function getRandomString(length) {
   return result;
 }
 
+async function getTeacherId(driver) {
+  // Assume there's an API or session from which you can retrieve the teacherId
+  const userDataString  = await driver.executeScript('return localStorage.getItem("userData._id");');
+
+  const userData = JSON.parse(userDataString);
+
+  return userData;
+}
+
+// Example utility function for fetching classroomId
+async function getClassroomId(driver) {
+  // Retrieve the classroomId after creating or accessing a classroom
+  const classroomId = await driver.executeScript('return localStorage.getItem("classroomId");');
+  return classroomId;
+}
+
 module.exports = {
   login,
   signupNewUser,
@@ -151,4 +167,6 @@ module.exports = {
   deleteTeacherUser,
   expectLoginFail,
   getRandomString,
+  getTeacherId,
+  getClassroomId
 };

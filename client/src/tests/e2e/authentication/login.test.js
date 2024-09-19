@@ -44,16 +44,16 @@ beforeAll(async () => {
 
 // executes after all tests
 afterAll(async () => {
-  await login(driver, email, password);
-  await driver.sleep(500);
-  await deleteTeacherUser(driver);
-  await driver.get("http://localhost:3000/login");
-  await login(driver, email, password);
-  await driver.sleep(1000);
-  await expectLoginFail(driver, email, password);
 
-  // Ensure driver is properly quit
-  if (driver) {
+  try{
+    await login(driver, email, password);
+    await driver.sleep(500);
+    await deleteTeacherUser(driver);
+    await driver.get("http://localhost:3000/login");
+    await login(driver, email, password);
+    await driver.sleep(1000);
+    await expectLoginFail(driver, email, password);
+  } finally {
     await driver.quit();
   }
 });

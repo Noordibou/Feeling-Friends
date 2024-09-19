@@ -4,9 +4,9 @@ const { signupNewUser, login, logout, deleteTeacherUser, getRandomString, expect
 
 // Configure Chrome options for Selenium
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments('--headless'); // Uncomment for headless mode in CI
-// chromeOptions.addArguments('--no-sandbox');
-// chromeOptions.addArguments('--disable-dev-shm-usage');
+chromeOptions.addArguments('--headless');
+chromeOptions.addArguments('--no-sandbox');
+chromeOptions.addArguments('--disable-dev-shm-usage');
 
 // Function to generate random email
 function getRandomEmail() {
@@ -45,19 +45,21 @@ describe('Signup Flow Test', () => {
 
     // Teardown: Close the browser after all tests
     afterAll(async () => {
-        await driver.get("http://localhost:3000/login");
-        await login(driver, email, password);
-        // temporary until login error is fixed
-        await driver.sleep(500);
-        await driver.navigate().refresh();
-        await driver.wait(until.urlIs("http://localhost:3000/teacher-home"), 1000);
-        await driver.sleep(500);
-        await deleteTeacherUser(driver);
-        await driver.get("http://localhost:3000/login");
-        await login(driver, email, password);
-        await driver.sleep(1000);
-        await expectLoginFail(driver, email, password);
-        if (driver) {
+
+        try{
+            await driver.get("http://localhost:3000/login");
+            await login(driver, email, password);
+            // temporary until login error is fixed
+            await driver.sleep(500);
+            await driver.navigate().refresh();
+            await driver.wait(until.urlIs("http://localhost:3000/teacher-home"), 1000);
+            await driver.sleep(500);
+            await deleteTeacherUser(driver);
+            await driver.get("http://localhost:3000/login");
+            await login(driver, email, password);
+            await driver.sleep(1000);
+            await expectLoginFail(driver, email, password);
+        } finally {
             await driver.quit();
         }
     });

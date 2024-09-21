@@ -1,4 +1,3 @@
-// controller/trelloController.js
 const axios = require("axios");
 
 const trelloApiKey = process.env.TRELLO_API_KEY;

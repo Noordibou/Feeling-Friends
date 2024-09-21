@@ -6,7 +6,7 @@ const { signupNewUser, deleteTeacherUser, login, getClassroomId, getTeacherId, g
 require('dotenv').config();
 
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments('--headless');
+chromeOptions.addArguments('--headless');
 
 let driver;
 let email, password, firstname, lastname, username;
@@ -49,19 +49,17 @@ async function runAccessibilityTests() {
     teacherId = await getTeacherId(driver);
     classroomId = await getClassroomId(driver);
 
-    // List of URLs to check
     const urls = [
       `http://localhost:3000/teacher-home`,
-      // `http://localhost:3000/classroom/${teacherId}/${classroomId}`,
-      // `http://localhost:3000/viewclasslist/${teacherId}/${classroomId}`,
-      // `http://localhost:3000/${teacherId}/${classroomId}/:studentId`, // Replace with actual studentId
-      // `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
-      // `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
-      // `http://localhost:3000/createclass`,
-      // `http://localhost:3000/addstudent/${teacherId}/${classroomId}`
+      `http://localhost:3000/classroom/${teacherId}/${classroomId}`,
+      `http://localhost:3000/viewclasslist/${teacherId}/${classroomId}`,
+      `http://localhost:3000/${teacherId}/${classroomId}/:studentId`,
+      `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
+      `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
+      `http://localhost:3000/createclass`,
+      `http://localhost:3000/addstudent/${teacherId}/${classroomId}`
     ];
 
-    // Accessibility tests for each URL
     for (const url of urls) {
       console.log(`Testing accessibility for: ${url}`);
       await driver.get(url);
@@ -69,19 +67,17 @@ async function runAccessibilityTests() {
       // Inject axe-core into the page
       await driver.executeScript(axeSource.source);
       
-      // Run accessibility checks
       const results = await driver.executeAsyncScript(function(callback) {
         axe.run(function(err, results) {
           if (err) {
             console.error('Error running Axe:', err);
-            callback([]); // Return an empty array in case of error
+            callback([]);
           } else {
             callback(results);
           }
         });
       });
       
-      // Reformat the results
       const formattedResults = results.violations.map(violation => ({
         issueTitle: `${violation.help}`,
         issueDesc: violation.nodes.map(node =>
@@ -99,7 +95,6 @@ async function runAccessibilityTests() {
       
       console.log(`Accessibility violations for ${url}:`, results.violations.length);
       
-      // Send results to backend
       await addAxeViolations(formattedData);
     }
   } catch (error) {
@@ -124,5 +119,4 @@ async function runAccessibilityTests() {
   }
 }
 
-// Run the accessibility tests
 runAccessibilityTests();

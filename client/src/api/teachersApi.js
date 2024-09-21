@@ -143,7 +143,9 @@ export const createClassroom = async (id, classroom) => {
 
   export const getAllStudents = async () => {
     try {
+        console.log("getting all students")
         const response = await axios.get(`${BASE_URL}/api/students`, { withCredentials: true });
+        console.log(JSON.stringify(response.data));
         return response.data;
     } catch (error) {
         console.log(error);

@@ -105,10 +105,10 @@ async function deleteTeacherUser(driver) {
   const userData = await driver.executeScript(
     "return localStorage.getItem('userData');"
   );
-  expect(userData).toBeNull();
+  return userData;
 }
 
-async function expectLoginFail(driver, email, password) {
+async function expectLoginFail(driver, email, password, isJest) {
   await login(driver, email, password);
   await driver.wait(
     until.elementLocated(
@@ -124,14 +124,17 @@ async function expectLoginFail(driver, email, password) {
       '//div[@class="Toastify__toast-body"]/div[contains(text(), "Incorrect password or email")]'
     )
   );
-  const alertText = await alertElement.getText();
-  expect(alertText).toBe("Incorrect password or email");
+  if (isJest){
+    const alertText = await alertElement.getText();
+    expect(alertText).toBe("Incorrect password or email");
+  
+    // Assert that local storage is empty
+    const checkLSData = await driver.executeScript(
+      "return localStorage.getItem('userData');"
+    );
+    expect(checkLSData).toBeNull();
+  }
 
-  // Assert that local storage is empty
-  const checkLSData = await driver.executeScript(
-    "return localStorage.getItem('userData');"
-  );
-  expect(checkLSData).toBeNull();
 }
 
 function getRandomString(length) {

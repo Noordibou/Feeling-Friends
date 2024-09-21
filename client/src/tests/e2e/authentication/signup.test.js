@@ -54,11 +54,12 @@ describe('Signup Flow Test', () => {
             await driver.navigate().refresh();
             await driver.wait(until.urlIs("http://localhost:3000/teacher-home"), 1000);
             await driver.sleep(500);
-            await deleteTeacherUser(driver);
+            const userData = await deleteTeacherUser(driver);
+            expect(userData).toBeNull();
             await driver.get("http://localhost:3000/login");
             await login(driver, email, password);
             await driver.sleep(1000);
-            await expectLoginFail(driver, email, password);
+            await expectLoginFail(driver, email, password, true);
         } finally {
             await driver.quit();
         }

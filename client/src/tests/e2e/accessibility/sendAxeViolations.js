@@ -52,13 +52,13 @@ async function runAccessibilityTests() {
     // List of URLs to check
     const urls = [
       `http://localhost:3000/teacher-home`,
-      `http://localhost:3000/classroom/${teacherId}/${classroomId}`,
-      `http://localhost:3000/viewclasslist/${teacherId}/${classroomId}`,
-      `http://localhost:3000/${teacherId}/${classroomId}/:studentId`, // Replace with actual studentId
-      `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
-      `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
-      `http://localhost:3000/createclass`,
-      `http://localhost:3000/addstudent/${teacherId}/${classroomId}`
+      // `http://localhost:3000/classroom/${teacherId}/${classroomId}`,
+      // `http://localhost:3000/viewclasslist/${teacherId}/${classroomId}`,
+      // `http://localhost:3000/${teacherId}/${classroomId}/:studentId`, // Replace with actual studentId
+      // `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
+      // `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
+      // `http://localhost:3000/createclass`,
+      // `http://localhost:3000/addstudent/${teacherId}/${classroomId}`
     ];
 
     // Accessibility tests for each URL

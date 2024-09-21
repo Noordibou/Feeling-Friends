@@ -83,7 +83,7 @@ async function runAccessibilityTests() {
       
       // Reformat the results
       const formattedResults = results.violations.map(violation => ({
-        issueTitle: `${violation.help} (${violation.nodes.map(node => node.html).join(', ')})`,
+        issueTitle: `${violation.help}`,
         issueDesc: violation.nodes.map(node =>
           node.any.map(issue => {
             const relatedNodes = issue.relatedNodes.map(rn => rn.html).join(', ') || node.html;

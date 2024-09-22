@@ -318,6 +318,7 @@ const AddStudent = () => {
                         />
                         <button
                           type="button"
+                          aria-label="delete content area notice"
                           onClick={() =>
                             removeItemFromArray("contentAreaNotices", index)
                           }
@@ -375,6 +376,7 @@ const AddStudent = () => {
                         />
                         <button
                           type="button"
+                          aria-label="delete learning challenge"
                           onClick={() =>
                             removeItemFromArray("learningChallenges", index)
                           }
@@ -476,6 +478,7 @@ const AddStudent = () => {
 
                           <button
                             type="button"
+                            aria-label="delete accomodation or assistive tech"
                             onClick={() =>
                               removeItemFromArray(
                                 "accomodationsAndAssisstiveTech",
@@ -541,6 +544,7 @@ const AddStudent = () => {
                         />
                         <button
                           type="button"
+                          aria-label="delete notes for student"
                           onClick={() =>
                             removeItemFromArray("notesForStudent", index)
                           }

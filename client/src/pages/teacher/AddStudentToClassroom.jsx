@@ -146,12 +146,15 @@ const AddStudent = () => {
             >
               <img
                 src={studentProfile.avatarImg}
-                alt="student"
+                alt="Profile picture of student"
                 className="rounded-md object-fill w-32"
               />
             </div>
 
             <div className="inline-flex text-[12px] self-right ml-14 mt-2 font-header1 underline">
+            <label htmlFor="file-upload" className="sr-only">
+              Upload a profile picture
+            </label>
               <FileBase
                 type="file"
                 multiple={false}
@@ -163,42 +166,52 @@ const AddStudent = () => {
             {/* Student Info Container */}
             <div className="flex flex-col w-60 xs:w-80 ml-3 text-[14px] md:text-[16px]">
               <div>
-                <label>First Name*: </label>
+                <label id="first-name-label" htmlFor="firstName">First Name*: </label>
                 <input
+                  id="firstName"
                   type="text"
                   name="firstName"
                   value={studentProfile.firstName}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-8/12 px-2 my-1"
                   required
+                  aria-required="true"
+                  aria-labelledby="first-name-label"
                 />
               </div>
               <div>
-                <label>Last Name*: </label>
+                <label id="last-name-label" htmlFor="lastName">Last Name*: </label>
                 <input
+                  id="lastName"
                   type="text"
                   name="lastName"
                   value={studentProfile.lastName}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-8/12 px-2 my-1"
                   required
+                  aria-required="true"
+                  aria-labelledby="last-name-label"
                 />
               </div>
               <div className="flex items-center">
-                <label className="w-28">Parent's Email*: </label>
+                <label id="email-label" htmlFor="email" className="w-28">Parent's Email*: </label>
                 <input
-                  type="text"
+                  id="email"
+                  type="email"
                   name="email"
                   value={studentProfile.email}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-8/12 px-2 my-1"
                   required
+                  aria-required="true"
+                  aria-labelledby="email-label"
                 />
               </div>
 
               <div>
                 <label htmlFor="gradeYear">Grade: </label>
                 <select
+                  id="gradeYear"
                   name="gradeYear"
                   value={studentProfile.gradeYear}
                   onChange={handleInputChange}
@@ -224,25 +237,29 @@ const AddStudent = () => {
               </div>
 
               <div>
-                <label>Student ID: </label>
+                <label id="student-id-label" htmlFor="studentId">Student ID: </label>
                 <input
+                  id="studentId"
                   type="text"
                   name="schoolStudentId"
                   value={studentProfile.schoolStudentId}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich w-7/12 px-2 my-1"
+                  aria-labelledby="student-id-label"
                 />
               </div>
 
               <div className="flex">
                 <div>
-                  <label>Birthday: </label>
+                  <label id="birthday-label" htmlFor="birthday">Birthday: </label>
                   <input
+                    id="birthday"
                     type="date"
                     name="birthday"
                     value={studentProfile.birthday}
                     onChange={handleInputChange}
                     className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                    aria-labelledby="birthday-label"
                   />
                 </div>
                 <div className="flex items-center">
@@ -255,13 +272,17 @@ const AddStudent = () => {
                 </div>
               </div>
               <div>
-                <label>IEP*: </label>
+                <label htmlFor="iepStatus">IEP*: </label>
+                <span id="iep-status-description" className="sr-only">Select if the student has an Individualized Education Plan</span>
                 <select
+                  id="iepStatus"
                   name="iepStatus"
                   value={studentProfile.iepStatus}
                   onChange={handleInputChange}
                   className="rounded-md bg-sandwich px-2 my-1"
                   required
+                  aria-required="true"
+                  aria-labelledby="iepStatus iep-status-description"
                 >
                   <option value="" disabled></option>
                   <option value="Yes">Yes</option>
@@ -278,15 +299,15 @@ const AddStudent = () => {
         {/* add iep section */}
 
         {studentProfile.iepStatus === "Yes" && (
-          <div className="flex w-full justify-center mb-32 md:mb-0 mt-10">
+          <div className="flex w-full justify-center mb-32 md:mb-0 mt-10" role="region" aria-labelledby="iep-section-header">
             <div className="flex flex-col justify-center">
-              <h1 className="text-black text-sm sm:text-md font-bold font-header1 mb-4 max-w-2xl">
+              <h1 id="iep-section-header" className="text-black text-sm sm:text-md font-bold font-header1 mb-4 max-w-2xl">
                 Individual Education Program (IEP)
               </h1>
               <div className="self-center bg-sandwich p-4 rounded-xl flex flex-col w-[19.5rem] xs:w-[25rem] md:w-[35rem] mb-32">
                 {/* Content Area Notices */}
-                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                  <h3 className="font-header4">Content Area Notices</h3>
+                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4" role="group" aria-labelledby="content-area-notices-header">
+                  <h3 id="content-area-notices-header" className="font-header4">Content Area Notices</h3>
                   <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
                     Learning Benchmark
                   </h3>
@@ -304,6 +325,7 @@ const AddStudent = () => {
                         }
                         placeholder="Content Area"
                         className="w-full flex rounded-md bg-sandwich text-[14px] px-2 md:text-[16px]"
+                        aria-label={`Content Area ${index + 1}`}
                       />
                       <div className="w-full flex justify-end ">
                         <input
@@ -315,6 +337,7 @@ const AddStudent = () => {
                           }
                           placeholder="Benchmark"
                           className="w-[120px] rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
+                          aria-label={`Benchmark for Content Area ${index + 1}`}
                         />
                         <button
                           type="button"
@@ -325,7 +348,7 @@ const AddStudent = () => {
                         >
                           <img
                             src={xButton}
-                            alt="remove"
+                            alt="remove content area notice"
                             className="w-4 ml-1 "
                           />
                         </button>
@@ -341,13 +364,14 @@ const AddStudent = () => {
                       })
                     }
                     className="w-full border-4 border-graphite rounded-xl py-2 my-4"
+                    aria-label="Add content area notice"
                   >
                     Add Content Area Notice +
                   </button>
                 </div>
 
-                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                  <h3 className="font-header4">Learning Challenges</h3>
+                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4" role="group" aria-labelledby="learning-challenges-header">
+                  <h3 id="learning-challenges-header" className="font-header4">Learning Challenges</h3>
                   <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
                     Diagnosed
                   </p>
@@ -362,6 +386,7 @@ const AddStudent = () => {
                         }
                         placeholder="Challenge"
                         className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
+                        aria-label={`Learning Challenge ${index + 1}`}
                       />
                       <div className="w-full flex justify-end ">
                         <input
@@ -373,6 +398,7 @@ const AddStudent = () => {
                           }
                           placeholder="Date"
                           className="w-[130px] rounded-md bg-sandwich text-[14px] md:text-[16px] ml-3 px-2"
+                          aria-label={`Date for Learning Challenge ${index + 1}`}
                         />
                         <button
                           type="button"
@@ -383,7 +409,7 @@ const AddStudent = () => {
                         >
                           <img
                             src={xButton}
-                            alt="remove"
+                            alt="remove learning challenge"
                             className="w-4 ml-1 "
                           />
                         </button>
@@ -399,13 +425,14 @@ const AddStudent = () => {
                       })
                     }
                     className="w-full border-4 border-graphite rounded-xl py-2 my-4"
+                    aria-label="Add learning challenge"
                   >
                     Add Learning Challenge +
                   </button>
                 </div>
 
-                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                  <h3 className="font-header4">
+                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4" role="region" aria-labelledby="accommodations-assistive-tech-header">
+                  <h3 id="accommodations-assistive-tech-header" className="font-header4">
                     Accommodations & Assistive Tech
                   </h3>
                   <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
@@ -423,6 +450,7 @@ const AddStudent = () => {
                       <div
                         key={index}
                         className="grid grid-cols-4 gap-1 sm:gap-4 items-center py-2"
+                        role="group" aria-labelledby={`accommodation-${index}`}
                       >
                         <input
                           type="text"
@@ -437,6 +465,7 @@ const AddStudent = () => {
                           }
                           placeholder="Accommodation"
                           className="w-[220%] flex pl-2 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1 px-2"
+                          aria-label={`Accommodation ${index + 1}`}
                         />
                         <div></div>
                         <select
@@ -452,8 +481,9 @@ const AddStudent = () => {
                           }
                           placeholder="Frequency"
                           className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1"
+                          aria-label={`Frequency for Accommodation ${index + 1}`}
                         >
-                          <option value=""></option>
+                          <option value="" aria-label="Select frequency"></option>
                           <option value="Daily">Daily</option>
                           <option value="Weekly">Weekly</option>
                           <option value="Monthly">Monthly</option>
@@ -474,11 +504,12 @@ const AddStudent = () => {
                             }
                             placeholder="Location"
                             className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1 px-2"
+                            aria-label={`Location for Accommodation ${index + 1}`}
                           />
 
                           <button
                             type="button"
-                            aria-label="delete accomodation or assistive tech"
+                            aria-label={`Delete accommodation or assistive tech for ${accomodation.accomodation}`}
                             onClick={() =>
                               removeItemFromArray(
                                 "accomodationsAndAssisstiveTech",
@@ -488,7 +519,7 @@ const AddStudent = () => {
                           >
                             <img
                               src={xButton}
-                              alt="remove"
+                              alt="remove accommodation or assistive tech"
                               className="w-4 ml-1 "
                             />
                           </button>
@@ -506,13 +537,14 @@ const AddStudent = () => {
                       })
                     }
                     className="w-full border-4 border-graphite rounded-xl py-2 my-4"
+                    aria-label="Add accommodation and assistive tech"
                   >
                     Add Accommodation & Assistive Tech +
                   </button>
                 </div>
 
-                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                  <h3 className="font-header4">Notes</h3>
+                <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4" role="region" aria-labelledby="notes-header">
+                  <h3 id="notes-header" className="font-header4">Notes</h3>
                   <div className="grid grid-cols-2 gap-1 md:gap-4 pb-2">
                     <div className="col-span-1"></div>
                     <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
@@ -520,7 +552,7 @@ const AddStudent = () => {
                     </h3>
                   </div>
                   {studentProfile.notesForStudent.map((studentNote, index) => (
-                    <div key={index} className="flex justify-end py-2">
+                    <div key={index} className="flex justify-end py-2" role="group" aria-labelledby={`note-${index}`}>
                       <input
                         type="text"
                         name="note"
@@ -530,6 +562,7 @@ const AddStudent = () => {
                         }
                         placeholder="Note"
                         className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] px-2"
+                        aria-label={`Note ${index + 1}`}
                       />
                       <div className="w-full flex justify-end ">
                         <input
@@ -541,17 +574,18 @@ const AddStudent = () => {
                           }
                           placeholder="Date"
                           className="w-[130px] rounded-md bg-sandwich text-[14px] md:text-[16px] ml-3 px-2"
+                          aria-label={`Date for Note ${index + 1}`}
                         />
                         <button
                           type="button"
-                          aria-label="delete notes for student"
+                          aria-label={`Delete note for student ${studentNote.note}`}
                           onClick={() =>
                             removeItemFromArray("notesForStudent", index)
                           }
                         >
                           <img
                             src={xButton}
-                            alt="remove"
+                            alt="remove note for student"
                             className="w-4 ml-1 "
                           />
                         </button>
@@ -567,6 +601,7 @@ const AddStudent = () => {
                       })
                     }
                     className="w-full border-4 border-graphite rounded-xl py-2 my-4"
+                    aria-label="Add note"
                   >
                     Add Note +
                   </button>
@@ -580,6 +615,7 @@ const AddStudent = () => {
           <button
             className="lg:hidden fixed bottom-36 flex "
             type="submit"
+            aria-label="Save changes"
           >
             <Button buttonText="Save" />
           </button>
@@ -589,6 +625,7 @@ const AddStudent = () => {
           <button
             className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
             type="submit"
+            aria-label="Save changes"
           >
             <SmallSaveButton />
           </button>

@@ -35,14 +35,16 @@ const GoBack = () => {
     
 
     return (
-      <button className="flex" onClick={goBack}>
+      <button className="flex" onClick={goBack} aria-label="Go back" title="Go back">
         <svg
           className={``}
           width="70"
           height="70"
           viewBox="25 0 1 100"
           xmlns="http://www.w3.org/2000/svg"
+          role="img"
         >
+          <title>Arrow pointing left to go back</title>
           <line
             x1="10"
             y1="50"

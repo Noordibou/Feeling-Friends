@@ -22,6 +22,26 @@
     background-color: #FFF9E4;
     border: #D2C2A4 solid 2px;
     border-radius: 8px;
+  }
+
+
+  @media (max-width: 600px) {
+    .custom-scrollbar {
+      overflow-y: none;
+      margin-right: 0px;
+      
+    }
     
+    .custom-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
     
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      display: none;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+      display: none;
+    }
+
   }

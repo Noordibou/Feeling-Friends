@@ -16,6 +16,7 @@ import "tailwind-scrollbar";
 import "./scrollbar.css";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
+import withAuth from "../../hoc/withAuth.js";
 
 
 
@@ -66,7 +67,7 @@ const TeacherHome = () => {
   return (
     <>
       <div className="flex flex-col justify-center">
-        <div className="h-screen lg:ml-28 lg:z-40">
+        <div className="h-screen lg:ml-28">
           <div className=" mb-3">
             <Greeting isEditMode={isEditMode} userData={userData} />
           </div>
@@ -161,7 +162,7 @@ const TeacherHome = () => {
         </div>
           {/* <div className="w-[35%] lg:order-first"> */}
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-          <Nav setIsEditMode={setIsEditMode} />
+          <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />
         </div>
 
       </div>
@@ -169,4 +170,4 @@ const TeacherHome = () => {
   );
 };
 
-export default TeacherHome;
+export default withAuth(['teacher'])(TeacherHome);

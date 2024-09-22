@@ -5,26 +5,42 @@ import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
 import NavButton from "../../images/NavButton.png";
 import NavLogo from "../../images/NavLogo.png";
+import { useNavigate } from "react-router-dom";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
+import { handleError } from "../../utils/toastHandling";
+import { ToastContainer } from "react-toastify";
 
 const navs = [
   { url: "/teacher-home", image: Exterior, text: "Dashboard", color:"sky" },
   { url: "/edit-seating-chart", image: Classroom, text: "Edit", color:"grass" },
-  { url: "/editneedsgoals", image: Goal, text: "Goals/Needs", color:"schoolBus" },
+  { url: "/editneedsgoals/:teacherId/:classroomId", image: Goal, text: "Goals/Needs", color:"schoolBus" },
   { url: "/edit/:teacherId", image: Settings, text: "Settings", color:"apple" }
 ];
 
 export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classroomId}) {
   const [isEditMode, setEditMode] = useState(false);
 
-  const redirectTo = (url) => {
+  const {hasUnsavedChanges, openModal } = useUnsavedChanges();
+
+
+  const navigate = useNavigate()
+    const redirectTo = (url) => {
     window.location.href = url;
   };
 
   const handleItemClick = (url) => {
+    let finalUrl = url
     if (url.includes(":teacherId")) {
-      url = url.replace(":teacherId", teacherId);
+      finalUrl = url.replace(":teacherId", teacherId);
     }
-    redirectTo(url);
+    if (url.includes(":classroomId")) {
+      finalUrl = url.replace(":classroomId", classroomId);
+    }
+    if (hasUnsavedChanges) {
+      openModal(() => redirectTo(finalUrl));
+    } else {
+      redirectTo(url);
+    }
   };
 
   const handleEditClick = () => {
@@ -39,13 +55,13 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
       setIsEditMode((prevEditMode) => !prevEditMode);
     } else {
       // Display a message or perform some other action when edit mode is not supported
-      alert("This page does not support edit mode.");
+      handleError("This page does not support edit mode.");
     }
   };
 
   return (
     <>
-    <div className="hidden lg:inline-flex mt-4 ml-2 ">
+    <div className="hidden lg:inline-flex mt-4 ml-2">
     <button
           type="button"
           className="items-center m-3 mt-4"
@@ -53,10 +69,12 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
         >
           <img src={NavButton} alt="Exterior" width={52} height={48}/>
         </button>
-        <img src={NavLogo} alt="Exterior" width={56} height={12} className="w-24 h-12 mt-4 "/>
+        <button aria-label="Go to teacher home" onClick={() => navigate("/teacher-home")}>
+          <img src={NavLogo} alt="Exterior" width={56} height={12} className="w-24 h-12 mt-4" />
+        </button>
 
     </div>
-    <div className="flex w-full lg:hidden ">
+    <div className="flex w-full lg:hidden">
       {navs.map((item, index) => (
         <div
           key={index}
@@ -67,6 +85,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
           <div><span className="font-poppins text-notebookPaper text-md nav-text-shadow">{item.text}</span></div>
         </div>
       ))}
+      <ToastContainer />
     </div>
     </>
   );

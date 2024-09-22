@@ -143,7 +143,9 @@ export const createClassroom = async (id, classroom) => {
 
   export const getAllStudents = async () => {
     try {
+        console.log("getting all students")
         const response = await axios.get(`${BASE_URL}/api/students`, { withCredentials: true });
+        console.log(JSON.stringify(response.data));
         return response.data;
     } catch (error) {
         console.log(error);
@@ -190,7 +192,6 @@ export const addFurniture = async (teacherId, classroomId, furnitureData) => {
 };
 
 export const deleteFurniture = async (teacherId, classroomId, itemIds) => {
-    console.log("Hey it's hitting he deleteFurniture api call hmm: " + JSON.stringify(itemIds))
     try {
       const response = await axios.delete(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, { data: itemIds, withCredentials: true });
       return response.data;
@@ -199,3 +200,13 @@ export const deleteFurniture = async (teacherId, classroomId, itemIds) => {
       throw error;
     }
   };
+
+export const deleteTeacher = async (teacherId) => {
+    try {
+      const response = await axios.delete(`${TEACHERS_API_URL}/${teacherId}`, { withCredentials: true });
+      return response.status;
+    } catch (error) {
+      console.log("Oops, an error has occurred:", error);
+      throw error;
+    }
+};

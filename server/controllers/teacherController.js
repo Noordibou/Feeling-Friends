@@ -79,9 +79,21 @@ const updateTeacherInfo = async (req, res) => {
 
 const deleteTeacher = async (req, res) => {
   try {
-    res.json(await Teacher.findByIdAndRemove(req.params.id));
+    const teacherId = req.params.id;
+
+    const teacher = await Teacher.findById(teacherId);
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+
+    const userId = teacher.user;
+    await User.findByIdAndDelete(userId);
+
+    await Teacher.findByIdAndDelete(teacherId);
+
+    res.status(200).json({ message: 'Teacher and associated user deleted successfully' });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json({ message: 'Error deleting teacher and user', error });
   }
 };
 

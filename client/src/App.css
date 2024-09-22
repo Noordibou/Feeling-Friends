@@ -1,5 +1,5 @@
 /* Font imports */
-@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700;800;900&family=Poppins&display=swap');
 
 body {
   background-color: #FFF9E4;
@@ -44,10 +44,10 @@ body {
   background: #FFF9E4;
   /* (notebook paper) */
   border-radius: 1rem;
-  border: 1rem;
-  font-family: karla;
+  border: 0rem;
+  font-family: poppins;
   padding: 0.5rem;
-  font-size: 1.75rem;
+  font-size: 1.1rem;
 }
 
 /* Save Button */
@@ -60,6 +60,34 @@ body {
   color: #FFF9E4;
 }
 
+
+
+/* Checkbox */
+
+input[type="checkbox"] {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.checkbox {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background: none;
+  border: 2px #A59F8B solid;
+  border-radius: 0.2rem;
+}
+
+.checkbox--active {
+  border: 0px;
+  background: #A59F8B;
+  background-image: url("./images/checkboxbg.svg");
+}
 
 @media (max-width: 600px) {
   /* Transparent background for specific scrollbars */

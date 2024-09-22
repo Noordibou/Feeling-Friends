@@ -12,7 +12,7 @@ import GoBack from "../../components/GoBack";
 import Nav from "../../components/Navbar/Nav";
 import youngStudent from "../../images/young-student.png";
 import { getBackgroundColorClass } from "../../utils/classroomColors";
-import Button from "../../components/Button";
+import Button from "../../components/SmallSaveButton";
 import Checkbox from "../../components/Checkbox";
 import Divider from "../../images/divider.png";
 import Arrow from "../../images/dropdownarrow.svg";
@@ -34,6 +34,9 @@ const CreateClass = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([])
+  const [sortByLastName, setSortByLastName] = useState(false);
+  const [selectedGrade, setSelectedGrade] = useState('All');
+  const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -123,12 +126,22 @@ const CreateClass = () => {
     newClassData.students.some(s => s._id === studentId);
 
   const handleCreateClassroom = async () => {
+    if (!newClassData.classSubject.trim()) {
+      alert("Please enter a class subject.");
+      return;
+    }
+
+    if (selectedStudents.length === 0) {
+      alert("Please select at least one student for the class.");
+      return;
+    }
+
     try {
       const newClassroomData = {
         classSubject: newClassData.classSubject,
         location: newClassData.location,
-        students: newClassData.students.map((studentId) => ({
-          student: studentId,
+        students: selectedStudents.map((student) => ({
+          student: student._id,
           seatInfo: {
             x: null,
             y: null,
@@ -145,7 +158,7 @@ const CreateClass = () => {
         ...prevData,
         { classroom: newClassroom },
       ]);
-      setNewClassData((prevData) => ({ ...prevData, students: [] }));
+      setSelectedStudents([]);
 
       // Updates React Context
       const updatedUserData = await getTeacherById(userData._id);
@@ -154,6 +167,7 @@ const CreateClass = () => {
       navigate(`/teacher-home`);
     } catch (error) {
       console.error(error);
+      alert("An error occurred while creating the classroom. Please try again.");
     }
   };
 
@@ -178,21 +192,36 @@ const CreateClass = () => {
     );
   };
 
+  const handleSortByLastName = () => {
+    setSortByLastName(!sortByLastName);
+  };
 
-  
+  const sortedFilteredStudents = sortByLastName
+    ? [...filteredStudents].sort((a, b) => a.lastName.localeCompare(b.lastName))
+    : filteredStudents;
+
+  const handleGradeSelect = (grade) => {
+    setSelectedGrade(grade);
+    setIsGradeDropdownOpen(false);
+  };
+
+  const filteredByGradeStudents = selectedGrade === 'All'
+    ? sortedFilteredStudents
+    : sortedFilteredStudents.filter(student => student.gradeYear === selectedGrade);
+
   return (
     <>
-      <div className="h-screen ">
-        <div className="flex justify-around items-center pt-8">
-          <div className="absolute left-[28%]">
+      <div className="h-screen">
+        <div className="flex justify-around items-center pt-8 pb-[1rem]">
+          <div className="lg:relative lg:left-[-18%] sm:relative sm:left-[-19%]">
             <GoBack />
           </div>
-          <span className="text-header2 font-semibold font-header2 w-[40%]">
+          <span className="text-header2 font-header2 font-semibold absolute lg:left-[35%]">
             Add New Classroom
           </span>
         </div>
 
-        <div className="bg-sandwich max-w-[40%] min-w-[25rem]  ml-auto mr-auto p-[1rem] rounded-[1rem] my-[1rem]">
+        <div className="bg-sandwich max-w-[40%] min-w-[23rem] ml-auto mr-auto p-[1rem] rounded-[1rem] lg:my-[1rem] sm:my-[0rem]">
           <h3 className="mb-[0.5rem] ml-[0.5rem] font-poppins font-bold text-sm">
             Title or Subject
           </h3>
@@ -202,10 +231,10 @@ const CreateClass = () => {
             onChange={(e) => handleInputChange("classSubject", e.target.value)}
           />
 
-          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem]  font-poppins font-bold text-sm">
+          <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem] font-poppins font-bold text-sm">
             Days of the Week
           </h3>
-          <div className="flex justify-center py-[1rem] font-poppins text-md">
+          <div className="flex py-[1rem] font-poppins lg:text-md sm:text-xs">
             Sun{" "}
             <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
@@ -314,35 +343,69 @@ const CreateClass = () => {
         </div>
 
         <div className="flex justify-center pt-[1.5rem]">
-          <div className="w-[40%]">
+          <div className="min-w-[40%]">
             <span className="text-md font-bold font-poppins">Class size</span>
             <span className="text-md font-poppins">
-              &nbsp;&nbsp;&nbsp;{newClassData.students.length} student(s)
+              &nbsp;&nbsp;&nbsp;{selectedStudents.length} student(s)
             </span>
           </div>
         </div>
-        <div className="flex justify-center">
-          <div className="w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem]">
-            {selectedStudents.length > 0 ? (
-              selectedStudents.map((student) => (
-                <div key={student._id}>
-                  {student.firstName} {student.lastName}
+        <div className="flex justify-center pt-[2rem]">
+          <div className="flex flex-col min-w-[40%] gap-5 text-center p-[0.5rem]">
+            <div className="min-w-[40%] text-center font-poppins text-md pt-[2rem] pb-[2rem]">
+              {selectedStudents.length > 0 ? (
+                <div className="ml-auto mr-auto">
+                  <ul className="lg:columns-3 sm:columns-2 md:columns-2">
+                    {selectedStudents.map((student) => (
+                      <li key={student._id}>
+                        <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
+                          <Checkbox
+                            id={`student-${student._id}`}
+                            handleCheckboxChange={() =>
+                              handleStudentChange(student)
+                            }
+                            isChecked={selectedStudents.some(
+                              (s) => s._id === student._id
+                            )}
+                          />
+                          <div>
+                            <img
+                              src={
+                                student.avatarImg === "none"
+                                  ? youngStudent
+                                  : student.avatarImg
+                              }
+                              alt={student.lastName}
+                              className="max-w-[3rem] max-h-[3rem] rounded-[1rem] ml-[0.5rem] mr-[0.5rem]"
+                            />
+                          </div>
+                          <div className="text-left lg:text-xs md:text-xs font-poppins">
+                            <span className="font-bold">
+                              {student.firstName} {student.lastName}
+                            </span>
+                            <br />
+                            Grade {student.gradeYear}
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))
-            ) : (
-              <span className="italic">
-                Students will appear here when added
-              </span>
-            )}
+              ) : (
+                <span className="italic">
+                  Students will appear here when added
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
         <div className="flex justify-center">
-          <img src={Divider} alt="Divider" className="w-[40%]" />
+          <img src={Divider} alt="Divider" className="max-w-[40%] p-[0.5rem]" />
         </div>
 
-        <div className="flex justify-center pt-[2rem]">
-          <div className="flex flex-col w-[40%] gap-5 text-center">
+        <div className="flex justify-center pt-[2rem] pb-[5rem]">
+          <div className="flex flex-col min-w-[40%] gap-5 text-center p-[0.5rem]">
             <h2 className="text-header3 font-poppins font-bold text-left">
               Add Students to Classroom
             </h2>
@@ -355,19 +418,40 @@ const CreateClass = () => {
             />
             <div>
               <div className="flex justify-between items-center">
-                <div className="flex justify-center items-center gap-2 p-[0.2rem] w-[40%] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">
-                  Sort by Last Name <img src={Sort} />
+                <div
+                  className="flex justify-center items-center gap-2 p-[0.2rem] w-[40%] bg-notebookPaper hover:border-lightSandwich rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm cursor-pointer"
+                  onClick={handleSortByLastName}
+                >
+                  Sort by Last Name <img src={Sort} alt="Sort icon" />
                 </div>
-                <div className="flex justify-center items-center gap-2 p-[0.6rem] w-[40%] bg-notebookPaper rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm">
-                  Grade Level: 5th
-                  <img src={Arrow} />
+                <div className="relative w-[40%]">
+                  <div
+                    className="flex justify-between items-center p-[0.6rem] w-full bg-notebookPaper hover:border-lightSandwich rounded-3xl border-[0.3rem] border-sandwich font-poppins text-sm cursor-pointer"
+                    onClick={() => setIsGradeDropdownOpen(!isGradeDropdownOpen)}
+                  >
+                    Grade Level: {selectedGrade}
+                    <img src={Arrow} alt="Dropdown arrow" className={`transition-transform duration-300 ${isGradeDropdownOpen ? 'transform rotate-180' : ''}`} />
+                  </div>
+                  {isGradeDropdownOpen && (
+                    <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border border-[0.1rem] border-sandwich rounded-3xl z-10">
+                      {['All', '1', '2', '3', '4', '5'].map((grade) => (
+                        <div
+                          key={grade}
+                          className="p-2 hover:bg-gray-100 cursor-pointer"
+                          onClick={() => handleGradeSelect(grade)}
+                        >
+                        Grade Level: {grade}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-            {filteredStudents.length > 0 && (
-              <div>
-                <ul className="columns-3">
-                  {filteredStudents.map((student) => (
+            {filteredByGradeStudents.length > 0 && (
+              <div className="ml-auto mr-auto">
+                <ul className="lg:columns-3 sm:columns-2 md:columns-2">
+                  {filteredByGradeStudents.map((student) => (
                     <li key={student._id}>
                       <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
                         <Checkbox
@@ -379,9 +463,6 @@ const CreateClass = () => {
                             (s) => s._id === student._id
                           )}
                         />
-                        <label htmlFor={`student-${student._id}`}>
-                          {student.firstName} {student.lastName}
-                        </label>
                         <div>
                           <img
                             src={
@@ -390,15 +471,15 @@ const CreateClass = () => {
                                 : student.avatarImg
                             }
                             alt={student.lastName}
-                            className="w-[3rem] h-[3rem] rounded-[1rem] ml-[0.5rem]"
+                            className="max-w-[3rem] max-h-[3rem] rounded-[1rem] ml-[0.5rem] mr-[0.5rem]"
                           />
                         </div>
-                        <div className="text-left m-auto text-xs font-poppins">
+                        <div className="text-left lg:text-xs md:text-xs font-poppins">
                           <span className="font-bold">
                             {student.firstName} {student.lastName}
                           </span>
                           <br />
-                          {student.gradeYear}
+                          Grade {student.gradeYear}
                         </div>
                       </div>
                     </li>
@@ -409,9 +490,9 @@ const CreateClass = () => {
           </div>
         </div>
 
-        <div className="h-[25%] w-full flex justify-center mt-[1rem]">
+        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed top-[88%] left-[42%] ">
           <div onClick={handleCreateClassroom}>
-            <Button buttonText="Submit" />
+            <Button />
           </div>
         </div>
 

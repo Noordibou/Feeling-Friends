@@ -9,10 +9,10 @@ export default function Button({ buttonText }) {
           backgroundImage: `url('${Background}')`,
           backgroundSize: "350px 50px",
         }}
-        className="w-[80%] sm:w-[350px] h-[50px] rounded-xl overflow-hidden cursor-pointer"
+        className="w-[80%] sm:w-[350px] h-[50px] rounded-xl overflow-hidden cursor-pointer drop-shadow-lg"
       >
         <div className="w-350px h-50px flex justify-center">
-          <span className="font-poppins text-white text-md font-semibold absolute z-20 mt-[12px]">
+          <span className="font-poppins text-white drop-shadow-lg text-md font-semibold absolute z-20 mt-[12px]">
             {buttonText}
           </span>
         </div>

@@ -67,6 +67,7 @@ module.exports = {
         graphite: "#8D8772",
         gray: "#808080",
         darkSandwich: "#9E9268",
+        lightSandwich: "#ecdfc4",
         black: "#000000",
         // Teacher Navbar
         sky: "#3DA4DE",

@@ -213,7 +213,7 @@ const CreateClass = () => {
     <>
       <div className="h-screen">
         <div className="flex justify-around items-center pt-8 pb-[1rem]">
-          <div className="lg:relative lg:left-[-18%] sm:relative sm:left-[-19%]">
+          <div className="relative lg:left-[-18%] left-[-40%]">
             <GoBack />
           </div>
           <span className="text-header2 font-header2 font-semibold absolute lg:left-[35%]">
@@ -234,63 +234,65 @@ const CreateClass = () => {
           <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem] font-poppins font-bold text-sm">
             Days of the Week
           </h3>
-          <div className="flex py-[1rem] font-poppins lg:text-md sm:text-xs">
-            Sun{" "}
-            <span className="ml-[1rem] mr-[1rem]">
+          <div className="flex flex-wrap py-[1rem] gap-4 justify-center font-poppins lg:text-md sm:text-xs max-w-[100%]">
+            
+            <div className="flex gap-2">
+              Sun{" "}
               <Checkbox
                 id="Sunday"
                 handleCheckboxChange={() => handleDayChange("Sunday")}
                 isChecked={selectedDays.includes("Sunday")}
+
               />
-            </span>
+            </div>
+            <div className="flex gap-2">
             Mon{" "}
-            <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
                 id="Monday"
                 handleCheckboxChange={() => handleDayChange("Monday")}
                 isChecked={selectedDays.includes("Monday")}
               />
-            </span>
+            </div>
+            <div className="flex gap-2">
             Tues{" "}
-            <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
                 id="Tuesday"
                 handleCheckboxChange={() => handleDayChange("Tuesday")}
                 isChecked={selectedDays.includes("Tuesday")}
               />
-            </span>
+            </div>
+            <div className="flex gap-2">
             Wed{" "}
-            <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
                 id="Wednesday"
                 handleCheckboxChange={() => handleDayChange("Wednesday")}
                 isChecked={selectedDays.includes("Wednesday")}
               />
-            </span>
+            </div>
+            <div className="flex gap-2">
             Thurs{" "}
-            <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
                 id="Thursday"
                 handleCheckboxChange={() => handleDayChange("Thursday")}
                 isChecked={selectedDays.includes("Thursday")}
               />
-            </span>
+            </div>
+            <div className="flex gap-2">
             Fri{" "}
-            <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
                 id="Friday"
                 handleCheckboxChange={() => handleDayChange("Friday")}
                 isChecked={selectedDays.includes("Friday")}
               />
-            </span>
+            </div>
+            <div className="flex gap-2">
             Sat{" "}
-            <span className="ml-[1rem] mr-[1rem]">
               <Checkbox
                 id="Saturday"
                 handleCheckboxChange={() => handleDayChange("Saturday")}
                 isChecked={selectedDays.includes("Saturday")}
               />
-            </span>
+            </div>
           </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">
@@ -404,7 +406,7 @@ const CreateClass = () => {
           <img src={Divider} alt="Divider" className="max-w-[40%] p-[0.5rem]" />
         </div>
 
-        <div className="flex justify-center pt-[2rem] pb-[5rem]">
+        <div className="flex justify-center pt-[2rem] lg:pb-[3rem] pb-[15rem]">
           <div className="flex flex-col min-w-[40%] gap-5 text-center p-[0.5rem]">
             <h2 className="text-header3 font-poppins font-bold text-left">
               Add Students to Classroom
@@ -434,7 +436,7 @@ const CreateClass = () => {
                   </div>
                   {isGradeDropdownOpen && (
                     <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border border-[0.1rem] border-sandwich rounded-3xl z-10">
-                      {['All', '1', '2', '3', '4', '5'].map((grade) => (
+                      {['All', '1', '2', '3', '4', '5', '6'].map((grade) => (
                         <div
                           key={grade}
                           className="p-2 hover:bg-gray-100 cursor-pointer"
@@ -453,7 +455,7 @@ const CreateClass = () => {
                 <ul className="lg:columns-3 sm:columns-2 md:columns-2">
                   {filteredByGradeStudents.map((student) => (
                     <li key={student._id}>
-                      <div className="flex font-poppins mb-[0.5rem] mr-[3rem]">
+                      <div className="flex font-poppins mb-[0.5rem]  mr-[3rem]">
                         <Checkbox
                           id={`student-${student._id}`}
                           handleCheckboxChange={() =>
@@ -490,11 +492,18 @@ const CreateClass = () => {
           </div>
         </div>
 
-        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed top-[88%] left-[42%] ">
+        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed md:top-[88%] top-[75%] md:left-[42%]">
           <div onClick={handleCreateClassroom}>
             <Button />
           </div>
         </div>
+
+        {/* <div className="lg:hidden h-[25%] w-full flex justify-center mt-[1rem]">
+          <div onClick={handleCreateClassroom}>
+            <Button />
+          </div>
+        </div> */}
+
 
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav />

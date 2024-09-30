@@ -1,15 +1,10 @@
 import Logo from "../images/logolarge.svg";
 import FriendWheel from "../images/friendwheel.png";
 import Divider from "../images/divider.png";
-import DarkLogo from "../images/darklogo.png";
-import FriendsWaving from "../images/friendswaving.svg";
 import Teachers from "../images/teachers.svg";
 import Students from "../images/students.svg";
-import AboutFF from "../images/aboutFF.svg";
-import GitHub from "../images/githubicon.svg";
-import LinkedIn from "../images/linkedinicon.svg";
-
 import Button from "../components/Button.jsx";
+import Footer from "../components/Footer.jsx";
 import { motion } from "framer-motion";
 
 // import { useEffect, useState } from "react";
@@ -134,90 +129,8 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex max-sm:block justify-evenly bg-sandwich w-full mt-[4rem] p-[3rem] max-sm:p-[1.5rem]">
-        <div>
-          <img
-            className="border-b-[0.2rem] border-notebookPaper mb-[1rem]"
-            src={AboutFF}
-            alt="About Feeling Friends"
-          />
-          <p className="font-poppins text-sm">
-            Feeling Friends was born during a Hackathon in late 2023.
-          </p>
-
-          <div className="flex justify-between mt-[3rem]">
-            <div>
-              <ul>
-                <li className="font-poppins font-semibold text-notebookPaper">
-                  Software Development
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Brianne Camesi{" "}
-                  <a href="https://github.com/freckledspider">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://www.linkedin.com/in/briannecamesi/">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Noor Dibou{" "}
-                  <a href="https://github.com/Noordibou">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://linkedin.com/in/noordibou/">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Alex Grimes{" "}
-                  <a href="https://github.com/agrimes23">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://www.linkedin.com/in/alex-grimes-dev/">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul>
-                <li className="font-poppins font-semibold text-notebookPaper">
-                  User Experience Design
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Anthony Sudol{" "}
-                  <a href="https://github.com/howdytony">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://www.linkedin.com/in/anthonysudol">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  July Choi{" "}
-                  <a href="#">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Sarah Shatto{" "}
-                  <a href="#">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <img className="max-sm:pt-[1rem]" src={FriendsWaving} alt="Friends Waving" />
-        </div>
-      </div>
-      <div className="bg-sandwich w-full pb-[2rem] text-center font-poppins font-semibold text-xs">
-      © 2024
-      </div>
+      <Footer />
+     
     </>
   );
 };

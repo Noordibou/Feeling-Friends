@@ -164,7 +164,7 @@ async function runAccessibilityTests() {
     await driver.get('http://localhost:3000/signup');
     await signupNewUser(driver, firstname, lastname, username, email, password);
     await driver.wait(until.urlIs('http://localhost:3000/teacher-home'), 3000);
-    
+
     // Retrieve local storage item after signup
     teacherId = await getUserId(driver);
     
@@ -192,7 +192,7 @@ async function runAccessibilityTests() {
       `http://localhost:3000/add-student`
     ];
 
-    for (const url of urls) {
+  for (const { url, title } of urls) {
       console.log(`Testing accessibility for: ${url}`);
       await driver.get(url);
       
@@ -222,7 +222,7 @@ async function runAccessibilityTests() {
       }));
       
       formattedData = {
-        pageUrl: url,
+        pageTitle: title,
         issues: formattedResults
       };
       

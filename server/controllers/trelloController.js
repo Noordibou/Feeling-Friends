@@ -108,7 +108,7 @@ const sortUpdateTrello = async (req, res) => {
     return res.status(500).json({ message: "Error fetching Trello cards" });
   }
 
-  const cardTitle = `Accessibility Issue on ${violations.pageUrl}`;
+  const cardTitle = `Accessibility Issue on ${violations.pageTitle}`;
 
   // Check if card exists
   const existingCard = currTrelloCards.find((card) => card.name === cardTitle);

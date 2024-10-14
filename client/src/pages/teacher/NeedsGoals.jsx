@@ -21,7 +21,7 @@ const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { teacherId, classroomId } = useParams();
   // Not used now but will probably need once backend is updated
-  const { userData, updateUser } = useUser();
+  const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
   const [showMsg, setShowMsg] = useState(false);
   // Not used now but will probably need once backend is updated

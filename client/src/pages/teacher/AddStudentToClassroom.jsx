@@ -159,6 +159,8 @@ const AddStudent = () => {
                   type="file"
                   multiple={false}
                   onDone={({ base64 }) => handleFileUpload({ base64 })}
+                  id="file-upload" // Associate the input with the label
+                  className="cursor-pointer"
                 />
               </div>
             </div>

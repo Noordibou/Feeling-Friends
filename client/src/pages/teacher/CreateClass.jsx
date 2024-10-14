@@ -248,6 +248,7 @@ const CreateClass = () => {
                 id="Sunday"
                 handleCheckboxChange={() => handleDayChange("Sunday")}
                 isChecked={selectedDays.includes("Sunday")}
+                label="Sunday"
               />
             </div>
             <div className="flex gap-2">
@@ -256,6 +257,7 @@ const CreateClass = () => {
                 id="Monday"
                 handleCheckboxChange={() => handleDayChange("Monday")}
                 isChecked={selectedDays.includes("Monday")}
+                label="Monday"
               />
             </div>
             <div className="flex gap-2">
@@ -264,6 +266,7 @@ const CreateClass = () => {
                 id="Tuesday"
                 handleCheckboxChange={() => handleDayChange("Tuesday")}
                 isChecked={selectedDays.includes("Tuesday")}
+                label="Tuesday"
               />
             </div>
             <div className="flex gap-2">
@@ -272,6 +275,7 @@ const CreateClass = () => {
                 id="Wednesday"
                 handleCheckboxChange={() => handleDayChange("Wednesday")}
                 isChecked={selectedDays.includes("Wednesday")}
+                label="Wednesday"
               />
             </div>
             <div className="flex gap-2">
@@ -280,6 +284,7 @@ const CreateClass = () => {
                 id="Thursday"
                 handleCheckboxChange={() => handleDayChange("Thursday")}
                 isChecked={selectedDays.includes("Thursday")}
+                label="Thursday"
               />
             </div>
             <div className="flex gap-2">
@@ -288,6 +293,7 @@ const CreateClass = () => {
                 id="Friday"
                 handleCheckboxChange={() => handleDayChange("Friday")}
                 isChecked={selectedDays.includes("Friday")}
+                label="Friday"
               />
             </div>
             <div className="flex gap-2">
@@ -296,6 +302,7 @@ const CreateClass = () => {
                 id="Saturday"
                 handleCheckboxChange={() => handleDayChange("Saturday")}
                 isChecked={selectedDays.includes("Saturday")}
+                label="Saturday"
               />
             </div>
           </div>
@@ -446,7 +453,7 @@ const CreateClass = () => {
                     />
                   </div>
                   {isGradeDropdownOpen && (
-                    <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border border-[0.1rem] border-sandwich rounded-3xl z-10">
+                    <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border-[0.1rem] border-sandwich rounded-3xl z-10">
                       {["All", "1", "2", "3", "4", "5", "6"].map((grade) => (
                         <div
                           key={grade}
@@ -475,6 +482,7 @@ const CreateClass = () => {
                           isChecked={selectedStudents.some(
                             (s) => s._id === student._id
                           )}
+                          label={`${student.firstName} ${student.lastName}`}
                         />
                         <div>
                           <img
@@ -483,7 +491,7 @@ const CreateClass = () => {
                                 ? youngStudent
                                 : student.avatarImg
                             }
-                            alt={student.lastName}
+                            alt={`${student.firstName} ${student.lastName}`}
                             className="max-w-[3rem] max-h-[3rem] rounded-[1rem] ml-[0.5rem] mr-[0.5rem]"
                           />
                         </div>

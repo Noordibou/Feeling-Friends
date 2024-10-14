@@ -268,7 +268,7 @@ const ViewClassroom = () => {
                                     ? SampleAvatar
                                     : assignedStudent?.avatarImg
                                 }
-                                alt={assignedStudent?.firstName}
+                                alt="Student avatar"
                               />
                             </div>
                             <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">

@@ -18,7 +18,6 @@ import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
 import editIcon from "../../images/edit_icon.png";
 
-
 const ViewClassroom = () => {
   const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
@@ -28,7 +27,7 @@ const ViewClassroom = () => {
   const constraintsRef = useRef(null);
   const [selectedStudent, setSelectedStudent] = useState({});
   const [showMsg, setShowMsg] = useState(false);
-  const [assignedFurniture, setAssignedFurniture] = useState([])
+  const [assignedFurniture, setAssignedFurniture] = useState([]);
 
   const getClassroomData = async () => {
     try {
@@ -57,8 +56,8 @@ const ViewClassroom = () => {
       const furniture = classroom.furniture.filter(
         (item) => item.assigned === true
       );
-      
-      setAssignedFurniture(furniture)
+
+      setAssignedFurniture(furniture);
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -151,10 +150,12 @@ const ViewClassroom = () => {
                   </Link>
                 </div>
               </div>
-              <a href={`/edit-seating-chart/${teacherId}/${classroomId}`} className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3">
+              <a
+                href={`/edit-seating-chart/${teacherId}/${classroomId}`}
+                className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3"
+              >
                 <h2 className="text-[16px] md:text-[18px] font-[Poppins] text-center underline">
-                  
-                    edit seating chart
+                  edit seating chart
                 </h2>
                 <img src={editIcon} alt="edit icon" className="h-6 w-6" />
               </a>
@@ -309,28 +310,28 @@ const ViewClassroom = () => {
                 handleClick={() => closeStudentInfo(selectedStudent)}
               />
             </div>
-          
-          <div
-            className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
-          >
-            <h4 className="text-black font-[Poppins] text-[32px] mt-32 md:mt-20 max-w-[740px] text-center font-semibold bg-notebookPaper">
-              Nothing assigned yet!
-            </h4>
-          </div>
-          <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">
-            <button
-              onClick={handleZoomIn}
-              className=" px-4 py-2 bg-blue text-white rounded"
+
+            <div
+              className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
             >
-              +
-            </button>
-            <button
-              onClick={handleZoomOut}
-              className="px-4 py-2 bg-blue text-white rounded"
-            >
-              -
-            </button>
-          </div>
+              <p className="text-black font-[Poppins] text-[32px] mt-32 md:mt-20 max-w-[740px] text-center font-semibold bg-notebookPaper">
+                Nothing assigned yet!
+              </p>
+            </div>
+            <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">
+              <button
+                onClick={handleZoomIn}
+                className=" px-4 py-2 bg-blue text-white rounded"
+              >
+                +
+              </button>
+              <button
+                onClick={handleZoomOut}
+                className="px-4 py-2 bg-blue text-white rounded"
+              >
+                -
+              </button>
+            </div>
           </div>
           <div className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
             <Nav teacherId={teacherId} classroomId={classroomId} />

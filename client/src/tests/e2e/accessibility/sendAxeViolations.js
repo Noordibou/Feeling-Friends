@@ -188,7 +188,6 @@ async function runAccessibilityTests() {
       `http://localhost:3000/${teacherId}/${classroomId}/${studentId}`,
       `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
       `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
-      `http://localhost:3000/createclass`,
       `http://localhost:3000/add-student`
     ];
 

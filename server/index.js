@@ -30,6 +30,9 @@ app.use("/api", studentRoute)
 const teacherRoute = require('./routes/teacher.js');
 app.use("/api", teacherRoute)
 
+const trelloRoute = require('./routes/trello.js');
+app.use("/api", trelloRoute)
+
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.get('/*', function (req, res) {

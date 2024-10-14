@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import { deleteStudent } from "../../api/studentsApi"
-import { useNavigate } from 'react-router-dom';
 
 const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, itemFullName, deleteMsg, inputValue, setInputValue, removeItemFromSystem }) => {
 
@@ -43,8 +40,9 @@ const ConfirmationModal = ({ showDeleteModal, setShowDeleteModal, itemFullName, 
             {deleteMsg}
           </h1>
           <h2 className="select-none">Type the below text to confirm.</h2>
-          <p className="py-5">{itemFullName}</p>
+          <p id="user-fullname" className="py-5">{itemFullName}</p>
           <input
+            id="name-input"
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

@@ -26,7 +26,7 @@ const ButtonView = ({
             <img
               className="w-6"
               src={!isSelected ? defaultBtnImage : btnImageWhenOpen}
-              alt={buttonText}
+              alt=""
             />
           </div>
         </button>

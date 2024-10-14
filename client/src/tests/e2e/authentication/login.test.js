@@ -10,8 +10,10 @@ const {
 } = require("../utils.js");
 
 // Configure Chrome options for Selenium
-const chromeOptions = new chrome.Options();
+let chromeOptions = new chrome.Options();
 chromeOptions.addArguments('--headless');
+chromeOptions.addArguments('--no-sandbox');
+chromeOptions.addArguments('--disable-dev-shm-usage');
 
 let driver;
 const emailString = getRandomString(6);

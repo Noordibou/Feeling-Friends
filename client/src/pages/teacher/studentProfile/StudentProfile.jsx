@@ -18,13 +18,12 @@ import Logout from "../../../components/LogoutButton.jsx";
 import { useUser } from "../../../context/UserContext";
 import SmallSaveButton from "../../../components/SmallSaveButton";
 import Button from "../../../components/Button";
-import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx"
+import ConfirmationModal from "../../../components/TeacherView/ConfirmationModal.jsx";
 import UnsavedChanges from "../../../components/TeacherView/UnsavedChanges.jsx";
 import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
-import { deleteStudent } from "../../../api/studentsApi"
+import { deleteStudent } from "../../../api/studentsApi";
 import { handleError } from "../../../utils/toastHandling.js";
 import { ToastContainer } from "react-toastify";
-
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -38,7 +37,7 @@ const StudentProfile = () => {
     contentAreaNotices: null,
     learningChallenges: null,
     accomodationsAndAssisstiveTech: null,
-    notesForStudent: null
+    notesForStudent: null,
   });
   const [editMode, setEditMode] = useState(false);
   const [editModeNotices, setEditModeNotices] = useState(false);
@@ -47,9 +46,9 @@ const StudentProfile = () => {
   const [lastSelectedCheck, setLastSelectedCheck] = useState({});
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [inputValue, setInputValue] = useState('');
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const { setHasUnsavedChanges } = useUnsavedChanges();
 
   const { userData } = useUser();
 
@@ -125,11 +124,11 @@ const StudentProfile = () => {
       ...studentProfile,
       [name]: value,
     });
-    setHasUnsavedChanges(true)
+    setHasUnsavedChanges(true);
   };
 
   const handleSaveClick = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const updatedProfile = await updateStudent(
         teacherId,
@@ -141,8 +140,8 @@ const StudentProfile = () => {
       setHasUnsavedChanges(false);
       setEditMode(false);
     } catch (error) {
-          setError("An error occurred while saving the student profile.");
-          console.error(error);
+      setError("An error occurred while saving the student profile.");
+      console.error(error);
     }
 
     try {
@@ -151,16 +150,17 @@ const StudentProfile = () => {
         // Ensure all IEP-related categories are included
         contentAreaNotices: studentProfile.contentAreaNotices || [],
         learningChallenges: studentProfile.learningChallenges || [],
-        accomodationsAndAssisstiveTech: studentProfile.accomodationsAndAssisstiveTech || [],
+        accomodationsAndAssisstiveTech:
+          studentProfile.accomodationsAndAssisstiveTech || [],
       };
-  
+
       const updatedProfile = await updateStudent(
         teacherId,
         classroomId,
         studentId,
         updatedStudent
       );
-  
+
       setStudentProfile(updatedProfile);
       setEditModeNotices(false);
     } catch (error) {
@@ -181,36 +181,39 @@ const StudentProfile = () => {
       ...prevProfile,
       contentAreaNotices: originalIEPData.contentAreaNotices,
       learningChallenges: originalIEPData.learningChallenges,
-      accomodationsAndAssisstiveTech: originalIEPData.accomodationsAndAssisstiveTech,
+      accomodationsAndAssisstiveTech:
+        originalIEPData.accomodationsAndAssisstiveTech,
       notesForStudent: originalIEPData.notesForStudent,
     }));
     setEditModeNotices(false);
   };
 
-
   const handleEditIEPClick = () => {
     setOriginalIEPData({
       contentAreaNotices: studentProfile.contentAreaNotices || [],
       learningChallenges: studentProfile.learningChallenges || [],
-      accomodationsAndAssisstiveTech: studentProfile.accomodationsAndAssisstiveTech || [],
-      notesForStudent: studentProfile.notesForStudent || []
+      accomodationsAndAssisstiveTech:
+        studentProfile.accomodationsAndAssisstiveTech || [],
+      notesForStudent: studentProfile.notesForStudent || [],
     });
     setEditModeNotices(true);
   };
 
   const handleIEPChange = (event, index, field, category) => {
     // Make a deep copy of the studentProfile state to avoid mutating the original state
-    const updatedItems = [...studentProfile[category]].map(item => ({ ...item }));
-  
+    const updatedItems = [...studentProfile[category]].map((item) => ({
+      ...item,
+    }));
+
     // Update the specific field
     updatedItems[index][field] = event.target.value;
-  
+
     // Set the updated state
     setStudentProfile({
       ...studentProfile,
       [category]: updatedItems,
     });
-    setHasUnsavedChanges(true)
+    setHasUnsavedChanges(true);
   };
 
   const handleIEPDeleteClick = (index, category) => {
@@ -221,7 +224,7 @@ const StudentProfile = () => {
       ...studentProfile,
       [category]: updatedItems,
     });
-    setHasUnsavedChanges(true)
+    setHasUnsavedChanges(true);
   };
 
   const handleIEPAddClick = (category) => {
@@ -233,23 +236,28 @@ const StudentProfile = () => {
     }));
   };
 
-
   const deleteOneStudent = async () => {
-    if (inputValue === studentProfile?.firstName + " " + studentProfile?.lastName) {
-      console.log('Deleting student');
-      const response = await deleteStudent(studentId)
+    if (
+      inputValue ===
+      studentProfile?.firstName + " " + studentProfile?.lastName
+    ) {
+      console.log("Deleting student");
+      const response = await deleteStudent(studentId);
       if (response === 200) {
-        sessionStorage.setItem('studentDeleteInfo', JSON.stringify({
-          success: true,
-          studentName: studentProfile?.firstName + " " + studentProfile?.lastName
-        }));
-        navigate(`/viewclasslist/${teacherId}/${classroomId}`)
+        sessionStorage.setItem(
+          "studentDeleteInfo",
+          JSON.stringify({
+            success: true,
+            studentName:
+              studentProfile?.firstName + " " + studentProfile?.lastName,
+          })
+        );
+        navigate(`/viewclasslist/${teacherId}/${classroomId}`);
       }
     } else {
-      console.log('Name does not match');
+      console.log("Name does not match");
     }
   };
-
 
   const getNewItemForCategory = (category) => {
     switch (category) {
@@ -275,9 +283,12 @@ const StudentProfile = () => {
   };
 
   const handleFileUpload = (file) => {
-    const base64Size = (file.base64.length * 3) / 4 - (file.base64.endsWith('==') ? 2 : (file.base64.endsWith('=') ? 1 : 0));
-    if (base64Size > 0.067 * 1024 * 1024) { // Limit file size to 0.067MB
-      handleError('File size is too large. Try using jpg instead.');
+    const base64Size =
+      (file.base64.length * 3) / 4 -
+      (file.base64.endsWith("==") ? 2 : file.base64.endsWith("=") ? 1 : 0);
+    if (base64Size > 0.067 * 1024 * 1024) {
+      // Limit file size to 0.067MB
+      handleError("File size is too large. Try using jpg instead.");
       return;
     }
 
@@ -394,7 +405,9 @@ const StudentProfile = () => {
                           <FileBase
                             type="file"
                             multiple={false}
-                            onDone={({ base64 }) => handleFileUpload({ base64 })}
+                            onDone={({ base64 }) =>
+                              handleFileUpload({ base64 })
+                            }
                           />
                         </div>
                       ) : null}
@@ -1016,7 +1029,7 @@ const StudentProfile = () => {
             </button>
           </div>
         </form>
-        <div className="flex justify-center w-full mb-80 md:mb-20">
+        <div className="flex justify-center w-full mb-80 lg:mb-20">
           <button
             onClick={() => setShowDeleteModal(true)}
             className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
@@ -1032,7 +1045,9 @@ const StudentProfile = () => {
           itemFullName={
             studentProfile?.firstName + " " + studentProfile?.lastName
           }
-          deleteMsg={"Are you sure you want to delete this student? This cannot be undone."}
+          deleteMsg={
+            "Are you sure you want to delete this student? This cannot be undone."
+          }
           inputValue={inputValue}
           setInputValue={setInputValue}
           removeItemFromSystem={deleteOneStudent}

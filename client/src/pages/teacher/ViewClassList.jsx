@@ -39,7 +39,7 @@ const ViewClassList = () => {
     checkOut: "",
   });
   const [isOpen, setIsOpen] = useState(false);
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const { setHasUnsavedChanges } = useUnsavedChanges();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +104,7 @@ const ViewClassList = () => {
     await updateUser(updatedUserInfo);
 
     console.log("User updated:", JSON.stringify(updatedUserInfo));
-    setHasUnsavedChanges(false)
+    setHasUnsavedChanges(false);
     setIsEditMode(false);
     // Show brief save message for 3 secs
     setShowMsg(true);
@@ -119,7 +119,7 @@ const ViewClassList = () => {
       ...classroom,
       [name]: value,
     });
-    setHasUnsavedChanges(true)
+    setHasUnsavedChanges(true);
   };
 
   const sortedStudents = sortByCriteria(students);
@@ -296,7 +296,7 @@ const ViewClassList = () => {
                       <div className="flex w-full justify-center items-center">
                         <Link
                           className="underline w-[104%]"
-                          to={`/addstudent/${teacherId}/${classroomId}`}
+                          to={`/add-student`}
                         >
                           Add new student
                         </Link>
@@ -310,7 +310,9 @@ const ViewClassList = () => {
                 {/* Scrollable list of students */}
                 <div
                   className={`px-4 md:px-0 md:mb-0 flex w-full justify-center md:overflow-y-auto md:custom-scrollbar ${
-                    isEditMode ? "h-full md:h-[35vh]" : "h-full md:h-[50vh] lg:h-[55vh]"
+                    isEditMode
+                      ? "h-full md:h-[35vh]"
+                      : "h-full md:h-[50vh] lg:h-[55vh]"
                   } pt-3 `}
                   key="list-of-students-1"
                 >

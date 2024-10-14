@@ -19,9 +19,7 @@ import Arrow from "../../images/dropdownarrow.svg";
 import Sort from "../../images/sortaz.svg";
 import withAuth from "../../hoc/withAuth";
 
-
 const CreateClass = () => {
-
   const navigate = useNavigate();
   const { userData, updateUser } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
@@ -33,9 +31,9 @@ const CreateClass = () => {
   const [allStudents, setAllStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDays, setSelectedDays] = useState([]);
-  const [selectedStudents, setSelectedStudents] = useState([])
+  const [selectedStudents, setSelectedStudents] = useState([]);
   const [sortByLastName, setSortByLastName] = useState(false);
-  const [selectedGrade, setSelectedGrade] = useState('All');
+  const [selectedGrade, setSelectedGrade] = useState("All");
   const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -78,7 +76,9 @@ const CreateClass = () => {
     setSelectedStudents((prev) => {
       if (prev.some((selectedStudent) => selectedStudent._id === student._id)) {
         // If the student is already selected, remove them
-        return prev.filter((selectedStudent) => selectedStudent._id !== student._id);
+        return prev.filter(
+          (selectedStudent) => selectedStudent._id !== student._id
+        );
       } else {
         // Otherwise, add the student to the selected list
         return [...prev, student];
@@ -101,10 +101,12 @@ const CreateClass = () => {
   const handleAddStudent = (student) => {
     console.log("handleAddStudent called with:", student);
     setNewClassData((prevData) => {
-      const isSelected = prevData.students.some(s => s._id === student._id);
+      const isSelected = prevData.students.some((s) => s._id === student._id);
       console.log("Is student already selected?", isSelected);
       if (isSelected) {
-        const updatedStudents = prevData.students.filter(s => s._id !== student._id);
+        const updatedStudents = prevData.students.filter(
+          (s) => s._id !== student._id
+        );
         console.log("Removing student. Updated students:", updatedStudents);
         return {
           ...prevData,
@@ -123,7 +125,7 @@ const CreateClass = () => {
 
   // TODO: remove if no longer need, replaced with "selectedStudents"
   const isStudentSelected = (studentId) =>
-    newClassData.students.some(s => s._id === studentId);
+    newClassData.students.some((s) => s._id === studentId);
 
   const handleCreateClassroom = async () => {
     if (!newClassData.classSubject.trim()) {
@@ -167,7 +169,9 @@ const CreateClass = () => {
       navigate(`/teacher-home`);
     } catch (error) {
       console.error(error);
-      alert("An error occurred while creating the classroom. Please try again.");
+      alert(
+        "An error occurred while creating the classroom. Please try again."
+      );
     }
   };
 
@@ -205,9 +209,12 @@ const CreateClass = () => {
     setIsGradeDropdownOpen(false);
   };
 
-  const filteredByGradeStudents = selectedGrade === 'All'
-    ? sortedFilteredStudents
-    : sortedFilteredStudents.filter(student => student.gradeYear === selectedGrade);
+  const filteredByGradeStudents =
+    selectedGrade === "All"
+      ? sortedFilteredStudents
+      : sortedFilteredStudents.filter(
+          (student) => student.gradeYear === selectedGrade
+        );
 
   return (
     <>
@@ -235,18 +242,16 @@ const CreateClass = () => {
             Days of the Week
           </h3>
           <div className="flex flex-wrap py-[1rem] gap-4 justify-center font-poppins lg:text-md sm:text-xs max-w-[100%]">
-            
             <div className="flex gap-2">
               Sun{" "}
               <Checkbox
                 id="Sunday"
                 handleCheckboxChange={() => handleDayChange("Sunday")}
                 isChecked={selectedDays.includes("Sunday")}
-
               />
             </div>
             <div className="flex gap-2">
-            Mon{" "}
+              Mon{" "}
               <Checkbox
                 id="Monday"
                 handleCheckboxChange={() => handleDayChange("Monday")}
@@ -254,7 +259,7 @@ const CreateClass = () => {
               />
             </div>
             <div className="flex gap-2">
-            Tues{" "}
+              Tues{" "}
               <Checkbox
                 id="Tuesday"
                 handleCheckboxChange={() => handleDayChange("Tuesday")}
@@ -262,7 +267,7 @@ const CreateClass = () => {
               />
             </div>
             <div className="flex gap-2">
-            Wed{" "}
+              Wed{" "}
               <Checkbox
                 id="Wednesday"
                 handleCheckboxChange={() => handleDayChange("Wednesday")}
@@ -270,7 +275,7 @@ const CreateClass = () => {
               />
             </div>
             <div className="flex gap-2">
-            Thurs{" "}
+              Thurs{" "}
               <Checkbox
                 id="Thursday"
                 handleCheckboxChange={() => handleDayChange("Thursday")}
@@ -278,7 +283,7 @@ const CreateClass = () => {
               />
             </div>
             <div className="flex gap-2">
-            Fri{" "}
+              Fri{" "}
               <Checkbox
                 id="Friday"
                 handleCheckboxChange={() => handleDayChange("Friday")}
@@ -286,7 +291,7 @@ const CreateClass = () => {
               />
             </div>
             <div className="flex gap-2">
-            Sat{" "}
+              Sat{" "}
               <Checkbox
                 id="Saturday"
                 handleCheckboxChange={() => handleDayChange("Saturday")}
@@ -432,17 +437,23 @@ const CreateClass = () => {
                     onClick={() => setIsGradeDropdownOpen(!isGradeDropdownOpen)}
                   >
                     Grade Level: {selectedGrade}
-                    <img src={Arrow} alt="Dropdown arrow" className={`transition-transform duration-300 ${isGradeDropdownOpen ? 'transform rotate-180' : ''}`} />
+                    <img
+                      src={Arrow}
+                      alt="Dropdown arrow"
+                      className={`transition-transform duration-300 ${
+                        isGradeDropdownOpen ? "transform rotate-180" : ""
+                      }`}
+                    />
                   </div>
                   {isGradeDropdownOpen && (
                     <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border border-[0.1rem] border-sandwich rounded-3xl z-10">
-                      {['All', '1', '2', '3', '4', '5', '6'].map((grade) => (
+                      {["All", "1", "2", "3", "4", "5", "6"].map((grade) => (
                         <div
                           key={grade}
                           className="p-2 hover:bg-gray-100 cursor-pointer"
                           onClick={() => handleGradeSelect(grade)}
                         >
-                        Grade Level: {grade}
+                          Grade Level: {grade}
                         </div>
                       ))}
                     </div>
@@ -492,8 +503,8 @@ const CreateClass = () => {
           </div>
         </div>
 
-        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed md:top-[88%] top-[75%] md:left-[42%]">
-          <div onClick={handleCreateClassroom}>
+        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed lg:top-[88%] top-[75%] md:left-[42%]">
+          <div aria-label="Save" onClick={handleCreateClassroom}>
             <Button />
           </div>
         </div>
@@ -504,7 +515,6 @@ const CreateClass = () => {
           </div>
         </div> */}
 
-
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav />
         </div>
@@ -512,7 +522,6 @@ const CreateClass = () => {
     </>
   );
 };
-
 
 const FormField = ({ label, value, onChange }) => (
   <div>
@@ -526,4 +535,4 @@ const FormField = ({ label, value, onChange }) => (
   </div>
 );
 
-export default withAuth(['teacher'])(CreateClass)
+export default withAuth(["teacher"])(CreateClass);

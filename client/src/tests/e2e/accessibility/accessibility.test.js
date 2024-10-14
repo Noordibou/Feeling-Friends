@@ -1,11 +1,14 @@
 import axios from 'axios';
-import { Builder, By, until } from 'selenium-webdriver';
+import { Builder, until } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
 import { signupNewUser, deleteTeacherUser, login, getClassroomId, getTeacherId, getRandomString, expectLoginFail } from '../utils.js';
 import axeSource from 'axe-core';
 
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments('--headless');
+chromeOptions.addArguments('--headless');
+chromeOptions.addArguments('--no-sandbox');
+chromeOptions.addArguments('--disable-dev-shm-usage');
+
 describe('Accessibility tests', () => {
   let driver;
   let email, password, firstname, lastname, username;
@@ -49,6 +52,7 @@ describe('Accessibility tests', () => {
 
     await driver.sleep(3000);
   });
+
   afterAll(async () => {
     try {
       await driver.get("http://localhost:3000/login");
@@ -75,7 +79,7 @@ describe('Accessibility tests', () => {
     `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
     `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
     `http://localhost:3000/createclass`,
-    `http://localhost:3000/addstudent/${teacherId}/${classroomId}`
+    `http://localhost:3000/add-student`
   ];
   jest.setTimeout(30000);
   // Accessibility tests for each URL
@@ -89,6 +93,7 @@ describe('Accessibility tests', () => {
   
       // Run accessibility checks
       const results = await driver.executeAsyncScript(function(callback) {
+        /* global axe */
         axe.run(function(err, results) {
           if (err) {
             console.error(err);

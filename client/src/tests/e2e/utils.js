@@ -80,6 +80,9 @@ async function deleteTeacherUser(driver) {
   );
 
   await settingsElement.click();
+  await driver.sleep(500);
+  await driver.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
   await driver.wait(
     until.elementLocated(By.xpath("//button[h3[contains(text(), 'Delete')]]")),
     500

@@ -1,4 +1,4 @@
-const { Builder, By, until } = require('selenium-webdriver');
+const { Builder, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { signupNewUser, deleteTeacherUser, login, logout, getClassroomId, getTeacherId, getRandomString, expectLoginFail } = require('../utils.js');
 
@@ -64,7 +64,7 @@ describe('Logout Button Test for Multiple URLs', () => {
         `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
         `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
         `http://localhost:3000/createclass`,
-        `http://localhost:3000/addstudent/${teacherId}/${classroomId}`
+        `http://localhost:3000/add-student`
     ];
 
     urlsToTest.forEach((url) => {

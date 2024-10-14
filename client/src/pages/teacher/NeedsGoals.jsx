@@ -17,7 +17,6 @@ import editIcon from "../../images/edit_icon.png";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
 import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
 
-
 const NeedsGoals = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { teacherId, classroomId } = useParams();
@@ -30,13 +29,15 @@ const NeedsGoals = () => {
   const [goalAnswers, setGoalAnswers] = useState([""]);
   const [needAnswers, setNeedAnswers] = useState([""]);
   // not sure if this will work with how schema is set up
-  const [editGoalMode, setEditGoalMode] = useState(Array(goalAnswers.length).fill(false));
-  const [editNeedsMode, setEditNeedsMode] = useState(Array(needAnswers.length).fill(false));
+  const [editGoalMode, setEditGoalMode] = useState(
+    Array(goalAnswers.length).fill(false)
+  );
+  const [editNeedsMode, setEditNeedsMode] = useState(
+    Array(needAnswers.length).fill(false)
+  );
   const [goalsSelectedOption, setGoalsSelectedOption] = useState("no");
   const [needsSelectedOption, setNeedsSelectedOption] = useState("no");
-  const {setHasUnsavedChanges} = useUnsavedChanges();
-
-
+  const { setHasUnsavedChanges } = useUnsavedChanges();
 
   // keeps track of which lines are being edited
   const toggleEditGoalMode = (index) => {
@@ -44,7 +45,7 @@ const NeedsGoals = () => {
     updatedEditGoalMode[index] = !updatedEditGoalMode[index];
     setEditGoalMode(updatedEditGoalMode);
   };
-  
+
   const toggleEditNeedsMode = (index) => {
     const updatedEditNeedsMode = [...editNeedsMode];
     updatedEditNeedsMode[index] = !updatedEditNeedsMode[index];
@@ -131,11 +132,11 @@ const NeedsGoals = () => {
       <div className="flex min-h-screen justify-center pb-[250px]">
         <div className="flex max-w-[900px] flex-col">
           <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 lg:mt-0 mt-8 mx-4 md:ml-5">
-          <div className="flex md:justify-center">
-            <SimpleTopNav
-              pageTitle={classroom?.classSubject}
-              fontsize="text-[25px] xl:text-[24px]"
-            />
+            <div className="flex md:justify-center">
+              <SimpleTopNav
+                pageTitle={classroom?.classSubject}
+                fontsize="text-[25px] xl:text-[24px]"
+              />
             </div>
             <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
               <div
@@ -189,9 +190,9 @@ const NeedsGoals = () => {
             </div>
           </div>
 
-          <h4 className="font-[Poppins] text-[18px] md:text-[24px] text-center px-2 mt-4">
+          <h1 className="font-[Poppins] text-[18px] md:text-[24px] text-center px-2 mt-4">
             Set preset goal options for your students
-          </h4>
+          </h1>
           <br />
 
           <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem]">
@@ -220,25 +221,35 @@ const NeedsGoals = () => {
                   <div
                     className={`flex rounded-[1rem] items-center justify-between mt-[1rem] mb-[1rem] h-[34px] `}
                   >
-                    <h3 className="text-[17px] font-body pl-3">{answer}</h3>
+                    <h3
+                      className="text-[17px] font-body pl-3"
+                      aria-label={answer ? answer : "No answer available"}
+                    >
+                      {answer || ""}
+                    </h3>
                   </div>
                 )}
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
-                  <button onClick={() => toggleEditGoalMode(index)}>
+                  <button
+                    aria-label={
+                      editNeedsMode[index] ? "Editing mode on" : "Edit item"
+                    }
+                    onClick={() => toggleEditGoalMode(index)}
+                  >
                     {editGoalMode[index] ? (
                       <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
-                    >
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
                     ) : (
                       <img
                         className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}
@@ -249,14 +260,19 @@ const NeedsGoals = () => {
                   </button>
 
                   {/* delete "x" button */}
-                  <button onClick={() => removeGoalsAnswer(index)}>
+                  <button
+                    aria-label="Delete item"
+                    onClick={() => removeGoalsAnswer(index)}
+                  >
                     <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`"w-[16px] ${ editGoalMode[index] ?"mt-2" : ""} sm:w-[24px]"`}
+                      className={`"w-[16px] ${
+                        editGoalMode[index] ? "mt-2" : ""
+                      } sm:w-[24px]"`}
                     >
                       <line
                         x1="5"
@@ -283,14 +299,13 @@ const NeedsGoals = () => {
             ))}
 
             {/* Add new goal div */}
-            <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
-              <h4
+            <div className="flex justify-center items-center rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+              <button
                 className="text-[17px] font-semibold font-[Poppins] text-center"
-                role="button"
                 onClick={() => addAnswer("goal")}
               >
                 Add new goal +
-              </h4>
+              </button>
             </div>
 
             <div className="flex mx-2 gap-5 items-center justify-between">
@@ -357,13 +372,24 @@ const NeedsGoals = () => {
                   <div
                     className={`flex md:p-5 rounded-[1rem] items-center justify-between mt-[1rem] mb-[1rem] h-[34px] `}
                   >
-                    <h3 className="text-[17px] font-body pl-3">{answer}</h3>
+                    <h3
+                      className="text-[17px] font-body pl-3"
+                      aria-label={answer ? answer : "No answer available"}
+                    >
+                      {answer || ""}
+                    </h3>
                   </div>
                 )}
 
                 <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
                   {/* edit button */}
-                  <button className="my-4" onClick={() => toggleEditNeedsMode(index)}>
+                  <button
+                    className="my-4"
+                    onClick={() => toggleEditNeedsMode(index)}
+                    aria-label={
+                      editNeedsMode[index] ? "Editing mode on" : "Edit item"
+                    }
+                  >
                     {editNeedsMode[index] ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -386,14 +412,19 @@ const NeedsGoals = () => {
                     )}
                   </button>
                   {/* delete "x" button */}
-                  <button onClick={() => removeNeedsAnswer(index)}>
+                  <button
+                    aria-label="Delete item"
+                    onClick={() => removeNeedsAnswer(index)}
+                  >
                     <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`"w-[16px] ${ editNeedsMode[index] ?"mt-2" : ""} sm:w-[24px]"`}
+                      className={`"w-[16px] ${
+                        editNeedsMode[index] ? "mt-2" : ""
+                      } sm:w-[24px]"`}
                     >
                       <line
                         x1="5"
@@ -420,14 +451,13 @@ const NeedsGoals = () => {
             ))}
 
             {/* Add new need div */}
-            <div className="rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
-              <h4
+            <div className="flex justify-center items-center rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+              <button
                 className="text-[17px] font-semibold font-[Poppins] text-center"
-                role="button"
                 onClick={() => addAnswer("need")}
               >
                 Add new need +
-              </h4>
+              </button>
             </div>
 
             {/* checkbox options */}

@@ -291,8 +291,8 @@ const ViewClassList = () => {
 
                 <ToggleButton students={students} setStudents={setStudents} />
                 <div className="w-full max-w-[700px]">
-                  <h2 className="text-[16px] md:text-header3 font-header2 text-center my-[1rem] ">
-                    {isEditMode ? (
+                  {isEditMode ? (
+                    <h2 className="text-[16px] md:text-header3 font-header2 text-center my-[1rem]">
                       <div className="flex w-full justify-center items-center">
                         <Link
                           className="underline w-[104%]"
@@ -301,10 +301,8 @@ const ViewClassList = () => {
                           Add new student
                         </Link>
                       </div>
-                    ) : (
-                      ""
-                    )}
-                  </h2>
+                    </h2>
+                  ) : null}
                 </div>
 
                 {/* Scrollable list of students */}

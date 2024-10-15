@@ -643,7 +643,7 @@ const StudentProfile = () => {
               <fieldset>
                 <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
                   <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4 ">
-                    <h3 className="font-header4">Content Area Notices</h3>
+                    <h2 className="font-header4">Content Area Notices</h2>
                     <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
                       Learning Benchmark
                     </h3>
@@ -725,7 +725,7 @@ const StudentProfile = () => {
                     )}
                   </div>
                   <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h3 className="font-header4">Learning Challenges</h3>
+                    <h2 className="font-header4">Learning Challenges</h2>
                     <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
                       Diagnosed
                     </p>
@@ -804,9 +804,9 @@ const StudentProfile = () => {
                     )}
                   </div>
                   <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h3 className="font-header4">
+                    <h2 className="font-header4">
                       Accommodations & Assistive Tech
-                    </h3>
+                    </h2>
                     <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
                       <div className="col-span-1"></div>
                       <div className="col-span-1"></div>
@@ -932,7 +932,7 @@ const StudentProfile = () => {
                     )}
                   </div>
                   <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h3 className="font-header4">Notes</h3>
+                    <h2 className="font-header4">Notes</h2>
                     <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
                       Date
                     </p>
@@ -1034,7 +1034,7 @@ const StudentProfile = () => {
             onClick={() => setShowDeleteModal(true)}
             className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
           >
-            <h3 className="text-white font-semibold">Delete Student</h3>
+            <p className="text-white font-semibold">Delete Student</p>
           </button>
         </div>
         <ToastContainer />

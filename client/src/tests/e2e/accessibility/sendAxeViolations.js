@@ -126,11 +126,11 @@ async function deleteStudent(driver, teacherId, classroomId, studentId) {
 
   // Find the delete button by text and click it
   await driver.wait(
-    until.elementLocated(By.xpath("//button[h3[contains(text(), 'Delete')]]")),
+    until.elementLocated(By.xpath("//button[p[contains(text(), 'Delete')]]")),
     500
   );
   const deleteAccountButton = await driver.findElement(
-    By.xpath("//button[h3[contains(text(), 'Delete Student')]]")
+    By.xpath("//button[p[contains(text(), 'Delete Student')]]")
   );
   deleteAccountButton.click();
 
@@ -182,13 +182,14 @@ async function runAccessibilityTests() {
     await createClassroom(driver);
 
     const urls = [
-      `http://localhost:3000/teacher-home`,
-      `http://localhost:3000/classroom/${teacherId}/${classroomId}`,
-      `http://localhost:3000/viewclasslist/${teacherId}/${classroomId}`,
-      `http://localhost:3000/${teacherId}/${classroomId}/${studentId}`,
-      `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`,
-      `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`,
-      `http://localhost:3000/add-student`
+      { url: `http://localhost:3000/teacher-home`, title: 'Teacher Home' },
+      { url: `http://localhost:3000/classroom/${teacherId}/${classroomId}`, title: 'Classroom' },
+      { url: `http://localhost:3000/viewclasslist/${teacherId}/${classroomId}`, title: 'View Class List' },
+      { url: `http://localhost:3000/${teacherId}/${classroomId}/${studentId}`, title: 'Student Details' },
+      { url: `http://localhost:3000/edit-seating-chart/${teacherId}/${classroomId}`, title: 'Edit Seating Chart' },
+      { url: `http://localhost:3000/editneedsgoals/${teacherId}/${classroomId}`, title: 'Edit Needs & Goals' },
+      { url: `http://localhost:3000/createclass`, title: 'Create Class' },
+      { url: `http://localhost:3000/add-student`, title: 'Add Student' }
     ];
 
   for (const { url, title } of urls) {

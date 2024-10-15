@@ -1,7 +1,7 @@
 import React from "react";
 
 // This component is for the buttons that are sandwich/notepaper color
-// // mainly the two buttons in manage class list and classroom, 
+// // mainly the two buttons in manage class list and classroom,
 
 const ButtonView = ({
   buttonText,
@@ -10,7 +10,7 @@ const ButtonView = ({
   isSelected,
   btnImageWhenOpen,
   flexType,
-  buttonSize
+  buttonSize,
 }) => {
   return (
     <>
@@ -21,13 +21,13 @@ const ButtonView = ({
           }`}
           onClick={handleClick}
         >
-          <h4 className="md:pl-0 pt-2">{buttonText}</h4>
+          <p className="md:pl-0 pt-2">{buttonText}</p>
           <div className="h-6 flex items-center">
-          <img
-          className="w-6"
-            src={!isSelected ? defaultBtnImage : btnImageWhenOpen}
-            alt={buttonText}
-          />
+            <img
+              className="w-6"
+              src={!isSelected ? defaultBtnImage : btnImageWhenOpen}
+              alt=""
+            />
           </div>
         </button>
       </div>

@@ -1,14 +1,25 @@
-import React, {useState} from "react";
-import { updatePassword } from "../../api/userApi"
-import xButton from "../../images/x-button.png"
+import React, { useState } from "react";
+import { updatePassword } from "../../api/userApi";
+import xButton from "../../images/x-button.png";
 import Button from "../Button";
-import SmallSaveButton from "../SmallSaveButton"
+import SmallSaveButton from "../SmallSaveButton";
 
-const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg}) => {
+const PasswordChange = ({
+  showModal,
+  setShowModal,
+  teacherId,
+  showMsg,
+  setShowMsg,
+}) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("");
+  // Single state to manage visibility of all password fields
+  const [showPassword, setShowPassword] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,21 +30,20 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
     }
 
     try {
-      const response = await updatePassword( teacherId, {
+      const response = await updatePassword(teacherId, {
         currentPassword,
         newPassword,
         confirmNewPassword,
       });
-    if (response.status === 200) {
+      if (response.status === 200) {
         setShowMsg(true);
         setTimeout(() => {
           setShowMsg(false);
         }, 2500);
-        setShowModal(false)
-    }
-
+        setShowModal(false);
+      }
     } catch (error) {
-      console.error("oops somethign wrong with updating password")
+      console.error("oops somethign wrong with updating password");
     }
   };
 
@@ -44,16 +54,28 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
     setShowModal(false);
   };
 
+  // Toggle the visibility for a specific field
+  const togglePasswordVisibility = (field) => {
+    setShowPassword((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field], // Toggle the specific field's visibility
+    }));
+  };
 
   return (
     <div className={`${showModal ? "flex" : "hidden"}`}>
-      <div className="fixed inset-0 flex items-center justify-center z-10">
+      <div
+        className="fixed inset-0 flex items-center justify-center z-10"
+        role="dialog"
+        aria-modal="true"
+      >
         {/* Background overlay */}
         <div className="fixed inset-0 bg-graphite opacity-75"></div>
         <div className="relative bg-sandwich w-[80%] sm:w-auto rounded-xl p-6 sm:p-10">
           <button
             className="absolute -right-4 -top-4"
             onClick={handleCloseModal}
+            aria-label="Close password change modal"
           >
             <img src={xButton} alt="close password change modal" />
           </button>
@@ -63,22 +85,28 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-3 font-[Poppins]">
               <div className="relative flex flex-col">
-                <label>Current Password:</label>
+                <label htmlFor="current-password">Current Password:</label>
                 <input
+                  id="current-password"
                   className="rounded-md pl-2 py-1"
-                  type={showPassword === "CurrentPW" ? 'text' : 'password'}
+                  type={showPassword.current ? "text" : "password"}
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   required
                 />
                 <div
                   className="absolute right-3 top-7 cursor-pointer"
-                  onMouseDown={() => setShowPassword("CurrentPW")}
-                  onMouseUp={() => setShowPassword("false")}
-                  onMouseLeave={() => setShowPassword("false")}
+                  onClick={() => togglePasswordVisibility("current")}
+                  aria-label={
+                    showPassword.current
+                      ? "Hide current password"
+                      : "Show current password"
+                  }
                 >
-                  {showPassword === "CurrentPW" ? (
-                    <span className="material-symbols-outlined select-none">visibility</span>
+                  {showPassword.current ? (
+                    <span className="material-symbols-outlined select-none">
+                      visibility
+                    </span>
                   ) : (
                     <span className="material-symbols-outlined select-none">
                       visibility_off
@@ -87,10 +115,11 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
                 </div>
               </div>
               <div className="relative flex flex-col">
-                <label>New Password:</label>
+                <label htmlFor="new-password">New Password:</label>
                 <input
+                  id="new-password"
                   className="flex rounded-md pl-2 py-1"
-                  type={showPassword === "NewPW" ? 'text' : 'password'}
+                  type={showPassword.new ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
@@ -98,12 +127,15 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
 
                 <div
                   className="absolute right-3 top-7 cursor-pointer"
-                  onMouseDown={() => setShowPassword("NewPW")}
-                  onMouseUp={() => setShowPassword("false")}
-                  onMouseLeave={() => setShowPassword("false")}
+                  onClick={() => togglePasswordVisibility("new")}
+                  aria-label={
+                    showPassword.new ? "Hide new password" : "Show new password"
+                  }
                 >
-                  {showPassword === "NewPW" ? (
-                    <span className="material-symbols-outlined select-none">visibility</span>
+                  {showPassword.new ? (
+                    <span className="material-symbols-outlined select-none">
+                      visibility
+                    </span>
                   ) : (
                     <span className="material-symbols-outlined select-none">
                       visibility_off
@@ -112,22 +144,30 @@ const PasswordChange = ({showModal, setShowModal, teacherId, showMsg, setShowMsg
                 </div>
               </div>
               <div className="relative flex flex-col">
-                <label>Confirm New Password:</label>
+                <label htmlFor="confirm-new-password">
+                  Confirm New Password:
+                </label>
                 <input
+                  id="confirm-new-password"
                   className="rounded-md pl-2 py-1"
-                  type={showPassword === "ConfirmNewPW" ? 'text' : 'password'}
+                  type={showPassword.confirm ? "text" : "password"}
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                   required
                 />
                 <div
                   className="absolute right-3 top-7 cursor-pointer"
-                  onMouseDown={() => setShowPassword("ConfirmNewPW")}
-                  onMouseUp={() => setShowPassword("false")}
-                  onMouseLeave={() => setShowPassword("false")}
+                  onClick={() => togglePasswordVisibility("confirm")}
+                  aria-label={
+                    showPassword.current
+                      ? "Hide confirm new password"
+                      : "Show confirm new password"
+                  }
                 >
-                  {showPassword === "ConfirmNewPW" ? (
-                    <span className="material-symbols-outlined select-none">visibility</span>
+                  {showPassword.confirm ? (
+                    <span className="material-symbols-outlined select-none">
+                      visibility
+                    </span>
                   ) : (
                     <span className="material-symbols-outlined select-none">
                       visibility_off

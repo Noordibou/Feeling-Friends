@@ -49,11 +49,13 @@ const EditSeatingChart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showMsg, setShowMsg] = useState(false);
   const [emptyMsg, setEmptyMsg] = useState(false);
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const { setHasUnsavedChanges } = useUnsavedChanges();
   const [scale, setScale] = useState(1);
 
-  const handleZoomIn = () => setScale(prevScale => Math.min(prevScale + 0.1, 1.5));
-  const handleZoomOut = () => setScale(prevScale => Math.max(prevScale - 0.1, 0.5));
+  const handleZoomIn = () =>
+    setScale((prevScale) => Math.min(prevScale + 0.1, 1.5));
+  const handleZoomOut = () =>
+    setScale((prevScale) => Math.max(prevScale - 0.1, 0.5));
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -227,11 +229,10 @@ const EditSeatingChart = () => {
         setShowMsg(false);
       }, 2500);
       setHasUnsavedChanges(false);
-      await updateInfo();      
+      await updateInfo();
     } catch (error) {
       console.log(error);
     }
-    
   };
 
   return (
@@ -300,9 +301,8 @@ const EditSeatingChart = () => {
                 <div
                   className="relative w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] "
                   ref={constraintsRef}
-                  >
-
-                    {/* Scale wrapper */}
+                >
+                  {/* Scale wrapper */}
                   <div
                     className="absolute top-0 left-0"
                     style={{
@@ -312,59 +312,59 @@ const EditSeatingChart = () => {
                       transformOrigin: "top left",
                     }}
                   >
-                  {/* Classroom layout here */}
+                    {/* Classroom layout here */}
 
-                  <ClassroomFurniture
-                    classroom={classroom}
-                    setFurniturePositions={setFurniturePositions}
-                    furniturePositions={furniturePositions}
-                    constraintsRef={constraintsRef}
-                    handleDragEnd={handleDragEnd}
-                    selectedItems={selectedItems}
-                    setSelectedItems={setSelectedItems}
-                    handleRemoveObject={handleRemoveObject}
-                  />
+                    <ClassroomFurniture
+                      classroom={classroom}
+                      setFurniturePositions={setFurniturePositions}
+                      furniturePositions={furniturePositions}
+                      constraintsRef={constraintsRef}
+                      handleDragEnd={handleDragEnd}
+                      selectedItems={selectedItems}
+                      setSelectedItems={setSelectedItems}
+                      handleRemoveObject={handleRemoveObject}
+                    />
 
-                  <AssignedStudent
-                    assignedStudents={assignedStudents}
-                    setSelectedStudents={setSelectedStudents}
-                    students={students}
-                    constraintsRef={constraintsRef}
-                    selectedStudents={selectedStudents}
-                    handleDragEnd={handleDragEnd}
-                    handleRemoveObject={handleRemoveObject}
-                  />
-                </div>
+                    <AssignedStudent
+                      assignedStudents={assignedStudents}
+                      setSelectedStudents={setSelectedStudents}
+                      students={students}
+                      constraintsRef={constraintsRef}
+                      selectedStudents={selectedStudents}
+                      handleDragEnd={handleDragEnd}
+                      handleRemoveObject={handleRemoveObject}
+                    />
+                  </div>
                 </div>
                 {showStudentRosterModal && (
-            <AddStudentModal
-              setShowStudentRosterModal={setShowStudentRosterModal}
-              unassignedStudents={unassignedStudents}
-              students={students}
-              teacherId={teacherId}
-              classroomId={classroomId}
-              updateInfo={updateInfo}
-            />
-          )}
-          {showFurnitureModal && (
-            <FurnitureModal
-              setShowFurnitureModal={setShowFurnitureModal}
-              classroom={classroom}
-              teacherId={teacherId}
-              classroomId={classroomId}
-              updateInfo={updateInfo}
-            />
-          )}
+                  <AddStudentModal
+                    setShowStudentRosterModal={setShowStudentRosterModal}
+                    unassignedStudents={unassignedStudents}
+                    students={students}
+                    teacherId={teacherId}
+                    classroomId={classroomId}
+                    updateInfo={updateInfo}
+                  />
+                )}
+                {showFurnitureModal && (
+                  <FurnitureModal
+                    setShowFurnitureModal={setShowFurnitureModal}
+                    classroom={classroom}
+                    teacherId={teacherId}
+                    classroomId={classroomId}
+                    updateInfo={updateInfo}
+                  />
+                )}
               </div>
             </>
           ) : (
             <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
               {/* placeholder for now */}
               <div className={`absolute mt-[250px] px-32 -ml-10`}>
-                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                <p className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
                   Sorry, this feature is not available right now. Please try
                   again later
-                </h4>
+                </p>
               </div>
             </div>
           )}
@@ -407,29 +407,27 @@ const EditSeatingChart = () => {
                 handleSave={handleSave}
               />
             </div>
-            
 
             {/* Msg shows when no students are in the classroom */}
             <div
               className={`${emptyMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
             >
-              <h4 className="text-black font-[Poppins] text-[32px] max-w-[730px] text-center font-semibold bg-notebookPaper">
+              <p className="text-black font-[Poppins] text-[32px] max-w-[730px] text-center font-semibold bg-notebookPaper">
                 Nothing yet! Click Student Roster or Classroom Objects to get
                 started!
-              </h4>
+              </p>
             </div>
           </div>
         </div>
         {/* Tells user they have saved the layout */}
 
-          <MsgModal
-            msgText="Save Successful!"
-            showMsg={showMsg}
-            textColor="text-black"
-          />
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
 
         <UnsavedChanges />
-
       </div>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
         <button

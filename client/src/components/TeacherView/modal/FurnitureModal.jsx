@@ -1,10 +1,15 @@
-import { useState, useRef } from "react";
-import furniture from "../../data/furnitureShapes";
-import CancelImg from "../../images/x-button.png";
-import { addFurniture } from "../../api/teachersApi";
-import { toggleSelected } from "../../utils/editSeatChartUtil";
+import { useState } from "react";
+import furniture from "../../../data/furnitureShapes";
+import CancelImg from "../../../images/x-button.png";
+import { addFurniture } from "../../../api/teachersApi";
+import { toggleSelected } from "../../../utils/editSeatChartUtil";
 
-const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateInfo }) => {
+const FurnitureModal = ({
+  setShowFurnitureModal,
+  teacherId,
+  classroomId,
+  updateInfo,
+}) => {
   const [isSelected, setIsSelected] = useState([]);
 
   const onConfirm = async () => {
@@ -28,8 +33,8 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
       {/* background to modal */}
       <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute top-0 z-30 w-full md:w-[752px] h-full rounded-lg opacity-90"></div>
 
-        {/* modal */}
-        <div className="w-full md:w-auto flex justify-center items-center ">
+      {/* modal */}
+      <div className="w-full md:w-auto flex justify-center items-center ">
         <div className="fixed md:absolute top-32 md:top-8  z-30 mx-5 h-[70%] md:h-[90%] w-[80%] md:w-[686px] bg-notebookPaper border-sandwich border-4 rounded-xl">
           <div className="flex flex-col w-full items-end">
             <button onClick={onClose}>
@@ -57,23 +62,33 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                     y: 0,
                     assigned: true,
                     rotation: 0,
-                  }; 
+                  };
 
                   const alreadySelected = isSelected.some(
                     (furnitureItem) => furnitureItem.name === item.name
                   );
 
                   return (
-                    
-                    <div className="flex justify-center" key={`furniture-${key}-container`}>
+                    <div
+                      className="flex justify-center"
+                      key={`furniture-${key}-container`}
+                    >
                       <div
                         id={`furniture-${key}`}
                         key={`${key}`}
                         className={`flex rounded-2xl ${item.style.width} ${
                           item.style.height
-                        } ${isSelectedItem ? "border-2 border-black" : ""} justify-center my-3 md:m-5`}
-                        onClick={ () => {
-                          setIsSelected(toggleSelected(newFormat, alreadySelected, isSelected))
+                        } ${
+                          isSelectedItem ? "border-2 border-black" : ""
+                        } justify-center my-3 md:m-5`}
+                        onClick={() => {
+                          setIsSelected(
+                            toggleSelected(
+                              newFormat,
+                              alreadySelected,
+                              isSelected
+                            )
+                          );
                         }}
                       >
                         <img
@@ -84,8 +99,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
                           alt={item.alt}
                         />
                       </div>
-                      </div>
-                    
+                    </div>
                   );
                 })}
               </div>
@@ -103,7 +117,7 @@ const FurnitureModal = ({ setShowFurnitureModal, teacherId, classroomId, updateI
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </>
   );
 };

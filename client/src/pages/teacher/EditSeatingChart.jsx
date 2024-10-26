@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
@@ -9,10 +8,10 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
+import AddStudentModal from "../../components/TeacherView/modal/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
-import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
+import FurnitureModal from "../../components/TeacherView/modal/FurnitureModal";
 import ClassDetails from "../../components/ClassDetails";
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";

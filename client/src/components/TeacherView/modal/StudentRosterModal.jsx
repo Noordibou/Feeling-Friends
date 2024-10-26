@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import UnassignedStudent from "../../SeatingChart/UnassignedStudent";
 import CancelImg from "../../../images/x-button.png";
 import { updateSeatingChart } from "../../../api/teachersApi";
 
 const AddStudentModal = ({
+  dialogRef,
+  setShowStudentRosterModal,
   unassignedStudents,
   students,
-  setShowStudentRosterModal,
   teacherId,
   classroomId,
   updateInfo,
@@ -17,31 +19,46 @@ const AddStudentModal = ({
     await updateSeatingChart(teacherId, classroomId, isSelected);
     setIsSelected([]);
     updateInfo();
-    onClose();
+    setShowStudentRosterModal();
   };
 
   const onClose = () => {
-    setShowStudentRosterModal(false);
+    setShowStudentRosterModal();
     setIsSelected([]);
   };
 
-  return (
-    <>
-      {/* bg cover over classroom */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed md:absolute z-30 top-0 md:w-[752px] w-full h-full rounded-lg opacity-90"></div>
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      onClose();
+    }
+  };
 
-      {/* add student modal */}
-      <div className="w-full md:w-auto flex justify-center items-center ">
-        <div className="fixed md:absolute top-20 md:top-8 z-30 h-[70%] md:h-[90%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
-          <div className="flex flex-col w-full items-end">
-            <button onClick={onClose}>
-              <img
-                className="absolute -top-6 -right-6"
-                src={CancelImg}
-                alt="close student roster"
-              />
-            </button>
-          </div>
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const modalContent = (
+    <dialog
+      ref={dialogRef}
+      className="bg-transparent fixed inset-0 flex justify-center items-center z-50"
+    >
+      {/* Background overlay */}
+      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed top-0 w-full h-full rounded-lg opacity-90"></div>
+
+      {/* Add Student Modal */}
+      <div className="w-full md:w-auto flex justify-center items-center">
+        <div className="relative h-[70%] md:h-[90%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
+          <button onClick={onClose}>
+            <img
+              className="absolute -top-6 -right-6"
+              src={CancelImg}
+              alt="close student roster"
+            />
+          </button>
+
           {unassignedStudents.length > 0 ? (
             <div className="flex w-full h-full flex-col">
               <h2 className="font-[Poppins] text-[20px] md:text-[24px] my-5">
@@ -60,9 +77,7 @@ const AddStudentModal = ({
                 <button
                   id="unassigned-section"
                   className="flex items-center h-[50px] md:h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"
-                  onClick={() => {
-                    handleConfirm();
-                  }}
+                  onClick={handleConfirm}
                 >
                   <h2 className="flex items-center h-full font-semibold text-[20px] md:text-header2">
                     Confirm
@@ -79,8 +94,10 @@ const AddStudentModal = ({
           )}
         </div>
       </div>
-    </>
+    </dialog>
   );
+
+  return ReactDOM.createPortal(modalContent, document.getElementById("modal"));
 };
 
 export default AddStudentModal;

@@ -51,6 +51,17 @@ const EditSeatingChart = () => {
   const { setHasUnsavedChanges } = useUnsavedChanges();
   const [scale, setScale] = useState(1);
 
+  const dialogRef = useRef(null);
+
+  const openModal = () => {
+    setShowStudentRosterModal(true);
+    dialogRef.current?.showModal();
+  };
+
+  const closeModal = () => {
+    setShowStudentRosterModal(false);
+    dialogRef.current?.close();
+  };
   const handleZoomIn = () =>
     setScale((prevScale) => Math.min(prevScale + 0.1, 1.5));
   const handleZoomOut = () =>
@@ -270,10 +281,7 @@ const EditSeatingChart = () => {
                 buttonText="Student Roster"
                 defaultBtnImage={RosterImg}
                 btnImageWhenOpen={openRosterImg}
-                handleClick={() => {
-                  setShowStudentRosterModal(!showStudentRosterModal);
-                  setShowFurnitureModal(false);
-                }}
+                handleClick={openModal}
                 isSelected={showStudentRosterModal}
                 buttonSize="small"
               />
@@ -337,7 +345,8 @@ const EditSeatingChart = () => {
                 </div>
                 {showStudentRosterModal && (
                   <AddStudentModal
-                    setShowStudentRosterModal={setShowStudentRosterModal}
+                    dialogRef={dialogRef} // Pass the ref to the modal
+                    setShowStudentRosterModal={closeModal} // Pass close handler
                     unassignedStudents={unassignedStudents}
                     students={students}
                     teacherId={teacherId}
@@ -375,10 +384,7 @@ const EditSeatingChart = () => {
                 buttonText="Student Roster"
                 defaultBtnImage={RosterImg}
                 btnImageWhenOpen={openRosterImg}
-                handleClick={() => {
-                  setShowStudentRosterModal(!showStudentRosterModal);
-                  setShowFurnitureModal(false);
-                }}
+                handleClick={openModal}
                 isSelected={showStudentRosterModal}
                 buttonSize="long"
               />
@@ -389,10 +395,7 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={() => {
-                  setShowFurnitureModal(!showFurnitureModal);
-                  setShowStudentRosterModal(false);
-                }}
+                handleClick={openModal}
                 isSelected={showFurnitureModal}
                 buttonSize="long"
               />

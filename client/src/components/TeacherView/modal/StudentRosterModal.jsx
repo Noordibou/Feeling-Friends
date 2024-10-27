@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import UnassignedStudent from "../../SeatingChart/UnassignedStudent";
 import CancelImg from "../../../images/x-button.png";
 import { updateSeatingChart } from "../../../api/teachersApi";
@@ -38,26 +38,23 @@ const AddStudentModal = ({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  });
 
-  const modalContent = (
-    <dialog
-      ref={dialogRef}
-      className="bg-transparent fixed inset-0 flex justify-center items-center z-50"
-    >
-      {/* Background overlay */}
-      <div className="bg-[#D2C2A4] border-[8px] border-[#A59F8B] fixed top-0 w-full h-full rounded-lg opacity-90"></div>
-
+  return createPortal(
+    <dialog ref={dialogRef} className="rounded overflow-visible">
       {/* Add Student Modal */}
       <div className="w-full md:w-auto flex justify-center items-center">
         <div className="relative h-[70%] md:h-[90%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
-          <button onClick={onClose}>
-            <img
-              className="absolute -top-6 -right-6"
-              src={CancelImg}
-              alt="close student roster"
-            />
-          </button>
+          <form method="dialog" onSubmit={onClose}>
+            <button>
+              <img
+                className="absolute -top-6 -right-6"
+                src={CancelImg}
+                alt="close student roster"
+                tabIndex="0"
+              />
+            </button>
+          </form>
 
           {unassignedStudents.length > 0 ? (
             <div className="flex w-full h-full flex-col">
@@ -94,10 +91,9 @@ const AddStudentModal = ({
           )}
         </div>
       </div>
-    </dialog>
+    </dialog>,
+    document.getElementById("modal")
   );
-
-  return ReactDOM.createPortal(modalContent, document.getElementById("modal"));
 };
 
 export default AddStudentModal;

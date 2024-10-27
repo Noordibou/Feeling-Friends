@@ -247,7 +247,15 @@ const EditSeatingChart = () => {
 
   return (
     <>
-      {" "}
+      <AddStudentModal
+        dialogRef={dialogRef} // Pass the ref to the modal
+        setShowStudentRosterModal={closeModal} // Pass close handler
+        unassignedStudents={unassignedStudents}
+        students={students}
+        teacherId={teacherId}
+        classroomId={classroomId}
+        updateInfo={updateInfo}
+      />{" "}
       {/* page container */}
       <div className="flex h-screen min-w-screen justify-center md:mb-0">
         <div className="hidden md:flex md:absolute w-full justify-end underline mt-4 px-2 md:px-5">
@@ -343,17 +351,7 @@ const EditSeatingChart = () => {
                     />
                   </div>
                 </div>
-                {showStudentRosterModal && (
-                  <AddStudentModal
-                    dialogRef={dialogRef} // Pass the ref to the modal
-                    setShowStudentRosterModal={closeModal} // Pass close handler
-                    unassignedStudents={unassignedStudents}
-                    students={students}
-                    teacherId={teacherId}
-                    classroomId={classroomId}
-                    updateInfo={updateInfo}
-                  />
-                )}
+
                 {showFurnitureModal && (
                   <FurnitureModal
                     setShowFurnitureModal={setShowFurnitureModal}
@@ -395,7 +393,10 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={openModal}
+                handleClick={() => {
+                  setShowFurnitureModal(!showFurnitureModal);
+                  setShowStudentRosterModal(false);
+                }}
                 isSelected={showFurnitureModal}
                 buttonSize="long"
               />

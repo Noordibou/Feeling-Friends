@@ -62,6 +62,7 @@ const EditSeatingChart = () => {
     setShowStudentRosterModal(false);
     dialogRef.current?.close();
   };
+
   const handleZoomIn = () =>
     setScale((prevScale) => Math.min(prevScale + 0.1, 1.5));
   const handleZoomOut = () =>
@@ -352,15 +353,14 @@ const EditSeatingChart = () => {
                   </div>
                 </div>
 
-                {showFurnitureModal && (
-                  <FurnitureModal
-                    setShowFurnitureModal={setShowFurnitureModal}
-                    classroom={classroom}
-                    teacherId={teacherId}
-                    classroomId={classroomId}
-                    updateInfo={updateInfo}
-                  />
-                )}
+                <FurnitureModal
+                  dialogRef={dialogRef}
+                  setShowFurnitureModal={openModal}
+                  classroom={classroom}
+                  teacherId={teacherId}
+                  classroomId={classroomId}
+                  updateInfo={updateInfo}
+                />
               </div>
             </>
           ) : (
@@ -393,10 +393,7 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={() => {
-                  setShowFurnitureModal(!showFurnitureModal);
-                  setShowStudentRosterModal(false);
-                }}
+                handleClick={openModal}
                 isSelected={showFurnitureModal}
                 buttonSize="long"
               />

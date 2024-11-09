@@ -5,26 +5,28 @@ import CancelImg from "../../../images/x-button.png";
 import { updateSeatingChart } from "../../../api/teachersApi";
 
 const AddStudentModal = forwardRef(
-  ({
-    dialogRef,
-    setShowStudentRosterModal,
-    unassignedStudents,
-    students,
-    teacherId,
-    classroomId,
-    updateInfo,
-  }) => {
+  (
+    {
+      closeStudentModal,
+      unassignedStudents,
+      students,
+      teacherId,
+      classroomId,
+      updateInfo,
+    },
+    studentModalRef
+  ) => {
     const [isSelected, setIsSelected] = useState([]);
 
     const handleConfirm = async () => {
       await updateSeatingChart(teacherId, classroomId, isSelected);
       setIsSelected([]);
       updateInfo();
-      setShowStudentRosterModal();
+      closeStudentModal();
     };
 
     const onClose = () => {
-      setShowStudentRosterModal();
+      closeStudentModal();
       setIsSelected([]);
     };
 
@@ -42,11 +44,11 @@ const AddStudentModal = forwardRef(
     });
 
     return createPortal(
-      <dialog ref={dialogRef} className="rounded overflow-visible">
+      <dialog ref={studentModalRef} className="rounded overflow-visible">
         {/* Add Student Modal */}
         <div className="w-full md:w-auto flex justify-center items-center">
           <div className="relative h-[70%] md:h-[90%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
-            <form method="dialog" onSubmit={setShowStudentRosterModal}>
+            <form method="dialog" onSubmit={onClose}>
               <button>
                 <img
                   className="absolute -top-6 -right-6"

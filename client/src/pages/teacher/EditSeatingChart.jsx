@@ -51,16 +51,27 @@ const EditSeatingChart = () => {
   const { setHasUnsavedChanges } = useUnsavedChanges();
   const [scale, setScale] = useState(1);
 
-  const dialogRef = useRef(null);
+  const furnitureModalRef = useRef(null);
+  const studentModalRef = useRef(null);
 
-  const openModal = () => {
-    setShowStudentRosterModal(true);
-    dialogRef.current?.showModal();
+  const openFurnitureModal = () => {
+    // setShowStudentRosterModal(true);
+    furnitureModalRef.current?.showModal();
   };
 
-  const closeModal = () => {
-    setShowStudentRosterModal(false);
-    dialogRef.current?.close();
+  const closeFurnitureModal = () => {
+    // setShowStudentRosterModal(false);
+    furnitureModalRef.current?.close();
+  };
+
+  const openStudentModal = () => {
+    // setShowStudentRosterModal(true);
+    studentModalRef.current?.showModal();
+  };
+
+  const closeStudentModal = () => {
+    // setShowStudentRosterModal(false);
+    studentModalRef.current?.close();
   };
 
   const handleZoomIn = () =>
@@ -249,10 +260,18 @@ const EditSeatingChart = () => {
   return (
     <>
       <AddStudentModal
-        dialogRef={dialogRef} // Pass the ref to the modal
-        setShowStudentRosterModal={closeModal} // Pass close handler
+        ref={studentModalRef}
+        closeStudentModal={closeStudentModal}
         unassignedStudents={unassignedStudents}
         students={students}
+        teacherId={teacherId}
+        classroomId={classroomId}
+        updateInfo={updateInfo}
+      />
+      <FurnitureModal
+        ref={furnitureModalRef}
+        closeFurnitureModal={closeFurnitureModal}
+        classroom={classroom}
         teacherId={teacherId}
         classroomId={classroomId}
         updateInfo={updateInfo}
@@ -290,7 +309,7 @@ const EditSeatingChart = () => {
                 buttonText="Student Roster"
                 defaultBtnImage={RosterImg}
                 btnImageWhenOpen={openRosterImg}
-                handleClick={openModal}
+                handleClick={openStudentModal}
                 isSelected={showStudentRosterModal}
                 buttonSize="small"
               />
@@ -298,10 +317,7 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={() => {
-                  setShowFurnitureModal(!showFurnitureModal);
-                  setShowStudentRosterModal(false);
-                }}
+                handleClick={openFurnitureModal}
                 isSelected={showFurnitureModal}
                 buttonSize="small"
               />
@@ -352,15 +368,6 @@ const EditSeatingChart = () => {
                     />
                   </div>
                 </div>
-
-                <FurnitureModal
-                  dialogRef={dialogRef}
-                  setShowFurnitureModal={openModal}
-                  classroom={classroom}
-                  teacherId={teacherId}
-                  classroomId={classroomId}
-                  updateInfo={updateInfo}
-                />
               </div>
             </>
           ) : (
@@ -382,7 +389,7 @@ const EditSeatingChart = () => {
                 buttonText="Student Roster"
                 defaultBtnImage={RosterImg}
                 btnImageWhenOpen={openRosterImg}
-                handleClick={openModal}
+                handleClick={openStudentModal}
                 isSelected={showStudentRosterModal}
                 buttonSize="long"
               />
@@ -393,7 +400,7 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={openModal}
+                handleClick={openFurnitureModal}
                 isSelected={showFurnitureModal}
                 buttonSize="long"
               />

@@ -7,8 +7,8 @@ import { createPortal } from "react-dom";
 
 const FurnitureModal = forwardRef(
   (
-    { setShowFurnitureModal, teacherId, classroomId, updateInfo },
-    dialogRef
+    { closeFurnitureModal, teacherId, classroomId, updateInfo },
+    furnitureModalRef
   ) => {
     const [isSelected, setIsSelected] = useState([]);
 
@@ -24,7 +24,7 @@ const FurnitureModal = forwardRef(
     };
 
     const onClose = () => {
-      setShowFurnitureModal(false);
+      closeFurnitureModal();
       setIsSelected([]);
     };
 
@@ -42,7 +42,7 @@ const FurnitureModal = forwardRef(
     }, []);
 
     return createPortal(
-      <dialog ref={dialogRef} className="rounded overflow-visible">
+      <dialog ref={furnitureModalRef} className="rounded overflow-visible">
         <div className="w-full md:w-auto flex justify-center items-center">
           <div className="relative h-[70%] md:h-[90%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
             <div className="flex justify-end">

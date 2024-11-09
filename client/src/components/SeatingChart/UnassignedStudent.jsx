@@ -6,7 +6,7 @@ const UnassignedStudent = ({
   unassignedStudents,
   students,
   isSelected,
-  setIsSelected
+  setIsSelected,
 }) => {
   return (
     <>
@@ -26,37 +26,49 @@ const UnassignedStudent = ({
               x: 0,
               y: 0,
               assigned: true,
-            }
-          }
+            },
+          };
 
           const alreadySelected = isSelected.some(
             (student) => student.student === studentObj.student
           );
 
-          
-          const { borderColorClass } = getLastJournalInfo(unassignedStudent)
+          const { borderColorClass } = getLastJournalInfo(unassignedStudent);
 
           return (
             <div
               id={`motion-div-${unassignedStudent._id}`}
               key={`unassigned-${index}`}
-              className={`m-2 bg-${
-                borderColorClass
-              } w-[70px] h-[90px] md:h-[110px] md:w-[94px] 
-              rounded-xl ${isSelectedStudent ? `opacity-50 border-black border-2` : ``}`}
+              className={`m-2 bg-${borderColorClass} w-[70px] h-[90px] md:h-[110px] md:w-[94px] 
+              rounded-xl ${
+                isSelectedStudent ? `opacity-50 border-black border-2` : ``
+              }`}
               onClick={() => {
-                setIsSelected(toggleSelected(newFormat, alreadySelected, isSelected))
+                setIsSelected(
+                  toggleSelected(newFormat, alreadySelected, isSelected)
+                );
               }}
+              tabIndex={0}
             >
               <div className="flex flex-col w-full justify-center h-full items-center">
                 <div className="">
                   <img
-                    className={`flex object-cover px-1 md:px-0 md:h-[75px] md:w-[75px] rounded-xl ${borderColorClass === "sandwich" ? "opacity-60" : ""}`}
-                    src={unassignedStudent.avatarImg !== "none" ? unassignedStudent.avatarImg : SampleAvatar}
+                    className={`flex object-cover px-1 md:px-0 md:h-[75px] md:w-[75px] rounded-xl ${
+                      borderColorClass === "sandwich" ? "opacity-60" : ""
+                    }`}
+                    alt="student"
+                    src={
+                      unassignedStudent.avatarImg !== "none"
+                        ? unassignedStudent.avatarImg
+                        : SampleAvatar
+                    }
                   />
                 </div>
                 <div className="flex flex-row text-[12px] text-center md:text-[15px]">
-                  <h2>{unassignedStudent.firstName} {unassignedStudent.lastName.charAt(0)}.</h2>  
+                  <h2>
+                    {unassignedStudent.firstName}{" "}
+                    {unassignedStudent.lastName.charAt(0)}.
+                  </h2>
                 </div>
               </div>
             </div>

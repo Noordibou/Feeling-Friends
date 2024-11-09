@@ -51,6 +51,7 @@ const FurnitureModal = forwardRef(
                   className="absolute -top-6 -right-6"
                   src={CancelImg}
                   alt="close furniture modal"
+                  tabIndex="0"
                 />
               </button>
             </div>
@@ -98,6 +99,7 @@ const FurnitureModal = forwardRef(
                               )
                             );
                           }}
+                          tabIndex={0}
                         >
                           <img
                             id={`furniture-img-${key}`}

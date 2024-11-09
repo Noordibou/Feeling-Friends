@@ -317,12 +317,12 @@ const NeedsGoals = () => {
               </label>
               <div className="flex flex-col gap-2 md:flex-row">
                 <div className="flex items-center">
-                  <label htmlFor="yes" className="mr-2">
+                  <label htmlFor="yes-custom-goal" className="mr-2">
                     Yes
                   </label>
                   <input
                     type="checkbox"
-                    id="yes"
+                    id="yes-custom-goal"
                     name="customGoals"
                     value="yes"
                     checked={goalsSelectedOption === "yes"}
@@ -331,12 +331,12 @@ const NeedsGoals = () => {
                   />
                 </div>
                 <div className="flex items-center">
-                  <label htmlFor="no" className="mr-2">
+                  <label htmlFor="no-custom-goal" className="mr-2">
                     No
                   </label>
                   <input
                     type="checkbox"
-                    id="no"
+                    id="no-custom-goal"
                     name="customGoals"
                     value="no"
                     checked={goalsSelectedOption === "no"}
@@ -470,12 +470,12 @@ const NeedsGoals = () => {
               </label>
               <div className="flex flex-col gap-2 md:flex-row">
                 <div className="flex items-center">
-                  <label htmlFor="yes" className="mr-2">
+                  <label htmlFor="yes-custom-need" className="mr-2">
                     Yes
                   </label>
                   <input
                     type="checkbox"
-                    id="yes"
+                    id="yes-custom-need"
                     name="customNeeds"
                     value="yes"
                     checked={needsSelectedOption === "yes"}
@@ -484,12 +484,12 @@ const NeedsGoals = () => {
                   />
                 </div>
                 <div className="flex items-center">
-                  <label htmlFor="no" className="mr-2">
+                  <label htmlFor="no-custom-need" className="mr-2">
                     No
                   </label>
                   <input
                     type="checkbox"
-                    id="no"
+                    id="no-custom-need"
                     name="customNeeds"
                     value="no"
                     checked={needsSelectedOption === "no"}

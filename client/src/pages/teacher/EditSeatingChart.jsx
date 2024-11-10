@@ -275,7 +275,9 @@ const EditSeatingChart = () => {
         teacherId={teacherId}
         classroomId={classroomId}
         updateInfo={updateInfo}
-      />{" "}
+      />
+      <UnsavedChanges />
+
       {/* page container */}
       <div className="flex h-screen min-w-screen justify-center md:mb-0">
         <div className="hidden md:flex md:absolute w-full justify-end underline mt-4 px-2 md:px-5">
@@ -433,8 +435,6 @@ const EditSeatingChart = () => {
           showMsg={showMsg}
           textColor="text-black"
         />
-
-        <UnsavedChanges />
       </div>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
         <button

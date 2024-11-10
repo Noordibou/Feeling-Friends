@@ -38,10 +38,18 @@ const EditTeacher = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [showMsg, setShowMsg] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { setHasUnsavedChanges } = useUnsavedChanges();
   const confirmRef = useRef(null);
+  const pwChangeRef = useRef(null);
+
+  const openPWModal = () => {
+    pwChangeRef.current?.showModal();
+  };
+
+  const closePWModal = () => {
+    pwChangeRef.current?.close();
+  };
 
   const openConfirmModal = () => {
     confirmRef.current?.showModal();
@@ -232,7 +240,7 @@ const EditTeacher = () => {
                   <button
                     className="flex self-center items-center justify-center px-8 border-2 border-graphite rounded-[1.2rem] p-[0.6rem] gap-3"
                     type="button"
-                    onClick={() => setShowModal(true)}
+                    onClick={openPWModal}
                   >
                     <h2 className="text-[14px] font-[Poppins] text-center underline">
                       Change Password
@@ -431,8 +439,8 @@ const EditTeacher = () => {
             removeItemFromSystem={deleteTeacherInSystem}
           />
           <PasswordChange
-            showModal={showModal}
-            setShowModal={setShowModal}
+            ref={pwChangeRef}
+            closePWModal={closePWModal}
             teacherId={userData._id}
             showMsg={showMsg}
             setShowMsg={setShowMsg}

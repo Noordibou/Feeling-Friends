@@ -18,10 +18,6 @@ const UnsavedChanges = () => {
       ref={unsavedRef}
       className={`items-center justify-center rounded-xl`}
     >
-      {/* <div
-        className="fixed inset-0 bg-graphite opacity-75"
-        onClick={() => setShowUnsavedModal(false)}
-      ></div> */}
       <div className="relative bg-notebookPaper w-[80%] sm:w-auto max-w-[500px] rounded-xl px-6 sm:px-10 font-[Poppins]">
         <div className="relative container mx-auto mb-20">
           <img className="block pl-20" src={QuestionFrog} alt="question frog" />

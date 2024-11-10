@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getStudentProfile, updateStudent } from "../../../api/teachersApi";
 import { getBackgroundColorClass } from "../../../utils/classroomColors";
@@ -46,14 +46,22 @@ const StudentProfile = () => {
   const [lastSelectedCheck, setLastSelectedCheck] = useState({});
   const [openStudentInfoModal, setOpenStudentInfoModal] = useState(false);
   const [borderColorClass, setBorderColorClass] = useState("");
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { setHasUnsavedChanges } = useUnsavedChanges();
 
   const { userData } = useUser();
+  const confirmRef = useRef(null);
 
   const navigate = useNavigate();
   const { hasUnsavedChanges, openModal } = useUnsavedChanges();
+
+  const openConfirmModal = () => {
+    confirmRef.current?.showModal();
+  };
+
+  const closeConfirmModal = () => {
+    confirmRef.current?.close();
+  };
 
   const handleNavigation = (url) => {
     if (hasUnsavedChanges) {
@@ -82,9 +90,9 @@ const StudentProfile = () => {
           ),
         }));
         setEvents(studentEvents);
-      } catch (error) {
+      } catch (e) {
         setError("An error occurred while fetching the student profile.");
-        console.error(error);
+        console.error("errors: " + e + "\n" + error);
       }
     };
     fetchStudentProfile();
@@ -139,9 +147,9 @@ const StudentProfile = () => {
       setStudentProfile(updatedProfile);
       setHasUnsavedChanges(false);
       setEditMode(false);
-    } catch (error) {
+    } catch (e) {
       setError("An error occurred while saving the student profile.");
-      console.error(error);
+      console.error("errors: " + e + "\n" + error);
     }
 
     try {
@@ -163,9 +171,9 @@ const StudentProfile = () => {
 
       setStudentProfile(updatedProfile);
       setEditModeNotices(false);
-    } catch (error) {
+    } catch (e) {
       setError("An error occurred while saving IEP data.");
-      console.error(error);
+      console.error("errors: " + e + "\n" + error);
     }
   };
 
@@ -1031,7 +1039,7 @@ const StudentProfile = () => {
         </form>
         <div className="flex justify-center w-full mb-80 lg:mb-20">
           <button
-            onClick={() => setShowDeleteModal(true)}
+            onClick={openConfirmModal}
             className="bg-red-500 py-2 px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
           >
             <p className="text-white font-semibold">Delete Student</p>
@@ -1040,8 +1048,8 @@ const StudentProfile = () => {
         <ToastContainer />
         <UnsavedChanges />
         <ConfirmationModal
-          showDeleteModal={showDeleteModal}
-          setShowDeleteModal={setShowDeleteModal}
+          ref={confirmRef}
+          closeConfirmModal={closeConfirmModal}
           itemFullName={
             studentProfile?.firstName + " " + studentProfile?.lastName
           }

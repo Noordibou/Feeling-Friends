@@ -1,20 +1,23 @@
-import React from 'react'
-import QuestionFrog from "../../images/teacher/unsaved_frog.svg"
-import { useUnsavedChanges } from '../../context/UnsavedChangesContext';
+import { useEffect, useRef } from "react";
+import QuestionFrog from "../../images/teacher/unsaved_frog.svg";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
+import { createPortal } from "react-dom";
 
 const UnsavedChanges = () => {
-    const { showUnsavedModal, setShowUnsavedModal, confirmChanges } = useUnsavedChanges();
+  const { hasUnsavedChanges, confirmChanges, registerRef } =
+    useUnsavedChanges();
+  const unsavedRef = useRef(null);
 
-  return (
-    <div
-      className={`${
-        showUnsavedModal ? "flex" : "hidden"
-      } fixed inset-0 z-50 flex items-center justify-center`}
+  useEffect(() => {
+    registerRef(unsavedRef.current);
+  }, [registerRef]);
+
+  if (!hasUnsavedChanges) return null;
+  return createPortal(
+    <dialog
+      ref={unsavedRef}
+      className={`items-center justify-center rounded-xl`}
     >
-      <div
-        className="fixed inset-0 bg-graphite opacity-75"
-        onClick={() => setShowUnsavedModal(false)}
-      ></div>
       <div className="relative bg-notebookPaper w-[80%] sm:w-auto max-w-[500px] rounded-xl px-6 sm:px-10 font-[Poppins]">
         <div className="relative container mx-auto mb-20">
           <img className="block pl-20" src={QuestionFrog} alt="question frog" />
@@ -35,10 +38,10 @@ const UnsavedChanges = () => {
           <button
             type="button"
             className="border-2 hover:border-4 border-graphite rounded-xl flex flex-row items-center justify-center sm:gap-3 h-12"
-            onClick={() => setShowUnsavedModal(false)}
+            onClick={() => unsavedRef.current.close()}
           >
             <svg
-              className="pr-4 sm:pr-0" 
+              className="pr-4 sm:pr-0"
               width="30"
               height="30"
               viewBox="0 0 30 60"
@@ -90,8 +93,9 @@ const UnsavedChanges = () => {
           </button>
         </div>
       </div>
-    </div>
+    </dialog>,
+    document.getElementById("modal")
   );
-}
+};
 
-export default UnsavedChanges
+export default UnsavedChanges;

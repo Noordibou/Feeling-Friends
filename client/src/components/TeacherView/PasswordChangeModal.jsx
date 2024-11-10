@@ -4,7 +4,7 @@ import xButton from "../../images/x-button.png";
 import Button from "../Button";
 import SmallSaveButton from "../SmallSaveButton";
 
-const PasswordChange = ({
+const PasswordChangeModal = ({
   showModal,
   setShowModal,
   teacherId,
@@ -191,4 +191,4 @@ const PasswordChange = ({
   );
 };
 
-export default PasswordChange;
+export default PasswordChangeModal;

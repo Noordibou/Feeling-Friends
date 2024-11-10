@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import { getTeacherById } from "../../api/teachersApi";
-import { useNavigate,  useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
-import PasswordChange from "../../components/TeacherView/PasswordChange.jsx"
+import PasswordChange from "../../components/TeacherView/PasswordChangeModal.jsx";
 import withAuth from "../../hoc/withAuth";
 import Button from "../../components/Button.jsx";
-import MsgModal from '../../components/SeatingChart/MsgModal.jsx'
+import MsgModal from "../../components/SeatingChart/MsgModal.jsx";
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 import FileBase from "react-file-base64";
 import youngStudent from "../../images/young-student.png";
 import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
-import editIcon from "../../images/edit_icon.png"
-import { motion } from 'framer-motion';
+import editIcon from "../../images/edit_icon.png";
+import { motion } from "framer-motion";
 import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
 import { deleteTeacher } from "../../api/teachersApi";
 import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
-
 
 const EditTeacher = () => {
   const navigate = useNavigate();
@@ -34,39 +32,43 @@ const EditTeacher = () => {
     school: "",
     phone: "",
     email: "",
-    username: ""
+    username: "",
   });
-  const [originalFormData, setOriginalFormData] = useState(null)
-  const [isDisplayOpen, setIsDisplayOpen] = useState(false)
-  const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [isAccountOpen, setIsAccountOpen] = useState(false)
-  const [showMsg, setShowMsg] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [inputValue, setInputValue] = useState('');
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const [isDisplayOpen, setIsDisplayOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const { setHasUnsavedChanges } = useUnsavedChanges();
+  const confirmRef = useRef(null);
+
+  const openConfirmModal = () => {
+    confirmRef.current?.showModal();
+  };
+
+  const closeConfirmModal = () => {
+    confirmRef.current?.close();
+  };
 
   useEffect(() => {
     const fetchTeacherData = async () => {
       try {
         const response = await getTeacherById(userData._id);
-        const acctResponse = await getUserByTeacherId(userData._id)
+        const acctResponse = await getUserByTeacherId(userData._id);
         // Combine data from both responses
         const combinedData = {
           ...response,
           email: acctResponse.email,
           username: acctResponse.username,
         };
-        setOriginalFormData(combinedData)
         setFormData(combinedData);
       } catch (error) {
         console.error(error);
       }
     };
     fetchTeacherData();
-    
   }, [userData]);
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -77,36 +79,38 @@ const EditTeacher = () => {
     setHasUnsavedChanges(true);
   };
 
-
   const deleteTeacherInSystem = async () => {
     if (inputValue === formData?.firstName + " " + formData?.lastName) {
-      console.log('Deleting teacher');
-      const response = await deleteTeacher(teacherId)
+      console.log("Deleting teacher");
+      const response = await deleteTeacher(teacherId);
       if (response === 200) {
-        sessionStorage.setItem('teacherDeleteInfo', JSON.stringify({
-          success: true,
-          teacherName: formData?.firstName + " " + formData?.lastName
-        }));
-        localStorage.removeItem('userData');
-        navigate(`/signup`)
+        sessionStorage.setItem(
+          "teacherDeleteInfo",
+          JSON.stringify({
+            success: true,
+            teacherName: formData?.firstName + " " + formData?.lastName,
+          })
+        );
+        localStorage.removeItem("userData");
+        navigate(`/signup`);
       }
     } else {
-      console.log('Name does not match');
+      console.log("Name does not match");
     }
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    
+
     try {
       const { email, username, ...teacherData } = formData;
 
       // Update teacher-specific fields
       await updateTeacherAcct(userData._id, { email, username });
-  
+
       await updateUser(teacherData);
       // Show brief save message for 3 secs
-      console.log('click click')
+      console.log("click click");
       setShowMsg(true);
       setTimeout(() => {
         setShowMsg(false);
@@ -119,7 +123,7 @@ const EditTeacher = () => {
   };
 
   if (!userData) {
-    return <div>Loading...</div>; // Or redirect to another page, or show an error message
+    return <div>Loading...</div>;
   }
 
   const handleFileUpload = (file) => {
@@ -128,7 +132,7 @@ const EditTeacher = () => {
       avatarImg: file.base64,
     });
   };
-  
+
   return (
     <>
       <div className="flex flex-col min-h-screen w-screen ">
@@ -150,7 +154,9 @@ const EditTeacher = () => {
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsAccountOpen(!isAccountOpen)}
               >
-                <h2 className="font-header4 text-header3 select-none">Account Settings</h2>
+                <h2 className="font-header4 text-header3 select-none">
+                  Account Settings
+                </h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isAccountOpen ? "" : "rotate-180"
@@ -244,7 +250,9 @@ const EditTeacher = () => {
                 className="flex w-full justify-between cursor-pointer"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
-                <h2 className="font-header4 text-header3 select-none">User profile</h2>
+                <h2 className="font-header4 text-header3 select-none">
+                  User profile
+                </h2>
                 <svg
                   className={`transition-transform duration-300 ${
                     isProfileOpen ? "" : "rotate-180"
@@ -404,7 +412,7 @@ const EditTeacher = () => {
 
           <div className="flex relative bottom-10 lg:bottom-0 justify-center w-full my-72">
             <button
-              onClick={() => setShowDeleteModal(true)}
+              onClick={openConfirmModal}
               className="bg-red-500 py-2 px-10 sm:px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 absolute"
             >
               <h3 className="text-white font-semibold">Delete Your Account</h3>
@@ -412,12 +420,12 @@ const EditTeacher = () => {
           </div>
 
           <ConfirmationModal
-            showDeleteModal={showDeleteModal}
-            setShowDeleteModal={setShowDeleteModal}
-            itemFullName={
-              formData?.firstName + " " + formData?.lastName
+            ref={confirmRef}
+            closeConfirmModal={closeConfirmModal}
+            itemFullName={formData?.firstName + " " + formData?.lastName}
+            deleteMsg={
+              "Are you sure you want to delete your account? This cannot be undone."
             }
-            deleteMsg={"Are you sure you want to delete your account? This cannot be undone."}
             inputValue={inputValue}
             setInputValue={setInputValue}
             removeItemFromSystem={deleteTeacherInSystem}
@@ -460,4 +468,4 @@ const EditTeacher = () => {
   );
 };
 
-export default withAuth(['teacher'])(EditTeacher)
+export default withAuth(["teacher"])(EditTeacher);

@@ -19,9 +19,12 @@ const ConfirmationModal = forwardRef(
     };
 
     return createPortal(
-      <dialog ref={confirmRef} className={`rounded-xl`}>
+      <dialog
+        ref={confirmRef}
+        className={`border-2 border-darkSandwich bg-lightSandwich rounded-xl`}
+      >
         <div className={`flex items-center justify-center z-10`}>
-          <div className="relative bg-sandwich w-[80%] sm:w-auto rounded-xl p-6 sm:p-10 font-[Poppins]">
+          <div className="relative   sm:w-auto rounded-xl p-6 sm:p-10 font-[Poppins]">
             <button
               onClick={resetInput}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"

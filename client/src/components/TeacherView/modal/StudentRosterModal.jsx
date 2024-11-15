@@ -44,14 +44,16 @@ const AddStudentModal = forwardRef(
     });
 
     return createPortal(
-      <dialog ref={studentModalRef} className="rounded overflow-visible">
-        {/* Add Student Modal */}
+      <dialog
+        ref={studentModalRef}
+        className="rounded overflow-hidden bg-notebookPaper border-sandwich border-4"
+      >
         <div className="w-full md:w-auto flex justify-center items-center">
-          <div className="relative h-[70%] md:h-[90%] w-[85%] md:w-[686px] bg-notebookPaper border-sandwich border-4 p-10 rounded">
+          <div className="max-h-[90vh] w-[85%] md:w-[686px] px-10 sm:p-10 rounded">
             <form method="dialog" onSubmit={onClose}>
               <button>
                 <img
-                  className="absolute -top-6 -right-6"
+                  className="absolute -top-6 -right-6 "
                   src={CancelImg}
                   alt="close student roster"
                   tabIndex="0"
@@ -64,7 +66,7 @@ const AddStudentModal = forwardRef(
                 <h2 className="font-[Poppins] text-[20px] md:text-[24px] my-5">
                   Tap to add students to the classroom
                 </h2>
-                <div className="flex flex-row h-[220%] md:h-3/4 flex-wrap overflow-y-auto">
+                <div className="flex flex-row h-[60vh] md:h-3/4 flex-wrap overflow-y-auto">
                   <UnassignedStudent
                     unassignedStudents={unassignedStudents}
                     students={students}
@@ -73,7 +75,7 @@ const AddStudentModal = forwardRef(
                   />
                 </div>
 
-                <div className="flex items-end h-72 md:h-1/3 justify-center">
+                <div className="flex items-end justify-center mt-4">
                   <button
                     id="unassigned-section"
                     className="flex items-center h-[50px] md:h-[90px] w-full flex-col rounded-2xl border-4 border-darkSandwich"

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import Button from "../../images/button.png";
 import { useAuth } from "./AuthContext";
 import "react-toastify/dist/ReactToastify.css";
-import BtnRainbow from "../../components/BtnRainbow";
+import Button from "../../components/Button";
 import { handleError, handleSuccess } from "../../utils/toastHandling";
+import NavLogo from "../../images/NavLogo.svg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -67,18 +67,21 @@ const Login = () => {
   };
 
   return (
+    <>
+    <div>
+      <img src={NavLogo} alt="Logo" className="mt-[25px] ml-[82px]" />
+    </div>
     <div className="h-screen w-screen pt-[10rem] flex justify-center">
       <div className="form_container">
-        {/* Image here */}
+        <span className="font-karla text-xl font-semibold">Welcome!</span>
 
-        <h2 className="font-header2 text-header2 leading-tight">Login</h2>
-
-        <div>
-          <div>{/* Image here */}</div>
+        <div className="mt-8">
+          <span className="font-karla text-lg font-bold">Email Address</span>
           <form onSubmit={handleSubmit}>
             <div>
               <input
-                className="w-[35rem] mt-[3rem] font-input text-gray p-[0.5rem] border-2 border-black rounded"
+                className="w-[35rem] mt-[0.2rem] 
+                font-poppins text-md text-graphite p-[0.5rem] border-2 border-graphite rounded-xl"
                 type="email"
                 name="email"
                 value={email}
@@ -86,11 +89,13 @@ const Login = () => {
                 onChange={handleOnChange}
               />
             </div>
-
+            <div className="mt-[1rem]">
+            <span className="font-karla text-lg font-bold">Password</span>
+            </div>
             <div>
-              <div>{/* Image here */}</div>
               <input
-                className="w-[35rem] mt-[2rem] font-input p-[0.5rem] border-2 border-black text-gray rounded"
+                className="w-[35rem] mt-[0.2rem] 
+                font-poppins text-md text-graphite p-[0.5rem] border-2 border-graphite rounded-xl"
                 type="password"
                 name="password"
                 value={password}
@@ -100,7 +105,10 @@ const Login = () => {
             </div>
 
             <div className="mt-[2rem] w-[35rem]"> 
-              <BtnRainbow textColor="text-white" btnText="Login"/>
+              <Button 
+                buttonText="Login"
+                type="submit"
+              />
             </div>
 
             {/* <button
@@ -154,6 +162,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

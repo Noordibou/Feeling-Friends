@@ -10,7 +10,7 @@ import AboutFF from "../../images/aboutFF.svg";
 import GitHub from "../../images/githubicon.svg";
 import LinkedIn from "../../images/linkedinicon.svg";
 import UserRole from "../../components/UserRole"
-import NavLogo from "../../images/NavLogo.png"
+import NavLogo from "../../images/NavLogo.svg"
 import Logo from "../../images/logolarge.svg"
 import { handleError, handleSuccess } from "../../utils/toastHandling"
 

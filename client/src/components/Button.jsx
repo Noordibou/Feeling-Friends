@@ -4,7 +4,7 @@ import Background from "../images/button.png"
 export default function Button({ buttonText }) {
   return (
     <>
-      <div
+      <button
         style={{
           backgroundImage: `url('${Background}')`,
           backgroundSize: "350px 50px",
@@ -25,7 +25,7 @@ export default function Button({ buttonText }) {
           }}
           className="rounded-xl w-[350px] h-[50px] z-10"
         ></motion.div>
-      </div>
+      </button>
     </>
   );
 }

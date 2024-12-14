@@ -47,7 +47,7 @@ const ConfirmationModal = forwardRef(
 
             <h1 className="select-none pt-6">{deleteMsg}</h1>
             <h2 className="select-none">Type the below text to confirm.</h2>
-            <p id="user-fullname" className="py-5">
+            <p id="user-fullname" className="py-5 font-bold">
               {itemFullName}
             </p>
             <input

@@ -65,9 +65,7 @@ const PasswordChangeModal = forwardRef(
           role="dialog"
           aria-modal="true"
         >
-          {/* Background overlay */}
-          <div className="fixed inset-0 bg-graphite opacity-75"></div>
-          <div className="relative bg-sandwich w-[80%] sm:w-auto rounded-xl p-6 sm:p-10">
+          <div className="relative bg-lightSandwich border-2 border-darkSandwich w-[80%] sm:w-auto rounded-xl p-6 sm:p-10">
             <button
               className="absolute -right-4 -top-4"
               onClick={handleCloseModal}

@@ -6,7 +6,6 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
-import xButton from "../../../images/x-button.png";
 import FileBase from "react-file-base64";
 import WeekView from "../../../components/TeacherView/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
@@ -24,6 +23,7 @@ import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
 import { deleteStudent } from "../../../api/studentsApi";
 import { handleError } from "../../../utils/toastHandling.js";
 import { ToastContainer } from "react-toastify";
+import IEPSection from "./IEPSection.jsx";
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -647,782 +647,133 @@ const StudentProfile = () => {
                   </div>
                 )}
               </div>
-
               <fieldset>
                 <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4 ">
-                    <h2 className="font-header4">Content Area Notices</h2>
-                    <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
-                      Learning Benchmark
-                    </h3>
-                    {editModeNotices
-                      ? studentProfile?.contentAreaNotices.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex w-full justify-between xs:-mr-3 py-1"
-                            >
-                              <input
-                                type="text"
-                                value={iepEntry.contentArea}
-                                onChange={(event) =>
-                                  handleIEPChange(
-                                    event,
-                                    index,
-                                    "contentArea",
-                                    "contentAreaNotices"
-                                  )
-                                }
-                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                              />
+                  <IEPSection
+                    title="Content Area Notices"
+                    entries={studentProfile?.contentAreaNotices || []}
+                    columns={[
+                      {
+                        field: "contentArea",
+                        header: "Content Area",
+                        align: "left",
+                      },
+                      {
+                        field: "benchmark",
+                        header: "Benchmark",
+                        align: "right",
+                      },
+                    ]}
+                    editMode={editModeNotices}
+                    onFieldChange={(e, index, field) =>
+                      handleIEPChange(e, index, field, "contentAreaNotices")
+                    }
+                    onDelete={(index) =>
+                      handleIEPDeleteClick(index, "contentAreaNotices")
+                    }
+                    onAdd={() => handleIEPAddClick("contentAreaNotices")}
+                  />
+                  <IEPSection
+                    title="Learning Challenges"
+                    entries={studentProfile?.learningChallenges || []}
+                    columns={[
+                      {
+                        field: "challenge",
+                        header: "Challenge",
+                        align: "left",
+                      },
+                      {
+                        field: "date",
+                        header: "Diagnosed",
+                        align: "right",
+                        type: "date",
+                      },
+                    ]}
+                    editMode={editModeNotices}
+                    onFieldChange={(e, index, field) =>
+                      handleIEPChange(e, index, field, "learningChallenges")
+                    }
+                    onDelete={(index) =>
+                      handleIEPDeleteClick(index, "learningChallenges")
+                    }
+                    onAdd={() => handleIEPAddClick("learningChallenges")}
+                  />
 
-                              <div className="w-full flex justify-end ">
-                                <input
-                                  type="text"
-                                  value={iepEntry.benchmark}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "benchmark",
-                                      "contentAreaNotices"
-                                    )
-                                  }
-                                  className="w-[80px] rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                                />
-                                <button
-                                  className="ml-1"
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "contentAreaNotices"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4"
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.contentAreaNotices.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex justify-between font-body text-[14px] md:text-[16px]"
-                            >
-                              <p className="w-7/12"> {iepEntry.contentArea}</p>
-                              <p> {iepEntry.benchmark}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.contentAreaNotices.length === 0) ||
-                      editModeNotices) && (
-                      <button
-                        type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("contentAreaNotices")}
-                      >
-                        Add
-                      </button>
-                    )}
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4">Learning Challenges</h2>
-                    <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
-                      Diagnosed
-                    </p>
-                    {editModeNotices
-                      ? studentProfile?.learningChallenges.map(
-                          (iepEntry, index) => (
-                            <div key={index} className="flex justify-end py-1">
-                              <input
-                                type="text"
-                                value={iepEntry.challenge}
-                                onChange={(event) =>
-                                  handleIEPChange(
-                                    event,
-                                    index,
-                                    "challenge",
-                                    "learningChallenges"
-                                  )
-                                }
-                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
-                              />
-                              <div className="w-full flex justify-end ">
-                                <input
-                                  type="date"
-                                  defaultValue={formatDate(iepEntry.date)}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "date",
-                                      "learningChallenges"
-                                    )
-                                  }
-                                  className="w-1/2 rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                                />
+                  <IEPSection
+                    title="Accommodations & Assistive Tech"
+                    entries={
+                      studentProfile?.accomodationsAndAssisstiveTech || []
+                    }
+                    columns={[
+                      {
+                        field: "accomodation",
+                        header: "Accommodation",
+                        align: "left",
+                      },
+                      {
+                        field: "frequency",
+                        header: "Frequency",
+                        align: "right",
+                        type: "select",
+                        options: [
+                          "",
+                          "Daily",
+                          "Weekly",
+                          "Monthly",
+                          "As Needed",
+                        ],
+                      },
+                      {
+                        field: "location",
+                        header: "Location",
+                        align: "right",
+                      },
+                    ]}
+                    editMode={editModeNotices}
+                    onFieldChange={(event, index, field) =>
+                      handleIEPChange(
+                        event,
+                        index,
+                        field,
+                        "accomodationsAndAssisstiveTech"
+                      )
+                    }
+                    onDelete={(index) =>
+                      handleIEPDeleteClick(
+                        index,
+                        "accomodationsAndAssisstiveTech"
+                      )
+                    }
+                    onAdd={() =>
+                      handleIEPAddClick("accomodationsAndAssisstiveTech")
+                    }
+                  />
 
-                                <button
-                                  className="ml-1"
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "learningChallenges"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4"
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.learningChallenges.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex justify-between font-body text-[14px] md:text-[16px]"
-                            >
-                              <p className="w-7/12">{iepEntry.challenge}</p>
-                              <p>{formatDate(iepEntry.date)}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.learningChallenges.length === 0) ||
-                      editModeNotices) && (
-                      <button
-                        type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("learningChallenges")}
-                      >
-                        Add
-                      </button>
-                    )}
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4">
-                      Accommodations & Assistive Tech
-                    </h2>
-                    <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
-                      <div className="col-span-1"></div>
-                      <div className="col-span-1"></div>
-                      <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
-                        Frequency
-                      </h3>
-                      <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
-                        Location
-                      </h3>
-                    </div>
-                    {editModeNotices
-                      ? studentProfile?.accomodationsAndAssisstiveTech.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="grid grid-cols-4 gap-1 sm:gap-4 items-center py-1"
-                            >
-                              {/* accomodation list */}
-                              <div className="ml-5">
-                                <input
-                                  type="text"
-                                  value={iepEntry.accomodation}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "accomodation",
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                  className="w-[280%] xs:w-[220%] sm:w-[250%] flex pl-2 -ml-4 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1"
-                                />
-                              </div>
-                              <div></div>
-                              {/* frequency */}
-                              <div className="inline px-1">
-                                <select
-                                  value={iepEntry.frequency}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "frequency",
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                  className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1"
-                                >
-                                  <option value=""></option>
-                                  <option value="Daily">Daily</option>
-                                  <option value="Weekly">Weekly</option>
-                                  <option value="Monthly">Monthly</option>
-                                  <option value="As Needed">As Needed</option>
-                                </select>
-                              </div>
-
-                              {/* location */}
-                              <div className="flex flex-row justify-end ">
-                                <input
-                                  type="text"
-                                  value={iepEntry.location}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "location",
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                  className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
-                                />
-                                <button
-                                  className=""
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4 ml-1 "
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.accomodationsAndAssisstiveTech.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="grid grid-cols-4 text-[14px] md:text-[16px] font-body my-3"
-                            >
-                              <p className="w-[200%]">
-                                {" "}
-                                {iepEntry.accomodation}
-                              </p>
-                              <p></p>
-                              <p className="text-right">
-                                {" "}
-                                {iepEntry.frequency}
-                              </p>
-                              <p className="text-right"> {iepEntry.location}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.accomodationsAndAssisstiveTech.length ===
-                        0) ||
-                      editModeNotices) && (
-                      <button
-                        type="button"
-                        className="mt-2"
-                        onClick={() =>
-                          handleIEPAddClick("accomodationsAndAssisstiveTech")
-                        }
-                      >
-                        Add
-                      </button>
-                    )}
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4">Notes</h2>
-                    <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
-                      Date
-                    </p>
-                    {editModeNotices
-                      ? studentProfile?.notesForStudent.map(
-                          (iepEntry, index) => (
-                            <div key={index} className="flex justify-end py-1">
-                              <input
-                                type="text"
-                                value={iepEntry.note}
-                                onChange={(event) =>
-                                  handleIEPChange(
-                                    event,
-                                    index,
-                                    "note",
-                                    "notesForStudent"
-                                  )
-                                }
-                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
-                              />
-                              <div className="w-full flex justify-end ">
-                                <input
-                                  type="date"
-                                  defaultValue={formatDate(iepEntry.date)}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "date",
-                                      "notesForStudent"
-                                    )
-                                  }
-                                  className="w-1/2 rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                                />
-
-                                <button
-                                  className="ml-1"
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "notesForStudent"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4"
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.notesForStudent.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex justify-between font-body text-[14px] md:text-[16px]"
-                            >
-                              <p className="w-7/12">{iepEntry.note}</p>
-                              <p>{formatDate(iepEntry.date)}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.notesForStudent.length === 0) ||
-                      editModeNotices) && (
-                      <button
-                        type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("notesForStudent")}
-                      >
-                        Add
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </fieldset>
-
-              {/* NEW CODE PLS REFORMAT */}
-
-              <fieldset>
-                <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4 text-[20px] pb-4">
-                      Content Area Notices
-                    </h2>
-                    <table className="w-full text-[14px] md:text-[16px]">
-                      <thead>
-                        <tr>
-                          <th className="text-left">Content Area</th>
-                          <th className="text-right">Benchmark</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {studentProfile?.contentAreaNotices.map(
-                          (iepEntry, index) => (
-                            <tr key={index} className="border-b">
-                              {editModeNotices ? (
-                                <>
-                                  <td>
-                                    <input
-                                      type="text"
-                                      value={iepEntry.contentArea}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "contentArea",
-                                          "contentAreaNotices"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich"
-                                    />
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="text"
-                                      value={iepEntry.benchmark}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "benchmark",
-                                          "contentAreaNotices"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich"
-                                    />
-                                  </td>
-                                  <td>
-                                    <button
-                                      className="ml-1"
-                                      onClick={() =>
-                                        handleIEPDeleteClick(
-                                          index,
-                                          "contentAreaNotices"
-                                        )
-                                      }
-                                    >
-                                      <img
-                                        src={xButton}
-                                        alt="xButton"
-                                        className="w-4"
-                                      />
-                                    </button>
-                                  </td>
-                                </>
-                              ) : (
-                                <>
-                                  <td>{iepEntry.contentArea}</td>
-                                  <td className="text-right">
-                                    {iepEntry.benchmark}
-                                  </td>
-                                </>
-                              )}
-                            </tr>
-                          )
-                        )}
-                        {editModeNotices && (
-                          <tr>
-                            <td colSpan={3}>
-                              <button
-                                type="button"
-                                className="mt-2"
-                                onClick={() =>
-                                  handleIEPAddClick("contentAreaNotices")
-                                }
-                              >
-                                Add
-                              </button>
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4 text-[20px] pb-4">
-                      Learning Challenges
-                    </h2>
-                    <table className="w-full text-[14px] md:text-[16px]">
-                      <thead>
-                        <tr>
-                          <th className="text-left">Challenge</th>
-                          <th className="text-right">Diagnosed</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {studentProfile?.learningChallenges.map(
-                          (iepEntry, index) => (
-                            <tr key={index} className="border-b">
-                              {editModeNotices ? (
-                                <>
-                                  <td>
-                                    <input
-                                      type="text"
-                                      value={iepEntry.challenge}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "challenge",
-                                          "learningChallenges"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich"
-                                    />
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="date"
-                                      defaultValue={formatDate(iepEntry.date)}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "date",
-                                          "learningChallenges"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich text-right"
-                                    />
-                                  </td>
-                                  <td>
-                                    <button
-                                      className="ml-1"
-                                      onClick={() =>
-                                        handleIEPDeleteClick(
-                                          index,
-                                          "learningChallenges"
-                                        )
-                                      }
-                                    >
-                                      <img
-                                        src={xButton}
-                                        alt="xButton"
-                                        className="w-4"
-                                      />
-                                    </button>
-                                  </td>
-                                </>
-                              ) : (
-                                <>
-                                  <td>{iepEntry.challenge}</td>
-                                  <td className="text-right">
-                                    {formatDate(iepEntry.date)}
-                                  </td>
-                                </>
-                              )}
-                            </tr>
-                          )
-                        )}
-                        {editModeNotices && (
-                          <tr>
-                            <td colSpan={3}>
-                              <button
-                                type="button"
-                                className="mt-2"
-                                onClick={() =>
-                                  handleIEPAddClick("learningChallenges")
-                                }
-                              >
-                                Add
-                              </button>
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4 text-[20px] pb-4">
-                      Accommodations & Assistive Tech
-                    </h2>
-                    <table className="w-full text-[14px] md:text-[16px]">
-                      <thead>
-                        <tr>
-                          <th className="text-left">Accommodation</th>
-                          <th className="text-right">Frequency</th>
-                          <th className="text-right">Location</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {editModeNotices
-                          ? studentProfile?.accomodationsAndAssisstiveTech.map(
-                              (iepEntry, index) => (
-                                <tr key={index}>
-                                  <td className="pr-2">
-                                    <input
-                                      type="text"
-                                      value={iepEntry.accomodation}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "accomodation",
-                                          "accomodationsAndAssisstiveTech"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich text-[14px] md:text-[17px] pl-2"
-                                    />
-                                  </td>
-                                  <td className="px-2">
-                                    <select
-                                      value={iepEntry.frequency}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "frequency",
-                                          "accomodationsAndAssisstiveTech"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich text-[14px] md:text-[17px]"
-                                    >
-                                      <option value=""></option>
-                                      <option value="Daily">Daily</option>
-                                      <option value="Weekly">Weekly</option>
-                                      <option value="Monthly">Monthly</option>
-                                      <option value="As Needed">
-                                        As Needed
-                                      </option>
-                                    </select>
-                                  </td>
-                                  <td className="px-2">
-                                    <input
-                                      type="text"
-                                      value={iepEntry.location}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "location",
-                                          "accomodationsAndAssisstiveTech"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich text-[14px] md:text-[17px]"
-                                    />
-                                  </td>
-                                  <td className="px-2 text-center">
-                                    <button
-                                      onClick={() =>
-                                        handleIEPDeleteClick(
-                                          index,
-                                          "accomodationsAndAssisstiveTech"
-                                        )
-                                      }
-                                    >
-                                      <img
-                                        src={xButton}
-                                        alt="Delete"
-                                        className="w-4"
-                                      />
-                                    </button>
-                                  </td>
-                                </tr>
-                              )
-                            )
-                          : studentProfile?.accomodationsAndAssisstiveTech.map(
-                              (iepEntry, index) => (
-                                <tr key={index}>
-                                  <td className="pr-2">
-                                    {iepEntry.accomodation}
-                                  </td>
-                                  <td className="px-2 text-right">
-                                    {iepEntry.frequency}
-                                  </td>
-                                  <td className="px-2 text-right">
-                                    {iepEntry.location}
-                                  </td>
-                                </tr>
-                              )
-                            )}
-                      </tbody>
-                    </table>
-                    {(editModeNotices &&
-                      studentProfile?.accomodationsAndAssisstiveTech.length ===
-                        0) ||
-                    editModeNotices ? (
-                      <button
-                        type="button"
-                        className="mt-2"
-                        onClick={() =>
-                          handleIEPAddClick("accomodationsAndAssisstiveTech")
-                        }
-                      >
-                        Add
-                      </button>
-                    ) : null}
-                  </div>
-
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4 text-[20px] pb-4">Notes</h2>
-                    <table className="w-full text-[14px] md:text-[16px]">
-                      <thead>
-                        <tr>
-                          <th className="text-left">Note</th>
-                          <th className="text-right">Date</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {editModeNotices
-                          ? studentProfile?.notesForStudent.map(
-                              (iepEntry, index) => (
-                                <tr key={index}>
-                                  <td className="px-2">
-                                    <input
-                                      type="text"
-                                      value={iepEntry.note}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "note",
-                                          "notesForStudent"
-                                        )
-                                      }
-                                      className="w-full rounded-md bg-sandwich text-[14px] md:text-[16px] pl-2"
-                                    />
-                                  </td>
-                                  <td className="pl-2 flex justify-end">
-                                    <input
-                                      type="date"
-                                      defaultValue={formatDate(iepEntry.date)}
-                                      onChange={(event) =>
-                                        handleIEPChange(
-                                          event,
-                                          index,
-                                          "date",
-                                          "notesForStudent"
-                                        )
-                                      }
-                                      className="rounded-md bg-sandwich text-[14px] md:text-[16px] text-right w-full"
-                                    />
-                                  </td>
-                                  <td className="px-2 text-center">
-                                    <button
-                                      onClick={() =>
-                                        handleIEPDeleteClick(
-                                          index,
-                                          "notesForStudent"
-                                        )
-                                      }
-                                    >
-                                      <img
-                                        src={xButton}
-                                        alt="Delete"
-                                        className="w-4"
-                                      />
-                                    </button>
-                                  </td>
-                                </tr>
-                              )
-                            )
-                          : studentProfile?.notesForStudent.map(
-                              (iepEntry, index) => (
-                                <tr key={index}>
-                                  <td className="px-2">{iepEntry.note}</td>
-                                  <td className="px-2 text-right">
-                                    {formatDate(iepEntry.date)}
-                                  </td>
-                                </tr>
-                              )
-                            )}
-                      </tbody>
-                    </table>
-                    {(editModeNotices &&
-                      studentProfile?.notesForStudent.length === 0) ||
-                    editModeNotices ? (
-                      <button
-                        type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("notesForStudent")}
-                      >
-                        Add
-                      </button>
-                    ) : null}
-                  </div>
+                  <IEPSection
+                    title="Notes"
+                    entries={studentProfile?.notesForStudent || []}
+                    columns={[
+                      {
+                        field: "note",
+                        header: "Note",
+                        align: "left",
+                      },
+                      {
+                        field: "date",
+                        header: "Date",
+                        align: "right",
+                        type: "date",
+                      },
+                    ]}
+                    editMode={editModeNotices}
+                    onFieldChange={(event, index, field) =>
+                      handleIEPChange(event, index, field, "notesForStudent")
+                    }
+                    onDelete={(index) =>
+                      handleIEPDeleteClick(index, "notesForStudent")
+                    }
+                    onAdd={() => handleIEPAddClick("notesForStudent")}
+                  />
                 </div>
               </fieldset>
             </div>

@@ -18,8 +18,6 @@ import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 
-
-
 const TeacherHome = () => {
   const { userData } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
@@ -68,17 +66,17 @@ const TeacherHome = () => {
     <>
       <div className="flex flex-col justify-center">
         <div className="h-screen lg:ml-28">
-          <div className=" mb-3">
+          <header className=" mb-3">
             <Greeting isEditMode={isEditMode} userData={userData} />
-          </div>
-          <div className="custom-scrollbar h-[60%] grid">
+          </header>
+          <section className="custom-scrollbar h-[60%] grid">
             {userData && userData.classrooms ? (
               classroomsData.map(({ classroom, zorPercentages }, index) => (
-                <div
+                <article
                   key={index}
                   className="bg-sandwich w-[80%] ml-auto mr-auto p-[0.5rem] rounded-[1rem] my-[1rem]"
                 >
-                  <div className="flex justify-between">
+                  <header className="flex justify-between">
                     <h2 className="text-header4 font-header2 text-left">
                       {classroom.classSubject}
                     </h2>
@@ -90,67 +88,64 @@ const TeacherHome = () => {
                         <img src={xButton} alt="xButton" />
                       </button>
                     ) : null}
-                  </div>
+                  </header>
 
-                  
-                    <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
-                      <div className="flex justify-between mb-[1rem] mx-2">
-                        <div className="flex-col text-sm font-body">
-                          <h2>Location:</h2>
-                          <h2 className="font-semibold">
-                            {classroom.location}
-                          </h2>
+                  <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
+                    <dl className="flex justify-between mb-[1rem] mx-2">
+                      <div className="flex-col text-sm font-body">
+                        <dt>Location:</dt>
+                        <dd className="font-semibold">{classroom.location}</dd>
+                      </div>
+
+                      <div className="flex-col text-sm font-body ">
+                        <div className="flex gap-4">
+                          <dt>Check-in</dt>
+                          <dt>Check-out</dt>
                         </div>
-
-                        <div className="flex-col text-sm font-body ">
-                          <div className="flex gap-4">
-                            <h2>Check-in</h2>
-                            <h2>Check-out</h2>
-                          </div>
-                          <div className="flex gap-[4rem] font-semibold">
-                            <h2>
-                              {classroom.checkIn
-                                ? `${classroom.checkIn}`
-                                : "-"}
-                            </h2>
-                            <h2>
-                              {classroom.checkOut
-                                ? `${classroom.checkOut}`
-                                : "-"}
-                            </h2>
-                          </div>
+                        <div className="flex gap-[4rem] font-semibold">
+                          <dd>
+                            {classroom.checkIn ? `${classroom.checkIn}` : "-"}
+                          </dd>
+                          <dd>
+                            {classroom.checkOut ? `${classroom.checkOut}` : "-"}
+                          </dd>
                         </div>
                       </div>
-                      <div className="flex justify-between">
-                        <div className="flex w-[80%] bg-sandwich rounded-[1rem] h-[2.5rem]">
-                          {Object.entries(zorPercentages).map(
-                            ([zor, percentage], i, arr) => (
-                              <div
-                                key={zor}
-                                style={{ width: `${percentage}%` }}
-                                className={`bg-${getBackgroundColorClass(
-                                  zor
-                                )} ${i === 0 ? "rounded-l-[1rem]" : ""} ${
-                                  i === arr.length - 1 ? "rounded-r-[1rem]" : ""
-                                } h-[2.5rem]`}
-                              ></div>
-                            )
-                          )}
-                        </div>
-                        <div className="flex items-center ">
-                          <h2 className="font-semibold underline p-2">
-                          <Link to={`/classroom/${userData._id}/${classroom._id}`}> Details{'>'}
+                    </dl>
+                    <div className="flex justify-between">
+                      <div className="flex w-[80%] bg-sandwich rounded-[1rem] h-[2.5rem]">
+                        {Object.entries(zorPercentages).map(
+                          ([zor, percentage], i, arr) => (
+                            <div
+                              key={zor}
+                              style={{ width: `${percentage}%` }}
+                              className={`bg-${getBackgroundColorClass(zor)} ${
+                                i === 0 ? "rounded-l-[1rem]" : ""
+                              } ${
+                                i === arr.length - 1 ? "rounded-r-[1rem]" : ""
+                              } h-[2.5rem]`}
+                            ></div>
+                          )
+                        )}
+                      </div>
+                      <div className="flex items-center ">
+                        <h2 className="font-semibold underline p-2">
+                          <Link
+                            to={`/classroom/${userData._id}/${classroom._id}`}
+                          >
+                            {" "}
+                            Details{">"}
                           </Link>
-                          </h2>
-                          </div>
+                        </h2>
                       </div>
                     </div>
-                </div>
+                  </div>
+                </article>
               ))
             ) : (
               <p>Loading classrooms...</p>
             )}
-          </div>
+          </section>
           <div className="flex justify-center pt-2">
             <button
               className="text-header2 font-header2 underline"
@@ -160,14 +155,13 @@ const TeacherHome = () => {
             </button>
           </div>
         </div>
-          {/* <div className="w-[35%] lg:order-first"> */}
-        <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+        {/* <div className="w-[35%] lg:order-first"> */}
+        <aside className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />
-        </div>
-
+        </aside>
       </div>
     </>
   );
 };
 
-export default withAuth(['teacher'])(TeacherHome);
+export default withAuth(["teacher"])(TeacherHome);

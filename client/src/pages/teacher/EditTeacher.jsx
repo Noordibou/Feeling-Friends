@@ -144,19 +144,22 @@ const EditTeacher = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen w-screen ">
+        <header className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav teacherId={userData._id} />
+        </header>
         <div className="flex justify-center lg:justify-end underline mt-10 px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
-        <div className="flex flex-col items-center pt-8">
-          <div className="mt-4 mb-3 max-w-[643px] lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px] px-5 sm:px-0">
+        <main className="flex flex-col items-center pt-8">
+          <section className="mt-4 mb-3 max-w-[643px] lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px] px-5 sm:px-0">
             <h1 className=" font-header1 text-header2 ">Manage settings</h1>
             <p className="text-header3 font-header3 text-start">
               Preferences for your account details and more.
             </p>
-          </div>
+          </section>
 
           <form className="flex flex-col gap-2 sm:h-auto max-h-[1200px] mb-24 sm:mb-0">
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
+            <fieldset className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* Account Profile */}
               <div
                 className="flex w-full justify-between cursor-pointer"
@@ -249,10 +252,10 @@ const EditTeacher = () => {
                   </button>
                 </div>
               </motion.div>
-            </div>
+            </fieldset>
 
             {/* TODO: add way to update teacher image */}
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
+            <fieldset className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* User Profile */}
               <div
                 className="flex w-full justify-between cursor-pointer"
@@ -361,9 +364,9 @@ const EditTeacher = () => {
                   />
                 </div>
               </motion.div>
-            </div>
+            </fieldset>
             {/* Display Section */}
-            <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center cursor-pointer">
+            <fieldset className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center cursor-pointer">
               {/* Display Header */}
               <div
                 className="flex w-full justify-between"
@@ -415,7 +418,7 @@ const EditTeacher = () => {
               >
                 <h2>Coming soon...</h2>
               </motion.div>
-            </div>
+            </fieldset>
           </form>
 
           <div className="flex relative bottom-10 lg:bottom-0 justify-center w-full my-72">
@@ -470,7 +473,7 @@ const EditTeacher = () => {
           <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
             <Nav teacherId={userData._id} />
           </div>
-        </div>
+        </main>
       </div>
     </>
   );

@@ -126,10 +126,10 @@ const ViewClassList = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen min-w-screen mb-44 lg:mb-0 lg:pb-0">
-        <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
+      <main className="flex flex-col min-h-screen min-w-screen mb-44 lg:mb-0 lg:pb-0">
+        <header className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
-        </div>
+        </header>
         <div className="flex flex-col items-center">
           <div className="flex flex-col h-full items-center w-full max-w-5xl lg:z-40 mt-2">
             {classroom ? (
@@ -137,15 +137,15 @@ const ViewClassList = () => {
                 {isEditMode ? (
                   <>
                     {/* Top Nav (on Edit only)*/}
-                    <div className="flex w-full md:w-[45%] justify-start md:mt-8">
+                    <header className="flex w-full md:w-[45%] justify-start md:mt-8">
                       <SimpleTopNav
                         pageTitle="Manage Classroom"
                         fontsize="text-[20px] md:text-[30px]"
                       />
-                    </div>
+                    </header>
 
                     {/* Classroom Info (on Edit only) */}
-                    <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-5 md:mb-14">
+                    <section className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-5 md:mb-14">
                       <input
                         className="flex w-full md:w-44 h-10 border-2 border-gray rounded my-3 pl-3 text-[18px] md:text-[22px]"
                         name="classSubject"
@@ -156,10 +156,14 @@ const ViewClassList = () => {
                       <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
                         <div className="flex flex-col md:flex-row justify-between mx-2">
                           <div className="flex-col text-sm font-body">
-                            <h2 className="text-[14px] md:text-[16px]">
+                            <label
+                              htmlFor="location"
+                              className="text-[14px] md:text-[16px]"
+                            >
                               Location:
-                            </h2>
+                            </label>
                             <input
+                              id="location"
                               className="border-2 w-44 xs:w-56 border-gray rounded pl-3 py-1 text-[15px] md:text-[18px]"
                               name="location"
                               placeholder="Room 123"
@@ -170,10 +174,14 @@ const ViewClassList = () => {
 
                           <div className="flex text-sm font-body gap-4 mt-2">
                             <div>
-                              <h2 className="text-[14px] md:text-[16px]">
+                              <label
+                                htmlFor="checkin"
+                                className="text-[14px] md:text-[16px]"
+                              >
                                 Check-in:
-                              </h2>
+                              </label>
                               <input
+                                id="checkin"
                                 className="flex w-20 xs:w-24 border-2 border-gray rounded pl-2 py-1 text-[15px] md:text-[18px]"
                                 name="checkIn"
                                 type="time"
@@ -182,10 +190,14 @@ const ViewClassList = () => {
                               />
                             </div>
                             <div>
-                              <h2 className="text-[14px] md:text-[16px]">
+                              <label
+                                htmlFor="checkout"
+                                className="text-[14px] md:text-[16px]"
+                              >
                                 Check-out:
-                              </h2>
+                              </label>
                               <input
+                                id="checkout"
                                 className="flex w-20 xs:w-24 border-2 border-gray rounded pl-2 py-1 text-[15px] md:text-[18px]"
                                 name="checkOut"
                                 type="time"
@@ -205,16 +217,16 @@ const ViewClassList = () => {
                           </a>
                         </h2>
                       </div>
-                    </div>
+                    </section>
                   </>
                 ) : (
-                  <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-6 px-5 mb-5 md:mb-0">
-                    <div className="flex md:justify-center">
+                  <section className="flex flex-col w-full md:justify-center md:flex-row md:mt-6 px-5 mb-5 md:mb-0">
+                    <header className="flex md:justify-center">
                       <SimpleTopNav
                         pageTitle={classroom?.classSubject}
                         fontsize="text-[25px] xl:text-[24px]"
                       />
-                    </div>
+                    </header>
                     <div className="flex flex-col-reverse md:flex-row">
                       <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
                         <div
@@ -286,7 +298,7 @@ const ViewClassList = () => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </section>
                 )}
 
                 <ToggleButton students={students} setStudents={setStudents} />
@@ -306,7 +318,7 @@ const ViewClassList = () => {
                 </div>
 
                 {/* Scrollable list of students */}
-                <div
+                <section
                   className={`px-4 md:px-0 md:mb-0 flex w-full justify-center md:overflow-y-auto md:custom-scrollbar ${
                     isEditMode
                       ? "h-full md:h-[35vh]"
@@ -321,7 +333,7 @@ const ViewClassList = () => {
                     >
                       {sortedStudents.map((student, index) => {
                         return (
-                          <div
+                          <article
                             key={`student-info-${index}`}
                             className="w-[98%] md:w-[460px]"
                           >
@@ -334,7 +346,7 @@ const ViewClassList = () => {
                                 handleDeleteStudent(student._id)
                               }
                             />
-                          </div>
+                          </article>
                         );
                       })}
                       {isEditMode && (
@@ -361,14 +373,14 @@ const ViewClassList = () => {
                   ) : (
                     <p>No students found.</p>
                   )}
-                </div>
+                </section>
               </>
             ) : (
               "Loading..."
             )}
           </div>
         </div>
-      </div>
+      </main>
       <UnsavedChanges />
       {/* Tells user they have saved the layout */}
       <div className="flex justify-center">

@@ -161,43 +161,50 @@ const EditTeacher = () => {
           <form className="flex flex-col gap-2 sm:h-auto max-h-[1200px] mb-24 sm:mb-0">
             <fieldset className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* Account Profile */}
-              <div
-                className="flex w-full justify-between cursor-pointer"
-                onClick={() => setIsAccountOpen(!isAccountOpen)}
-              >
-                <h2 className="font-header4 text-header3 select-none">
-                  Account Settings
-                </h2>
-                <svg
-                  className={`transition-transform duration-300 ${
-                    isAccountOpen ? "" : "rotate-180"
-                  }`}
-                  width="33"
-                  height="33"
-                  viewBox="30 10 40 40"
-                  xmlns="http://www.w3.org/2000/svg"
+              <section className="w-full">
+                <header
+                  className="flex w-full justify-between cursor-pointer"
+                  onClick={() => setIsAccountOpen(!isAccountOpen)}
+                  aria-expanded={isAccountOpen ? "true" : "false"}
+                  aria-controls="account-settings-content"
                 >
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="35"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  <h2 className="font-header4 text-header3 select-none">
+                    Account Settings
+                  </h2>
+                  <svg
+                    className={`transition-transform duration-300 ${
+                      isAccountOpen ? "" : "rotate-180"
+                    }`}
+                    width="33"
+                    height="33"
+                    viewBox="30 10 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label={
+                      isAccountOpen ? "Collapse section" : "Expand section"
+                    }
+                  >
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="35"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
 
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="65"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="65"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </header>
+              </section>
               {/* Account Profile Contents */}
               <motion.div
                 className={`${isAccountOpen ? "" : "hidden"}`}
@@ -260,43 +267,50 @@ const EditTeacher = () => {
             {/* TODO: add way to update teacher image */}
             <fieldset className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* User Profile */}
-              <div
-                className="flex w-full justify-between cursor-pointer"
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
-              >
-                <h2 className="font-header4 text-header3 select-none">
-                  User profile
-                </h2>
-                <svg
-                  className={`transition-transform duration-300 ${
-                    isProfileOpen ? "" : "rotate-180"
-                  }`}
-                  width="33"
-                  height="33"
-                  viewBox="30 10 40 40"
-                  xmlns="http://www.w3.org/2000/svg"
+              <section className="w-full">
+                <header
+                  className="flex w-full justify-between cursor-pointer"
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  aria-expanded={isProfileOpen ? "true" : "false"}
+                  aria-controls="profile-settings-content"
                 >
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="35"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  <h2 className="font-header4 text-header3 select-none">
+                    User profile
+                  </h2>
+                  <svg
+                    className={`transition-transform duration-300 ${
+                      isProfileOpen ? "" : "rotate-180"
+                    }`}
+                    width="33"
+                    height="33"
+                    viewBox="30 10 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label={
+                      isProfileOpen ? "Collapse section" : "Expand section"
+                    }
+                  >
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="35"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
 
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="65"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="65"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </header>
+              </section>
               {/* User Profile Contents */}
               <motion.div
                 className={`${isProfileOpen ? "" : "hidden"}`}
@@ -375,44 +389,51 @@ const EditTeacher = () => {
             {/* Display Section */}
             <fieldset className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center cursor-pointer">
               {/* Display Header */}
-              <div
-                className="flex w-full justify-between"
-                onClick={() => setIsDisplayOpen(!isDisplayOpen)}
-              >
-                <h2 className="font-semibold font-header4 text-header3 font-[Poppins] select-none">
-                  Display
-                </h2>
-
-                <svg
-                  className={`transition-transform duration-300 ${
-                    isDisplayOpen ? "" : "rotate-180"
-                  }`}
-                  width="33"
-                  height="33"
-                  viewBox="30 10 40 40"
-                  xmlns="http://www.w3.org/2000/svg"
+              <section className="w-full">
+                <header
+                  className="flex w-full justify-between"
+                  onClick={() => setIsDisplayOpen(!isDisplayOpen)}
+                  aria-expanded={isDisplayOpen ? "true" : "false"}
+                  aria-controls="display-settings-content"
                 >
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="35"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  <h2 className="font-semibold font-header4 text-header3 font-[Poppins] select-none">
+                    Display
+                  </h2>
 
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="65"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    className={`transition-transform duration-300 ${
+                      isDisplayOpen ? "" : "rotate-180"
+                    }`}
+                    width="33"
+                    height="33"
+                    viewBox="30 10 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label={
+                      isDisplayOpen ? "Collapse section" : "Expand section"
+                    }
+                  >
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="35"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="65"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </header>
+              </section>
               <motion.div
                 className={`${isDisplayOpen ? "" : "hidden"}`}
                 initial={{ height: 0, opacity: 0 }}
@@ -432,6 +453,7 @@ const EditTeacher = () => {
             <button
               onClick={openConfirmModal}
               className="bg-red-500 py-2 px-10 sm:px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 absolute"
+              type="button"
             >
               <h3 className="text-white font-semibold">Delete Your Account</h3>
             </button>

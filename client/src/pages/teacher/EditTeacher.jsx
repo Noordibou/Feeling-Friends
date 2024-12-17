@@ -210,8 +210,9 @@ const EditTeacher = () => {
                 style={{ overflow: "hidden" }}
               >
                 <div className="flex flex-col">
-                  <label>Email </label>
+                  <label htmlFor="email">Email </label>
                   <input
+                    id="email"
                     type="text"
                     name="email"
                     value={formData?.email || ""}
@@ -220,8 +221,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>Username </label>
+                  <label htmlFor="username">Username </label>
                   <input
+                    id="username"
                     type="text"
                     name="username"
                     value={formData?.username || ""}
@@ -230,8 +232,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>Phone </label>
+                  <label htmlFor="phoneNum">Phone </label>
                   <input
+                    id="phoneNum"
                     type="text"
                     name="phone"
                     value={formData.phone || ""}
@@ -324,8 +327,9 @@ const EditTeacher = () => {
                   </div>
                 </div>
                 <div className={`flex flex-col `}>
-                  <label>Prefix </label>
+                  <label htmlFor="prefix">Prefix </label>
                   <input
+                    id="prefix"
                     type="text"
                     name="prefix"
                     value={formData.prefix || ""}
@@ -334,8 +338,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>First Name </label>
+                  <label htmlFor="firstName">First Name </label>
                   <input
+                    id="firstName"
                     type="text"
                     name="firstName"
                     value={formData.firstName || ""}
@@ -344,8 +349,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>Last Name </label>
+                  <label htmlFor="lastName">Last Name </label>
                   <input
+                    id="lastName"
                     type="text"
                     name="lastName"
                     value={formData.lastName || ""}
@@ -354,8 +360,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>School </label>
+                  <label htmlFor="school">School </label>
                   <input
+                    id="school"
                     type="text"
                     name="school"
                     value={formData.school || ""}

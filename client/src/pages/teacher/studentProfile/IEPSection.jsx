@@ -10,9 +10,10 @@ function IEPSection({
   onAdd,
 }) {
   return (
-    <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
+    <section className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
       <h2 className="font-header4 text-[20px] pb-4">{title}</h2>
       <table className="w-full text-[14px] md:text-[16px]">
+        <caption className="sr-only">{`Table for ${title}`}</caption>
         <thead>
           <tr>
             {columns.map((col, index) => (
@@ -36,23 +37,40 @@ function IEPSection({
                 >
                   {editMode ? (
                     col.type === "date" ? (
-                      <input
-                        type="date"
-                        defaultValue={formatDate(entry[col.field])}
-                        onChange={(event) =>
-                          onFieldChange(event, index, col.field)
-                        }
-                        className="rounded-md bg-sandwich text-[14px] md:text-[16px] text-right w-full"
-                      />
+                      <>
+                        <label
+                          htmlFor={`date-${index}-${colIndex}`}
+                          className="sr-only"
+                        >
+                          {col.header}
+                        </label>
+                        <input
+                          type="date"
+                          defaultValue={formatDate(entry[col.field])}
+                          onChange={(event) =>
+                            onFieldChange(event, index, col.field)
+                          }
+                          className="rounded-md bg-sandwich text-[14px] md:text-[16px] text-right w-full"
+                        />
+                      </>
                     ) : (
-                      <input
-                        type="text"
-                        value={entry[col.field]}
-                        onChange={(event) =>
-                          onFieldChange(event, index, col.field)
-                        }
-                        className="w-full rounded-md bg-sandwich text-[14px] md:text-[16px] pl-2"
-                      />
+                      <>
+                        <label
+                          htmlFor={`text-${index}-${colIndex}`}
+                          className="sr-only"
+                        >
+                          {col.header}
+                        </label>
+                        <input
+                          id={`text-${index}-${colIndex}`}
+                          type="text"
+                          value={entry[col.field]}
+                          onChange={(event) =>
+                            onFieldChange(event, index, col.field)
+                          }
+                          className="w-full rounded-md bg-sandwich text-[14px] md:text-[16px] pl-2"
+                        />
+                      </>
                     )
                   ) : col.type === "date" ? (
                     formatDate(entry[col.field])
@@ -73,11 +91,16 @@ function IEPSection({
         </tbody>
       </table>
       {editMode && (
-        <button type="button" className="mt-2" onClick={onAdd}>
+        <button
+          type="button"
+          className="mt-2"
+          onClick={onAdd}
+          aria-label="Add new entry"
+        >
           Add
         </button>
       )}
-    </div>
+    </section>
   );
 }
 

@@ -1,18 +1,16 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { checkTimeOfDay } from '../utils/dailyGreeting.js'
+import { checkTimeOfDay } from "../utils/dailyGreeting.js";
 import Logout from "../components/LogoutButton.jsx";
 
 const Greeting = ({ isEditMode, userData }) => {
-
-  const [greeting, setGreeting] = useState(checkTimeOfDay());
+  const greeting = checkTimeOfDay();
 
   if (isEditMode) {
     return (
-      <div className="lg:mt-16 mt-20 md:mt-0 ml-8">
-        <div className="hidden md:flex items-start justify-end underline mt-4 lg:mt-0 lg:mb-12 mr-4 ">
+      <section className="lg:mt-16 mt-20 md:mt-0 ml-8">
+        <header className="hidden md:flex items-start justify-end underline mt-4 lg:mt-0 lg:mb-12 mr-4 ">
           <Logout location="teacherLogout" userData={userData} />
-        </div>
+        </header>
         <h1 className="text-header4 font-header4 text-start  mx-6">
           Edit Classes
         </h1>
@@ -26,7 +24,7 @@ const Greeting = ({ isEditMode, userData }) => {
             Add new class
           </Link>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -39,12 +37,11 @@ const Greeting = ({ isEditMode, userData }) => {
   }
 
   return (
-    
-      <div className="font-body text-start lg:mt-16 mt-20 md:mt-0">
-        <div className="hidden md:flex items-start justify-end underline lg:-mt-16 lg:mb-20 mr-4 md:pt-8 ">
-          <Logout location="teacherLogout" userData={userData} />
-        </div>
-        <div className="ml-10 mt-4">
+    <section className="font-body text-start lg:mt-16 mt-20 md:mt-0">
+      <div className="hidden md:flex items-start justify-end underline lg:-mt-16 lg:mb-20 mr-4 md:pt-8 ">
+        <Logout location="teacherLogout" userData={userData} />
+      </div>
+      <div className="ml-10 mt-4">
         <h1 className="text-header4 md:text-header1 font-header1 text-start">
           {greeting}, {userData.prefix} {userData.firstName}!
         </h1>
@@ -53,8 +50,8 @@ const Greeting = ({ isEditMode, userData }) => {
             Your Classes at a Glance
           </h2>
         )}
-        </div>
       </div>
+    </section>
   );
 };
 

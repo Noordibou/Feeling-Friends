@@ -278,16 +278,20 @@ const EditSeatingChart = () => {
       />
       <UnsavedChanges />
 
-      {/* page container */}
-      <div className="flex h-screen min-w-screen justify-center md:mb-0">
+      <header>
         <div className="hidden md:flex md:absolute w-full justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
-
+      </header>
+      {/* page container */}
+      <main className="flex h-screen min-w-screen justify-center md:mb-0">
         {/* page container */}
         <div className="flex flex-col w-full h-screen items-center max-w-3xl">
           {/* top half of page */}
-          <div className="flex flex-col h-[180px] md:h-auto w-screen md:w-full top-0 md:flex-row max-w-[752px] justify-start mb-2 md:mb-0 mt-5 md:mt-10 lg:mt-16 mx-4 md:ml-5 z-20">
+          <section className="flex flex-col h-[180px] md:h-auto w-screen md:w-full top-0 md:flex-row max-w-[752px] justify-start mb-2 md:mb-0 mt-5 md:mt-10 lg:mt-16 mx-4 md:ml-5 z-20">
+            <h1 id="classroom-header" className="sr-only">
+              Edit Seating Chart
+            </h1>
             <div className="flex">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -324,13 +328,16 @@ const EditSeatingChart = () => {
                 buttonSize="small"
               />
             </div>{" "}
-          </div>
+          </section>
 
           {/* bottom half/classroom part of page */}
           {classroom ? (
             <>
               {/* inside of the classroom (movable on mobile) */}
-              <div className="relative w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+              <section className="relative w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                <h2 id="classroom-layout" className="sr-only">
+                  Classroom Layout
+                </h2>
                 {/* static container of the classroom */}
                 <div
                   className="relative w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] "
@@ -370,10 +377,10 @@ const EditSeatingChart = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </section>
             </>
           ) : (
-            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+            <section className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
               {/* placeholder for now */}
               <div className={`absolute mt-[250px] px-32 -ml-10`}>
                 <p className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
@@ -381,7 +388,7 @@ const EditSeatingChart = () => {
                   again later
                 </p>
               </div>
-            </div>
+            </section>
           )}
 
           <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-start md:mt-5">
@@ -435,7 +442,7 @@ const EditSeatingChart = () => {
           showMsg={showMsg}
           textColor="text-black"
         />
-      </div>
+      </main>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
         <button
           onClick={() => handleZoomIn()}

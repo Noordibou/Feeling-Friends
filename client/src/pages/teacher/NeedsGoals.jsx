@@ -126,12 +126,12 @@ const NeedsGoals = () => {
 
   return (
     <>
-      <div className="hidden md:flex justify-center lg:justify-end underline lg:mt-8 mt-10 px-5">
+      <header className="hidden md:flex justify-center lg:justify-end underline lg:mt-8 mt-10 px-5">
         <Logout location="teacherLogout" userData={userData} />
-      </div>
-      <div className="flex min-h-screen justify-center pb-[250px]">
+      </header>
+      <main className="flex min-h-screen justify-center pb-[250px]">
         <div className="flex max-w-[900px] flex-col">
-          <div className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 lg:mt-0 mt-8 mx-4 md:ml-5">
+          <header className="flex flex-col md:flex-row max-w-[900px] justify-start mb-2 lg:mt-0 mt-8 mx-4 md:ml-5">
             <div className="flex md:justify-center">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -188,166 +188,168 @@ const NeedsGoals = () => {
                 />
               </div>
             </div>
-          </div>
+          </header>
 
           <h1 className="font-[Poppins] text-[18px] md:text-[24px] text-center px-2 mt-4">
             Set preset goal options for your students
           </h1>
           <br />
+          <section>
+            <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem]">
+              <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
+                "What's your most important <u>goal</u> for the day?"
+              </h2>
 
-          <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem]">
-            <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
-              "What's your most important <u>goal</u> for the day?"
-            </h2>
-
-            {/* Divs in place of buttons for this selection probably. Here is one div since they will probably need to be listed from the backend depending on how many choices the teacher has made */}
-            {goalAnswers.map((answer, index) => (
-              <div
-                key={index}
-                className={`flex ${
-                  editGoalMode[index] ? "bg-white" : "bg-sandwich"
-                } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
-              >
-                {editGoalMode[index] ? (
-                  <textarea
-                    key={index}
-                    value={answer}
-                    onChange={(e) =>
-                      handleInputGoalChange(index, e.target.value)
-                    }
-                    className="w-10/12 px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
-                  />
-                ) : (
-                  <div
-                    className={`flex rounded-[1rem] items-center justify-between mt-[1rem] mb-[1rem] h-[34px] `}
-                  >
-                    <h3
-                      className="text-[17px] font-body pl-3"
-                      aria-label={answer ? answer : "No answer available"}
+              {/* Divs in place of buttons for this selection probably. Here is one div since they will probably need to be listed from the backend depending on how many choices the teacher has made */}
+              {goalAnswers.map((answer, index) => (
+                <div
+                  key={index}
+                  className={`flex ${
+                    editGoalMode[index] ? "bg-white" : "bg-sandwich"
+                  } rounded-[1rem] border-graphite border-[4px]  items-center justify-between mt-[1rem] mb-[1rem]`}
+                >
+                  {editGoalMode[index] ? (
+                    <textarea
+                      key={index}
+                      value={answer}
+                      onChange={(e) =>
+                        handleInputGoalChange(index, e.target.value)
+                      }
+                      className="w-10/12 px-3 pt-[15px] md:px-5 rounded-[1rem] text-[17px] font-body "
+                    />
+                  ) : (
+                    <div
+                      className={`flex rounded-[1rem] items-center justify-between mt-[1rem] mb-[1rem] h-[34px] `}
                     >
-                      {answer || ""}
-                    </h3>
-                  </div>
-                )}
-                <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
-                  {/* edit button */}
-                  <button
-                    aria-label={
-                      editNeedsMode[index] ? "Editing mode on" : "Edit item"
-                    }
-                    onClick={() => toggleEditGoalMode(index)}
-                  >
-                    {editGoalMode[index] ? (
+                      <h3
+                        className="text-[17px] font-body pl-3"
+                        aria-label={answer ? answer : "No answer available"}
+                      >
+                        {answer || ""}
+                      </h3>
+                    </div>
+                  )}
+                  <div className="flex flex-col-reverse md:flex-row text-body font-body items-center pr-4">
+                    {/* edit button */}
+                    <button
+                      aria-label={
+                        editNeedsMode[index] ? "Editing mode on" : "Edit item"
+                      }
+                      onClick={() => toggleEditGoalMode(index)}
+                    >
+                      {editGoalMode[index] ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
+                        >
+                          <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                      ) : (
+                        <img
+                          className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}
+                          src={editIcon}
+                          alt="edit"
+                        />
+                      )}
+                    </button>
+
+                    {/* delete "x" button */}
+                    <button
+                      aria-label="Delete item"
+                      onClick={() => removeGoalsAnswer(index)}
+                    >
                       <svg
-                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-8 h-8 flex justify-end text-green mt-2 md:mx-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`"w-[16px] ${
+                          editGoalMode[index] ? "mt-2" : ""
+                        } sm:w-[24px]"`}
                       >
-                        <path d="M20 6L9 17l-5-5" />
+                        <line
+                          x1="5"
+                          y1="5"
+                          x2="19"
+                          y2="19"
+                          stroke="#000"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                        />
+                        <line
+                          x1="19"
+                          y1="5"
+                          x2="5"
+                          y2="19"
+                          stroke="#000"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                        />
                       </svg>
-                    ) : (
-                      <img
-                        className={`mt-2 md:mt-0 h-5 md:h-7 px-3`}
-                        src={editIcon}
-                        alt="edit"
-                      />
-                    )}
-                  </button>
-
-                  {/* delete "x" button */}
-                  <button
-                    aria-label="Delete item"
-                    onClick={() => removeGoalsAnswer(index)}
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className={`"w-[16px] ${
-                        editGoalMode[index] ? "mt-2" : ""
-                      } sm:w-[24px]"`}
-                    >
-                      <line
-                        x1="5"
-                        y1="5"
-                        x2="19"
-                        y2="19"
-                        stroke="#000"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                      />
-                      <line
-                        x1="19"
-                        y1="5"
-                        x2="5"
-                        y2="19"
-                        stroke="#000"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </button>
+                    </button>
+                  </div>
                 </div>
+              ))}
+
+              {/* Add new goal div */}
+              <div className="flex justify-center items-center rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
+                <button
+                  className="text-[17px] font-semibold font-[Poppins] text-center"
+                  onClick={() => addAnswer("goal")}
+                >
+                  Add new goal +
+                </button>
               </div>
-            ))}
 
-            {/* Add new goal div */}
-            <div className="flex justify-center items-center rounded-[1rem] border-graphite border-[4px] py-2 mt-[1rem] mb-[1.5rem]">
-              <button
-                className="text-[17px] font-semibold font-[Poppins] text-center"
-                onClick={() => addAnswer("goal")}
-              >
-                Add new goal +
-              </button>
-            </div>
-
-            <div className="flex mx-2 gap-5 items-center justify-between">
-              <label
-                htmlFor="customGoals"
-                className="text-[17px] font-[Poppins]"
-              >
-                Allow students to input custom needs?
-              </label>
-              <div className="flex flex-col gap-2 md:flex-row">
-                <div className="flex items-center">
-                  <label htmlFor="yes-custom-goal" className="mr-2">
-                    Yes
-                  </label>
-                  <input
-                    type="checkbox"
-                    id="yes-custom-goal"
-                    name="customGoals"
-                    value="yes"
-                    checked={goalsSelectedOption === "yes"}
-                    onChange={handleGoalsCheckboxChange}
-                    className="w-5 h-5"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <label htmlFor="no-custom-goal" className="mr-2">
-                    No
-                  </label>
-                  <input
-                    type="checkbox"
-                    id="no-custom-goal"
-                    name="customGoals"
-                    value="no"
-                    checked={goalsSelectedOption === "no"}
-                    onChange={handleGoalsCheckboxChange}
-                    className="w-5 h-5"
-                  />
+              <div className="flex mx-2 gap-5 items-center justify-between">
+                <label
+                  htmlFor="customGoals"
+                  className="text-[17px] font-[Poppins]"
+                >
+                  Allow students to input custom needs?
+                </label>
+                <div className="flex flex-col gap-2 md:flex-row">
+                  <div className="flex items-center">
+                    <label htmlFor="yes-custom-goal" className="mr-2">
+                      Yes
+                    </label>
+                    <input
+                      type="checkbox"
+                      id="yes-custom-goal"
+                      name="customGoals"
+                      value="yes"
+                      checked={goalsSelectedOption === "yes"}
+                      onChange={handleGoalsCheckboxChange}
+                      className="w-5 h-5"
+                    />
+                  </div>
+                  <div className="flex items-center">
+                    <label htmlFor="no-custom-goal" className="mr-2">
+                      No
+                    </label>
+                    <input
+                      type="checkbox"
+                      id="no-custom-goal"
+                      name="customGoals"
+                      value="no"
+                      checked={goalsSelectedOption === "no"}
+                      onChange={handleGoalsCheckboxChange}
+                      className="w-5 h-5"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
+          </section>
+
+          <section className="bg-sandwich w-[90%] ml-auto mr-auto p-[1.5rem] rounded-[1rem] mt-[3rem]">
             <h2 className="font-[Poppins] text-[18px] md:text-[22px] mb-6">
               "What do you <u>need</u> from an adult to succeed today?"
             </h2>
@@ -518,9 +520,9 @@ const NeedsGoals = () => {
                 <SmallSaveButton />
               </div>
             </div>
-          </div>
+          </section>
         </div>
-      </div>
+      </main>
 
       {/* Tells user they have saved the layout */}
       <div className="flex justify-center">

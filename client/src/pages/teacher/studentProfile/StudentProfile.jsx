@@ -6,7 +6,6 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import youngStudent from "../../../images/young-student.png";
 import "./StudentProfile.css";
-import xButton from "../../../images/x-button.png";
 import FileBase from "react-file-base64";
 import WeekView from "../../../components/TeacherView/WeekView.jsx";
 import StudentProfileBoxInfo from "../../../components/StudentProfileBoxInfo.jsx";
@@ -24,6 +23,7 @@ import { useUnsavedChanges } from "../../../context/UnsavedChangesContext.js";
 import { deleteStudent } from "../../../api/studentsApi";
 import { handleError } from "../../../utils/toastHandling.js";
 import { ToastContainer } from "react-toastify";
+import IEPSection from "./IEPSection.jsx";
 
 const { calculateAge, formatDate } = require("../../../utils/dateFormat");
 
@@ -310,334 +310,223 @@ const StudentProfile = () => {
     <>
       {/* Page conatainer including bottom nav */}
       <div className="flex flex-col  bg-notebookPaper min-h-screen">
-        <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
+        <header className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5 ">
           <Logout location="teacherLogout" userData={userData} />
-        </div>
+        </header>
         {/* Page container (no nav) */}
-        <form onSubmit={handleSaveClick}>
-          <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10 mb-10 md:mb-20 lg:mb-0">
-            {/* top student section */}
-            <div className="flex w-full">
-              <div className="w-full flex flex-col justify-center">
-                <div className="flex self-center flex-row w-full max-w-lg mb-5">
-                  <div
-                    className="md:text-header1 text-[33px] font-header1"
-                    onClick={() =>
-                      handleNavigation(
-                        `/viewclasslist/${teacherId}/${classroomId}`
-                      )
-                    }
-                  >
-                    <svg
-                      className={``}
-                      width="70"
-                      height="70"
-                      viewBox="25 0 1 100"
-                      xmlns="http://www.w3.org/2000/svg"
+        <main>
+          <form onSubmit={handleSaveClick}>
+            <div className="flex flex-col items-center pb-[4rem] mt-5 md:mt-10 mb-10 md:mb-20 lg:mb-0">
+              {/* top student section */}
+              <div className="flex w-full">
+                <div className="w-full flex flex-col justify-center">
+                  <div className="flex self-center flex-row w-full max-w-lg mb-5">
+                    <div
+                      className="md:text-header1 text-[33px] font-header1"
+                      onClick={() =>
+                        handleNavigation(
+                          `/viewclasslist/${teacherId}/${classroomId}`
+                        )
+                      }
                     >
-                      <line
-                        x1="10"
-                        y1="50"
-                        x2="32"
-                        y2="35"
-                        stroke="#8D8772"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                      />
+                      <svg
+                        className={``}
+                        width="70"
+                        height="70"
+                        viewBox="25 0 1 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <line
+                          x1="10"
+                          y1="50"
+                          x2="32"
+                          y2="35"
+                          stroke="#8D8772"
+                          strokeWidth="5"
+                          strokeLinecap="round"
+                        />
 
-                      <line
-                        x1="10"
-                        y1="50"
-                        x2="32"
-                        y2="65"
-                        stroke="#8D8772"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                        <line
+                          x1="10"
+                          y1="50"
+                          x2="32"
+                          y2="65"
+                          stroke="#8D8772"
+                          strokeWidth="5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="">
+                      {/* First & Last Name */}
+                      <fieldset>
+                        {editMode ? (
+                          <input
+                            type="text"
+                            name="firstName"
+                            value={studentProfile.firstName}
+                            onChange={handleInputChange}
+                            className="w-4/12 md:w-1/4 py-2 px-2 mx-3 text-[20px] rounded-md bg-sandwich"
+                          />
+                        ) : (
+                          <span className="md:text-header1 text-[33px] font-header1 px-2">
+                            {studentProfile?.firstName}
+                          </span>
+                        )}
+                        {editMode ? (
+                          <input
+                            type="text"
+                            name="lastName"
+                            value={studentProfile.lastName}
+                            onChange={handleInputChange}
+                            className="w-4/12 md:w-1/4 py-2 px-2 text-[20px] rounded-md bg-sandwich"
+                          />
+                        ) : (
+                          <span className="md:text-header1 text-[33px] font-header1">
+                            {studentProfile?.lastName}
+                          </span>
+                        )}
+                      </fieldset>
+                    </div>
                   </div>
-                  <div className="">
-                    {/* First & Last Name */}
-                    <fieldset>
-                      {editMode ? (
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={studentProfile.firstName}
-                          onChange={handleInputChange}
-                          className="w-4/12 md:w-1/4 py-2 px-2 mx-3 text-[20px] rounded-md bg-sandwich"
-                        />
-                      ) : (
-                        <span className="md:text-header1 text-[33px] font-header1 px-2">
-                          {studentProfile?.firstName}
-                        </span>
-                      )}
-                      {editMode ? (
-                        <input
-                          type="text"
-                          name="lastName"
-                          value={studentProfile.lastName}
-                          onChange={handleInputChange}
-                          className="w-4/12 md:w-1/4 py-2 px-2 text-[20px] rounded-md bg-sandwich"
-                        />
-                      ) : (
-                        <span className="md:text-header1 text-[33px] font-header1">
-                          {studentProfile?.lastName}
-                        </span>
-                      )}
+
+                  {/* Image + Student Info Container + Button */}
+                  <div>
+                    {/* Field set section for student info */}
+                    <fieldset className="flex flex-col md:flex-row items-center justify-center">
+                      {/* Image */}
+                      <div className="flex flex-col items-center md:self-left md:mr-5">
+                        <div
+                          className={`flex items-center justify-center w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
+                        >
+                          <img
+                            src={
+                              studentProfile?.avatarImg === "none"
+                                ? youngStudent
+                                : studentProfile?.avatarImg
+                            }
+                            alt="student"
+                            className="rounded-md object-fill w-32"
+                          />
+                        </div>
+                        {editMode ? (
+                          <div className="inline-flex text-[12px] self-right mt-2 font-header1 underline w-36 truncate">
+                            <FileBase
+                              type="file"
+                              multiple={false}
+                              onDone={({ base64 }) =>
+                                handleFileUpload({ base64 })
+                              }
+                            />
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="flex justify-center my-5 md:my-0">
+                        {/* Student Info Container */}
+                        <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
+                          <p>Age: {calculateAge(studentProfile?.birthday)}</p>
+                          {editMode ? (
+                            <div>
+                              <label htmlFor="gradeYear">Grade: </label>
+                              <input
+                                id="gradeYear"
+                                type="text"
+                                name="gradeYear"
+                                value={studentProfile.gradeYear}
+                                onChange={handleInputChange}
+                                className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                              />
+                            </div>
+                          ) : (
+                            <p>
+                              Grade: <span>{studentProfile?.gradeYear}</span>
+                            </p>
+                          )}
+                          {editMode ? (
+                            <div>
+                              <label htmlFor="studentId">Student ID: </label>
+                              <input
+                                id="studentId"
+                                type="text"
+                                name="schoolStudentId"
+                                value={studentProfile.schoolStudentId}
+                                onChange={handleInputChange}
+                                className="rounded-md bg-sandwich w-7/12 px-2 my-1"
+                              />
+                            </div>
+                          ) : (
+                            <p>
+                              Student ID:{" "}
+                              <span>{studentProfile?.schoolStudentId}</span>
+                            </p>
+                          )}
+                          {editMode ? (
+                            <div>
+                              <label htmlFor="birthday">Birthday: </label>
+                              <input
+                                id="birthday"
+                                type="text"
+                                name="birthday"
+                                value={studentProfile.birthday}
+                                onChange={handleInputChange}
+                                className="rounded-md bg-sandwich w-8/12 px-2 my-1"
+                              />
+                            </div>
+                          ) : (
+                            <p>
+                              Birthday: <span>{studentProfile?.birthday}</span>
+                            </p>
+                          )}
+                          {editMode ? (
+                            <div>
+                              <label htmlFor="iepStatus">IEP: </label>
+                              <select
+                                id="iepStatus"
+                                value={studentProfile.iepStatus}
+                                onChange={(e) =>
+                                  setStudentProfile({
+                                    ...studentProfile,
+                                    iepStatus: e.target.value,
+                                  })
+                                }
+                                className="rounded-md bg-sandwich px-2 my-1"
+                              >
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                            </div>
+                          ) : (
+                            <p>
+                              IEP: <span>{studentProfile?.iepStatus}</span>
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
-
-                {/* Image + Student Info Container + Button */}
-                <div>
-                  {/* Field set section for student info */}
-                  <fieldset className="flex flex-col md:flex-row items-center justify-center">
-                    {/* Image */}
-                    <div className="flex flex-col items-center md:self-left md:mr-5">
-                      <div
-                        className={`flex items-center justify-center w-32 rounded-md mr-4 border-8 border-${borderColorClass.borderColorClass}`}
-                      >
-                        <img
-                          src={
-                            studentProfile?.avatarImg === "none"
-                              ? youngStudent
-                              : studentProfile?.avatarImg
-                          }
-                          alt="student"
-                          className="rounded-md object-fill w-32"
-                        />
-                      </div>
-                      {editMode ? (
-                        <div className="inline-flex text-[12px] self-right mt-2 font-header1 underline w-36 truncate">
-                          <FileBase
-                            type="file"
-                            multiple={false}
-                            onDone={({ base64 }) =>
-                              handleFileUpload({ base64 })
-                            }
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className="flex justify-center my-5 md:my-0">
-                      {/* Student Info Container */}
-                      <div className="flex flex-col w-44 md:w-52 ml-3 text-[14px] md:text-[16px]">
-                        <p>Age: {calculateAge(studentProfile?.birthday)}</p>
-                        {editMode ? (
-                          <div>
-                            <label>Grade: </label>
-                            <input
-                              type="text"
-                              name="gradeYear"
-                              value={studentProfile.gradeYear}
-                              onChange={handleInputChange}
-                              className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                            />
-                          </div>
-                        ) : (
-                          <p>
-                            Grade: <span>{studentProfile?.gradeYear}</span>
-                          </p>
-                        )}
-                        {editMode ? (
-                          <div>
-                            <label>Student ID: </label>
-                            <input
-                              type="text"
-                              name="schoolStudentId"
-                              value={studentProfile.schoolStudentId}
-                              onChange={handleInputChange}
-                              className="rounded-md bg-sandwich w-7/12 px-2 my-1"
-                            />
-                          </div>
-                        ) : (
-                          <p>
-                            Student ID:{" "}
-                            <span>{studentProfile?.schoolStudentId}</span>
-                          </p>
-                        )}
-                        {editMode ? (
-                          <div>
-                            <label>Birthday: </label>
-                            <input
-                              type="text"
-                              name="birthday"
-                              value={studentProfile.birthday}
-                              onChange={handleInputChange}
-                              className="rounded-md bg-sandwich w-8/12 px-2 my-1"
-                            />
-                          </div>
-                        ) : (
-                          <p>
-                            Birthday: <span>{studentProfile?.birthday}</span>
-                          </p>
-                        )}
-                        {editMode ? (
-                          <div>
-                            <label>IEP: </label>
-                            <select
-                              value={studentProfile.iepStatus}
-                              onChange={(e) =>
-                                setStudentProfile({
-                                  ...studentProfile,
-                                  iepStatus: e.target.value,
-                                })
-                              }
-                              className="rounded-md bg-sandwich px-2 my-1"
-                            >
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
-                            </select>
-                          </div>
-                        ) : (
-                          <p>
-                            IEP: <span>{studentProfile?.iepStatus}</span>
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
               </div>
-            </div>
 
-            {/* Button container */}
-            <div className="sm:mt-4 flex items-center text-[14px] md:text-[15px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-full max-w-xs sm:max-w-md md:max-w-lg justify-center">
-              {editMode ? (
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                    onClick={handleCancelClick}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <div className="mt-2 md:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
-                  <button
-                    type="button"
-                    className="items-center justify-between rounded-md flex flex-row py-2 px-3 font-[Poppins]"
-                    onClick={handleEditClick}
-                  >
-                    edit student info
-                    <img className="pl-2 h-4" src={editIcon} alt="edit icon" />
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div className="">
-              {studentProfile && (
-                <div className="mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
-                  {/* Calendar View Container */}
-
-                  {/* REACT CALENDAR - MONTH VIEW */}
-                  {isMonthView && (
-                    <div className="relative ">
-                      <Calendar
-                        className="react-calendar"
-                        tileClassName={({ date }) => {
-                          const event = events.find(
-                            (event) =>
-                              event.date.toDateString() === date.toDateString()
-                          );
-                          if (event) {
-                            return `${event.className} `;
-                          }
-                          return "";
-                        }}
-                        onClickDay={isMonthView ? handleDateClick : null}
-                      />
-
-                      {/* Selected Day Student Info Modal Overlay */}
-                      {openStudentInfoModal && (
-                        <div
-                          className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[120%] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`} // z-index higher than calendar
-                          style={{ left: "50%", transform: "translateX(-50%)" }} // Center modal horizontally
-                        >
-                          <div
-                            className={`flex h-full justify-center items-center`}
-                          >
-                            <StudentProfileBoxInfo
-                              student={studentProfile}
-                              selectedEntry={lastSelectedCheck}
-                              setOpenStudentInfoModal={setOpenStudentInfoModal}
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {/* REACT CALENDAR - WEEK VIEW */}
-
-                  {!isMonthView && (
-                    <div
-                      className={`week-view ${
-                        openStudentInfoModal
-                          ? "flex z-20 "
-                          : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
-                      } `}
-                    >
-                      <WeekView
-                        events={events}
-                        handleDateClick={handleDateClick}
-                        isMonthView={isMonthView}
-                        lastSelectedCheck={lastSelectedCheck}
-                        openStudentInfoModal={openStudentInfoModal}
-                        setOpenStudentInfoModal={setOpenStudentInfoModal}
-                        studentProfile={studentProfile}
-                      />
-                    </div>
-                  )}
-
-                  <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center bg-notebookPaper">
-                    <button
-                      type="button"
-                      className={`${
-                        !isMonthView ? "bg-sandwich font-semibold" : ""
-                      } border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
-                      onClick={() => setIsMonthView(false)}
-                    >
-                      <h4 className="font-[Poppins]">Week View</h4>
-                    </button>
-                    <button
-                      type="button"
-                      className={`${
-                        isMonthView ? "bg-sandwich font-semibold " : ""
-                      }bg-notebook border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
-                      onClick={() => setIsMonthView(true)}
-                    >
-                      <h4 className="font-[Poppins]">Month View</h4>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="mb-20 mt-6 max-w-2xl">
-              <div className="flex flex-col gap-4 md:gap-0 mt-6 mb-2 items-center w-full justify-between ">
-                <h1 className="text-black text-sm sm:text-md font-bold font-header1">
-                  Individual Education Program (IEP)
-                </h1>
-                {editModeNotices ? (
-                  <div className="flex px-2 my-2 w-full">
+              {/* Button container */}
+              <div className="sm:mt-4 flex items-center text-[14px] md:text-[15px] w-[300px] xs:w-[350px] sm:w-[420px] md:w-full max-w-xs sm:max-w-md md:max-w-lg justify-center">
+                {editMode ? (
+                  <div className="flex gap-4">
                     <button
                       type="button"
                       className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
-                      onClick={handleCancelIEPClick}
+                      onClick={handleCancelClick}
                     >
                       Cancel
                     </button>
                   </div>
                 ) : (
-                  <div className="flex my-2 px-2 w-full">
+                  <div className="mt-2 md:mt-8 w-full flex items-center justify-center border-2 rounded-xl border-sandwich">
                     <button
                       type="button"
-                      className="flex flex-row w-full justify-center items-center text-[14px] md:text-[16px] px-3 py-2 border-2 border-sandwich rounded-2xl font-[Poppins]"
-                      onClick={handleEditIEPClick}
+                      className="items-center justify-between rounded-md flex flex-row py-2 px-3 font-[Poppins]"
+                      onClick={handleEditClick}
                     >
-                      edit IEP
+                      edit student info
                       <img
                         className="pl-2 h-4"
                         src={editIcon}
@@ -648,395 +537,278 @@ const StudentProfile = () => {
                 )}
               </div>
 
-              <fieldset>
-                <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4 ">
-                    <h2 className="font-header4">Content Area Notices</h2>
-                    <h3 className="underline flex justify-end pb-2 text-[14px] md:text-[15px]">
-                      Learning Benchmark
-                    </h3>
-                    {editModeNotices
-                      ? studentProfile?.contentAreaNotices.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex w-full justify-between xs:-mr-3 py-1"
-                            >
-                              <input
-                                type="text"
-                                value={iepEntry.contentArea}
-                                onChange={(event) =>
-                                  handleIEPChange(
-                                    event,
-                                    index,
-                                    "contentArea",
-                                    "contentAreaNotices"
-                                  )
-                                }
-                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                              />
+              <article className="">
+                {studentProfile && (
+                  <div className="mt-10 rounded-2xl border-sandwich border-8 w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]">
+                    {/* Calendar View Container */}
 
-                              <div className="w-full flex justify-end ">
-                                <input
-                                  type="text"
-                                  value={iepEntry.benchmark}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "benchmark",
-                                      "contentAreaNotices"
-                                    )
-                                  }
-                                  className="w-[80px] rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                                />
-                                <button
-                                  className="ml-1"
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "contentAreaNotices"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4"
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.contentAreaNotices.map(
-                          (iepEntry, index) => (
+                    {/* REACT CALENDAR - MONTH VIEW */}
+                    {isMonthView && (
+                      <div className="relative ">
+                        <Calendar
+                          className="react-calendar"
+                          tileClassName={({ date }) => {
+                            const event = events.find(
+                              (event) =>
+                                event.date.toDateString() ===
+                                date.toDateString()
+                            );
+                            if (event) {
+                              return `${event.className} `;
+                            }
+                            return "";
+                          }}
+                          onClickDay={isMonthView ? handleDateClick : null}
+                        />
+
+                        {/* Selected Day Student Info Modal Overlay */}
+                        {openStudentInfoModal && (
+                          <div
+                            className={`absolute bg-sandwich rounded-2xl bg-opacity-70 top-0 h-[120%] w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] z-5`} // z-index higher than calendar
+                            style={{
+                              left: "50%",
+                              transform: "translateX(-50%)",
+                            }} // Center modal horizontally
+                          >
                             <div
-                              key={index}
-                              className="flex justify-between font-body text-[14px] md:text-[16px]"
+                              className={`flex h-full justify-center items-center`}
                             >
-                              <p className="w-7/12"> {iepEntry.contentArea}</p>
-                              <p> {iepEntry.benchmark}</p>
+                              <StudentProfileBoxInfo
+                                student={studentProfile}
+                                selectedEntry={lastSelectedCheck}
+                                setOpenStudentInfoModal={
+                                  setOpenStudentInfoModal
+                                }
+                              />
                             </div>
-                          )
+                          </div>
                         )}
-                    {((editModeNotices &&
-                      studentProfile?.contentAreaNotices.length === 0) ||
-                      editModeNotices) && (
+                      </div>
+                    )}
+                    {/* REACT CALENDAR - WEEK VIEW */}
+
+                    {!isMonthView && (
+                      <div
+                        className={`week-view ${
+                          openStudentInfoModal
+                            ? "flex z-20 "
+                            : " w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px]"
+                        } `}
+                      >
+                        <WeekView
+                          events={events}
+                          handleDateClick={handleDateClick}
+                          isMonthView={isMonthView}
+                          lastSelectedCheck={lastSelectedCheck}
+                          openStudentInfoModal={openStudentInfoModal}
+                          setOpenStudentInfoModal={setOpenStudentInfoModal}
+                          studentProfile={studentProfile}
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex px-3 text-[14px] md:text-[15px] gap-3 md:gap-0 flex-row justify-around py-3 rounded-b-2xl items-center bg-notebookPaper">
                       <button
                         type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("contentAreaNotices")}
+                        className={`${
+                          !isMonthView ? "bg-sandwich font-semibold" : ""
+                        } border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
+                        onClick={() => setIsMonthView(false)}
                       >
-                        Add
+                        <h4 className="font-[Poppins]">Week View</h4>
                       </button>
-                    )}
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4">Learning Challenges</h2>
-                    <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
-                      Diagnosed
-                    </p>
-                    {editModeNotices
-                      ? studentProfile?.learningChallenges.map(
-                          (iepEntry, index) => (
-                            <div key={index} className="flex justify-end py-1">
-                              <input
-                                type="text"
-                                value={iepEntry.challenge}
-                                onChange={(event) =>
-                                  handleIEPChange(
-                                    event,
-                                    index,
-                                    "challenge",
-                                    "learningChallenges"
-                                  )
-                                }
-                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
-                              />
-                              <div className="w-full flex justify-end ">
-                                <input
-                                  type="date"
-                                  defaultValue={formatDate(iepEntry.date)}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "date",
-                                      "learningChallenges"
-                                    )
-                                  }
-                                  className="w-1/2 rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                                />
-
-                                <button
-                                  className="ml-1"
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "learningChallenges"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4"
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.learningChallenges.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex justify-between font-body text-[14px] md:text-[16px]"
-                            >
-                              <p className="w-7/12">{iepEntry.challenge}</p>
-                              <p>{formatDate(iepEntry.date)}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.learningChallenges.length === 0) ||
-                      editModeNotices) && (
                       <button
                         type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("learningChallenges")}
+                        className={`${
+                          isMonthView ? "bg-sandwich font-semibold " : ""
+                        }bg-notebook border-2 border-sandwich rounded-3xl py-1 w-44 text-center`}
+                        onClick={() => setIsMonthView(true)}
                       >
-                        Add
+                        <h4 className="font-[Poppins]">Month View</h4>
                       </button>
-                    )}
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4">
-                      Accommodations & Assistive Tech
-                    </h2>
-                    <div className="grid grid-cols-4 gap-1 md:gap-4 pb-2">
-                      <div className="col-span-1"></div>
-                      <div className="col-span-1"></div>
-                      <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
-                        Frequency
-                      </h3>
-                      <h3 className="underline col-span-1 text-[14px] md:text-[16px] text-right">
-                        Location
-                      </h3>
                     </div>
-                    {editModeNotices
-                      ? studentProfile?.accomodationsAndAssisstiveTech.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="grid grid-cols-4 gap-1 sm:gap-4 items-center py-1"
-                            >
-                              {/* accomodation list */}
-                              <div className="ml-5">
-                                <input
-                                  type="text"
-                                  value={iepEntry.accomodation}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "accomodation",
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                  className="w-[280%] xs:w-[220%] sm:w-[250%] flex pl-2 -ml-4 rounded-md text-[14px] md:text-[17px] bg-sandwich col-span-1"
-                                />
-                              </div>
-                              <div></div>
-                              {/* frequency */}
-                              <div className="inline px-1">
-                                <select
-                                  value={iepEntry.frequency}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "frequency",
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                  className="rounded-md bg-sandwich text-[14px] md:text-[17px] w-full col-span-1"
-                                >
-                                  <option value=""></option>
-                                  <option value="Daily">Daily</option>
-                                  <option value="Weekly">Weekly</option>
-                                  <option value="Monthly">Monthly</option>
-                                  <option value="As Needed">As Needed</option>
-                                </select>
-                              </div>
-
-                              {/* location */}
-                              <div className="flex flex-row justify-end ">
-                                <input
-                                  type="text"
-                                  value={iepEntry.location}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "location",
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                  className="inline pl-1 w-full text-[14px] md:text-[17px] rounded-md bg-sandwich"
-                                />
-                                <button
-                                  className=""
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "accomodationsAndAssisstiveTech"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4 ml-1 "
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.accomodationsAndAssisstiveTech.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="grid grid-cols-4 text-[14px] md:text-[16px] font-body my-3"
-                            >
-                              <p className="w-[200%]">
-                                {" "}
-                                {iepEntry.accomodation}
-                              </p>
-                              <p></p>
-                              <p className="text-right">
-                                {" "}
-                                {iepEntry.frequency}
-                              </p>
-                              <p className="text-right"> {iepEntry.location}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.accomodationsAndAssisstiveTech.length ===
-                        0) ||
-                      editModeNotices) && (
+                  </div>
+                )}
+              </article>
+              <section className="mb-20 mt-6 max-w-2xl">
+                <header className="flex flex-col gap-4 md:gap-0 mt-6 mb-2 items-center w-full justify-between ">
+                  <h1 className="text-black text-sm sm:text-md font-bold font-header1">
+                    Individual Education Program (IEP)
+                  </h1>
+                  {editModeNotices ? (
+                    <div className="flex px-2 my-2 w-full">
                       <button
                         type="button"
-                        className="mt-2"
-                        onClick={() =>
-                          handleIEPAddClick("accomodationsAndAssisstiveTech")
-                        }
+                        className="px-4 py-2 border-2 border-[#ff9a9a] rounded-md"
+                        onClick={handleCancelIEPClick}
                       >
-                        Add
+                        Cancel
                       </button>
-                    )}
-                  </div>
-                  <div className="border-4 border-sandwich bg-notebookPaper rounded-lg px-2 sm:px-4 py-4">
-                    <h2 className="font-header4">Notes</h2>
-                    <p className="underline flex justify-end pb-2 text-[14px] md:text-[16px]">
-                      Date
-                    </p>
-                    {editModeNotices
-                      ? studentProfile?.notesForStudent.map(
-                          (iepEntry, index) => (
-                            <div key={index} className="flex justify-end py-1">
-                              <input
-                                type="text"
-                                value={iepEntry.note}
-                                onChange={(event) =>
-                                  handleIEPChange(
-                                    event,
-                                    index,
-                                    "note",
-                                    "notesForStudent"
-                                  )
-                                }
-                                className="w-full flex rounded-md bg-sandwich text-[14px] md:text-[16px] "
-                              />
-                              <div className="w-full flex justify-end ">
-                                <input
-                                  type="date"
-                                  defaultValue={formatDate(iepEntry.date)}
-                                  onChange={(event) =>
-                                    handleIEPChange(
-                                      event,
-                                      index,
-                                      "date",
-                                      "notesForStudent"
-                                    )
-                                  }
-                                  className="w-1/2 rounded-md bg-sandwich text-[14px] md:text-[16px]"
-                                />
-
-                                <button
-                                  className="ml-1"
-                                  onClick={() =>
-                                    handleIEPDeleteClick(
-                                      index,
-                                      "notesForStudent"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={xButton}
-                                    alt="xButton"
-                                    className="w-4"
-                                  />
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )
-                      : studentProfile?.notesForStudent.map(
-                          (iepEntry, index) => (
-                            <div
-                              key={index}
-                              className="flex justify-between font-body text-[14px] md:text-[16px]"
-                            >
-                              <p className="w-7/12">{iepEntry.note}</p>
-                              <p>{formatDate(iepEntry.date)}</p>
-                            </div>
-                          )
-                        )}
-                    {((editModeNotices &&
-                      studentProfile?.notesForStudent.length === 0) ||
-                      editModeNotices) && (
+                    </div>
+                  ) : (
+                    <div className="flex my-2 px-2 w-full">
                       <button
                         type="button"
-                        className="mt-2"
-                        onClick={() => handleIEPAddClick("notesForStudent")}
+                        className="flex flex-row w-full justify-center items-center text-[14px] md:text-[16px] px-3 py-2 border-2 border-sandwich rounded-2xl font-[Poppins]"
+                        onClick={handleEditIEPClick}
                       >
-                        Add
+                        edit IEP
+                        <img
+                          className="pl-2 h-4"
+                          src={editIcon}
+                          alt="edit icon"
+                        />
                       </button>
-                    )}
+                    </div>
+                  )}
+                </header>
+                <fieldset>
+                  <div className="border-4 bg-sandwich border-sandwich rounded-2xl w-[300px] xs:w-[350px] sm:w-[420px] md:w-[530px] mx-auto">
+                    <IEPSection
+                      title="Content Area Notices"
+                      entries={studentProfile?.contentAreaNotices || []}
+                      columns={[
+                        {
+                          field: "contentArea",
+                          header: "Content Area",
+                          align: "left",
+                        },
+                        {
+                          field: "benchmark",
+                          header: "Benchmark",
+                          align: "right",
+                        },
+                      ]}
+                      editMode={editModeNotices}
+                      onFieldChange={(e, index, field) =>
+                        handleIEPChange(e, index, field, "contentAreaNotices")
+                      }
+                      onDelete={(index) =>
+                        handleIEPDeleteClick(index, "contentAreaNotices")
+                      }
+                      onAdd={() => handleIEPAddClick("contentAreaNotices")}
+                    />
+                    <IEPSection
+                      title="Learning Challenges"
+                      entries={studentProfile?.learningChallenges || []}
+                      columns={[
+                        {
+                          field: "challenge",
+                          header: "Challenge",
+                          align: "left",
+                        },
+                        {
+                          field: "date",
+                          header: "Diagnosed",
+                          align: "right",
+                          type: "date",
+                        },
+                      ]}
+                      editMode={editModeNotices}
+                      onFieldChange={(e, index, field) =>
+                        handleIEPChange(e, index, field, "learningChallenges")
+                      }
+                      onDelete={(index) =>
+                        handleIEPDeleteClick(index, "learningChallenges")
+                      }
+                      onAdd={() => handleIEPAddClick("learningChallenges")}
+                    />
+
+                    <IEPSection
+                      title="Accommodations & Assistive Tech"
+                      entries={
+                        studentProfile?.accomodationsAndAssisstiveTech || []
+                      }
+                      columns={[
+                        {
+                          field: "accomodation",
+                          header: "Accommodation",
+                          align: "left",
+                        },
+                        {
+                          field: "frequency",
+                          header: "Frequency",
+                          align: "right",
+                          type: "select",
+                          options: [
+                            "",
+                            "Daily",
+                            "Weekly",
+                            "Monthly",
+                            "As Needed",
+                          ],
+                        },
+                        {
+                          field: "location",
+                          header: "Location",
+                          align: "right",
+                        },
+                      ]}
+                      editMode={editModeNotices}
+                      onFieldChange={(event, index, field) =>
+                        handleIEPChange(
+                          event,
+                          index,
+                          field,
+                          "accomodationsAndAssisstiveTech"
+                        )
+                      }
+                      onDelete={(index) =>
+                        handleIEPDeleteClick(
+                          index,
+                          "accomodationsAndAssisstiveTech"
+                        )
+                      }
+                      onAdd={() =>
+                        handleIEPAddClick("accomodationsAndAssisstiveTech")
+                      }
+                    />
+
+                    <IEPSection
+                      title="Notes"
+                      entries={studentProfile?.notesForStudent || []}
+                      columns={[
+                        {
+                          field: "note",
+                          header: "Note",
+                          align: "left",
+                        },
+                        {
+                          field: "date",
+                          header: "Date",
+                          align: "right",
+                          type: "date",
+                        },
+                      ]}
+                      editMode={editModeNotices}
+                      onFieldChange={(event, index, field) =>
+                        handleIEPChange(event, index, field, "notesForStudent")
+                      }
+                      onDelete={(index) =>
+                        handleIEPDeleteClick(index, "notesForStudent")
+                      }
+                      onAdd={() => handleIEPAddClick("notesForStudent")}
+                    />
                   </div>
-                </div>
-              </fieldset>
-            </div>
-            <div className="lg:hidden flex justify-center">
+                </fieldset>
+              </section>
+              <div className="lg:hidden flex justify-center">
+                <button
+                  className="lg:hidden fixed bottom-36 flex justify-center"
+                  type="submit"
+                >
+                  <Button buttonText="Save" />
+                </button>
+              </div>
               <button
-                className="lg:hidden fixed bottom-36 flex justify-center"
+                className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
                 type="submit"
               >
-                <Button buttonText="Save" />
+                <SmallSaveButton />
               </button>
             </div>
-            <button
-              className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
-              type="submit"
-            >
-              <SmallSaveButton />
-            </button>
-          </div>
-        </form>
+          </form>
+        </main>
         <div className="flex justify-center w-full mb-80 lg:mb-20">
           <button
             onClick={openConfirmModal}

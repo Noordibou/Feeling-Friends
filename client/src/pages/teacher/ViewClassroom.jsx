@@ -102,13 +102,13 @@ const ViewClassroom = () => {
   return (
     <>
       <div className="flex flex-col h-screen w-screen">
-        <div className="hidden md:flex w-full justify-end underline mt-4 px-2 md:px-5">
+        <header className="hidden md:flex w-full justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
-        </div>
-        <div className="flex flex-col md:items-center ">
-          <div className="flex flex-col h-screen max-w-4xl lg:z-40 ">
+        </header>
+        <main className="flex flex-col md:items-center ">
+          <section className="flex flex-col h-screen max-w-4xl lg:z-40 ">
             {/* Top Navbar */}
-            <div className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-6 pt-2 px-2 z-20">
+            <header className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-6 pt-2 px-2 z-20">
               <div className="flex justify-center w-full flex-col md:flex-row ">
                 <div className="flex">
                   <div className="flex md:justify-center">
@@ -130,7 +130,7 @@ const ViewClassroom = () => {
                   </div>
                 </div>
                 {/* Seating Chart & Class List Buttons */}
-                <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
+                <nav className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
                   <ButtonView
                     buttonText="Seating Chart"
                     btnImageWhenOpen={classBoxesIcon}
@@ -148,7 +148,7 @@ const ViewClassroom = () => {
                       buttonSize="small"
                     />
                   </Link>
-                </div>
+                </nav>
               </div>
               <a
                 href={`/edit-seating-chart/${teacherId}/${classroomId}`}
@@ -159,7 +159,7 @@ const ViewClassroom = () => {
                 </h2>
                 <img src={editIcon} alt="edit icon" className="h-6 w-6" />
               </a>
-            </div>
+            </header>
 
             <div
               className={`${
@@ -172,7 +172,7 @@ const ViewClassroom = () => {
             {classroom ? (
               <>
                 {/* static classroom */}
-                <div className="relative flex w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                <section className="relative flex w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                   {/* Classroom Container */}
                   {/* movable classroom */}
                   <div
@@ -280,7 +280,7 @@ const ViewClassroom = () => {
                       );
                     })}
                   </div>
-                </div>
+                </section>
               </>
             ) : (
               <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
@@ -332,11 +332,11 @@ const ViewClassroom = () => {
                 -
               </button>
             </div>
-          </div>
-          <div className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
+          </section>
+          <aside className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
             <Nav teacherId={teacherId} classroomId={classroomId} />
-          </div>
-        </div>
+          </aside>
+        </main>
       </div>
     </>
   );

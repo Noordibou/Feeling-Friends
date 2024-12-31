@@ -10,11 +10,15 @@ const ConfirmationModal = forwardRef(
       inputValue,
       setInputValue,
       removeItemFromSystem,
+      inputNeeded,
+      itemId,
     },
     confirmRef
   ) => {
     const resetInput = () => {
-      setInputValue("");
+      if (inputNeeded) {
+        setInputValue("");
+      }
       closeConfirmModal();
     };
 
@@ -46,22 +50,27 @@ const ConfirmationModal = forwardRef(
             </button>
 
             <h1 className="select-none pt-6">{deleteMsg}</h1>
-            <h2 className="select-none">Type the below text to confirm.</h2>
-            <p id="user-fullname" className="py-5 font-bold">
-              {itemFullName}
-            </p>
-            <input
-              id="name-input"
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="border border-gray-300 rounded-md p-2 mt-2 w-full"
-            />
+
+            {inputNeeded ? (
+              <>
+                <h2 className="select-none">Type the below text to confirm.</h2>
+                <p id="user-fullname" className="py-5 font-bold">
+                  {itemFullName}
+                </p>
+                <input
+                  id="name-input"
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  className="border border-gray-300 rounded-md p-2 mt-2 w-full"
+                />
+              </>
+            ) : null}
             <div className="w-full flex justify-end pt-8">
               <button
                 type="button"
                 className="bg-red-500 text-white font-semibold mt-4 p-2 rounded-md"
-                onClick={() => removeItemFromSystem()}
+                onClick={() => removeItemFromSystem(itemId)}
               >
                 Delete
               </button>

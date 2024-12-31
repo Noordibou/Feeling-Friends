@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext.js";
 import {
@@ -17,12 +17,22 @@ import "./scrollbar.css";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
+import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 
 const TeacherHome = () => {
   const { userData } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
+  const confirmRef = useRef(null);
+
+  const openConfirmModal = () => {
+    confirmRef.current?.showModal();
+  };
+
+  const closeConfirmModal = () => {
+    confirmRef.current?.close();
+  };
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -83,7 +93,7 @@ const TeacherHome = () => {
                     {isEditMode ? (
                       <button
                         className="-mt-[3rem] -mx-[2rem]"
-                        onClick={() => handleDeleteClassroom(classroom._id)}
+                        onClick={openConfirmModal}
                       >
                         <img src={xButton} alt="xButton" />
                       </button>
@@ -140,6 +150,18 @@ const TeacherHome = () => {
                       </div>
                     </div>
                   </div>
+
+                  <ConfirmationModal
+                    ref={confirmRef}
+                    closeConfirmModal={closeConfirmModal}
+                    itemFullName={classroom.classSubject}
+                    itemId={classroom._id}
+                    deleteMsg={
+                      "Are you sure you want to delete this classroom? This cannot be undone."
+                    }
+                    removeItemFromSystem={handleDeleteClassroom}
+                    inputNeeded={false}
+                  />
                 </article>
               ))
             ) : (
@@ -155,6 +177,7 @@ const TeacherHome = () => {
             </button>
           </div>
         </div>
+
         {/* <div className="w-[35%] lg:order-first"> */}
         <aside className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />

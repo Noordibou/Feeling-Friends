@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext.js";
 import {
   getTeacherById,
@@ -18,16 +18,19 @@ import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
-import { handleError, handleSuccess } from "../../utils/toastHandling";
+import Loading from "../Loading.jsx";
+import { handleSuccess } from "../../utils/toastHandling";
 
 const TeacherHome = () => {
   const { userData } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
-  const [toastShown, setToastShown] = useState(false);
-  // this is a test
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const modalRefs = useRef({});
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
   const openConfirmModal = (classroomId) => {
     modalRefs.current[classroomId]?.current?.showModal();
@@ -45,8 +48,17 @@ const TeacherHome = () => {
   };
 
   useEffect(() => {
+    const isRedirectedFromLogin = new URLSearchParams(location.search).get(
+      "login"
+    );
+
     const fetchTeacherData = async () => {
+      setLoading(true);
+
       try {
+        if (isRedirectedFromLogin) {
+          await wait(500);
+        }
         const response = await getTeacherById(userData._id);
         const studentsPromises = response.classrooms.map(async (classroom) => {
           const students = await getAllStudentsClassroom(
@@ -61,6 +73,8 @@ const TeacherHome = () => {
         setClassroomsData(classroomsWithStudents);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTeacherData();
@@ -74,7 +88,6 @@ const TeacherHome = () => {
       );
       closeConfirmModal(classroomId);
       handleSuccess(`${classroomSubject} deleted successfully!`);
-      setToastShown(true);
     } catch (error) {
       console.error(error);
     }
@@ -84,6 +97,10 @@ const TeacherHome = () => {
     setIsEditMode(!isEditMode);
     setSelectedClassroom(userData._id);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

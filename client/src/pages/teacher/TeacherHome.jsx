@@ -24,14 +24,21 @@ const TeacherHome = () => {
   const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
-  const confirmRef = useRef(null);
+  const modalRefs = useRef({});
 
-  const openConfirmModal = () => {
-    confirmRef.current?.showModal();
+  const openConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.showModal();
   };
 
-  const closeConfirmModal = () => {
-    confirmRef.current?.close();
+  const closeConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.close();
+  };
+
+  const getModalRef = (classroomId) => {
+    if (!modalRefs.current[classroomId]) {
+      modalRefs.current[classroomId] = React.createRef();
+    }
+    return modalRefs.current[classroomId];
   };
 
   useEffect(() => {
@@ -62,6 +69,7 @@ const TeacherHome = () => {
       setClassroomsData((prevData) =>
         prevData.filter((item) => item.classroom._id !== classroomId)
       );
+      closeConfirmModal(classroomId);
     } catch (error) {
       console.error(error);
     }
@@ -93,7 +101,7 @@ const TeacherHome = () => {
                     {isEditMode ? (
                       <button
                         className="-mt-[3rem] -mx-[2rem]"
-                        onClick={openConfirmModal}
+                        onClick={() => openConfirmModal(classroom._id)}
                       >
                         <img src={xButton} alt="xButton" />
                       </button>
@@ -152,8 +160,8 @@ const TeacherHome = () => {
                   </div>
 
                   <ConfirmationModal
-                    ref={confirmRef}
-                    closeConfirmModal={closeConfirmModal}
+                    ref={getModalRef(classroom._id)}
+                    closeConfirmModal={() => closeConfirmModal(classroom._id)}
                     itemFullName={classroom.classSubject}
                     itemId={classroom._id}
                     deleteMsg={

@@ -37,11 +37,10 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        process.env.REACT_APP_URL +"/login",
+        process.env.REACT_APP_URL + "/login",
         { ...inputValue },
         { withCredentials: true }
       );
-
 
       const { success, message, redirectPath } = data;
 
@@ -49,9 +48,9 @@ const Login = () => {
         handleSuccess(message);
 
         if (redirectPath) {
-          navigate(redirectPath);
+          navigate(`${redirectPath}?login=true`);
         }
-        handleLogin(data.user); 
+        handleLogin(data.user);
       } else {
         handleError(message);
       }
@@ -99,8 +98,8 @@ const Login = () => {
               />
             </div>
 
-            <div className="mt-[2rem] w-[35rem]"> 
-              <BtnRainbow textColor="text-white" btnText="Login"/>
+            <div className="mt-[2rem] w-[35rem]">
+              <BtnRainbow textColor="text-white" btnText="Login" />
             </div>
 
             {/* <button
@@ -132,23 +131,26 @@ const Login = () => {
         {/* Temporary fix for public to view a demo of both student and teacher views  */}
         {/* Normally, admin or teacher would register, because we want it to be secure */}
         <div className="h-2/5 w-full flex justify-center items-center flex-col mt-10 border-4 border-lightGray rounded shadow-2xl bg-sandwich">
-          <button className=" bg-lightOrange w-9/12 py-5 my-5 font-[Poppins] text-[25px] rounded shadow-lg"
-          onClick={ () => {
-            setInputValue({
-              email: process.env.REACT_APP_DEMO_STUDENT_EMAIL,
-              password: process.env.REACT_APP_DEMO_STUDENT_PW,
-            })
-          }}
+          <button
+            className=" bg-lightOrange w-9/12 py-5 my-5 font-[Poppins] text-[25px] rounded shadow-lg"
+            onClick={() => {
+              setInputValue({
+                email: process.env.REACT_APP_DEMO_STUDENT_EMAIL,
+                password: process.env.REACT_APP_DEMO_STUDENT_PW,
+              });
+            }}
           >
             <h4>See demo for Student View</h4>
           </button>
-          <button className=" bg-darkTeal w-9/12 py-5 my-5 font-[Poppins] text-[25px] text-white rounded shadow-lg"
-          onClick={ () => {
-            setInputValue({
-              email: process.env.REACT_APP_DEMO_TEACHER_EMAIL,
-              password: process.env.REACT_APP_DEMO_TEACHER_PW,
-            })
-          }}>
+          <button
+            className=" bg-darkTeal w-9/12 py-5 my-5 font-[Poppins] text-[25px] text-white rounded shadow-lg"
+            onClick={() => {
+              setInputValue({
+                email: process.env.REACT_APP_DEMO_TEACHER_EMAIL,
+                password: process.env.REACT_APP_DEMO_TEACHER_PW,
+              });
+            }}
+          >
             <h4>See demo for Teacher View</h4>
           </button>
         </div>

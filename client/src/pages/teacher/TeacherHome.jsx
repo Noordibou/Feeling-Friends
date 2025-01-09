@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext.js";
 import {
   getTeacherById,
@@ -17,16 +17,48 @@ import "./scrollbar.css";
 import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
+import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
+import Loading from "../Loading.jsx";
+import { handleSuccess } from "../../utils/toastHandling";
 
 const TeacherHome = () => {
   const { userData } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const modalRefs = useRef({});
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
+  const openConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.showModal();
+  };
+
+  const closeConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.close();
+  };
+
+  const getModalRef = (classroomId) => {
+    if (!modalRefs.current[classroomId]) {
+      modalRefs.current[classroomId] = React.createRef();
+    }
+    return modalRefs.current[classroomId];
+  };
 
   useEffect(() => {
+    const isRedirectedFromLogin = new URLSearchParams(location.search).get(
+      "login"
+    );
+
     const fetchTeacherData = async () => {
+      setLoading(true);
+
       try {
+        if (isRedirectedFromLogin) {
+          await wait(500);
+        }
         const response = await getTeacherById(userData._id);
         const studentsPromises = response.classrooms.map(async (classroom) => {
           const students = await getAllStudentsClassroom(
@@ -41,17 +73,21 @@ const TeacherHome = () => {
         setClassroomsData(classroomsWithStudents);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTeacherData();
   }, [userData]);
 
-  const handleDeleteClassroom = async (classroomId) => {
+  const handleDeleteClassroom = async (classroomId, classroomSubject) => {
     try {
       await deleteClassroom(userData._id, classroomId);
       setClassroomsData((prevData) =>
         prevData.filter((item) => item.classroom._id !== classroomId)
       );
+      closeConfirmModal(classroomId);
+      handleSuccess(`${classroomSubject} deleted successfully!`);
     } catch (error) {
       console.error(error);
     }
@@ -61,6 +97,10 @@ const TeacherHome = () => {
     setIsEditMode(!isEditMode);
     setSelectedClassroom(userData._id);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -83,7 +123,7 @@ const TeacherHome = () => {
                     {isEditMode ? (
                       <button
                         className="-mt-[3rem] -mx-[2rem]"
-                        onClick={() => handleDeleteClassroom(classroom._id)}
+                        onClick={() => openConfirmModal(classroom._id)}
                       >
                         <img src={xButton} alt="xButton" />
                       </button>
@@ -140,6 +180,16 @@ const TeacherHome = () => {
                       </div>
                     </div>
                   </div>
+
+                  <ConfirmationModal
+                    ref={getModalRef(classroom._id)}
+                    closeConfirmModal={() => closeConfirmModal(classroom._id)}
+                    itemFullName={classroom.classSubject}
+                    itemId={classroom._id}
+                    deleteMsg={`Are you sure you want to delete ${classroom.classSubject}? This cannot be undone.`}
+                    removeItemFromSystem={handleDeleteClassroom}
+                    inputNeeded={false}
+                  />
                 </article>
               ))
             ) : (
@@ -155,6 +205,7 @@ const TeacherHome = () => {
             </button>
           </div>
         </div>
+
         {/* <div className="w-[35%] lg:order-first"> */}
         <aside className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />

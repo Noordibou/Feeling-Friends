@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
@@ -23,7 +23,9 @@ import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import Logout from "../../components/LogoutButton.jsx";
 import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
+import { handleSuccess } from "../../utils/toastHandling";
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -40,6 +42,22 @@ const ViewClassList = () => {
   });
   const [isOpen, setIsOpen] = useState(false);
   const { setHasUnsavedChanges } = useUnsavedChanges();
+  const modalRefs = useRef({});
+
+  const openConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.showModal();
+  };
+
+  const closeConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.close();
+  };
+
+  const getModalRef = (classroomId) => {
+    if (!modalRefs.current[classroomId]) {
+      modalRefs.current[classroomId] = React.createRef();
+    }
+    return modalRefs.current[classroomId];
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,13 +81,14 @@ const ViewClassList = () => {
     fetchData();
   }, [teacherId, classroomId]);
 
-  const handleDeleteStudent = async (studentId) => {
+  const handleDeleteStudent = async (studentId, studentName) => {
     try {
       await deleteStudentFromClassroom(teacherId, classroomId, studentId);
       setStudents((prevData) =>
         prevData.filter((item) => item._id !== studentId)
       );
-
+      closeConfirmModal(studentId);
+      handleSuccess(`${studentName} removed from classroom successfully`);
       const updatedUserData = await getTeacherById(userData._id);
       updateUser(updatedUserData);
     } catch (error) {
@@ -342,9 +361,23 @@ const ViewClassList = () => {
                               userData={userData}
                               classroomId={classroomId}
                               isEditMode={isEditMode}
-                              handleClick={() =>
-                                handleDeleteStudent(student._id)
+                              handleClick={() => openConfirmModal(student._id)}
+                            />
+                            <ConfirmationModal
+                              ref={getModalRef(student._id)}
+                              closeConfirmModal={() =>
+                                closeConfirmModal(student._id)
                               }
+                              itemFullName={`${student.firstName} ${student.lastName}`}
+                              itemId={student._id}
+                              deleteMsg={`Are you sure you want to delete ${student.firstName} ${student.lastName} from the classroom? This cannot be undone.`}
+                              removeItemFromSystem={() =>
+                                handleDeleteStudent(
+                                  student._id,
+                                  `${student.firstName} ${student.lastName}`
+                                )
+                              }
+                              inputNeeded={false}
                             />
                           </article>
                         );

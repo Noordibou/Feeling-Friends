@@ -469,6 +469,7 @@ const EditTeacher = () => {
             inputValue={inputValue}
             setInputValue={setInputValue}
             removeItemFromSystem={deleteTeacherInSystem}
+            inputNeeded={true}
           />
           <PasswordChange
             ref={pwChangeRef}

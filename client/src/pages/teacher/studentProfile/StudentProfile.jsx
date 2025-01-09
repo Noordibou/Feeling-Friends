@@ -831,6 +831,7 @@ const StudentProfile = () => {
           inputValue={inputValue}
           setInputValue={setInputValue}
           removeItemFromSystem={deleteOneStudent}
+          inputNeeded={true}
         />
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav teacherId={teacherId} classroomId={classroomId} />

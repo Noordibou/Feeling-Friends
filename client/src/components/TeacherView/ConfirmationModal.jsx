@@ -70,7 +70,7 @@ const ConfirmationModal = forwardRef(
               <button
                 type="button"
                 className="bg-red-500 text-white font-semibold mt-4 p-2 rounded-md"
-                onClick={() => removeItemFromSystem(itemId)}
+                onClick={() => removeItemFromSystem(itemId, itemFullName)}
               >
                 Delete
               </button>

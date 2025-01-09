@@ -18,12 +18,15 @@ import TeacherNavbar from "../../components/Navbar/TeacherNavbar.jsx";
 import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
+import { handleError, handleSuccess } from "../../utils/toastHandling";
 
 const TeacherHome = () => {
   const { userData } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
+  const [toastShown, setToastShown] = useState(false);
+
   const modalRefs = useRef({});
 
   const openConfirmModal = (classroomId) => {
@@ -63,13 +66,15 @@ const TeacherHome = () => {
     fetchTeacherData();
   }, [userData]);
 
-  const handleDeleteClassroom = async (classroomId) => {
+  const handleDeleteClassroom = async (classroomId, classroomSubject) => {
     try {
       await deleteClassroom(userData._id, classroomId);
       setClassroomsData((prevData) =>
         prevData.filter((item) => item.classroom._id !== classroomId)
       );
       closeConfirmModal(classroomId);
+      handleSuccess(`${classroomSubject} deleted successfully!`);
+      setToastShown(true);
     } catch (error) {
       console.error(error);
     }
@@ -164,9 +169,7 @@ const TeacherHome = () => {
                     closeConfirmModal={() => closeConfirmModal(classroom._id)}
                     itemFullName={classroom.classSubject}
                     itemId={classroom._id}
-                    deleteMsg={
-                      "Are you sure you want to delete this classroom? This cannot be undone."
-                    }
+                    deleteMsg={`Are you sure you want to delete ${classroom.classSubject}? This cannot be undone.`}
                     removeItemFromSystem={handleDeleteClassroom}
                     inputNeeded={false}
                   />

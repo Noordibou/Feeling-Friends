@@ -26,6 +26,8 @@ const CreateClass = () => {
   const [newClassData, setNewClassData] = useState({
     classSubject: "",
     location: "",
+    checkIn: "",
+    checkOut: "",
     students: [],
   });
   const [allStudents, setAllStudents] = useState([]);
@@ -142,6 +144,8 @@ const CreateClass = () => {
       const newClassroomData = {
         classSubject: newClassData.classSubject,
         location: newClassData.location,
+        checkIn: newClassData.checkIn,
+        checkOut: newClassData.checkOut,
         students: selectedStudents.map((student) => ({
           student: student._id,
           seatInfo: {
@@ -330,6 +334,7 @@ const CreateClass = () => {
                     onChange={(e) =>
                       handleInputChange("checkIn", e.target.value)
                     }
+                    inputType="time"
                   />
                 </div>
                 <div className="w-[50%]">
@@ -342,6 +347,7 @@ const CreateClass = () => {
                     onChange={(e) =>
                       handleInputChange("checkOut", e.target.value)
                     }
+                    inputType="time"
                   />
                 </div>
               </div>
@@ -531,10 +537,10 @@ const CreateClass = () => {
   );
 };
 
-const FormField = ({ label, value, onChange }) => (
+const FormField = ({ label, value, onChange, inputType }) => (
   <div>
     <input
-      type="text"
+      type={inputType || "text"}
       placeholder={label}
       value={value}
       onChange={onChange}

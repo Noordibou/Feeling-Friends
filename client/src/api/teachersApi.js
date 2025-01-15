@@ -18,8 +18,6 @@ export const getTeachers = async () => {
     try {
 
         const response = await axios.get(TEACHERS_API_URL, { withCredentials: true });
-
-
         return response.data;
     } catch (error) {
         console.log(error);
@@ -40,7 +38,6 @@ export const getTeacherById = async (id) => {
 
 export const updateTeacher = async (id, teacher) => {
     try {
-        // console.log(id)
         const response = await axios.put(`${TEACHERS_API_URL}/${id}`, teacher, { withCredentials: true });
         return response.data;
     } catch (error) {
@@ -51,7 +48,6 @@ export const updateTeacher = async (id, teacher) => {
 
 export const updateStudent = async (teacherId, classroomId, studentId, studentData) => {
     try {
-        console.log('Received student:', studentData);
         const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/students/${studentId}`, studentData, { withCredentials: true });
         console.log(response.data);
         return response.data;
@@ -143,9 +139,7 @@ export const createClassroom = async (id, classroom) => {
 
   export const getAllStudents = async () => {
     try {
-        console.log("getting all students")
         const response = await axios.get(`${BASE_URL}/api/students`, { withCredentials: true });
-        console.log(JSON.stringify(response.data));
         return response.data;
     } catch (error) {
         console.log(error);
@@ -167,12 +161,8 @@ export const updateSeatingChart = async (teacherId, classroomId, updatedPosition
 };
 
 export const updateFurniturePositions = async (teacherId, classroomId, updatedPositions) => {
-    console.log("teacher ID: " + teacherId)
-    console.log("class ID: " + classroomId)
-    console.log("updated positions: " + JSON.stringify(updatedPositions))
     try {
       const response = await axios.put(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, updatedPositions);
-      console.log("response data:  " + JSON.stringify(response.data))
       return response.data;
     } catch (error) {
       console.log("Oops, an error has occurred: " + error);
@@ -182,11 +172,10 @@ export const updateFurniturePositions = async (teacherId, classroomId, updatedPo
 
 export const addFurniture = async (teacherId, classroomId, furnitureData) => {
     try {
-        console.log("well I'm here")
         const response = await axios.post(`${TEACHERS_API_URL}/${teacherId}/classrooms/${classroomId}/furniture`, furnitureData);
         return response.data;
     } catch (error) {
-        console.log("woops an aerror has occured: " + error);
+        console.log("woops an error has occured: " + error);
         throw error;
     }
 };

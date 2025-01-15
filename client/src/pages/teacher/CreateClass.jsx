@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
   getTeacherById,
@@ -18,11 +18,12 @@ import Divider from "../../images/divider.png";
 import Arrow from "../../images/dropdownarrow.svg";
 import Sort from "../../images/sortaz.svg";
 import withAuth from "../../hoc/withAuth";
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
 
 const CreateClass = () => {
   const navigate = useNavigate();
   const { userData, updateUser } = useUser();
-  const [classroomsData, setClassroomsData] = useState([]);
   const [newClassData, setNewClassData] = useState({
     classSubject: "",
     location: "",
@@ -37,26 +38,9 @@ const CreateClass = () => {
   const [sortByLastName, setSortByLastName] = useState(false);
   const [selectedGrade, setSelectedGrade] = useState("All");
   const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
+  const { setHasUnsavedChanges } = useUnsavedChanges();
 
   useEffect(() => {
-    const fetchTeacherData = async () => {
-      try {
-        const response = await getTeacherById(userData._id);
-        const studentsPromises = response.classrooms.map(async (classroom) => {
-          const students = await getAllStudentsClassroom(
-            userData._id,
-            classroom._id
-          );
-          return { classroom, students };
-        });
-
-        const classroomsWithStudents = await Promise.all(studentsPromises);
-        setClassroomsData(classroomsWithStudents);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const fetchAllStudents = async () => {
       try {
         const allStudentsData = await getAllStudents();
@@ -66,12 +50,12 @@ const CreateClass = () => {
       }
     };
 
-    fetchTeacherData();
     fetchAllStudents();
   }, [userData]);
 
   const handleInputChange = (field, value) => {
     setNewClassData((prevData) => ({ ...prevData, [field]: value }));
+    setHasUnsavedChanges(true);
   };
 
   const handleStudentChange = (student) => {
@@ -86,6 +70,7 @@ const CreateClass = () => {
         return [...prev, student];
       }
     });
+    setHasUnsavedChanges(true);
   };
 
   const handleDayChange = (day) => {
@@ -96,38 +81,8 @@ const CreateClass = () => {
         return [...prev, day];
       }
     });
+    setHasUnsavedChanges(true);
   };
-
-  // probably would use this for the "submit" button
-  // FIXME: need to use selectedStudents instead of maybe prevData??
-  const handleAddStudent = (student) => {
-    console.log("handleAddStudent called with:", student);
-    setNewClassData((prevData) => {
-      const isSelected = prevData.students.some((s) => s._id === student._id);
-      console.log("Is student already selected?", isSelected);
-      if (isSelected) {
-        const updatedStudents = prevData.students.filter(
-          (s) => s._id !== student._id
-        );
-        console.log("Removing student. Updated students:", updatedStudents);
-        return {
-          ...prevData,
-          students: updatedStudents,
-        };
-      } else {
-        const updatedStudents = [...prevData.students, student];
-        console.log("Adding student. Updated students:", updatedStudents);
-        return {
-          ...prevData,
-          students: updatedStudents,
-        };
-      }
-    });
-  };
-
-  // TODO: remove if no longer need, replaced with "selectedStudents"
-  const isStudentSelected = (studentId) =>
-    newClassData.students.some((s) => s._id === studentId);
 
   const handleCreateClassroom = async () => {
     if (!newClassData.classSubject.trim()) {
@@ -155,21 +110,14 @@ const CreateClass = () => {
           },
         })),
       };
-      const newClassroom = await createClassroom(
-        userData._id,
-        newClassroomData
-      );
+      await createClassroom(userData._id, newClassroomData);
 
-      setClassroomsData((prevData) => [
-        ...prevData,
-        { classroom: newClassroom },
-      ]);
       setSelectedStudents([]);
 
       // Updates React Context
       const updatedUserData = await getTeacherById(userData._id);
       updateUser(updatedUserData);
-
+      setHasUnsavedChanges(false);
       navigate(`/teacher-home`);
     } catch (error) {
       console.error(error);
@@ -198,6 +146,7 @@ const CreateClass = () => {
         ? currentSelectedDays.filter((d) => d !== day)
         : [...currentSelectedDays, day]
     );
+    setHasUnsavedChanges(true);
   };
 
   const handleSortByLastName = () => {
@@ -515,6 +464,7 @@ const CreateClass = () => {
               </div>
             )}
           </div>
+          <UnsavedChanges />
         </div>
 
         <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed lg:top-[88%] top-[75%] md:left-[42%]">

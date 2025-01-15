@@ -112,10 +112,13 @@ const TeacherHome = () => {
           <section className="custom-scrollbar h-[60%] grid">
             {userData && userData.classrooms ? (
               classroomsData.map(({ classroom, zorPercentages }, index) => (
-                <Link to={`/classroom/${userData._id}/${classroom._id}`}>
+                <Link
+                  className="block w-[80%] ml-auto mr-auto my-[1rem] h-[165px] "
+                  to={`/classroom/${userData._id}/${classroom._id}`}
+                >
                   <article
                     key={index}
-                    className="bg-sandwich w-[80%] ml-auto mr-auto p-[0.5rem] rounded-[1rem] my-[1rem] h-[175px] hover:scale-[102%] transition-transform duration-300 ease-in-out hover:border-darkSandwich hover:border-2"
+                    className="bg-sandwich p-[0.5rem] rounded-[1rem] hover:scale-[102%] transition-transform duration-300 ease-in-out hover:border-darkSandwich hover:border-2"
                   >
                     <header className="flex justify-between">
                       <h2 className="text-header4 font-header2 text-left">

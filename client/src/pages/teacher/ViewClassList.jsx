@@ -75,6 +75,20 @@ const ViewClassList = () => {
     return modalRefs.current[classroomId];
   };
 
+  const bitmaskToDays = (bitmask) => {
+    const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const days = [];
+
+    // Check each bit (from right to left) and add the corresponding day to the array
+    daysOfWeek.forEach((day, index) => {
+      if (bitmask & (1 << index)) {
+        days.push(day); // If the bit is set, add the day to the array
+      }
+    });
+
+    return days;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,12 +100,15 @@ const ViewClassList = () => {
         );
         setStudents(classroomStudents);
         setUserInfo(userData);
+        const bitmask = classroom.activeDays;
+        if (bitmask) {
+          const days = bitmaskToDays(bitmask);
+          setSelectedDays(days);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-
-    console.log("classroom: " + JSON.stringify(classroom));
 
     window.scrollTo(0, 0);
     fetchData();
@@ -327,6 +344,7 @@ const ViewClassList = () => {
                           <ClassDetails
                             teacherId={teacherId}
                             classroomId={classroomId}
+                            selectedDays={selectedDays}
                           />
                         </div>
                       </div>

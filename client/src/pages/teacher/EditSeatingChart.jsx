@@ -51,6 +51,22 @@ const EditSeatingChart = () => {
   const { setHasUnsavedChanges } = useUnsavedChanges();
   const [scale, setScale] = useState(1);
 
+  const [selectedDays, setSelectedDays] = useState([]);
+
+  const bitmaskToDays = (bitmask) => {
+    const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const days = [];
+
+    // Check each bit (from right to left) and add the corresponding day to the array
+    daysOfWeek.forEach((day, index) => {
+      if (bitmask & (1 << index)) {
+        days.push(day); // If the bit is set, add the day to the array
+      }
+    });
+
+    return days;
+  };
+
   const furnitureModalRef = useRef(null);
   const studentModalRef = useRef(null);
 
@@ -117,6 +133,12 @@ const EditSeatingChart = () => {
         teacherId,
         classroomId
       );
+
+      const bitmask = classroom.activeDays;
+      if (bitmask) {
+        const days = bitmaskToDays(bitmask);
+        setSelectedDays(days);
+      }
 
       setStudents(classroomStudents);
       const positions = {};
@@ -306,6 +328,7 @@ const EditSeatingChart = () => {
                   teacherId={teacherId}
                   classroomId={classroomId}
                   hasButtons={false}
+                  selectedDays={selectedDays}
                 />
               </div>
             </div>

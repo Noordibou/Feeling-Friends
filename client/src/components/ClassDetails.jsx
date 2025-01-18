@@ -4,7 +4,7 @@ import { formatTime } from "../utils/dateFormat";
 import { ToastContainer } from "react-toastify";
 import { handleSuccess } from "../utils/toastHandling";
 
-const ClassDetails = ({ teacherId, classroomId, hasButtons }) => {
+const ClassDetails = ({ teacherId, classroomId, hasButtons, selectedDays }) => {
   const [classroom, setClassroom] = useState("");
   const [toastShown, setToastShown] = useState(false);
 
@@ -76,7 +76,9 @@ const ClassDetails = ({ teacherId, classroomId, hasButtons }) => {
         <div className="flex py-[5px] md:py-[2px] text-[14px]">
           <h2>Days:</h2>
           <h2 className="font-semibold pl-2 tracking-wide text-graphite">
-            MON | TUE | WED | THU | FRI
+            {selectedDays !== undefined && selectedDays !== null
+              ? selectedDays.join(" | ")
+              : "-"}
           </h2>
         </div>
       </div>

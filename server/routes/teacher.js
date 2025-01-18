@@ -20,7 +20,6 @@ const {
     addFurniture,
     updateFurniturePositions,
     deleteFurniture,
-    updateClassroomInfo,
 } = require('../controllers/teacherController.js');
 
 // probably won't use, use the signup instead
@@ -44,7 +43,6 @@ router.put("/teachers/:id/classrooms/:classroomId/students/:studentId", verifyTo
 // router.get('/teachers/:id/students', getAllStudentsForTeacher);
 router.get('/teachers/:id/classrooms/:classroomId', getClassBySubject);
 router.get('/students', getAllStudents);
-router.put('/teachers/:id/classrooms/:classroomId', updateClassroomInfo)
 // ================================================== //
 //check
 router.delete("/teachers/:id/classrooms/:classroomId/furniture", deleteFurniture);

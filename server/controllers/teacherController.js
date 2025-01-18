@@ -416,44 +416,6 @@ const getAllStudents = async (req, res) => {
   }
 };
 
-const updateClassroomInfo = async (req, res) => {
-  try {
-    const { teacherId, classroomId, activeDays, classSubject, location, checkIn, checkOut } = req.body;
-    // Find the teacher by ID
-    const teacher = await Teacher.findById(teacherId);
-    
-    if (!teacher) {
-      return res.status(404).json({ message: "Teacher not found" });
-    }
-
-    // Find the classroom by its ID
-    const classroom = teacher.classrooms.find((classroom) => classroom._id.toString() === classroomId);
-    
-    if (!classroom) {
-      return res.status(404).json({ message: "Classroom not found" });
-    }
-    
-    // Update the classroom details
-    classroom.classSubject = classSubject || classroom.classSubject;
-    classroom.location = location || classroom.location;
-    classroom.checkIn = checkIn || classroom.checkIn;
-    classroom.checkOut = checkOut || classroom.checkOut;
-
-    // Convert activeDays to a bitmask if provided
-    if (activeDays && activeDays.length > 0) {
-      classroom.activeDays = calculateBitmask(activeDays);
-      console.log("active days: " + classroom.activeDays)
-    }
-
-    // Save the teacher document with the updated classroom info
-    await teacher.save();
-
-    // Return the updated teacher document
-    res.json(teacher);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
 
 // updating the student seating chart with x y coords and assigned or unassigned.
 const updateStudentSeats = async (req, res) => {
@@ -621,5 +583,4 @@ module.exports = {
   addFurniture,
   updateFurniturePositions,
   deleteFurniture,
-  updateClassroomInfo
 };

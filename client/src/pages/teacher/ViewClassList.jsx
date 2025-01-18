@@ -6,7 +6,6 @@ import {
   getAllStudentsClassroom,
   deleteStudentFromClassroom,
   getTeacherById,
-  updateClassroomInfo,
 } from "../../api/teachersApi";
 import "./scrollbar.css";
 import Button from "../../components/Button.jsx";
@@ -47,6 +46,19 @@ const ViewClassList = () => {
   const modalRefs = useRef({});
   const [selectedDays, setSelectedDays] = useState([]);
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const daysToBitmask = {
+    SUN: 1,
+    MON: 2,
+    TUE: 4,
+    WED: 8,
+    THU: 16,
+    FRI: 32,
+    SAT: 64,
+  };
+
+  const calculateBitmask = (days) => {
+    return days.reduce((bitmask, day) => bitmask | daysToBitmask[day], 0);
+  };
 
   const openConfirmModal = (classroomId) => {
     modalRefs.current[classroomId]?.current?.showModal();
@@ -112,6 +124,8 @@ const ViewClassList = () => {
   };
 
   const saveClassroomInfo = async () => {
+    const bitmask = calculateBitmask(selectedDays);
+
     // finding the index of this classroom needing to be updated
     const classroomIndex = userInfo.classrooms.findIndex(
       (c) => c._id === classroom._id
@@ -129,21 +143,11 @@ const ViewClassList = () => {
     updatedUserInfo.classrooms[classroomIndex] = {
       ...updatedUserInfo.classrooms[classroomIndex],
       classSubject: classroom.classSubject,
-      activeDays: selectedDays,
+      activeDays: bitmask,
       location: classroom.location,
       checkIn: classroom.checkIn,
       checkOut: classroom.checkOut,
     };
-
-    await updateClassroomInfo({
-      teacherId: userInfo._id,
-      classroomId: classroom._id,
-      activeDays: selectedDays,
-      classSubject: classroom.classSubject,
-      location: classroom.location,
-      checkIn: classroom.checkIn,
-      checkOut: classroom.checkOut,
-    });
 
     // update teacher from react context
     await updateUser(updatedUserInfo);

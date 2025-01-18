@@ -31,6 +31,12 @@ const TeacherHome = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
+  const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+  const getActiveDays = (bitmask) => {
+    return daysOfWeek.filter((day, index) => (bitmask & (1 << index)) !== 0);
+  };
+
   const openConfirmModal = (classroomId) => {
     modalRefs.current[classroomId]?.current?.showModal();
   };
@@ -111,6 +117,7 @@ const TeacherHome = () => {
             {userData && userData.classrooms ? (
               classroomsData.map(({ classroom, zorPercentages }, index) => (
                 <div key={index}>
+                  {/* TODO: fix height for medium and small screens */}
                   <Link
                     className={`block w-[80%] ml-auto mr-auto my-[1rem] h-[165px] ${
                       isEditMode ? "pointer-events-none" : ""
@@ -128,10 +135,14 @@ const TeacherHome = () => {
                           : ""
                       }`}
                     >
-                      <header className="flex justify-between">
-                        <h2 className="text-header4 font-header2 text-left">
+                      <header className="flex justify-between items-center w-full my-2">
+                        <h2 className="text-header4 font-header2 text-left w-[50%]">
                           {classroom.classSubject}
                         </h2>
+                        <div className="flex flex-row justify-end mr-10 w-[50%] font-[Poppins]">
+                          <p>Location:</p>
+                          <p className="pl-1 font-bold">{classroom.location}</p>
+                        </div>
                         {isEditMode ? (
                           <button
                             className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
@@ -144,13 +155,19 @@ const TeacherHome = () => {
 
                       <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
                         <dl className="flex justify-between mb-[1rem] mx-2">
-                          <div className="flex-col text-sm font-body">
-                            <dt>Location:</dt>
-                            <dd className="font-semibold">
-                              {classroom.location}
+                          <div className="flex text-sm font-body items-center">
+                            <dt>Days:</dt>
+                            <dd className="font-semibold pl-1">
+                              {classroom.activeDays !== undefined &&
+                              classroom.activeDays !== null
+                                ? getActiveDays(classroom.activeDays).join(
+                                    " | "
+                                  )
+                                : "-"}
                             </dd>
                           </div>
 
+                          {/* TODO: fix styling on large and small screens */}
                           <div className="flex-col text-sm font-body ">
                             <div className="flex gap-4">
                               <dt>Check-in</dt>

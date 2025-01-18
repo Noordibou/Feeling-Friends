@@ -137,6 +137,17 @@ export const createClassroom = async (id, classroom) => {
     }
   }
 
+export  const updateClassroomInfo = async (data) => {
+    try {
+        console.log("getting response to update classroom info")
+      const response = await axios.put(`${TEACHERS_API_URL}/${data.teacherId}/classrooms/${data.classroomId}`, data);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating classroom info:", error);
+      throw error;
+    }
+  };
+
   export const getAllStudents = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/students`, { withCredentials: true });

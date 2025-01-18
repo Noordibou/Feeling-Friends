@@ -3,6 +3,19 @@ const Student = require("../models/Student.js");
 const User = require("../models/User.js");
 const mongoose = require("mongoose");
 
+const daysToBitmask = {
+  SUN: 1,
+  MON: 2,
+  TUE: 4,
+  WED: 8,
+  THU: 16,
+  FRI: 32,
+  SAT: 64,
+};
+
+const calculateBitmask = (days) => {
+  return days.reduce((bitmask, day) => bitmask | daysToBitmask[day], 0);
+};
 
 const createNewTeacher = async (req, res) => {
   try {
@@ -370,8 +383,13 @@ const createClassroom = async (req, res) => {
       return res.status(404).json({ error: 'Teacher not found' });
     }
 
+    // Calculate bitmask for activeDays
+    const activeDays = req.body.activeDays || []; // Expecting an array of days from the request
+    const activeDaysBitmask = calculateBitmask(activeDays);
+
     const newClassroom = {
       classSubject: req.body.classSubject,
+      activeDays: activeDaysBitmask,
       location: req.body.location,
       checkIn: req.body.checkIn,
       checkOut: req.body.checkOut,
@@ -395,6 +413,45 @@ const getAllStudents = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
+  }
+};
+
+const updateClassroomInfo = async (req, res) => {
+  try {
+    const { teacherId, classroomId, activeDays, classSubject, location, checkIn, checkOut } = req.body;
+    // Find the teacher by ID
+    const teacher = await Teacher.findById(teacherId);
+    
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    // Find the classroom by its ID
+    const classroom = teacher.classrooms.find((classroom) => classroom._id.toString() === classroomId);
+    
+    if (!classroom) {
+      return res.status(404).json({ message: "Classroom not found" });
+    }
+    
+    // Update the classroom details
+    classroom.classSubject = classSubject || classroom.classSubject;
+    classroom.location = location || classroom.location;
+    classroom.checkIn = checkIn || classroom.checkIn;
+    classroom.checkOut = checkOut || classroom.checkOut;
+
+    // Convert activeDays to a bitmask if provided
+    if (activeDays && activeDays.length > 0) {
+      classroom.activeDays = calculateBitmask(activeDays);
+      console.log("active days: " + classroom.activeDays)
+    }
+
+    // Save the teacher document with the updated classroom info
+    await teacher.save();
+
+    // Return the updated teacher document
+    res.json(teacher);
+  } catch (error) {
+    res.status(400).json(error);
   }
 };
 
@@ -564,4 +621,5 @@ module.exports = {
   addFurniture,
   updateFurniturePositions,
   deleteFurniture,
+  updateClassroomInfo
 };

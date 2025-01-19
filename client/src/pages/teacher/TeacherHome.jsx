@@ -20,6 +20,8 @@ import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.js
 import Loading from "../Loading.jsx";
 import { handleSuccess } from "../../utils/toastHandling";
 import { formatTime } from "../../utils/dateFormat";
+import favoriteIconStar from "../../images/favoriteIconStar.svg";
+import unFavIconStar from "../../images/unfavIconStar.svg";
 
 const TeacherHome = () => {
   const { userData } = useUser();
@@ -104,6 +106,30 @@ const TeacherHome = () => {
     }
   };
 
+  const handleToggleFavorite = (classroomId) => {
+    setClassroomsData((prevClassroomsData) => {
+      if (!prevClassroomsData || prevClassroomsData.length === 0) {
+        console.error("classroomsData is not initialized or empty.");
+        return prevClassroomsData;
+      }
+
+      const updatedData = prevClassroomsData.map((item) =>
+        item.classroom._id === classroomId
+          ? {
+              ...item,
+              classroom: {
+                ...item.classroom,
+                isFavorite: !item.classroom.isFavorite,
+              },
+            }
+          : item
+      );
+
+      console.log("Updated classroomsData:", updatedData);
+      return updatedData;
+    });
+  };
+
   const handleEditClick = () => {
     setIsEditMode(!isEditMode);
   };
@@ -162,9 +188,37 @@ const TeacherHome = () => {
                                 }`}
                               >
                                 <header className="flex justify-between items-center w-full my-2">
-                                  <h2 className="text-header4 font-header2 text-left w-[50%]">
-                                    {classroom.classSubject}
-                                  </h2>
+                                  <div className="flex items-center gap-2">
+                                    {/* if in isEditMode and user clicks do opposite */}
+                                    {isEditMode ? (
+                                      <button
+                                        className="z-20 pointer-events-auto"
+                                        onClick={() => {
+                                          console.log("clicked on favorite");
+                                          handleToggleFavorite(classroom._id);
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            classroom.isFavorite
+                                              ? favoriteIconStar
+                                              : unFavIconStar
+                                          }
+                                          alt="Favorite"
+                                          className="cursor-pointer"
+                                        />
+                                      </button>
+                                    ) : classroom.isFavorite ? (
+                                      <img
+                                        className="bg-blue"
+                                        src={favoriteIconStar}
+                                        alt="is fav"
+                                      />
+                                    ) : null}
+                                    <h2 className="text-header4 font-header2 text-left w-[50%]">
+                                      {classroom.classSubject}
+                                    </h2>
+                                  </div>
                                   <div className="flex flex-row justify-end mr-10 w-[50%] font-[Poppins]">
                                     <p>Location:</p>
                                     <p className="pl-1 font-bold">

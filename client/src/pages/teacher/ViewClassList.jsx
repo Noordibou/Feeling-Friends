@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
@@ -23,7 +23,9 @@ import Nav from "../../components/Navbar/Nav.jsx";
 import withAuth from "../../hoc/withAuth.js";
 import Logout from "../../components/LogoutButton.jsx";
 import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
+import { handleSuccess } from "../../utils/toastHandling";
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -39,7 +41,23 @@ const ViewClassList = () => {
     checkOut: "",
   });
   const [isOpen, setIsOpen] = useState(false);
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const { setHasUnsavedChanges } = useUnsavedChanges();
+  const modalRefs = useRef({});
+
+  const openConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.showModal();
+  };
+
+  const closeConfirmModal = (classroomId) => {
+    modalRefs.current[classroomId]?.current?.close();
+  };
+
+  const getModalRef = (classroomId) => {
+    if (!modalRefs.current[classroomId]) {
+      modalRefs.current[classroomId] = React.createRef();
+    }
+    return modalRefs.current[classroomId];
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,13 +81,14 @@ const ViewClassList = () => {
     fetchData();
   }, [teacherId, classroomId]);
 
-  const handleDeleteStudent = async (studentId) => {
+  const handleDeleteStudent = async (studentId, studentName) => {
     try {
       await deleteStudentFromClassroom(teacherId, classroomId, studentId);
       setStudents((prevData) =>
         prevData.filter((item) => item._id !== studentId)
       );
-
+      closeConfirmModal(studentId);
+      handleSuccess(`${studentName} removed from classroom successfully`);
       const updatedUserData = await getTeacherById(userData._id);
       updateUser(updatedUserData);
     } catch (error) {
@@ -104,7 +123,7 @@ const ViewClassList = () => {
     await updateUser(updatedUserInfo);
 
     console.log("User updated:", JSON.stringify(updatedUserInfo));
-    setHasUnsavedChanges(false)
+    setHasUnsavedChanges(false);
     setIsEditMode(false);
     // Show brief save message for 3 secs
     setShowMsg(true);
@@ -119,17 +138,17 @@ const ViewClassList = () => {
       ...classroom,
       [name]: value,
     });
-    setHasUnsavedChanges(true)
+    setHasUnsavedChanges(true);
   };
 
   const sortedStudents = sortByCriteria(students);
 
   return (
     <>
-      <div className="flex flex-col min-h-screen min-w-screen mb-44 lg:mb-0 lg:pb-0">
-        <div className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
+      <main className="flex flex-col min-h-screen min-w-screen mb-44 lg:mb-0 lg:pb-0">
+        <header className="hidden md:flex justify-center lg:justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
-        </div>
+        </header>
         <div className="flex flex-col items-center">
           <div className="flex flex-col h-full items-center w-full max-w-5xl lg:z-40 mt-2">
             {classroom ? (
@@ -137,15 +156,15 @@ const ViewClassList = () => {
                 {isEditMode ? (
                   <>
                     {/* Top Nav (on Edit only)*/}
-                    <div className="flex w-full md:w-[45%] justify-start md:mt-8">
+                    <header className="flex w-full md:w-[45%] justify-start md:mt-8">
                       <SimpleTopNav
                         pageTitle="Manage Classroom"
                         fontsize="text-[20px] md:text-[30px]"
                       />
-                    </div>
+                    </header>
 
                     {/* Classroom Info (on Edit only) */}
-                    <div className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-5 md:mb-14">
+                    <section className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-5 md:mb-14">
                       <input
                         className="flex w-full md:w-44 h-10 border-2 border-gray rounded my-3 pl-3 text-[18px] md:text-[22px]"
                         name="classSubject"
@@ -156,10 +175,14 @@ const ViewClassList = () => {
                       <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
                         <div className="flex flex-col md:flex-row justify-between mx-2">
                           <div className="flex-col text-sm font-body">
-                            <h2 className="text-[14px] md:text-[16px]">
+                            <label
+                              htmlFor="location"
+                              className="text-[14px] md:text-[16px]"
+                            >
                               Location:
-                            </h2>
+                            </label>
                             <input
+                              id="location"
                               className="border-2 w-44 xs:w-56 border-gray rounded pl-3 py-1 text-[15px] md:text-[18px]"
                               name="location"
                               placeholder="Room 123"
@@ -170,10 +193,14 @@ const ViewClassList = () => {
 
                           <div className="flex text-sm font-body gap-4 mt-2">
                             <div>
-                              <h2 className="text-[14px] md:text-[16px]">
+                              <label
+                                htmlFor="checkin"
+                                className="text-[14px] md:text-[16px]"
+                              >
                                 Check-in:
-                              </h2>
+                              </label>
                               <input
+                                id="checkin"
                                 className="flex w-20 xs:w-24 border-2 border-gray rounded pl-2 py-1 text-[15px] md:text-[18px]"
                                 name="checkIn"
                                 type="time"
@@ -182,10 +209,14 @@ const ViewClassList = () => {
                               />
                             </div>
                             <div>
-                              <h2 className="text-[14px] md:text-[16px]">
+                              <label
+                                htmlFor="checkout"
+                                className="text-[14px] md:text-[16px]"
+                              >
                                 Check-out:
-                              </h2>
+                              </label>
                               <input
+                                id="checkout"
                                 className="flex w-20 xs:w-24 border-2 border-gray rounded pl-2 py-1 text-[15px] md:text-[18px]"
                                 name="checkOut"
                                 type="time"
@@ -205,16 +236,16 @@ const ViewClassList = () => {
                           </a>
                         </h2>
                       </div>
-                    </div>
+                    </section>
                   </>
                 ) : (
-                  <div className="flex flex-col w-full md:justify-center md:flex-row md:mt-6 px-5 mb-5 md:mb-0">
-                    <div className="flex md:justify-center">
+                  <section className="flex flex-col w-full md:justify-center md:flex-row md:mt-6 px-5 mb-5 md:mb-0">
+                    <header className="flex md:justify-center">
                       <SimpleTopNav
                         pageTitle={classroom?.classSubject}
                         fontsize="text-[25px] xl:text-[24px]"
                       />
-                    </div>
+                    </header>
                     <div className="flex flex-col-reverse md:flex-row">
                       <div className="flex flex-col px-4 md:flex-row justify-center md:items-center border-t-2 border-b-2 border-sandwich md:border-none">
                         <div
@@ -286,31 +317,31 @@ const ViewClassList = () => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </section>
                 )}
 
                 <ToggleButton students={students} setStudents={setStudents} />
                 <div className="w-full max-w-[700px]">
-                  <h2 className="text-[16px] md:text-header3 font-header2 text-center my-[1rem] ">
-                    {isEditMode ? (
+                  {isEditMode ? (
+                    <h2 className="text-[16px] md:text-header3 font-header2 text-center my-[1rem]">
                       <div className="flex w-full justify-center items-center">
                         <Link
                           className="underline w-[104%]"
-                          to={`/addstudent/${teacherId}/${classroomId}`}
+                          to={`/add-student`}
                         >
                           Add new student
                         </Link>
                       </div>
-                    ) : (
-                      ""
-                    )}
-                  </h2>
+                    </h2>
+                  ) : null}
                 </div>
 
                 {/* Scrollable list of students */}
-                <div
+                <section
                   className={`px-4 md:px-0 md:mb-0 flex w-full justify-center md:overflow-y-auto md:custom-scrollbar ${
-                    isEditMode ? "h-full md:h-[35vh]" : "h-full md:h-[50vh] lg:h-[55vh]"
+                    isEditMode
+                      ? "h-full md:h-[35vh]"
+                      : "h-full md:h-[50vh] lg:h-[55vh]"
                   } pt-3 `}
                   key="list-of-students-1"
                 >
@@ -321,7 +352,7 @@ const ViewClassList = () => {
                     >
                       {sortedStudents.map((student, index) => {
                         return (
-                          <div
+                          <article
                             key={`student-info-${index}`}
                             className="w-[98%] md:w-[460px]"
                           >
@@ -330,11 +361,25 @@ const ViewClassList = () => {
                               userData={userData}
                               classroomId={classroomId}
                               isEditMode={isEditMode}
-                              handleClick={() =>
-                                handleDeleteStudent(student._id)
-                              }
+                              handleClick={() => openConfirmModal(student._id)}
                             />
-                          </div>
+                            <ConfirmationModal
+                              ref={getModalRef(student._id)}
+                              closeConfirmModal={() =>
+                                closeConfirmModal(student._id)
+                              }
+                              itemFullName={`${student.firstName} ${student.lastName}`}
+                              itemId={student._id}
+                              deleteMsg={`Are you sure you want to delete ${student.firstName} ${student.lastName} from the classroom? This cannot be undone.`}
+                              removeItemFromSystem={() =>
+                                handleDeleteStudent(
+                                  student._id,
+                                  `${student.firstName} ${student.lastName}`
+                                )
+                              }
+                              inputNeeded={false}
+                            />
+                          </article>
                         );
                       })}
                       {isEditMode && (
@@ -361,14 +406,14 @@ const ViewClassList = () => {
                   ) : (
                     <p>No students found.</p>
                   )}
-                </div>
+                </section>
               </>
             ) : (
               "Loading..."
             )}
           </div>
         </div>
-      </div>
+      </main>
       <UnsavedChanges />
       {/* Tells user they have saved the layout */}
       <div className="flex justify-center">

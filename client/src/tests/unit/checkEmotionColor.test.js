@@ -1,4 +1,4 @@
-import { getEmotionColor } from "../utils/classroomColors";
+import { getEmotionColor } from "../../utils/classroomColors";
 
 
 describe('get Emotion Color for student view styling', () => {

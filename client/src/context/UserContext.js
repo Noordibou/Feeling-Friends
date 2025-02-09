@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from '../pages/Authentication/AuthContext';
-import { getStudentById, updateStudent, createStudent, deleteStudent } from '../api/studentsApi';
+import { getStudentById, createStudent, deleteStudent } from '../api/studentsApi';
 import { getTeacherById, updateTeacher, createTeacher } from '../api/teachersApi';
 
 const UserContext = createContext();

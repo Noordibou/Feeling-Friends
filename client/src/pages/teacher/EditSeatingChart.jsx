@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
@@ -9,10 +8,10 @@ import {
   updateFurniturePositions,
   deleteFurniture,
 } from "../../api/teachersApi";
-import AddStudentModal from "../../components/SeatingChart/StudentRosterModal";
+import AddStudentModal from "../../components/TeacherView/modal/StudentRosterModal";
 import ClassroomFurniture from "../../components/SeatingChart/ClassroomFurniture";
 import AssignedStudent from "../../components/SeatingChart/AssignedStudent";
-import FurnitureModal from "../../components/SeatingChart/FurnitureModal";
+import FurnitureModal from "../../components/TeacherView/modal/FurnitureModal";
 import ClassDetails from "../../components/ClassDetails";
 import RosterImg from "../../images/Three People.png";
 import FurnitureImg from "../../images/Desk.png";
@@ -49,11 +48,36 @@ const EditSeatingChart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showMsg, setShowMsg] = useState(false);
   const [emptyMsg, setEmptyMsg] = useState(false);
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const { setHasUnsavedChanges } = useUnsavedChanges();
   const [scale, setScale] = useState(1);
 
-  const handleZoomIn = () => setScale(prevScale => Math.min(prevScale + 0.1, 1.5));
-  const handleZoomOut = () => setScale(prevScale => Math.max(prevScale - 0.1, 0.5));
+  const furnitureModalRef = useRef(null);
+  const studentModalRef = useRef(null);
+
+  const openFurnitureModal = () => {
+    // setShowStudentRosterModal(true);
+    furnitureModalRef.current?.showModal();
+  };
+
+  const closeFurnitureModal = () => {
+    // setShowStudentRosterModal(false);
+    furnitureModalRef.current?.close();
+  };
+
+  const openStudentModal = () => {
+    // setShowStudentRosterModal(true);
+    studentModalRef.current?.showModal();
+  };
+
+  const closeStudentModal = () => {
+    // setShowStudentRosterModal(false);
+    studentModalRef.current?.close();
+  };
+
+  const handleZoomIn = () =>
+    setScale((prevScale) => Math.min(prevScale + 0.1, 1.5));
+  const handleZoomOut = () =>
+    setScale((prevScale) => Math.max(prevScale - 0.1, 0.5));
 
   const handleRemoveObject = async () => {
     if (selectedStudents.length > 0) {
@@ -227,26 +251,47 @@ const EditSeatingChart = () => {
         setShowMsg(false);
       }, 2500);
       setHasUnsavedChanges(false);
-      await updateInfo();      
+      await updateInfo();
     } catch (error) {
       console.log(error);
     }
-    
   };
 
   return (
     <>
-      {" "}
-      {/* page container */}
-      <div className="flex h-screen min-w-screen justify-center md:mb-0">
+      <AddStudentModal
+        ref={studentModalRef}
+        closeStudentModal={closeStudentModal}
+        unassignedStudents={unassignedStudents}
+        students={students}
+        teacherId={teacherId}
+        classroomId={classroomId}
+        updateInfo={updateInfo}
+      />
+      <FurnitureModal
+        ref={furnitureModalRef}
+        closeFurnitureModal={closeFurnitureModal}
+        classroom={classroom}
+        teacherId={teacherId}
+        classroomId={classroomId}
+        updateInfo={updateInfo}
+      />
+      <UnsavedChanges />
+
+      <header>
         <div className="hidden md:flex md:absolute w-full justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
-
+      </header>
+      {/* page container */}
+      <main className="flex h-screen min-w-screen justify-center md:mb-0">
         {/* page container */}
         <div className="flex flex-col w-full h-screen items-center max-w-3xl">
           {/* top half of page */}
-          <div className="flex flex-col h-[180px] md:h-auto w-screen md:w-full top-0 md:flex-row max-w-[752px] justify-start mb-2 md:mb-0 mt-5 md:mt-10 lg:mt-16 mx-4 md:ml-5 z-20">
+          <section className="flex flex-col h-[180px] md:h-auto w-screen md:w-full top-0 md:flex-row max-w-[752px] justify-start mb-2 md:mb-0 mt-5 md:mt-10 lg:mt-16 mx-4 md:ml-5 z-20">
+            <h1 id="classroom-header" className="sr-only">
+              Edit Seating Chart
+            </h1>
             <div className="flex">
               <SimpleTopNav
                 pageTitle={classroom?.classSubject}
@@ -270,10 +315,7 @@ const EditSeatingChart = () => {
                 buttonText="Student Roster"
                 defaultBtnImage={RosterImg}
                 btnImageWhenOpen={openRosterImg}
-                handleClick={() => {
-                  setShowStudentRosterModal(!showStudentRosterModal);
-                  setShowFurnitureModal(false);
-                }}
+                handleClick={openStudentModal}
                 isSelected={showStudentRosterModal}
                 buttonSize="small"
               />
@@ -281,28 +323,27 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={() => {
-                  setShowFurnitureModal(!showFurnitureModal);
-                  setShowStudentRosterModal(false);
-                }}
+                handleClick={openFurnitureModal}
                 isSelected={showFurnitureModal}
                 buttonSize="small"
               />
             </div>{" "}
-          </div>
+          </section>
 
           {/* bottom half/classroom part of page */}
           {classroom ? (
             <>
               {/* inside of the classroom (movable on mobile) */}
-              <div className="relative w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+              <section className="relative w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                <h2 id="classroom-layout" className="sr-only">
+                  Classroom Layout
+                </h2>
                 {/* static container of the classroom */}
                 <div
                   className="relative w-[752px] h-[570px] rounded-[1rem] mt-10 ml-10 md:mt-0 md:ml-0 md:border-[#D2C2A4] md:border-[8px] md:rounded-[1rem] "
                   ref={constraintsRef}
-                  >
-
-                    {/* Scale wrapper */}
+                >
+                  {/* Scale wrapper */}
                   <div
                     className="absolute top-0 left-0"
                     style={{
@@ -312,61 +353,42 @@ const EditSeatingChart = () => {
                       transformOrigin: "top left",
                     }}
                   >
-                  {/* Classroom layout here */}
+                    {/* Classroom layout here */}
 
-                  <ClassroomFurniture
-                    classroom={classroom}
-                    setFurniturePositions={setFurniturePositions}
-                    furniturePositions={furniturePositions}
-                    constraintsRef={constraintsRef}
-                    handleDragEnd={handleDragEnd}
-                    selectedItems={selectedItems}
-                    setSelectedItems={setSelectedItems}
-                    handleRemoveObject={handleRemoveObject}
-                  />
+                    <ClassroomFurniture
+                      classroom={classroom}
+                      setFurniturePositions={setFurniturePositions}
+                      furniturePositions={furniturePositions}
+                      constraintsRef={constraintsRef}
+                      handleDragEnd={handleDragEnd}
+                      selectedItems={selectedItems}
+                      setSelectedItems={setSelectedItems}
+                      handleRemoveObject={handleRemoveObject}
+                    />
 
-                  <AssignedStudent
-                    assignedStudents={assignedStudents}
-                    setSelectedStudents={setSelectedStudents}
-                    students={students}
-                    constraintsRef={constraintsRef}
-                    selectedStudents={selectedStudents}
-                    handleDragEnd={handleDragEnd}
-                    handleRemoveObject={handleRemoveObject}
-                  />
+                    <AssignedStudent
+                      assignedStudents={assignedStudents}
+                      setSelectedStudents={setSelectedStudents}
+                      students={students}
+                      constraintsRef={constraintsRef}
+                      selectedStudents={selectedStudents}
+                      handleDragEnd={handleDragEnd}
+                      handleRemoveObject={handleRemoveObject}
+                    />
+                  </div>
                 </div>
-                </div>
-                {showStudentRosterModal && (
-            <AddStudentModal
-              setShowStudentRosterModal={setShowStudentRosterModal}
-              unassignedStudents={unassignedStudents}
-              students={students}
-              teacherId={teacherId}
-              classroomId={classroomId}
-              updateInfo={updateInfo}
-            />
-          )}
-          {showFurnitureModal && (
-            <FurnitureModal
-              setShowFurnitureModal={setShowFurnitureModal}
-              classroom={classroom}
-              teacherId={teacherId}
-              classroomId={classroomId}
-              updateInfo={updateInfo}
-            />
-          )}
-              </div>
+              </section>
             </>
           ) : (
-            <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
+            <section className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
               {/* placeholder for now */}
               <div className={`absolute mt-[250px] px-32 -ml-10`}>
-                <h4 className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
+                <p className="text-black font-[Poppins] text-[32px] text-center font-semibold bg-notebookPaper">
                   Sorry, this feature is not available right now. Please try
                   again later
-                </h4>
+                </p>
               </div>
-            </div>
+            </section>
           )}
 
           <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full justify-center items-start md:mt-5">
@@ -376,10 +398,7 @@ const EditSeatingChart = () => {
                 buttonText="Student Roster"
                 defaultBtnImage={RosterImg}
                 btnImageWhenOpen={openRosterImg}
-                handleClick={() => {
-                  setShowStudentRosterModal(!showStudentRosterModal);
-                  setShowFurnitureModal(false);
-                }}
+                handleClick={openStudentModal}
                 isSelected={showStudentRosterModal}
                 buttonSize="long"
               />
@@ -390,10 +409,7 @@ const EditSeatingChart = () => {
                 buttonText="Classroom Objects"
                 defaultBtnImage={FurnitureImg}
                 btnImageWhenOpen={openFurnitureImg}
-                handleClick={() => {
-                  setShowFurnitureModal(!showFurnitureModal);
-                  setShowStudentRosterModal(false);
-                }}
+                handleClick={openFurnitureModal}
                 isSelected={showFurnitureModal}
                 buttonSize="long"
               />
@@ -407,30 +423,26 @@ const EditSeatingChart = () => {
                 handleSave={handleSave}
               />
             </div>
-            
 
             {/* Msg shows when no students are in the classroom */}
             <div
               className={`${emptyMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
             >
-              <h4 className="text-black font-[Poppins] text-[32px] max-w-[730px] text-center font-semibold bg-notebookPaper">
+              <p className="text-black font-[Poppins] text-[32px] max-w-[730px] text-center font-semibold bg-notebookPaper">
                 Nothing yet! Click Student Roster or Classroom Objects to get
                 started!
-              </h4>
+              </p>
             </div>
           </div>
         </div>
         {/* Tells user they have saved the layout */}
 
-          <MsgModal
-            msgText="Save Successful!"
-            showMsg={showMsg}
-            textColor="text-black"
-          />
-
-        <UnsavedChanges />
-
-      </div>
+        <MsgModal
+          msgText="Save Successful!"
+          showMsg={showMsg}
+          textColor="text-black"
+        />
+      </main>
       <div className="fixed bottom-28 left-2 flex flex-col md:hidden justify-center gap-2 my-4 z-20">
         <button
           onClick={() => handleZoomIn()}

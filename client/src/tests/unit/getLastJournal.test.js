@@ -1,5 +1,5 @@
-import { getLastJournalInfo } from "../utils/editSeatChartUtil";
-import { getCurrentDate } from "../utils/dateFormat";
+import { getLastJournalInfo } from "../../utils/editSeatChartUtil";
+import { getCurrentDate } from "../../utils/dateFormat";
 
 // FIXME: Need to test whenever we get the current day's journal entry checkin/out
 

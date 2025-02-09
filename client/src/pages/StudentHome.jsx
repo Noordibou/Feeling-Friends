@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import ProgressBar from "../components/StudentView/ProgressBar";
 import CurvedWords from "../components/StudentView/CurvedWord";
 import subEmotionInfo from "../data/subEmotions";
 import withAuth from "../hoc/withAuth";
-import { checkTimeOfDay } from '../utils/dailyGreeting'
+import { checkTimeOfDay } from "../utils/dailyGreeting";
 import { handleError } from "../utils/toastHandling";
 import { ToastContainer } from "react-toastify";
-
 
 const StudentHome = () => {
   const navigate = useNavigate();
 
   const { userData, setIsCheckInOrOut, isCheckinOrOut } = useUser();
-  const [greeting, setGreeting] = useState(checkTimeOfDay());
+  const greeting = checkTimeOfDay();
   const [checkInBtn, setCheckInBtn] = useState("bg-white");
   const [checkOutBtn, setCheckOutBtn] = useState("bg-white");
 
@@ -44,7 +43,7 @@ const StudentHome = () => {
       navigate(`/emotion`, {
         state: {
           emotion: chosenEmotion,
-          previousPage: '/student-home'
+          previousPage: "/student-home",
         },
       });
     }
@@ -56,16 +55,15 @@ const StudentHome = () => {
     chunkedData.push(subEmotionInfo.slice(i, i + chunkSize));
   }
 
-
   return (
     <>
       {/* page container */}
-      <div className="flex w-screen flex-col items-center bg-notebookPaper h-screen flex-grow">
-        <div className="flex w-full justify-center mt-10 sm:mt-20">
+      <main className="flex w-screen flex-col items-center bg-notebookPaper h-screen flex-grow">
+        <header className="flex w-full justify-center mt-10 sm:mt-20">
           <ProgressBar totalPages="5" currentPage="1" />
-        </div>
+        </header>
         {/* Check time Section */}
-        <div className="flex pt-10 sm:pt-20 justify-center h-[80%] lg:h-auto flex-col text-center">
+        <section className="flex pt-10 sm:pt-20 justify-center h-[80%] lg:h-auto flex-col text-center">
           <h1 className="text-[Karla] text-[25px] font-semibold sm:text-header1 sm:font-header1">
             {userData ? `${greeting}, ` + userData.firstName : "Hello"}!
           </h1>
@@ -86,33 +84,36 @@ const StudentHome = () => {
               Check-out
             </button>
           </div>
-        </div>
+        </section>
 
-        <div className="flex flex-col lg:pt-16 pb-10 h-full items-center">
+        <section className="flex flex-col lg:pt-16 pb-10 h-full items-center">
           <h2 className="font-[Karla] font-semibold text-[18px] sm:text-header2 sm:font-header2 text-center">
             How are you feeling?
           </h2>
           <div className="h-full">
             {chunkedData.map((chunk, index) => (
-                <div key={index} className="w-screen max-w-lg flex gap-8 justify-center md:justify-between mt-8 mb-10 md:my-14">
-                  {chunk.map((emotionInfo, idx) => (
-                    <CurvedWords
-                      key={idx}
-                      emotion={emotionInfo.emotion}
-                      image={emotionInfo.eImage}
-                      rotationList={emotionInfo.rotationList}
-                      translateList={emotionInfo.translateList}
-                      handleEmotion={handleEmotion}
-                    />
-                  ))}
-                </div>
-              ))}
+              <div
+                key={index}
+                className="w-screen max-w-lg flex gap-8 justify-center md:justify-between mt-8 mb-10 md:my-14"
+              >
+                {chunk.map((emotionInfo, idx) => (
+                  <CurvedWords
+                    key={idx}
+                    emotion={emotionInfo.emotion}
+                    image={emotionInfo.eImage}
+                    rotationList={emotionInfo.rotationList}
+                    translateList={emotionInfo.translateList}
+                    handleEmotion={handleEmotion}
+                  />
+                ))}
+              </div>
+            ))}
           </div>
-        </div>
+        </section>
         <ToastContainer />
-      </div>
+      </main>
     </>
   );
 };
 
-export default withAuth(['student'])(StudentHome);
+export default withAuth(["student"])(StudentHome);

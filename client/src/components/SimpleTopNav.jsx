@@ -5,9 +5,11 @@ const SimpleTopNav = ({ pageTitle, fontsize }) => {
       <div className="">
         <GoBack />
       </div>
-      <span className={`${fontsize} w-full text-center font-header1`}>
-        {pageTitle}
-      </span>
+      {pageTitle ? (
+        <h1 className={`${fontsize} w-full text-center font-header1`}>
+          {pageTitle}
+        </h1>
+      ) : null}
     </div>
   );
 };

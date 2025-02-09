@@ -22,6 +22,11 @@ body {
     background-color: #FFF9E4;
   }
   
+  
+  
+  dialog::backdrop {
+    background-color: rgba(210, 194, 164, 0.8); /* Adjust opacity as needed */
+  }
 
 
 

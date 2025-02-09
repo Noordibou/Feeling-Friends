@@ -27,6 +27,7 @@ module.exports = {
         regZone: "1.5rem",
         input: "1.5rem",
         button: "1.6rem",
+        xl: "3rem",
         lg: "1.75rem",
         md: "1.2rem",
         sm: "1rem",

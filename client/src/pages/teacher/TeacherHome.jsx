@@ -211,23 +211,28 @@ const TeacherHome = () => {
                                   <div className="flex items-center gap-2">
                                     {/* if in isEditMode and user clicks do opposite */}
                                     {isEditMode ? (
-                                      <button
-                                        className="pointer-events-auto"
-                                        onClick={() => {
-                                          console.log("clicked on favorite");
-                                          handleToggleFavorite(classroom._id);
-                                        }}
+                                      <Tooltip
+                                        content="Unmark class as favorite"
+                                        side="-right-24"
                                       >
-                                        <img
-                                          src={
-                                            classroom.isFavorite
-                                              ? favoriteIconStar
-                                              : unFavIconStar
-                                          }
-                                          alt="Favorite"
-                                          className="cursor-pointer"
-                                        />
-                                      </button>
+                                        <button
+                                          className="pointer-events-auto"
+                                          onClick={() => {
+                                            console.log("clicked on favorite");
+                                            handleToggleFavorite(classroom._id);
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              classroom.isFavorite
+                                                ? favoriteIconStar
+                                                : unFavIconStar
+                                            }
+                                            alt="Favorite"
+                                            className="cursor-pointer"
+                                          />
+                                        </button>
+                                      </Tooltip>
                                     ) : classroom.isFavorite ? (
                                       <img
                                         src={favoriteIconStar}
@@ -377,23 +382,28 @@ const TeacherHome = () => {
                                 <header className="flex justify-between items-center w-full my-2">
                                   {/* if in isEditMode and user clicks do opposite */}
                                   {isEditMode ? (
-                                    <button
-                                      className="pointer-events-auto"
-                                      onClick={() => {
-                                        console.log("clicked on favorite");
-                                        handleToggleFavorite(classroom._id);
-                                      }}
+                                    <Tooltip
+                                      content="Unmark class as favorite"
+                                      side="-right-24"
                                     >
-                                      <img
-                                        src={
-                                          classroom.isFavorite
-                                            ? favoriteIconStar
-                                            : unFavIconStar
-                                        }
-                                        alt="Favorite"
-                                        className="cursor-pointer"
-                                      />
-                                    </button>
+                                      <button
+                                        className="pointer-events-auto"
+                                        onClick={() => {
+                                          console.log("clicked on favorite");
+                                          handleToggleFavorite(classroom._id);
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            classroom.isFavorite
+                                              ? favoriteIconStar
+                                              : unFavIconStar
+                                          }
+                                          alt="Favorite"
+                                          className="cursor-pointer"
+                                        />
+                                      </button>
+                                    </Tooltip>
                                   ) : classroom.isFavorite ? (
                                     <img
                                       className=""
@@ -411,14 +421,19 @@ const TeacherHome = () => {
                                     </p>
                                   </div>
                                   {isEditMode ? (
-                                    <button
-                                      className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
-                                      onClick={() =>
-                                        openConfirmModal(classroom._id)
-                                      }
+                                    <Tooltip
+                                      content="Delete class"
+                                      side="left-16"
                                     >
-                                      <img src={xButton} alt="xButton" />
-                                    </button>
+                                      <button
+                                        className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
+                                        onClick={() =>
+                                          openConfirmModal(classroom._id)
+                                        }
+                                      >
+                                        <img src={xButton} alt="xButton" />
+                                      </button>
+                                    </Tooltip>
                                   ) : null}
                                 </header>
 

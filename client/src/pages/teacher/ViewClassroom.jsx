@@ -28,6 +28,20 @@ const ViewClassroom = () => {
   const [selectedStudent, setSelectedStudent] = useState({});
   const [showMsg, setShowMsg] = useState(false);
   const [assignedFurniture, setAssignedFurniture] = useState([]);
+  const [selectedDays, setSelectedDays] = useState([]);
+
+  const bitmaskToDays = (bitmask) => {
+    const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const days = [];
+
+    daysOfWeek.forEach((day, index) => {
+      if (bitmask & (1 << index)) {
+        days.push(day);
+      }
+    });
+
+    return days;
+  };
 
   const getClassroomData = async () => {
     try {
@@ -52,6 +66,12 @@ const ViewClassroom = () => {
         (student) => student.seatInfo.assigned === true
       );
       setAssignedStudents(students);
+
+      const bitmask = classroom.activeDays;
+      if (bitmask) {
+        const days = bitmaskToDays(bitmask);
+        setSelectedDays(days);
+      }
 
       const furniture = classroom.furniture.filter(
         (item) => item.assigned === true
@@ -125,6 +145,7 @@ const ViewClassroom = () => {
                       <ClassDetails
                         teacherId={teacherId}
                         classroomId={classroomId}
+                        selectedDays={selectedDays}
                       />
                     </div>
                   </div>

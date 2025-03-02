@@ -12,9 +12,11 @@ const teacherSchema = new mongoose.Schema({
   classrooms: [
     {
       classSubject: { type: String },
+      activeDays: { type: Number }, // Bitmask for active days
       location: { type: String },
       checkIn: { type: String },
       checkOut: { type: String },
+      isFavorite: { type: Boolean, default: false },
       furniture: [
         {
           name: {

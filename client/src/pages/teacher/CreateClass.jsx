@@ -39,6 +39,7 @@ const CreateClass = () => {
   const [selectedGrade, setSelectedGrade] = useState("All");
   const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
   const { setHasUnsavedChanges } = useUnsavedChanges();
+  const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   useEffect(() => {
     const fetchAllStudents = async () => {
@@ -101,6 +102,7 @@ const CreateClass = () => {
         location: newClassData.location,
         checkIn: newClassData.checkIn,
         checkOut: newClassData.checkOut,
+        activeDays: selectedDays,
         students: selectedStudents.map((student) => ({
           student: student._id,
           seatInfo: {
@@ -195,69 +197,17 @@ const CreateClass = () => {
             Days of the Week
           </h3>
           <div className="flex flex-wrap py-[1rem] gap-4 justify-center font-poppins lg:text-md sm:text-xs max-w-[100%]">
-            <div className="flex gap-2">
-              Sun{" "}
-              <Checkbox
-                id="Sunday"
-                handleCheckboxChange={() => handleDayChange("Sunday")}
-                isChecked={selectedDays.includes("Sunday")}
-                label="Sunday"
-              />
-            </div>
-            <div className="flex gap-2">
-              Mon{" "}
-              <Checkbox
-                id="Monday"
-                handleCheckboxChange={() => handleDayChange("Monday")}
-                isChecked={selectedDays.includes("Monday")}
-                label="Monday"
-              />
-            </div>
-            <div className="flex gap-2">
-              Tues{" "}
-              <Checkbox
-                id="Tuesday"
-                handleCheckboxChange={() => handleDayChange("Tuesday")}
-                isChecked={selectedDays.includes("Tuesday")}
-                label="Tuesday"
-              />
-            </div>
-            <div className="flex gap-2">
-              Wed{" "}
-              <Checkbox
-                id="Wednesday"
-                handleCheckboxChange={() => handleDayChange("Wednesday")}
-                isChecked={selectedDays.includes("Wednesday")}
-                label="Wednesday"
-              />
-            </div>
-            <div className="flex gap-2">
-              Thurs{" "}
-              <Checkbox
-                id="Thursday"
-                handleCheckboxChange={() => handleDayChange("Thursday")}
-                isChecked={selectedDays.includes("Thursday")}
-                label="Thursday"
-              />
-            </div>
-            <div className="flex gap-2">
-              Fri{" "}
-              <Checkbox
-                id="Friday"
-                handleCheckboxChange={() => handleDayChange("Friday")}
-                isChecked={selectedDays.includes("Friday")}
-                label="Friday"
-              />
-            </div>
-            <div className="flex gap-2">
-              Sat{" "}
-              <Checkbox
-                id="Saturday"
-                handleCheckboxChange={() => handleDayChange("Saturday")}
-                isChecked={selectedDays.includes("Saturday")}
-                label="Saturday"
-              />
-            </div>
+            {daysOfWeek.map((day) => (
+              <div key={day} className="flex gap-2 items-center">
+                {day}{" "}
+                <Checkbox
+                  id={day}
+                  handleCheckboxChange={() => handleDayChange(day)}
+                  isChecked={selectedDays.includes(day)}
+                  label={day}
+                />
+              </div>
+            ))}
           </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">

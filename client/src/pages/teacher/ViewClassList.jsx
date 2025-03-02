@@ -26,6 +26,7 @@ import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
 import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
 import { handleSuccess } from "../../utils/toastHandling";
+import Checkbox from "../../components/Checkbox.jsx";
 
 const ViewClassList = () => {
   const { teacherId, classroomId } = useParams();
@@ -43,6 +44,21 @@ const ViewClassList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { setHasUnsavedChanges } = useUnsavedChanges();
   const modalRefs = useRef({});
+  const [selectedDays, setSelectedDays] = useState([]);
+  const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const daysToBitmask = {
+    SUN: 1,
+    MON: 2,
+    TUE: 4,
+    WED: 8,
+    THU: 16,
+    FRI: 32,
+    SAT: 64,
+  };
+
+  const calculateBitmask = (days) => {
+    return days.reduce((bitmask, day) => bitmask | daysToBitmask[day], 0);
+  };
 
   const openConfirmModal = (classroomId) => {
     modalRefs.current[classroomId]?.current?.showModal();
@@ -59,6 +75,20 @@ const ViewClassList = () => {
     return modalRefs.current[classroomId];
   };
 
+  const bitmaskToDays = (bitmask) => {
+    const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const days = [];
+
+    // Check each bit (from right to left) and add the corresponding day to the array
+    daysOfWeek.forEach((day, index) => {
+      if (bitmask & (1 << index)) {
+        days.push(day); // If the bit is set, add the day to the array
+      }
+    });
+
+    return days;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,16 +100,30 @@ const ViewClassList = () => {
         );
         setStudents(classroomStudents);
         setUserInfo(userData);
+        const bitmask = classroom.activeDays;
+        if (bitmask) {
+          const days = bitmaskToDays(bitmask);
+          setSelectedDays(days);
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
-    console.log("classroom: " + JSON.stringify(classroom));
-
     window.scrollTo(0, 0);
     fetchData();
   }, [teacherId, classroomId]);
+
+  const handleDayChange = (day) => {
+    setSelectedDays((prev) => {
+      if (prev.includes(day)) {
+        return prev.filter((selectedDay) => selectedDay !== day);
+      } else {
+        return [...prev, day];
+      }
+    });
+    setHasUnsavedChanges(true);
+  };
 
   const handleDeleteStudent = async (studentId, studentName) => {
     try {
@@ -97,6 +141,8 @@ const ViewClassList = () => {
   };
 
   const saveClassroomInfo = async () => {
+    const bitmask = calculateBitmask(selectedDays);
+
     // finding the index of this classroom needing to be updated
     const classroomIndex = userInfo.classrooms.findIndex(
       (c) => c._id === classroom._id
@@ -114,6 +160,7 @@ const ViewClassList = () => {
     updatedUserInfo.classrooms[classroomIndex] = {
       ...updatedUserInfo.classrooms[classroomIndex],
       classSubject: classroom.classSubject,
+      activeDays: bitmask,
       location: classroom.location,
       checkIn: classroom.checkIn,
       checkOut: classroom.checkOut,
@@ -132,12 +179,8 @@ const ViewClassList = () => {
     }, 2500);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setClassroom({
-      ...classroom,
-      [name]: value,
-    });
+  const handleInputChange = (field, value) => {
+    setClassroom((prevData) => ({ ...prevData, [field]: value }));
     setHasUnsavedChanges(true);
   };
 
@@ -164,79 +207,87 @@ const ViewClassList = () => {
                     </header>
 
                     {/* Classroom Info (on Edit only) */}
-                    <section className="bg-sandwich w-[80%] max-w-[530px] ml-auto mr-auto px-5 rounded-[1rem] my-[1rem] mb-5 md:mb-14">
-                      <input
-                        className="flex w-full md:w-44 h-10 border-2 border-gray rounded my-3 pl-3 text-[18px] md:text-[22px]"
-                        name="classSubject"
-                        placeholder="Subject"
-                        value={classroom.classSubject}
-                        onChange={handleChange}
+                    <div className="bg-sandwich max-w-[40%] min-w-[23rem] ml-auto mr-auto p-[1rem] rounded-[1rem] lg:my-[1rem] sm:my-[0rem]">
+                      <h3 className="mb-[0.5rem] ml-[0.5rem] font-poppins font-bold text-sm">
+                        Title or Subject
+                      </h3>
+                      <FormField
+                        label="Math"
+                        value={classroom?.classSubject || ""}
+                        onChange={(e) =>
+                          handleInputChange("classSubject", e.target.value)
+                        }
                       />
-                      <div className="bg-notebookPaper p-[0.3rem] rounded-[1rem]">
-                        <div className="flex flex-col md:flex-row justify-between mx-2">
-                          <div className="flex-col text-sm font-body">
-                            <label
-                              htmlFor="location"
-                              className="text-[14px] md:text-[16px]"
-                            >
-                              Location:
-                            </label>
-                            <input
-                              id="location"
-                              className="border-2 w-44 xs:w-56 border-gray rounded pl-3 py-1 text-[15px] md:text-[18px]"
-                              name="location"
-                              placeholder="Room 123"
-                              value={classroom.location}
-                              onChange={handleChange}
+
+                      <h3 className="mb-[0.5rem] ml-[0.5rem] mt-[1rem] font-poppins font-bold text-sm">
+                        Days of the Week
+                      </h3>
+                      <div className="flex flex-wrap py-[1rem] gap-4 justify-center font-poppins lg:text-md sm:text-xs max-w-[100%]">
+                        {daysOfWeek.map((day) => (
+                          <div key={day} className="flex gap-2 items-center">
+                            {day}{" "}
+                            <Checkbox
+                              id={day}
+                              handleCheckboxChange={() => handleDayChange(day)}
+                              isChecked={selectedDays.includes(day)}
+                              label={day}
                             />
                           </div>
+                        ))}
+                      </div>
+                      <div className="rounded-[1rem]">
+                        <div className="flex-col text-sm font-body">
+                          <h3 className="mt-[0.5rem] mb-[0.5rem] ml-[0.5rem] font-poppins font-bold text-sm">
+                            Location
+                          </h3>
+                          <FormField
+                            label="Classroom 101"
+                            value={classroom?.location || ""}
+                            onChange={(e) =>
+                              handleInputChange("location", e.target.value)
+                            }
+                          />
+                        </div>
 
-                          <div className="flex text-sm font-body gap-4 mt-2">
-                            <div>
-                              <label
-                                htmlFor="checkin"
-                                className="text-[14px] md:text-[16px]"
-                              >
+                        <div>
+                          <div className="flex gap-[8rem]">
+                            <div className="w-[50%]">
+                              <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[1rem] font-poppins font-bold text-sm">
                                 Check-in:
-                              </label>
-                              <input
-                                id="checkin"
-                                className="flex w-20 xs:w-24 border-2 border-gray rounded pl-2 py-1 text-[15px] md:text-[18px]"
-                                name="checkIn"
-                                type="time"
-                                value={classroom.checkIn}
-                                onChange={handleChange}
+                              </h3>
+                              <FormField
+                                label="00:00 AM"
+                                value={classroom?.checkIn || ""}
+                                onChange={(e) =>
+                                  handleInputChange("checkIn", e.target.value)
+                                }
+                                inputType="time"
                               />
                             </div>
-                            <div>
-                              <label
-                                htmlFor="checkout"
-                                className="text-[14px] md:text-[16px]"
-                              >
+                            <div className="w-[50%]">
+                              <h3 className="mb-[0.5rem] ml-[0.2rem] mt-[1rem] font-poppins font-bold text-sm">
                                 Check-out:
-                              </label>
-                              <input
-                                id="checkout"
-                                className="flex w-20 xs:w-24 border-2 border-gray rounded pl-2 py-1 text-[15px] md:text-[18px]"
-                                name="checkOut"
-                                type="time"
-                                value={classroom.checkOut}
-                                onChange={handleChange}
+                              </h3>
+                              <FormField
+                                label="00:00 PM"
+                                value={classroom?.checkOut || ""}
+                                onChange={(e) =>
+                                  handleInputChange("checkOut", e.target.value)
+                                }
+                                inputType="time"
                               />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="flex justify-center bg-sandwich rounded-[1rem] py-[0.8rem]">
-                        <h2 className="text-[16px] md:text-header3 font-semibold font-[Poppins] underline">
-                          <a
-                            href={`/edit-seating-chart/${teacherId}/${classroomId}`}
-                          >
-                            Edit Seating Chart
+                      <div className="flex justify-center bg-sandwich rounded-[1rem] mt-[1rem]">
+                        <h2 className="text-sm font-body">
+                          <a href="/edit-seating-chart/:teacherId/:classroomId">
+                            <u>Edit Seating Chart</u>
                           </a>
                         </h2>
                       </div>
-                    </section>
+                    </div>
                   </>
                 ) : (
                   <section className="flex flex-col w-full md:justify-center md:flex-row md:mt-6 px-5 mb-5 md:mb-0">
@@ -293,6 +344,7 @@ const ViewClassList = () => {
                           <ClassDetails
                             teacherId={teacherId}
                             classroomId={classroomId}
+                            selectedDays={selectedDays}
                           />
                         </div>
                       </div>
@@ -433,5 +485,17 @@ const ViewClassList = () => {
     </>
   );
 };
+
+const FormField = ({ label, value, onChange, inputType }) => (
+  <div>
+    <input
+      type={inputType || "text"}
+      placeholder={label}
+      value={value}
+      onChange={onChange}
+      className="custom-placeholder custom-input"
+    />
+  </div>
+);
 
 export default withAuth(["teacher"])(ViewClassList);

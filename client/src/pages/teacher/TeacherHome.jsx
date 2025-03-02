@@ -157,11 +157,11 @@ const TeacherHome = () => {
     <>
       <div className="flex flex-col justify-center">
         <div className="h-screen lg:ml-28">
-          <div className="max-w-5xl mx-auto px-4">
+          <div className="max-w-5xl mx-auto px-4 pb-60 lg:pb-32">
             <header className=" mb-3">
               <Greeting isEditMode={isEditMode} userData={userData} />
             </header>
-            <section className="custom-scrollbar h-[60%] grid">
+            <section className="h-[60%] grid">
               {userData && userData.classrooms ? (
                 <>
                   {/* Your Classes Today */}
@@ -190,7 +190,7 @@ const TeacherHome = () => {
                           <div key={index}>
                             {/* TODO: fix height for medium and small screens */}
                             <Link
-                              className={`block w-[80%] ml-auto mr-auto my-[1rem] ${
+                              className={`block w-[80%] ml-auto mr-auto my-[1rem] h-[165px] ${
                                 isEditMode ? "pointer-events-none" : ""
                               }`}
                               to={
@@ -211,7 +211,7 @@ const TeacherHome = () => {
                                     {/* if in isEditMode and user clicks do opposite */}
                                     {isEditMode ? (
                                       <button
-                                        className="z-20 pointer-events-auto"
+                                        className="pointer-events-auto"
                                         onClick={() => {
                                           console.log("clicked on favorite");
                                           handleToggleFavorite(classroom._id);
@@ -362,7 +362,7 @@ const TeacherHome = () => {
                               }
                             >
                               <article
-                                className={`bg-sandwich p-[0.5rem] rounded-[1rem] ${
+                                className={`bg-sandwich p-[0.5rem] rounded-[1rem] overflow-hidden ${
                                   !isEditMode
                                     ? "hover:scale-[102%] transition-transform duration-300 ease-in-out hover:border-darkSandwich hover:border-2"
                                     : ""
@@ -372,7 +372,7 @@ const TeacherHome = () => {
                                   {/* if in isEditMode and user clicks do opposite */}
                                   {isEditMode ? (
                                     <button
-                                      className="z-20 pointer-events-auto"
+                                      className="pointer-events-auto"
                                       onClick={() => {
                                         console.log("clicked on favorite");
                                         handleToggleFavorite(classroom._id);

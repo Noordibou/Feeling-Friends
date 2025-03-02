@@ -24,6 +24,7 @@ import favoriteIconStar from "../../images/favoriteIconStar.svg";
 import unFavIconStar from "../../images/unfavIconStar.svg";
 import Button from "../../components/Button.jsx";
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
+import Tooltip from "../../components/Tooltip.jsx";
 
 const TeacherHome = () => {
   const { userData, updateUser } = useUser();
@@ -244,14 +245,19 @@ const TeacherHome = () => {
                                     </p>
                                   </div>
                                   {isEditMode ? (
-                                    <button
-                                      className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
-                                      onClick={() =>
-                                        openConfirmModal(classroom._id)
-                                      }
+                                    <Tooltip
+                                      content="Delete class"
+                                      side="left-16"
                                     >
-                                      <img src={xButton} alt="xButton" />
-                                    </button>
+                                      <button
+                                        className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
+                                        onClick={() =>
+                                          openConfirmModal(classroom._id)
+                                        }
+                                      >
+                                        <img src={xButton} alt="xButton" />
+                                      </button>
+                                    </Tooltip>
                                   ) : null}
                                 </header>
 

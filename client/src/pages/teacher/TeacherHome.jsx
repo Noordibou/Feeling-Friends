@@ -22,9 +22,11 @@ import { handleSuccess } from "../../utils/toastHandling";
 import { formatTime } from "../../utils/dateFormat";
 import favoriteIconStar from "../../images/favoriteIconStar.svg";
 import unFavIconStar from "../../images/unfavIconStar.svg";
+import Button from "../../components/Button.jsx";
+import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 
 const TeacherHome = () => {
-  const { userData } = useUser();
+  const { userData, updateUser } = useUser();
   const [classroomsData, setClassroomsData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -108,10 +110,7 @@ const TeacherHome = () => {
 
   const handleToggleFavorite = (classroomId) => {
     setClassroomsData((prevClassroomsData) => {
-      if (!prevClassroomsData || prevClassroomsData.length === 0) {
-        console.error("classroomsData is not initialized or empty.");
-        return prevClassroomsData;
-      }
+      if (!prevClassroomsData) return prevClassroomsData;
 
       const updatedData = prevClassroomsData.map((item) =>
         item.classroom._id === classroomId
@@ -125,13 +124,29 @@ const TeacherHome = () => {
           : item
       );
 
-      console.log("Updated classroomsData:", updatedData);
       return updatedData;
     });
   };
 
-  const handleEditClick = () => {
-    setIsEditMode(!isEditMode);
+  const handleEditClick = async () => {
+    if (!userData || !classroomsData) return;
+
+    const updatedUserData = {
+      ...userData,
+      classrooms: classroomsData.map((item) => item.classroom),
+    };
+
+    console.log("Submitting updated userData:", updatedUserData);
+
+    try {
+      await updateUser(updatedUserData);
+      console.log("User data updated successfully!");
+
+      // Clear pending updates after successful submission
+      setIsEditMode(false);
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
   };
 
   if (loading) {
@@ -166,6 +181,10 @@ const TeacherHome = () => {
                           return getActiveDays(classroom.activeDays).includes(
                             today
                           );
+                        })
+                        .sort(({ classroom: a }, { classroom: b }) => {
+                          // Sort so that favorite classrooms are at the top
+                          return b.isFavorite - a.isFavorite; // 1: a isFavorite is false, b isFavorite is true
                         })
                         .map(({ classroom, zorPercentages }, index) => (
                           <div key={index}>
@@ -210,7 +229,6 @@ const TeacherHome = () => {
                                       </button>
                                     ) : classroom.isFavorite ? (
                                       <img
-                                        className="bg-blue"
                                         src={favoriteIconStar}
                                         alt="is fav"
                                       />
@@ -327,6 +345,10 @@ const TeacherHome = () => {
                             today
                           );
                         })
+                        .sort(({ classroom: a }, { classroom: b }) => {
+                          // Sort so that favorite classrooms are at the top
+                          return b.isFavorite - a.isFavorite; // 1: a isFavorite is false, b isFavorite is true
+                        })
                         .map(({ classroom, zorPercentages }, index) => (
                           <div key={`other-${index}`}>
                             <Link
@@ -347,6 +369,32 @@ const TeacherHome = () => {
                                 }`}
                               >
                                 <header className="flex justify-between items-center w-full my-2">
+                                  {/* if in isEditMode and user clicks do opposite */}
+                                  {isEditMode ? (
+                                    <button
+                                      className="z-20 pointer-events-auto"
+                                      onClick={() => {
+                                        console.log("clicked on favorite");
+                                        handleToggleFavorite(classroom._id);
+                                      }}
+                                    >
+                                      <img
+                                        src={
+                                          classroom.isFavorite
+                                            ? favoriteIconStar
+                                            : unFavIconStar
+                                        }
+                                        alt="Favorite"
+                                        className="cursor-pointer"
+                                      />
+                                    </button>
+                                  ) : classroom.isFavorite ? (
+                                    <img
+                                      className=""
+                                      src={favoriteIconStar}
+                                      alt="is fav"
+                                    />
+                                  ) : null}
                                   <h2 className="text-header4 font-header2 text-left w-[50%]">
                                     {classroom.classSubject}
                                   </h2>
@@ -449,17 +497,30 @@ const TeacherHome = () => {
                 <p>Loading classrooms...</p>
               )}
             </section>
-            <div className="flex justify-center pt-2">
-              <button
-                className="text-header2 font-header2 underline"
-                onClick={handleEditClick}
-              >
-                {isEditMode ? "Done" : ""}
-              </button>
-            </div>
+            {/* Save Button on Tablet and Phone screens centered*/}
+            {isEditMode && (
+              <>
+                <div className="lg:hidden flex justify-center items-center ">
+                  <div
+                    className="lg:hidden fixed bottom-32 xs:bottom-36 flex items-center justify-center "
+                    onClick={handleEditClick}
+                  >
+                    <Button buttonText="Save" />
+                  </div>
+                </div>
+                {/* Small Save button for desktop/large screens to the right */}
+                <div>
+                  <div
+                    className="hidden lg:fixed lg:bottom-36 lg:right-10 lg:flex "
+                    onClick={handleEditClick}
+                  >
+                    <SmallSaveButton />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
-          {/* <div className="w-[35%] lg:order-first"> */}
           <aside className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
             <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />
           </aside>

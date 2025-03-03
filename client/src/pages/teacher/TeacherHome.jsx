@@ -423,7 +423,7 @@ const TeacherHome = () => {
                                   {isEditMode ? (
                                     <Tooltip
                                       content="Delete class"
-                                      tooltipStyling="-translate-x-[-20px] translate-y-[30px]"
+                                      tooltipStyling="left-[30px] top-[-30px]"
                                     >
                                       <button
                                         className="-mt-[3rem] -mx-[2rem] pointer-events-auto"

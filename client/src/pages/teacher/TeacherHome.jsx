@@ -213,7 +213,7 @@ const TeacherHome = () => {
                                     {isEditMode ? (
                                       <Tooltip
                                         content="Unmark class as favorite"
-                                        side="-right-24"
+                                        tooltipStyling="right-[50px] top-[-10px]"
                                       >
                                         <button
                                           className="pointer-events-auto"
@@ -252,7 +252,7 @@ const TeacherHome = () => {
                                   {isEditMode ? (
                                     <Tooltip
                                       content="Delete class"
-                                      side="left-16"
+                                      tooltipStyling="left-[30px] top-[-30px]"
                                     >
                                       <button
                                         className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
@@ -373,7 +373,7 @@ const TeacherHome = () => {
                               }
                             >
                               <article
-                                className={`bg-sandwich p-[0.5rem] rounded-[1rem] overflow-hidden ${
+                                className={`bg-sandwich p-[0.5rem] rounded-[1rem] ${
                                   !isEditMode
                                     ? "hover:scale-[102%] transition-transform duration-300 ease-in-out hover:border-darkSandwich hover:border-2"
                                     : ""
@@ -384,7 +384,7 @@ const TeacherHome = () => {
                                   {isEditMode ? (
                                     <Tooltip
                                       content="Unmark class as favorite"
-                                      side="-right-24"
+                                      tooltipStyling="right-[50px] top-[-10px]"
                                     >
                                       <button
                                         className="pointer-events-auto"
@@ -423,7 +423,7 @@ const TeacherHome = () => {
                                   {isEditMode ? (
                                     <Tooltip
                                       content="Delete class"
-                                      side="left-16"
+                                      tooltipStyling="-translate-x-[-20px] translate-y-[30px]"
                                     >
                                       <button
                                         className="-mt-[3rem] -mx-[2rem] pointer-events-auto"

@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
-const Tooltip = ({ children, content, side }) => {
+const Tooltip = ({ children, content, tooltipStyling }) => {
   const [isHovered, setIsHovered] = useState(false);
-  //  hello
+
   return (
     <div
       className="relative inline-block"
@@ -12,11 +13,15 @@ const Tooltip = ({ children, content, side }) => {
       {children}
 
       {isHovered && (
-        <div
-          className={`absolute bottom-full mb-2 ${side} py-3 transform -translate-x-1/2 bg-graphite text-white text-sm px-5 rounded-3xl shadow-lg z-30 underline whitespace-nowrap`}
+        <motion.div
+          className={`absolute bottom-full mb-2 py-3 h-12 ${tooltipStyling} bg-graphite text-white text-sm px-5 rounded-3xl shadow-lg z-30 underline whitespace-nowrap`}
+          initial={{ opacity: 0, x: -10 }} // Start from a slightly off position and transparent
+          animate={{ opacity: 1, x: 0 }} // Animate to visible position
+          exit={{ opacity: 0, x: -10 }} // Exit with fade and shift
+          transition={{ duration: 0.3, ease: "easeInOut" }} // Set duration and easing
         >
           {content}
-        </div>
+        </motion.div>
       )}
     </div>
   );

@@ -27,31 +27,31 @@ export default function Footer() {
                 <ul>
                 <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
                   Brianne Camesi<br />
-                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="#">Portfolio</a></button>
-                  <a href="https://github.com/freckledspider">
+                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="https://bricamesi.vercel.app/" target="_blank">Portfolio</a></button>
+                  <a href="https://github.com/freckledspider" target="_blank">
                     <img className="inline w-[28px] h-[28px] ml-[1rem] mr-[1rem]" src={GitHub} />
                   </a>{" "}
-                  <a href="https://www.linkedin.com/in/briannecamesi/">
+                  <a href="https://www.linkedin.com/in/briannecamesi/" target="_blank">
                     <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
                   </a>
                 </li>
                 <li className="font-poppins text-sm pt-[1.5rem] max-sm:text-xs">
                   Noor Dibou<br />
-                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="#">Portfolio</a></button>
-                  <a href="https://github.com/Noordibou">
+                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="https://noor-dibou.vercel.app/" target="_blank">Portfolio</a></button>
+                  <a href="https://github.com/Noordibou" target="_blank">
                     <img className="inline w-[28px] h-[28px] ml-[1rem] mr-[1rem]" src={GitHub} />
                   </a>{" "}
-                  <a href="https://linkedin.com/in/noordibou/">
+                  <a href="https://linkedin.com/in/noordibou/" target="_blank">
                     <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
                   </a>
                 </li>
                 <li className="font-poppins text-sm pt-[1.5rem] max-sm:text-xs">
                   Alex Grimes<br />
-                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="#">Portfolio</a></button>
-                  <a href="https://github.com/agrimes23">
+                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="https://alex-grimes-fullstack.herokuapp.com/" target="_blank">Portfolio</a></button>
+                  <a href="https://github.com/agrimes23" target="_blank">
                     <img className="inline w-[28px] h-[28px] ml-[1rem] mr-[1rem]" src={GitHub} />
                   </a>{" "}
-                  <a href="https://www.linkedin.com/in/alex-grimes-dev/">
+                  <a href="https://www.linkedin.com/in/alex-grimes-dev/" target="_blank">
                     <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
                   </a>
                 </li>
@@ -67,23 +67,21 @@ export default function Footer() {
                 <ul>
                 <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
                   Anthony Sudol<br />
-                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="#">Portfolio</a></button>
-                  <a href="https://github.com/howdytony">
+                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="https://www.anthonysudol.com/" target="_blank">Portfolio</a></button>
+                  <a href="https://github.com/howdytony" target="_blank">
                     <img className="inline w-[28px] h-[28px] ml-[1rem] mr-[1rem]" src={GitHub} />
                   </a>{" "}
-                  <a href="https://www.linkedin.com/in/anthonysudol">
+                  <a href="https://www.linkedin.com/in/anthonysudol" target="_blank">
                     <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
                   </a>
                 </li>
                 <li className="font-poppins text-sm pt-[1.5rem] max-sm:text-xs">
                   July Choi<br />
-                  <a href="#">
-                    <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
-                  </a>
+                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="https://lifestance.com/provider/therapist/or/portland/july-choi/" target="_blank">Bio</a></button>
                 </li>
                 <li className="font-poppins text-sm pt-[1.5rem] max-sm:text-xs">
                   Sarah Shatto<br />
-                  <a href="#">
+                  <a href="https://www.linkedin.com/in/sarahshatto/" target="_blank">
                     <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
                   </a>
                 </li>

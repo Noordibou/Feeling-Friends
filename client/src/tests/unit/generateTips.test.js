@@ -1,5 +1,5 @@
-import subEmotionInfo from '../data/subEmotions';
-import emotionsExplained from '../data/emotionData.js';
+import subEmotionInfo from '../../data/subEmotions.js';
+import emotionsExplained from '../../data/emotionData.js';
 
 describe('Data Files', () => {
     test('Sub-emotions should be present in emotionData', () => {

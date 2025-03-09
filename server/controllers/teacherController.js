@@ -3,6 +3,19 @@ const Student = require("../models/Student.js");
 const User = require("../models/User.js");
 const mongoose = require("mongoose");
 
+const daysToBitmask = {
+  SUN: 1,
+  MON: 2,
+  TUE: 4,
+  WED: 8,
+  THU: 16,
+  FRI: 32,
+  SAT: 64,
+};
+
+const calculateBitmask = (days) => {
+  return days.reduce((bitmask, day) => bitmask | daysToBitmask[day], 0);
+};
 
 const createNewTeacher = async (req, res) => {
   try {
@@ -370,9 +383,16 @@ const createClassroom = async (req, res) => {
       return res.status(404).json({ error: 'Teacher not found' });
     }
 
+    // Calculate bitmask for activeDays
+    const activeDays = req.body.activeDays || []; // Expecting an array of days from the request
+    const activeDaysBitmask = calculateBitmask(activeDays);
+
     const newClassroom = {
       classSubject: req.body.classSubject,
+      activeDays: activeDaysBitmask,
       location: req.body.location,
+      checkIn: req.body.checkIn,
+      checkOut: req.body.checkOut,
       students: req.body.students || [],
     };
 
@@ -395,6 +415,7 @@ const getAllStudents = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 // updating the student seating chart with x y coords and assigned or unassigned.
 const updateStudentSeats = async (req, res) => {

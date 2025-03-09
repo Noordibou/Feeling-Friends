@@ -1,32 +1,50 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useRef } from 'react';
 
 const UnsavedChangesContext = createContext();
 
 export const UnsavedChangesProvider = ({ children }) => {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [ showUnsavedModal, setShowUnsavedModal] = useState(false)
   const [callback, setCallback] = useState(() => () => {});
+
+  const unsavedRef = useRef(null);
+
+  const registerRef = (ref) => {
+    unsavedRef.current = ref;
+  };
 
   const openModal = (onConfirm) => {
     setCallback(() => onConfirm);
-    setShowUnsavedModal(true)
+    if (unsavedRef.current) {
+      unsavedRef.current.showModal();
+    }
   };
 
   const closeModal = () => {
     setCallback(null);
-    setShowUnsavedModal(false);
+    if (unsavedRef.current) {
+      unsavedRef.current.close();
+    }
   };
 
   const confirmChanges = () => {
     if (callback) {
-      setHasUnsavedChanges(false)
-      callback(); // Executes the redirection or any other action
+      setHasUnsavedChanges(false);
+      callback();
     }
     closeModal();
   };
-  
+
   return (
-    <UnsavedChangesContext.Provider value={{ hasUnsavedChanges, openModal, closeModal, confirmChanges, setHasUnsavedChanges, showUnsavedModal, setShowUnsavedModal }}>
+    <UnsavedChangesContext.Provider
+      value={{
+        hasUnsavedChanges,
+        openModal,
+        closeModal,
+        confirmChanges,
+        setHasUnsavedChanges,
+        registerRef,
+      }}
+    >
       {children}
     </UnsavedChangesContext.Provider>
   );

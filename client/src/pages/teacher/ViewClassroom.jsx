@@ -18,7 +18,6 @@ import SimpleTopNav from "../../components/SimpleTopNav";
 import Logout from "../../components/LogoutButton";
 import editIcon from "../../images/edit_icon.png";
 
-
 const ViewClassroom = () => {
   const { userData } = useUser();
   const [classroom, setClassroom] = useState(null);
@@ -28,7 +27,21 @@ const ViewClassroom = () => {
   const constraintsRef = useRef(null);
   const [selectedStudent, setSelectedStudent] = useState({});
   const [showMsg, setShowMsg] = useState(false);
-  const [assignedFurniture, setAssignedFurniture] = useState([])
+  const [assignedFurniture, setAssignedFurniture] = useState([]);
+  const [selectedDays, setSelectedDays] = useState([]);
+
+  const bitmaskToDays = (bitmask) => {
+    const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const days = [];
+
+    daysOfWeek.forEach((day, index) => {
+      if (bitmask & (1 << index)) {
+        days.push(day);
+      }
+    });
+
+    return days;
+  };
 
   const getClassroomData = async () => {
     try {
@@ -54,11 +67,17 @@ const ViewClassroom = () => {
       );
       setAssignedStudents(students);
 
+      const bitmask = classroom.activeDays;
+      if (bitmask) {
+        const days = bitmaskToDays(bitmask);
+        setSelectedDays(days);
+      }
+
       const furniture = classroom.furniture.filter(
         (item) => item.assigned === true
       );
-      
-      setAssignedFurniture(furniture)
+
+      setAssignedFurniture(furniture);
     } catch (error) {
       console.log("oof error ");
       console.log(error);
@@ -103,13 +122,13 @@ const ViewClassroom = () => {
   return (
     <>
       <div className="flex flex-col h-screen w-screen">
-        <div className="hidden md:flex w-full justify-end underline mt-4 px-2 md:px-5">
+        <header className="hidden md:flex w-full justify-end underline mt-4 px-2 md:px-5">
           <Logout location="teacherLogout" userData={userData} />
-        </div>
-        <div className="flex flex-col md:items-center ">
-          <div className="flex flex-col h-screen max-w-4xl lg:z-40 ">
+        </header>
+        <main className="flex flex-col md:items-center ">
+          <section className="flex flex-col h-screen max-w-4xl lg:z-40 ">
             {/* Top Navbar */}
-            <div className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-6 pt-2 px-2 z-20">
+            <header className="flex flex-col h-[280px] md:h-auto w-full md:justify-between md:mt-6 pt-2 px-2 z-20">
               <div className="flex justify-center w-full flex-col md:flex-row ">
                 <div className="flex">
                   <div className="flex md:justify-center">
@@ -126,12 +145,13 @@ const ViewClassroom = () => {
                       <ClassDetails
                         teacherId={teacherId}
                         classroomId={classroomId}
+                        selectedDays={selectedDays}
                       />
                     </div>
                   </div>
                 </div>
                 {/* Seating Chart & Class List Buttons */}
-                <div className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
+                <nav className="flex justify-around md:justify-between gap-4 items-center mb-5 md:mb-0">
                   <ButtonView
                     buttonText="Seating Chart"
                     btnImageWhenOpen={classBoxesIcon}
@@ -149,16 +169,18 @@ const ViewClassroom = () => {
                       buttonSize="small"
                     />
                   </Link>
-                </div>
+                </nav>
               </div>
-              <a href={`/edit-seating-chart/${teacherId}/${classroomId}`} className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3">
+              <a
+                href={`/edit-seating-chart/${teacherId}/${classroomId}`}
+                className="flex self-center items-center justify-center px-8 w-full md:w-72 border-2 border-sandwich rounded-[1.2rem] mb-[1rem] p-[0.8rem] gap-3"
+              >
                 <h2 className="text-[16px] md:text-[18px] font-[Poppins] text-center underline">
-                  
-                    edit seating chart
+                  edit seating chart
                 </h2>
                 <img src={editIcon} alt="edit icon" className="h-6 w-6" />
               </a>
-            </div>
+            </header>
 
             <div
               className={`${
@@ -171,7 +193,7 @@ const ViewClassroom = () => {
             {classroom ? (
               <>
                 {/* static classroom */}
-                <div className="relative flex w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
+                <section className="relative flex w-full md:w-[752px] md:h-[570px] h-full overflow-auto md:overflow-visible shadow-inner-md md:shadow-none scrollbar-bg-transparent">
                   {/* Classroom Container */}
                   {/* movable classroom */}
                   <div
@@ -267,7 +289,7 @@ const ViewClassroom = () => {
                                     ? SampleAvatar
                                     : assignedStudent?.avatarImg
                                 }
-                                alt={assignedStudent?.firstName}
+                                alt="Student avatar"
                               />
                             </div>
                             <h3 className="flex h-full text-[10px] font-[Poppins] text-center flex-col-reverse">
@@ -279,7 +301,7 @@ const ViewClassroom = () => {
                       );
                     })}
                   </div>
-                </div>
+                </section>
               </>
             ) : (
               <div className="flex w-[752px] h-[61%] rounded-[1rem] mt-3 mr-auto ml-auto border-[#D2C2A4] border-[8px] shadow-2xl">
@@ -309,33 +331,33 @@ const ViewClassroom = () => {
                 handleClick={() => closeStudentInfo(selectedStudent)}
               />
             </div>
-          
-          <div
-            className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
-          >
-            <h4 className="text-black font-[Poppins] text-[32px] mt-32 md:mt-20 max-w-[740px] text-center font-semibold bg-notebookPaper">
-              Nothing assigned yet!
-            </h4>
-          </div>
-          <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">
-            <button
-              onClick={handleZoomIn}
-              className=" px-4 py-2 bg-blue text-white rounded"
+
+            <div
+              className={`${showMsg ? "absolute" : "hidden"} mt-[350px] px-24`}
             >
-              +
-            </button>
-            <button
-              onClick={handleZoomOut}
-              className="px-4 py-2 bg-blue text-white rounded"
-            >
-              -
-            </button>
-          </div>
-          </div>
-          <div className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
+              <p className="text-black font-[Poppins] text-[32px] mt-32 md:mt-20 max-w-[740px] text-center font-semibold bg-notebookPaper">
+                Nothing assigned yet!
+              </p>
+            </div>
+            <div className="fixed bottom-4 left-2 flex flex-col gap-2 md:hidden justify-center my-4 z-20">
+              <button
+                onClick={handleZoomIn}
+                className=" px-4 py-2 bg-blue text-white rounded"
+              >
+                +
+              </button>
+              <button
+                onClick={handleZoomOut}
+                className="px-4 py-2 bg-blue text-white rounded"
+              >
+                -
+              </button>
+            </div>
+          </section>
+          <aside className="bottom-0 hidden md:block md:fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 z-20">
             <Nav teacherId={teacherId} classroomId={classroomId} />
-          </div>
-        </div>
+          </aside>
+        </main>
       </div>
     </>
   );

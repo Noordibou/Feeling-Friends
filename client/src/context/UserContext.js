@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from '../pages/Authentication/AuthContext';
-import { getStudentById, updateStudent, createStudent, deleteStudent } from '../api/studentsApi';
+import { getStudentById, createStudent, deleteStudent } from '../api/studentsApi';
 import { getTeacherById, updateTeacher, createTeacher } from '../api/teachersApi';
 
 const UserContext = createContext();
@@ -120,17 +120,6 @@ export const UserProvider = ({ children }) => {
         .catch((error) => {
           console.error('Error deleting student data:', error);
         });
-      // } else if (user.teacher) {
-      //   deleteTeacher(userId)
-      //     .then(() => {
-      //       console.log('Teacher data deleted successfully.');
-      //       const updatedData = userData.filter((data) => data.id !== userId);
-      //       setUserData(updatedData);
-      //       localStorage.setItem('userData', JSON.stringify(updatedData));
-      //     })
-      //     .catch((error) => {
-      //       console.error('Error deleting teacher data:', error);
-      //     });
     }
   };
 

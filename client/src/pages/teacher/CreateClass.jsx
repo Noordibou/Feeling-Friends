@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import {
   getTeacherById,
@@ -18,45 +18,30 @@ import Divider from "../../images/divider.png";
 import Arrow from "../../images/dropdownarrow.svg";
 import Sort from "../../images/sortaz.svg";
 import withAuth from "../../hoc/withAuth";
-
+import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
+import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
 
 const CreateClass = () => {
-
   const navigate = useNavigate();
   const { userData, updateUser } = useUser();
-  const [classroomsData, setClassroomsData] = useState([]);
   const [newClassData, setNewClassData] = useState({
     classSubject: "",
     location: "",
+    checkIn: "",
+    checkOut: "",
     students: [],
   });
   const [allStudents, setAllStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDays, setSelectedDays] = useState([]);
-  const [selectedStudents, setSelectedStudents] = useState([])
+  const [selectedStudents, setSelectedStudents] = useState([]);
   const [sortByLastName, setSortByLastName] = useState(false);
-  const [selectedGrade, setSelectedGrade] = useState('All');
+  const [selectedGrade, setSelectedGrade] = useState("All");
   const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
+  const { setHasUnsavedChanges } = useUnsavedChanges();
+  const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   useEffect(() => {
-    const fetchTeacherData = async () => {
-      try {
-        const response = await getTeacherById(userData._id);
-        const studentsPromises = response.classrooms.map(async (classroom) => {
-          const students = await getAllStudentsClassroom(
-            userData._id,
-            classroom._id
-          );
-          return { classroom, students };
-        });
-
-        const classroomsWithStudents = await Promise.all(studentsPromises);
-        setClassroomsData(classroomsWithStudents);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const fetchAllStudents = async () => {
       try {
         const allStudentsData = await getAllStudents();
@@ -66,24 +51,27 @@ const CreateClass = () => {
       }
     };
 
-    fetchTeacherData();
     fetchAllStudents();
   }, [userData]);
 
   const handleInputChange = (field, value) => {
     setNewClassData((prevData) => ({ ...prevData, [field]: value }));
+    setHasUnsavedChanges(true);
   };
 
   const handleStudentChange = (student) => {
     setSelectedStudents((prev) => {
       if (prev.some((selectedStudent) => selectedStudent._id === student._id)) {
         // If the student is already selected, remove them
-        return prev.filter((selectedStudent) => selectedStudent._id !== student._id);
+        return prev.filter(
+          (selectedStudent) => selectedStudent._id !== student._id
+        );
       } else {
         // Otherwise, add the student to the selected list
         return [...prev, student];
       }
     });
+    setHasUnsavedChanges(true);
   };
 
   const handleDayChange = (day) => {
@@ -94,36 +82,8 @@ const CreateClass = () => {
         return [...prev, day];
       }
     });
+    setHasUnsavedChanges(true);
   };
-
-  // probably would use this for the "submit" button
-  // FIXME: need to use selectedStudents instead of maybe prevData??
-  const handleAddStudent = (student) => {
-    console.log("handleAddStudent called with:", student);
-    setNewClassData((prevData) => {
-      const isSelected = prevData.students.some(s => s._id === student._id);
-      console.log("Is student already selected?", isSelected);
-      if (isSelected) {
-        const updatedStudents = prevData.students.filter(s => s._id !== student._id);
-        console.log("Removing student. Updated students:", updatedStudents);
-        return {
-          ...prevData,
-          students: updatedStudents,
-        };
-      } else {
-        const updatedStudents = [...prevData.students, student];
-        console.log("Adding student. Updated students:", updatedStudents);
-        return {
-          ...prevData,
-          students: updatedStudents,
-        };
-      }
-    });
-  };
-
-  // TODO: remove if no longer need, replaced with "selectedStudents"
-  const isStudentSelected = (studentId) =>
-    newClassData.students.some(s => s._id === studentId);
 
   const handleCreateClassroom = async () => {
     if (!newClassData.classSubject.trim()) {
@@ -140,6 +100,9 @@ const CreateClass = () => {
       const newClassroomData = {
         classSubject: newClassData.classSubject,
         location: newClassData.location,
+        checkIn: newClassData.checkIn,
+        checkOut: newClassData.checkOut,
+        activeDays: selectedDays,
         students: selectedStudents.map((student) => ({
           student: student._id,
           seatInfo: {
@@ -149,25 +112,20 @@ const CreateClass = () => {
           },
         })),
       };
-      const newClassroom = await createClassroom(
-        userData._id,
-        newClassroomData
-      );
+      await createClassroom(userData._id, newClassroomData);
 
-      setClassroomsData((prevData) => [
-        ...prevData,
-        { classroom: newClassroom },
-      ]);
       setSelectedStudents([]);
 
       // Updates React Context
       const updatedUserData = await getTeacherById(userData._id);
       updateUser(updatedUserData);
-
+      setHasUnsavedChanges(false);
       navigate(`/teacher-home`);
     } catch (error) {
       console.error(error);
-      alert("An error occurred while creating the classroom. Please try again.");
+      alert(
+        "An error occurred while creating the classroom. Please try again."
+      );
     }
   };
 
@@ -190,6 +148,7 @@ const CreateClass = () => {
         ? currentSelectedDays.filter((d) => d !== day)
         : [...currentSelectedDays, day]
     );
+    setHasUnsavedChanges(true);
   };
 
   const handleSortByLastName = () => {
@@ -205,9 +164,12 @@ const CreateClass = () => {
     setIsGradeDropdownOpen(false);
   };
 
-  const filteredByGradeStudents = selectedGrade === 'All'
-    ? sortedFilteredStudents
-    : sortedFilteredStudents.filter(student => student.gradeYear === selectedGrade);
+  const filteredByGradeStudents =
+    selectedGrade === "All"
+      ? sortedFilteredStudents
+      : sortedFilteredStudents.filter(
+          (student) => student.gradeYear === selectedGrade
+        );
 
   return (
     <>
@@ -235,64 +197,17 @@ const CreateClass = () => {
             Days of the Week
           </h3>
           <div className="flex flex-wrap py-[1rem] gap-4 justify-center font-poppins lg:text-md sm:text-xs max-w-[100%]">
-            
-            <div className="flex gap-2">
-              Sun{" "}
-              <Checkbox
-                id="Sunday"
-                handleCheckboxChange={() => handleDayChange("Sunday")}
-                isChecked={selectedDays.includes("Sunday")}
-
-              />
-            </div>
-            <div className="flex gap-2">
-            Mon{" "}
-              <Checkbox
-                id="Monday"
-                handleCheckboxChange={() => handleDayChange("Monday")}
-                isChecked={selectedDays.includes("Monday")}
-              />
-            </div>
-            <div className="flex gap-2">
-            Tues{" "}
-              <Checkbox
-                id="Tuesday"
-                handleCheckboxChange={() => handleDayChange("Tuesday")}
-                isChecked={selectedDays.includes("Tuesday")}
-              />
-            </div>
-            <div className="flex gap-2">
-            Wed{" "}
-              <Checkbox
-                id="Wednesday"
-                handleCheckboxChange={() => handleDayChange("Wednesday")}
-                isChecked={selectedDays.includes("Wednesday")}
-              />
-            </div>
-            <div className="flex gap-2">
-            Thurs{" "}
-              <Checkbox
-                id="Thursday"
-                handleCheckboxChange={() => handleDayChange("Thursday")}
-                isChecked={selectedDays.includes("Thursday")}
-              />
-            </div>
-            <div className="flex gap-2">
-            Fri{" "}
-              <Checkbox
-                id="Friday"
-                handleCheckboxChange={() => handleDayChange("Friday")}
-                isChecked={selectedDays.includes("Friday")}
-              />
-            </div>
-            <div className="flex gap-2">
-            Sat{" "}
-              <Checkbox
-                id="Saturday"
-                handleCheckboxChange={() => handleDayChange("Saturday")}
-                isChecked={selectedDays.includes("Saturday")}
-              />
-            </div>
+            {daysOfWeek.map((day) => (
+              <div key={day} className="flex gap-2 items-center">
+                {day}{" "}
+                <Checkbox
+                  id={day}
+                  handleCheckboxChange={() => handleDayChange(day)}
+                  isChecked={selectedDays.includes(day)}
+                  label={day}
+                />
+              </div>
+            ))}
           </div>
           <div className="rounded-[1rem]">
             <div className="flex-col text-sm font-body">
@@ -318,6 +233,7 @@ const CreateClass = () => {
                     onChange={(e) =>
                       handleInputChange("checkIn", e.target.value)
                     }
+                    inputType="time"
                   />
                 </div>
                 <div className="w-[50%]">
@@ -330,6 +246,7 @@ const CreateClass = () => {
                     onChange={(e) =>
                       handleInputChange("checkOut", e.target.value)
                     }
+                    inputType="time"
                   />
                 </div>
               </div>
@@ -432,17 +349,23 @@ const CreateClass = () => {
                     onClick={() => setIsGradeDropdownOpen(!isGradeDropdownOpen)}
                   >
                     Grade Level: {selectedGrade}
-                    <img src={Arrow} alt="Dropdown arrow" className={`transition-transform duration-300 ${isGradeDropdownOpen ? 'transform rotate-180' : ''}`} />
+                    <img
+                      src={Arrow}
+                      alt="Dropdown arrow"
+                      className={`transition-transform duration-300 ${
+                        isGradeDropdownOpen ? "transform rotate-180" : ""
+                      }`}
+                    />
                   </div>
                   {isGradeDropdownOpen && (
-                    <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border border-[0.1rem] border-sandwich rounded-3xl z-10">
-                      {['All', '1', '2', '3', '4', '5', '6'].map((grade) => (
+                    <div className="text-left absolute top-full left-0 w-full mt-1 font-poppins bg-notebookPaper border-[0.1rem] border-sandwich rounded-3xl z-10">
+                      {["All", "1", "2", "3", "4", "5", "6"].map((grade) => (
                         <div
                           key={grade}
                           className="p-2 hover:bg-gray-100 cursor-pointer"
                           onClick={() => handleGradeSelect(grade)}
                         >
-                        Grade Level: {grade}
+                          Grade Level: {grade}
                         </div>
                       ))}
                     </div>
@@ -464,6 +387,7 @@ const CreateClass = () => {
                           isChecked={selectedStudents.some(
                             (s) => s._id === student._id
                           )}
+                          label={`${student.firstName} ${student.lastName}`}
                         />
                         <div>
                           <img
@@ -472,7 +396,7 @@ const CreateClass = () => {
                                 ? youngStudent
                                 : student.avatarImg
                             }
-                            alt={student.lastName}
+                            alt={`${student.firstName} ${student.lastName}`}
                             className="max-w-[3rem] max-h-[3rem] rounded-[1rem] ml-[0.5rem] mr-[0.5rem]"
                           />
                         </div>
@@ -490,10 +414,11 @@ const CreateClass = () => {
               </div>
             )}
           </div>
+          <UnsavedChanges />
         </div>
 
-        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed md:top-[88%] top-[75%] md:left-[42%]">
-          <div onClick={handleCreateClassroom}>
+        <div className="h-[25%] w-full flex justify-center mt-[1rem] fixed lg:top-[88%] top-[75%] md:left-[42%]">
+          <div aria-label="Save" onClick={handleCreateClassroom}>
             <Button />
           </div>
         </div>
@@ -504,7 +429,6 @@ const CreateClass = () => {
           </div>
         </div> */}
 
-
         <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
           <Nav />
         </div>
@@ -513,11 +437,10 @@ const CreateClass = () => {
   );
 };
 
-
-const FormField = ({ label, value, onChange }) => (
+const FormField = ({ label, value, onChange, inputType }) => (
   <div>
     <input
-      type="text"
+      type={inputType || "text"}
       placeholder={label}
       value={value}
       onChange={onChange}
@@ -526,4 +449,4 @@ const FormField = ({ label, value, onChange }) => (
   </div>
 );
 
-export default withAuth(['teacher'])(CreateClass)
+export default withAuth(["teacher"])(CreateClass);

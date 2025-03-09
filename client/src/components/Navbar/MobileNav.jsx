@@ -4,7 +4,7 @@ import Classroom from "../../images/Classroom.png";
 import Goal from "../../images/Goal.png";
 import Settings from "../../images/Settings.png";
 import NavButton from "../../images/NavButton.png";
-import NavLogo from "../../images/NavLogo.png";
+import NavLogo from "../../images/NavLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext";
 import { handleError } from "../../utils/toastHandling";
@@ -24,7 +24,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
 
 
   const navigate = useNavigate()
-    const redirectTo = (url) => {
+  const redirectTo = (url) => {
     window.location.href = url;
   };
 
@@ -39,7 +39,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
     if (hasUnsavedChanges) {
       openModal(() => redirectTo(finalUrl));
     } else {
-      redirectTo(url);
+      redirectTo(finalUrl);
     }
   };
 
@@ -61,18 +61,21 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
 
   return (
     <>
-    <div className="hidden lg:inline-flex mt-4 ml-2">
-    <button
+    <div className="hidden lg:inline-flex mt-4 ml-2 w-[500px]">
+      <div>
+        <button
           type="button"
-          className="items-center m-3 mt-4"
+          className="items-center m-3 mt-2.8"
           onClick={toggle}
         >
-          <img src={NavButton} alt="Exterior" width={52} height={48}/>
+        <img src={NavButton} alt="Exterior" width={52} height={52}/>
         </button>
+        </div>
+        <div>
         <button aria-label="Go to teacher home" onClick={() => navigate("/teacher-home")}>
-          <img src={NavLogo} alt="Exterior" width={56} height={12} className="w-24 h-12 mt-4" />
+          <img src={NavLogo} alt="Exterior" className="mt-2" />
         </button>
-
+        </div>
     </div>
     <div className="flex w-full lg:hidden">
       {navs.map((item, index) => (

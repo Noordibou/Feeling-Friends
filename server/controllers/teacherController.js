@@ -373,6 +373,8 @@ const createClassroom = async (req, res) => {
     const newClassroom = {
       classSubject: req.body.classSubject,
       location: req.body.location,
+      checkIn: req.body.checkIn,
+      checkOut: req.body.checkOut,
       students: req.body.students || [],
     };
 

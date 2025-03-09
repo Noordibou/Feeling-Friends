@@ -14,6 +14,7 @@ import NavLogo from "../../images/NavLogo.svg"
 import Logo from "../../images/logolarge.svg"
 import { handleError, handleSuccess } from "../../utils/toastHandling"
 
+
 const Signup = () => {
   const navigate = useNavigate();
   const { handleLogin } = useAuth();
@@ -26,14 +27,15 @@ const Signup = () => {
     userDetails: {
       firstName: "",
       lastName: "",
-    }
+    },
   });
-  const { email, password, confirmPassword, username, role, userDetails } = inputValue;
+  const { email, password, confirmPassword, username, role, userDetails } =
+    inputValue;
 
   const [toastShown, setToastShown] = useState(false);
-  
+
   useEffect(() => {
-    const storedData = sessionStorage.getItem('teacherDeleteInfo');
+    const storedData = sessionStorage.getItem("teacherDeleteInfo");
 
     if (storedData) {
       const { success, teacherName } = JSON.parse(storedData);
@@ -42,7 +44,7 @@ const Signup = () => {
         handleSuccess(`${teacherName} deleted successfully!`);
         setToastShown(true);
         // Clear the data from sessionStorage
-        sessionStorage.removeItem('teacherDeleteInfo');
+        sessionStorage.removeItem("teacherDeleteInfo");
       }
     }
   }, [toastShown]);
@@ -64,7 +66,6 @@ const Signup = () => {
       });
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,7 +93,7 @@ const Signup = () => {
           password,
           username,
           role,
-          userDetails
+          userDetails,
         },
         { withCredentials: true }
       );
@@ -102,12 +103,11 @@ const Signup = () => {
 
         handleLogin(data.user);
         setTimeout(() => {
-          if (inputValue.role === "student"){
+          if (inputValue.role === "student") {
             navigate("/student-home");
           } else {
             navigate("/teacher-home");
           }
-          
         }, 1000);
       } else {
         handleError(message);
@@ -124,18 +124,26 @@ const Signup = () => {
       userDetails: {
         firstName: "",
         lastName: "",
-      }
+      },
     });
   };
 
   return (
     <div className="form_container flex flex-col min-w-screen min-h-screen items-center justify-center">
       {/* mobile logo */}
-      <button aria-label="go to landing page" className="flex md:hidden w-full justify-center pt-[3rem] p-[1.5rem]" onClick={() => navigate("/")}>
+      <button
+        aria-label="go to landing page"
+        className="flex md:hidden w-full justify-center pt-[3rem] p-[1.5rem]"
+        onClick={() => navigate("/")}
+      >
         <img src={Logo} alt="logo" />
       </button>
       {/* desktop logo */}
-      <button className="w-full" aria-label="go to landing page" onClick={() => navigate("/")}>
+      <button
+        className="w-full"
+        aria-label="go to landing page"
+        onClick={() => navigate("/")}
+      >
         <img
           src={NavLogo}
           alt="Exterior"
@@ -144,10 +152,10 @@ const Signup = () => {
           className="hidden md:flex w-32 h-14 mt-6 self-start mx-14"
         />
       </button>
-      <div className="flex flex-col w-10/12 sm:w-8/12 max-w-lg mt-10">
+      <main className="flex flex-col w-10/12 sm:w-8/12 max-w-lg mt-10">
         {/* <h2 className="flex font-header2 text-header2 mb-4">Create Account</h2> */}
 
-        <div className="flex flex-col mb-5 ">
+        <section className="flex flex-col mb-5 ">
           <h3 className="hidden md:flex py-5 text-[22px] font-bold text-center font-[Poppins] justify-center">
             What's your role?
           </h3>
@@ -157,9 +165,9 @@ const Signup = () => {
             setInputValue={setInputValue}
             inputValue={inputValue}
           />
-        </div>
+        </section>
 
-        <div>
+        <section>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col my-3">
               <label
@@ -273,99 +281,101 @@ const Signup = () => {
               </span>
             </div>
           </form>
-        </div>
-      </div>
+        </section>
+      </main>
       <ToastContainer />
 
       {/* Footer - please delete once footer component is made */}
-      <div className="flex max-sm:block justify-evenly bg-sandwich w-full mt-[4rem] p-[3rem] max-sm:p-[1.5rem]">
-        <div>
-          <img
-            className="border-b-[0.2rem] border-notebookPaper mb-[1rem]"
-            src={AboutFF}
-            alt="About Feeling Friends"
-          />
-          <p className="font-poppins text-sm">
-            Feeling Friends was born during a Hackathon in late 2023.
-          </p>
+      <footer>
+        <div className="flex max-sm:block justify-evenly bg-sandwich w-full mt-[4rem] p-[3rem] max-sm:p-[1.5rem]">
+          <div>
+            <img
+              className="border-b-[0.2rem] border-notebookPaper mb-[1rem]"
+              src={AboutFF}
+              alt="About Feeling Friends"
+            />
+            <p className="font-poppins text-sm">
+              Feeling Friends was born during a Hackathon in late 2023.
+            </p>
 
-          <div className="flex justify-between mt-[3rem]">
-            <div>
-              <ul>
-                <li className="font-poppins font-semibold text-notebookPaper">
-                  Software Development
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Brianne Camesi{" "}
-                  <a href="https://github.com/freckledspider">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://www.linkedin.com/in/briannecamesi/">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Noor Dibou{" "}
-                  <a href="https://github.com/Noordibou">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://linkedin.com/in/noordibou/">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Alex Grimes{" "}
-                  <a href="https://github.com/agrimes23">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://www.linkedin.com/in/alex-grimes-dev/">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul>
-                <li className="font-poppins font-semibold text-notebookPaper">
-                  User Experience Design
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Anthony Sudol{" "}
-                  <a href="https://github.com/howdytony">
-                    <img className="inline" src={GitHub} />
-                  </a>{" "}
-                  <a href="https://www.linkedin.com/in/anthonysudol">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  July Choi{" "}
-                  <a href="#">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-                <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
-                  Sarah Shatto{" "}
-                  <a href="#">
-                    <img className="inline" src={LinkedIn} />
-                  </a>
-                </li>
-              </ul>
+            <div className="flex justify-between mt-[3rem]">
+              <div>
+                <ul>
+                  <li className="font-poppins font-semibold text-notebookPaper">
+                    Software Development
+                  </li>
+                  <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
+                    Brianne Camesi{" "}
+                    <a href="https://github.com/freckledspider">
+                      <img className="inline" src={GitHub} />
+                    </a>{" "}
+                    <a href="https://www.linkedin.com/in/briannecamesi/">
+                      <img className="inline" src={LinkedIn} />
+                    </a>
+                  </li>
+                  <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
+                    Noor Dibou{" "}
+                    <a href="https://github.com/Noordibou">
+                      <img className="inline" src={GitHub} />
+                    </a>{" "}
+                    <a href="https://linkedin.com/in/noordibou/">
+                      <img className="inline" src={LinkedIn} />
+                    </a>
+                  </li>
+                  <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
+                    Alex Grimes{" "}
+                    <a href="https://github.com/agrimes23">
+                      <img className="inline" src={GitHub} />
+                    </a>{" "}
+                    <a href="https://www.linkedin.com/in/alex-grimes-dev/">
+                      <img className="inline" src={LinkedIn} />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <ul>
+                  <li className="font-poppins font-semibold text-notebookPaper">
+                    User Experience Design
+                  </li>
+                  <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
+                    Anthony Sudol{" "}
+                    <a href="https://github.com/howdytony">
+                      <img className="inline" src={GitHub} />
+                    </a>{" "}
+                    <a href="https://www.linkedin.com/in/anthonysudol">
+                      <img className="inline" src={LinkedIn} />
+                    </a>
+                  </li>
+                  <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
+                    July Choi{" "}
+                    <a href="#">
+                      <img className="inline" src={LinkedIn} />
+                    </a>
+                  </li>
+                  <li className="font-poppins text-sm pt-[0.5rem] max-sm:text-xs">
+                    Sarah Shatto{" "}
+                    <a href="#">
+                      <img className="inline" src={LinkedIn} />
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div>
-          <img
-            className="max-sm:pt-[1rem]"
-            src={FriendsWaving}
-            alt="Friends Waving"
-          />
+          <div>
+            <img
+              className="max-sm:pt-[1rem]"
+              src={FriendsWaving}
+              alt="Friends Waving"
+            />
+          </div>
         </div>
-      </div>
-      <div className="bg-sandwich w-full pb-[2rem] text-center font-poppins font-semibold text-xs">
-        © 2024
-      </div>
+        <div className="bg-sandwich w-full pb-[2rem] text-center font-poppins font-semibold text-xs">
+          © 2024
+        </div>
+      </footer>
     </div>
   );
 };

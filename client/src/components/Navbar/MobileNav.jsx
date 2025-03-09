@@ -24,7 +24,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
 
 
   const navigate = useNavigate()
-    const redirectTo = (url) => {
+  const redirectTo = (url) => {
     window.location.href = url;
   };
 
@@ -39,7 +39,7 @@ export default function MobileNavbar({ toggle, setIsEditMode, teacherId, classro
     if (hasUnsavedChanges) {
       openModal(() => redirectTo(finalUrl));
     } else {
-      redirectTo(url);
+      redirectTo(finalUrl);
     }
   };
 

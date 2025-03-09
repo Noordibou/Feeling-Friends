@@ -1,7 +1,7 @@
-import React from 'react';
-import {AnimatePresence, motion} from 'framer-motion'
-import saveBg from '../../images/saveModalBg.png'
-import successFrog from '../../images/successFrog.png'
+import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import saveBg from "../../images/saveModalBg.png";
+import successFrog from "../../images/successFrog.png";
 
 // How to use this temporary message modal:
 // Please follow the below instructions. All of the following should go on the page where it will be used
@@ -14,14 +14,12 @@ import successFrog from '../../images/successFrog.png'
 
 // Ex: <MsgModal showMsg={showMsg} msgText="anything you want as text" textColor="textwhite" />
 
-
 // * Can also be used as a normal permanent Msg modal. To do this, do the following:
 // <MsgModal showMsg={true} msgText="anything you want as text" />
 
 // TODO: might use tailwind animations instead of framer for this to make this component even more reusable https://tailwindcss.com/docs/animation
 
 const MsgModal = ({ msgText, showMsg }) => {
-
   return (
     <>
       <AnimatePresence>
@@ -39,14 +37,22 @@ const MsgModal = ({ msgText, showMsg }) => {
               >
                 {msgText}
               </h3>
-            
-            <div className="flex sm:hidden absolute bottom-0 left-0 w-full items-center justify-center">
-                <img src={successFrog} className="mt-4 sm:mt-2" alt="Success Frog" />
+
+              <div className="flex sm:hidden absolute bottom-0 left-0 w-full items-center justify-center">
+                <img
+                  src={successFrog}
+                  className="mt-4 sm:mt-2"
+                  alt="Success Frog"
+                />
               </div>
-              </div>
-            <img alt="save success" src={saveBg} className={`w-full h-full sm:h-[200px]`} />
+            </div>
+            <img
+              alt="save success"
+              src={saveBg}
+              className={`w-full h-full sm:h-[200px]`}
+            />
             <div className="sm:absolute hidden bottom-0 left-12 sm:flex items-end h-full">
-              <img src={successFrog} />
+              <img src={successFrog} alt="" />
             </div>
           </motion.div>
         )}

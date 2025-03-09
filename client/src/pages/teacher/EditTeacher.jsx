@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import { getTeacherById } from "../../api/teachersApi";
-import { useNavigate,  useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import Logout from "../../components/LogoutButton";
 import Nav from "../../components/Navbar/Nav";
-import PasswordChange from "../../components/TeacherView/PasswordChange.jsx"
+import PasswordChange from "../../components/TeacherView/PasswordChangeModal.jsx";
 import withAuth from "../../hoc/withAuth";
 import Button from "../../components/Button.jsx";
-import MsgModal from '../../components/SeatingChart/MsgModal.jsx'
+import MsgModal from "../../components/SeatingChart/MsgModal.jsx";
 import SmallSaveButton from "../../components/SmallSaveButton.jsx";
 import FileBase from "react-file-base64";
 import youngStudent from "../../images/young-student.png";
 import { getUserByTeacherId, updateTeacherAcct } from "../../api/userApi.js";
-import editIcon from "../../images/edit_icon.png"
-import { motion } from 'framer-motion';
+import editIcon from "../../images/edit_icon.png";
+import { motion } from "framer-motion";
 import UnsavedChanges from "../../components/TeacherView/UnsavedChanges.jsx";
 import { deleteTeacher } from "../../api/teachersApi";
 import ConfirmationModal from "../../components/TeacherView/ConfirmationModal.jsx";
 import { useUnsavedChanges } from "../../context/UnsavedChangesContext.js";
-
 
 const EditTeacher = () => {
   const navigate = useNavigate();
@@ -34,39 +32,51 @@ const EditTeacher = () => {
     school: "",
     phone: "",
     email: "",
-    username: ""
+    username: "",
   });
-  const [originalFormData, setOriginalFormData] = useState(null)
-  const [isDisplayOpen, setIsDisplayOpen] = useState(false)
-  const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [isAccountOpen, setIsAccountOpen] = useState(false)
-  const [showMsg, setShowMsg] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [inputValue, setInputValue] = useState('');
-  const {setHasUnsavedChanges} = useUnsavedChanges();
+  const [isDisplayOpen, setIsDisplayOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const { setHasUnsavedChanges } = useUnsavedChanges();
+  const confirmRef = useRef(null);
+  const pwChangeRef = useRef(null);
+
+  const openPWModal = () => {
+    pwChangeRef.current?.showModal();
+  };
+
+  const closePWModal = () => {
+    pwChangeRef.current?.close();
+  };
+
+  const openConfirmModal = () => {
+    confirmRef.current?.showModal();
+  };
+
+  const closeConfirmModal = () => {
+    confirmRef.current?.close();
+  };
 
   useEffect(() => {
     const fetchTeacherData = async () => {
       try {
         const response = await getTeacherById(userData._id);
-        const acctResponse = await getUserByTeacherId(userData._id)
+        const acctResponse = await getUserByTeacherId(userData._id);
         // Combine data from both responses
         const combinedData = {
           ...response,
           email: acctResponse.email,
           username: acctResponse.username,
         };
-        setOriginalFormData(combinedData)
         setFormData(combinedData);
       } catch (error) {
         console.error(error);
       }
     };
     fetchTeacherData();
-    
   }, [userData]);
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -77,35 +87,38 @@ const EditTeacher = () => {
     setHasUnsavedChanges(true);
   };
 
-
   const deleteTeacherInSystem = async () => {
     if (inputValue === formData?.firstName + " " + formData?.lastName) {
-      console.log('Deleting teacher');
-      const response = await deleteTeacher(teacherId)
+      console.log("Deleting teacher");
+      const response = await deleteTeacher(teacherId);
       if (response === 200) {
-        sessionStorage.setItem('teacherDeleteInfo', JSON.stringify({
-          success: true,
-          teacherName: formData?.firstName + " " + formData?.lastName
-        }));
-        navigate(`/signup`)
+        sessionStorage.setItem(
+          "teacherDeleteInfo",
+          JSON.stringify({
+            success: true,
+            teacherName: formData?.firstName + " " + formData?.lastName,
+          })
+        );
+        localStorage.removeItem("userData");
+        navigate(`/signup`);
       }
     } else {
-      console.log('Name does not match');
+      console.log("Name does not match");
     }
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    
+
     try {
       const { email, username, ...teacherData } = formData;
 
       // Update teacher-specific fields
       await updateTeacherAcct(userData._id, { email, username });
-  
+
       await updateUser(teacherData);
       // Show brief save message for 3 secs
-      console.log('click click')
+      console.log("click click");
       setShowMsg(true);
       setTimeout(() => {
         setShowMsg(false);
@@ -118,7 +131,7 @@ const EditTeacher = () => {
   };
 
   if (!userData) {
-    return <div>Loading...</div>; // Or redirect to another page, or show an error message
+    return <div>Loading...</div>;
   }
 
   const handleFileUpload = (file) => {
@@ -127,59 +140,71 @@ const EditTeacher = () => {
       avatarImg: file.base64,
     });
   };
-  
+
   return (
     <>
       <div className="flex flex-col min-h-screen w-screen ">
+        <header className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
+          <Nav teacherId={userData._id} />
+        </header>
         <div className="flex justify-center lg:justify-end underline mt-10 px-5">
           <Logout location="teacherLogout" userData={userData} />
         </div>
-        <div className="flex flex-col items-center pt-8">
-          <div className="mt-4 mb-3 max-w-[643px] lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px] px-5 sm:px-0">
+        <main className="flex flex-col items-center pt-8">
+          <section className="mt-4 mb-3 max-w-[643px] lg:w-[643px] md:w-[475px] sm:w-[450px] w-[320px] px-5 sm:px-0">
             <h1 className=" font-header1 text-header2 ">Manage settings</h1>
             <p className="text-header3 font-header3 text-start">
               Preferences for your account details and more.
             </p>
-          </div>
+          </section>
 
           <form className="flex flex-col gap-2 sm:h-auto max-h-[1200px] mb-24 sm:mb-0">
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
+            <fieldset className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* Account Profile */}
-              <div
-                className="flex w-full justify-between cursor-pointer"
-                onClick={() => setIsAccountOpen(!isAccountOpen)}
-              >
-                <h2 className="font-header4 text-header3 select-none">Account Settings</h2>
-                <svg
-                  className={`transition-transform duration-300 ${
-                    isAccountOpen ? "" : "rotate-180"
-                  }`}
-                  width="33"
-                  height="33"
-                  viewBox="30 10 40 40"
-                  xmlns="http://www.w3.org/2000/svg"
+              <section className="w-full">
+                <header
+                  className="flex w-full justify-between cursor-pointer"
+                  onClick={() => setIsAccountOpen(!isAccountOpen)}
+                  aria-expanded={isAccountOpen ? "true" : "false"}
+                  aria-controls="account-settings-content"
                 >
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="35"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  <h2 className="font-header4 text-header3 select-none">
+                    Account Settings
+                  </h2>
+                  <svg
+                    className={`transition-transform duration-300 ${
+                      isAccountOpen ? "" : "rotate-180"
+                    }`}
+                    width="33"
+                    height="33"
+                    viewBox="30 10 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label={
+                      isAccountOpen ? "Collapse section" : "Expand section"
+                    }
+                  >
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="35"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
 
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="65"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="65"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </header>
+              </section>
               {/* Account Profile Contents */}
               <motion.div
                 className={`${isAccountOpen ? "" : "hidden"}`}
@@ -192,8 +217,9 @@ const EditTeacher = () => {
                 style={{ overflow: "hidden" }}
               >
                 <div className="flex flex-col">
-                  <label>Email </label>
+                  <label htmlFor="email">Email </label>
                   <input
+                    id="email"
                     type="text"
                     name="email"
                     value={formData?.email || ""}
@@ -202,8 +228,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>Username </label>
+                  <label htmlFor="username">Username </label>
                   <input
+                    id="username"
                     type="text"
                     name="username"
                     value={formData?.username || ""}
@@ -212,8 +239,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>Phone </label>
+                  <label htmlFor="phoneNum">Phone </label>
                   <input
+                    id="phoneNum"
                     type="text"
                     name="phone"
                     value={formData.phone || ""}
@@ -225,7 +253,7 @@ const EditTeacher = () => {
                   <button
                     className="flex self-center items-center justify-center px-8 border-2 border-graphite rounded-[1.2rem] p-[0.6rem] gap-3"
                     type="button"
-                    onClick={() => setShowModal(true)}
+                    onClick={openPWModal}
                   >
                     <h2 className="text-[14px] font-[Poppins] text-center underline">
                       Change Password
@@ -234,46 +262,55 @@ const EditTeacher = () => {
                   </button>
                 </div>
               </motion.div>
-            </div>
+            </fieldset>
 
             {/* TODO: add way to update teacher image */}
-            <div className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
+            <fieldset className=" p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center">
               {/* User Profile */}
-              <div
-                className="flex w-full justify-between cursor-pointer"
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
-              >
-                <h2 className="font-header4 text-header3 select-none">User profile</h2>
-                <svg
-                  className={`transition-transform duration-300 ${
-                    isProfileOpen ? "" : "rotate-180"
-                  }`}
-                  width="33"
-                  height="33"
-                  viewBox="30 10 40 40"
-                  xmlns="http://www.w3.org/2000/svg"
+              <section className="w-full">
+                <header
+                  className="flex w-full justify-between cursor-pointer"
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  aria-expanded={isProfileOpen ? "true" : "false"}
+                  aria-controls="profile-settings-content"
                 >
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="35"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  <h2 className="font-header4 text-header3 select-none">
+                    User profile
+                  </h2>
+                  <svg
+                    className={`transition-transform duration-300 ${
+                      isProfileOpen ? "" : "rotate-180"
+                    }`}
+                    width="33"
+                    height="33"
+                    viewBox="30 10 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label={
+                      isProfileOpen ? "Collapse section" : "Expand section"
+                    }
+                  >
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="35"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
 
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="65"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="65"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </header>
+              </section>
               {/* User Profile Contents */}
               <motion.div
                 className={`${isProfileOpen ? "" : "hidden"}`}
@@ -304,8 +341,9 @@ const EditTeacher = () => {
                   </div>
                 </div>
                 <div className={`flex flex-col `}>
-                  <label>Prefix </label>
+                  <label htmlFor="prefix">Prefix </label>
                   <input
+                    id="prefix"
                     type="text"
                     name="prefix"
                     value={formData.prefix || ""}
@@ -314,8 +352,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>First Name </label>
+                  <label htmlFor="firstName">First Name </label>
                   <input
+                    id="firstName"
                     type="text"
                     name="firstName"
                     value={formData.firstName || ""}
@@ -324,8 +363,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>Last Name </label>
+                  <label htmlFor="lastName">Last Name </label>
                   <input
+                    id="lastName"
                     type="text"
                     name="lastName"
                     value={formData.lastName || ""}
@@ -334,8 +374,9 @@ const EditTeacher = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label>School </label>
+                  <label htmlFor="school">School </label>
                   <input
+                    id="school"
                     type="text"
                     name="school"
                     value={formData.school || ""}
@@ -344,48 +385,55 @@ const EditTeacher = () => {
                   />
                 </div>
               </motion.div>
-            </div>
+            </fieldset>
             {/* Display Section */}
-            <div className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center cursor-pointer">
+            <fieldset className="flex flex-col p-4 rounded-lg justify-center bg-sandwich lg:w-[643px] md:w-[475px] sm:w-[450px] w-[90%] self-center cursor-pointer">
               {/* Display Header */}
-              <div
-                className="flex w-full justify-between"
-                onClick={() => setIsDisplayOpen(!isDisplayOpen)}
-              >
-                <h2 className="font-semibold font-header4 text-header3 font-[Poppins] select-none">
-                  Display
-                </h2>
-
-                <svg
-                  className={`transition-transform duration-300 ${
-                    isDisplayOpen ? "" : "rotate-180"
-                  }`}
-                  width="33"
-                  height="33"
-                  viewBox="30 10 40 40"
-                  xmlns="http://www.w3.org/2000/svg"
+              <section className="w-full">
+                <header
+                  className="flex w-full justify-between"
+                  onClick={() => setIsDisplayOpen(!isDisplayOpen)}
+                  aria-expanded={isDisplayOpen ? "true" : "false"}
+                  aria-controls="display-settings-content"
                 >
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="35"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
+                  <h2 className="font-semibold font-header4 text-header3 font-[Poppins] select-none">
+                    Display
+                  </h2>
 
-                  <line
-                    x1="50"
-                    y1="20"
-                    x2="65"
-                    y2="40"
-                    stroke="#000000"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    className={`transition-transform duration-300 ${
+                      isDisplayOpen ? "" : "rotate-180"
+                    }`}
+                    width="33"
+                    height="33"
+                    viewBox="30 10 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label={
+                      isDisplayOpen ? "Collapse section" : "Expand section"
+                    }
+                  >
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="35"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="65"
+                      y2="40"
+                      stroke="#000000"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </header>
+              </section>
               <motion.div
                 className={`${isDisplayOpen ? "" : "hidden"}`}
                 initial={{ height: 0, opacity: 0 }}
@@ -398,32 +446,34 @@ const EditTeacher = () => {
               >
                 <h2>Coming soon...</h2>
               </motion.div>
-            </div>
+            </fieldset>
           </form>
 
           <div className="flex relative bottom-10 lg:bottom-0 justify-center w-full my-72">
             <button
-              onClick={() => setShowDeleteModal(true)}
+              onClick={openConfirmModal}
               className="bg-red-500 py-2 px-10 sm:px-24 rounded-lg hover:shadow-[0_0_8px_3px_rgba(200,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 absolute"
+              type="button"
             >
               <h3 className="text-white font-semibold">Delete Your Account</h3>
             </button>
           </div>
 
           <ConfirmationModal
-            showDeleteModal={showDeleteModal}
-            setShowDeleteModal={setShowDeleteModal}
-            itemFullName={
-              formData?.firstName + " " + formData?.lastName
+            ref={confirmRef}
+            closeConfirmModal={closeConfirmModal}
+            itemFullName={formData?.firstName + " " + formData?.lastName}
+            deleteMsg={
+              "Are you sure you want to delete your account? This cannot be undone."
             }
-            deleteMsg={"Are you sure you want to delete your account? This cannot be undone."}
             inputValue={inputValue}
             setInputValue={setInputValue}
             removeItemFromSystem={deleteTeacherInSystem}
+            inputNeeded={true}
           />
           <PasswordChange
-            showModal={showModal}
-            setShowModal={setShowModal}
+            ref={pwChangeRef}
+            closePWModal={closePWModal}
             teacherId={userData._id}
             showMsg={showMsg}
             setShowMsg={setShowMsg}
@@ -453,10 +503,10 @@ const EditTeacher = () => {
           <div className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
             <Nav teacherId={userData._id} />
           </div>
-        </div>
+        </main>
       </div>
     </>
   );
 };
 
-export default withAuth(['teacher'])(EditTeacher)
+export default withAuth(["teacher"])(EditTeacher);

@@ -11,6 +11,7 @@ import Divider from "../../images/divider.png";
 import Teachers from "../../images/teachers.svg";
 import Students from "../../images/students.svg";
 import LogoLarge from "../../images/logolarge.svg"
+import Footer from "../../components/Footer";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const Login = () => {
       <img src={NavLogo} alt="Logo" className="mt-[25px] ml-[82px] hidden lg:block" />
       <img src={LogoLarge} alt="Logo" className="block lg:hidden w-[90%] ml-auto mr-auto mt-[25px]" />
     </div>
-    <div className="h-screen pt-[2rem] flex justify-center">
+    <div className="pt-[2rem] flex justify-center">
       <div className="form_container">
         <h1 className="font-karla text-lg lg:text-xl font-semibold text-center lg:text-left">Welcome!</h1>
 
@@ -175,6 +176,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    <Footer />
     </>
   );
 };

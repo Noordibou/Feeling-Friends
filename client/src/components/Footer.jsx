@@ -77,9 +77,7 @@ export default function Footer() {
                 </li>
                 <li className="font-poppins text-sm pt-[1.5rem] max-sm:text-xs">
                   July Choi<br />
-                  <a href="https://www.linkedin.com/in/julychoi/" target="_blank">
-                    <img className="inline w-[25px] h-[25px]" src={LinkedIn} />
-                  </a>
+                  <button className="p-[0.7rem] border-[0.1rem] rounded-[1.5rem] text-xs"><a href="https://lifestance.com/provider/therapist/or/portland/july-choi/" target="_blank">Bio</a></button>
                 </li>
                 <li className="font-poppins text-sm pt-[1.5rem] max-sm:text-xs">
                   Sarah Shatto<br />

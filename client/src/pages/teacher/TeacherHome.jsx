@@ -92,8 +92,9 @@ const TeacherHome = () => {
         setLoading(false);
       }
     };
+
     fetchTeacherData();
-  }, [userData]);
+  }, [userData, location.search]);
 
   const handleDeleteClassroom = async (classroomId, classroomSubject) => {
     try {
@@ -522,7 +523,11 @@ const TeacherHome = () => {
           </div>
 
           <aside className="bottom-0 fixed w-screen lg:inset-y-0 lg:left-0 lg:order-first lg:w-44 ">
-            <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />
+            {userData ? (
+              <Nav setIsEditMode={setIsEditMode} teacherId={userData._id} />
+            ) : (
+              <></>
+            )}
           </aside>
         </div>
       </div>

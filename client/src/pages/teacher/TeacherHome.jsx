@@ -159,7 +159,7 @@ const TeacherHome = () => {
       <div className="flex flex-col justify-center">
         <div className="h-screen lg:ml-28">
           <div className="max-w-5xl mx-auto px-4 pb-60 lg:pb-32">
-            <header className=" mb-3">
+            <header className="mb-3">
               <Greeting isEditMode={isEditMode} userData={userData} />
             </header>
             <section className="h-[60%] grid">
@@ -167,9 +167,9 @@ const TeacherHome = () => {
                 <>
                   {/* Your Classes Today */}
                   <section>
-                    <div className="flex justify-between items-center px-10 my-4">
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-5 px-10 sm:my-4 sm:gap-0">
                       <h2 className="text-2xl">Your Classes Today</h2>
-                      <p className="text-sm font-bold border-sandwich border-2 p-2 rounded-[1rem]">
+                      <p className="text-sm font-bold border-sandwich border-2 p-2 rounded-[1rem] text-center">
                         {todayDate}
                       </p>
                     </div>
@@ -191,7 +191,7 @@ const TeacherHome = () => {
                           <div key={index}>
                             {/* TODO: fix height for medium and small screens */}
                             <Link
-                              className={`block w-[80%] ml-auto mr-auto my-[1rem] h-[165px] ${
+                              className={`block w-full sm:w-[80%] ml-auto mr-auto my-[3rem] md:my-[1rem] h-[165px] ${
                                 isEditMode ? "pointer-events-none" : ""
                               }`}
                               to={
@@ -208,41 +208,44 @@ const TeacherHome = () => {
                                 }`}
                               >
                                 <header className="flex justify-between items-center w-full my-2">
-                                  <div className="flex items-center gap-2">
-                                    {/* if in isEditMode and user clicks do opposite */}
-                                    {isEditMode ? (
-                                      <button
-                                        className="pointer-events-auto"
-                                        onClick={() => {
-                                          console.log("clicked on favorite");
-                                          handleToggleFavorite(classroom._id);
-                                        }}
-                                      >
+                                  <div className="w-full flex flex-col sm:flex-row">
+                                    <div className="flex items-center gap-2">
+                                      {/* if in isEditMode and user clicks do opposite */}
+                                      {isEditMode ? (
+                                        <button
+                                          className="pointer-events-auto"
+                                          onClick={() => {
+                                            console.log("clicked on favorite");
+                                            handleToggleFavorite(classroom._id);
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              classroom.isFavorite
+                                                ? favoriteIconStar
+                                                : unFavIconStar
+                                            }
+                                            alt="Favorite"
+                                            className="cursor-pointer w-7"
+                                          />
+                                        </button>
+                                      ) : classroom.isFavorite ? (
                                         <img
-                                          src={
-                                            classroom.isFavorite
-                                              ? favoriteIconStar
-                                              : unFavIconStar
-                                          }
-                                          alt="Favorite"
-                                          className="cursor-pointer"
+                                          src={favoriteIconStar}
+                                          alt="is fav"
+                                          className="w-7"
                                         />
-                                      </button>
-                                    ) : classroom.isFavorite ? (
-                                      <img
-                                        src={favoriteIconStar}
-                                        alt="is fav"
-                                      />
-                                    ) : null}
-                                    <h2 className="text-header4 font-header2 text-left w-[50%]">
-                                      {classroom.classSubject}
-                                    </h2>
-                                  </div>
-                                  <div className="flex flex-row justify-end mr-10 w-[50%] font-[Poppins]">
-                                    <p>Location:</p>
-                                    <p className="pl-1 font-bold">
-                                      {classroom.location}
-                                    </p>
+                                      ) : null}
+                                      <h2 className="text-header4 font-header2 text-left w-[50%]">
+                                        {classroom.classSubject}
+                                      </h2>
+                                    </div>
+                                    <div className="flex flex-row sm:justify-end mt-2 sm:mt-0 sm:mr-10 sm:w-full font-[Poppins]">
+                                      <p>Location:</p>
+                                      <p className="pl-1 font-bold">
+                                        {classroom.location}
+                                      </p>
+                                    </div>
                                   </div>
                                   {isEditMode ? (
                                     <button
@@ -257,8 +260,8 @@ const TeacherHome = () => {
                                 </header>
 
                                 <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
-                                  <dl className="flex justify-between mb-[1rem] mx-2">
-                                    <div className="flex text-sm font-body items-center">
+                                  <dl className="flex flex-col sm:flex-row justify-between mb-[1rem] mx-2 gap-2 sm:gap-0">
+                                    <div className="flex text-sm font-body sm:items-center">
                                       <dt>Days:</dt>
                                       <dd className="font-semibold pl-1">
                                         {classroom.activeDays !== undefined &&
@@ -271,12 +274,12 @@ const TeacherHome = () => {
                                     </div>
 
                                     {/* TODO: fix styling on large and small screens */}
-                                    <div className="flex-col text-sm font-body ">
-                                      <div className="flex gap-4">
+                                    <div className="flex-col text-sm font-body">
+                                      <div className="flex gap-4 justify-between w-full">
                                         <dt>Check-in</dt>
                                         <dt>Check-out</dt>
                                       </div>
-                                      <div className="flex gap-[4rem] font-semibold">
+                                      <div className="flex gap-[4rem] font-semibold justify-between w-full">
                                         <dd>
                                           {classroom.checkIn
                                             ? `${formatTime(classroom.checkIn)}`
@@ -335,7 +338,9 @@ const TeacherHome = () => {
 
                   {/* Other Classes */}
                   <section>
-                    <h2 className="text-2xl px-10 my-4">Other Classes</h2>
+                    <h2 className="text-2xl px-10 mt-10 sm:my-4">
+                      Other Classes
+                    </h2>
                     <div className="flex flex-col space-y-4 max-w-6xl mx-auto">
                       {classroomsData
                         .filter(({ classroom }) => {
@@ -353,7 +358,7 @@ const TeacherHome = () => {
                         .map(({ classroom, zorPercentages }, index) => (
                           <div key={`other-${index}`}>
                             <Link
-                              className={`block w-[80%] ml-auto mr-auto my-[1rem] h-[165px] ${
+                              className={`block w-full sm:w-[80%] ml-auto mr-auto my-[3rem] md:my-[1rem] h-[165px] ${
                                 isEditMode ? "pointer-events-none" : ""
                               }`}
                               to={
@@ -370,40 +375,44 @@ const TeacherHome = () => {
                                 }`}
                               >
                                 <header className="flex justify-between items-center w-full my-2">
-                                  {/* if in isEditMode and user clicks do opposite */}
-                                  {isEditMode ? (
-                                    <button
-                                      className="pointer-events-auto"
-                                      onClick={() => {
-                                        console.log("clicked on favorite");
-                                        handleToggleFavorite(classroom._id);
-                                      }}
-                                    >
-                                      <img
-                                        src={
-                                          classroom.isFavorite
-                                            ? favoriteIconStar
-                                            : unFavIconStar
-                                        }
-                                        alt="Favorite"
-                                        className="cursor-pointer"
-                                      />
-                                    </button>
-                                  ) : classroom.isFavorite ? (
-                                    <img
-                                      className=""
-                                      src={favoriteIconStar}
-                                      alt="is fav"
-                                    />
-                                  ) : null}
-                                  <h2 className="text-header4 font-header2 text-left w-[50%]">
-                                    {classroom.classSubject}
-                                  </h2>
-                                  <div className="flex flex-row justify-end mr-10 w-[50%] font-[Poppins]">
-                                    <p>Location:</p>
-                                    <p className="pl-1 font-bold">
-                                      {classroom.location}
-                                    </p>
+                                  <div className="w-full flex flex-col sm:flex-row">
+                                    {/* if in isEditMode and user clicks do opposite */}
+                                    <div className="flex">
+                                      {isEditMode ? (
+                                        <button
+                                          className="pointer-events-auto pr-2 sm:pr-0"
+                                          onClick={() => {
+                                            console.log("clicked on favorite");
+                                            handleToggleFavorite(classroom._id);
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              classroom.isFavorite
+                                                ? favoriteIconStar
+                                                : unFavIconStar
+                                            }
+                                            alt="Favorite"
+                                            className="cursor-pointer w-7"
+                                          />
+                                        </button>
+                                      ) : classroom.isFavorite ? (
+                                        <img
+                                          className="w-7"
+                                          src={favoriteIconStar}
+                                          alt="is fav"
+                                        />
+                                      ) : null}
+                                      <h2 className="text-header4 font-header2 text-left w-[50%]">
+                                        {classroom.classSubject}
+                                      </h2>
+                                    </div>
+                                    <div className="flex flex-row sm:justify-end mt-2 sm:mt-0 sm:mr-10 sm:w-full font-[Poppins]">
+                                      <p>Location:</p>
+                                      <p className="pl-1 font-bold">
+                                        {classroom.location}
+                                      </p>
+                                    </div>
                                   </div>
                                   {isEditMode ? (
                                     <button
@@ -418,8 +427,8 @@ const TeacherHome = () => {
                                 </header>
 
                                 <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
-                                  <dl className="flex justify-between mb-[1rem] mx-2">
-                                    <div className="flex text-sm font-body items-center">
+                                  <dl className="flex flex-col sm:flex-row justify-between mb-[1rem] mx-2 gap-2 sm:gap-0">
+                                    <div className="flex text-sm font-body sm:items-center">
                                       <dt>Days:</dt>
                                       <dd className="font-semibold pl-1">
                                         {classroom.activeDays !== undefined &&
@@ -433,11 +442,11 @@ const TeacherHome = () => {
 
                                     {/* TODO: fix styling on large and small screens */}
                                     <div className="flex-col text-sm font-body ">
-                                      <div className="flex gap-4">
+                                      <div className="flex gap-4 justify-between w-full">
                                         <dt>Check-in</dt>
                                         <dt>Check-out</dt>
                                       </div>
-                                      <div className="flex gap-[4rem] font-semibold">
+                                      <div className="flex gap-[4rem] font-semibold justify-between w-full">
                                         <dd>
                                           {classroom.checkIn
                                             ? `${formatTime(classroom.checkIn)}`

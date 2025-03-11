@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -12,8 +12,7 @@ const AuthProvider = ({ children }) => {
   // Function to set user data after login
   const handleLogin = (userData) => {
     setUser(userData);
-  };  
-  
+  };
 
   const isStudent = () => {
     return user && user.role === "student";
@@ -31,11 +30,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={contextValue}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 

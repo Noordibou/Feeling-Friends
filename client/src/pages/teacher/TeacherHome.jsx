@@ -124,7 +124,6 @@ const TeacherHome = () => {
             }
           : item
       );
-
       return updatedData;
     });
   };
@@ -165,347 +164,28 @@ const TeacherHome = () => {
             <section className="h-[60%] grid">
               {userData && userData.classrooms ? (
                 <>
-                  {/* Your Classes Today */}
-                  <section>
-                    <div className="flex flex-col sm:flex-row justify-between items-center gap-5 px-10 sm:my-4 sm:gap-0">
-                      <h2 className="text-2xl">Your Classes Today</h2>
-                      <p className="text-sm font-bold border-sandwich border-2 p-2 rounded-[1rem] text-center">
-                        {todayDate}
-                      </p>
-                    </div>
-                    <div className="flex flex-col space-y-4 max-w-6xl mx-auto">
-                      {classroomsData
-                        .filter(({ classroom }) => {
-                          const today = new Date()
-                            .toLocaleString("en-US", { weekday: "short" })
-                            .toUpperCase();
-                          return getActiveDays(classroom.activeDays).includes(
-                            today
-                          );
-                        })
-                        .sort(({ classroom: a }, { classroom: b }) => {
-                          // Sort so that favorite classrooms are at the top
-                          return b.isFavorite - a.isFavorite; // 1: a isFavorite is false, b isFavorite is true
-                        })
-                        .map(({ classroom, zorPercentages }, index) => (
-                          <div key={index}>
-                            {/* TODO: fix height for medium and small screens */}
-                            <Link
-                              className={`block w-full sm:w-[80%] ml-auto mr-auto my-[3rem] md:my-[1rem] h-[165px] ${
-                                isEditMode ? "pointer-events-none" : ""
-                              }`}
-                              to={
-                                isEditMode
-                                  ? "#"
-                                  : `/classroom/${userData._id}/${classroom._id}`
-                              }
-                            >
-                              <article
-                                className={`bg-sandwich p-[0.5rem] rounded-[1rem] ${
-                                  !isEditMode
-                                    ? "hover:scale-[102%] transition-transform duration-300 ease-in-out hover:border-darkSandwich hover:border-2"
-                                    : ""
-                                }`}
-                              >
-                                <header className="flex justify-between items-center w-full my-2">
-                                  <div className="w-full flex flex-col sm:flex-row">
-                                    <div className="flex items-center gap-2">
-                                      {/* if in isEditMode and user clicks do opposite */}
-                                      {isEditMode ? (
-                                        <button
-                                          className="pointer-events-auto"
-                                          onClick={() => {
-                                            console.log("clicked on favorite");
-                                            handleToggleFavorite(classroom._id);
-                                          }}
-                                        >
-                                          <img
-                                            src={
-                                              classroom.isFavorite
-                                                ? favoriteIconStar
-                                                : unFavIconStar
-                                            }
-                                            alt="Favorite"
-                                            className="cursor-pointer w-7"
-                                          />
-                                        </button>
-                                      ) : classroom.isFavorite ? (
-                                        <img
-                                          src={favoriteIconStar}
-                                          alt="is fav"
-                                          className="w-7"
-                                        />
-                                      ) : null}
-                                      <h2 className="text-header4 font-header2 text-left w-[50%]">
-                                        {classroom.classSubject}
-                                      </h2>
-                                    </div>
-                                    <div className="flex flex-row sm:justify-end mt-2 sm:mt-0 sm:mr-10 sm:w-full font-[Poppins]">
-                                      <p>Location:</p>
-                                      <p className="pl-1 font-bold">
-                                        {classroom.location}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  {isEditMode ? (
-                                    <button
-                                      className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
-                                      onClick={() =>
-                                        openConfirmModal(classroom._id)
-                                      }
-                                    >
-                                      <img src={xButton} alt="xButton" />
-                                    </button>
-                                  ) : null}
-                                </header>
-
-                                <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
-                                  <dl className="flex flex-col sm:flex-row justify-between mb-[1rem] mx-2 gap-2 sm:gap-0">
-                                    <div className="flex text-sm font-body sm:items-center">
-                                      <dt>Days:</dt>
-                                      <dd className="font-semibold pl-1">
-                                        {classroom.activeDays !== undefined &&
-                                        classroom.activeDays !== null
-                                          ? getActiveDays(
-                                              classroom.activeDays
-                                            ).join(" | ")
-                                          : "-"}
-                                      </dd>
-                                    </div>
-
-                                    {/* TODO: fix styling on large and small screens */}
-                                    <div className="flex-col text-sm font-body">
-                                      <div className="flex gap-4 justify-between w-full">
-                                        <dt>Check-in</dt>
-                                        <dt>Check-out</dt>
-                                      </div>
-                                      <div className="flex gap-[4rem] font-semibold justify-between w-full">
-                                        <dd>
-                                          {classroom.checkIn
-                                            ? `${formatTime(classroom.checkIn)}`
-                                            : "-"}
-                                        </dd>
-                                        <dd>
-                                          {classroom.checkOut
-                                            ? `${formatTime(
-                                                classroom.checkOut
-                                              )}`
-                                            : "-"}
-                                        </dd>
-                                      </div>
-                                    </div>
-                                  </dl>
-                                  <div className="flex justify-between">
-                                    <div className="flex w-full bg-sandwich rounded-[1rem] h-[2.5rem]">
-                                      {Object.entries(zorPercentages).map(
-                                        ([zor, percentage], i, arr) => (
-                                          <div
-                                            key={zor}
-                                            style={{ width: `${percentage}%` }}
-                                            className={`bg-${getBackgroundColorClass(
-                                              zor
-                                            )} ${
-                                              i === 0 ? "rounded-l-[1rem]" : ""
-                                            } ${
-                                              i === arr.length - 1
-                                                ? "rounded-r-[1rem]"
-                                                : ""
-                                            } h-[2.5rem]`}
-                                          ></div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <ConfirmationModal
-                                  ref={getModalRef(classroom._id)}
-                                  closeConfirmModal={() =>
-                                    closeConfirmModal(classroom._id)
-                                  }
-                                  itemFullName={classroom.classSubject}
-                                  itemId={classroom._id}
-                                  deleteMsg={`Are you sure you want to delete ${classroom.classSubject}? This cannot be undone.`}
-                                  removeItemFromSystem={handleDeleteClassroom}
-                                  inputNeeded={false}
-                                />
-                              </article>
-                            </Link>
-                          </div>
-                        ))}
-                    </div>
-                  </section>
-
-                  {/* Other Classes */}
-                  <section>
-                    <h2 className="text-2xl px-10 mt-10 sm:my-4">
-                      Other Classes
-                    </h2>
-                    <div className="flex flex-col space-y-4 max-w-6xl mx-auto">
-                      {classroomsData
-                        .filter(({ classroom }) => {
-                          const today = new Date()
-                            .toLocaleString("en-US", { weekday: "short" })
-                            .toUpperCase();
-                          return !getActiveDays(classroom.activeDays).includes(
-                            today
-                          );
-                        })
-                        .sort(({ classroom: a }, { classroom: b }) => {
-                          // Sort so that favorite classrooms are at the top
-                          return b.isFavorite - a.isFavorite; // 1: a isFavorite is false, b isFavorite is true
-                        })
-                        .map(({ classroom, zorPercentages }, index) => (
-                          <div key={`other-${index}`}>
-                            <Link
-                              className={`block w-full sm:w-[80%] ml-auto mr-auto my-[3rem] md:my-[1rem] h-[165px] ${
-                                isEditMode ? "pointer-events-none" : ""
-                              }`}
-                              to={
-                                isEditMode
-                                  ? "#"
-                                  : `/classroom/${userData._id}/${classroom._id}`
-                              }
-                            >
-                              <article
-                                className={`bg-sandwich p-[0.5rem] rounded-[1rem] overflow-hidden ${
-                                  !isEditMode
-                                    ? "hover:scale-[102%] transition-transform duration-300 ease-in-out hover:border-darkSandwich hover:border-2"
-                                    : ""
-                                }`}
-                              >
-                                <header className="flex justify-between items-center w-full my-2">
-                                  <div className="w-full flex flex-col sm:flex-row">
-                                    {/* if in isEditMode and user clicks do opposite */}
-                                    <div className="flex">
-                                      {isEditMode ? (
-                                        <button
-                                          className="pointer-events-auto pr-2 sm:pr-0"
-                                          onClick={() => {
-                                            console.log("clicked on favorite");
-                                            handleToggleFavorite(classroom._id);
-                                          }}
-                                        >
-                                          <img
-                                            src={
-                                              classroom.isFavorite
-                                                ? favoriteIconStar
-                                                : unFavIconStar
-                                            }
-                                            alt="Favorite"
-                                            className="cursor-pointer w-7"
-                                          />
-                                        </button>
-                                      ) : classroom.isFavorite ? (
-                                        <img
-                                          className="w-7"
-                                          src={favoriteIconStar}
-                                          alt="is fav"
-                                        />
-                                      ) : null}
-                                      <h2 className="text-header4 font-header2 text-left w-[50%]">
-                                        {classroom.classSubject}
-                                      </h2>
-                                    </div>
-                                    <div className="flex flex-row sm:justify-end mt-2 sm:mt-0 sm:mr-10 sm:w-full font-[Poppins]">
-                                      <p>Location:</p>
-                                      <p className="pl-1 font-bold">
-                                        {classroom.location}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  {isEditMode ? (
-                                    <button
-                                      className="-mt-[3rem] -mx-[2rem] pointer-events-auto"
-                                      onClick={() =>
-                                        openConfirmModal(classroom._id)
-                                      }
-                                    >
-                                      <img src={xButton} alt="xButton" />
-                                    </button>
-                                  ) : null}
-                                </header>
-
-                                <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
-                                  <dl className="flex flex-col sm:flex-row justify-between mb-[1rem] mx-2 gap-2 sm:gap-0">
-                                    <div className="flex text-sm font-body sm:items-center">
-                                      <dt>Days:</dt>
-                                      <dd className="font-semibold pl-1">
-                                        {classroom.activeDays !== undefined &&
-                                        classroom.activeDays !== null
-                                          ? getActiveDays(
-                                              classroom.activeDays
-                                            ).join(" | ")
-                                          : "-"}
-                                      </dd>
-                                    </div>
-
-                                    {/* TODO: fix styling on large and small screens */}
-                                    <div className="flex-col text-sm font-body ">
-                                      <div className="flex gap-4 justify-between w-full">
-                                        <dt>Check-in</dt>
-                                        <dt>Check-out</dt>
-                                      </div>
-                                      <div className="flex gap-[4rem] font-semibold justify-between w-full">
-                                        <dd>
-                                          {classroom.checkIn
-                                            ? `${formatTime(classroom.checkIn)}`
-                                            : "-"}
-                                        </dd>
-                                        <dd>
-                                          {classroom.checkOut
-                                            ? `${formatTime(
-                                                classroom.checkOut
-                                              )}`
-                                            : "-"}
-                                        </dd>
-                                      </div>
-                                    </div>
-                                  </dl>
-                                  <div className="flex justify-between">
-                                    <div className="flex w-full bg-sandwich rounded-[1rem] h-[2.5rem]">
-                                      {Object.entries(zorPercentages).map(
-                                        ([zor, percentage], i, arr) => (
-                                          <div
-                                            key={zor}
-                                            style={{ width: `${percentage}%` }}
-                                            className={`bg-${getBackgroundColorClass(
-                                              zor
-                                            )} ${
-                                              i === 0 ? "rounded-l-[1rem]" : ""
-                                            } ${
-                                              i === arr.length - 1
-                                                ? "rounded-r-[1rem]"
-                                                : ""
-                                            } h-[2.5rem]`}
-                                          ></div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <ConfirmationModal
-                                  ref={getModalRef(classroom._id)}
-                                  closeConfirmModal={() =>
-                                    closeConfirmModal(classroom._id)
-                                  }
-                                  itemFullName={classroom.classSubject}
-                                  itemId={classroom._id}
-                                  deleteMsg={`Are you sure you want to delete ${classroom.classSubject}? This cannot be undone.`}
-                                  removeItemFromSystem={handleDeleteClassroom}
-                                  inputNeeded={false}
-                                />
-                              </article>
-                            </Link>
-                          </div>
-                        ))}
-                    </div>
-                  </section>
+                  <ClassList
+                    title="Your Classes Today"
+                    filterCondition={(classroom) =>
+                      getActiveDays(classroom.activeDays).includes(
+                        new Date()
+                          .toLocaleString("en-US", { weekday: "short" })
+                          .toUpperCase()
+                      )
+                    }
+                  />
+                  <ClassList
+                    title="Other Classes"
+                    filterCondition={(classroom) =>
+                      !getActiveDays(classroom.activeDays).includes(
+                        new Date()
+                          .toLocaleString("en-US", { weekday: "short" })
+                          .toUpperCase()
+                      )
+                    }
+                  />
                 </>
-              ) : (
-                <p>Loading classrooms...</p>
-              )}
+              ) : null}
             </section>
             {/* Save Button on Tablet and Phone screens centered*/}
             {isEditMode && (
@@ -542,6 +222,163 @@ const TeacherHome = () => {
       </div>
     </>
   );
+
+  function ClassList({ title, filterCondition }) {
+    return (
+      <section>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-5 sm:px-10 sm:my-4 sm:gap-0 my-4">
+          <h2
+            className={`text-3xl mb-4 ${
+              title === "Other Classes" ? "mt-16 -mb-4" : ""
+            }`}
+          >
+            {title}
+          </h2>
+          {title === "Your Classes Today" && (
+            <p className="text-sm font-bold border-sandwich border-2 p-2 rounded-[1rem] text-center">
+              {todayDate}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col space-y-4 max-w-6xl mx-auto">
+          {classroomsData
+            .filter(({ classroom }) => filterCondition(classroom))
+            .sort(
+              ({ classroom: a }, { classroom: b }) =>
+                b.isFavorite - a.isFavorite
+            )
+            .map(({ classroom, zorPercentages }, index) => (
+              <div key={index} className="relative">
+                {isEditMode && (
+                  <button
+                    className="absolute -right-4 top-8 sm:right-12 md:top-0 md:right-20 pointer-events-auto"
+                    onClick={() => openConfirmModal(classroom._id)}
+                  >
+                    <img src={xButton} alt="Delete" />
+                  </button>
+                )}
+
+                <Link
+                  className={`block w-full sm:w-[80%] ml-auto mr-auto my-[3rem] md:my-[1rem] h-[165px] ${
+                    isEditMode ? "pointer-events-none" : ""
+                  }`}
+                  to={
+                    isEditMode
+                      ? "#"
+                      : `/classroom/${userData._id}/${classroom._id}`
+                  }
+                >
+                  <article
+                    className={`bg-sandwich p-[0.5rem] rounded-[1rem] transition-transform duration-300 ease-in-out ${
+                      !isEditMode
+                        ? "hover:scale-[102%] hover:border-darkSandwich hover:border-2"
+                        : ""
+                    }`}
+                  >
+                    <header className="flex justify-between items-center w-full my-2">
+                      <div className="w-full flex flex-col sm:flex-row">
+                        <div className="flex items-center gap-2">
+                          {isEditMode ? (
+                            <button
+                              className="pointer-events-auto"
+                              onClick={() =>
+                                handleToggleFavorite(classroom._id)
+                              }
+                            >
+                              <img
+                                src={
+                                  classroom.isFavorite
+                                    ? favoriteIconStar
+                                    : unFavIconStar
+                                }
+                                alt="Favorite"
+                                className="cursor-pointer w-7"
+                              />
+                            </button>
+                          ) : classroom.isFavorite ? (
+                            <img
+                              src={favoriteIconStar}
+                              alt="is fav"
+                              className="w-7"
+                            />
+                          ) : null}
+
+                          <h2 className="text-header4 font-header2 text-left w-[50%]">
+                            {classroom.classSubject}
+                          </h2>
+                        </div>
+                        <div className="flex flex-row sm:justify-end mt-2 sm:mt-0 sm:mr-10 sm:w-full font-[Poppins]">
+                          <p>Location:</p>
+                          <p className="pl-1 font-bold">{classroom.location}</p>
+                        </div>
+                      </div>
+                    </header>
+
+                    <div className="bg-notebookPaper p-[0.5rem] rounded-[1rem]">
+                      <dl className="flex flex-col sm:flex-row justify-between mb-[1rem] mx-2 gap-2 sm:gap-0">
+                        <div className="flex text-sm font-body sm:items-center">
+                          <dt>Days:</dt>
+                          <dd className="font-semibold pl-1">
+                            {classroom.activeDays
+                              ? getActiveDays(classroom.activeDays).join(" | ")
+                              : "-"}
+                          </dd>
+                        </div>
+                        <div className="flex-col text-sm font-body">
+                          <div className="flex gap-4 justify-between w-full">
+                            <dt>Check-in</dt>
+                            <dt>Check-out</dt>
+                          </div>
+                          <div className="flex gap-[4rem] font-semibold justify-between w-full">
+                            <dd>
+                              {classroom.checkIn
+                                ? formatTime(classroom.checkIn)
+                                : "-"}
+                            </dd>
+                            <dd>
+                              {classroom.checkOut
+                                ? formatTime(classroom.checkOut)
+                                : "-"}
+                            </dd>
+                          </div>
+                        </div>
+                      </dl>
+                      <div className="flex justify-between">
+                        <div className="flex w-full bg-sandwich rounded-[1rem] h-[2.5rem]">
+                          {Object.entries(zorPercentages).map(
+                            ([zor, percentage], i, arr) => (
+                              <div
+                                key={zor}
+                                style={{ width: `${percentage}%` }}
+                                className={`bg-${getBackgroundColorClass(
+                                  zor
+                                )} ${i === 0 ? "rounded-l-[1rem]" : ""} ${
+                                  i === arr.length - 1 ? "rounded-r-[1rem]" : ""
+                                } h-[2.5rem]`}
+                              ></div>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+
+                <ConfirmationModal
+                  ref={getModalRef(classroom._id)}
+                  closeConfirmModal={() => closeConfirmModal(classroom._id)}
+                  itemFullName={classroom.classSubject}
+                  itemId={classroom._id}
+                  deleteMsg={`Are you sure you want to delete ${classroom.classSubject}? This cannot be undone.`}
+                  removeItemFromSystem={handleDeleteClassroom}
+                  inputNeeded={false}
+                />
+              </div>
+            ))}
+        </div>
+      </section>
+    );
+  }
 };
 
 export default withAuth(["teacher"])(TeacherHome);
